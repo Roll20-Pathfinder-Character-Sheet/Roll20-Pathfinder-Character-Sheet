@@ -1,4 +1,3 @@
-
 <input type="checkbox" name="attr_use_widefont" value="1" class="sheet-accessible sheet-noshow" title="@{use_widefont}" role="presentation" />
 <div style="width:100%;min-width:100%;margin-top:-1em;" class="sheet-pf-wrapper">
 	<span class="sheet-offscreen" data-i18n="instru-a-3">Screenreader users should check expand all to ensure all content is visible to the reader. It is the second checkbox on this page.</span>
@@ -25,9 +24,13 @@
 	</div>
 	<div role="banner" class="sheet-section-header">
 		<div class="sheet-table-row">
-			<div style="width:144px;display:table-cell;" role="presentation">
-				<img src="http://paizo.com/image/content/Logos/PathfinderRPGLogo_500.jpeg" style="max-height: 70px;width:140px;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
+			<div style="width:20%;display:table-cell;" role="presentation">
+				<img src="http://paizo.com/image/content/Logos/PathfinderRPGLogo_500.jpeg" style="max-height: 70px;  min-width: 140px;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
 			</div>
+			<label class="sheet-small-label2" style="width:2.5em;padding-left:0;">
+				<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-cssbutton sheet-readonly-show" title="Edit Mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" checked /><span></span>
+				<span style="vertical-align:bottom;" title="Edit Mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
+			</label>
 			<label class="sheet-small-label2" style="width:2.5em;padding-left:0;">
 				<input type="checkbox" name="attr_recalc1" value="1" class="sheet-cssbutton sheet-refreshbutton sheet-sect-show" title="Recalculate Sheet." /><span></span>
 				<span style="vertical-align:bottom;" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
@@ -50,11 +53,12 @@
 	</div>
 	<input type="checkbox" name="attr_config-show" value="1" class="sheet-config-show sheet-noshow" data-i18n-aria-label="display-settings-config" role="presentation" checked />
 	<div class="sheet-pfsheet">
+		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
 		<input type="checkbox" name="attr_is_undead" value="1" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_normal_macro_show" value="1" class="sheet-all-macro-text-show" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_adv_macro_show" value="1" class="sheet-advanced-macro-show" role="presentation" />
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-show-npc-tab" style="display:none;" data-i18n-aria-label="is-npc-check-caps" />
-		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab" style="margin-right:.5em;display:none;"  data-i18n-aria-label="uses-spells-title" role="presentation" />
+		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab" style="margin-right:.5em;display:none;" data-i18n-aria-label="uses-spells-title" role="presentation" />		
 		<div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-status-section" class="sheet-section-status" >
 			<div class="sheet-status-panel" role="status" aria-live="polite" aria-label="Current Conditions" data-i18n-aria-label="current-conditions">
 				<div class="sheet-options">
@@ -329,7 +333,6 @@
 				</div>
 			</div>
 		</div>
-		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-cssbutton" title="Edit Mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" checked /><span></span>
 		<input type="checkbox" class="sheet-noshow sheet-npc-show" name="attr_is_npc" value="1" role="presentation" />
 		<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-pc" style="margin-top:.25em;">
 			<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
@@ -357,7 +360,7 @@
 				<button type="roll" name="roll_spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book}" title="%{selected|spellclass-1-book}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book}" title="%{selected|spellclass-2-book}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_items" class="sheet-command-button" value="@{item_buttons_macro}" title="%{selected|item_buttons_macro}" data-i18n="items">Items</button>
-				<input type="hidden" name="attr_ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
+				<input type="hidden" name="attr_ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{whisper=@{PC-whisper}}} {{switch=[Switch](~@{character_id}|NPC-ability_checks)}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves)}} @{var_defenses-macro-text}" />
 				<input type="hidden" name="attr_var_defenses-macro-text" value="{{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{var_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
 				<input type="hidden" name="attr_all_saves-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=[[ 1d20 + [[ @{Fort} ]] ]]}} {{^{reflex-save}=[[ 1d20 + [[ @{Ref} ]] ]]}} {{^{willpower-save-abbrv}=[[ 1d20 + [[ @{Will} ]] ]]}} @{toggle_save_notes}" />
@@ -366,17 +369,17 @@
 				<input type="hidden" name="attr_will-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=[[ 1d20 + [[ @{Will} ]] ]]}} @{toggle_save_notes}" />
 				<input type="hidden" name="attr_attacks-macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
-				<input type="hidden" name="attr_combat_skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-skills} }} {{^{skills}}} {{ [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{intimidate}](~@{character_id}|Intimidate-check) [^{perception}](~@{character_id}|Perception-check)  [^{ride}](~@{character_id}|Ride-check)  [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) }} {{^{knowledge} ^{skills}}} {{ [^{arcana}](~@{character_id}|Knowledge-Arcana-check) [^{dungeoneering}](~@{character_id}|Knowledge-Dungeoneering-check) [^{engineering}](~@{character_id}|Knowledge-Engineering-check) [^{geography}](~@{character_id}|Knowledge-Geography-check) [^{history}](~@{character_id}|Knowledge-History-check) [^{local}](~@{character_id}|Knowledge-Local-check) [^{nature}](~@{character_id}|Knowledge-Nature-check) [^{nobility}](~@{character_id}|Knowledge-Nobility-check) [^{planes}](~@{character_id}|Knowledge-Planes-check) [^{religion}](~@{character_id}|Knowledge-Religion-check) }}" />
+				<input type="hidden" name="attr_combat_skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-skills} }} {{^{skills}}} {{ [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{intimidate}](~@{character_id}|Intimidate-check) [^{perception}](~@{character_id}|Perception-check)  [^{ride}](~@{character_id}|Ride-check)  [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) }} {{^{knowledge} ^{skills}}} {{ [^{arcana}](~@{character_id}|Knowledge-Arcana-check) [^{dungeoneering}](~@{character_id}|Knowledge-Dungeoneering-check) [^{engineering}](~@{character_id}|Knowledge-Engineering-check) [^{geography}](~@{character_id}|Knowledge-Geography-check) [^{history}](~@{character_id}|Knowledge-History-check) [^{local}](~@{character_id}|Knowledge-Local-check) [^{nature}](~@{character_id}|Knowledge-Nature-check) [^{nobility}](~@{character_id}|Knowledge-Nobility-check) [^{planes}](~@{character_id}|Knowledge-Planes-check) [^{religion}](~@{character_id}|Knowledge-Religion-check) }}" />							
 				<input type="hidden" name="attr_spellclass-0-book" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-1-book" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-2-book" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{row01=**^{check}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_item_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{items}}} {{description=^{none-available} }}" />
 			</span>
-		</div>
+		</div>	
 		<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-npc" style="margin-top:.25em;">
 			<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_NPC-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
 			<h2 class="sheet-clickheader sheet-showsect"><label title="Show chat ability command buttons" data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="npc-buttons">NPC Buttons</label></h2>
-			<span class="sheet-h2-section sheet-inline" style="margin-left:2em;width:50%;">
+			<span class="sheet-h2-section sheet-inline" style="margin-left:2em;width:50%;">				
 				<input type="checkbox" name="attr_unchained_skills-show" class="sheet-unchained-show" value="1" role="presentation" />
 				<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-consolidated-show" value="0" role="presentation" />
 				<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-bg-show" value="1" checked role="presentation" />
@@ -399,18 +402,18 @@
 				<button type="roll" name="roll_NPC-spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book-npc}" title="%{selected|spellclass-1-book-npc}"><span data-i18n="npc">NPC</span>&nbsp;<span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_NPC-spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book-npc}" title="%{selected|spellclass-2-book-npc}"><span data-i18n="npc">NPC</span>&nbsp;<span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_NPC-items" class="sheet-command-button" value="@{NPC-item_buttons_macro}" title="%{selected|item_buttons}" data-i18n="items">Items</button>
-				<input type="hidden" name="attr_NPC-ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{npc} ^{ability-checks}}} {{row01=[^{strength-abbrv}](~@{character_id}|NPC-STR-Check) [^{dexterity-abbrv}](~@{character_id}|NPC-DEX-Check) [^{constitution-abbrv}](~@{character_id}|NPC-CON-Check) [^{intelligence-abbrv}](~@{character_id}|NPC-INT-Check) [^{wisdom-abbrv}](~@{character_id}|NPC-WIS-Check) [^{charisma-abbrv}](~@{character_id}|NPC-CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|NPC-Initiative-Roll)}}" />
+				<input type="hidden" name="attr_NPC-ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{npc} ^{ability-checks}}} {{whisper=@{NPC-whisper}}} {{switch=[Switch](~@{character_id}|ability_checks)}} {{row01=[^{strength-abbrv}](~@{character_id}|NPC-STR-Check) [^{dexterity-abbrv}](~@{character_id}|NPC-DEX-Check) [^{constitution-abbrv}](~@{character_id}|NPC-CON-Check) [^{intelligence-abbrv}](~@{character_id}|NPC-INT-Check) [^{wisdom-abbrv}](~@{character_id}|NPC-WIS-Check) [^{charisma-abbrv}](~@{character_id}|NPC-CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|NPC-Initiative-Roll)}}" />
 				<input type="hidden" name="attr_NPC-defenses-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{npc} ^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|NPC-Fort-Save) [^{reflex-abbrv}](~@{character_id}|NPC-Ref-Save) [^{willpower-abbrv}](~@{character_id}|NPC-Will-Save) [^{all-saves}](~@{character_id}|NPC-All-Saves)}} @{var_defenses-macro-text}" />
 				<input type="hidden" name="attr_attacks-macro-npc" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{attacks}}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_NPC-skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{skills} }} {{ [^{appraise}](~@{character_id}|NPC-Appraise-check) [^{acrobatics}](~@{character_id}|NPC-Acrobatics-check) [^{bluff}](~@{character_id}|NPC-Bluff-check) [^{climb}](~@{character_id}|NPC-Climb-check) [^{craft}](~@{character_id}|NPC-craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|NPC-Diplomacy-check) [^{disable-device}](~@{character_id}|NPC-Disable-Device-check) [^{disguise}](~@{character_id}|NPC-Disguise-check) [^{escape-artist}](~@{character_id}|NPC-Escape-Artist-check) [^{fly}](~@{character_id}|NPC-Fly-check) [^{handle-animal}](~@{character_id}|NPC-Handle-Animal-check) [^{heal}](~@{character_id}|NPC-Heal-check) [^{knowledge}](~@{character_id}|NPC-knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|NPC-Intimidate-check) [^{linguistics}](~@{character_id}|NPC-Linguistics-check) [^{misc-skill}](~@{character_id}|NPC-misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|NPC-Perception-check) [^{perform}](~@{character_id}|NPC-perform_skills_buttons_macro) [^{profession}](~@{character_id}|NPC-profession_skills_buttons_macro) [^{ride}](~@{character_id}|NPC-Ride-check) [^{sense-motive}](~@{character_id}|NPC-Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|NPC-Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|NPC-Spellcraft-check) [^{stealth}](~@{character_id}|NPC-Stealth-check) [^{swim}](~@{character_id}|NPC-Swim-check) [^{use-magic-device}](~@{character_id}|NPC-Use-Magic-Device-check) }}" />
-				<input type="hidden" name="attr_NPC-combat_skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{combat-skills} }} {{^{npc} ^{skills}}} {{ [^{acrobatics}](~@{character_id}|NPC-Acrobatics-check) [^{bluff}](~@{character_id}|NPC-Bluff-check) [^{disable-device}](~@{character_id}|NPC-Disable-Device-check) [^{fly}](~@{character_id}|NPC-Fly-check)  [^{handle-animal}](~@{character_id}|NPC-Handle-Animal-check) [^{intimidate}](~@{character_id}|NPC-Intimidate-check) [^{perception}](~@{character_id}|NPC-Perception-check)  [^{ride}](~@{character_id}|NPC-Ride-check) [^{sense-motive}](~@{character_id}|NPC-Sense-Motive-check) [^{stealth}](~@{character_id}|NPC-Stealth-check) [^{survival}](~@{character_id}|NPC-Survival-check) [^{use-magic-device}](~@{character_id}|NPC-Use-Magic-Device-check) [^{perform}](~@{character_id}|NPC-perform_skills_buttons_macro) }} {{^{knowledge} ^{skills}}} {{ [^{arcana}](~@{character_id}|NPC-Knowledge-Arcana-check) [^{dungeoneering}](~@{character_id}|NPC-Knowledge-Dungeoneering-check) [^{engineering}](~@{character_id}|NPC-Knowledge-Engineering-check) [^{geography}](~@{character_id}|NPC-Knowledge-Geography-check) [^{history}](~@{character_id}|NPC-Knowledge-History-check) [^{local}](~@{character_id}|NPC-Knowledge-Local-check) [^{nature}](~@{character_id}|NPC-Knowledge-Nature-check) [^{nobility}](~@{character_id}|NPC-Knowledge-Nobility-check) [^{planes}](~@{character_id}|NPC-Knowledge-Planes-check) [^{religion}](~@{character_id}|NPC-Knowledge-Religion-check) }}" />
+				<input type="hidden" name="attr_NPC-combat_skills-macro" value="/w &quot;@{character_name}&quot; &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{combat-skills} }} {{^{npc} ^{skills}}} {{ [^{acrobatics}](~@{character_id}|NPC-Acrobatics-check) [^{bluff}](~@{character_id}|NPC-Bluff-check) [^{disable-device}](~@{character_id}|NPC-Disable-Device-check) [^{fly}](~@{character_id}|NPC-Fly-check)  [^{handle-animal}](~@{character_id}|NPC-Handle-Animal-check) [^{intimidate}](~@{character_id}|NPC-Intimidate-check) [^{perception}](~@{character_id}|NPC-Perception-check)  [^{ride}](~@{character_id}|NPC-Ride-check) [^{sense-motive}](~@{character_id}|NPC-Sense-Motive-check) [^{stealth}](~@{character_id}|NPC-Stealth-check) [^{survival}](~@{character_id}|NPC-Survival-check) [^{use-magic-device}](~@{character_id}|NPC-Use-Magic-Device-check) [^{perform}](~@{character_id}|NPC-perform_skills_buttons_macro) }} {{^{knowledge} ^{skills}}} {{ [^{arcana}](~@{character_id}|NPC-Knowledge-Arcana-check) [^{dungeoneering}](~@{character_id}|NPC-Knowledge-Dungeoneering-check) [^{engineering}](~@{character_id}|NPC-Knowledge-Engineering-check) [^{geography}](~@{character_id}|NPC-Knowledge-Geography-check) [^{history}](~@{character_id}|NPC-Knowledge-History-check) [^{local}](~@{character_id}|NPC-Knowledge-Local-check) [^{nature}](~@{character_id}|NPC-Knowledge-Nature-check) [^{nobility}](~@{character_id}|NPC-Knowledge-Nobility-check) [^{planes}](~@{character_id}|NPC-Knowledge-Planes-check) [^{religion}](~@{character_id}|NPC-Knowledge-Religion-check) }}" />							
 				<input type="hidden" name="attr_spellclass-0-book-npc" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|NPC-Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-1-book-npc" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|NPC-Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-2-book-npc" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|NPC-Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_NPC-item_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{items}}} {{description=^{none-available} }}" />
 			</span>
 				<div style="display:none;">
-					<!-- old buttons -->
+					<!-- old buttons -->				
 					<button type="roll" name="roll_skills_buttons_macro" class="sheet-command-button" value="@{skills-macro}" title="%{selected|skills-macro}" data-i18n="all-skills">All Skills</button>
 					<button type="roll" name="roll_NPC-skills_buttons_macro" class="sheet-command-button" value="@{NPC-skills-macro}" title="%{selected|NPC-skills_buttons_macro}"><span data-i18n="all-skills">All Skills</span></button>
 					<button type="roll" name="roll_adventure_skills_buttons_macro" class="sheet-command-button sheet-bg-only" value="@{adventure_skills-macro}" title="%{selected|adventure_skills-macro}" data-i18n="adventure">Adventure</button>
@@ -424,7 +427,7 @@
 					<button type="roll" name="roll_spellbook-0-roll-npc" class="sheet-command-button sheet-sect2 sheet-sect-spellclass0" value="@{spellclass-0-book-npc}" title="%{selected|spellbook-0-roll-npc}"><span data-i18n="non-player-character-abbrv">NPC</span>&nbsp;<span name="roll_spellclass-0-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 					<button type="roll" name="roll_spellbook-1-roll-npc" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book-npc}" title="%{selected|spellbook-1-roll-npc}"><span data-i18n="non-player-character-abbrv">NPC</span>&nbsp;<span name="roll_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 					<button type="roll" name="roll_spellbook-2-roll-npc" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book-npc}" title="%{selected|spellbook-2-roll-npc}"><span data-i18n="non-player-character-abbrv">NPC</span>&nbsp;<span name="roll_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				</div>
+				</div>				
 		</div>
 		<div role="main" class="sheet-main">
 			<div role="menubar" class="sheet-mainnav sheet-tabs" aria-label="Main menubar"  data-i18n-aria-label="nav-main-desc"></div>
@@ -843,12 +846,12 @@
 							<label class="sheet-left sheet-small-label" style="display: block;" data-i18n="faction-notes">Faction Notes</label>
 							<textarea class="sheet-inline-textarea" title="@{faction_notes}" name="attr_faction_notes" Placeholder="Fame, Prestige, and Faction Notes" data-i18n-placeholder="faction-notes-place"></textarea>
 						</div>
-					</div>
+					</div>				
 				</div>
 				<div class="sheet-cheat"></div>
 				<div class="sheet-row sheet-row2">
 					<div class="sheet-flex-row">
-						<input type="checkbox" class="sheet-wounds-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_wound_threshold-show" value="1">
+						<input type="checkbox" class="sheet-wounds-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_wound_threshold-show" value="1">				
 						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_health-and-wounds-show" data-i18n-aria-label="health-and-wounds" value="1" checked />
 						<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="health-and-wounds">Health and Wounds</label></h2>
 						<div class="sheet-cheat"></div>
@@ -967,80 +970,83 @@
 									<span class="sheet-table-rightcell"></span>
 								</div>
 							</div>
-						</div>
+						</div>				
 						<div class="sheet-cheat"></div>
 						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_initiative-show" data-i18n-aria-label="initiative" value="1" checked />
 						<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="initiative-and-speeds">Initiative and Speed</label></h2>
 						<div class="sheet-h2-section sheet-initiative">
 							<div class="sheet-table" style="margin-bottom:.5em;">
 								<span class="sheet-table-name" data-i18n="initiative">Initiative</span>
-								<div class="sheet-table-group sheet-init-group">
-									<div class="sheet-table-group-head sheet-hide-readonly">
+								<div class="sheet-table sheet-init-group">
+									<div class="sheet-table-row sheet-hide-readonly">
 										<span class="sheet-table-header" data-i18n="roll">Roll</span>
 										<span class="sheet-table-header" data-i18n="total">Total</span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
+										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" style="max-width: 6em ; min-width: 3em" data-i18n="ability">Ability</span>
 										<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
-										<span class="sheet-table-header sheet-hide-readonly" data-i18n="trait">Trait</span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
-										<span class="sheet-table-header sheet-hide-readonly" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
+										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header" data-i18n="trait">Trait</span>
+										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
+										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
-										<span class="sheet-table-header sheet-hide-readonly"></span>
+										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 										<span class="sheet-table-header" data-i18n="notes">Notes</span>
 										<span class="sheet-table-header sheet-table-rightcell"></span>
-									</div>
-									<div class="sheet-table-group">
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell" style="vertical-align: text-bottom">
-												<button title="%{selected|Roll-for-initiative}" type="roll" name="roll_Roll-for-initiative" value="@{init-macro-text}">&nbsp;<span style="vertical-align: text-bottom" data-i18n="initiative-abbrv">INIT</span>&nbsp;</button>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" title="@{init}" name="attr_init" value="0" class="sheet-calc" readonly>
-											</span>
-											<span class="sheet-divider sheet-hide-readonly">=</span>
-											<span class="sheet-table-cell">
-												<select title="@{init-ability}" name="attr_init-ability" class="sheet-select-small">
-													<option value="0" data-i18n="none">None</option>
-													<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-													<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-													<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-													<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-													<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-													<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
-												</select>
-											</span>
-											<span class="sheet-table-cell">
-												<input value="1" type="checkbox" name="attr_nodex-toggle" class="sheet-warn-show sheet-sect-show sheet-sect-show-inverse" />
-												<input type="number" title="@{init-ability-mod}" name="attr_init-ability-display" value="0" class="sheet-calc sheet-highlight sheet-sect" readonly>
-												<input type="number" title="@{init-ability-mod}" name="attr_init-ability-mod" value="0" class="sheet-calc sheet-sect-inverse" readonly>
-											</span>
-											<span class="sheet-divider sheet-hide-readonly">+</span>
-											<span class="sheet-table-cell sheet-hide-readonly"><input type="number" title="@{init-trait}" name="attr_init-trait" value="0"></span>
-											<span class="sheet-divider sheet-hide-readonly">+</span>
-											<input type="checkbox" name="attr_init-misc-mod_error" class="sheet-error-mshow" value="1" />
-											<span class="sheet-table-cell sheet-hide-readonly sheet-entry-20p-shrink sheet-highlight"><input class="sheet-macro-text-inline" type="text" title="@{init-misc}" name="attr_init-misc" value="" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></span>
-											<span class="sheet-table-cell sheet-hide-readonly sheet-highlight"><input type="number" title="@{init-misc-mod}" name="attr_init-misc-mod" value="0" class="sheet-calc" readonly></span>
-											<span class="sheet-divider-lg sheet-hide-readonly">-</span>
-											<span class="sheet-table-cell"><input type="number" title="@{condition-Deafened}" name="attr_condition-Deafened" value="0" class="sheet-calc" readonly></span>
-											<span class="sheet-divider sheet-hide-readonly">+</span>
-											<span class="sheet-table-cell"><input type="number" title="@{checks-cond}" name="attr_checks-cond" value="0" class="sheet-calc" readonly></span>
-											<span class="sheet-table-cell" style="white-space:nowrap; padding-left: .25em;">
-												<label><input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}"><b style="white-space:nowrap;" data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes">Include notes in roll</b></label>
-											</span>
-											<span class="sheet-table-cell sheet-table-rightcell"></span>
-										</div>
-									</div>
+									</div>									
+									<div class="sheet-table-row">
+										<span class="sheet-table-cell"><button title="%{selected|Roll-for-initiative}" type="roll" name="roll_Roll-for-initiative" value="@{init-macro-text}" style="height:1.85em;margin-top: 2px;">&nbsp;<span style="vertical-align: text-bottom" data-i18n="initiative-abbrv">INIT</span>&nbsp;</button><span class="sheet-show-readonly sheet-inverse-readonly"><br>&nbsp;</span></span>
+										<span class="sheet-table-cell"><input type="number" title="@{init}" name="attr_init" value="0" class="sheet-calc" readonly>
+										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="total">Total</span></span>
+										</span>
+										<span class="sheet-divider sheet-hide-readonly">=</span>
+										<span class="sheet-table-cell">
+											<select title="@{init-ability}" name="attr_init-ability" class="sheet-select-small">
+												<option value="0" data-i18n="none">None</option>
+												<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
+												<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+												<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
+												<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
+												<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
+												<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+											</select>
+											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="ability">Ability</span></span>
+										</span>
+										<span class="sheet-table-cell">
+											<input value="1" type="checkbox" name="attr_nodex-toggle" class="sheet-warn-show sheet-sect-show sheet-sect-show-inverse" />
+											<input type="number" title="@{init-ability-mod}" name="attr_init-ability-display" value="0" class="sheet-calc sheet-highlight sheet-sect" readonly>
+											<input type="number" title="@{init-ability-mod}" name="attr_init-ability-mod" value="0" class="sheet-calc sheet-sect-inverse" readonly>
+											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="modifier-abbrv">Mod</span></span>
+										</span>
+										<br class="sheet-show-readonly sheet-inverse-readonly">
+										<span class="sheet-divider sheet-hide-readonly">+</span>
+										<span class="sheet-table-cell sheet-hide-readonly"><input type="number" title="@{init-trait}" name="attr_init-trait" value="0"></span>
+										<span class="sheet-divider sheet-hide-readonly">+</span>
+										<input type="checkbox" name="attr_init-misc-mod_error" class="sheet-error-mshow" value="1" />
+										<span class="sheet-table-cell sheet-hide-readonly sheet-entry-20p-shrink sheet-highlight"><input class="sheet-macro-text-inline" type="text" title="@{init-misc}" name="attr_init-misc" value="" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></span>
+										<span class="sheet-table-cell sheet-hide-readonly sheet-highlight"><input type="number" title="@{init-misc-mod}" name="attr_init-misc-mod" value="0" class="sheet-calc" readonly></span>
+										<span class="sheet-divider-lg sheet-hide-readonly">-</span>
+										<span class="sheet-table-cell"><input type="number" title="@{condition-Deafened}" name="attr_condition-Deafened" value="0" class="sheet-calc" readonly>
+										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
+										</span>
+										<span class="sheet-divider sheet-hide-readonly">+</span>
+										<span class="sheet-table-cell"><input type="number" title="@{checks-cond}" name="attr_checks-cond" value="0" class="sheet-calc" readonly>
+										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
+										</span>
+										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
+											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
+										</span>
+										<span class="sheet-table-cell sheet-table-rightcell sheet-hide-readonly"></span>
+									</div>									
 								</div>
-								<div class="sheet-table-group">
+								<div class="sheet-table">
 									<div class="sheet-table-row sheet-sect sheet-expand" style="vertical-align:top;">
 										<input type="checkbox" class="sheet-showarrow sheet-macro-text-show sheet-hide-readonly" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_macro-text-show" value="1" style="margin-left:.25em;">
 										<label class="sheet-showsect sheet-macro-text-showlabel sheet-hide-readonly" data-i18n="macro-text">Macro Text</label>
 										<input type="checkbox" class="sheet-showarrow sheet-init-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:.25em;">
-										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>
+										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>								
 										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit;">
 											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Full Macro" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
 										</div>
@@ -1375,7 +1381,7 @@
 								<span class="sheet-table-header" style="width:10%;" data-i18n="combat-maneuver-defense-abbrv">CMD</span>
 								<span class="sheet-table-header" data-i18n="total">Total</span>
 								<span class="sheet-table-header" style="width:3.25em;min-width:3.25em;"></span>
-								<span class="sheet-table-header">
+								<span class="sheet-table-header"> 
 									<input name="attr_hd_not_bab" type="checkbox" value="1" class="sheet-sect-show sheet-sect-show-inverse" role="presentation" data-i18n-aria-label="hd-not-bab-title" aria-label="if checked use total HD not Bab for CMD"/>
 									<span class="sheet-sect-inverse" data-i18n="base-attack-bonus-abbrv">BAB</span>
 									<span class="sheet-sect" data-i18n="hit-dice-abbrv">HD</span>
@@ -1583,7 +1589,7 @@
 						<div class="sheet-table-row sheet-hide-readonly">
 							<span class="sheet-table-header">&nbsp;</span>
 							<span class="sheet-table-header">&nbsp;</span>
-						</div>
+						</div>						
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell sheet-right sheet-nowrap"><span data-i18n="armor-check-penalty-abbrv">ACP</span>:&nbsp;<input title="@{acp}" type="number" name="attr_acp" value="0" class="sheet-calc" style="max-width:3em;" readonly></span>
 							<span class="sheet-table-cell sheet-right sheet-nowrap" style="padding-left:3px;"><span data-i18n="attack-penalty">Attack penalty</span>:&nbsp;<input title="@{acp-attack-mod}" type="number" name="attr_acp-attack-mod" value="0" class="sheet-calc" readonly /></span>
@@ -1616,21 +1622,21 @@
 						</div>
 						<div class="sheet-table-row">
 							<div class="sheet-table-cell sheet-notes-cell">
-								<div class="sheet-table">
+								<div class="sheet-table">								
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-left sheet-notes-cell"><textarea class="sheet-notes" title="@{Armor-notes}" name="attr_Armor-notes" placeholder="Put notes about context-sensitive AC bonuses here." data-i18n-placeholder="armor-notes-place"></textarea></span>
 									</div>
 								</div>
 							</div>
 							<div class="sheet-table-cell sheet-notes-cell">
-								<div class="sheet-table">
+								<div class="sheet-table">								
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-left sheet-notes-cell"><textarea class="sheet-notes" title="@{cmd-notes}" name="attr_cmd-notes" placeholder="Put notes about context-sensitive CMD bonuses here." data-i18n-placeholder="combat-maneuver-notes-place"></textarea></span>
 									</div>
 								</div>
 							</div>
 							<div class="sheet-table-cell sheet-notes-cell">
-								<div class="sheet-table">
+								<div class="sheet-table">								
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-left sheet-notes-cell"><textarea class="sheet-notes" title="@{defense-notes}" name="attr_defense-notes" placeholder="Put notes about context-sensitive defense bonuses here." data-i18n-placeholder="defense-notes-place"></textarea></span>
 									</div>
@@ -1938,9 +1944,9 @@
 				<div class="sheet-h2-section sheet-table sheet-attack-notes">
 					<div class="sheet-table">
 						<div class="sheet-table-group-head">
-							<span class="sheet-table-header sheet-show-readonly" data-i18n="melee-attack-notes">Melee Attack Notes</span>
-							<span class="sheet-table-header sheet-show-readonly" data-i18n="ranged-attack-notes">Ranged Attack Notes</span>
-							<span class="sheet-table-header sheet-show-readonly" data-i18n="combat-maneuver-bonus-notes">CMB Notes</span>
+							<span class="sheet-table-header sheet-show-readonly" data-i18n="melee-attack-notes">Melee Attack Notes</span>						
+							<span class="sheet-table-header sheet-show-readonly" data-i18n="ranged-attack-notes">Ranged Attack Notes</span>						
+							<span class="sheet-table-header sheet-show-readonly" data-i18n="combat-maneuver-bonus-notes">CMB Notes</span>						
 							<span class="sheet-table-header sheet-show-readonly" data-i18n="attack-notes">Attack Notes</span>
 						</div>
 						<div class="sheet-table-row">
@@ -2235,7 +2241,7 @@
 											<span class="sheet-table-header" style="width: 20%;" data-i18n="custom-name">Custom Name</span>
 											<span class="sheet-table-header" style="width: 7em;" data-i18n="attack-modifier-abbrv">Attack Mod</span>
 											<span class="sheet-table-header" data-i18n="macro-text">Macro</span>
-										</div>
+										</div>										
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell">
 												<label>
@@ -2249,7 +2255,7 @@
 												<input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly>
 											</span>
 											<span class="sheet-table-cell sheet-macro-text-tohide">&nbsp;</span>
-										</div>
+										</div>										
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell">
 												<label>
@@ -2575,7 +2581,7 @@
 								</span>
 								<span class="sheet-table-cell sheet-left">
 									<label>
-										<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>
+										<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>									
 										<select name="attr_misc_skill_num_show" title="@{misc_skill_num_show}">
 										  <option name="attr_misc_skill_num_show" value="1" selected >&nbsp;1</option>
 										  <option name="attr_misc_skill_num_show" value="2">&nbsp;2</option>
@@ -6612,80 +6618,83 @@
 			</div>
 			<div class="sheet-section4 sheet-section sheet-section-abilities" role="region" aria-label="Abilities" data-i18n-aria-label="abilities">
 				<h1 class="sheet-selected-tabtitle" data-i18n="abilities">Abilities</h1>
-<!-- pc command buttons-->
-				<input type="checkbox" class="sheet-npc-show sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-				<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-pc" style="margin-top:.25em;">
-					<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_ability-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
-					<h2 class="sheet-clickheader sheet-showsect"><label title="Show chat ability command buttons" data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="buttons">Buttons</label></h2>
-					<span class="sheet-h2-section sheet-inline" style="margin-left:2em;width:50%;">
-						<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-traits-show" name="attr_use_traits" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-racial-traits-show" name="attr_use_racial_traits" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
-						<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro}" title="%{selected|ability_buttons_macro}"><span data-i18n="abilities">Abilities</span></button>
-						<button type="roll" name="roll_ex_button" class="sheet-command-button" value="@{ex_buttons_macro}" title="%{selected|ex_buttons_macro}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
-						<button type="roll" name="roll_sp_button" class="sheet-command-button" value="@{sp_buttons_macro}" title="%{selected|sp_buttons_macro}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
-						<button type="roll" name="roll_su_button" class="sheet-command-button" value="@{su_buttons_macro}" title="%{selected|su_buttons_macro}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
-						<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_buttons_macro}" title="%{selected|class-ability_buttons_macro}"><span data-i18n="original-class-features-list">Orig Class Features</span></button>
-						<button type="roll" name="roll_feat_button" class="sheet-command-button sheet-section-featlist" value="@{feat_buttons_macro}" title="%{selected|feat_buttons_macro}"><span data-i18n="original-feats-list">Orig Feats</span></button>
-						<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_buttons_macro}"><span data-i18n="original-traits-list">Orig Traits</span></button>
-						<button type="roll" name="roll_racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{racial-trait_buttons_macro}" title="%{selected|racial-trait_buttons_macro}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
-						<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_buttons_macro}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
-						<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_buttons_macro}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
-						<button type="roll" name="roll_npc-spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|npc-spell-like-abilities_buttons_macro}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
-						<input type="hidden" name="attr_ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{abilities}}} @{orig_ability_header_macro} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_ex_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{extraordinary-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_sp_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{spell-like-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_su_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{supernatural-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_orig_ability_header_macro" value="" />
-						<input type="hidden" name="attr_class-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-class-features-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-feats-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-traits-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_racial-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-racial-traits-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_mythic-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{mythic-feats}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_mythic-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{mythic-abilities}}} {{description=^{none-available} }}" />
-					</span>
-				</div>
-				<div class="sheet-cheat"></div>
-	<!-- npc command buttons-->
-				<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-npc" style="margin-top:.25em;">
-					<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_NPC-ability-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
-					<h2 class="sheet-clickheader sheet-showsect"><label title="Show chat ability command buttons" data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="npc-buttons">NPC Buttons</label></h2>
-					<span class="sheet-h2-section sheet-inline" style="margin-left:2em;width:50%;">
-						<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-traits-show" name="attr_use_traits" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-racial-traits-show" name="attr_use_racial_traits" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
-						<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
-						<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro}" title="%{selected|NPC-ability_buttons_macro}"><span data-i18n="abilities">Abilities</span></button>
-						<button type="roll" name="roll_NPC-ex_button" class="sheet-command-button" value="@{NPC-ex_buttons_macro}" title="%{selected|NPC-ex_buttons_macro}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
-						<button type="roll" name="roll_NPC-sp_button" class="sheet-command-button" value="@{NPC-sp_buttons_macro}" title="%{selected|NPC-sp_buttons_macro}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
-						<button type="roll" name="roll_NPC-su_button" class="sheet-command-button" value="@{NPC-su_buttons_macro}" title="%{selected|NPC-su_buttons_macro}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
-						<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_buttons_macro}" title="%{selected|class-ability_buttons_macro}"><span data-i18n="original-class-features-list">Class Features</span></button>
-						<button type="roll" name="roll_NPC-feat_button" class="sheet-command-button sheet-section-featlist" value="@{NPC-feat_buttons_macro}" title="%{selected|NPC-feat_buttons_macro}"><span data-i18n="original-feats-list">Orig Feats</span></button>
-						<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_buttons_macro}"><span data-i18n="original-traits-list">Orig Traits</span></button>
-						<button type="roll" name="roll_NPC-racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{NPC-racial-trait_buttons_macro}" title="%{selected|NPC-racial-trait_buttons_macro}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
-						<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_buttons_macro}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
-						<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_buttons_macro}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
-						<button type="roll" name="roll_spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|npc-spell-like-abilities_buttons_macro}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
-						<input type="hidden" name="attr_NPC-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{abilities}}} @{orig_ability_header_macro} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-ex_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{extraordinary-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-sp_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{spell-like-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-su_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{supernatural-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-orig_ability_header_macro" value="" />
-						<input type="hidden" name="attr_NPC-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-feats-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-racial-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-racial-traits-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_npc-spell-like-abilities_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-spell-like-abilities-list}}} {{description=^{none-available} }}" />
-<!-- not used yet:
-						<input type="hidden" name="attr_NPC-class-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-class-features-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-traits-list}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-mythic-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{mythic-feats}}} {{description=^{none-available} }}" />
-						<input type="hidden" name="attr_NPC-mythic-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{mythic-abilities}}} {{description=^{none-available} }}" />
-						-->
-					</span>
+			<div class="sheet-col sheet-col1">
+				<div class="sheet-h2-section sheet-inline sheet-ability-buttons">
+					<input type="checkbox" class="sheet-npc-show sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+					<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-pc">
+						<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_ability-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
+						<h2 class="sheet-clickheader sheet-showsect"><label title="Show chat ability command buttons" data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="buttons">Buttons</label></h2>
+						<span class="sheet-h2-section sheet-inline" style="border:none;">
+							<span class="sheet-hide-readonly" style="margin-left: 2em;width"></span>
+							<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-traits-show" name="attr_use_traits" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-racial-traits-show" name="attr_use_racial_traits" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
+							<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro}" title="%{selected|ability_buttons_macro}"><span data-i18n="abilities">Abilities</span></button>
+							<button type="roll" name="roll_ex_button" class="sheet-command-button" value="@{ex_buttons_macro}" title="%{selected|ex_buttons_macro}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
+							<button type="roll" name="roll_sp_button" class="sheet-command-button" value="@{sp_buttons_macro}" title="%{selected|sp_buttons_macro}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
+							<button type="roll" name="roll_su_button" class="sheet-command-button" value="@{su_buttons_macro}" title="%{selected|su_buttons_macro}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
+							<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_buttons_macro}" title="%{selected|class-ability_buttons_macro}"><span data-i18n="original-class-features-list">Orig Class Features</span></button>
+							<button type="roll" name="roll_feat_button" class="sheet-command-button sheet-section-featlist" value="@{feat_buttons_macro}" title="%{selected|feat_buttons_macro}"><span data-i18n="original-feats-list">Orig Feats</span></button>
+							<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_buttons_macro}"><span data-i18n="original-traits-list">Orig Traits</span></button>
+							<button type="roll" name="roll_racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{racial-trait_buttons_macro}" title="%{selected|racial-trait_buttons_macro}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
+							<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_buttons_macro}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
+							<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_buttons_macro}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
+							<button type="roll" name="roll_npc-spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|npc-spell-like-abilities_buttons_macro}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
+							<input type="hidden" name="attr_ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{abilities}}} @{orig_ability_header_macro} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_ex_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{extraordinary-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_sp_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{spell-like-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_su_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{supernatural-abilities-menu}}} {{name=^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_orig_ability_header_macro" value="" />
+							<input type="hidden" name="attr_class-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-class-features-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-feats-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-traits-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_racial-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{original-racial-traits-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_mythic-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{mythic-feats}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_mythic-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{mythic-abilities}}} {{description=^{none-available} }}" />
+						</span>
+					</div>
+					<div class="sheet-cheat"></div>
+					<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-sect-npc">
+						<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_NPC-ability-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
+						<h2 class="sheet-clickheader sheet-showsect"><label title="Show chat ability command buttons" data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="npc-buttons">NPC Buttons</label></h2>												
+						<span class="sheet-h2-section sheet-inline" style="border:none;">
+							<span class="sheet-hide-readonly" style="margin-left: 2em;width"></span>
+							<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-traits-show" name="attr_use_traits" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-racial-traits-show" name="attr_use_racial_traits" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
+							<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
+							<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro}" title="%{selected|NPC-ability_buttons_macro}"><span data-i18n="abilities">Abilities</span></button>
+							<button type="roll" name="roll_NPC-ex_button" class="sheet-command-button" value="@{NPC-ex_buttons_macro}" title="%{selected|NPC-ex_buttons_macro}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
+							<button type="roll" name="roll_NPC-sp_button" class="sheet-command-button" value="@{NPC-sp_buttons_macro}" title="%{selected|NPC-sp_buttons_macro}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
+							<button type="roll" name="roll_NPC-su_button" class="sheet-command-button" value="@{NPC-su_buttons_macro}" title="%{selected|NPC-su_buttons_macro}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
+							<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_buttons_macro}" title="%{selected|class-ability_buttons_macro}"><span data-i18n="original-class-features-list">Class Features</span></button>
+							<button type="roll" name="roll_NPC-feat_button" class="sheet-command-button sheet-section-featlist" value="@{NPC-feat_buttons_macro}" title="%{selected|NPC-feat_buttons_macro}"><span data-i18n="original-feats-list">Orig Feats</span></button>
+							<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_buttons_macro}"><span data-i18n="original-traits-list">Orig Traits</span></button>
+							<button type="roll" name="roll_NPC-racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{NPC-racial-trait_buttons_macro}" title="%{selected|NPC-racial-trait_buttons_macro}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
+							<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_buttons_macro}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
+							<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_buttons_macro}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
+							<button type="roll" name="roll_spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|npc-spell-like-abilities_buttons_macro}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
+							<input type="hidden" name="attr_NPC-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{abilities}}} @{orig_ability_header_macro} {{description=^{none-available} }}" />				
+							<input type="hidden" name="attr_NPC-ex_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{extraordinary-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-sp_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{spell-like-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-su_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{supernatural-abilities-menu}}} {{name=^{npc} ^{abilities}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-orig_ability_header_macro" value="" />
+							<input type="hidden" name="attr_NPC-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-feats-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-racial-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-racial-traits-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_npc-spell-like-abilities_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-spell-like-abilities-list}}} {{description=^{none-available} }}" />								
+	<!-- not used yet:
+							<input type="hidden" name="attr_NPC-class-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-class-features-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-trait_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-traits-list}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-mythic-feat_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{mythic-feats}}} {{description=^{none-available} }}" />
+							<input type="hidden" name="attr_NPC-mythic-ability_buttons_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{mythic-abilities}}} {{description=^{none-available} }}" />
+							-->
+						</span>
+					</div>
 				</div>
 				<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 				<input type="checkbox" class="sheet-psionic-show" name="attr_psionics-show" value="1" role="presentation" />
@@ -6718,58 +6727,60 @@
 						<span class="sheet-table-cell"><input type="text" title="@{feats-total}" name="attr_feats-total" value="(@{feats-level} + [[ @{feats-race} ]] + [[ @{feats-class} ]] + [[ @{feats-misc} ]])" class="sheet-number" disabled /></span>
 						<span class="sheet-table-rightcell"></span>
 					</div>
-				</div>
+				</div>			
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow sheet-section-mythic" type="checkbox" name="attr_mythic-info-show" data-i18n-aria-label="mythic-hero-power" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-section-mythic"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="mythic-hero-power">Mythic Hero Information and Mythic Power</label></h2>
-				<div class="sheet-h2-section sheet-section-mythic sheet-wide-readonly sheet-noborder-readonly">
+				<div class="sheet-h2-section sheet-section-mythic sheet-wide-readonly sheet-noborder-readonly sheet-mythic">
 					<div class="sheet-cheat"></div>
-					<div class="sheet-h2-section sheet-section-mythic" style="display:inline-block;width:59.5%;margin-right:.25em;" role="region" data-i18n-aria-label="mythic-information">
-						<div class="sheet-table sheet-wide-numbers" >
-							<span class="sheet-table-name sheet-show-readonly" data-i18n="mythic-information">Mythic Information</span>
-							<div class="sheet-table-row">
-								<span class="sheet-table-header" style="width:1.5em;">#</span>
-								<span class="sheet-table-header" style="width:50%;" data-i18n-title="mythic-path-title" data-i18n-aria-label="mythic-path-title" title="Mythic Path: archmage, champion, guardian, hierophant, marshal, or trickster" data-i18n="mythic-path">Mythic Path</span>
-								<span class="sheet-table-header" data-i18n-title="mythic-tier-title" data-i18n-aria-label="mythic-tier-title" title="Mythic tier or rank. Mythic tiers range from 1 to 10" data-i18n="mythic-tier">Tier</span>
-								<span class="sheet-table-header" data-i18n-title="mythic-bonus-hit-points-title" data-i18n-aria-label="mythic-bonus-hit-points-title" title="Bonus hit points that are gained from each tier advancement: archmage: 3, champion: 5, guardian: 5, hierophant: 4, marshal: 4, or trickster: 4" data-i18n="mythic-bonus-hit-points-abbrv">Bonus HP</span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><b>0.</b></span>
-								<span class="sheet-table-cell"><input title="@{mythic-0-path}" type="text" name="attr_mythic-0-path" placeholder="Path Name" data-i18n-placeholder="mythic-path-name" /></span>
-								<span class="sheet-table-cell"><input title="@{mythic-tier}" type="number" name="attr_mythic-tier" value="0"></span>
-								<span class="sheet-table-cell"><input title="@{mythic-hp}" type="number" name="attr_mythic-hp" value="0" /></span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><b>1.</b></span>
-								<span class="sheet-table-cell"><input title="@{mythic-1-path}" type="text" name="attr_mythic-1-path" placeholder="Path Name" data-i18n-placeholder="mythic-path-name" /></span>
-								<span class="sheet-table-cell"><b data-i18n-title="mythic-hit-points-title" data-i18n-aria-label="mythic-hit-points-title" title="Bonus HP x Tier. This is automatically added to Max HP"><span data-i18n="mythic-hit-points">Total Mythic HP</span>:</b></span>
-								<span class="sheet-table-cell"><input title="@{total-mythic-hp}" type="number" name="attr_total-mythic-hp" value="0" class="sheet-calc" readonly /></span>
+					<div class="sheet-h2-section sheet-section-mythic">	
+						<div class="sheet-h2-section sheet-section-mythic" style="display:inline-block; width:60%;" role="region" data-i18n-aria-label="mythic-information">
+							<div class="sheet-table sheet-wide-numbers" >
+								<span class="sheet-table-name sheet-show-readonly" data-i18n="mythic-information">Mythic Information</span>
+								<div class="sheet-table-row">
+									<span class="sheet-table-header" style="width:1.5em;">#</span>
+									<span class="sheet-table-header" style="width:50%;" data-i18n-title="mythic-path-title" data-i18n-aria-label="mythic-path-title" title="Mythic Path: archmage, champion, guardian, hierophant, marshal, or trickster" data-i18n="mythic-path">Mythic Path</span>
+									<span class="sheet-table-header" data-i18n-title="mythic-tier-title" data-i18n-aria-label="mythic-tier-title" title="Mythic tier or rank. Mythic tiers range from 1 to 10" data-i18n="mythic-tier">Tier</span>
+									<span class="sheet-table-header" data-i18n-title="mythic-bonus-hit-points-title" data-i18n-aria-label="mythic-bonus-hit-points-title" title="Bonus hit points that are gained from each tier advancement: archmage: 3, champion: 5, guardian: 5, hierophant: 4, marshal: 4, or trickster: 4" data-i18n="mythic-bonus-hit-points-abbrv">Bonus HP</span>
+								</div>
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell"><b>0.</b></span>
+									<span class="sheet-table-cell"><input title="@{mythic-0-path}" type="text" name="attr_mythic-0-path" placeholder="Path Name" data-i18n-placeholder="mythic-path-name" /></span>
+									<span class="sheet-table-cell"><input title="@{mythic-tier}" type="number" name="attr_mythic-tier" value="0"></span>
+									<span class="sheet-table-cell"><input title="@{mythic-hp}" type="number" name="attr_mythic-hp" value="0" /></span>
+								</div>
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell"><b>1.</b></span>
+									<span class="sheet-table-cell"><input title="@{mythic-1-path}" type="text" name="attr_mythic-1-path" placeholder="Path Name" data-i18n-placeholder="mythic-path-name" /></span>
+									<span class="sheet-table-cell"><b data-i18n-title="mythic-hit-points-title" data-i18n-aria-label="mythic-hit-points-title" title="Bonus HP x Tier. This is automatically added to Max HP"><span data-i18n="mythic-hit-points">Total Mythic HP</span>:</b></span>
+									<span class="sheet-table-cell"><input title="@{total-mythic-hp}" type="number" name="attr_total-mythic-hp" value="0" class="sheet-calc" readonly /></span>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="sheet-h2-section sheet-section-mythic" style="display:inline-block;width:39.5%;" role="region" data-i18n-aria-label="mythic-information">
-						<div class="sheet-table sheet-wide-numbers" >
-							<span class="sheet-table-name sheet-show-readonly" data-i18n="mythic-power">Mythic Power</span>
-							<div class="sheet-table-row">
-								<span class="sheet-table-header" data-i18n-title="mythic-power-avail-title" data-i18n-aria-label="mythic-power-avail-title" title="How much mythic power you have available to use" data-i18n="mythic-power-current">Current MP</span>
-								<span class="sheet-table-header">/</span>
-								<span class="sheet-table-header" data-i18n-title="mythic-power-max-title" data-i18n-aria-label="mythic-power-max-title" title="The maximum amount of mythic power you have" data-i18n="mythic-power-maximum">Max MP</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n-title="mythic-power-tiers-title" data-i18n-aria-label="mythic-power-tiers-title" title="The amount of mythic power you gain from tiers" data-i18n="mythic-power-tier">Tier MP</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n-title="mythic-power-miscellaneous-title" data-i18n-aria-label="mythic-power-miscellaneous-title" title="Any additional mythic power you gain from abilities or feats" data-i18n="miscellaneous-abbrv">Misc</span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><input type="number" title="@{mythic-power}" name="attr_mythic-power" value="0" min="0" /></span>
-								<span class="sheet-divider">/</span>
-								<span class="sheet-table-cell"><input type="number" title="@{mythic-power|max}" name="attr_mythic-power_max" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">=</span>
-								<span class="sheet-table-cell"><input type="number" title="@{tier-mythic-power}" name="attr_tier-mythic-power" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input type="number" title="@{misc-mythic-power}" name="attr_misc-mythic-power" value="0" /></span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell sheet-nowrap"><label ><input type="checkbox" title="@{mythic-paragon}" name="attr_mythic-paragon" value="2" /><b data-i18n-title="mythic-paragon-title" data-i18n-aria-label="mythic-paragon-title" title="Has Mythic Paragon feat"><span data-i18n="mythic-paragon"> Mythic Paragon</span></b></label></span>
+						<div class="sheet-h2-section sheet-section-mythic" style="display:inline-block;width:39%;" role="region" data-i18n-aria-label="mythic-information">
+							<div class="sheet-table sheet-wide-numbers" >
+								<span class="sheet-table-name sheet-show-readonly" data-i18n="mythic-power">Mythic Power</span>
+								<div class="sheet-table-row">
+									<span class="sheet-table-header" data-i18n-title="mythic-power-avail-title" data-i18n-aria-label="mythic-power-avail-title" title="How much mythic power you have available to use" data-i18n="mythic-power-current">Current MP</span>
+									<span class="sheet-table-header">/</span>
+									<span class="sheet-table-header" data-i18n-title="mythic-power-max-title" data-i18n-aria-label="mythic-power-max-title" title="The maximum amount of mythic power you have" data-i18n="mythic-power-maximum">Max MP</span>
+									<span class="sheet-table-header"></span>
+									<span class="sheet-table-header" data-i18n-title="mythic-power-tiers-title" data-i18n-aria-label="mythic-power-tiers-title" title="The amount of mythic power you gain from tiers" data-i18n="mythic-power-tier">Tier MP</span>
+									<span class="sheet-table-header"></span>
+									<span class="sheet-table-header" data-i18n-title="mythic-power-miscellaneous-title" data-i18n-aria-label="mythic-power-miscellaneous-title" title="Any additional mythic power you gain from abilities or feats" data-i18n="miscellaneous-abbrv">Misc</span>
+								</div>
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell"><input type="number" title="@{mythic-power}" name="attr_mythic-power" value="0" min="0" /></span>
+									<span class="sheet-divider">/</span>
+									<span class="sheet-table-cell"><input type="number" title="@{mythic-power|max}" name="attr_mythic-power_max" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-divider">=</span>
+									<span class="sheet-table-cell"><input type="number" title="@{tier-mythic-power}" name="attr_tier-mythic-power" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-divider">+</span>
+									<span class="sheet-table-cell"><input type="number" title="@{misc-mythic-power}" name="attr_misc-mythic-power" value="0" /></span>
+								</div>
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell sheet-nowrap"><label ><input type="checkbox" title="@{mythic-paragon}" name="attr_mythic-paragon" value="2" /><b data-i18n-title="mythic-paragon-title" data-i18n-aria-label="mythic-paragon-title" title="Has Mythic Paragon feat"><span data-i18n="mythic-paragon"> Mythic Paragon</span></b></label></span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -6777,7 +6788,7 @@
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow sheet-section-psionic" type="checkbox" name="attr_psionic-info-show" data-i18n-aria-label="psionic-information" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-section-psionic"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="psionic-information">Psionic Information</label></h2>
-				<div class="sheet-h2-section sheet-section-psionic sheet-table sheet-wide-readonly sheet-wide-numbers">
+				<div class="sheet-h2-section sheet-section-psionic sheet-table sheet-wide-readonly sheet-wide-numbers sheet-psionic">
 					<span class="sheet-table-name sheet-show-readonly" data-i18n="psionic-manifester-level-and-power-points">Psionic Manifester Level and Power Points</span>
 					<div class="sheet-table-group-head">
 						<div class="sheet-table-row">
@@ -6831,6 +6842,7 @@
 						<span class="sheet-table-cell sheet-nowrap"><label ><input type="checkbox" title="@{psionic-focus}" name="attr_psionic-focus" value="1" /><b data-i18n-title="psionic-focus-title" data-i18n-aria-label="psionic-focus-title" title="Is maintaining psionic focus."><span data-i18n="psionic-focus"> Psionic Focus</span></b></label></span>
 					</div>
 				</div>
+			</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_abilities-show" data-i18n-aria-label="abilities" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked  />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n="abilities">Abilities</label></h2>
@@ -6991,25 +7003,25 @@
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-misc">
+									<div class="sheet-misc">										
 										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
 											<input type="checkbox" value="1" name="attr_showextrafields" />
 											<span data-i18n-title="display-advanced-options-title" data-i18n="custom">Custom</span>
-										</label>
+										</label>											
 										<label class="sheet-small-label2 sheet-section-extra">
 											<input class="sheet-number sheet-calc" type="number" name="attr_CL-basis-mod" title="@{CL-basis}" value="0" readonly />
 											<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation" >CL basis</span>
 										</label>
-										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>
+										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>											
 										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink">
 											<input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="sheet-error-mshow" />
 											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" style="display:inline-block;"></textarea>
 											<input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="sheet-narrow-numbers sheet-calc sheet-linked-cellfield sheet-highlight" style="display:inline-block;" readonly />
 											<br>
 											<span data-i18n-title="buff-spell-caster-level-title" data-i18n-aria-label="buff-spell-caster-level-title" data-i18n="miscellaneous-abbrv" style="display:inline-block;">Misc</span>
-										</label>
+										</label>						
 										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra" style="margin-left:-.5em;">)=</label>
 										<label class="sheet-small-label2 sheet-number">
 											<input type="number" value="0" title="@{repeating_ability_$X_casterlevel}" name="attr_casterlevel" class="sheet-calc" />
@@ -7053,7 +7065,7 @@
 										<label class="sheet-divider-db-lg">|</label>
 										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span></label>
 										<label class="sheet-small-label2 sheet-number">
-											<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />
+											<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />												
 											<span data-i18n-title="difficulty-class-calculation-desc" data-i18n-aria-label="difficulty-class-calculation-desc" data-i18n="difficulty-class-abbrv" >DC</span>
 										</label>
 										<label class="sheet-small-label2 sheet-sect-sp">
@@ -7085,7 +7097,7 @@
 												<option value="see_text" data-i18n="see_text">See text</option>
 											</select>
 											<span data-i18n="range">Range</span>
-										</label>
+										</label>										
 										<label class="sheet-small-label2 sheet-sect-sp">
 											<select class="sheet-select-small" title="@{repeating_ability_$X_range_pick}" name="attr_range_pick">
 												<option value="" data-i18n="blank" selected>Blank</option>
@@ -7100,7 +7112,7 @@
 												<option value="unknownrange" data-i18n="unknownrange">Unknown Range</option>
 											</select>
 											<span data-i18n="range">Range</span>
-										</label>
+										</label>										
 										<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
 										<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
 										<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-either-or-sect"><input title="@{repeating_ability_$X_range}" type="text" name="attr_range" placeholder="Flat # or # /level" data-i18n-placeholder="range-custom-place" /><span data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span></label>
@@ -7172,13 +7184,12 @@
 									</span>
 									<span class="sheet-table-cell sheet-small-label sheet-sect sheet-sect sheet-hide-readonly" >
 										<select title="@{repeating_class-ability_$X_class-number}" name="attr_class-number" class="sheet-select-small sheet-select-class">
-											<option value="not-applicable" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
-											<option value="@{class-0-name}" data-i18n="class-0">Class 0</option>
-											<option value="@{class-1-name}" data-i18n="class-1">Class 1</option>
-											<option value="@{class-2-name}" data-i18n="class-2">Class 2</option>
-											<option value="@{class-3-name}" data-i18n="class-3">Class 3</option>
-											<option value="@{class-4-name}" data-i18n="class-4">Class 4</option>
-											<option value="@{class-5-name}" data-i18n="class-5">Class 5</option>
+											<option value="@{class-0-name}" data-i18n="class-0-default" selected>•0 class</option>
+											<option value="@{class-1-name}" data-i18n="class-1">1st</option>
+											<option value="@{class-2-name}" data-i18n="class-2">2nd</option>
+											<option value="@{class-3-name}" data-i18n="class-3">3rd</option>
+											<option value="@{class-4-name}" data-i18n="class-4">4th</option>
+											<option value="@{class-5-name}" data-i18n="class-5">5th</option>
 											<option value="@{race}">Race</option>
 										</select>
 										<br><span class="sheet-nowrap" data-i18n-title="class-number-explanation" data-i18n-aria-label="class-number-explanation" data-i18n="class-number">Class #</span>
@@ -7194,7 +7205,7 @@
 									<div style="display:none;">
 										<input type="text" name="attr_compendium_category" accept="Category" value="" />
 										<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
-									</div>
+									</div>	
 									<div class="sheet-sect sheet-expand">
 										<input type="checkbox" class="sheet-showarrow sheet-desc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
 										<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
@@ -7684,9 +7695,9 @@
 							<div class="sheet-h3-section sheet-table sheet-spellclass-spellnotes">
 								<span class="sheet-table-name" data-i18n="notes">Notes</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>
-									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>
-									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>
+									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>					
+									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>						
+									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>						
 								</div>
 								<div class="sheet-table-row">
 									<div class="sheet-table-cell sheet-notes-cell">
@@ -8107,9 +8118,9 @@
 							<div class="sheet-h3-section sheet-table sheet-spellclass-spellnotes">
 								<span class="sheet-table-name" data-i18n="notes">Notes</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>
-									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>
-									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>
+									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>					
+									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>						
+									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>						
 								</div>
 								<div class="sheet-table-row">
 									<div class="sheet-table-cell sheet-notes-cell">
@@ -8490,7 +8501,7 @@
 									<span class="sheet-table-header sheet-table-rightcell sheet-show-readonly sheet-inverse-readonly"aria-label="empty spacer cell" role="presentation"></span>
 								</div>
 								<div class="sheet-table-row">
-									<input type="checkbox" name="attr_spellclass-2-SP-mod_error" class="sheet-error-mshow" value="1" />
+									<input type="checkbox" name="attr_spellclass-2-SP-mod_error" class="sheet-error-mshow" value="1" />								
 									<span class="sheet-table-cell sheet-highlight" ><textarea class="sheet-inline-textarea" title="@{spellclass-2-SP_misc}" name="attr_spellclass-2-SP_misc" data-i18n-placeholder="equation-macro-place"></textarea></span>
 									<span class="sheet-table-cell sheet-number sheet-highlight"><input type="number" title="@{spellclass-2-SP-mod}" name="attr_spellclass-2-SP-mod" value="0" class="sheet-calc" readonly></span>
 									<span class="sheet-table-cell sheet-nowrap-readonly"><input title="@{Concentration-2-def}" type="number" name="attr_Concentration-2-def" value="0" /></span>
@@ -8530,9 +8541,9 @@
 							<div class="sheet-h3-section sheet-table sheet-spellclass-spellnotes">
 								<span class="sheet-table-name" data-i18n="notes">Notes</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>
-									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>
-									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>
+									<span class="sheet-table-header" data-i18n="spells-notes" data-i18n-title="spells-notes" data-i18n-aria-label="spells-notes" >Spells Notes</span>					
+									<span class="sheet-table-header" data-i18n="caster-level" data-i18n-title="caster-level-check-notes" data-i18n-aria-label="caster-level-check-notes" >Caster Level</span>						
+									<span class="sheet-table-header" data-i18n="concentration" data-i18n-title="concentration-check-notes" data-i18n-aria-label="concentration-check-notes" >Concentration</span>						
 								</div>
 								<div class="sheet-table-row">
 									<div class="sheet-table-cell sheet-notes-cell">
@@ -8789,7 +8800,7 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_spelloptions-show" data-i18n-aria-label="spell-roll-options" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spell-roll-options">Spell Roll Options</label></h2>
 				<div class="sheet-h2-section sheet-table sheet-spell-options sheet-options sheet-named sheet-hide-readonly">
-					<span class="sheet-table-name"><b data-i18n="include-spell-info">Include these attributes with each spell roll?</b></span>
+					<span class="sheet-table-name"><b data-i18n="include-spell-info">Include these attributes with each spell roll?</b></span>				
 					<div class="sheet-table-row">
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_school_notes" value="1" title="@{toggle_spell_school_notes}" checked /><b title="Include School" data-i18n-title="options-spell-school-title" data-i18n-aria-label="options-spell-school-title" data-i18n="school"> School</b></label></span>
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_level_notes" value="1" title="@{toggle_spell_level_notes}" checked /><b title="Include Class/Level" data-i18n-title="options-spell-level-title" data-i18n-aria-label="options-spell-level-title" data-i18n="spell-level"> Spell Level</b></label></span>
@@ -8834,7 +8845,7 @@
 						<span class="sheet-compendium-icon">i</span>
 						<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
 						<span class="sheet-drag-icon">&#9111;</span>
-					</span>
+					</span>					
 					<div class="sheet-spellsnav sheet-tabs sheet-custbordernav" role="menubar" aria-label="Spells by Level" data-i18n-aria-label="spells-by-level"></div>
 					<input type="radio" class="sheet-tabinput sheet-tab0" name="attr_spells_tab" value="0" data-i18n-aria-label="level-0-spells" data-i18n-title="cantrips" title="Cantrips" />
 					<label role="menuitem" class="sheet-tab sheet-tab0" data-i18n-title="cantrips" data-i18n-aria-label="cantrips" title="Cantrips" data-i18n="cantrips">Cantrips</label>
@@ -8893,7 +8904,8 @@
 									<label class="sheet-small-label2 sheet-entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" placeholder="Spell Name" data-i18n-placeholder="spell-name" accept="Name"><span data-i18n="name">Name</span></label>
 									<label class="sheet-small-label2 sheet-sect" style="width:3em;">
 										<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
-											<option value="0" selected>0</option>
+											<option value="">Select One</option>
+											<option value="0" >0</option>
 											<option value="1">1</option>
 											<option value="2">2</option>
 										</select>
@@ -9005,7 +9017,7 @@
 											<label class="sheet-small-label2 sheet-entry-15p-shrink">
 												<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
 												<span data-i18n="damage-type">Damage Type</span>
-											</label>
+											</label>											
 										</div>
 										<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
 										<textarea class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
@@ -9030,21 +9042,21 @@
 						<div class="sheet-table sheet-wide-numbers sheet-carried-currency">
 							<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" title="The amount of currency carried on the character that will contribute to total load" data-i18n-title="carried-currency-title" data-i18n-aria-label="carried-currency-title" data-i18n="carried-currency">Carried Currency</span>
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell" style="width:10%;"><img style="vertical-align:middle;" src="http://i.imgur.com/rnuQ6SJ.png"></span>
-								<span class="sheet-table-cell"><label title="Copper pieces" style="width:10%;min-width:2em;" data-i18n="copper-pieces-abbrv">&nbsp;CP</label><input title="@{CP}" type="number" name="attr_CP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Silver pieces" style="width:10%;min-width:2em;" data-i18n="silver-pieces-abbrv">&nbsp;SP</label><input title="@{SP}" type="number" name="attr_SP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Gold pieces" style="width:10%;min-width:2em;" data-i18n="gold-pieces-abbrv">&nbsp;GP</label><input title="@{GP}" type="number" name="attr_GP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Platinum pieces" style="width:10%;min-width:2em;" data-i18n="platinum-pieces-abbrv">&nbsp;PP</label><input title="@{PP}" type="number" name="attr_PP" value="0"></span>
+								<span class="sheet-table-cell" style="width:10%;"><img style="vertical-align:middle;" alt="image of coin purse" src="http://i.imgur.com/F7USUqg.png"></span>									
+								<span class="sheet-table-cell"><label title="Copper pieces" data-i18n-title="copper-pieces" data-i18n-aria-label="copper-pieces" data-i18n="copper-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;CP</label><input title="@{CP}" type="number" name="attr_CP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Silver pieces" data-i18n-title="silver-pieces" data-i18n-aria-label="silver-pieces" data-i18n="silver-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;SP</label><input title="@{SP}" type="number" name="attr_SP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Gold pieces" data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;GP</label><input title="@{GP}" type="number" name="attr_GP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Platinum pieces" data-i18n-title="platinum-pieces" data-i18n-aria-label="platinum-pieces" data-i18n="platinum-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;PP</label><input title="@{PP}" type="number" name="attr_PP" value="0"></span>
 							</div>
 						</div>
 						<div class="sheet-table sheet-wide-numbers sheet-other-currency">
 							<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" title="The amount of currency not actively carried by the character" data-i18n-title="other-currency-title" data-i18n-aria-label="other-currency-title" data-i18n="other-currency">Other Currency</span>
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell" style="width:10%;"><img style="vertical-align:middle;" src="http://i.imgur.com/F7USUqg.png"></span>
-								<span class="sheet-table-cell"><label title="Copper pieces" style="width:10%;min-width:2em;" data-i18n="copper-pieces-abbrv">&nbsp;CP</label><input title="@{other-CP}" type="number" name="attr_other-CP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Silver pieces" style="width:10%;min-width:2em;" data-i18n="silver-pieces-abbrv">&nbsp;SP</label><input title="@{other-SP}" type="number" name="attr_other-SP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Gold pieces" style="width:10%;min-width:2em;" data-i18n="gold-pieces-abbrv">&nbsp;GP</label><input title="@{other-GP}" type="number" name="attr_other-GP" value="0"></span>
-								<span class="sheet-table-cell"><label title="Platinum pieces" style="width:10%;min-width:2em;" data-i18n="platinum-pieces-abbrv">&nbsp;PP</label><input title="@{other-PP}" type="number" name="attr_other-PP" value="0"></span>
+								<span class="sheet-table-cell" style="width:10%;"><img style="vertical-align:middle;" alt="image of treasure chest" src="http://i.imgur.com/rnuQ6SJ.png"></span>
+								<span class="sheet-table-cell"><label title="Copper pieces" data-i18n-title="copper-pieces" data-i18n-aria-label="copper-pieces" data-i18n="copper-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;CP</label><input title="@{other-CP}" type="number" name="attr_other-CP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Silver pieces" data-i18n-title="silver-pieces" data-i18n-aria-label="silver-pieces" data-i18n="silver-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;SP</label><input title="@{other-SP}" type="number" name="attr_other-SP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Gold pieces" data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;GP</label><input title="@{other-GP}" type="number" name="attr_other-GP" value="0"></span>
+								<span class="sheet-table-cell"><label title="Platinum pieces" data-i18n-title="platinum-pieces" data-i18n-aria-label="platinum-pieces" data-i18n="platinum-pieces-abbrv" style="width:10%;min-width:2em;">&nbsp;PP</label><input title="@{other-PP}" type="number" name="attr_other-PP" value="0"></span>
 							</div>
 						</div>
 					</div>
@@ -9079,9 +9091,9 @@
 								<span class="sheet-table-config-row-name sheet-secondary-table-name sheet-show-readonly sheet-inverse-readonly" style="width:10%;" data-i18n="current-load">Current Load</span>
 								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="0" name="attr_current-load" checked>&nbsp;<span data-i18n="light">Light</span></label></span>
 								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="1" name="attr_current-load">&nbsp;<span data-i18n="medium">Medium</span></label></span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load">&nbsp;<span data-i18n="heavy">Heavy</span></label></span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="3" name="attr_current-load">&nbsp;<span data-i18n-title="over-heavy-encumbrance-title" data-i18n-aria-label="over-heavy-encumbrance-title" data-i18n="over">Over</span></label></span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="4" name="attr_current-load">&nbsp;<span data-i18n-title="maximum-encumbrance-title" data-i18n-aria-label="maximum-encumbrance-title" data-i18n="maximum-abbrv">Max</span></label></span>
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load">&nbsp;<span data-i18n="heavy">Heavy</span></label></span>					
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="3" name="attr_current-load">&nbsp;<span data-i18n-title="over-heavy-encumbrance-title" data-i18n-aria-label="over-heavy-encumbrance-title" data-i18n="over">Over</span></label></span>					
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="4" name="attr_current-load">&nbsp;<span data-i18n-title="maximum-encumbrance-title" data-i18n-aria-label="maximum-encumbrance-title" data-i18n="maximum-abbrv">Max</span></label></span>					
 							</div>
 						</div>
 					</div>
@@ -9293,40 +9305,39 @@
 					<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 					<span class="sheet-nontable-name" >&nbsp;</span>
 					<div class="sheet-table">
-						<span class="sheet-table-cell sheet-left" style="width:4%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:4%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:18%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:40%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"></span>
-						<span class="sheet-table-cell sheet-left">&nbsp;</span>
-						<span class="sheet-table-cell sheet-right" style="width:5%; min-width:3.5em;"><b data-i18n="totals">Totals:</b></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:4.5em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><b data-i18n="pounds-abbrv">lbs.</b></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><input title="@{item-total-hp}" type="number" name="attr_item-total-hp" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-divider-lg">/</span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:4em;"><input title="@{item-total-hp|max}" type="number" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly></span>
+						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
+						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals:</b></span>
+						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly="">
+						<b title="Weight in pounds" data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv">lbs.</b></span>						
+						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly="">
+						<b title="Gold pieces" data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv">GP</b></span>
+						<!-- keep these in case someone needs them -->
+						<input title="@{item-total-hp}" type="hidden" name="attr_item-total-hp" value="0" class="sheet-calc" readonly="">					
+						<input title="@{item-total-hp|max}" type="hidden" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly="">
 					</div>
 					<input type="checkbox" name="attr_is_npc" value="1" class="sheet-noshow sheet-npc-show" />
+					<!-- hide/show some fields -->
+					<label style="position: absolute;margin-top: -1.75em;"><input type="checkbox" class="sheet-boldlabel-check" name="attr_inventory_onetime_show" title="@{inventory_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item hardness, item-hp, item-hp|max, and value." data-i18n="show-onetime-fields">Show onetime fields</b></label>							
+					<input type="checkbox" class="sheet-inventory-onetime-show sheet-noshow" name="attr_inventory_onetime_show" value="1" role="presentation" checked />		
 					<div class="sheet-sect sheet-table sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_item">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="0" class="sheet-tabcopy sheet-custnavsection-new" checked role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="1" class="sheet-tabcopy sheet-custnavsection-0" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="2" class="sheet-tabcopy sheet-custnavsection-1" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="3" class="sheet-tabcopy sheet-custnavsection-2" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="4" class="sheet-tabcopy sheet-custnavsection-3" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="5" class="sheet-tabcopy sheet-custnavsection-4" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="6" class="sheet-tabcopy sheet-custnavsection-5" role="presentation" />
-							<input style="display:none;" type="radio" name="attr_equiptype-tab" value="7" class="sheet-tabcopy sheet-custnavsection-6" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="0" class="sheet-tabcopy sheet-custnavsection-new" checked role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="1" class="sheet-tabcopy sheet-custnavsection-0" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="2" class="sheet-tabcopy sheet-custnavsection-1" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="3" class="sheet-tabcopy sheet-custnavsection-2" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="4" class="sheet-tabcopy sheet-custnavsection-3" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="5" class="sheet-tabcopy sheet-custnavsection-4" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="6" class="sheet-tabcopy sheet-custnavsection-5" role="presentation" />
+							<input type="radio" name="attr_equiptype-tab" value="7" class="sheet-tabcopy sheet-custnavsection-6" role="presentation" />
 							<div class="sheet-nontable-repeating sheet-custrepeating-border compendium-drop-target Items">
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span class="sheet-table-cell"></span>
 								<span class="sheet-repeating-rollbutton sheet-sect-pc"><button type="roll" name="attr_roll" title="%{selected|repeating_item_$X_roll}" value="@{PC-whisper} @{macro-text}"></button></span>
 								<span class="sheet-repeating-rollbutton sheet-sect-npc"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_item_$X_npc-roll}" value="@{NPC-whisper} @{macro-text}"></button></span>
 								<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly" style="width:2.125em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_item_$X_showinmenu}" value="1"  /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
 								<label class="sheet-small-label2 sheet-small-label"><input title="@{repeating_item_$X_name}" type="text" name="attr_name" value="" accept="Name" placeholder="Item Name" data-i18n-placeholder="item-name"><span data-i18n="name">Name</span></label>
-								<label class="sheet-small-label2 sheet-small-label"><textarea class="sheet-inline-textarea" title="@{repeating_item_$X_short-description}" name="attr_short-description" placeholder="Short Description" data-i18n-placeholder="short-description" data-i18n-aria-label="worn-equipment-short-desc-title" ></textarea><span data-i18n-title="worn-equipment-short-desc-title" data-i18n-aria-label="worn-equipment-short-desc-title" data-i18n="short-description-abbrv">Short Desc</span></label>
-								<label class="sheet-small-label2 sheet-small-label" style="width:15%;">
+								<label class="sheet-small-label2 sheet-small-label"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_item_$X_short-description}" name="attr_short-description" placeholder="Short Description" data-i18n-placeholder="short-description" data-i18n-aria-label="worn-equipment-short-desc-title" ></textarea><span data-i18n-title="worn-equipment-short-desc-title" data-i18n-aria-label="worn-equipment-short-desc-title" data-i18n="short-description-abbrv">Short Desc</span></label>
+								<label class="sheet-small-label2 sheet-small-label sheet-items-toggle-except-on-all" style="width:15%;">
 									<select title="@{repeating_item_$X_equip-type}" name="attr_equip-type" class="sheet-select-small">
 										<option value="0" data-i18n="select-one-default" selected>Select One</option>
 										<option value="1" data-i18n="weapon" >Weapon</option>
@@ -9367,19 +9378,19 @@
 										<input title="@{repeating_item_$X_qty}" type="number" name="attr_qty" value="0" aria-label-i18n="worn-equipment-quantity-title" />
 										<span data-i81n-title="worn-equipment-quantity-title" data-i18n="quantity-abbrv" >Qty</span>
 									</label>
-									<span class="sheet-divider-db-lg sheet-sect sheet-hide-readonly" style="width:.1%;">/</span>
-									<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly sheet-sect"><input title="@{repeating_item_$X_qty|max}" type="number" name="attr_qty_max" value="0" /><span data-i18n="maximum-abbrv">Max</span></label>
+									<span class="sheet-divider-db-lg sheet-sect sheet-hide-readonly sheet-items-toggle" style="width:.1%;">/</span>
+									<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly sheet-sect sheet-items-toggle"><input title="@{repeating_item_$X_qty|max}" type="number" name="attr_qty_max" value="0" /><span data-i18n="maximum-abbrv">Max</span></label>
 								</div>
 								<label class="sheet-small-label2 sheet-small-label"><input title="@{repeating_item_$X_item-weight}" type="number" name="attr_item-weight" value="0" step="any" /><span data-i18n="weight-abbrv">Wt</span></label>
-								<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly sheet-sect"><input title="@{repeating_item_$X_hardness}" type="number" name="attr_hardness" value="0" step="any" min="0" /><span data-i18n="hardness-abbrv">Hard</span></label>
-								<div class="sheet-linked-fields sheet-hide-readonly">
+								<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly sheet-sect sheet-items-toggle"><input title="@{repeating_item_$X_hardness}" type="number" name="attr_hardness" value="0" step="any" min="0" /><span data-i18n="hardness-abbrv">Hard</span></label>
+								<div class="sheet-linked-fields sheet-hide-readonly sheet-items-toggle">
 									<label class="sheet-small-label2 sheet-small-label sheet-sect"><input title="@{repeating_item_$X_item-hp}" type="number" name="attr_item-hp" value="0" step="any" /><span data-i18n="item-hit-points-abbrv">HP</span></label>
 									<span class="sheet-divider-db-lg sheet-sect" style="width:.1%;">/</span>
 									<label class="sheet-small-label2 sheet-small-label sheet-sect"><input title="@{repeating_item_$X_item-hp|max}" type="number" name="attr_item-hp_max" value="0" step="any" min="0" /><span data-i18n="maximum-abbrv">Max</span></label>
-								</div>
-								<label class="sheet-small-label2 sheet-small-label sheet-sect"><input title="@{repeating_item_$X_value}" type="number" name="attr_value" value="0" step="any" min="0" /><span data-i18n="value">Value</span></label>
+								</div>								
+								<label class="sheet-small-label2 sheet-small-label sheet-sect sheet-items-toggle"><input title="@{repeating_item_$X_value}" type="number" name="attr_value" value="0" step="any" min="0" /><span data-i18n="value">Value</span></label>
 								<div style="display:none;">
-									<input type="text" name="attr_item-critical_compendium" value="" accept="Critical"  />
+										<input type="text" name="attr_item-critical_compendium" value="" accept="Critical"  />
 										<input type="text" name="attr_item-meddamage_compendium" value="" accept="Single-Handed Damage"  />
 										<input type="text" name="attr_item-smalldamage_compendium" value="" accept="Double-Handed Damage"  />
 										<input type="text" name="attr_item-category_compendium" value="" accept="Category"  />
@@ -9393,7 +9404,7 @@
 										<input type="text" name="attr_item-acbonus_compendium" value="" accept="Armor/Shield Bonus"  />
 										<input type="text" name="attr_item-acp_compendium" value="" accept="Armor Check Penalty"  />
 									</div>
-								<div class="sheet-sect sheet-expand">
+								<div class="sheet-sect sheet-expand" style="margin-top:.5em;">
 									<input type="checkbox" class="sheet-showarrow sheet-armor-attributes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Armor Attributes" name="attr_armor-attributes-show" value="1" />
 									<label class="sheet-showsect sheet-armor-attributes-showlabel" data-i18n="armor-attributes">Armor Attributes</label>
 									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Weapon Attributes" name="attr_weapon-attributes-show" value="1" />
@@ -9406,7 +9417,7 @@
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-armor-attributes">
+									<div class="sheet-armor-attributes">								
 										<label class="sheet-small-label2" style="width:5em;">
 											<input type="checkbox" name="attr_set-as-armor" value="1" class="sheet-cssbutton sheet-addarmorbutton" title="@{set-as-armor}" data-i18n-aria-label="set-as-armor"><span></span>
 											<span data-i18n-title="set-as-armor" data-i18n-aria-label="set-as-armor" data-i18n="set-armor" >Set Armor</span>
@@ -9430,13 +9441,13 @@
 											</select>
 											<span data-i18n="armor-type">Armor or Shield Type</span>
 										</label>
-										<label class="sheet-small-label2">
+										<label class="sheet-small-label2">								
 											<select title="@{repeating_item_$X_item-proficiency}" name="attr_item-proficiency" class="sheet-select-small">
 												<option value="0" data-i18n="yes-default" selected>Yes</option>
 												<option value="1" data-i18n="no">No</option>
 											</select>
 											<span data-i18n="proficiency">Proficiency</span>
-										</label>
+										</label>								
 									</div>
 									<div class="sheet-weapon-attributes sheet-show-grp1">
 										<label class="sheet-small-label2" style="width:5em;">
@@ -9455,7 +9466,7 @@
 											</select>
 											<span data-i18n="attack-type">Attack Type</span>
 										</label>
-
+										
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-wpenhance}" name="attr_item-wpenhance" type="number" value="0" min="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
 										<label class="sheet-small-label2 sheet-sect" style="width:2.125em;"><input title="@{repeating_item_$X_item-masterwork}" name="attr_item-masterwork" type="checkbox" value="1" /><span data-i18n="masterwork-abbrv">Mwk</span></label>
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-damage-dice-num}" name="attr_item-damage-dice-num" type="number" value="0" min="0" /><span data-i18n="dice">Dice</span></label>
@@ -9498,37 +9509,30 @@
 											<input style="height:2.15em;" type="text" name="attr_item-critical_dmg_type" title="@{repeating_item_$X_item-critical_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
 											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 										</label>
-										<label class="sheet-small-label2">
+										<label class="sheet-small-label2">								
 											<select title="@{repeating_item_$X_item-proficiency}" name="attr_item-proficiency" class="sheet-select-small">
 												<option value="0" data-i18n="yes-default" selected>Yes</option>
 												<option value="1" data-i18n="no">No</option>
 											</select>
 											<span data-i18n="proficiency-abbrv">Prof</span>
-										</label>
-									</div>
+										</label>								
+									</div>							
 									<textarea class="sheet-desc" title="@{repeating_item_$X_description}" name="attr_description" accept="content" ></textarea>
 									<textarea class="sheet-macro-text" title="@{repeating_item_$X_macro-text}" name="attr_macro-text">&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-item}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{description=@{short-description}}}</textarea>
 									<div class="sheet-repeating-id">
 										<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
 									</div>
-								</div>
+								</div>						
 							</div>
 						</fieldset>
 					</div>
 					<div class="sheet-table">
-						<span class="sheet-table-cell sheet-left" style="width:4%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:4%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:18%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:40%;"></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"></span>
-						<span class="sheet-table-cell sheet-left">&nbsp;</span>
-						<span class="sheet-table-cell sheet-right" style="width:5%; min-width:3.5em;"><b data-i18n="totals">Totals:</b></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:4.5em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><b data-i18n="pounds-abbrv">lbs.</b></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><input title="@{item-total-hp}" type="number" name="attr_item-total-hp" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-divider-lg">/</span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:4em;"><input title="@{item-total-hp|max}" type="number" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly></span>
-						<span class="sheet-table-cell sheet-left" style="width:5%; min-width:3.5em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly></span>
+						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
+						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals</b></span>
+						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly="">
+						<b title="Weight in pounds" data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv">lbs.</b></span>						
+						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly="">
+						<b title="Gold pieces" data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv">GP</b></span>
 					</div>
 				</div>
 				<!-- xp at end of sheet in read mode -->
@@ -9578,7 +9582,7 @@
 						<span class="sheet-nontable-name sheet-show-readonly" data-i18n="npc-statblock-import" >Statblock Import</span>
 						<div class="sheet-left">
 							<span data-i18n="npc-statblock-parse-instructions">Drag a monster from the compendium here, or type in the statblock values below. Then hit the parse button. The parser will populate the sheet with the underlying stats and attacks.</span>
-							<span data-i18n="npc-statblock-textarea-instructions">For multiline textareas, paste in exactly as appears in source. Keep newlines in input.</span>
+							<span data-i18n="npc-statblock-textarea-instructions">For multiline textareas, paste in exactly as appears in source. Keep newlines in input.</span> 
 							<br/>
  							<input class="sheet-csstextbutton sheet-npcparsebutton sheet-sect-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
 							<span class="sheet-sect sheet-progress-icon"><img src="http://i.imgur.com/XKktDjC.gif" />&nbsp;<span data-i18n="loading">Loading...</span></span>
@@ -9586,7 +9590,7 @@
 								<span class="sheet-compendium-icon">i</span>
 								<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
 								<span class="sheet-drag-icon">&#9111;</span>
-							</span>
+							</span>					
 						</div>
 						<div class="sheet-nontable">
 							<label class="sheet-small-label2 sheet-autoexpand"><input type="text" name="attr_character_name" accept="Name" value="" title="@{character_name}"/><span data-i18n="name">Name</span><span name="attr_character_name" class="sheet-autoexpand"></span></label>
@@ -9621,7 +9625,7 @@
 							<label class="sheet-small-label2 sheet-wide-textareaparent"><textarea class="sheet-inline-textarea"  name="attr_npc-spellike-ability-text" accept="Spell-Like Abilities" title="@{spellike-ability-text}" placeholder="Spell like abilities from compendium" data-i18n-placeholder="npc-spellike-abilities-text-place"></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="spell-like-abilities">Spell-Like Abilities</span></label>
 							<label class="sheet-small-label2 sheet-wide-textareaparent"><textarea class="sheet-inline-textarea"  name="attr_npc-spells-known-text" accept="Spells Known" title="@{npc-spells-known-text}" placeholder="Spells known from compendium" data-i18n-placeholder="npc-spells-known-text-place"></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="spells-known">Spells Known</span></label>
 							<div class="sheet-cheat"></div>
-							<hr/>
+							<hr/>							
 							<label class="sheet-small-label2 sheet-autoexpand"><input type="text" name="attr_str_compendium" accept="Str" value="" placeholder="Str" /><span data-i18n="strength-abbrv">STR</span><span name="attr_str_compendium" class="sheet-autoexpand"></span></label>
 							<label class="sheet-small-label2 sheet-autoexpand"><input type="text" name="attr_dex_compendium" accept="Dex" value="" placeholder="Dex" /><span data-i18n="dexterity-abbrv">DEX</span><span name="attr_dex_compendium" class="sheet-autoexpand"></span></label>
 							<label class="sheet-small-label2 sheet-autoexpand"><input type="text" name="attr_con_compendium" accept="Con" value="" placeholder="Con" /><span data-i18n="constitution-abbrv">CON</span><span name="attr_con_compendium" class="sheet-autoexpand"></span></label>
@@ -9990,7 +9994,7 @@
 											<span class="sheet-table-header" style="width: 20%;" data-i18n="custom-name">Custom Name</span>
 											<span class="sheet-table-header" style="width: 7em;" data-i18n="attack-modifier-abbrv">Attack Mod</span>
 											<span class="sheet-table-header" data-i18n="macro-text">Macro</span>
-										</div>
+										</div>										
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell">
 												<label>
@@ -10004,7 +10008,7 @@
 												<input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly>
 											</span>
 											<span class="sheet-table-cell sheet-macro-text-tohide">&nbsp;</span>
-										</div>
+										</div>										
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell">
 												<label>
@@ -10251,7 +10255,7 @@
 						</div>
 					</div>
 
-
+					
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_npc-spells-show" data-i18n-aria-label="spells" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 					<h3 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spells">Spells</label></h3>
@@ -10403,7 +10407,7 @@
 								<span class="sheet-compendium-icon">i</span>
 								<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
 								<span class="sheet-drag-icon">&#9111;</span>
-							</span>
+							</span>					
 							<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 							<div class="sheet-npc-spells sheet-repeating-fields sheet-hiderepborder">
 								<fieldset class="repeating_spells">
@@ -10436,7 +10440,8 @@
 										<label class="sheet-small-label2 sheet-entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" placeholder="Spell Name" data-i18n-placeholder="spell-name" accept="Name"><span data-i18n="name">Name</span></label>
 										<label class="sheet-small-label2 sheet-sect" style="width:3em;">
 											<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
-												<option value="0" selected>0</option>
+												<option value="">Select One</option>
+												<option value="0" >0</option>
 												<option value="1">1</option>
 												<option value="2">2</option>
 											</select>
@@ -10545,7 +10550,7 @@
 												<label class="sheet-small-label2 sheet-entry-15p-shrink">
 													<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
 													<span data-i18n="damage-type">Damage Type</span>
-												</label>
+												</label>											
 											</div>
 											<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
 											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
@@ -10574,9 +10579,9 @@
 					<h3 style="display:block;" data-i18n="base-statistics">Base Statistics</h3>
 					<textarea class="sheet-inline-textarea" title="@{npc-base-statistics}" name="attr_npc-base-statistics" placeholder="If the creature has buffs and other effects active that modify his stats, the base stats should be quickly summarized here." data-i18n-placeholder="base-statistics-place"></textarea>
 					<h3 style="display:block;" data-i18n="combat-gear">Combat Gear</h3>
-					<textarea class="sheet-inline-textarea" title="@{npc-combat-gear}" name="attr_npc-combat-gear" placeholder="Gear used in combat" data-i18n-placeholder="gear-used-place"></textarea>
+					<textarea class="sheet-inline-textarea" title="@{npc-combat-gear}" name="attr_npc-combat-gear" placeholder="Gear used in combat" data-i18n-placeholder="gear-used-place"></textarea>						
 					<h3 style="display:block;"  data-i18n="other-gear">Other Gear</h3>
-					<textarea class="sheet-inline-textarea" title="@{npc-other-gear}" name="attr_npc-other-gear" placeholder="Gear not used in combat" data-i18n-placeholder="gear-not-used-place"></textarea>
+					<textarea class="sheet-inline-textarea" title="@{npc-other-gear}" name="attr_npc-other-gear" placeholder="Gear not used in combat" data-i18n-placeholder="gear-not-used-place"></textarea>						
 				</div>
 				<hr class="sheet-npc-hr sheet-npchead-top" />
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_npc-statistics-show" data-i18n-aria-label="statistics" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -10604,7 +10609,7 @@
 							</div>
 						</div>
 						<label class="sheet-small-label2 sheet-autoexpand"><input type="text" title="@{languages}" value="" name="attr_languages" placeholder="Languages" data-i18n-placeholder="languages"/><span data-i18n="languages">Languages</span><span class="sheet-autoexpand" name="attr_languages"></span></label>
-						<input class="sheet-sect-show-inverse sheet-noshow" type="checkbox" name="attr_is_v1" value="1" />
+						<input class="sheet-sect-show-inverse sheet-noshow" type="checkbox" name="attr_is_v1" value="1" />			
 						<div class="sheet-sect-inverse">
 							<div class="sheet-small-label"><span class="sheet-left" data-i18n="special-attacks">Special Attacks</span><br><textarea class="sheet-inline-textarea" title="@{npc-special-attacks}" name="attr_npc-special-attacks" placeholder="List all special combat actions here. Do not list feats." data-i18n-placeholder="npc-special-attacks-place" ></textarea></div>
 							<div class="sheet-small-label"><span class="sheet-left" data-i18n="spell-like-abilities">Spell-like Abilities</span><br><textarea class="sheet-inline-textarea" title="@{npc-spellike-ability-text}" name="attr_npc-spellike-ability-text" placeholder="Spell like abilities from compendium" data-i18n-placeholder="npc-spellike-abilities-text-place" ></textarea></div>
@@ -10624,7 +10629,7 @@
 						<h3 class="sheet-clickheader sheet-showsect sheet-section-featlist"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="non-player-character-feats">NPC Feats</label></h3>
 						<div class="sheet-h3-section sheet-repeating-sect sheet-section-featlist">
 							<span class="sheet-nontable-name" data-i18n="feats">Feats</span>
-
+							
 							<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npcfeat-min-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcfeat-expand-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcfeat-column-show" value="1" /><span></span>
@@ -10763,7 +10768,7 @@
 					<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_skill-notes-show" data-i18n-aria-label="skill-notes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 					<h3 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-notes">Skill Notes</label></h3>
 					<div class="sheet-h3-section sheet-table sheet-wide-readonly">
-						<textarea class="sheet-sect sheet-inline-textarea" title="@{Skill-notes}" name="attr_Skill-notes" style="height:50px;" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea>
+						<textarea class="sheet-sect sheet-inline-textarea" title="@{Skill-notes}" name="attr_Skill-notes" style="height:50px;" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea>							
 					</div>
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_npc-skills-show" data-i18n-aria-label="skills" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -11110,7 +11115,7 @@
 							<span class="sheet-compendium-icon">i</span>
 							<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
 							<span class="sheet-drag-icon">&#9111;</span>
-						</span>
+						</span>		
 						<div class="sheet-repeating-fields sheet-table">
 <!-- NPC -->
 							<fieldset class="repeating_ability">
@@ -11227,25 +11232,25 @@
 										<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 										<hr class="sheet-subnav-hr">
 										<div class="sheet-cheat"></div>
-										<div class="sheet-misc">
+										<div class="sheet-misc">										
 											<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-noshow"/>
 											<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 											<label class="sheet-small-label2">
 												<input type="checkbox" value="1" name="attr_showextrafields" />
 												<span data-i18n-title="display-advanced-options-title" data-i18n="custom">Custom</span>
-											</label>
+											</label>											
 											<label class="sheet-small-label2 sheet-section-extra">
 												<input class="sheet-number sheet-calc" type="number" name="attr_CL-basis-mod" title="@{CL-basis}" value="0" readonly />
 												<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation" >CL basis</span>
 											</label>
-											<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>
+											<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>											
 											<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink">
 												<input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="sheet-error-mshow" />
 												<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" style="display:inline-block;"></textarea>
 												<input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="sheet-narrow-numbers sheet-calc sheet-linked-cellfield sheet-highlight" style="display:inline-block;" readonly />
 												<br>
 												<span data-i18n-title="buff-spell-caster-level-title" data-i18n-aria-label="buff-spell-caster-level-title" data-i18n="miscellaneous-abbrv" style="display:inline-block;">Misc</span>
-											</label>
+											</label>						
 											<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra" style="margin-left:-.5em;">)=</label>
 											<label class="sheet-small-label2 sheet-number">
 												<input type="number" value="0" title="@{repeating_ability_$X_casterlevel}" name="attr_casterlevel" class="sheet-calc" />
@@ -11289,7 +11294,7 @@
 											<label class="sheet-divider-db-lg">|</label>
 											<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span></label>
 											<label class="sheet-small-label2 sheet-number">
-												<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />
+												<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />												
 												<span data-i18n-title="difficulty-class-calculation-desc" data-i18n-aria-label="difficulty-class-calculation-desc" data-i18n="difficulty-class-abbrv" >DC</span>
 											</label>
 											<label class="sheet-small-label2 sheet-sect-sp">
@@ -11321,7 +11326,7 @@
 													<option value="see_text" data-i18n="see_text">See text</option>
 												</select>
 												<span data-i18n="range">Range</span>
-											</label>
+											</label>										
 											<label class="sheet-small-label2 sheet-sect-sp">
 												<select class="sheet-select-small" title="@{repeating_ability_$X_range_pick}" name="attr_range_pick">
 													<option value="" data-i18n="blank" selected>Blank</option>
@@ -11336,7 +11341,7 @@
 													<option value="unknownrange" data-i18n="unknownrange">Unknown Range</option>
 												</select>
 												<span data-i18n="range">Range</span>
-											</label>
+											</label>										
 											<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
 											<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
 											<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-either-or-sect"><input title="@{repeating_ability_$X_range}" type="text" name="attr_range" placeholder="Flat # or # /level" data-i18n-placeholder="range-custom-place" /><span data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span></label>
@@ -11530,7 +11535,7 @@
 					<span class="sheet-table-cell sheet-left">
 					</span>
 				</div>
-
+				
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="attacks">Attacks</span>
 					<span class="sheet-table-cell sheet-left">
@@ -11542,9 +11547,9 @@
 						<label>
 							<input type="checkbox" title="@{cmb_2_show}" name="attr_cmb_2_show" value="1" class="sheet-selectedlabel-check"/><b><span data-i18n="display-cmb-2">Display Alt CMB attack type</span></b>
 						</label>
-					</span>
+					</span>					
 				</div>
-				<div class="sheet-table-row">
+				<div class="sheet-table-row">				
 					<span class="sheet-table-config-row-name" data-i18n="encumbrance">Encumbrance</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
@@ -11577,11 +11582,11 @@
 						</label>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-sect2-show sheet-noshow" value="1" name="attr_auto_calc_hp" role="presentation"  />
+						<input type="checkbox" class="sheet-sect2-show sheet-noshow" value="1" name="attr_auto_calc_hp" role="presentation"  />					
 						<label class="sheet-sect2">
 							<input type="checkbox" value="1" name="attr_maxhp_lvl1" class="sheet-selectedlabel-check" /><b><span data-i18n-title="100-at-level-1-title" data-i18n="100-at-level-1">Use Max hp for first level/HD</span></b>
 						</label>
-					</span>
+					</span>					
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="defenses" style="border-bottom: none;">Defenses</span>
@@ -11630,7 +11635,7 @@
 							<input type="checkbox" title="@{adv_macro_show}" name="attr_adv_macro_show" value="1" class="sheet-selectedlabel-check" />
 							<b><span data-i18n-title="display-advanced-macros-title" data-i18n-aria-label="display-advanced-macros-title" aria-label="display-advanced-macros-title" data-i18n="display-advanced-macros">Display 'Advanced' roll-time macro fields to add to rolls</span></b>
 						</label>
-					</span>
+					</span>					
 					<span class="sheet-table-cell sheet-left">&nbsp;</span>
 				</div>
 				<div class="sheet-table-row">
@@ -11658,12 +11663,12 @@
 					<span class="sheet-table-config-row-name">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-						<input type="hidden" name="attr_var_rounded_flag" value="{{rounded=rounded}}" />
+						<input type="hidden" name="attr_var_rounded_flag" value="{{rounded=rounded}}" />						
 							<input type="checkbox" name="attr_toggle_rounded_flag" value="@{var_rounded_flag}" title="@{toggle_rounded_flag}" class="sheet-selectedlabel-check" checked /><b>
 							<span data-i18n="use-round-corners-on-simple-templates">Round Corners on non simple template.</span>
 							</b>
 						</label>
-					</span>
+					</span>					
 					<span class="sheet-table-cell sheet-left">
 						<label>
 							<span data-i18n="heading-border-colors">Heading background and outlines:</span>
@@ -11696,9 +11701,9 @@
 								<option value="darkviolet" data-i18n="dark-violet">DarkViolet</option>
 							</select>
 						</label>
-					</span>
+					</span>					
 				</div>
-			</div>
+			</div>			
 		</div>
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_core_pfs_show" data-i18n-aria-label="core-pfs-rules" aria-label="Core and PFS Rule Options" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -11801,7 +11806,7 @@
 							</span>
 						</label>
 					</span>
-				</div>
+				</div>				
 			</div>
 		</div>
 		<div class="sheet-cheat"></div>
@@ -11829,7 +11834,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[default](http://imgur.com/9yjOsAD.png)" title="@{header_image-pf_spell}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/9yjOsAD.png" style="padding-top:.125em;"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[custom](@{header_image-pf_spell-url})" title="@{header_image-pf_spell}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_spell-url" title="@{header_image-pf_spell-url}">http://imgur.com/9yjOsAD.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11839,7 +11844,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-melee" value="[default](http://i.imgur.com/AGq5VBG.png)" title="@{header_image-pf_attack}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/AGq5VBG.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-melee" value="[custom](@{header_image-pf_attack-melee-url})" title="@{header_image-pf_attack}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_attack-melee-url" title="@{header_image-pf_attack-melee-url}">http://i.imgur.com/AGq5VBG.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11849,7 +11854,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-ranged" value="[default](http://imgur.com/58j2e8P.png)" title="@{header_image-pf_attack}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/58j2e8P.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-ranged" value="[custom](@{header_image-pf_attack-ranged-url})" title="@{header_image-pf_attack}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_attack-ranged-url" title="@{header_image-pf_attack-ranged-url}">http://imgur.com/58j2e8P.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11859,7 +11864,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-cmb" value="[default](http://i.imgur.com/Si4vfts.png)" title="@{header_image-pf_attack}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/Si4vfts.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_attack-cmb" value="[custom](@{header_image-pf_attack-cmb-url})" title="@{header_image-pf_attack}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_attack-cmb-url" title="@{header_image-pf_attack-cmb-url}">http://i.imgur.com/Si4vfts.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11869,7 +11874,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_defense" value="[default](http://imgur.com/02fV6wh.png)" title="@{header_image-pf_defense}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/02fV6wh.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_defense" value="[custom](@{header_image-pf_defense-url})" title="@{header_image-pf_defense}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_defense-url" title="@{header_image-pf_defense-url}">http://imgur.com/02fV6wh.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11879,7 +11884,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic" value="[default](http://imgur.com/phw1eFB.png)" title="@{header_image-pf_generic}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/phw1eFB.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic" value="[custom](@{header_image-pf_generic-url})" title="@{header_image-pf_generic}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_generic-url" title="@{header_image-pf_generic-url}">http://imgur.com/phw1eFB.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11889,7 +11894,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_ability" value="[default](http://i.imgur.com/UxYSva8.png)" title="@{header_image-pf_ability}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/UxYSva8.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_ability" value="[custom](@{header_image-pf_ability-url})" title="@{header_image-pf_ability}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_ability-url" title="@{header_image-pf_ability-url}">http://i.imgur.com/UxYSva8.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11899,7 +11904,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block" value="[default](http://imgur.com/nBnv4DL.png)" title="@{header_image-pf_block}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/nBnv4DL.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block" value="[custom](@{header_image-pf_block-url})" title="@{header_image-pf_block}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_block-url" title="@{header_image-pf_block-url}">http://imgur.com/nBnv4DL.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11909,7 +11914,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic-skill" value="[default](http://imgur.com/8dCkRtG.png)" title="@{header_image-pf_generic-skill}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/8dCkRtG.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic-skill" value="[custom](@{header_image-pf_generic-skill-url})" title="@{header_image-pf_generic-skill}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_generic-skill-url" title="@{header_image-pf_generic-skill-url}">http://imgur.com/8dCkRtG.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11919,7 +11924,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic-init" value="[default](http://i.imgur.com/pjS6HVJ.png)" title="@{header_image-pf_generic-init}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/pjS6HVJ.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_generic-init" value="[custom](@{header_image-pf_generic-init-url})" title="@{header_image-pf_generic-init}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_generic-init-url" title="@{header_image-pf_generic-init-url}">http://i.imgur.com/pjS6HVJ.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11929,7 +11934,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block-item" value="[default](http://i.imgur.com/4FgQuqS.png)" title="@{header_image-pf_block-item}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/4FgQuqS.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block-item" value="[custom](@{header_image-pf_block-item-url})" title="@{header_image-pf_block-item}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_block-item-url" title="@{header_image-pf_block-item-url}">http://i.imgur.com/4FgQuqS.png</textarea></span>
 			</div>
 			<div class="sheet-table-row">
@@ -11939,7 +11944,7 @@
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block-check" value="[default](http://i.imgur.com/a6O3ZGB.png)" title="@{header_image-pf_block-check}" /></span>
 				<span class="sheet-table-cell sheet-nontable-name"><img src="http://i.imgur.com/a6O3ZGB.png"></span>
-				<span class="sheet-divider"></span>
+				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_block-check" value="[custom](@{header_image-pf_block-check-url})" title="@{header_image-pf_block-check}" /><textarea class="sheet-inline-textarea" style="width:80%; margin-left:.5em;" name="attr_header_image-pf_block-check-url" title="@{header_image-pf_block-check-url}">http://i.imgur.com/a6O3ZGB.png</textarea></span>
 			</div>
 		</div>
@@ -11955,7 +11960,7 @@
 							<strong>Hero Lab XML Import </strong><br/>Used to import characters from Hero Lab via XML files.<br/>
 							<strong>Step 1:</strong> Save the character as an XML file in Hero Lab (File -> Save Custom Output).<br/>
 							<strong>Step 2:</strong> Use Code Beautify's XML to JSON converter (link below) to convert the contents of the XML file to JSON (paste contents of XML file from a text editor into the text area labelled "Xml Input", set "Result mode" to text, click "XML to JSON", then copy the text from the text area on the right).<br/>
-							<strong>Step 3:</strong> Paste the JSON into the text field below these instructions.<br/><strong>Step 4:</strong> Profit!<br/>Code Beautify:
+							<strong>Step 3:</strong> Paste the JSON into the text field below these instructions.<br/><strong>Step 4:</strong> Profit!<br/>Code Beautify: 
 						</span>
 					</span>
 					<input type="text" style="width:75%; border:none; cursor:help; height:1.4em;" value="http://codebeautify.org/xmltojson" />
@@ -12098,8 +12103,8 @@
 					</div>
 					<div class="sheet-table-row">
 						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >&nbsp;</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_repeating_item_attributes" title="@{migrated_repeating_item_attributes}" value="1"><span data-i18n="copy-duplicate-attrs" >Copy duplicate fields</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_worn_equipment" title="@{migrated_worn_equipment}" value="1" /><span data-i18n-title="worn-equipment-migrated" data-i18n-aria-label="worn-equipment-migrated" data-i18n="worn-equipment-migrated">Worn Equipment </span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_repeating_item_attributes" title="@{migrated_repeating_item_attributes}" value="1"><span data-i18n="equipment-list" >Equipment List</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_hp_misc" title="@{migrated_hp_misc}" value="1"/><span data-i18n="hit-point-misc-migrated">Misc hp field</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_maxskill_misc" title="@{migrated_maxskill_misc}" value="1"/><span data-i18n="misc-skill-point-field" >Misc skill point field</span></label></span>
 					</div>
@@ -13087,7 +13092,7 @@
 	</div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" style="margin-top: 2em" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>02/17/2017 7:30pm(Pac)&nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>02/21/2017 2:26am(Pac)&nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
@@ -13239,7 +13244,7 @@
 					{{#description}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{description}}</div></div>{{/description}}
 					{{#spells_notes}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="spells-notes">Spells Notes</span>:**{{spells_notes}}</div></div>{{/spells_notes}}
 					{{#generic_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{generic_note}}</div></div>{{/generic_note}}
-					{{#deafened_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="deafened">Deafened</span>:**<span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></div></div>{{/deafened_note}}
+					{{#deafened_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="deafened">Deafened</span>:**<span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></div></div>{{/deafened_note}}				
 				</div>
 			</div>
 			{{/accessible}}
@@ -13370,7 +13375,7 @@
 				{{#spells_notes}}<h4 data-i18n="description">Spells Notes</h4><span class="sheet-roll-description">{{spells_notes}}</span>{{/spells_notes}}
 				{{#deafened_note}}<h4 data-i18n="deafened">Deafened</h4>
 				<label><span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></label>
-				{{/deafened_note}}
+				{{/deafened_note}}				
 			</div>
 			{{/accessible}}
 		</rolltemplate>
@@ -13657,7 +13662,7 @@
 				</div>
 				<div class="sheet-roll-group">
 					{{#buttons}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{buttons}}</div></div>{{/buttons}}
-				</div>
+				</div>					
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#allprops() spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note}}
@@ -13785,7 +13790,7 @@
 						{{#targetarea}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="targets-area-effect">Targets/Area/Effect</span>**</div><div class="sheet-roll-cell">{{targetarea}}</div></div>{{/targetarea}}
 						{{#damage}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="damage">Damage</span>**</div><div class="sheet-roll-cell">{{damage}}{{#damagetype}} {{damagetype}}{{/damagetype}}</div></div>{{/damage}}
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check">Check</span>**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
-						{{#duration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="duration">Duration</span>**</div><div class="sheet-roll-cell">{{duration}}</div></div>{{/duration}}
+						{{#duration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="duration">Duration</span>**</div><div class="sheet-roll-cell">{{duration}}</div></div>{{/duration}}														
 						{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**</div><div class="sheet-roll-cell">{{value}}</div></div>
 						{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
@@ -13959,11 +13964,12 @@
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
+					{{#whisper}}{{#switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">(<span data-i18n="whisper-gm">Roll: GM</span>)</div></div>{{/switch}}{{/whisper}}
+					{{^whisper}}{{#switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">(<span data-i18n="public-roll">Roll: Public</span>{{switch}})</div></div>{{/switch}}{{/whisper}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
-
-					{{#allprops() color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+					{{#allprops() whisper switch color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
 					<div class="sheet-roll-row"><div class="sheet-roll-cell">{{value}}</div></div>
-					{{/allprops() color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+					{{/allprops() whisper switch color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
 				</div>
 				<div class="sheet-roll-group">
 					{{#description}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{description}}</div></div>{{/description}}
@@ -13978,10 +13984,12 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
+				{{#whisper}}{{#switch}}<label class="sheet-right">(<span data-i18n="whisper-gm">Roll: GM</span> {{whisper}} {{switch}})</label>{{/switch}}{{/whisper}}
+				{{^whisper}}{{#switch}}<label class="sheet-right">(<span data-i18n="public-roll">Roll: Public</span>{{switch}}</label>){{/switch}}{{/whisper}}		
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
-				{{#allprops() color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+				{{#allprops() whisper switch color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
 				<label><span>{{value}}</span></label>
-				{{/allprops() color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+				{{/allprops() whisper switch color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
 				{{#description}}<span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
 			</div>
