@@ -184,6 +184,11 @@ export function applyConditions (callback, silently) {
         }
     });
 }
+export function migrate (callback){
+    if (typeof callback === "function"){
+        callback();
+    }
+}
 /** recalculates all attributes written to by this module.
  *@param {function()} callback to call when done.
  *@param {boolean} silently if true update with PFConst.silentParams
