@@ -1,3 +1,4 @@
+'use strict';
 import _ from 'underscore';
 import {on,randomInteger,getsectionIDs,getTranslationByKey,getAttrs,setAttrs,removeRepeatingRow,generateRowID} from '../stubs/on';
 import {PFLog, PFConsole} from './PFLog';
@@ -9,7 +10,7 @@ import * as ExExp from './ExExp';
 * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
 * allows: floor, abs, kh1, kl1,  ceil, round, max, min
 *@param {string} preeval string to examine
-*@returns {bool} true if string will evaluate to a number.
+*@returns {boolean} true if string will evaluate to a number.
 */
 function validNumericStr (preeval) {
 	var anyIllegal = preeval.match(/\||\?|&|\{|\}|k[h,l][^1]/);
@@ -178,8 +179,8 @@ function evaluateExpression (exprStr, callback) {
  * @param {string} writeField= field to write to
  * @param {number} defaultVal= optional, default to set if we cannot evaluate the field. If not supplied assume 0
  * @param {function} callback - function(newval, oldval, ischanged)
- * @param {bool} silently if true set new val with {silent:true}
- * @param {bool} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
+ * @param {boolean} silently if true set new val with {silent:true}
+ * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
 export function evaluateAndSetNumber (readField, writeField, defaultVal, callback, silently, errcallback) {
@@ -319,7 +320,7 @@ function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 * @param {function} synchrousFindAttributeFunc takes value of @readField and says what the lookup field is.
 * @param {function(int)} callback (optional) if we need to update the field, call this function
 *         with the value we set as the only parameter.
-* @param {bool} silently if true call setAttrs with {silent:true}
+* @param {boolean} silently if true call setAttrs with {silent:true}
 */
 export function setDropdownValue (readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
 	var done = function (newval, currval, changed) {
@@ -327,7 +328,7 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
 			callback(newval, currval, changed);
 		}
 	};
-	SWUtils.getDropdownValue(readField, synchrousFindAttributeFunc, function (valueOf) {
+	getDropdownValue(readField, synchrousFindAttributeFunc, function (valueOf) {
 		var params = {};
 		if (silently) {params.silent=true;}
 		if (Array.isArray(writeFields) && writeFields.length === 1) {
@@ -431,7 +432,7 @@ function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, errorCa
 * @param {Array} penalties array of fieldnames whose values are to be subtracted from the total
 * @param {boolean} totalIsFloat true if we should not round the total to int.
 * @param {function(number,number)} callback optional call this with two values: the new total, old total
-* @param {bool} silently if true call setAttrs with {silent:true}
+* @param {boolean} silently if true call setAttrs with {silent:true}
 */
 export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback, silently) {
 	var done = function () {
@@ -611,6 +612,6 @@ export function trimBoth (val){
 	}
 	return val;
 }
-;
+
 PFConsole.log( '   SWUtils module loaded          ' );
 PFLog.modulecount++;

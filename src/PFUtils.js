@@ -165,8 +165,8 @@ export function findSpellRange  (customRangeVal, rangeDropdown, casterlevel) {
 }
 /** getWoundPenalty - applies Endurance feat or Gritty Mode to wound level.
 *@param {int} woundLevel value of wounds attribute
-*@param {bool} hasEndurance if char has Endurance feat (lessens penalty by 1)
-*@param {bool} grittyMode if using grittyMode (doubles penalty, applied before hasEndurance)
+*@param {boolean} hasEndurance if char has Endurance feat (lessens penalty by 1)
+*@param {boolean} grittyMode if using grittyMode (doubles penalty, applied before hasEndurance)
 *@returns {int} value to apply.
 */
 export function getWoundPenalty  (woundLevel, hasEndurance, grittyMode) {
@@ -229,8 +229,8 @@ export function deleteOption  (optionText, optionKey, regexMap) {
 * @param {int} hdice # of dice
 * @param {int} hdie # of sides (4,6,8,10,12,etc)
 * @param {float} mult optional percent of max to average, must be .5 (average), .75, or 1. If null then assume .5
-* @param {bool} firstMax if true then 1st level gets 100% hp
-* @param {bool} ispfs if true then round up EVERY level.
+* @param {boolean} firstMax if true then 1st level gets 100% hp
+* @param {boolean} ispfs if true then round up EVERY level.
 * @returns {int} hit point average. 
 */
 export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
@@ -529,7 +529,7 @@ export function getSpecialAbilityTypeFromString (str){
 /** returns string after first comma ( that is after an opening parenthesis )
 * or after first comma if there is no opening parenthesis
 * @param {string} str the string to split
-* @param {bool} putOutside if true then return whateever is before first comma and after opening paren.
+* @param {boolean} putOutside if true then return whateever is before first comma and after opening paren.
 *      if false, then return everything up to first paren then between 1st and 2nd comma. why? who the hell knows?
 * @returns {?} ?
 */
@@ -585,9 +585,9 @@ export function getDiceDieString (str){
 * whether to divide that level by 2 or not.
 * @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
 * @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd-num" etc
-* @param {bool} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
+* @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
 * @param {int} miscBonus a flat number to add in
-* @param {bool} doNotDivideByTwo if true then do not divide level attr value by 2 
+* @param {boolean} doNotDivideByTwo if true then do not divide level attr value by 2 
 * @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]";
 */
 export function getDCString  (ability, levelAttr, isUndead, miscBonus, doNotDivideByTwo) {
@@ -618,9 +618,9 @@ export function getDCString  (ability, levelAttr, isUndead, miscBonus, doNotDivi
 * @param {string} str the string to search and replace
 * @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
 * @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd" etc
-* @param {bool} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
+* @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
 * @param {int} levelFlatNum optional the level, if levelAttr is blank, this must be filled in, or vice versa
-* @param {bool} doNotDivideByTwo if true then do not divide level by 2 to calculate DC
+* @param {boolean} doNotDivideByTwo if true then do not divide level by 2 to calculate DC
 * @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]"
 */
 export function replaceDCString  (str, ability, levelAttr, isUndead, levelFlatNum, doNotDivideByTwo) {

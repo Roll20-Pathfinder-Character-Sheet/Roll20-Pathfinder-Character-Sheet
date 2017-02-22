@@ -1,3 +1,4 @@
+'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
@@ -8,11 +9,10 @@ import * as PFUtilsAsync from './PFUtilsAsync';
 
 /** splitMacro Splits macro into {{x=y}} components
  * and @{attr} if at top level (not inside a {{x=@{attr}}})
- *@param {string} macrostr the macro-text from a repeating row
- *@returns {Array} of strings comprising macro
+ * @param {string} macrostr the macro-text from a repeating row
+ * @returns {Array} of strings comprising macro
  */
 function splitMacro (macrostr){
-    'use strict';
     var splitted,newsplit,lastclosing;
     if (!macrostr) {return "";}
     splitted = macrostr.split(/(?=\{\{)/);
@@ -55,7 +55,6 @@ function splitMacro (macrostr){
 *@returns {jsobj} of each array entry split in half
 */
 function arrayToMap (currArray,removeWhisper){
-    'use strict';
     return _.reduce(currArray,function(memo,val){
         var spliteq=val.split('=');
         if (val){
@@ -85,7 +84,6 @@ function arrayToMap (currArray,removeWhisper){
 *@returns {Array} of strings for macro entries.
 */
 function mergeMacroMaps (currMap,defaultMap,sameAsKeys){
-    'use strict';
     var currKeys=[],newKeys=[],customKeys=[], newArray=[] , customizedMap={}, userDefinedMap={};
     try {
         currKeys = _.keys(currMap).sort();
@@ -185,7 +183,6 @@ function mergeMacroMaps (currMap,defaultMap,sameAsKeys){
             any other string: the new macro (if the user customized it, then this is the new one with updates)
 */
 export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sameAsKeys) {
-     'use strict';
    var currMacroArray, currMacroMap,newMacroArray,newMacroString=null;
     try {
         if (currMacro !== defaultMacro){
@@ -235,7 +232,6 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
  * @param {Array} deleteArray  array of strings of old rolltemplate entries that are not used (entire entry not just left side )
  */
 export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray, whisper){
-     'use strict';
    var done = _.once(function(){
         TAS.debug("leaving migrateRepeatingMacros for "+ section + ", "+fieldname);
         if (typeof callback === "function") {
@@ -309,7 +305,6 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
 *@param {Array} replaceArray array of strings to replace the word 'REPLACE' with that are found in the other params.
 */
 export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray,replaceArray, whisper){
-    'use strict';
    var done=_.once(function(){
         TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);
         if (typeof callback === "function"){
@@ -410,7 +405,6 @@ export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultM
  * @param {any} whisper 
  */
 export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMap, deleteArray, sameAsKeys, whisper){
-    'use strict';
     var done = _.once(function(){
         TAS.debug("leaving migrateRepeatingMacros for "+ fieldname);
         if (typeof callback === "function") {
@@ -467,7 +461,6 @@ export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMa
  * @param {any} whisper 
  */
 export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultMaps,deleteArrays, sameAsKeys, whisper){
-    'use strict';
     var done = _.once(function(){
         TAS.debug("leaving migrateStaticMacros ");
         if (typeof callback === "function") {
@@ -529,24 +522,24 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
  * REPLACEREMOVENUMBER - replace this with: strip out digit chars from string from replaceArray
  * REPLACELOWERREMOVENUMBER - replace this with: strip out digit chars from lowercase string from replaceArray
  * 
+ * if any of the "REMOVENUMBER" values are used, then caller should set useNoNumber to true
  * 
  * @param {function} callback after calling setAttrs with the new macros
- * @param {string} fieldname string pattern of attr we are saving to. Should have 'REPLACE' in it, which will be replaced by values in replaceArray
+ * @param {string} fieldname string pattern of attr we are saving to. Should have one of 'REPLACE','REPLACELOWER','REPLACEREMOVENUMBER','REPLACELOWERREMOVENUMBER' in it, which will be replaced by values in replaceArray
  * @param {string} defaultMacro default macro with REPLACE strings
  * @param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
                         }} defaultMap a map of key and values for the rolltemplate.  
                          {rollqueryleft : {current:rollqueryright, old:[  oldrollqueryright1, oldrollqueryright2 ], 
                             replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] } }
- * @param {[string]} deleteArray 
- * @param {[string]} replaceArray values to put in "REPLACE" string found in fieldname
- * @param {[string]} keysToReplaceShortcut 
+ * @param {[string]} deleteArray Strings to delete from the macro (such as @{PC-Whisper} or other @{attrname}) that do not correspond to key-value pair in defaultMacro
+ * @param {[string]} replaceArray values to insert in place of "REPLACEx" strings found in fieldname
+ * @param {[string]} keysToReplaceShortcut array of keys from defaultMacro, if not supplied will be built
  * @param {[string]} valsToReplaceShortcut 
- * @param {bool} useNoNumber When matching replaceArray, whether to try to strip numbers from replace strings as well as use the whole string
+ * @param {boolean} useNoNumber When matching replaceArray, whether to try to strip numbers from replace strings as well as use the whole string
  * @param {string} whisper Either @{PC-Whisper} or @{NPC-Whisper}
  */
 export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defaultMap, deleteArray, replaceArray, 
     keysToReplaceShortcut, valsToReplaceShortcut, useNoNumber, whisper){
-    'use strict';
     var done=_.once(function(){
         TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
         if (typeof callback === "function"){

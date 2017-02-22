@@ -1,13 +1,14 @@
 import _ from 'underscore';
 import {on,randomInteger,getsectionIDs,getTranslationByKey,getAttrs,setAttrs,removeRepeatingRow,generateRowID} from '../stubs/on';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import * as ExExp from './ExExp';
-import {PFLog} from './PFLog';
+import {PFLog,PFConsole} from './PFLog';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import PFDB from './PFDB';
 import * as PFUtils from './PFUtils';
 import * as PFMacros from './PFMacros';
+import * as PFMenus from './PFMenus';
+
 //how to run this before anything? even before stuff is loaded?
 TAS.config({
  logging: {
@@ -18,2812 +19,6 @@ TAS.config({
 TAS.debugMode();
 
 
-var PFMenus = PFMenus || (function () {
-	'use strict';
-	/** creates a command macro button for a repeating section
-	* it also extends to add old lists using "extendbysections"
-	* @param {jsmap} baseAttribs object of schema:
-	*  name:string ex:'abilities',
-	*  template:string ex:'pf_generic',
-	*  header:string ex:'header_image-pf_generic',
-	*  section:string the name after 'repeating_' e.g. weapon,item, spells, etc
-	*  bonusField:string bonus attr to add at the end of the name attr of each row, put into parenthesis, such as Burning Hands (Sp),
-	*  usesField:string used or attr name with |max if instead to print uses/max,
-	*  nameField:string name of header of menu written to {{#name}}
-	*  linkField:string the attr of the roll button 'roll'
-	*  npclinkField:string if necessary, different link field to use if the char is an NPC
-	*  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
-	*  filterValue:string if filter should be custom (not 1/0) then fill in value ex: 'Sp', cannot be '0' (zero)
-	*  groupByField:string optional name of attr to group by
-	*  translateGroup: if ^{} should be placed around groupby field value
-	*  translateBonus: if ^{} should be placed around bonus field value
-	*  groupMap:{key:string,key:string} if instead of grouping by the groupField itself, pass the value to a map and group by the result.
-	* @param {function(string)} callback Pass string for command macro as first param, or ""
-	*/
-	var
-	menuMap={
-		'class-ability':{'name':'original-class-features-list','section':'class-ability'},
-		'feat':{'npcMacroName':'NPC-feat','name':'original-feats-list','section':'feat','npcLinkField':'npc-roll'},
-		'racial-trait':{'npcMacroName':'NPC-racial-trait','name':'original-racial-traits-list','section':'racial-trait','npcLinkField':'npc-roll'},
-		'trait':{'name':'original-traits-list','section':'trait'},
-		'mythic-ability':{'name':'mythic-abilities','section':'mythic-ability'},
-		'mythic-feat':{'name':'mythic-feats','section':'mythic-feat'},
-		'npc-spell-like-abilities':{'name':'original-spell-like-abilities-list','section':'npc-spell-like-abilities'},
-		'ability':{'npcMacroName':'NPC-ability','name':'abilities','section':'ability','groupBy':'rule_category','translateGroup':1,'npcLinkField':'npc-roll'},
-		'ex':{'npcMacroName':'NPC-ex','name':'extraordinary-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Ex','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-		'sp':{'npcMacroName':'NPC-sp','name':'spell-like-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Sp','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-		'su':{'npcMacroName':'NPC-su','name':'supernatural-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Su','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-		'item':{'npcMacroName':'NPC-item','name':'items','section':'item','usesField':'qty','bonusField':'','groupBy':'equip-type','translateGroup':1,'npcLinkField':'npc-roll'}
-	},
-	
-	getRepeatingCommandMacro = function(baseAttribs,callback,header){
-		var done = function (macro) { 
-				if (typeof callback === "function") { callback(macro); } 
-			},
-			defaultTemplate = "pf_block",
-			defaultHeader="header_image-pf_block",
-			defaultName="ability-menus",
-			nameField = "name",
-			bonusField ="",
-			usesField="",
-			altUsesField="",
-			groupByField="",
-			linkField="roll",
-			filterField="",
-			filterValue="",
-			baseMacro = "/w \"@{character_name}\" &{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
-			baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
-			noRows = " {{description=^{none-available} }}";
-		if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
-			done("");
-			return;
-		}
-		try {
-			header=header||"";
-			baseMacro = baseMacro.replace('REPLACETEMPLATE',baseAttribs.template||defaultTemplate);
-			baseMacro = baseMacro.replace('REPLACEHEADER',baseAttribs.header||defaultHeader);
-			baseMacro = baseMacro.replace('REPLACENAME',baseAttribs.name||defaultName);
-			baseMacro = baseMacro.replace('REPLACESUBTITLE','');
-			baseMacro = baseMacro.replace(/REPLACENPC/g,baseAttribs.npcName||'');
-			baseMacro += header;
-			nameField=baseAttribs.nameField||nameField;
-			bonusField=baseAttribs.bonusField||bonusField;
-			usesField=baseAttribs.usesField||usesField;
-			linkField=baseAttribs.linkField||linkField;
-			groupByField=baseAttribs.groupBy||groupByField;
-			filterField=baseAttribs.filterField||filterField;
-			altUsesField=baseAttribs.altUsesField||altUsesField;
-			//TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
-		} catch (outerErr){
-			TAS.error("PFMenus.getRepeatingCommandMacro outererror for "+ baseAttribs.section, outerErr);
-			done("");
-			return;
-		}
-		getSectionIDs("repeating_"+baseAttribs.section,function(ids){
-			var fields=[],prefix="repeating_"+baseAttribs.section+"_";
-			try {
-				if (_.size(ids)<0){
-					TAS.error("It says "+baseAttribs.section+" has no rows!");
-					done(baseMacro+ noRows);
-					return;
-				}
-				_.each(ids,function(id){
-					var linePrefix=prefix+id+"_";
-					fields.push(linePrefix+nameField);
-					fields.push(linePrefix+'showinmenu');
-					if (bonusField){
-						fields.push(linePrefix+bonusField);
-					}
-					if (usesField){
-						fields.push(linePrefix+usesField);
-						fields.push(linePrefix+usesField+"_max");
-					}
-					if (filterField){
-						fields.push(linePrefix+filterField);
-					}
-					if (groupByField){
-						fields.push(linePrefix+groupByField);
-					}
-					if (altUsesField){
-						fields.push(linePrefix+altUsesField);
-					}
-				});
-			} catch (outerError2){
-				TAS.error("PFMenus.getRepeatingCommandMacro outererror 2 assembling all attrs in rows for "+ baseAttribs.section, outerError2);
-				done("");
-				return;
-			}
-			fields.push( '_reporder_repeating_'+baseAttribs.section);
-			getAttrs(fields,function(v){
-				var restOfMacro="", totalMacro="",orderedList,repList,customSorted=0, rowCounter=20;
-				try {
-					if (v['_reporder_repeating_'+baseAttribs.section]) {
-						repList = v['_reporder_repeating_'+baseAttribs.section].split(",");
-						repList = _.map(repList, function (ID) {
-							return ID.toLowerCase();
-						});
-						orderedList = _.intersection(_.union(repList, ids), ids);
-						customSorted = 1;
-					} else {
-						orderedList = ids;
-					}
-					restOfMacro=_.chain(orderedList)
-						.map(function(id){
-							var linePrefix=prefix+id+'_',buttonName='',bonus='',uses='',max='',usesStr='',tempshow=0,
-							retObj= {
-								'id': id,
-								'name': (v[linePrefix+'name']||id),
-								'showinmenu':1
-							};
-							try {
-								if (usesField){
-									uses = v[linePrefix+usesField]||'';
-									max = v[linePrefix+usesField+"_max"]||'';
-								}
-								if (groupByField && v[linePrefix+groupByField]){
-									if (baseAttribs.groupMap){
-										if (baseAttribs.groupMap[v[linePrefix+groupByField]]){
-											retObj.group = baseAttribs.groupMap[v[linePrefix+groupByField]];
-										} else {
-											retObj.group='AAAAAA';
-										}
-									} else if (groupByField==='frequency' ){
-										switch(v[linePrefix+groupByField]){
-											case 'perday':
-												retObj.group='';
-												if (max) {
-													retObj.group = max + ' ';
-												}
-												retObj.group += (baseAttribs.translateGroup?'^{':'') + v[linePrefix+groupByField] + (baseAttribs.translateGroup?'}':'');
-												retObj.doNotTranslate=1;
-												break;
-											case 'not-applicable':
-												retObj.group='AAAAAA';
-												uses=0;
-												max=0;
-												break;
-											case 'constant':
-											case 'atwill':
-												retObj.group=v[linePrefix+groupByField];
-												uses=0;
-												max=0;
-												break;
-											case 'hexfreq':
-											case 'other':
-												retObj.group=v[linePrefix+groupByField];
-												break;
-											case 'everyrounds':
-												retObj.group=v[linePrefix+groupByField];
-												if(v[linePrefix+altUsesField]){
-													uses= v[linePrefix+altUsesField];
-													max=0;
-												}
-												break;
-											default:
-												retObj.group=v[linePrefix+groupByField];
-												break;
-										}
-									} else {
-										retObj.group =  v[linePrefix+groupByField];
-									}
-								} else {
-									retObj.group='AAAAAA';
-								}
-								if (retObj.group!=='AAAAAA' && baseAttribs.translateGroup && !retObj.doNotTranslate){
-									retObj.group = '^{'+retObj.group+'}'; 
-								}
-								if (usesField){
-									if(uses&&max){
-										usesStr = ' ('+uses+'/'+max+')';
-									} else if (uses){
-										usesStr = ' ('+uses+')';
-									}
-								}
-								if (filterField){
-									if(baseAttribs.filterValue){
-										if(String(v[linePrefix+filterField]) === String(baseAttribs.filterValue)){
-											retObj.showinmenu = 1;
-										} else {
-											retObj.showinmenu = 0;
-										}
-									} else {
-										retObj.showinmenu = parseInt(v[linePrefix+filterField],10)||0;
-									}
-								} else {
-									retObj.showinmenu = 1;
-								}
-								if(retObj.showinmenu){
-									tempshow=parseInt(v[linePrefix+'showinmenu'],10)||0;
-									retObj.showinmenu = retObj.showinmenu && tempshow;
-								}
-								if (bonusField && v[linePrefix+bonusField] && v[linePrefix+bonusField]!=='not-applicable'){
-									bonus = ' (' + (baseAttribs.translateBonus?'^{':'') + v[linePrefix+bonusField] + (baseAttribs.translateBonus?'}':'') +')';
-								}
-								buttonName  = retObj.name + bonus + usesStr;
-								retObj.chatLink='['+SWUtils.escapeForRollTemplate(SWUtils.escapeForChatLinkButton(buttonName))+'](~@{character_id}|'+ linePrefix + linkField + ')';
-							} catch (builderr){
-								TAS.error("PFMenus.getRepeatingCommandMacro builderr object for id "+id,builderr);
-							} finally {
-								return retObj;
-							}
-						})
-						.filter(function(o){return o.showinmenu;})
-						.sortBy('group');
-						if(groupByField==='frequency'){
-							restOfMacro = restOfMacro.reverse();
-						}
-						restOfMacro=restOfMacro.groupBy('group')
-						.reduce(function(m,rowList,groupName){
-							var restOflink='';
-							try {
-								if(groupName !== 'AAAAAA' && _.size(rowList)>0){
-									m += ' {{row'+ String(rowCounter) + '=' + SWUtils.escapeForRollTemplate(groupName) + '}}';
-									rowCounter++;
-								}
-								restOflink=_.reduce(rowList,function(mi,o){
-									mi+= ' '+ o.chatLink;
-									return mi;
-								},' {{row' + String(rowCounter)+ '=' );
-								m  += restOflink + '}}';
-								rowCounter++;
-							} catch (strerror) {
-								TAS.error("PFMenus.getRepeatingCommandMacro strerror creating string for group "+groupName,strerror);
-							} finally {
-								return m;
-							}
-						},"")
-						.value();
-				} catch (innererror2){
-					TAS.error("PFMenus.getRepeatingCommandMacro innererror2 for "+ baseAttribs.section, innererror2);
-				} finally {
-					if (restOfMacro){
-						totalMacro = baseMacro + restOfMacro;
-					} else {
-						totalMacro=baseMacro + noRows; 
-					}
-					done(totalMacro);
-				}
-			});
-		});
-	},
-	/**resetOneCommandMacro sets command button macro with all rows from one ability list.
-	* calls PFMenus.getRepeatingCommandMacro
-	* sets the returned string to macro with attribute name: section+"_buttons_macro"
-	*@param {string} section name after "repeating_"
-	*@param {boolean} isNPC  true if npc false or not needed otherwise.
-	*@param {function} callback  when done
-	*/
-	resetOneCommandMacro=function(menuName,isNPC,callback,header,groupMap){
-		var done = _.once(function () {
-				//TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
-				if (typeof callback === "function") {
-					callback();
-				}
-			}),
-			params={},
-			macroName=menuName;
-		params ={
-			'usesField': 'used',
-			'linkField': 'roll',
-			'nameField': 'name',
-			'bonusField':'ability_type',
-			'translateBonus':1
-			};
-		if (menuMap[menuName]) {
-			params = _.extend(params,menuMap[menuName]);
-			if(isNPC){
-				if (menuMap[menuName].npcLinkField){
-					params.linkField=menuMap[menuName].npcLinkField;
-				}
-				if(menuMap[menuName].npcMacroName){
-					macroName = menuMap[menuName].npcMacroName;
-					params.npcName = ' ^{npc} ';
-				}
-			}
-		} else {
-			TAS.warn("Could not find parameters for menu "+menuName);			
-		}
-		if (groupMap && params.groupBy){
-			params.groupMap = groupMap;
-		}
-		//TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
-		getRepeatingCommandMacro( params,function(newMacro){
-			var setter={};
-			//TAS.debug("PFMenus.resetOneCommandMacro returned for "+menuName,newMacro);
-			setter[macroName+"_buttons_macro"]=newMacro||"";
-			setAttrs(setter,PFConst.silentParams,done);
-		},header);
-	},
-	/** same as resetOneCommandMacro if you do not know the npc status 
-	*@param {string} section name after "repeating_"
-	*@param {function} callback  when done
-	*/
-	resetOneCommandMacroNoNPC = function(section,callback,header){
-		getAttrs(['is_npc'],function(v){
-			resetOneCommandMacro(section, (parseInt(v.is_npc,10)||0), callback,header);
-		});
-	};
-	
-	PFConsole.log('   PFMenus module loaded          ');
-	PFLog.modulecount++;
-	return {
-		resetOneCommandMacro: resetOneCommandMacro,
-		resetOneCommandMacroNoNPC: resetOneCommandMacroNoNPC,
-		getRepeatingCommandMacro: getRepeatingCommandMacro
-	};
-} ());
-var PFAbilityScores = PFAbilityScores || (function () {
-	'use strict';
-	var abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"],
-	abilitymods = ["STR-mod", "DEX-mod", "CON-mod", "INT-mod", "WIS-mod", "CHA-mod"],
-	/** updateAbilityScore - Updates the final ability score, ability modifier, condition column based on entries in ability grid plus conditions and buffs.
-	* Note: Ability value is not affected by damage and penalties, instead only modifier is affected.
-	*@param {string} ability 3 letter abbreviation for one of the 6 ability scores, member of PFAbilityScores.abilities
-	*@param {eventInfo} eventInfo unused eventinfo from 'on' method
-	*@param {function} callback to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
-	*/
-	updateAbilityScore = function (ability, eventInfo, callback, silently) {
-		var done = _.once(function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		//TAS.debug("at updateAbilityScore:" + ability);
-		getAttrs([ability + "-base", ability + "-enhance", ability + "-inherent", ability + "-misc", ability + "-damage", ability + "-penalty", ability + "-drain", ability, ability + "-mod", ability + "-cond", ability + "-modded", "buff_" + ability + "-total", "buff_" + ability + "-total_penalty", "condition-Helpless"], function (values) {
-			var setter = {},
-			params = {
-				silent: false
-			},
-			base = 0,
-			newVal = 0,
-			rawDmg = 0,
-			rawPen = 0,
-			dmgAndPen = 0,
-			rawCond = 0,
-			penalized = 0,
-			currAbility = 0,
-			currMod = 0,
-			currPenalized = 0,
-			mod = 0;
-			try {
-				base = parseInt(values[ability + "-base"], 10);
-				newVal = (isNaN(base) ? 10 : base) + (parseInt(values[ability + "-enhance"], 10) || 0) + (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
-				rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
-				rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
-				dmgAndPen = Math.floor((Math.abs(parseInt(values[ability + "-damage"], 10) || 0) + Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) +
-				(Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0)) + Math.abs(parseInt(values[ability + "-cond"], 10) || 0)) / 2);
-				rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
-				currAbility = parseInt(values[ability], 10);
-				currPenalized = parseInt(values[ability+"-modded"],10)||0;
-				currMod = parseInt(values[ability + "-mod"], 10);
-				mod = Math.floor((newVal - 10) / 2) - dmgAndPen;
-				//TAS.debug(values);
-				if (ability === "DEX" && (parseInt(values["condition-Helpless"], 10) || 0) === 1) {
-					newVal = 0;
-					mod = -5;
-					penalized = 1;
-				} else if (rawDmg >= newVal) {
-					newVal = 0;
-					mod = -5;
-					penalized = 1;
-				} else if ((rawPen + rawDmg + rawCond) >= (newVal - 1)) {
-					//min of 1
-					mod = -5;
-					penalized = 1;
-				} else if (dmgAndPen !== 0) {
-					penalized = 1;					
-				}
-				//TAS.debug("base:" + base + ", newval:" + newVal + ", mod:" + mod);
-				if (isNaN(base)) {
-					setter[ability] = "-";
-					setter[ability + "-mod"] = 0;
-				} else {
-					if (currAbility !== newVal || isNaN(currAbility)) {
-						setter[ability] = newVal;
-					}
-					if (currMod !== mod || isNaN(currMod)) {
-						setter[ability + "-mod"] = mod;
-					}
-				}
-				if (penalized && !currPenalized){
-					setter[ability+"-modded"]=1;
-				} else if (!penalized && currPenalized){
-					setter[ability+"-modded"]=0;
-				}
-			} catch (err) {
-				TAS.error("updateAbilityScore:" + ability, err);
-			} finally {
-				if (_.size(setter) > 0) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
-					setAttrs(setter, params, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/** updateAbilityScores - update all 6 scores then calls callback 
-	*@param {function(bool)} callback to call when done, pass in true if any changes were made.
-	*@param {bool} silently if true update with PFConst.silentParams
-	*/
-	updateAbilityScores = function (callback, silently) {
-		//TAS.debug("at updateAbilityScores");
-		var callatend = _.after(6, function (changed) {
-			if (typeof callback === "function") {
-				callback(changed);
-			}
-		}),
-		anychanged = false,
-		thecount = 0,
-		calleach = function (newval, currval, changed) {
-			anychanged = anychanged || changed;
-			thecount++;
-			callatend(anychanged);
-		};
-		_.each(PFAbilityScores.abilities, function (ability) {
-			updateAbilityScore(ability, null, calleach, silently);
-		});
-	},
-	/** Sets ability penalties, not "ability check" penalties 
-	* Sets DEX-cond and STR-cond for fatigued, entangled, and grappled  
-	*@param {function()} callback to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
-	*/
-	applyConditions = function (callback, silently) {
-		//TAS.debug("at PFAbilityScores.applyConditions");
-		getAttrs(["STR-cond", "DEX-cond", "condition-Fatigued", "condition-Entangled", "condition-Grappled", "condition-Helpless"], function (v) {
-			var done = function () {
-				if (typeof callback === "function") {
-					callback();
-				}
-			},
-			setter = {},
-			params = {},
-			helpless = parseInt(v["condition-Helpless"], 10) || 0,
-			strMod = parseInt(v["condition-Fatigued"], 10) || 0,
-			dexMod = 0,
-			dexAbMod = 0,
-			strAbMod = 0;
-			try {
-				dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
-				dexAbMod = dexMod * -2;
-				strAbMod = strMod * -2;
-				if (!helpless) {
-					if (dexAbMod !== (parseInt(v["DEX-cond"], 10) || 0)) {
-						setter["DEX-cond"] = dexAbMod;
-					}
-					if (strAbMod !== (parseInt(v["STR-cond"], 10) || 0)) {
-						setter["STR-cond"] = strAbMod;
-					}
-				} else {
-					setter["DEX"] = 0;
-					setter["DEX-mod"] = -5;
-				}
-			} catch (err) {
-				TAS.error("PFAbilityScores.applyConditions", err);
-			} finally {
-				if (_.size(setter) > 0) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
-					setAttrs(setter, params, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/** recalculates all attributes written to by this module.
-	*@param {function()} callback to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
-	*@param {float} oldversion the current @{PFVersion} in the attributes
-	*/
-	recalculate = function (callback, silently, oldversion) {
-		var done = _.once(function () {
-			TAS.debug("leaving PFAbilityScores.recalculate");
-			if (typeof callback === "function") {
-				callback();
-			}
-		}),
-		updateScoresOnce = _.once(function () {
-			updateAbilityScores(done, silently);
-		});
-		applyConditions(updateScoresOnce, silently);
-	},
-	/** map of event types to event string for 'on' function to look for */
-	events = {
-		abilityEventsAuto: "change:REPLACE-cond",
-		abilityEventsPlayer: "change:REPLACE-base change:REPLACE-enhance change:REPLACE-inherent change:REPLACE-misc change:REPLACE-temp change:REPLACE-damage change:REPLACE-penalty change:REPLACE-drain"
-	},
-	/** Calls 'on' function for everything related to this module */
-	registerEventHandlers = function () {
-		//register event handlers **********************************************
-		_.each(abilities, function (ability) {
-			on((events.abilityEventsAuto.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbility(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker") {
-					updateAbilityScore(ability, eventInfo);
-				}
-			}));
-			on((events.abilityEventsPlayer.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbilityPlayerUpdated(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-					updateAbilityScore(ability, eventInfo);
-				}
-			}));
-		});
-		on("change:condition-Helpless", TAS.callback(function eventUpdateAbilityHelpless(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				updateAbilityScore("DEX", eventInfo);
-			}
-		}));
-	};
-	registerEventHandlers();
-	PFConsole.log('   PFAbilityScores module loaded  ');
-	PFLog.modulecount++;
-	return {
-		recalculate: recalculate,
-		abilities: abilities,
-		abilitymods: abilitymods,
-		updateAbilityScore: updateAbilityScore,
-		updateAbilityScores: updateAbilityScores,
-		applyConditions: applyConditions
-	};
-}());
-var PFMigrate = PFMigrate || (function () {
-	'use strict';
-	/* default repeating_weapon macro texts and iteratives. old = .56, new = .60 */
-	var 
-	//all user editable fields at the time
-	oldSpellUserFieldDefaults = {
-		"spellclass_number": {
-			"type": "int",
-			"val": 0
-		},
-		"used": {
-			"type": "int",
-			"val": 0
-		},
-		"spell_level": {
-			"type": "int",
-			"val": -1
-		},
-		"CL_misc": {
-			"type": "int",
-			"val": 0
-		},
-		"SP_misc": {
-			"type": "int",
-			"val": 0
-		},
-		"Concentration_misc": {
-			"type": "int",
-			"val": 0
-		},
-		"range": {
-			"type": "text",
-			"val": ""
-		},
-		"name": {
-			"type": "text",
-			"val": ""
-		},
-		"school": {
-			"type": "text",
-			"val": ""
-		},
-		"cast-time": {
-			"type": "text",
-			"val": ""
-		},
-		"components": {
-			"type": "text",
-			"val": ""
-		},
-		"targets": {
-			"type": "text",
-			"val": ""
-		},
-		"duration": {
-			"type": "text",
-			"val": ""
-		},
-		"save": {
-			"type": "text",
-			"val": ""
-		},
-		"sr": {
-			"type": "text",
-			"val": ""
-		},
-		"description": {
-			"type": "text",
-			"val": ""
-		},
-		"macro-text": {
-			"type": "text",
-			"val": "@{PC-whisper} &{template:pf_spell} {{color}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}"
-		},
-		"npc-macro-text": {
-			"type": "text",
-			"val": "@{NPC-whisper} &{template:pf_spell} {{color}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}"
-		},
-		"isDomain": {
-			"type": "checkbox",
-			"val": "0"
-		}
-	},
-	/** breaks the damage dropdown into 2 dropdowns, one for the multiplier and one for the attribute
-	* done as part of migration to .60
-	*@param {Array} ids array of strings which are the row ids
-	*@param {function} callback when done
-	*/
-	migrateRepeatingDamage = function (ids,callback) {
-		var done=_.once(function(){
-			if (typeof callback === "function") {
-				callback();
-			}
-		}),
-		setter = {},
-		fields = [],
-		/** findMultiplier - OLD not used anymore  - returns old damage multiplier when it was in the dropdown.
-		* @param {string} str = the value of the damage ability
-		* @returns {float} a number indicating the multiplier for the ability mod. Must be 1, .5, 1.5, 2. 
-		*/
-		findMultiplier = function (str) {
-			var retNum;
-			if (!str) {
-				return 0;
-			}
-			if (str.indexOf("1.5") >= 0) {
-				retNum = 1.5;
-			} else if (str.indexOf(".5") >= 0) {
-				retNum = 0.5;
-			} else if (str.indexOf("1/2") >= 0) {
-				retNum = 0.5;
-			} else if (str.indexOf("3/2") >= 0) {
-				retNum = 1.5;
-			} else if (str.indexOf("1 1/2") >= 0) {
-				retNum = 1.5;
-			} else if (str.indexOf("2") >= 0) {
-				retNum = 2;
-			} else {
-				retNum = 1;
-			}
-			return retNum;
-		};
-		_.each(ids, function (id) {
-			var dmgDropdownField = "repeating_weapon_" + id + "_damage-ability",
-			abilityMultField = "repeating_weapon_" + id + "_damage_ability_mult";
-			fields.push(dmgDropdownField);
-			fields.push(abilityMultField);
-		});
-		getAttrs(fields, function (v) {
-			var setter = {};
-			try {
-				//TAS.debug("migrateRepeatingDamage", "values", v);
-				_.each(ids, function (id) {
-					var dmgDropdownField = "repeating_weapon_" + id + "_damage-ability",
-					abilityMultField = "repeating_weapon_" + id + "_damage_ability_mult",
-					ability, multStr, strToSet, multval;
-					try {
-						ability = PFUtils.findAbilityInString(v[dmgDropdownField]);
-						multStr = findMultiplier(v[dmgDropdownField]);
-						strToSet = "@{" + ability + "}";
-						multval = parseFloat(multStr, 10);
-						//multfield is blank but multstr is not.
-						if (!(v[abilityMultField]) && multStr && ability) {
-							if (!isNaN(multval)) {
-								if (multval !== 1.0) {
-									setter[abilityMultField] = multStr;
-								}
-							}
-							if (ability) {
-								setter[dmgDropdownField] = strToSet;
-							}
-						}
-					} catch (errinner) {
-						TAS.error("migrateRepeatingDamage dropdown to mult: could not migrate str " + v[dmgDropdownField] + " in attack row " + id, errinner);
-					}
-				});
-				setter["migrated_damage-multiplier"] = "1";
-			} catch (err) {
-				TAS.error("migrateRepeatingDamage outer error!? SHOULD NOT HAPPEN", err);
-			} finally {
-				if (_.size(setter)>0){
-					setAttrs(setter, PFConst.silentParams, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/** sets old dropdown  max dex and acp values to new ones for Magik's updates. 
-	* because old values were so different, new values are set to either "none" or "armor and load"
-	*/
-	migrateMaxDexAndACP = function () {
-		getAttrs(["max-dex-source"], function (v) {
-			var newMaxDex = 0,
-			currMaxDex = parseInt(v["max-dex-source"],10) || 0,
-			setter = {};
-			if (currMaxDex >= 99) {
-				setAttrs(setter, { silent: true });
-			}
-		});
-	},
-	/** updates repeating_spells ranges from text to dropdown and custom text field, and range number 
-	* @param {function} callback call after finishing */
-	migrateSpellRanges = function (callback) {
-		var done = function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		};
-		getAttrs(["spellranges_migrated"], function (m) {
-			var rangeFields = ["casterlevel", "range", "range_numeric", "range_pick", "targets", "name"];
-			if (m["spellranges_migrated"] == "1") {
-				done();
-				return;
-			}
-			getSectionIDs("repeating_spells", function (ids) {
-				var fields = [];
-				fields = _.reduce(ids, function (memo, id) {
-					var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
-					row = _.map(rangeFields, function (field) {
-						return prefix + field;
-					});
-					return memo.concat(row);
-				}, []);
-				getAttrs(fields, function (v) {
-					var setter = {};
-					_.each(ids, function (id) {
-						var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
-						casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 1,
-						chosenRange = v[prefix + "range_pick"],
-						rangeText = v[prefix + "range"] || "",
-						areaEffect = v[prefix + "targets"] || "",
-						name = v[prefix + "name"],
-						newRange = 0,
-						rangeUpdates,
-						resetDropdown = false;
-						//if dropdown is blank but text filled in try to migrate
-						if (!chosenRange && !rangeText) {
-							setter[prefix + "range"] = "";
-							setter[prefix + "range_numeric"] = 0;
-							setter[prefix + "range_pick"] = "blank";
-						} else if (((!chosenRange) || chosenRange === "blank") && rangeText) {
-							rangeUpdates = PFUtils.parseSpellRangeText(rangeText, areaEffect);
-							chosenRange = rangeUpdates.dropdown;
-							if (chosenRange === "number" || chosenRange === "perlevel" || rangeUpdates.useorig) {
-								rangeText = rangeUpdates.rangeText;
-							}
-							//otherwise leave it in case user had something they wanted.
-							newRange = PFUtils.findSpellRange(rangeText, chosenRange, casterlevel) || 0;
-							setter[prefix + "range"] = rangeText;
-							setter[prefix + "range_numeric"] = newRange;
-							setter[prefix + "range_pick"] = chosenRange;
-						} else if (resetDropdown) {
-							newRange = PFUtils.findSpellRange(rangeText, chosenRange, casterlevel) || 0;
-							setter[prefix + "range_numeric"] = newRange;
-							setter[prefix + "range_pick"] = chosenRange;
-						}
-					});
-					setter["spellranges_migrated"] = "1";
-					if (_.size(setter) > 0) {
-						setAttrs(setter, {
-							silent: true
-						}, callback);
-					} else {
-						done();
-					}
-				});
-			});
-		});
-	},
-	/** copies spells from repeating-lvl-*-spells and npc spells to repeating_spells 
-	* there are bugs in this, but it's so old we never were able to find them all and fix them. 
-	* @param {function} callback call when done
-	* @param {bool} silently if true call setAttrs with PFConst.silentParams 
-	*/
-	migrateSpells = function (callback) {
-		var done = function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		},
-		/* determines spell class from class dropdown in the spell repeating row 
-		* this is not a migrate function, just an old utility function  called by migrate
-		*/
-		handleOldSpellClassDropdown = function (selected, class0name, class1name, class2name) {
-			if (!selected) {
-				return 0;
-			} //it is undefined if it is default set to the first one
-			if (selected.indexOf("0") >= 0) {
-				return 0;
-			}
-			if (selected.indexOf("1") >= 0) {
-				return 1;
-			}
-			if (selected.indexOf("2") >= 0) {
-				return 2;
-			}
-			if (selected === class0name) {
-				return 0;
-			}
-			if (selected === class1name) {
-				return 1;
-			}
-			if (selected === class2name) {
-				return 2;
-			}
-			return 0;
-		},
-		/** this is the old version of updateSpell. This also is not a migrate function but called by migrate 
-		* @param {string} section the repeating_*** name since old spells had 10 different repeating lists
-		* @param {string} id the id of row to update
-		* @param {eventInfo} eventInfo object from on method, not used in this.
-		* @param {bool} forceRange if true recalculate range
-		* @param {function} callback call when done
-		*/
-		updateOldSpell = function (section, id, eventInfo, forceRange, callback) {
-			if (section.indexOf("lvl") !== 0 && section.indexOf("npc") !== 0) {
-				return;
-			}
-			var idStr = PFUtils.getRepeatingIDStr(id),
-			isNPC = section.indexOf("npc") >= 0 ? 1 : 0,
-			prefix = "repeating_" + section + "_" + idStr,
-			spellclassField = prefix + "spellclass",
-			spellLevelField = isNPC ? (prefix + "level") : (prefix + "spell_level");
-			getAttrs([spellLevelField, spellclassField, "spellclass-0-name", "spellclass-1-name", "spellclass-2-name"], function (va) {
-				var currSpellLevel = parseInt(va[spellLevelField], 10),
-				spellLevel = isNPC ? (isNaN(currSpellLevel) ? 0 : currSpellLevel) : (isNaN(currSpellLevel) ? parseInt(section.substring(4), 10) : currSpellLevel),
-				classNum = isNPC ? (section.indexOf("1") >= 0 ? 0 : (section.indexOf("2") >= 0 ? 1 : 0)) : (handleOldSpellClassDropdown(va[spellclassField], va["spellclass-0-name"], va["spellclass-1-name"], va["spellclass-2-name"]) || 0),
-				hiddenclassNumField = prefix + "spellclass_number",
-				spellDefCastDCField = prefix + "cast_def_dc",
-				spellDefConField = prefix + "cast_def-mod",
-				spellDCField = prefix + "savedc",
-				spellDCUserField = prefix + "DC_misc",
-				spellCLField = prefix + "casterlevel",
-				spellCLUserField = prefix + "CL_misc",
-				spellConField = prefix + "Concentration-mod",
-				spellConUserField = prefix + "Concentration_misc",
-				spellSpellPenField = prefix + "SP-mod",
-				spellSpellPenUserField = prefix + "SP_misc",
-				classCLField = "spellclass-" + classNum + "-level-total",
-				classDCField = "spellclass-" + classNum + "-level-" + spellLevel + "-savedc",
-				classConField = "Concentration-" + classNum,
-				classDefConField = "Concentration-" + classNum + "-def",
-				classSpellPenField = "spellclass-" + classNum + "-SP-mod",
-				spellRangeText = prefix + "range",
-				spellRangeNum = prefix + "range_numeric",
-				spellRangeTarget = prefix + "targets";
-				getAttrs([hiddenclassNumField, spellDCField, spellDCUserField, spellCLField, spellCLUserField, spellConField, spellConUserField, spellDefConField, spellDefCastDCField, spellSpellPenField, spellSpellPenUserField, classDCField, classCLField, classConField, classDefConField, classSpellPenField, spellRangeText, spellRangeNum, spellRangeTarget], function (v) {
-					var newDC,
-					newCL,
-					newCon,
-					newDefCon,
-					newSpellPen,
-					currDC = parseInt(v[spellDCField], 10),
-					currCL = parseInt(v[spellCLField], 10),
-					currCon = parseInt(v[spellConField], 10),
-					currDefCon = parseInt(v[spellDefConField], 10),
-					currdefDC = parseInt(v[spellDefCastDCField], 10),
-					currSpellPen = parseInt(v[spellSpellPenField], 10),
-					classDC = (parseInt(v[classDCField], 10) || 0),
-					classCL = (parseInt(v[classCLField], 10) || 0),
-					classCon = (parseInt(v[classConField], 10) || 0),
-					classDefConMod = (parseInt(v[classDefConField], 10) || 0),
-					classSpellPen = classCL + (parseInt(v[classSpellPenField], 10) || 0),
-					defDC = 15 + (spellLevel * 2),
-					currClassNum = parseInt(v[hiddenclassNumField], 10),
-					currRange = parseInt(v[spellRangeNum], 10),
-					newRange = 0,
-					setter = {},
-					setAny = 0,
-					classLevelDelta = 0,
-					updateRange = false;
-					if (classNum !== currClassNum || isNaN(currClassNum)) {
-						setter[hiddenclassNumField] = classNum;
-						setAny = 1;
-						//updateRange = true;
-					}
-					//prepare for migration of npc spells
-					if (isNPC) {
-						if (classNum === 0) {
-							//set dropdown
-							setter["spellclass"] = "@{spellclass-0-name}";
-							if (!va["spellclass-0-name"]) {
-								setter["spellclass-0-name"] = "NPC 1";
-							}
-							setAny = 1;
-						} else if (classNum === 1) {
-							setter["spellclass"] = "@{spellclass-1-name}";
-							if (!va["spellclass-1-name"]) {
-								setter["spellclass-1-name"] = "NPC 2";
-							}
-							setAny = 1;
-						}
-					}
-					if (!isNaN(spellLevel) && (currSpellLevel !== spellLevel || isNaN(currSpellLevel))) {
-						setter[spellLevelField] = spellLevel;
-						setAny = 1;
-					}
-					newCL = (parseInt(v[spellCLUserField], 10) || 0) + classCL;
-					if (newCL !== currCL || isNaN(currCL)) {
-						setter[spellCLField] = newCL;
-						setAny = 1;
-						updateRange = true;
-					}
-					if (defDC !== currdefDC || isNaN(currdefDC)) {
-						setter[spellDefCastDCField] = defDC;
-						setAny = 1;
-					}
-					classLevelDelta = newCL - classCL;
-					newDC = (parseInt(v[spellDCUserField], 10) || 0) + classDC;
-					if (newDC !== currDC || isNaN(currDC)) {
-						setter[spellDCField] = newDC;
-						setAny = 1;
-					}
-					newCon = (parseInt(v[spellConUserField], 10) || 0) + classCon + classLevelDelta;
-					if (newCon !== currCon || isNaN(currCon)) {
-						setter[spellConField] = newCon;
-						setAny = 1;
-					}
-					newDefCon = newCon + classDefConMod;
-					if (newDefCon !== currDefCon || isNaN(currDefCon)) {
-						setter[spellDefConField] = newDefCon;
-						setAny = 1;
-					}
-					newSpellPen = classSpellPen + (parseInt(v[spellSpellPenUserField], 10) || 0) + classLevelDelta;
-					if (newSpellPen !== currSpellPen || isNaN(currSpellPen)) {
-						setter[spellSpellPenField] = newSpellPen;
-						setAny = 1;
-					}
-					if (updateRange || forceRange || isNaN(currRange)) {
-						newRange = PFUtils.findSpellRange(v[spellRangeText], newCL);
-						if (isNaN(newRange)) {
-							if (isNaN(currRange)) {
-								newRange = -1;
-							} else {
-								newRange = currRange;
-								currRange--;
-							}
-						}
-						if (newRange !== currRange || isNaN(currRange)) {
-							setter[spellRangeNum] = newRange;
-							setAny = 1;
-						}
-					}
-					if (setAny) {
-						setAttrs(setter, {
-							silent: true
-						});
-					}
-					//cannot wait for callback of setAttrs since it will not call if there were no changes.
-					if (typeof callback === "function") {
-						callback();
-					}
-				});
-			});
-		},
-		
-		migrateCheckedSpells = function () {
-			var countofSpells = 0,
-			spellsUpdated = 0,
-			spellUserFields = [],
-			countofSections = 12,
-			sectionsCounted = 0,
-			idmap = {},
-			sectionsToMigrate = ["lvl-0-spells", "lvl-1-spells", "lvl-2-spells", "lvl-3-spells", "lvl-4-spells", "lvl-5-spells", "lvl-6-spells", "lvl-7-spells", "lvl-8-spells", "lvl-9-spells", "npc-spells1", "npc-spells2"],
-			finishUp = function () {
-				var params = {};
-				setAttrs({
-					"spellmap": JSON.stringify(idmap),
-					"migrated_spells": "1"
-				}, PFConst.silentParams, done);
-			},
-			updateAtEnd,
-			migrateSpell = function (section, id, callback) {
-				var prefix = "",
-				prefixLen = 0,
-				oldAttribList = [];
-				if (id === undefined || id === null || section === undefined || section === null) {
-					callback();
-					return;
-				}
-				prefix = "repeating_" + section + "_" + id + "_";
-				prefixLen = prefix.length;
-				_.each(spellUserFields, function (field) {
-					oldAttribList.push(prefix + field);
-				});
-				//TAS.debug(oldAttribList);
-				getAttrs(oldAttribList, function (v) {
-					var spellLevel = 0,
-					newId = "",
-					newPrefix = "",
-					setter = {},
-					allNonBlank = true;
-					//undefined for any attribute indicates it is outlined in red
-					//for some reason checking name and === works better than checking typeof
-					if (v[prefix + "name"] === undefined) {
-						TAS.error("cannot migrate " + id);
-						updateAtEnd();
-						return;
-					}
-					//if any are null or undefined skip this row,
-					_.each(v, function (val) {
-						//saw some that were undefined but typeof came back something else? how?
-						if (val === undefined || val === null || typeof val === "undefined") {
-							TAS.error("cannot migrate " + id);
-							updateAtEnd();
-							return;
-						}
-						if (val !== "" || (parseInt(val, 10) || 0) !== 0) {
-							allNonBlank = false;
-						}
-					});
-					//if all are blank or zero then skip this row
-					if (allNonBlank) {
-						TAS.error("cannot migrate " + id);
-						updateAtEnd();
-						return;
-					}
-					//passed check, so generate new id and attribute list
-					newId = generateRowID();
-					//TAS.debug("Passed test, migrating " + id +" to new "+newId);
-					newPrefix = "repeating_spells_" + newId + "_";
-					idmap["repeating_" + section + "_" + id + "_"] = "repeating_spells_" + newId + "_";
-					_.each(v, function (val, field) {
-						var col = field.substring(prefixLen);
-						switch (oldSpellUserFieldDefaults[col].type) {
-							case 'int':
-								setter[newPrefix + col] = parseInt(val, 10) || 0;
-								break;
-							case 'text':
-								if (col !== "macro-text" && col !== "npc-macro-text") {
-									setter[newPrefix + col] = val;
-								} else {
-									try {
-										if (val !== oldSpellUserFieldDefaults[col].val) {
-											setter[newPrefix + col] = val;
-										}
-									} catch (errrrr) { }
-								}
-								break;
-							case 'checkbox':
-								setter[newPrefix + col] = val;
-								break;
-							default:
-								setter[newPrefix + col] = val;
-						}
-					});
-					spellLevel = parseInt(v[prefix + "spell_level"], 10);
-					//redo spell level since default is -1 instead of 0
-					if (isNaN(spellLevel)) {
-						setter[newPrefix + "spell_level"] = "";
-						setter[newPrefix + "spell_level_r"] = -1;
-					} else {
-						setter[newPrefix + "spell_level"] = spellLevel;
-						setter[newPrefix + "spell_level_r"] = spellLevel;
-					}
-					setter[newPrefix + "spell_class_r"] = parseInt(v[prefix + "spellclass_number"], 10) || 0;
-					//TAS.debug("Setting "+newPrefix+"spellclass_number:"+ setter[newPrefix+"spellclass_number"] +", spell_level_r:"+setter[newPrefix+"spell_level"]+" and ensure undefined old level "+ setter[prefix+"spell_level"]+" for spell new "+setter[newPrefix+"name"]+", old:" + v[prefix+"name"]);
-					//TAS.log(setter);
-					setAttrs(setter, {
-						silent: true
-					}, function () {
-						updateAtEnd();
-						return;
-					});
-				});
-			},
-			migrateUpdatedSpells = function () {
-				_.each(sectionsToMigrate, function (section) {
-					var repeatingsection = "repeating_" + section;
-					getSectionIDs(repeatingsection, function (ids) {
-						_.each(ids, function (id) {
-							migrateSpell(section, id);
-						});
-					});
-				});
-			},
-			updateOldSpells = function () {
-				//re-update each spell before migrating, in case some are very old.
-				_.each(sectionsToMigrate, function (section) {
-					var repeatingsection = "repeating_" + section;
-					getSectionIDs(repeatingsection, function (ids) {
-						_.each(ids, function (id) {
-							updateOldSpell(section, id, null, true, function () {
-								spellsUpdated++;
-								if (spellsUpdated === countofSpells) {
-									migrateUpdatedSpells();
-								}
-							});
-						});
-					});
-				});
-			};
-			//create array from keys from oldSpellUserFieldDefaults
-			_.each(oldSpellUserFieldDefaults, function (defMap, field) {
-				spellUserFields.push(field);
-			});
-			//get total count of spells to migrate
-			_.each(sectionsToMigrate, function (section) {
-				getSectionIDs("repeating_" + section, function (ids) {
-					countofSpells += ids.length;
-					sectionsCounted++;
-					if (sectionsCounted === countofSections) {
-						updateAtEnd = _.after(countofSpells, function () {
-							finishUp();
-						});
-						updateOldSpells();
-					}
-				});
-			});
-		};
-		getAttrs(["migrated_spells"], function (vm) {
-			if (vm["migrated_spells"] == "1") {
-				done();
-			} else {
-				migrateCheckedSpells();
-			}
-		});
-	},
-	/* fixes rolltemplate image urls in dropdown to update urls from solid bkg to transparent. (from old to new val) */
-	migrateRollTemplateImages = function () {
-		getAttrs(['migrated_rolltemplateimages','header_image-pf_spell', 'header_image-pf_attack-melee', 'header_image-pf_attack-ranged', 'header_image-pf_attack-cmb', 'header_image-pf_defense'], function (v) {
-			var isMigrated=parseInt(v.migrated_rolltemplateimages,10)||0,
-			setter={};
-			try {
-				if (!isMigrated){
-					setter = _.chain(v).filter(function (val, attr) {
-						return (/\[default\]/).test(val);
-					}).reduce(function (memo, val, attr) {
-						var newval = "";
-						try {
-							switch (attr) {
-								case 'header_image-pf_spell':
-									if (val !== "[default](http://imgur.com/9yjOsAD.png)") {
-										newval = "[default](http://imgur.com/9yjOsAD.png)";
-									}
-									break;
-								case 'header_image-pf_attack-melee':
-									if (val !== "[default](http://i.imgur.com/AGq5VBG.png)") {
-										newval = "[default](http://i.imgur.com/AGq5VBG.png)";
-									}
-									break;
-								case 'header_image-pf_attack-ranged':
-									if (val !== "[default](http://imgur.com/58j2e8P.png)") {
-										newval = "[default](http://imgur.com/58j2e8P.png)";
-									}
-									break;
-								case 'header_image-pf_attack-cmb':
-									if (val !== "[default](http://imgur.com/RUJfMGe.png)") {
-										newval = "[default](http://imgur.com/RUJfMGe.png)";
-									}
-									break;
-								case 'header_image-pf_defense':
-									if (val !== "[default](http://imgur.com/02fV6wh.png)") {
-										newval = "[default](http://imgur.com/02fV6wh.png)";
-									}
-									break;
-							}
-							if (newval) {
-								memo[attr] = newval;
-							}
-						} catch (err) {
-							TAS.error("migrateRollTemplateImages: inner error on " + attr, err);
-						}
-						return memo;
-					}, {}).value();
-				}
-			} catch (erro){
-				TAS.error("migrateRollTemplateImages outer error",erro);
-			} finally {
-				setter['migrated_rolltemplateimages']=1;
-				if (_.size(setter) > 0) {
-					setAttrs(setter, PFConst.silentParams);
-				}
-			}
-		});
-	},
-	/**addNumberToMacro adds the value to the end of the macro string. 
-	* so the evaluated value of the returned string equals macroVal + miscVal
-	* either "macroText + miscVal" or "macroText - miscVal"
-	* This is for conversions only, if we are removing the miscfield. it is pretty useless otherwise.
-	*@param {string} macroText the text of the macro to add to. if it is wrapped in [[ ]] make sure to remove that before passing macro in or it will be added outside of the brackets!
-	*@param {int} macroVal the value the macro currently evaluates to.
-	*@param {string} miscMacroText text of 2nd macro to add to macroText if there is one
-	*@param {int} miscVal the value we are adding to macroText , it is value of miscMacroText if there is a macro
-	*@returns {string} the resulting new macro text
-	*/
-	addNumberToMacro = function(macroText, macroVal, miscMacroText, miscVal){
-		//TAS.debug("at addNumberToMacro:" );
-		macroText=macroText||"";
-		miscMacroText=miscMacroText||"";
-		if (macroText || macroVal){
-			macroVal += miscVal;
-			if (miscMacroText){
-				macroText += " "+miscMacroText;
-			} else if (miscVal){
-				if (miscVal>0){
-					macroText+=" + ";
-				} else {
-					macroText+= " - ";
-				}
-				macroText += String(Math.abs(miscVal));
-			}
-		} else if (miscVal){
-			macroText = String(miscVal);
-			macroVal = miscVal;
-		} else {
-			macroText="";
-			macroVal = 0;
-		}
-		return {  'macroText':macroText, 'macroVal':macroVal};
-	},
-	/** adds the value to the end of the macro string. either "macro + miscVal" or "macro - miscVal"
-	* saves new macro to the sheet
-	*@param {function} callback call when done
-	*@param {migrateFlag} the sheet attribute to check, if 1 do nothing, if 1 then perform migration then set to 1
-	*@param {string} macroAttr the attribute name of macro we will update
-	*@param {string} modAttr the attribute name containing the # evaluated from macroAttr
-	*@param {string} miscMacroAttr the attribute name of macro to remove and whose value to add to macroAttr
-	*@param {string} miscAttr the attribute name of a number field, standalone if macroAttr is null, or it is the 
-	          field containing evaluted number of miscMacroAttr
-	*/
-	migrateMoveIntIntoMacro = function(callback,migrateFlag,macroAttr,modAttr,miscMacroAttr,miscAttr) {
-		var done=_.once(function(){
-			//TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
-			if (typeof callback === "function"){
-				callback();
-			}
-		}),
-		fields = [macroAttr,modAttr,miscAttr, migrateFlag];
-		if (miscMacroAttr){
-			fields.push(miscMacroAttr);
-		}
-		getAttrs(fields,function(v){
-			var miscVal=0,formVal=0,newFormula={},setter={},miscFormula="";
-			try {
-				//TAS.debug("PFMigrate.migrateMoveIntIntoMacro: ",v);
-				if (!parseInt(v[migrateFlag],10)){
-					miscVal = parseInt(v[miscAttr],10)||0;
-					formVal = parseInt(v[modAttr], 10) || 0 ;
-					if (miscMacroAttr){
-						miscFormula=v[miscMacroAttr];
-					}
-					newFormula = addNumberToMacro(v[macroAttr], formVal, miscFormula, miscVal);
-					if (newFormula.macroText && newFormula.macroText !== v[macroAttr]){
-						setter[macroAttr]=newFormula.macroText;
-						setter[modAttr]=newFormula.macroVal;
-					}
-					setter[migrateFlag] = 1;
-					setter[miscAttr]="";
-					if (miscMacroAttr){
-						setter[miscMacroAttr]="";
-					}					
-				}
-			} catch (err){
-				TAS.error("PFMigrate.migrateMoveIntIntoMacro:" + migrateFlag,err);
-			} finally {
-				if (_.size(setter)>0){
-					setAttrs(setter,PFConst.silentParams,done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/**migrateHPMisc copies HP-misc into HP-formula-macro-text and HP-formula-mod 
-	* This modifies the same fields aas migrateNPC so make sure to call them in sequence not at the same time!
-	*@param {function} callback when done.
-	*/
-	migrateHPMisc=function(callback){
-		//TAS.debug("at migrateHPMisc");
-		migrateMoveIntIntoMacro(callback,"migrated_hp_misc","HP-formula-macro-text","HP-formula-mod","", "HP-misc");
-	},
-	/**migrateHPMisc copies Max-Skill-Ranks-Misc2 into Max-Skill-Ranks-Misc
-	*@param {function} callback when done.
-	*/
-	migrateMaxSkills = function(callback){
-		//TAS.debug("at migrateMaxSkills");
-		migrateMoveIntIntoMacro(callback,"migrated_maxskill_misc","Max-Skill-Ranks-Misc","Max-Skill-Ranks-mod","","Max-Skill-Ranks-Misc2");
-	},
-	/** updates NPC from pre v 1.00 to version 1.00 
-	* @param {function} callback call when done
-	* @param {number} oldversion the sheet attribute PFVersion.
-	*/
-	migrateNPC = function (callback, oldversion) {
-		var done = _.once(function () {
-			TAS.debug("Leaving migrateNPC");
-			if (typeof callback === "function") {
-				callback();
-			}
-		}),
-		migrateNPCConfig = function(callback){
-				setAttrs({ 'auto_calc_hp':1, 'normal_macro_show': 1,
-					'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 }, 
-					PFConst.silentParams,callback);
-		},
-		/* updates hp and hp|max, resets npc-hp as avg of hit dice only (npc-hd and npc-hd-num) ,
-		* sets class-0-hd and class-0-level to values of  npc-hd2 and npc-hd-num2 
-		* if undead then sets ability to CHA */
-		migrateNPCHP = function (callback) {
-			var done=_.once(function(){
-				TAS.debug("Leaving PFMigrate.migrateNPCHP");
-				if(typeof callback === "function"){
-					callback();
-				}
-			});
-			getAttrs(["HP-ability", "HP-ability-mod", "npc-type", "CON-mod", "CHA-mod", "total-hp","level","bab", "HP-formula-macro-text", "HP-formula-mod", 
-				"class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level",
-				"is_undead",
-				"npc-hd-misc", "npc-hd-misc-mod","npc-hd", "npc-hd-num", "npc-hd2", "npc-hd-num2", 'npc-bab'], function (v) {
-				var isUndead=0,abilityMod=0,ability='',classLevels=0,classhd=0,level=0,totalhp=0,hitdice=0,hitdie=0,basehp=0,
-					tempInt=0,classhp=0,classNum=0,abilityModTot=0,
-					currLevel=0,currHP=0,setter={},bab=0,npcbab=0,newbab=0,newFormula={},hdMiscVal=0,currhpFormVal=0;
-				try {
-					setter["auto_calc_hp"]= "1";
-					hitdice=parseInt(v['npc-hd-num'],10)||0;
-					hitdie=parseInt(v["npc-hd"], 10) || 0;
-					classLevels=parseInt(v['npc-hd-num2'],10)||0;
-					classhd=parseInt(v['npc-hd2'],10)||0;
-
-					//get basic numbers
-					isUndead = ((/undead/i).test(v["npc-type"])||parseInt(v.is_undead,10))||0;
-					setter["is_undead"]= isUndead;
-
-					currLevel=parseInt(v.level,10)||0;
-					currHP = parseInt(v.HP,10)||0;
-
-					bab = parseInt(v.bab,10)||0;
-					npcbab = parseInt(v['npc-bab'],10)||0;
-					newbab = bab + npcbab;
-					if (newbab !== bab){
-						setter["bab"]=newbab;
-					}
-					
-					abilityMod = isUndead ? (parseInt(v["CHA-mod"], 10) || 0) : (parseInt(v["HP-ability-mod"], 10) || 0);
-					abilityModTot = abilityMod * (currLevel||hitdice);
-					ability=isUndead ? '@{CHA-mod}' : '@{CON-mod}';
-					setter["HP-ability"]= ability;
-					setter["HP-ability-mod"]= abilityMod;
-
-					//get the +xx portion and move to correct field.
-					hdMiscVal = parseInt(v["npc-hd-misc-mod"], 10) || 0;
-					currhpFormVal = parseInt(v["HP-formula-mod"],10)||0;
-					if (hdMiscVal || v["HP-formula-macro-text"] ){
-						setter["npc-hd-misc"]= "";
-						setter["npc-hd-misc-mod"]= "";
-					}
-					if (hdMiscVal ){
-						hdMiscVal -= abilityModTot;
-					}
-					newFormula = addNumberToMacro(v["HP-formula-macro-text"],currhpFormVal,v["npc-hd-misc"],hdMiscVal);
-					if (newFormula.macroText && newFormula.macroText !== v["HP-formula-macro-text"]){
-						setter["HP-formula-macro-text"]= newFormula.macroText;
-						setter["HP-formula-mod"]= newFormula.macroVal;			
-					}
-					basehp=PFUtils.getAvgHP(hitdice,hitdie );
-					setter["NPC-HP"]=basehp;
-
-					if (classLevels>0 ){
-						//should be class-0-name, if not, something is really wrong.
-						for (classNum=0;classNum<6;classNum++){
-							tempInt=  parseInt(v['class-'+classNum+'-level'],10);
-							if(  tempInt === 0 ||  tempInt === classLevels  ){
-								break;
-							}
-						}
-						if (classNum<6){
-							classhp=PFUtils.getAvgHP(classLevels,classhd);
-							setter['class-'+classNum+'-hp']=classhp;
-							setter['class-'+classNum+'-level']=classLevels;
-							setter['class-'+classNum+'-hd']=classhd;
-						} else {
-							TAS.error("Cannot convert npc class hit dice, the class grid is full! class levels:"+classLevels +", class hit die:"+classhd);
-							classLevels=0;
-						}
-					}
-					totalhp=currHP+basehp+classhp;
-					level=currLevel+classLevels+hitdice;
-					if (totalhp !== currHP){
-						setter['total-hp']=totalhp;
-					}
-					if (level !== currLevel){
-						setter['level']=level;
-					}
-				} catch(err) {
-					TAS.error("PFMigrate.MigrateNPC",err);
-				} finally {
-					setter["migrated_npc"]= 1;
-					if(_.size(setter)>0){
-						setAttrs(setter, PFConst.silentParams,done);
-					} else {
-						done();
-					}
-				}
-			});
-		},
-		/* copies or appends sense to vision */
-		migrateNPCSenses = function (callback) {
-			var done = function(){
-				if(typeof callback === "function"){
-					callback();
-				}
-			};
-			getAttrs([ "senses", "vision",  "character-description"], function (v) {
-				var a = '', b= '', c ='', setter={};
-				try {
-					a = v.senses || '';
-					b = v.vision || '';
-					if (a && b){
-						c=a+', '+b;
-					} else {
-						c=a||b;
-					}
-					if (c) {
-						setter.vision=c;
-					}
-					if (a) {
-						setter.senses='';
-					}
-				} catch(err){
-					TAS.error("migrateNPCSenses",err);
-				} finally {
-					if (_.size(setter)>0){
-						setAttrs(setter, PFConst.silentParams, done);
-					} else {
-						done();
-					}
-				}
-			});
-		};
-
-		getAttrs(["migrated_npc", "is_npc"], function (v) {
-			var isNPC = 0, isMigrated=0,
-			doneSub=_.after(3,done);
-			try {
-				isNPC=parseInt(v["is_npc"], 10) || 0;
-				isMigrated = parseInt(v["migrated_npc"], 10) || 0;
-				if (!isNPC ){
-					setAttrs({"migrated_npc": 1}, PFConst.silentParams);
-				} 
-				if (!isMigrated){
-					migrateNPCSenses(doneSub);
-					migrateNPCConfig(doneSub);
-					migrateNPCHP(doneSub);
-				} else {
-					done();
-				}
-			} catch (err){
-				TAS.error("PFMigrate.migrateNPC",err);
-				done();
-			}
-		});
-	},
-	/** looks at dropdowns for cmb2 and ranged2 and if they are set to anything then check the 'show' checkboxes on config 
-	* @param {function} callback call when done */
-	migrateAltAttackGridrowFlags = function (callback) {
-		var done = function () { if (typeof callback === "function") { callback(); } };
-		getAttrs(["ranged_2_show", "cmb_2_show", "ranged2-ability", "CMB2-ability","migratedAttack2row"], function (v) {
-			var setter = {};
-			try{
-				if((parseInt(v['migratedAttack2row'],10)||0) === 0){
-					if (PFUtils.findAbilityInString(v["ranged2-ability"]) && parseInt(v.ranged_2_show ,10)!== 1) {
-						setter.ranged_2_show = 1;
-					}
-					if (PFUtils.findAbilityInString(v["CMB2-ability"]) && parseInt(v.cmb_2_show,10) !== 1) {
-						setter.cmb_2_show = 1;
-					}
-					setter["migratedAttack2row"]=1;
-				}
-			} catch(err){
-				TAS.error("PFMigrate.migrateAltAttackGridrowFlags",err);
-			} finally {
-				if (_.size(setter) > 0) {
-					setAttrs(setter, { silent: true }, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	migrateExperience = function (callback) {
-		var done = _.once(function () { 
-			TAS.debug("leaving migrateExperience");
-			if (typeof callback === "function") { callback(); } 
-		});
-		getAttrs(['migrated_experience', 'use_prestige_fame', 'use_hero_points', 'prestige', 'fame', 'hero-points', 'faction_notes'], function (v) {
-			var mig = parseInt(v.migrated_experience, 10) || 0, setter = {};
-			if (mig) {
-				done();
-				return;
-			}
-			if (((parseInt(v.prestige, 10) || 0) || (parseInt(v.fame, 10) || 0) || v.faction_notes) && !parseInt(v.use_prestige_fame, 10)) {
-				setter.use_prestige_fame = 1;
-			}
-			if ((parseInt(v['hero-points'], 10) || 0) && !parseInt(v.use_hero_points, 10)) {
-				setter.use_hero_points = 1;
-			}
-			setter.skill_onetimecolumns_show = 1;
-			setter.misc_skill_num_show = 1;
-			setter.migrated_experience = 1;
-			setter.custom_skill_num_show = 1;
-			setAttrs(setter, { silent: true }, done);
-		});
-	},
-	migrateUsesSpellFlag = function(callback){
-		var done = _.once(function () { 
-			TAS.debug("leaving migrateUsesSpellFlag");
-			if (typeof callback === "function") { callback(); } 
-		}),
-		setFlag= function(){
-			setAttrs( {'migrated_spellflag':1},PFConst.silentParams,done );
-		},
-		tryTwoJustCountRows = function(){
-			getSectionIDs('repeating_spells',function(ids){
-				if(ids && _.size(ids)>0){
-					setAttrs( {'use_spells':1},PFConst.silentParams,setFlag );
-				} else {
-					setAttrs( {'use_spells':0},PFConst.silentParams,setFlag );
-				}
-			});
-		};
-		getAttrs(['spellclass-0-level','spellclass-1-level','spellclass-2-level','use_spells','migrated_spellflag'],function(v){
-			var lvl1=0,lvl2=0,lvl3=0,usesSpells=0,setter={};
-			try {
-				usesSpells = parseInt(v.use_spells,10)||0;
-				if ((parseInt(v.migrated_spellflag,10)||0)!==1 && !usesSpells){
-					lvl1=parseInt(v['spellclass-0-level'],10)||0;
-					lvl2=parseInt(v['spellclass-1-level'],10)||0;
-					lvl3=parseInt(v['spellclass-3-level'],10)||0;
-					if (lvl1||lvl2||lvl3){
-						usesSpells=1;
-						setter['use_spells'] = 1;
-					}
-					if ((lvl1&&lvl2) || (lvl2&&lvl3) || (lvl1&&lvl3)){
-						setter['spellclasses_multiclassed']=1;
-					}
-				}
-			} catch (err){
-				TAS.error("FMigrate.migrateUsesSpellFlag",err);
-			} finally {
-				if (usesSpells){
-					setAttrs(setter,PFConst.silentParams,setFlag);
-				} else {
-					tryTwoJustCountRows();
-				}
-			}
-		});
-	},
-	migrateSize = function(callback){
-		getAttrs(['size','old_size','default_char_size'],function(v){
-			var size = parseInt(v.size,10)||0;
-			if (v.old_size==='x'){
-				setAttrs({'old_size':size, 'default_char_size':size});
-			}
-		});
-	},
-	/** migrates repeating_item name, short-description, type, and weight to have item- prefix to avoid duplicate attributes
-	* @param {function} callback call after finishing */
-	migrateRepeatingItemAttributes = function (callback) {
-		var done = function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		};
-		getAttrs(["migrated_repeating_item_attributes"], function (m) {
-			var duplicateFields = ["weight", "hp", "hp_max"], // repeating fields can have duplicate attrbitues with other repeating lists, but not non-repeating list attrbiutes
-			resetFields=["qty","qty_max"];
-			if (parseInt(m["migrated_repeating_item_attributes"],10)) {
-				//TAS.debug"Duplicate repeating_item attributes already migrated; exiting");
-				done();
-				return;
-			}
-			getSectionIDs("repeating_item", function (ids) {
-				var fields = [];
-				if(!(ids && _.size(ids)>0)){
-					setAttrs({'migrated_repeating_item_attributes':1},PFConst.silentParams,done);
-					return;
-				}
-				fields = _.reduce(ids, function (memo, id) {
-					var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id),
-					row = [];
-					_.each(duplicateFields,function(field){
-						row.push(prefix+field);
-					});
-					_.each(resetFields,function(field){
-						row.push(prefix+field);
-					});
-					return memo.concat(row);
-				}, []);
-				
-				getAttrs(fields, function (v) {
-					var setter = {};
-					try {
-						_.each(ids, function (id) {
-							var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id);
-							duplicateFields.forEach(function (attr) {
-								var newInt= parseInt(v[prefix+attr],10)||0;
-								if (v[prefix + attr] && newInt!==0 ) {
-									setter[prefix + "item-" + attr] = newInt;
-									setter[prefix+attr]="";
-								}
-							});
-							
-							//new default is 1, old was undefined 
-							if (isNaN(parseInt(v[prefix+"qty"],10))){
-								setter[prefix+"qty"]=1;
-							}
-							if (isNaN(parseInt(v[prefix+"qty_max"],10))){
-								setter[prefix+"qty_max"]=0;
-							}
-						});
-						setter["migrated_repeating_item_attributes"] = "1";
-					} catch (err){
-						TAS.error("migrateRepeatingItemAttributes",err);
-					} finally {
-						TAS.debug("##### PFMigrate.migrateRepeatingItemAttributes setting  ",setter);
-						if (_.size(setter) > 0) {
-							setAttrs(setter, {}, done);
-						} else {
-							done();
-						}
-					}
-				});
-			});
-		});
-	},
-	migrateAbilityListFlags = function(callback){
-		var done=_.once(function(){
-			TAS.debug("leaving migrateAbilityListFlags");
-			if (typeof callback === "function"){
-				callback();
-			}
-		}),
-		setFlag = _.after(5,function(){
-			setAttrs({'migrated_abilityflags109':1},PFConst.silentParams,done);
-		});
-		getAttrs(['migrated_abilityflags109','uses_feats','uses_traits','use_racial_traits','use_class_features','use_npc-spell-like-abilities'],function(vm){
-			if (! parseInt(vm['migrated_abilityflags109'],10)){
-				getSectionIDs('repeating_npc-spell-like-abilities',function(ids){
-					if(ids && _.size(ids)>0){
-						setAttrs( {'use_npc-spell-like-abilities':1},PFConst.silentParams,setFlag );
-					} else {
-						setAttrs( {'use_npc-spell-like-abilities':0},PFConst.silentParams,setFlag );
-					}
-				});
-				getSectionIDs('repeating_feat',function(ids){
-					if(ids && _.size(ids)>0){
-						setAttrs( {'use_feats':1},PFConst.silentParams,setFlag );
-					} else {
-						setAttrs( {'use_feats':0},PFConst.silentParams,setFlag );
-					}
-				});
-				getSectionIDs('repeating_class-ability',function(ids){
-					if(ids && _.size(ids)>0){
-						setAttrs( {'use_class_features':1},PFConst.silentParams,setFlag );
-					} else {
-						setAttrs( {'use_class_features':0},PFConst.silentParams,setFlag );
-					}
-				});
-				getSectionIDs('repeating_trait',function(ids){
-					if(ids && _.size(ids)>0){
-						setAttrs( {'use_traits':1},PFConst.silentParams,setFlag );
-					} else {
-						setAttrs( {'use_traits':0},PFConst.silentParams,setFlag );
-					}
-				});
-				getSectionIDs('repeating_racial-trait',function(ids){
-					if(ids && _.size(ids)>0){
-						setAttrs( {'use_racial_traits':1},PFConst.silentParams,setFlag );
-					} else {
-						setAttrs( {'use_racial_traits':0},PFConst.silentParams,setFlag );
-					}
-				});
-			} else {
-				done();
-			}
-		});
-	},
-	migrateConfigFlags = function(callback){
-		var done = _.once(function(){ 
-			TAS.debug("leaving PFMigrate migrateConfigFlags");
-			if (typeof callback === "function") { callback(); }
-		});
-		migrateNPC(function(){migrateHPMisc(done);});
-		migrateRollTemplateImages();
-		migrateAltAttackGridrowFlags();
-		migrateSize();
-		migrateUsesSpellFlag();
-		migrateAbilityListFlags();
-		migrateExperience();
-	},
-	getAllMigrateFlags = function(v){
-		TAS.debug("at PFMigrate.getAllMigrateFlags");
-		v=v||{};
-		v['migrated_buffs']=1;
-		v['migrated_effects']=1;
-		v['classSkillsMigrated']=1;
-		v['migrated_spells']=1;
-		v['spellranges_migrated']=1;
-		v['migrated_damage-multiplier']=1;
-		v['migrated_experience']=1;
-		v['migrated_spellflag']=1;
-		v['migratedAttack2row']=1;
-		v['migrated_npc']=1;
-		v['migrated_worn_equipment']=1;
-		v['migrated_repeating_item_attributes']=1;
-		v['migrated_skill_macrosv1']=1;
-		v['migrated_attack_macrosv1']=1;
-		v['migrated_spells_macrosv1']=1;
-		v['migrated_feature_macrosv109']=1;
-		v['migrated_ability_macrosv112']=1;
-		v['migrated_hp_misc']=1;
-		v['migrated_maxskill_misc']=1;
-		v['migrated_featurelists_defaults']=1;
-		v['migrated_attacklist_defaults111']=1;
-		v['migrated_itemlist_defaults']=1;
-		v['migrated_abilityflags109']=1;
-		return v;
-	},
-	setAllMigrateFlags = function(callback){
-		var done = _.once(function(){ 
-			TAS.debug("leaving PFMigrate setAllMigrateFlags");
-			if (typeof callback === "function") { callback(); }
-		});
-		setAttrs(getAllMigrateFlags(), PFConst.silentParams, done);
-	}
-	;
-	PFConsole.log('   PFMigrate module loaded        ');
-	PFLog.modulecount++;
-	return {
-		migrateRepeatingDamage: migrateRepeatingDamage,
-		migrateMaxDexAndACP: migrateMaxDexAndACP,
-		migrateSpellRanges: migrateSpellRanges,
-		migrateSpells: migrateSpells,
-		migrateRollTemplateImages: migrateRollTemplateImages,
-		migrateNPC: migrateNPC,
-		migrateExperience: migrateExperience,
-		migrateUsesSpellFlag: migrateUsesSpellFlag,
-		migrateAltAttackGridrowFlags: migrateAltAttackGridrowFlags,
-		migrateConfigFlags: migrateConfigFlags,
-		migrateSize: migrateSize,
-		migrateAbilityListFlags: migrateAbilityListFlags,
-		migrateHPMisc: migrateHPMisc,
-		migrateMaxSkills: migrateMaxSkills,
-		migrateRepeatingItemAttributes: migrateRepeatingItemAttributes,
-		getAllMigrateFlags: getAllMigrateFlags,
-		setAllMigrateFlags: setAllMigrateFlags
-	};
-}());
-var PFDefense = PFDefense || (function () {
-	/** module for attack grid on top of attack page */
-	'use strict';
-	/* **********************************DEFENSE PAGE ********************************** */
-	var defenseDropdowns = {
-		"AC-ability": "AC-ability-mod",
-		"FF-ability": "FF-DEX",
-		"CMD-ability1": "CMD-STR",
-		"CMD-ability2": "CMD-DEX",
-		"CMD-ability": "FF-CMD-DEX"
-	},
-	defenseLowerToMixed = {
-		"ac-ability": "AC-ability",
-		"ff-ability": "FF-ability",
-		"cmd-ability1": "CMD-ability1",
-		"cmd-ability2": "CMD-ability2",
-		"cmd-ability": "CMD-ability"
-	},
-	//reverse order to do worn first:
-	defenseArmorShieldRowsOld = ["armor3", "armor2", "armor", "shield3", "shield2", "shield"],
-	defenseArmorShieldRows = ["armor3", "shield3"],
-	defenseArmorShieldColumns = ["equipped", "acbonus", "enhance", "max-dex", "acp", "spell-fail", "proficiency", "type"],
-	defenseFieldTotals = ["acp", "max-dex", "AC-armor", "AC-shield", "spell-fail", "acp-attack-mod", "max-dex-source", "current-load"],
-	defenseArmorFields = SWUtils.cartesianAppend(defenseArmorShieldRows, ['-'], defenseArmorShieldColumns).concat(defenseFieldTotals),
-	/** updateDefenses updates the top grid of AC, Touch AC, Flat Footed AC, CMD, Flat Footed CMD
-	* http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#combat-maneuver-defense
-	* Any penalties to a creature's AC also apply to its CMD
-	*@param {function} callback optional call when done
-	*@param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	*@param {eventInfo} eventInfo unused eventInfo from on method
-	*/
-	updateDefenses = function ( callback, silently, eventInfo) {
-		var done = _.once(function () {
-			TAS.debug("leaving PFDefense.updateDefenses");
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		getAttrs(["AC-ability-mod", "FF-DEX", "AC-penalty", "CMD-penalty", "size", "max-dex", "AC-dodge", 
-		"AC-natural", "AC-deflect", "AC-misc", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
-		"CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
-		"AC-ability", "FF-ability", "CMD-ability", "CMD-ability1", "CMD-ability2", "AC-armor", "AC-shield", 
-		"condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained", 
-		"condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
-		"maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
-		"current-load", "max-dex-source"], function (v) {
-			var size = parseInt(v["size"], 10) || 0,
-			dodge = parseInt(v["AC-dodge"], 10) || 0,
-			deflect = parseInt(v["AC-deflect"], 10) || 0,
-			miscAC = parseInt(v["AC-misc"], 10) || 0,
-			condPenalty = parseInt(v["AC-penalty"], 10) || 0,
-			buffs = parseInt(v["buff_AC-total"], 10) || 0,
-			buffsTouch = parseInt(v["buff_Touch-total"], 10) || 0,
-			buffsCMD = parseInt(v["buff_CMD-total"], 10) || 0,
-			armor = parseInt(v["AC-armor"], 10) || 0,
-			shield = parseInt(v["AC-shield"], 10) || 0,
-			natural = parseInt(v["AC-natural"], 10) || 0,
-			bab = parseInt(v["bab"], 10) || 0,
-			miscCMD = parseInt(v["CMD-misc"], 10) || 0,
-			maxDex = parseInt(v["max-dex"], 10),
-			cmdPenalty = parseInt(v["CMD-penalty"], 10) || 0,
-			blinded = (parseInt(v["condition-Blinded"], 10) || 0) ? 1 : 0,
-			pinned = (parseInt(v["condition-Pinned"], 10) || 0) ? 1 : 0,
-			stunned = (parseInt(v["condition-Stunned"], 10) || 0) ? 1 : 0,
-			ffed = (parseInt(v["condition-Flat-Footed"], 10) || 0) ? 1 : 0,
-			cowering = (parseInt(v["condition-Cowering"], 10) || 0) ? 1 : 0,
-			maxDexSource = parseInt(v["max-dex-source"],10)||0,
-			currload = parseInt(v["current-load"],10)||0,
-			dexModShowLimit = 0,
-			currDexModLimit = parseInt(v["maxdex-toggle"], 10) || 0,
-			noDexShowLimit = 0,
-			currNoDexLimit = parseInt(v["nodex-toggle"], 10) || 0,
-			unlockDefAbility = parseInt(v.unlock_def_ability,10)||0,
-			lockDefAbility = unlockDefAbility?0:1,
-			ac = 10,
-			touch = 10,
-			ff = 10,
-			cmd = 10,
-			cmdFF = 10,
-			currAC = parseInt(v["AC"], 10),
-			currTouch = parseInt(v["Touch"], 10),
-			currFF = parseInt(v["Flat-Footed"], 10),
-			currCMD = parseInt(v["CMD"], 10),
-			currCMDFF = parseInt(v["FF-CMD"], 10),
-			currUncanny = parseInt(v["uncanny_dodge"], 10) || 0,
-			currCMDUncanny = lockDefAbility?currUncanny:(parseInt(v["uncanny_cmd_dodge"], 10) || 0),
-			acAbilityName = PFUtils.findAbilityInString(v["AC-ability"]),
-			uncannyAbilityName = currUncanny?acAbilityName:PFUtils.findAbilityInString(v["FF-ability"]),
-			uncannyCMDabilityName = lockDefAbility?uncannyAbilityName:PFUtils.findAbilityInString(v["CMD-ability"]),
-			cmdAbilityDDvalName = lockDefAbility?acAbilityName:PFUtils.findAbilityInString(v["CMD-ability2"]),
-			ability = parseInt(v["AC-ability-mod"], 10) || 0,
-			ffAbility = (currUncanny&&lockDefAbility)?ability:(parseInt(v["FF-DEX"], 10) || 0),
-			cmdAbility1 = parseInt(v["CMD-STR"], 10) || 0,
-			cmdAbility2 = lockDefAbility?ability:(parseInt(v["CMD-DEX"], 10) || 0),
-			cmdFFAbility2 = lockDefAbility?ffAbility:(parseInt(v["FF-CMD-DEX"], 10) || 0),
-			setter = {},
-			params = {},
-			loseDex = 0,
-			immobilized = 0,
-			setAny = 0;
-			try {
-				//TAS.debug(v);
-				maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
-				if ((maxDex) < ability) {
-					//assume ability, FF-ability, CMD-ability2 all set the same (or to "none" for ff)
-					dexModShowLimit = 1;
-				}
-				if (acAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-					ability = Math.min(ability, maxDex);
-				}
-				if (uncannyAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-					ffAbility = Math.min(ffAbility, maxDex);
-				}
-				if (cmdAbilityDDvalName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-					cmdAbility2 = Math.min(cmdAbility2, maxDex);
-				}
-				if (uncannyCMDabilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-					cmdFFAbility2 = Math.min(cmdFFAbility2, maxDex);
-				}
-
-				//if ability is below zero, FF dex adj must be set to negative too
-				//assume ffability dropdown should be None or the same as dex ability
-				//because if not then it doesn't make sense
-				if (ability < 0 && ffAbility > ability) {
-					ffAbility = ability;
-				}
-				if (cmdAbility2 < 0 && cmdFFAbility2 > cmdAbility2) {
-					cmdFFAbility2 = cmdAbility2;
-				}
-				if (unlockDefAbility ){
-					if (uncannyAbilityName && currUncanny === 0) {
-						//TAS.debug("switching to uncanny");
-						setter["uncanny_dodge"] = "1";
-						setAny = 1;
-						currUncanny = 1;
-					} else if (!uncannyAbilityName && currUncanny === 1) {
-						//TAS.debug("switching from uncanny");
-						setter["uncanny_dodge"] = "0";
-						setAny = 1;
-						currUncanny = 0;
-					}
-					if (uncannyCMDabilityName && currCMDUncanny === 0) {
-						//TAS.debug("switching to cmd uncanny");
-						setter["uncanny_cmd_dodge"] = "1";
-						setAny = 1;
-						currCMDUncanny = 1;
-					} else if (!uncannyCMDabilityName && currCMDUncanny === 1) {
-						//TAS.debug("switching from cmd uncanny");
-						setter["uncanny_cmd_dodge"] = "0";
-						setAny = 1;
-						currCMDUncanny = 0;
-					}
-				}
-				//lose Dex: you lose your bonus (and dodge) - not the same as flat footed
-				//Must be applied even if your bonus is not dex :
-				//http://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9qdi
-				//flat footed : lose dex unless uncanny
-				//blinded: lose dex unless uncanny
-				//pinned, cowering, stunned : always lose dex
-				if (pinned || cowering || stunned || (currload===4&& (maxDexSource===0 || maxDexSource===2))) {
-					immobilized=1;
-				} else if (blinded || ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
-					loseDex=1;
-				}
-				
-				if (immobilized ) {
-					if (currUncanny) {
-						ffAbility = Math.min(0, ffAbility);
-					}
-					if (currCMDUncanny){
-						cmdFFAbility2 = Math.min(0, cmdFFAbility2);
-					}
-					//dexModShowLimit=1;
-					ability = Math.min(0, ability);
-					cmdAbility2 = Math.min(0, cmdAbility2);
-					dodge = 0;
-					noDexShowLimit = 1;
-				} else if (loseDex) {
-					//TAS.debug("we are blinded or flat footed uncanny:"+currUncanny+", cmd uncan:"+currCMDUncanny);
-					if (!currUncanny || !currCMDUncanny) {
-						//dexModShowLimit=1;
-						dodge = 0;
-						noDexShowLimit = 1;
-					}
-					//set to same as flat footed (probably 0) or less than if ability already under 10.
-					ability = Math.min(ability,ffAbility);
-					cmdAbility2 = Math.min(cmdAbility2,cmdFFAbility2);
-				}
-				if (parseInt(v.hd_not_bab,10)){
-					bab = parseInt(v.level,10)||0;
-				}
-				ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs;
-				touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouch;
-				ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0);
-				cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
-				cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0);
-				if (ac !== currAC || isNaN(currAC)) {
-					setter["AC"] = ac;
-					setAny += 1;
-				}
-				if (touch !== currTouch || isNaN(currTouch)) {
-					setter["Touch"] = touch;
-					setAny += 1;
-				}
-				if (ff !== currFF || isNaN(currFF)) {
-					setter["Flat-Footed"] = ff;
-					setAny += 1;
-				}
-				//TAS.debug("PFDefense.updateDefenses currcmd is :"+ currCMD +", new cmd is:"+ cmd);
-				if (cmd !== currCMD || isNaN(currCMD)) {
-					setter["CMD"] = cmd;
-					setAny += 1;
-				}
-				if (cmdFF !== currCMDFF || isNaN(currCMDFF)) {
-					setter["FF-CMD"] = cmdFF;
-					setAny += 1;
-				}
-				if (ability !== (parseInt(v["AC-ability-display"], 10))) {
-					setter["AC-ability-display"] = ability;
-				}
-				if (ffAbility !== (parseInt(v["FF-DEX-display"], 10))) {
-					setter["FF-DEX-display"] = ffAbility;
-				}
-				if (cmdAbility2 !== (parseInt(v["CMD-DEX-display"], 10))) {
-					setter["CMD-DEX-display"] = cmdAbility2;
-				}
-				if (cmdFFAbility2 !== (parseInt(v["FF-CMD-DEX-display"], 10))) {
-					setter["FF-CMD-DEX-display"] = cmdFFAbility2;
-				}
-				if (dexModShowLimit !== currDexModLimit) {
-					setter["maxdex-toggle"] = dexModShowLimit;
-				}
-				if (noDexShowLimit !== currNoDexLimit) {
-					setter["nodex-toggle"] = noDexShowLimit;
-				}
-			} catch (err) {
-				TAS.error("PFDefense.updateDefenses:", err);
-			} finally {
-				if (_.size(setter) > 0) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
-					setAttrs(setter, params, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/** setDefenseDropdownMod
-	* All dropdowns in the defense grid: AC, flat footed AC, touch, CMD, flat footed CMD.
-	* calls handledropdown then calls updateDefenses.
-	*
-	* NOTE: due to the way eventInfo.sourceAttribute is populated if the change comes from the autocalc code, the value is
-	* lower case, so you must check either BOTH the regular and all lowercase, or just change it to lower case before comparing to be sure
-	*
-	*@param {string} dropdownField fieldname of dropdown to set 
-	*@param {function} callback callback
-	*@param {bool} silently if true set silently make sure to call updateDefenses after!
-	*@param {object} the eventInfo object USED, this is checked for uncanny_dodge flag 
-	*@param {bool} doNotCallUpdateDefenseAfter if not set call updateDefenses after updating dropdown mod.
-	*/
-	setDefenseDropdownMod = function (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
-		var done = _.once(function () {
-			TAS.debug("leaving PFDefense.setDefenseDropdownMod");
-			if (typeof callback === "function") {
-				callback();
-			}
-		}),
-		updateAndDone = _.once(function(){
-			if (!doNotCallUpdateDefenseAfter) {
-				updateDefenses(done, silently);
-			} else {
-				done();
-			}
-		}),
-		dropdownLower="",
-		dropdownMixed="";
-		//TAS.debug"PFDefense.setDefenseDropdownMod called with "+dropdownField +", lower:"+ dropdownLower);
-		try {
-			if (dropdownField){
-				dropdownLower = dropdownField.toLowerCase();
-				dropdownMixed = defenseLowerToMixed[dropdownLower];
-				if (dropdownMixed){
-					getAttrs(['unlock_def_ability','uncanny_dodge'],function(v){
-						if(parseInt(v['unlock_def_ability'],10) || ( dropdownLower==='ac-ability' || dropdownLower==='cmd-ability1') ){
-							PFUtilsAsync.setDropdownValue(dropdownMixed, defenseDropdowns[dropdownMixed], function (newv, oldv) {
-								if (newv !== oldv || newv < 0 || oldv < 0 || dropdownLower==="ff-ability" || dropdownLower=== "cmd-ability") {
-									updateAndDone();
-								} else {
-									done();
-								}
-							}, silently);
-						} else {
-							done();
-						}
-					});
-				} else {
-					TAS.warn("PFDefense.updateDefenses, called with invalid dropdown: "+dropdownField);
-					done();
-				}
-			} else if (eventInfo && eventInfo.sourceAttribute==='uncanny_dodge') {
-				getAttrs(['unlock_def_ability','uncanny_dodge','AC-ability',defenseDropdowns['AC-ability']],function(v){
-					var unlockAbilityDD = 0,
-						currACmod =  0,
-						setter={};
-					try {
-						unlockAbilityDD = parseInt(v.unlock_def_ability,10)||0;
-						if (unlockAbilityDD){
-							//TAS.debug("at PFDefense.setDefenseDropdownMod",v);
-							currACmod=parseInt(v['AC-ability'],10)||0;
-							//we came here because uncanny dodge was checked
-							if (!parseInt(v.uncanny_dodge,10)) {
-								//turn uncanny off
-								setter["FF-ability"]="0";
-								setter[defenseDropdowns["FF-ability"]]=0;
-								setter["CMD-ability"]="0";
-								setter[defenseDropdowns["CMD-ability"]]=0;
-							} else {
-								//turned uncanny on
-								//TAS.debug("set FF_ability to " +v['AC-ability'] );
-								setter["FF-ability"]=v['AC-ability'];
-								setter[defenseDropdowns["FF-ability"]]=currACmod;
-								setter["CMD-ability"]=v['AC-ability'];
-								setter[defenseDropdowns["CMD-ability"]]=currACmod;
-							}
-							setAttrs(setter,PFConst.silentParams,updateAndDone);
-						} else {
-							updateAndDone();
-						}
-					} catch (err2) {
-						TAS.error("PFDefense.setDefenseDropdownMod inner error for : "+dropdownField, err2);
-						done();
-					}
-				});
-			}
-		} catch (err) {
-			TAS.error("PFDefense.setDefenseDropdownMod error for: "+dropdownField, err);
-			done();
-		}
-	},
-	/** updates total AC and penalty and max dex
-	* if not proficient sets attack penalty
-	* for backward compatibility, proficiency is string and 0 is proficient, anything else non proficient
-	*@param {function} callback optional call when done
-	*@param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	*@param {eventInfo} eventInfo unused eventInfo from on method
-	*/
-	updateArmor = function (callback, silently, eventInfo) {
-		var done = function () { if (typeof callback === "function") { callback(); } },
-		params = {};
-		getAttrs(defenseArmorFields, function (v) {
-			var acp = 0, minAcp = 0, acA = 0, acS = 0, sp = 0, atk = 0, subAC = 0, subD = 0,
-			subAcp = 0, nonProf = 0, subsp = 0, maxDex = 99, subE = 0,
-			currACP = 0, currMaxDex = 99, currACArmor = 0, currACShield = 0, currSpellFail = 0,
-			currAtkMod = 0,
-			encumbranceDD = parseInt(v["max-dex-source"], 10) || 0,
-			currentLoad = parseInt(v["current-load"], 10) || 0,
-			setter = {};
-			try {
-				//TAS.debug("at updateArmor ",v);
-				defenseArmorShieldRows.forEach(function (row) {
-					if (v[row + "-equipped"] == "1") {
-						subAC = parseInt(v[row + "-acbonus"], 10) || 0;
-						subE = parseInt(v[row+"-enhance"],10)||0;
-						subsp = parseInt(v[row + "-spell-fail"], 10) || 0;
-						sp += subsp;
-						if (row.indexOf("armor") >= 0) {
-							acA += subAC + subE;
-						} else {
-							acS += subAC + subE;
-						}
-						subAcp = parseInt(v[row + "-acp"], 10) || 0;
-						if (encumbranceDD < 2) {
-							subD = parseInt(v[row + "-max-dex"], 10);
-							if (v[row + "-max-dex"]==="-" || isNaN(subD)){
-								subD=99;
-							}
-							maxDex = Math.min(subD, maxDex);
-							acp += subAcp;
-						}
-						nonProf = parseInt(v[row + "-proficiency"], 10) || 0;
-						if (nonProf) {
-							atk += subAcp;
-						}
-						if ((/tower/i).test(v[row+"-type"])){
-							atk -= 2;
-						}
-						//TAS.debug("row=" + row + ", subAC=" + subAC + ", subD=" + subD + ", subAcp=" + subAcp + ", nonProf=" + nonProf + ", subsp=" + subsp + ", acA=" + acA + ", maxDex=" + maxDex + ", acp=" + acp + ", sp=" + sp + ", atk=" + atk);
-					}
-				});
-				minAcp = acp;
-				// #0: Armor, Shield & Load
-				// #1: Armor & Shield only
-				// #2: Load only
-				// #3: None
-				if (encumbranceDD === 0 || encumbranceDD === 2) {
-					if (currentLoad === 1) { // under medium encumbrance load
-						maxDex = Math.min(maxDex, 3);
-						minAcp = Math.min(minAcp, -3);
-					} else if (currentLoad === 2) { // under heavy encumbrance load
-						maxDex = Math.min(maxDex, 1);
-						minAcp = Math.min(minAcp, -6);
-					} else if (currentLoad > 2){
-						maxDex = 0;
-						minAcp = Math.min(minAcp, -6);
-					}
-				}
-				
-				
-				currACP = parseInt(v.acp, 10) || 0;
-				currMaxDex = parseInt(v["max-dex"], 10); //cannot do "||0" since 0 is valid but falsy
-				currMaxDex = isNaN(currMaxDex) ? 99 : currMaxDex;
-				currACArmor = parseInt(v["AC-armor"], 10) || 0;
-				currACShield = parseInt(v["AC-shield"], 10) || 0;
-				currSpellFail = parseInt(v["spell-fail"], 10) || 0;
-				currAtkMod = parseInt(v["acp-attack-mod"], 10) || 0;
-				if (currACP !== minAcp) {
-					setter["acp"] = minAcp;
-				}
-				if (currMaxDex !== maxDex) {
-					setter["max-dex"] = maxDex;
-				}
-				if (currACArmor !== acA) {
-					setter["AC-armor"] = acA;
-				}
-				if (currACShield !== acS) {
-					setter["AC-shield"] = acS;
-				}
-				if (currSpellFail !== sp) {
-					setter["spell-fail"] = sp;
-				}
-				if (currAtkMod !== atk) {
-					setter["acp-attack-mod"] = atk;
-				}
-			} catch (err) {
-				TAS.error("PFDefense.updateArmor", err);
-			} finally {
-				if (_.size(setter) > 0) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
-					setAttrs(setter, params, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-	/** applyConditions Updates the AC-penalty and CMD-penalty field based on conditions
-	*only difference is CMD penalty affected by energy drain for some reason
-	*@param {function} callback optional call when done
-	*@param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	*@param {eventInfo} eventInfo unused eventInfo from on method
-	*/
-	applyConditions = function (callback, silently,eventInfo) {
-		var done = _.once(function () {
-			TAS.debug("leaving PFDefense.applyConditions");
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode"], function (v) {
-			var subTotPenalty = 0,
-			drained = 0,
-			woundLevel = 0,
-			AC = 0,
-			CMD = 0,
-			newCMD = 0,
-			woundPenalty = 0,
-			hasEndurance = 0,
-			grittyMode = 0,
-			setter = {},
-			params = {};
-			try {
-				drained = parseInt(v["condition-Drained"], 10) || 0;
-				woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
-				AC = parseInt(v["AC-penalty"], 10) || 0;
-				CMD = parseInt(v["CMD-penalty"], 10) || 0;
-				hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
-				grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
-				woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
-				subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
-				subTotPenalty += (parseInt(v["condition-Pinned"], 10) || 0);
-				subTotPenalty += woundPenalty;
-				newCMD = drained + subTotPenalty;
-				if (AC !== subTotPenalty) {
-					setter["AC-penalty"] = subTotPenalty;
-				}
-				if (CMD !== newCMD) {
-					setter["CMD-penalty"] = newCMD;
-				}
-			} catch (err) {
-				TAS.error("PFDefense.applyConditions:", err);
-			} finally {
-				if (_.size(setter) > 0) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
-					setAttrs(setter, params, done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-
-	migrate = function(callback,oldversion){
-		var done = _.once(function () {
-			TAS.debug("leaving PFDefense.migrate");
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		if (oldversion > 0 && oldversion < 0.50) {
-			PFMigrate.migrateMaxDexAndACP();
-		}
-		getAttrs(['CMD-ability2','unlock_def_ability','AC-ability'],function(v){
-			var ac='',cmd='',configflag=0, setter={};
-			try {
-				ac = PFUtils.findAbilityInString(v['AC-ability']);
-				cmd = PFUtils.findAbilityInString(v['CMD-ability2']);
-				configflag = parseInt(v.unlock_def_ability,10)||0;
-				if (ac && cmd && ac !== cmd && !configflag){
-					setter.unlock_def_ability=1;
-				} else if (configflag){
-					setter.unlock_def_ability=0;
-				}
-			} catch (err){
-				TAS.error("PFDefense.migrate",err);
-			} finally {
-				if (_.size(setter)>0){
-					setAttrs(setter,PFConst.silentParams,done);
-				} else {
-					done();
-				}
-			}
-		});
-	},
-
-	recalculate = function (callback, silently, oldversion) {
-		var done = _.once(function () {
-			TAS.debug("leaving PFDefense.recalculate");
-			if (typeof callback === "function") {
-				callback();
-			}
-		}),
-		numDropdowns = _.size(defenseDropdowns),
-		doneOneDefenseDropdown= _.after(numDropdowns, function(){
-			updateDefenses(done, true);
-		});
-
-		migrate(function() {
-			applyConditions(function () {
-				updateArmor(function () {
-					_.each(defenseDropdowns, function (value, key) {
-						setDefenseDropdownMod(key, doneOneDefenseDropdown,true,null,true);
-					});
-				}, silently);
-			}, silently);
-		},silently);
-	},
-	events = {
-		defenseEventsAuto: "change:bab change:ac-penalty change:cmd-penalty change:size change:ac-shield change:ac-armor change:ac-ability-mod change:ff-dex change:cmd-dex change:ff-cmd-dex change:cmd-str change:max-dex",
-		defenseEventsPlayer: "change:ff-dex change:ac-penalty change:cmd-penalty change:size change:ac-dodge change:ac-natural change:ac-deflect change:ac-misc change:cmd-misc",
-		defenseEventsEither: "change:size change:AC-ability change:FF-ability change:CMD-ability1 change:CMD-ability2 change:CMD-ability"
-	},
-	registerEventHandlers = function () {
-		_.each(defenseDropdowns, function (write, read) {
-			on("change:" + read, TAS.callback(function eventsetDefenseDropdownMod(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				setDefenseDropdownMod(read,null,null,eventInfo);
-			}));
-		});
-		on("change:uncanny_dodge" , TAS.callback(function eventUncannyDodgeUpdate(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				setDefenseDropdownMod(null,null,null,eventInfo);
-			}
-		}));
-		on("change:hd_not_bab" , TAS.callback(function eventCMDSwitchHDandBAB(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				updateDefenses(null,null,eventInfo);
-			}
-		}));		
-		on(events.defenseEventsAuto, TAS.callback(function eventUpdateDefensesAuto(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker") {
-				updateDefenses(null,null,eventInfo);
-			}
-		}));
-		on(events.defenseEventsPlayer, TAS.callback(function eventUpdateDefensesPlayer(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				updateDefenses(null,null,eventInfo);
-			}
-		}));
-		on(events.defenseEventsEither, TAS.callback(function eventUpdateDefensesEither(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateDefenses(null,null,eventInfo);
-		}));
-		on("change:max-dex-source change:current-load", TAS.callback(function eventUpdateArmor(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateArmor(null,null,eventInfo);
-		}));
-		_.each(defenseArmorShieldRows, function (row) {
-			_.each(defenseArmorShieldColumns, function (column) {
-				var eventToWatch = "change:" + row + "-" + column;
-				on(eventToWatch, TAS.callback(function eventUpdateDefenseArmorShield(eventInfo) {
-					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateArmor(null,null,eventInfo);
-				}));
-			});
-		});
-	};
-	registerEventHandlers();
-	PFConsole.log('   PFDefense module loaded        ');
-	PFLog.modulecount++;
-	return {
-		recalculate: recalculate,
-		migrate: migrate,
-		defenseDropdowns: defenseDropdowns,
-		defenseArmorShieldRows: defenseArmorShieldRows,
-		defenseArmorShieldRowsOld: defenseArmorShieldRowsOld,
-		defenseArmorShieldColumns: defenseArmorShieldColumns,
-		applyConditions: applyConditions,
-		updateDefenses: updateDefenses,
-		setDefenseDropdownMod: setDefenseDropdownMod,
-		updateArmor: updateArmor
-	};
-}());
-var PFAttackGrid = PFAttackGrid || (function () {
-	'use strict';
-	var attackGridFields = {
-		"melee": {
-			"size": "size",
-			"atk": "attk-melee",
-			"buff": "buff_Melee-total",
-			"abilityMod": "melee-ability-mod",
-			"misc": "attk-melee-misc",
-			"crit": "attk_melee_crit_conf",
-			"attackmacro": "@{toggle_global_melee_macro_insert}",
-			"damagemacro": "@{toggle_global_melee_damage_macro_insert}"
-		},
-		"melee2": {
-			"size": "size",
-			"atk": "attk-melee2",
-			"buff": "buff_Melee-total",
-			"abilityMod": "melee2-ability-mod",
-			"misc": "attk-melee2-misc",
-			"crit": "attk_melee2_crit_conf",
-			"attackmacro": "@{toggle_global_melee_macro_insert}",
-			"damagemacro": "@{toggle_global_melee_damage_macro_insert}"
-		},
-		"ranged": {
-			"size": "size",
-			"atk": "attk-ranged",
-			"buff": "buff_Ranged-total",
-			"abilityMod": "ranged-ability-mod",
-			"misc": "attk-ranged-misc",
-			"crit": "attk_ranged_crit_conf",
-			"attackmacro": "@{toggle_global_ranged_macro_insert}",
-			"damagemacro": "@{toggle_global_ranged_damage_macro_insert}"
-		},
-		"ranged2": {
-			"size": "size",
-			"atk": "attk-ranged2",
-			"buff": "buff_Ranged-total",
-			"abilityMod": "ranged2-ability-mod",
-			"misc": "attk-ranged2-misc",
-			"crit": "attk_ranged2_crit_conf",
-			"attackmacro": "@{toggle_global_ranged_macro_insert}",
-			"damagemacro": "@{toggle_global_ranged_damage_macro_insert}"
-		},
-		"CMB": {
-			"size": "CMD-size",
-			"atk": "CMB",
-			"buff": "buff_Melee-total",
-			"abilityMod": "CMB-ability-mod",
-			"misc": "attk-CMB-misc",
-			"crit": "attk_cmb_crit_conf",
-			"attackmacro": "@{toggle_global_cmb_macro_insert}",
-			"damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
-		},
-		"CMB2": {
-			"size": "CMD-size",
-			"atk": "CMB2",
-			"buff": "buff_Melee-total",
-			"abilityMod": "CMB2-ability-mod",
-			"misc": "attk-CMB2-misc",
-			"crit": "attk_cmb2_crit_conf",
-			"attackmacro": "@{toggle_global_cmb_macro_insert}",
-			"damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
-		}
-	},
-	attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
-	attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
-	attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
-	updateDamage = function (callback, silently) {
-		SWUtils.updateRowTotal(["DMG-mod", "buff_DMG-total"], 0, ["condition-Sickened"], false, callback, silently);
-	},
-	/** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
-	*@param {function} callback optional call when done
-	*@param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	*@param {eventInfo} eventInfo unused eventInfo from on method
-	*/
-	applyConditions = function (callback, silently, eventInfo) {
-		var done = _.once(function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
-	},
-	/** updateAttack - updates one row of attack grid (left most column in grid)
-	* Updates the attack type totals at top of attack page for one row of grid
-	* @param {string} attype = key for attackGridFields to indicate which row from attack grid
-	* @param {eventInfo } eventInfo unused
-	* @param {function} callback optional call when done
-	* @param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	*/
-	updateAttack = function (attype, eventInfo, callback, silently) {
-		var done = _.once(function () {
-			if (typeof callback === "function") {
-				callback();
-			}
-		});
-		if (attackGridFields[attype]) {
-			SWUtils.updateRowTotal([attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
-				attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff
-				], 0, [], false, done, silently);
-		} else {
-			TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
-			done();
-		}
-	},
-
-	resetCommandMacro = function (eventInfo, callback) {
-		var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
-		baseAttacks = "{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|REPLACENPCMelee-Attack-Roll) [^{ranged}](~@{character_id}|REPLACENPCRanged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|REPLACENPCCMB-Check) [^{melee2}](~@{character_id}|REPLACENPCMelee2-Attack-Roll) REPLACE}}",
-		ranged2BaseAttacks = "[^{ranged2}](~@{character_id}|REPLACENPCRanged2-Attack-Roll)",
-		cmb2BaseAttacks = "[^{combat-maneuver-bonus-abbrv2}](~@{character_id}|REPLACENPCCMB2-Check)",
-		//           012 345678901234567890 23
-		baseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}}",
-		npcBaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{attacks}}}";
-		getAttrs(["is_npc", "attacks-macro", "attacks-macro-npc", "include_attack_totals", "ranged_2_show", "cmb_2_show"], function (currMacros) {
-			var showBonus = parseInt(currMacros["include_attack_totals"], 10) || 0,
-			isNPC = parseInt(currMacros.is_npc, 10) || 0,
-			npcStr = isNPC ? "npc-" : "";
-			baseAttacks = baseAttacks.replace(/REPLACENPC/g, npcStr);
-			if (parseInt(currMacros.ranged_2_show, 10)) {
-				ranged2BaseAttacks = ranged2BaseAttacks.replace(/REPLACENPC/g, npcStr)||"";
-			} else {
-				ranged2BaseAttacks = "";
-			}
-			if (parseInt(currMacros.cmb_2_show, 10)) {
-				cmb2BaseAttacks = cmb2BaseAttacks.replace(/REPLACENPC/g, npcStr)||"";
-			} else {
-				cmb2BaseAttacks = "";
-			}
-			baseAttacks = baseAttacks.replace(/REPLACE/, (ranged2BaseAttacks + ' ' + cmb2BaseAttacks))||"";
-			if (isNPC){
-				baseMacro = npcBaseMacro + baseAttacks;
-			} else {
-				baseMacro += baseAttacks;
-			}
-			
-			//TAS.debug("PFAttackGrid.resetCommandMacro baseMacro: " + baseMacro);
-			getSectionIDs("repeating_weapon", function (idarray) {
-				//if no attacks just set the base melee, ranged, cmb attacks
-				if (!idarray || idarray.length === 0) {
-					var attrs = {};
-					if (!isNPC && currMacros["attacks-macro"].slice(13) !== baseMacro.slice(13)) {
-						attrs["attacks-macro"] = baseMacro;
-					} else if (isNPC && currMacros["attacks-macro-npc"].slice(13) !== baseMacro.slice(13)) {
-						attrs["attacks-macro-npc"] = baseMacro;
-					}
-					if (_.size(attrs)) {
-						setAttrs(attrs, {
-							silent: true
-						}, done);
-					} else {
-						done();
-					}
-					return;
-				}
-				getAttrs(["_reporder_repeating_weapon"], function (repValues) {
-					var atkattrs = [];
-					//TAS.debug("PFAttackGrid.resetCommandMacro values:", repValues);
-					_.each(idarray, function (id) {
-						atkattrs.push("repeating_weapon_" + id + "_attack-type");
-						atkattrs.push("repeating_weapon_" + id + "_name");
-						atkattrs.push("repeating_weapon_" + id + "_group");
-						if (showBonus) {
-							atkattrs.push("repeating_weapon_" + id + "_total-attack");
-						}
-					});
-					getAttrs(atkattrs, function (values) {
-						var repList,
-						orderedList,
-						attackIDList,
-						melee = "",
-						ranged = "",
-						cmb = "",
-						misc = "",
-						attrs = {},
-						otherGroups = {},
-						other = "",
-						tempstr="",
-						rowcounter=10,
-						newMacro="";
-						try {
-							if (!_.isUndefined(repValues._reporder_repeating_weapon) && repValues._reporder_repeating_weapon !== "") {
-								repList = repValues._reporder_repeating_weapon.split(",");
-								repList = _.map(repList, function (ID) {
-									return ID.toLowerCase();
-								});
-							}
-							orderedList = _.union(repList, idarray);
-							attackIDList = _.object(_.map(orderedList, function (id) {
-								return [id, values["repeating_weapon_" + id + "_attack-type"]];
-							}));
-							orderedList = _.filter(orderedList, function (ID) {
-								if (typeof values["repeating_weapon_" + ID + "_name"] === "undefined" || typeof values["repeating_weapon_" + ID + "_attack-type"] === "undefined") {
-									return false;
-								}
-								return true;
-							});
-							_.each(orderedList, function (ID) {
-								var temproll = "",
-								NPCtemproll = "",
-								value = "",
-								buttonName = "",
-								bonusStr = showBonus ? (" + @{repeating_weapon_" + ID + "_total-attack}") : "",
-								attackName = values["repeating_weapon_" + ID + "_name"],
-								groupName = values["repeating_weapon_" + ID + "_group"];
-								buttonName = attackName + bonusStr;
-								buttonName = SWUtils.escapeForChatLinkButton(buttonName);
-								buttonName = SWUtils.escapeForRollTemplate(buttonName);
-
-								temproll = " [" + buttonName + "](~@{character_id}|repeating_weapon_" + ID + "_attack-" + npcStr + "roll)";
-
-								if (attackIDList[ID]) {
-									if (groupName) {
-										if (!otherGroups[groupName]) {
-											otherGroups[groupName] = "";
-										}
-										otherGroups[groupName] += temproll;
-									} else {
-										value = PFUtils.findAbilityInString(attackIDList[ID]);
-										switch (value) {
-											case 'attk-melee':
-											case 'attk-melee2':
-												melee += temproll;
-												break;
-											case 'attk-ranged':
-											case 'attk-ranged2':
-												ranged += temproll;
-												break;
-											case 'CMB':
-											case 'CMB2':
-												cmb += temproll;
-												break;
-											default:
-												misc += temproll;
-												break;
-										}
-									}
-								}
-							});
-							if (otherGroups && _.size(otherGroups) > 0) {
-								other = _.reduce(otherGroups, function (memo, str, loopgroup) {
-									memo += " {{row"+rowcounter +"=**"+ loopgroup + "**}}" ;
-									rowcounter++;
-									memo += " {{row"+rowcounter +"="+ str.trim() + "}}";
-									rowcounter++;
-									return memo;
-								}, other);
-							}
-							other = other||"";
-							if (melee) {
-								tempstr = " {{row"+rowcounter +"=**^{melee}**}}";
-								rowcounter++;
-								tempstr += " {{row"+rowcounter +"="+ melee.trim() + "}}";
-								rowcounter++;
-								melee = tempstr;
-							}
-							if (ranged) {
-								tempstr = " {{row"+rowcounter +"=**^{ranged}**}}";
-								rowcounter++;
-								tempstr += " {{row"+rowcounter +"=" + ranged.trim() + "}}";
-								rowcounter++;
-								ranged = tempstr;
-							}
-							if (cmb) {
-								tempstr = " {{row"+rowcounter +"=**^{combat-maneuver-bonus-abbrv}**}}";
-								rowcounter++;
-								tempstr += " {{row"+rowcounter +"=" + cmb.trim() + "}}";
-								rowcounter++;
-								cmb = tempstr;
-							}
-							if (misc) {
-								tempstr = " {{row"+rowcounter +"=**^{miscellaneous-abbrv}**}}";
-								rowcounter++;
-								tempstr += " {{row"+rowcounter +"=" + cmb.trim() + "}}";
-								rowcounter++;
-								misc = tempstr;
-							}
-
-							newMacro = baseMacro + other + melee + ranged + cmb + misc;
-							if (newMacro){
-								if (!isNPC && currMacros["attacks-macro"].slice(13) !== newMacro.slice(13)) {
-									attrs["attacks-macro"] = newMacro;
-								} else if (isNPC && currMacros["attacks-macro-npc"].slice(13) !== newMacro.slice(13)) {
-									attrs["attacks-macro-npc"] = newMacro;
-								}
-							}
-						} catch (err) {
-							TAS.error("PFAttackGrid.resetCommandMacro", err);
-						} finally {
-							if (_.size(attrs) > 0) {
-								setAttrs(attrs, { silent: true }, done);
-							} else {
-								done();
-							}
-						}
-					});
-				});
-			});
-		});
-	},
-
-	migrate = function(callback, oldversion){
-		var done = function () {
-			TAS.debug("leaving PFAttackGrid.migrate");
-			if (typeof callback === "function") {
-				callback();
-			}
-		};
-		PFMigrate.migrateAltAttackGridrowFlags();
-		done();
-	},
-	/** recalculates all write-to fields in module 
-	* @param {function} callback optional call when done
-	* @param {bool} silently optional if true call setAttrs with PFConst.silentParams
-	* @param {number} oldversion the version upgrading from 
-	*/
-	recalculate = function (callback, silently, oldversion) {
-		var done = function () {
-			TAS.debug("leaving PFAttackGrid.recalculate");
-			if (typeof callback === "function") {
-				callback();
-			}
-		},
-		doneAttack=_.after(7,done),
-		callUpdateAttacksAndDamage = _.once(function(){
-			_.each(attackGridFields, function (attrMap, attack) {
-				updateAttack(attack,null,doneAttack,silently);
-			});
-			updateDamage(doneAttack,silently);
-		}),
-		callApplyConditions = _.once(function(){
-			applyConditions(callUpdateAttacksAndDamage,silently);
-		});
-		//TAS.debug"At PFAttackGrid.recalculate");
-		migrate(callApplyConditions,oldversion);
-	},
-	registerEventHandlers = function () {
-		_.each(attackGridFields, function (attackFields, attack) {
-			on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				updateAttack(attack);
-			}));
-			on("change:" + attackFields.misc, TAS.callback(function eventAttackMisc(eventInfo) {
-				if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateAttack(attack);
-				}
-			}));
-			on("change:attk-penalty change:" + attackFields.abilityMod + " change:" + attackFields.buff, TAS.callback(function eventAttackPenalty(eventInfo) {
-				if (eventInfo.sourceType === "sheetworker") {
-					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateAttack(attack);
-				}
-			}));
-		});
-		on("change:buff_Melee-total", TAS.callback(function meleebuffEventMelee(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker") {
-				updateAttack('melee', eventInfo);
-				updateAttack('melee2', eventInfo);
-				updateAttack('CMB', eventInfo);
-				updateAttack('CMB2', eventInfo);
-			}
-		}));
-		on("change:buff_Ranged-total", TAS.callback(function meleebuffEventRanged(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker") {
-				updateAttack('ranged', eventInfo);
-				updateAttack('ranged2', eventInfo);
-			}
-		}));
-		on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			applyConditions();
-		}));
-	};
-	registerEventHandlers();
-	PFConsole.log('   PFAttackGrid module loaded     ');
-	PFLog.modulecount++;
-	return {
-		migrate: migrate,
-		recalculate: recalculate,
-		resetCommandMacro: resetCommandMacro,
-		attackGridFields: attackGridFields,
-		updateDamage: updateDamage,
-		applyConditions: applyConditions,
-		updateAttack: updateAttack
-	};
-}());
 var PFAttackOptions = PFAttackOptions || (function () {
 	'use strict';
 	var optionTemplates = {
@@ -3000,7 +195,7 @@ var PFAttackOptions = PFAttackOptions || (function () {
 		});
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFAttackOptions module loaded  ');
+	console.log(PFLog.l + '   PFAttackOptions module loaded  ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -3569,7 +764,7 @@ var PFEncumbrance = PFEncumbrance || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFEncumbrance module loaded    ');
+	console.log(PFLog.l + '   PFEncumbrance module loaded    ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -3647,7 +842,7 @@ var PFInventory = PFInventory || (function () {
 	},
 	/** updateRepeatingItems totals columns 
 	*@param {function} callback to call when done
-	*@param {bool} silently if true send PFConst.silentParams to setAttrs
+	*@param {boolean} silently if true send PFConst.silentParams to setAttrs
 	*/
 	updateRepeatingItems = function (callback, silently) {
 		var done = _.once(function () {
@@ -3693,7 +888,7 @@ var PFInventory = PFInventory || (function () {
 	},
 	/** updateCarriedCurrency  totals weight for carried currency 
 	*@param {function} callback to call when done
-	*@param {bool} silently if true send PFConst.silentParams to setAttrs
+	*@param {boolean} silently if true send PFConst.silentParams to setAttrs
 	*/
 	updateCarriedCurrency = function (callback, silently) {
 		var done = function () {
@@ -3726,7 +921,7 @@ var PFInventory = PFInventory || (function () {
 	},
 	/** updateCarriedTotal- updates the total for carried weight
 	*@param {function} callback to call when done
-	*@param {bool} silently if true send PFConst.silentParams to setAttrs
+	*@param {boolean} silently if true send PFConst.silentParams to setAttrs
 	*/
 	updateCarriedTotal = function (callback, silently) {
 		var done = function () {
@@ -3758,7 +953,7 @@ var PFInventory = PFInventory || (function () {
 	/** Got rid of the Worn Equipment section, so migrate any values to the Equipment as repeating entries.
 	* Worn Armor & Worn Shield are now disabled and controlled by the Equipment section in the Inventory tab.
 	*@param {function} callback to call when done
-	*@param {bool} silently if true send PFConst.silentParams to setAttrs
+	*@param {boolean} silently if true send PFConst.silentParams to setAttrs
 	*/
 	migrateWornEquipment = function (callback) {
 		var doneMigrating = _.once(function () {
@@ -5045,7 +2240,7 @@ var PFInventory = PFInventory || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFInventory module loaded      ');
+	console.log(PFLog.l + '   PFInventory module loaded      ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate: migrate,
@@ -5445,7 +2640,7 @@ var PFSpellOptions = PFSpellOptions || (function () {
 		});
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFSpellOptions module loaded   ');
+	console.log(PFLog.l + '   PFSpellOptions module loaded   ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -6361,7 +3556,7 @@ var PFSpells = PFSpells || (function () {
 	*@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
 	*@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
 	*@param {function} callback - to call when done.
-	*@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
+	*@param {boolean} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
 	*/
 	updateSpell = function (id, eventInfo, callback, doNotUpdateTotals) {
 		var spellLevelUndefined = false,
@@ -6982,7 +4177,7 @@ var PFSpells = PFSpells || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFSpells module loaded         ');
+	console.log(PFLog.l + '   PFSpells module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate: migrate,
@@ -7063,9 +4258,9 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	/** updates the ranges at the top for this spellcasting class
 	*@param {int} spellclassidx 0,1,2 the spell casting tab
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-	*@param {bool} force if true update no matter if new ranges are same or not.
+	*@param {boolean} force if true update no matter if new ranges are same or not.
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateCasterRanges = function (spellclassidx, eventInfo, force, callback, silently) {
 		var done = function () {
@@ -7111,7 +4306,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {int} classidx 0,1,2 the spellclass
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateConcentration = function (classidx, eventInfo, callback, silently) {
 		//TAS.debug("at PFSpellCasterClasses.updateConcentration");
@@ -7122,7 +4317,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {int} classidx 0,1,2 the spellclass
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateSaveDCs = function (classidx, eventInfo, callback, silently) {
 		var done = _.once(function () {
@@ -7164,7 +4359,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {number} classidx 0,1,2 the spellclass
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateBonusSpells = function (classidx, eventInfo, callback, silently) {
 		var done = _.once(function () {
@@ -7218,7 +4413,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	/**  applyConditions - for condition deafened update {SpellFailureNote} on DEFENSE PAGE
 	* note drain should have already been applied
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	applyConditions = function (callback, silently) {
 		var done = _.once(function () {
@@ -7273,7 +4468,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {eventInfo} eventInfo unused eventinfo from 'on' method
 	*@param {int} classlevel optional override for class level, use this if you know it and sheet attribute might not be updated yet.
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateCasterLevel = function (spellclassidx, eventInfo, classlevel, callback, silently) {
 		var done = _.once(function () {
@@ -7338,7 +4533,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateCasterLevels = function (dummy, eventInfo, callback, silently) {
 		updateCasterLevel(0, eventInfo, 0, callback, silently);
@@ -7350,7 +4545,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	*@param {int} spellclassidx 0,1,2 the spell casting tab
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	setCasterClassFromDropdown = function (spellclassidx, eventInfo, callback, silently) {
 		var done = _.once(function () {
@@ -7417,9 +4612,9 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 	/** update level on SPELL page when updated on CLASS page, but not vice versa
 	*@param {int} classidx 0..6 the row on the CLASS GRID starting with 0 to grab level from, or 6 if {npc-hd-num}
 	*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-	*@param {bool} force if true update no matter if new ranges are same or not.
+	*@param {boolean} force if true update no matter if new ranges are same or not.
 	*@param {function} callback - to call when done.
-	*@param {bool} silently if true update with PFConst.silentParams
+	*@param {boolean} silently if true update with PFConst.silentParams
 	*/
 	updateCasterFromClassLevel = function (classidx, eventInfo, force, callback, silently) {
 		var done = _.once(function () {
@@ -7598,7 +4793,7 @@ var PFSpellCasterClasses = PFSpellCasterClasses || (function () {
 		}); //end of spell classes
 	};
 	registerEventHandlers();
-	PFConsole.log('PFSpellCasterClasses module loaded');
+	console.log(PFLog.l + 'PFSpellCasterClasses module loaded' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		ifSpellClassExists: ifSpellClassExists,
@@ -7644,7 +4839,7 @@ var PFClassRaceGrid = PFClassRaceGrid || (function () {
 	/** PFClassRaceGrid.updateClassInformation Updates totals at bottom of Class Information grid
 	*@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns 
 	*@param {function} callback optional call when finished updating
-	*@param {bool} silently if true then call setAttrs with PFConst.silentParams
+	*@param {boolean} silently if true then call setAttrs with PFConst.silentParams
 	*/
 	updateClassInformation = function (col, callback, silently) {
 		var done = function () {
@@ -7930,7 +5125,7 @@ var PFClassRaceGrid = PFClassRaceGrid || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFClassRaceGrid module loaded  ');
+	console.log(PFLog.l + '   PFClassRaceGrid module loaded  ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		events: events,
@@ -8988,7 +6183,7 @@ var PFSkills = PFSkills || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFSkills module loaded         ');
+	console.log(PFLog.l + '   PFSkills module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -9454,7 +6649,7 @@ var PFFeatures = PFFeatures || (function () {
 		
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFFeatures module loaded       ');
+	console.log(PFLog.l + '   PFFeatures module loaded       ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -10422,7 +7617,7 @@ var PFAbility = PFAbility || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFAbility module loaded        ');
+	console.log(PFLog.l + '   PFAbility module loaded        ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate: migrate,
@@ -11218,7 +8413,7 @@ var PFAttacks = PFAttacks || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFAttacks module loaded        ');
+	console.log(PFLog.l + '   PFAttacks module loaded        ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate: migrate,
@@ -11314,7 +8509,7 @@ var PFPsionic = PFPsionic || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFPsionic module loaded        ');
+	console.log(PFLog.l + '   PFPsionic module loaded        ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -11438,7 +8633,7 @@ var PFMythic = PFMythic || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFMythic module loaded         ');
+	console.log(PFLog.l + '   PFMythic module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -11764,7 +8959,7 @@ var PFHealth = PFHealth || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFHealth module loaded         ');
+	console.log(PFLog.l + '   PFHealth module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate:migrate,
@@ -11882,7 +9077,7 @@ var PFSaves = PFSaves || (function () {
 		});
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFSaves module loaded          ');
+	console.log(PFLog.l + '   PFSaves module loaded          ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -12180,7 +9375,7 @@ var PFSize = PFSize || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFSize module loaded           ');
+	console.log(PFLog.l + '   PFSize module loaded           ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		migrate: migrate,
@@ -12228,7 +9423,7 @@ var PFInitiative = PFInitiative || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFInitiative module loaded     ');
+	console.log(PFLog.l + '   PFInitiative module loaded     ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -12290,7 +9485,7 @@ var PFChecks = PFChecks || (function () {
 			}
 		});
 	};
-	PFConsole.log('   PFChecks module loaded         ');
+	console.log(PFLog.l + '   PFChecks module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		applyConditions: applyConditions
@@ -12405,7 +9600,7 @@ var PFConditions = PFConditions || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFConditions module loaded     ');
+	console.log(PFLog.l + '   PFConditions module loaded     ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -12758,7 +9953,7 @@ var PFBuffs = PFBuffs || (function () {
 		});
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFBuffs module loaded          ');
+	console.log(PFLog.l + '   PFBuffs module loaded          ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		recalculate: recalculate,
@@ -12813,7 +10008,7 @@ var PFNPC = PFNPC || (function () {
 		}));
 	};
 	registerEventHandlers();
-	PFConsole.log('   PFNPC module loaded            ');
+	console.log(PFLog.l + '   PFNPC module loaded            ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		setToNPC: setToNPC,
@@ -15946,7 +13141,7 @@ var PFNPCParser = PFNPCParser || (function () {
 	registerEventHandlers = function () {
 	};
 	registerEventHandlers();
-	PFConsole.log('   NPCParser module loaded        ');
+	console.log(PFLog.l + '   NPCParser module loaded        ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		importFromCompendium: importFromCompendium,
@@ -17166,7 +14361,7 @@ var HLImport = HLImport || (function() {
 		});
 	};
 	registerEventHandlers();
-	PFConsole.log('   HLImport module loaded         ');
+	console.log(PFLog.l + '   HLImport module loaded         ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	return {
 		importCharacter: importCharacter
@@ -17644,7 +14839,7 @@ var PFSheet = PFSheet || (function () {
 		},
 		errorDone = _.once(function (){
 			TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
-			setAttrs({ recalc1: 0, PFSheet_forcesync: 0 }, { silent: true });
+			setAttrs({ recalc1: 0, migrate1: 0 }, { silent: true });
 		});
 		getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
 		'race', 'class-0-name', 'npc-type', 'level'], function (v) {
@@ -17676,7 +14871,7 @@ var PFSheet = PFSheet || (function () {
 				migrateSheet = true;
 			}
 			if (newSheet) {
-				setupNewSheet(setUpgradeFinished);
+				setupNewSheet(done);
 			} else if (migrateSheet){
 				migrate(currVer, setUpgradeFinished, errorDone);
 			} else if (recalc) {
@@ -17777,20 +14972,20 @@ var PFSheet = PFSheet || (function () {
 
 	};
 	registerEventHandlers();
-	PFConsole.log('       ,## /##                    ');
-	PFConsole.log('      /#/ /  ##                   ');
-	PFConsole.log('     / / /    ##                  ');
-	PFConsole.log('      | ##___#/                   ');
-	PFConsole.log('      | ##       athfinder        ');
-	PFConsole.log('   #  | ##    sheet version       ');
-	PFConsole.log('    ### /           ' + ("0000" + PFConst.version.toFixed(2)).slice(-5) + '         ');
-	PFConsole.log('                                  ');
-	PFConsole.log('   PFSheet module loaded          ');
+	console.log(PFLog.l + '       ,## /##                    ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '      /#/ /  ##                   ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '     / / /    ##                  ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '      | ##___#/                   ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '      | ##       athfinder        ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '   #  | ##    sheet version       ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '    ### /           ' + ("0000" + PFConst.version.toFixed(2)).slice(-5) + '         ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '                                  ' + PFLog.r, PFLog.bg);
+	console.log(PFLog.l + '   PFSheet module loaded          ' + PFLog.r, PFLog.bg);
 	PFLog.modulecount++;
 	if (PFLog.modulecount === 34) {
-		PFConsole.log('   All ' + PFLog.modulecount + ' Modules Loaded          ');
+		console.log(PFLog.l + '   All ' + PFLog.modulecount + ' Modules Loaded          ' + PFLog.r, PFLog.bg);
 	} else {
-		console.log(PFLog.l +'   ONLY ' + PFLog.modulecount + ' Modules Loaded!        ' + PFLog.r, 'background: linear-gradient(to right,yellow,white,white,yellow); color:black;text-shadow: 0 0 8px white;');
+		console.log(PFLog.l + '   ONLY ' + PFLog.modulecount + ' Modules Loaded!        ' + PFLog.r, 'background: linear-gradient(to right,yellow,white,white,yellow); color:black;text-shadow: 0 0 8px white;');
 	}
 	return {
 		recalculateCore: recalculateCore,

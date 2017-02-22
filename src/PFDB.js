@@ -71,4 +71,4 @@ export default {
 	skillBonusFeatRegExp : /Acrobatic|Uncanny Alertness|Alertness|Animal Affinity|Athletic|Breadth of Experience|Brewmaster|Deceitful|Deft Hands|Deny the Reaper|Forgotten Past|Innocent Blood|Monkey Moves|Monkey Style|Monument Builder|No Name|Persuasive|Scavenger.s Eye|Sea Legs|Self.Sufficient|Sharp Senses|Stealthy|Sure and Fleet|Voice of the Sibyl/i,
 	lessImportantCombatFeatRegExp : /Power Attack|Double Slice|Greater Weapon of the Chosen|Spell Focus|Toughness/i,
 	monsterRules : /spells|damage reduction/i
-}
+};
