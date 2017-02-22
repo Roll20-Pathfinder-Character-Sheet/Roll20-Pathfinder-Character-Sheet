@@ -1,3 +1,4 @@
+'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
@@ -204,7 +205,7 @@ export function shouldNotDisplayOption  (attr, val) {
         case 'saving_throw':
             return ((/^n/i.test(val) || /harmless/i.test(val)) && !(/and|or/i.test(val)));
         case 'spell_fail':
-            return (! ( (parseInt(val,10)||0) === 0));
+            return  ( (parseInt(val,10)||0) !== 0);
         default:
             return false;
     }

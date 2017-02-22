@@ -220,20 +220,20 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
         return newMacroString;
     }
 }
-/**migrateRepeatingMacros updates all macros in the section 
-*@param {function} callback after calling setAttrs with the new macros
-*@param {string} section  name after "repeating_"
-*@param {string} fieldname  the attribute name containing the macro after "id_"
-*@param {string} defaultMacro the current Macro in the page
-*@param {jsobj} defaultMap map of "{{rolltemplatekey=" to right side "var}}"
+/** migrateRepeatingMacros updates all macros in the section 
+ * @param {function} callback after calling setAttrs with the new macros
+ * @param {string} section  name after "repeating_"
+ * @param {string} fieldname  the attribute name containing the macro after "id_"
+ * @param {string} defaultMacro the current Macro in the page
+ * @param {jsobj} defaultMap map of "{{rolltemplatekey=" to right side "var}}"
         {rollqueryleft : {
             current:rollqueryright, 
             old:[  oldrollqueryright1, oldrollqueryright2 ], 
             replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] 
             }
         }
-*@param {Array} deleteArray  array of strings of old rolltemplate entries that are not used (entire entry not just left side )
-*/
+ * @param {Array} deleteArray  array of strings of old rolltemplate entries that are not used (entire entry not just left side )
+ */
 export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray, whisper){
      'use strict';
    var done = _.once(function(){
@@ -397,6 +397,18 @@ export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultM
         done();
     }
 }
+/**
+ * 
+ * 
+ * @export
+ * @param {any} callback 
+ * @param {any} fieldname 
+ * @param {any} defaultMacro 
+ * @param {any} defaultMap 
+ * @param {any} deleteArray 
+ * @param {any} sameAsKeys 
+ * @param {any} whisper 
+ */
 export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMap, deleteArray, sameAsKeys, whisper){
     'use strict';
     var done = _.once(function(){
@@ -510,21 +522,30 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
         }
     });		
 }
-/** migrateStaticMacrosMult 
+/** migrateStaticMacrosMult migrate many static macros with names following a pattern (skills)
+ * fieldname can have the following keys in it:
+ * REPLACE  - replace this with string from replaceArray
+ * REPLACELOWER - replace this with lowercase of string from replaceArray
+ * REPLACEREMOVENUMBER - replace this with: strip out digit chars from string from replaceArray
+ * REPLACELOWERREMOVENUMBER - replace this with: strip out digit chars from lowercase string from replaceArray
  * 
- * @param {any} callback 
- * @param {any} fieldname 
- * @param {any} defaultMacro 
- * @param {any} defaultMap 
- * @param {any} deleteArray 
- * @param {any} replaceArray 
- * @param {any} keysToReplaceShortcut 
- * @param {any} valsToReplaceShortcut 
- * @param {any} useNoNumber 
- * @param {any} whisper 
- * @returns 
+ * 
+ * @param {function} callback after calling setAttrs with the new macros
+ * @param {string} fieldname string pattern of attr we are saving to. Should have 'REPLACE' in it, which will be replaced by values in replaceArray
+ * @param {string} defaultMacro default macro with REPLACE strings
+ * @param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
+                        }} defaultMap a map of key and values for the rolltemplate.  
+                         {rollqueryleft : {current:rollqueryright, old:[  oldrollqueryright1, oldrollqueryright2 ], 
+                            replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] } }
+ * @param {[string]} deleteArray 
+ * @param {[string]} replaceArray values to put in "REPLACE" string found in fieldname
+ * @param {[string]} keysToReplaceShortcut 
+ * @param {[string]} valsToReplaceShortcut 
+ * @param {bool} useNoNumber When matching replaceArray, whether to try to strip numbers from replace strings as well as use the whole string
+ * @param {string} whisper Either @{PC-Whisper} or @{NPC-Whisper}
  */
-export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defaultMap, deleteArray, replaceArray, keysToReplaceShortcut, valsToReplaceShortcut, useNoNumber, whisper){
+export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defaultMap, deleteArray, replaceArray, 
+    keysToReplaceShortcut, valsToReplaceShortcut, useNoNumber, whisper){
     'use strict';
     var done=_.once(function(){
         TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
