@@ -1,4 +1,5 @@
 import {PFLog, PFConsole} from './PFLog';
+import TAS from 'exports-loader?TAS!TheAaronSheet';
 
 var rollOperator;
 
