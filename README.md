@@ -23,7 +23,7 @@ Download the latest release from https://git-for-windows.github.io/ and install 
 1. Open a shell in the project directory (Windows: Right click -> Open git bash here)
 2. Run `npm install`
 
-### install curl (If you don't have it already)
+### Install curl (If you don't have it already)
 Curl allows us to download The Arron Sheet, instead of maintaining our own copy
 1. go to https://curl.haxx.se/dlwiz/ and pick the correct version (pick 'any' if you are unsure)
 2. unzip and save to a directory on your computer
