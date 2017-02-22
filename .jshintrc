@@ -1,0 +1,10 @@
+{
+    "predef":["on","randomInteger","getSectionIDs","getTranslationByKey","getAttrs","setAttrs","removeRepeatingRow","generateRowID"],
+    "strict": true,
+    "eqeqeq": true,
+    "latedef": true,
+    "undef": true,
+    "plusplus": false,
+    "sub":true,
+    "-W119": true    //import error saying must use esversion
+}
