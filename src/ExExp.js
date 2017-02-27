@@ -1,13 +1,15 @@
+'use strict';
+import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
+import TAS from 'exports-loader?TAS!TheAaronSheet';
 
 var rollOperator;
 
 function parseExpression (s, until) {
   var untilCb = (typeof until === "function" ? until : function (tok) {
     return (tok == until);
-  })
+  }),
   // constants
-  ,
   ARG_COUNTS = {
     'abs': 1,
     'ceil': 1,
@@ -50,9 +52,8 @@ function parseExpression (s, until) {
   CLOSERS = {
     '(': ")",
     '{': "}"
-  }
+  },
   // local variables
-  ,
   operators = [{
     'precedence': 0
   }],
@@ -479,7 +480,7 @@ function sendCommand (chunks, asts, evalResults, labels) {
       return x == y;
     },
     '==': function (x, y) {
-      return x == y;
+      return x === y;
     },
     '!=': function (x, y) {
       return x != y;
@@ -537,9 +538,8 @@ function sendCommand (chunks, asts, evalResults, labels) {
     '-': function (x) {
       return -x;
     }
-  }
+  },
   // local variables
-  ,
   references = {},
   unevalRefs = [],
   evalReqs = [],
@@ -868,7 +868,7 @@ function sendCommand (chunks, asts, evalResults, labels) {
   }
 
   function reportError(err) {
-    ExExp.write("Error: " + err);
+    write("Error: " + err);
     return "";
   }
   //BEGIN
@@ -982,7 +982,7 @@ export function handleExpression (msg) {
   ast = parseExpression(state, null);
   //TAS.debug(ast);
   if (typeof (ast) === "string") {
-    ExExp.write("could not parse" + msg);
+    write("could not parse" + msg);
     return "";
   }
   asts.push(ast);
@@ -990,7 +990,7 @@ export function handleExpression (msg) {
   //  ((state.tok || {'text': ""}).text || "") + state.s;
   chunks.push(state.s);
   return sendCommand(chunks, asts, [], {});
-};
+}
 
 PFConsole.log('   ExExp module loaded            ');
 PFLog.modulecount++;
