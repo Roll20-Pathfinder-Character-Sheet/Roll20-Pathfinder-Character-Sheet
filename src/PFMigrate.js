@@ -921,7 +921,11 @@ export function migrateNPC (callback, oldversion) {
             isNPC=parseInt(v["is_npc"], 10) || 0;
             isMigrated = parseInt(v["migrated_npc"], 10) || 0;
             if (!isNPC ){
-                setAttrs({"migrated_npc": 1}, PFConst.silentParams);
+                if  (!isMigrated) {
+                    setAttrs({"migrated_npc": 1}, PFConst.silentParams,done);
+                } else{
+                    done();
+                }
             } 
             if (!isMigrated){
                 migrateNPCSenses(doneSub);
@@ -1194,6 +1198,7 @@ export function getAllMigrateFlags (v){
     v['migrated_spells_macrosv1']=1;
     v['migrated_feature_macrosv109']=1;
     v['migrated_ability_macrosv112']=1;
+	v['migrated_item_macrosv1']=1;
     v['migrated_hp_misc']=1;
     v['migrated_maxskill_misc']=1;
     v['migrated_featurelists_defaults']=1;
