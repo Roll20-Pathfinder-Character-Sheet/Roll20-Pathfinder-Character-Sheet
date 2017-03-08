@@ -38,6 +38,7 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
         rawPen = 0,
         dmgAndPen = 0,
         rawCond = 0,
+        helpless = 0,
         penalized = 0,
         rawDmgAndPen = 0,
         currAbility = 0,
@@ -46,53 +47,59 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
         mod = 0;
         try {
             base = parseInt(values[ability + "-base"], 10);
-            if (isNaN(base)){base = 10;}
-            newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
-                (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
-                (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
-            rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
-            rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
-            rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
-            rawDmgAndPen = rawDmg + rawPen + rawCond;
-            dmgAndPen = Math.floor(rawDmgAndPen / 2);
-            currAbility = parseInt(values[ability], 10);
-            currPenalized = parseInt(values[ability+"-modded"],10)||0;
-            currMod = parseInt(values[ability + "-mod"], 10);
-            mod = Math.floor((newVal - 10) / 2) - dmgAndPen;
-            //TAS.debug(values);
-            if (ability === "DEX" && (parseInt(values["condition-Helpless"], 10) || 0) === 1) {
-                newVal = 0;
-                mod = -5;
-                penalized = 1;
-            } else if (rawDmg >= newVal) {
-                newVal = 0;
-                mod = -5;
-                penalized = 1;
-            } else if (rawDmgAndPen >= (newVal - 1)) {
-                //minimum effective ability score of 1 from non damage penalties
-                mod = -5;
+            //if NaN, make sure it's either empty or has a minus
+            if (isNaN(base) && values[ability+'-base'] && !PFConst.minusreg.test(values[ability+'-base']) ){
+                done();
+                return;
             }
-            if (newVal < 0){
-                newVal = 0;
-            }
-            if (mod < -5){
-                mod = -5;
-            }
-            if (rawDmgAndPen !== 0) {
-                penalized = 1;					
-            }
-            //TAS.debug("base:" + base + ", newval:" + newVal + ", mod:" + mod);
             if (isNaN(base)) {
                 setter[ability] = "-";
                 setter[ability + "-mod"] = 0;
+                setter[ability + "-modded"]=0;
             } else {
-                if (currAbility !== newVal || isNaN(currAbility)) {
-                    setter[ability] = newVal;
+                newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
+                    (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
+                    (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
+                rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
+                rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
+                rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
+                rawDmgAndPen = rawDmg + rawPen + rawCond;
+                dmgAndPen = Math.floor(rawDmgAndPen / 2);
+                currAbility = parseInt(values[ability], 10);
+                currPenalized = parseInt(values[ability+"-modded"],10)||0;
+                currMod = parseInt(values[ability + "-mod"], 10);
+                mod = Math.floor((newVal - 10) / 2) - dmgAndPen;
+                helpless = parseInt(values["condition-Helpless"], 10) || 0;
+                //TAS.debug(values);
+                if (ability === "DEX" && helpless) {
+                    newVal = 0;
+                    mod = -5;
+                    penalized = 1;
+                } else if (rawDmg >= newVal) {
+                    newVal = 0;
+                    mod = -5;
+                    penalized = 1;
+                } else if (rawDmgAndPen >= (newVal - 1)) {
+                    //minimum effective ability score of 1 from non damage penalties
+                    mod = -5;
                 }
-                if (currMod !== mod || isNaN(currMod)) {
-                    setter[ability + "-mod"] = mod;
+                if (newVal < 0){
+                    newVal = 0;
+                }
+                if (mod < -5){
+                    mod = -5;
+                }
+                if (rawDmgAndPen !== 0) {
+                    penalized = 1;					
                 }
             }
+            if (currAbility !== newVal || isNaN(currAbility)) {
+                setter[ability] = newVal;
+            }
+            if (currMod !== mod || isNaN(currMod)) {
+                setter[ability + "-mod"] = mod;
+            }
+            
             if (penalized && !currPenalized){
                 setter[ability+"-modded"]=1;
             } else if (!penalized && currPenalized){
@@ -111,7 +118,6 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
             }
         }
     });
-
 }
 /** updateAbilityScores - update all 6 scores then calls callback 
  *@param {function(bool)} callback to call when done, pass in true if any changes were made.
@@ -135,6 +141,7 @@ function updateAbilityScores (callback, silently) {
         updateAbilityScore(ability, null, calleach, silently);
     });
 }
+
 /** Sets ability penalties, not "ability check" penalties 
  * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled  
  *@param {function} callback to call when done.
@@ -184,7 +191,11 @@ export function applyConditions (callback, silently) {
         }
     });
 }
-export function migrate (callback){
+/** migrate (currently empty just calls callback
+ * @param {function} callback when done
+ * @param {Number} oldversion
+ */
+export function migrate (callback,oldversion){
     if (typeof callback === "function"){
         callback();
     }
