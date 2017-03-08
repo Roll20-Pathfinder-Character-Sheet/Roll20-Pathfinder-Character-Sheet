@@ -18,7 +18,7 @@ var menuMap={
     'ex':{'npcMacroName':'NPC-ex','name':'extraordinary-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Ex','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
     'sp':{'npcMacroName':'NPC-sp','name':'spell-like-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Sp','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
     'su':{'npcMacroName':'NPC-su','name':'supernatural-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Su','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-    'item':{'npcMacroName':'NPC-item','name':'items','section':'item','usesField':'qty','bonusField':'','groupBy':'equip-type','translateGroup':1,'npcLinkField':'npc-roll'}
+    'item':{'npcMacroName':'NPC-item','name':'items','section':'item','usesField':'','bonusField':'','groupBy':'equip-type','translateGroup':1,'npcLinkField':'npc-roll'}
 };
 
 /** creates a command macro button for a repeating section
@@ -56,7 +56,7 @@ function getRepeatingCommandMacro (baseAttribs,callback,header){
         linkField="roll",
         filterField="",
         filterValue="",
-        baseMacro = "/w \"@{character_name}\" &{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
+		baseMacro = "/w \"@{character_name}\" &{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){

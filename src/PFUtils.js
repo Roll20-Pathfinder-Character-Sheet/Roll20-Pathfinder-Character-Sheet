@@ -236,6 +236,9 @@ export function deleteOption  (optionText, optionKey, regexMap) {
 export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     var hp=0, bonus=1;
     //TAS.debug("PFUtils.getAvgHP called with hdice:"+hdice+", hdie:"+hdie+", mult:"+mult+", firstMax:"+firstMax);
+    if (hdie===0){
+        return 0;
+    }
     if (!(mult === 0.5 || mult === 0.75 || mult === 1)) {
         mult = 0.5;
     }

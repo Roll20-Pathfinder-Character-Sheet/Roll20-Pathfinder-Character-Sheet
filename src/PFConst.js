@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.15,
+	version: 1.17,
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
 	repeatingSections: ["weapon", "ability", "class-ability", "feat", "racial-trait", "trait", "item", "npc-spell-like-abilities", "mythic-ability", "mythic-feat", "buff", "spells"],
@@ -31,7 +31,13 @@ export default {
 		"SR-macro-text": "SR",
 		"spellclass-0-SP_misc": "spellclass-0-SP-mod",
 		"spellclass-1-SP_misc": "spellclass-1-SP-mod",
-		"spellclass-2-SP_misc": "spellclass-2-SP-mod"
+		"spellclass-2-SP_misc": "spellclass-2-SP-mod",
+		"customa1": "customa1-mod",
+		"customa2": "customa2-mod",
+		"customa3": "customa3-mod",
+		"customa4": "customa4-mod_max",
+		"customa5": "customa5-mod_max",
+		"customa6": "customa6-mod_max"
 	},
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],
