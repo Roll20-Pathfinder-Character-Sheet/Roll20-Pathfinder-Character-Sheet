@@ -1,7 +1,8 @@
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog,PFConsole} from './PFLog';
-import * as PFSheet from './PFSheet';
+import PFConst from './PFConst';
 //importing PFSheet imports everything else
+import * as PFSheet from './PFSheet';
 TAS.config({
  logging: {
    info: true,
