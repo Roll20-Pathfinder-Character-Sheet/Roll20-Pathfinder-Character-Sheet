@@ -1,3 +1,5 @@
+'use strict';
+//import {on,randomInteger,getsectionIDs,getTranslationByKey,getAttrs,setAttrs,removeRepeatingRow,generateRowID} from '../stubs/on';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog,PFConsole} from './PFLog';
 import PFConst from './PFConst';
