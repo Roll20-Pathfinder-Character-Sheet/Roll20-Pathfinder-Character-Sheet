@@ -32,11 +32,11 @@ Curl allows us to download The Arron Sheet, instead of maintaining our own copy
 
 ### Building
 Run `npm run build` to build the project, the output will show up in a new folder called dist
-
+------
 ###Specific instructions for Windows w/ Visual Studio Code
 ####git 
 1. if you already have Github for windows you do not need to install git separately. If you do not have it, then you must still download it or else download git as above. You can also have both side by side
-2. Add Github for windows to the PATH variable using these instructions: http://www.chambaud.com/2013/07/08/adding-git-to-path-when-using-github-for-windows/
+2. Add Github for windows to the PATH variable using these instructions  (there is only a 'cmd' directory, no bin directory, contrary to what this says): http://www.chambaud.com/2013/07/08/adding-git-to-path-when-using-github-for-windows/
 
 ####VS Code and Node.js integration
 2. Download and install Visual Studio Code https://code.visualstudio.com/Download
