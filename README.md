@@ -40,7 +40,7 @@ Run `npm run build` to build the project, the output will show up in a new folde
 
 ####VS Code and Node.js integration
 2. Download and install Visual Studio Code https://code.visualstudio.com/Download
-3. You can easily install Node from here at the link titled "Install Nodejs for your platform" which links to an .msi file  https://code.visualstudio.com/Docs/runtimes/nodejs you don't need to use the 'nvm' commands this way
+3. You can easily install Node from here at the link titled "Install Nodejs for your platform" which links to an .msi file  https://code.visualstudio.com/Docs/runtimes/nodejs you don't need to use the 'nvm' commands this way. If you need nvm then you probably already know what you are doing and don't need these instructions.
 
 ####Extensions
 4. Required: In VS Code Extensions, download egamma's npm implementation for VS Code: https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script
