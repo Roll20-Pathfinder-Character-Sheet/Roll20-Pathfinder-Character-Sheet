@@ -43,9 +43,14 @@ Run `npm run build` to build the project, the output will show up in a new folde
 4. Required: In VS Code Extensions, download egamma's npm implementation for VS Code: https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script
 5. Optional: npm intellisense extension helps: https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense
 6. Optional: The .jshint files are used by jshint for VSCode: https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint
+7. Optional: new CodeLens extentsion for git, js: https://code.visualstudio.com/blogs/2017/02/12/code-lens-roundup
 #####curl
-7. you must still install curl as above
+8. you must still install curl as above
 #####opening project.
+9. fork project if you haven't already
+10. clone project from within VS Code
+11. ??
+12. profit!
 **remember CTRL-Shift-P opens a terminal prompt** it also has better intellisense than the terminal window due to the picklist it generates as you type.
 Much easier to fork from github's web interface first.
 Then use the URL of your fork as the url of the repository i think with the git clone command, i did it once :)
