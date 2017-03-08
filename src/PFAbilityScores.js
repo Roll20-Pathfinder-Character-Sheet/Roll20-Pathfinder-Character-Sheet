@@ -7,6 +7,10 @@ import * as PFUtils from './PFUtils';
 
 export var abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 export var abilitymods = ["STR-mod", "DEX-mod", "CON-mod", "INT-mod", "WIS-mod", "CHA-mod"];
+var columnMods = [ "-base",  "-enhance",  "-inherent",  "-misc",  "-damage",  "-penalty",  "-drain",  "-mod",  "-cond",  "-modded"],
+columBuffMods = [  "-total",  "-total_penalty"],
+columnModHelpers=[ "condition-Helpless"];
+
 /** map of event types to event string for 'on' function to look for */
 var events = {
     abilityEventsAuto: "change:REPLACE-cond",
@@ -27,7 +31,9 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
         }
     });
     //TAS.debug("at updateAbilityScore:" + ability);
-    getAttrs([ability + "-base", ability + "-enhance", ability + "-inherent", ability + "-misc", ability + "-damage", ability + "-penalty", ability + "-drain", ability, ability + "-mod", ability + "-cond", ability + "-modded", "buff_" + ability + "-total", "buff_" + ability + "-total_penalty", "condition-Helpless"], function (values) {
+    getAttrs([ability + "-base", ability + "-enhance", ability + "-inherent", ability + "-misc", ability + "-damage",
+     ability + "-penalty", ability + "-drain",  ability + "-mod", ability + "-cond", ability + "-modded", 
+     ability, "buff_" + ability + "-total", "buff_" + ability + "-total_penalty", "condition-Helpless"], function (values) {
         var setter = {},
         params = {
             silent: false
@@ -53,57 +59,54 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
                 return;
             }
             if (isNaN(base)) {
-                setter[ability] = "-";
-                setter[ability + "-mod"] = 0;
-                setter[ability + "-modded"]=0;
+                newVal = "-";
+                mod = 0;
+                penalized = 0;
             } else {
-                newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
-                    (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
-                    (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
-                rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
-                rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
-                rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
-                rawDmgAndPen = rawDmg + rawPen + rawCond;
-                dmgAndPen = Math.floor(rawDmgAndPen / 2);
-                currAbility = parseInt(values[ability], 10);
-                currPenalized = parseInt(values[ability+"-modded"],10)||0;
                 currMod = parseInt(values[ability + "-mod"], 10);
-                mod = Math.floor((newVal - 10) / 2) - dmgAndPen;
+                currPenalized = parseInt(values[ability+"-modded"],10)||0;
+                currAbility = parseInt(values[ability], 10);
                 helpless = parseInt(values["condition-Helpless"], 10) || 0;
-                //TAS.debug(values);
                 if (ability === "DEX" && helpless) {
                     newVal = 0;
                     mod = -5;
                     penalized = 1;
-                } else if (rawDmg >= newVal) {
-                    newVal = 0;
-                    mod = -5;
-                    penalized = 1;
-                } else if (rawDmgAndPen >= (newVal - 1)) {
-                    //minimum effective ability score of 1 from non damage penalties
-                    mod = -5;
-                }
-                if (newVal < 0){
-                    newVal = 0;
-                }
-                if (mod < -5){
-                    mod = -5;
-                }
-                if (rawDmgAndPen !== 0) {
-                    penalized = 1;					
+                } else {
+                    newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
+                        (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
+                        (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
+                    rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
+                    if (rawDmg >= newVal || newVal <= 0) {
+                        newVal = 0;
+                        mod = -5;
+                        penalized = 1;
+                    } else {
+                        rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
+                        rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
+                        rawDmgAndPen = rawDmg + rawPen + rawCond;
+                        if (rawDmgAndPen >= newVal ) {
+                            newVal = currAbility;
+                            mod = -5;
+                            penalized = 1;
+                        } else {
+                            //normal
+                            if (rawDmgAndPen !== 0) {
+                                penalized = 1;					
+                            }
+                            dmgAndPen = Math.floor(rawDmgAndPen / 2);
+                            mod = Math.max(-5,Math.floor((newVal - 10) / 2) - dmgAndPen);
+                        }
+                    }
                 }
             }
-            if (currAbility !== newVal || isNaN(currAbility)) {
+            if (currAbility !== newVal ) {
                 setter[ability] = newVal;
             }
             if (currMod !== mod || isNaN(currMod)) {
                 setter[ability + "-mod"] = mod;
             }
-            
-            if (penalized && !currPenalized){
-                setter[ability+"-modded"]=1;
-            } else if (!penalized && currPenalized){
-                setter[ability+"-modded"]=0;
+            if (penalized !== currPenalized){
+                setter[ability+"-modded"] = penalized;
             }
         } catch (err) {
             TAS.error("updateAbilityScore:" + ability, err);
