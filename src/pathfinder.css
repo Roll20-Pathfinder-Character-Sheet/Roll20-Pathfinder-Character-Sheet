@@ -220,7 +220,7 @@ button[type="roll"]:not(.sheet-command-button) {
 	font-size: .95rem;
 	min-height: 1.5em;
 	min-width: 1.5em;
-    padding: .13em .25em .3em .25em;
+    padding: .25em .25em .3em .25em;
 	cursor:pointer;
 }
 
@@ -861,6 +861,7 @@ button[type=roll].sheet-spellcaster-button {
 .sheet-skills button[type=roll] {
     width: 1.5rem;
     height: 1.5rem;
+	padding: 0;
 }
 
 button[type=roll].sheet-custom-button::before,
@@ -3864,6 +3865,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .sheet-h2-section.sheet-core-details {
+	width: calc(100% - 4px);
 	height:auto;
 	display;block;
 	clear:both;
