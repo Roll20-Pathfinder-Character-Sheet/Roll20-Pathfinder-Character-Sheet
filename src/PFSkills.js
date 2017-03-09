@@ -873,20 +873,11 @@ export function migrate (callback, oldversion) {
 		migrateClassSkill = function (skill) {
 			var csNm = skill + "-cs";
 			getAttrs([csNm], function (v) {
-				var cs = 0,
-				setter = {};
-				cs = parseInt(v[csNm], 10);
-				if (isNaN(cs)) {
-					if (v[csNm] == "0") {
-						cs = 0;
-					} else if (v[csNm] && (parseInt(v[csNm], 10) || 0) !== 3) {
-						cs = 3;
-					} else if (!v[csNm]) {
-						cs = 0;
-					}
-					if (cs === 3) {
+				var setter = {};
+				if (isNaN(parseInt(v[csNm], 10))) {
+					if (! (!v[csNm] || v[csNm] == "0") ) {
 						//TAS.debug({"function":"migrateClassSkill","raw":v[csNm],"cs":cs});
-						setter[csNm] = cs;
+						setter[csNm] = 3;
 						setAttrs(setter, PFConst.silentParams);
 					}
 				}
@@ -926,7 +917,7 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	};
-	TAS.debug("at PFSkills.migrate");
+	//TAS.debug("at PFSkills.migrate");
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
