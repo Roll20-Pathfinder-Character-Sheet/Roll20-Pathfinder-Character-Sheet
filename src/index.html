@@ -581,7 +581,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|STR-Check}" type="roll" name="roll_STR-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} ]]  + [[ @{checks-cond}  ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="strength-abbrv">STR</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{STR}" type="text" name="attr_STR" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_STR-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{STR-mod}" type="number" name="attr_STR-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{STR-base}" type="text" name="attr_STR-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{STR-base}" type="text" name="attr_STR-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{STR-inherent}" type="number" name="attr_STR-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{STR-enhance}" type="number" name="attr_STR-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{STR-misc}" type="number" name="attr_STR-misc" value="0" /></span>
@@ -596,7 +596,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|DEX-Check}" type="roll" name="roll_DEX-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="dexterity-abbrv">DEX</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{DEX}" type="text" name="attr_DEX" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_DEX-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{DEX-mod}" type="number" name="attr_DEX-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{DEX-base}" type="text" name="attr_DEX-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{DEX-base}" type="text" name="attr_DEX-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{DEX-inherent}" type="number" name="attr_DEX-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-enhance}" type="number" name="attr_DEX-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-misc}" type="number" name="attr_DEX-misc" value="0" min="0" /></span>
@@ -611,7 +611,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CON-Check}" type="roll" name="roll_CON-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{constitution}}} {{check=[[ 1d20 + [[ @{CON-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="constitution-abbrv">CON</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CON}" type="text" name="attr_CON" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CON-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CON-mod}" type="number" name="attr_CON-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CON-base}" type="text" name="attr_CON-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CON-base}" type="text" name="attr_CON-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{CON-inherent}" type="number" name="attr_CON-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-enhance}" type="number" name="attr_CON-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-misc}" type="number" name="attr_CON-misc" value="0" min="0" /></span>
@@ -626,7 +626,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|INT-Check}" type="roll" name="roll_INT-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intelligence}}} {{check=[[ 1d20 + [[ @{INT-mod} ]]  + [[ @{checks-cond}  ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="intelligence-abbrv">INT</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{INT}" type="text" name="attr_INT" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_INT-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{INT-mod}" type="number" name="attr_INT-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{INT-base}" type="text" name="attr_INT-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{INT-base}" type="text" name="attr_INT-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{INT-inherent}" type="number" name="attr_INT-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-enhance}" type="number" name="attr_INT-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-misc}" type="number" name="attr_INT-misc" value="0" min="0" /></span>
@@ -641,7 +641,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|WIS-Check}" type="roll" name="roll_WIS-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{wisdom}}} {{check=[[ 1d20 + [[ @{WIS-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="wisdom-abbrv">WIS</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{WIS}" type="text" name="attr_WIS" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_WIS-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{WIS-mod}" type="number" name="attr_WIS-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{WIS-base}" type="text" name="attr_WIS-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{WIS-base}" type="text" name="attr_WIS-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{WIS-inherent}" type="number" name="attr_WIS-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-enhance}" type="number" name="attr_WIS-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-misc}" type="number" name="attr_WIS-misc" value="0" min="0" /></span>
@@ -656,7 +656,7 @@
 										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CHA-Check}" type="roll" name="roll_CHA-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{charisma}}} {{check=[[ 1d20 + [[ @{CHA-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="charisma-abbrv">CHA</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CHA}" type="text" name="attr_CHA" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CHA-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CHA-mod}" type="number" name="attr_CHA-mod" value="0" /></span>
-										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CHA-base}" type="text" name="attr_CHA-base" value="10" /></span>
+										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CHA-base}" type="text" name="attr_CHA-base" value=""/></span>
 										<span class="sheet-table-cell"><input title="@{CHA-inherent}" type="number" name="attr_CHA-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-enhance}" type="number" name="attr_CHA-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-misc}" type="number" name="attr_CHA-misc" value="0" min="0" /></span>
