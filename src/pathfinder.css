@@ -589,7 +589,7 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom textarea,
 .sheet-linked-custom .sheet-inline-textarea {
 	width:calc(100% - 7em);
-	display:inline;
+/*	display:inline; */
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section > .sheet-notes {
 	padding: .125em .125em .125em .25em;
@@ -601,7 +601,7 @@ also need 1 more level in selector or base css will override border */
 	align-items:stretch;
 }
 .sheet-custom-buttons {
-	display:inline;
+/*	display:inline; */
 	width:auto;
 	margin-right:.5em;
 }
@@ -1821,7 +1821,7 @@ hr.sheet-skinny {
 }
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .repitem {
     width: 50%;
-    display: inline-block;
+/*    display: inline-block; */
 	float:left;
 }
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .repitem:nth-child(odd),
@@ -2153,9 +2153,6 @@ input.sheet-highlight[readonly]
 	max-width:calc(49% - 4px);
 }
 
-.sheet-readonly-show:checked ~ .sheet-main .sheet-section-core .sheet-wounds-show:checked ~ .sheet-h2-section.sheet-hit-points {
-	/*width: 28%;*/
-}
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-h2-section.sheet-initiative {
 	min-width:9em;
 }
@@ -3867,7 +3864,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-h2-section.sheet-core-details {
 	width: calc(100% - 4px);
 	height:auto;
-	display;block;
+	display:block;
 	clear:both;
 	margin: 4px 2px 2px 2px;
 }
