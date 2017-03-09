@@ -2,16 +2,176 @@
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog,PFConsole} from './PFLog';
+import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils from './PFUtils';
 
 export var abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 export var abilitymods = ["STR-mod", "DEX-mod", "CON-mod", "INT-mod", "WIS-mod", "CHA-mod"];
+var columnMods = [ "-base",  "-enhance",  "-inherent",  "-misc",  "-damage",  "-penalty",  "-drain",  "-mod",  "-cond",  "-modded"],
+columnBuffMods = [  "-total",  "-total_penalty"],
+columnModHelpers=[ "condition-Helpless"],
 /** map of event types to event string for 'on' function to look for */
-var events = {
+events = {
     abilityEventsAuto: "change:REPLACE-cond",
     abilityEventsPlayer: "change:REPLACE-base change:REPLACE-enhance change:REPLACE-inherent change:REPLACE-misc change:REPLACE-temp change:REPLACE-damage change:REPLACE-penalty change:REPLACE-drain"
 };
+
+
+function getAttributes (ability){
+    var fields = _.map(columnMods,function(col){return ability+col;});
+    fields = fields.concat( _.map(columnBuffMods,function(col){
+        return 'buff_'+ability+col;
+    }));
+    fields = fields.concat(columnModHelpers);
+    return fields;
+}
+
+function getAllAttributes (){
+    var fields = SWUtils.cartesianAppend(abilities,columnMods);
+    fields = fields.concat(SWUtils.cartesianAppend(['buff_'],abilities,columnBuffMods));
+    fields = fields.concat(columnModHelpers);
+    return fields;
+}
+
+/** Looks at current values and calculates new ability , ability-mod and ability-modded values
+ * @param {string} ability string matching a value in abilities
+ * @param {Map} values map of return values from getAttrs
+ * @param {Map} setter map of values to pass to setAttrs. or null
+ * @returns {Map} setter same setter passed in, with added values
+ */
+function getAbilityScore (ability, values, setter) {
+    var base = 0,
+    newVal = 0,
+    rawDmg = 0,
+    rawPen = 0,
+    dmgAndPen = 0,
+    rawCond = 0,
+    helpless = 0,
+    penalized = 0,
+    rawDmgAndPen = 0,
+    currAbility = 0,
+    currMod = 0,
+    currPenalized = 0,
+    mod = 0;
+    try {
+        setter = setter || {};
+        base = parseInt(values[ability + "-base"], 10);
+        //if NaN, make sure it's either empty or has a minus
+        if (isNaN(base) && values[ability+'-base'] && !PFConst.minusreg.test(values[ability+'-base']) ){
+            return setter;
+        }
+        if (isNaN(base)) {
+            newVal = "-";
+            mod = 0;
+            penalized = 0;
+        } else {
+            currMod = parseInt(values[ability + "-mod"], 10);
+            currPenalized = parseInt(values[ability+"-modded"],10)||0;
+            currAbility = parseInt(values[ability], 10);
+            helpless = parseInt(values["condition-Helpless"], 10) || 0;
+            if (ability === "DEX" && helpless) {
+                newVal = 0;
+                mod = -5;
+                penalized = 1;
+            } else {
+                newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
+                    (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
+                    (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
+                rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
+                if (rawDmg >= newVal || newVal <= 0) {
+                    newVal = 0;
+                    mod = -5;
+                    penalized = 1;
+                } else {
+                    rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
+                    rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
+                    rawDmgAndPen = rawDmg + rawPen + rawCond;
+                    if (rawDmgAndPen >= newVal ) {
+                        newVal = currAbility;
+                        mod = -5;
+                        penalized = 1;
+                    } else {
+                        //normal
+                        if (rawDmgAndPen !== 0) {
+                            penalized = 1;					
+                        }
+                        dmgAndPen = Math.floor(rawDmgAndPen / 2);
+                        mod = Math.max(-5,Math.floor((newVal - 10) / 2) - dmgAndPen);
+                    }
+                }
+            }
+        }
+        if (currAbility !== newVal ) {
+            setter[ability] = newVal;
+        }
+        if (currMod !== mod || isNaN(currMod)) {
+            setter[ability + "-mod"] = mod;
+        }
+        if (penalized !== currPenalized){
+            setter[ability+"-modded"] = penalized;
+        }
+    } catch (err) {
+        TAS.error("updateAbilityScore:" + ability, err);
+    } finally {
+        return setter;
+    }
+}
+
+/** updateAbilityScore - Updates the final ability score, ability modifier, condition column based on entries in ability grid plus conditions and buffs.
+ * Note: Ability value is not affected by damage and penalties, instead only modifier is affected.
+ * @param {string} ability 3 letter abbreviation for one of the 6 ability scores, member of PFAbilityScores.abilities
+ * @param {eventInfo} eventInfo unused eventinfo from 'on' method
+ * @param {function} callback when done
+ * @param {boolean} silently if silent:true or not
+ */
+function updateAbilityScore (ability,eventInfo,callback,silently){
+    var done = _.once(function () {
+        if (typeof callback === "function") {
+            callback();
+        }
+    }),
+    fields = getAttributes(ability);
+    getAttrs(fields,function(v){
+        var params = {}, setter={};
+        getAbilityScore(ability,v,setter);
+        if (_.size(setter) ) {
+            if (silently) {
+                params = PFConst.silentParams;
+            }
+            setAttrs(setter, params, done);
+        } else {
+            done();
+        }
+    });
+}
+/** calls getAbilityScore for all abilities
+ * @param {function} callback when done
+ * @param {boolean} silently if silent:true or not
+ */
+function updateAbilityScores (callback, silently) {
+    var done = _.once(function () {
+        if (typeof callback === "function") {
+            callback();
+        }
+    }),
+    fields = getAllAttributes();
+    getAttrs(fields,function(v){
+        var params = {}, setter={};
+        setter = _.reduce(abilities,function(m,a){
+                getAbilityScore(a,v,m);
+                return m;
+            },{});
+        if (_.size(setter) ) {
+            if (silently) {
+                params = PFConst.silentParams;
+            }
+            setAttrs(setter, params, done);
+        } else {
+            done();
+        }
+    });
+}
 
 /** updateAbilityScore - Updates the final ability score, ability modifier, condition column based on entries in ability grid plus conditions and buffs.
  * Note: Ability value is not affected by damage and penalties, instead only modifier is affected.
@@ -20,14 +180,16 @@ var events = {
  *@param {function} callback to call when done.
  *@param {boolean} silently if true update with PFConst.silentParams
  */
-function updateAbilityScore (ability, eventInfo, callback, silently) {
+function updateAbilityScoreOld (ability, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
         }
     });
     //TAS.debug("at updateAbilityScore:" + ability);
-    getAttrs([ability + "-base", ability + "-enhance", ability + "-inherent", ability + "-misc", ability + "-damage", ability + "-penalty", ability + "-drain", ability, ability + "-mod", ability + "-cond", ability + "-modded", "buff_" + ability + "-total", "buff_" + ability + "-total_penalty", "condition-Helpless"], function (values) {
+    getAttrs([ability + "-base", ability + "-enhance", ability + "-inherent", ability + "-misc", ability + "-damage",
+     ability + "-penalty", ability + "-drain",  ability + "-mod", ability + "-cond", ability + "-modded", 
+     ability, "buff_" + ability + "-total", "buff_" + ability + "-total_penalty", "condition-Helpless"], function (values) {
         var setter = {},
         params = {
             silent: false
@@ -38,6 +200,7 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
         rawPen = 0,
         dmgAndPen = 0,
         rawCond = 0,
+        helpless = 0,
         penalized = 0,
         rawDmgAndPen = 0,
         currAbility = 0,
@@ -46,57 +209,60 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
         mod = 0;
         try {
             base = parseInt(values[ability + "-base"], 10);
-            if (isNaN(base)){base = 10;}
-            newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
-                (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
-                (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
-            rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
-            rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
-            rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
-            rawDmgAndPen = rawDmg + rawPen + rawCond;
-            dmgAndPen = Math.floor(rawDmgAndPen / 2);
-            currAbility = parseInt(values[ability], 10);
-            currPenalized = parseInt(values[ability+"-modded"],10)||0;
-            currMod = parseInt(values[ability + "-mod"], 10);
-            mod = Math.floor((newVal - 10) / 2) - dmgAndPen;
-            //TAS.debug(values);
-            if (ability === "DEX" && (parseInt(values["condition-Helpless"], 10) || 0) === 1) {
-                newVal = 0;
-                mod = -5;
-                penalized = 1;
-            } else if (rawDmg >= newVal) {
-                newVal = 0;
-                mod = -5;
-                penalized = 1;
-            } else if (rawDmgAndPen >= (newVal - 1)) {
-                //minimum effective ability score of 1 from non damage penalties
-                mod = -5;
+            //if NaN, make sure it's either empty or has a minus
+            if (isNaN(base) && values[ability+'-base'] && !PFConst.minusreg.test(values[ability+'-base']) ){
+                done();
+                return;
             }
-            if (newVal < 0){
-                newVal = 0;
-            }
-            if (mod < -5){
-                mod = -5;
-            }
-            if (rawDmgAndPen !== 0) {
-                penalized = 1;					
-            }
-            //TAS.debug("base:" + base + ", newval:" + newVal + ", mod:" + mod);
             if (isNaN(base)) {
-                setter[ability] = "-";
-                setter[ability + "-mod"] = 0;
+                newVal = "-";
+                mod = 0;
+                penalized = 0;
             } else {
-                if (currAbility !== newVal || isNaN(currAbility)) {
-                    setter[ability] = newVal;
-                }
-                if (currMod !== mod || isNaN(currMod)) {
-                    setter[ability + "-mod"] = mod;
+                currMod = parseInt(values[ability + "-mod"], 10);
+                currPenalized = parseInt(values[ability+"-modded"],10)||0;
+                currAbility = parseInt(values[ability], 10);
+                helpless = parseInt(values["condition-Helpless"], 10) || 0;
+                if (ability === "DEX" && helpless) {
+                    newVal = 0;
+                    mod = -5;
+                    penalized = 1;
+                } else {
+                    newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
+                        (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
+                        (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
+                    rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
+                    if (rawDmg >= newVal || newVal <= 0) {
+                        newVal = 0;
+                        mod = -5;
+                        penalized = 1;
+                    } else {
+                        rawPen = Math.abs(parseInt(values[ability + "-penalty"], 10) || 0) + Math.abs(parseInt(values["buff_" + ability + "-total_penalty"], 10) || 0);
+                        rawCond = Math.abs(parseInt(values[ability + "-cond"], 10) || 0);
+                        rawDmgAndPen = rawDmg + rawPen + rawCond;
+                        if (rawDmgAndPen >= newVal ) {
+                            newVal = currAbility;
+                            mod = -5;
+                            penalized = 1;
+                        } else {
+                            //normal
+                            if (rawDmgAndPen !== 0) {
+                                penalized = 1;					
+                            }
+                            dmgAndPen = Math.floor(rawDmgAndPen / 2);
+                            mod = Math.max(-5,Math.floor((newVal - 10) / 2) - dmgAndPen);
+                        }
+                    }
                 }
             }
-            if (penalized && !currPenalized){
-                setter[ability+"-modded"]=1;
-            } else if (!penalized && currPenalized){
-                setter[ability+"-modded"]=0;
+            if (currAbility !== newVal ) {
+                setter[ability] = newVal;
+            }
+            if (currMod !== mod || isNaN(currMod)) {
+                setter[ability + "-mod"] = mod;
+            }
+            if (penalized !== currPenalized){
+                setter[ability+"-modded"] = penalized;
             }
         } catch (err) {
             TAS.error("updateAbilityScore:" + ability, err);
@@ -111,13 +277,12 @@ function updateAbilityScore (ability, eventInfo, callback, silently) {
             }
         }
     });
-
 }
 /** updateAbilityScores - update all 6 scores then calls callback 
  *@param {function(bool)} callback to call when done, pass in true if any changes were made.
  *@param {boolean} silently if true update with PFConst.silentParams
  */
-function updateAbilityScores (callback, silently) {
+function updateAbilityScoresOld (callback, silently) {
     //TAS.debug("at updateAbilityScores");
     var callatend = _.after(6, function (changed) {
         if (typeof callback === "function") {
@@ -135,6 +300,7 @@ function updateAbilityScores (callback, silently) {
         updateAbilityScore(ability, null, calleach, silently);
     });
 }
+
 /** Sets ability penalties, not "ability check" penalties 
  * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled  
  *@param {function} callback to call when done.
@@ -184,7 +350,11 @@ export function applyConditions (callback, silently) {
         }
     });
 }
-export function migrate (callback){
+/** migrate (currently empty just calls callback
+ * @param {function} callback when done
+ * @param {Number} oldversion
+ */
+export function migrate (callback,oldversion){
     if (typeof callback === "function"){
         callback();
     }

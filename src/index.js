@@ -1,21 +1,9 @@
-import _ from 'underscore';
-import {on,randomInteger,getsectionIDs,getTranslationByKey,getAttrs,setAttrs,removeRepeatingRow,generateRowID} from '../stubs/on';
+'use strict';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog,PFConsole} from './PFLog';
-import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
-import PFDB from './PFDB';
-import * as PFUtils from './PFUtils';
-import * as PFUtilsAsync from './PFUtilsAsync';
-import * as PFMacros from './PFMacros';
-import * as PFMenus from './PFMenus';
-import * as PFMigrate from './PFMigrate';
-import * as PFAttackGrid from './PFAttackGrid';
-import * as PFAttackOptions from './PFAttackOptions';
-import * as PFDefense from './PFDefense';
-import * as PFEncumbrance from './PFEncumbrance';
-
-//how to run this before anything? even before stuff is loaded?
+//importing PFSheet imports everything else
+import * as PFSheet from './PFSheet';
 TAS.config({
  logging: {
    info: true,
