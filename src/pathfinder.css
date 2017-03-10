@@ -2116,11 +2116,7 @@ input.sheet-highlight[readonly]
 	border: none;
 	box-shadow: none;
 }
-.sheet-table-cell > input[type="checkbox"], 
-.sheet-table-cell > input[type="radio"]{
-	height: 1.5em;
-	margin-top: .25em;
-}
+
 .sheet-hit-points {
     width: calc(30% - 4px);
     display: inline-block;
