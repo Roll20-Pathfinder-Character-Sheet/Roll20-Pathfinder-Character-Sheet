@@ -1766,7 +1766,7 @@ function setCasterFields (setter, casterObj, classidx) {
 *@param {?} section ?
 *@returns {jsobject} setter
 */
-function createSpellEntries (setter, spellObj, casterObj, section) {
+export function createSpellEntries (setter, spellObj, casterObj, section) {
 	section = section || 'spells';
 	setter = setter || {};
 	if (!spellObj || !casterObj) {
@@ -1813,7 +1813,7 @@ function createSpellEntries (setter, spellObj, casterObj, section) {
 	});
 	return setter;
 }
-function createSLAEntries (setter, slaObj, casterObj, section) {
+export function createSLAEntries (setter, slaObj, casterObj, section) {
 	var defaultLevel=0;
 	section = section || 'ability';
 	setter = setter || {};
@@ -1970,7 +1970,7 @@ function createSLAEntries (setter, slaObj, casterObj, section) {
 * @setter = the map to pass to setAttrs
 * @returns setterf
 */
-function createAttacks (attacklist, setter, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches, sizeMap) {
+export function createAttacks (attacklist, setter, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches, sizeMap) {
 	setter = setter || {};
 	if (!attacklist || _.size(attacklist)===0) {
 		return setter;
@@ -2158,7 +2158,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 	//TAS.debug("end of create attacks returning:", setter);
 	return setter;
 }
-function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, bab) {
+export function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, bab) {
 	var acAbility = "DEX",
 	acDexDef = abilityScores.dex.mod,
 	calcCMD=0,
@@ -2247,7 +2247,7 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		return setter;
 	}
 }
-function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, isUndead) {
+export function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, isUndead) {
 	var npcSkillsWithFillInNames = ["Craft", "Perform", "Profession"],
 	craftLevel = -1, performLevel = -1, professionLevel = -1, runningTot = 0, counter = 0,
 	tempAbilities = PFSkills.coreSkillAbilityDefaults,
@@ -2354,7 +2354,7 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 		return setter;
 	}
 }
-function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
+export function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 	var initMisc = 0;
 	try {
 		initMisc = baseInit - abilityScores.dex.mod;
@@ -2368,7 +2368,7 @@ function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 		return setter;
 	}
 }
-function createHPAbilityModEntry (setter, abilityScores, isUndead) {
+export function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 	try {
 		if (isUndead || abilityScores.con.base === "-") {
 			setter["HP-ability"] = "@{CHA-mod}";
@@ -2380,7 +2380,7 @@ function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 		return setter;
 	}
 }
-function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
+export function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
 	var currlevel=0;
 	try {
 		setter["npc-hd-num"] = hpMap.hdice1;
@@ -2408,7 +2408,7 @@ function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
 		return setter;
 	}
 }
-function createSpeedEntries (setter, speedMap, importantFeats) {
+export function createSpeedEntries (setter, speedMap, importantFeats) {
 	var tempstr = "";
 	try {
 		_.each(speedMap, function (speed, stype) {
@@ -2450,7 +2450,7 @@ function createSpeedEntries (setter, speedMap, importantFeats) {
 		return setter;
 	}
 }
-function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
+export function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 	var fortMisc,
 	refMisc,
 	willMisc,
@@ -2502,7 +2502,7 @@ function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 		return setter;
 	}
 }
-function createAbilityScoreEntries (setter, abilityScores) {
+export function createAbilityScoreEntries (setter, abilityScores) {
 	try {
 		setter["STR-base"] = abilityScores.str.base;
 		setter["DEX-base"] = abilityScores.dex.base;
@@ -2618,7 +2618,7 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 }
 /*createFeatEntries
 *@returns setter */
-function createFeatEntries (setter, featlist) {
+export function createFeatEntries (setter, featlist) {
 	return _.reduce(featlist, function (memo, feat) {
 		var newRowId = generateRowID(),
 		prefix="repeating_ability_"+newRowId+"_";
@@ -2638,7 +2638,7 @@ function createFeatEntries (setter, featlist) {
 }
 /*createFeatureEntries
 *@returns setter */
-function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
+export function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
 	var attrs = {}, creatureRace = "", tempint=0,dc=0,abilityMod=0,charlevel=0,calcDC=0;
 	try {
 		//TAS.debug("at createFeatureEntries:", abilitylist);
@@ -2815,7 +2815,7 @@ function combineSpecialAbilities (sa1, sa2) {
 	combined = _.union(combined, sa2);
 	return combined;
 }
-function createClassEntries (setter, characterClass) {
+export function createClassEntries (setter, characterClass) {
 	var sumlvls =0, currlvls = 0,i=0,startidx=0,alreadyPresent=false;
 	try {
 		if (characterClass.CL && characterClass.classname){
@@ -2849,7 +2849,7 @@ function createClassEntries (setter, characterClass) {
 
 /**************************** THE BIG ONE ***********************/
 /*importFromCompendium - imports all stuff*/
-function importFromCompendium (eventInfo, callback, errorCallback) {
+export function importFromCompendium (eventInfo, callback, errorCallback) {
 	var done = _.once(function(){
 		TAS.info("##############################################");
 		TAS.info("Leaving importFromCompendium");

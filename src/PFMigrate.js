@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
@@ -201,7 +201,7 @@ export function migrateSpellRanges (callback) {
         getSectionIDs("repeating_spells", function (ids) {
             var fields = [];
             fields = _.reduce(ids, function (memo, id) {
-                var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                 row = _.map(rangeFields, function (field) {
                     return prefix + field;
                 });
@@ -210,7 +210,7 @@ export function migrateSpellRanges (callback) {
             getAttrs(fields, function (v) {
                 var setter = {};
                 _.each(ids, function (id) {
-                    var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                     casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 1,
                     chosenRange = v[prefix + "range_pick"],
                     rangeText = v[prefix + "range"] || "",
@@ -302,7 +302,7 @@ export function migrateSpells (callback) {
         if (section.indexOf("lvl") !== 0 && section.indexOf("npc") !== 0) {
             return;
         }
-        var idStr = PFUtils.getRepeatingIDStr(id),
+        var idStr = SWUtils.getRepeatingIDStr(id),
         isNPC = section.indexOf("npc") >= 0 ? 1 : 0,
         prefix = "repeating_" + section + "_" + idStr,
         spellclassField = prefix + "spellclass",
@@ -1066,7 +1066,7 @@ export function migrateRepeatingItemAttributes (callback) {
                 return;
             }
             fields = _.reduce(ids, function (memo, id) {
-                var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id),
+                var prefix = "repeating_item_" + SWUtils.getRepeatingIDStr(id),
                 row = [];
                 _.each(duplicateFields,function(field){
                     row.push(prefix+field);
@@ -1081,7 +1081,7 @@ export function migrateRepeatingItemAttributes (callback) {
                 var setter = {};
                 try {
                     _.each(ids, function (id) {
-                        var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id);
+                        var prefix = "repeating_item_" + SWUtils.getRepeatingIDStr(id);
                         duplicateFields.forEach(function (attr) {
                             var newInt= parseInt(v[prefix+attr],10)||0;
                             if (v[prefix + attr] && newInt!==0 ) {

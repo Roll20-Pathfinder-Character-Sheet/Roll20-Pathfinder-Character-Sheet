@@ -29,7 +29,7 @@ export function setDropdownValue (readField, writeFields, callback, silently) {
 *@param {function} callback - the function passed to setDropdownValue as its callback, that function calls it
 */
 export function setRepeatingDropdownValue (section, id, from, to, callback,silently) {
-    var idStr = PFUtils.getRepeatingIDStr(id),
+    var idStr = SWUtils.getRepeatingIDStr(id),
     prefix = "repeating_" + section + "_" + idStr;
     setDropdownValue(prefix + from, prefix + to, callback,silently);
 }

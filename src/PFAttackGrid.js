@@ -6,7 +6,7 @@ import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFMigrate from './PFMigrate';
 
-var attackGridFields = {
+export var attackGridFields = {
     "melee": {
         "size": "size",
         "atk": "attk-melee",
@@ -67,8 +67,8 @@ var attackGridFields = {
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
         "damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
     }
-},
-attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
+};
+var attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
 attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
 attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields);
 

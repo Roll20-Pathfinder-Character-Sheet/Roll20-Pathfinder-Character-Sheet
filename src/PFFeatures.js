@@ -273,7 +273,7 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 		}
 	});
 }
-function setNewDefaults (callback,section){
+export function setNewDefaults (callback,section){
 	var done = _.once(function(){
 		TAS.debug("leaving PFFeatures.setNewDefaults");
 		if(typeof callback === "function"){
@@ -320,7 +320,7 @@ function setNewDefaults (callback,section){
 		}
 	});
 }
-function migrateRepeatingMacros (callback){
+export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
 		if (typeof callback === "function") {

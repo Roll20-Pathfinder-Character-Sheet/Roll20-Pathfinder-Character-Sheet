@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';

@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
@@ -111,7 +111,7 @@ export function resetCommandMacro (eventInfo, callback) {
                 //TAS.debug("PFSpells.resetCommandMacro order repValues:",repValues);
                 var spellAttrs = _.chain(idarray)
                     .map(function(id){
-                        var prefix = 'repeating_spells_'+PFUtils.getRepeatingIDStr(id),
+                        var prefix = 'repeating_spells_'+SWUtils.getRepeatingIDStr(id),
                         retVal = [];
                         _.each(repeatingSpellAttrs,function(attr){
                             retVal.push(prefix + attr);
@@ -277,7 +277,7 @@ function getSpellTotals  (ids, v, setter) {
         }, {});
         totalListed = _.mapObject(totalPrepped, _.clone);
         _.each(ids, function (id) {
-            var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+            var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
             spellLevel = parseInt(v[prefix + "spell_level"], 10),
             classNum = parseInt(v[prefix + "spellclass_number"], 10),
             metamagic = parseInt(v[prefix + "metamagic"], 10) || 0,
@@ -321,7 +321,7 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
         rowattrs = ['spellclass_number', 'spell_level', 'slot', 'metamagic', 'used'];
         try {
             _.each(ids, function (id) {
-                var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id);
+                var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id);
                 _.each(rowattrs, function (attr) {
                     fields.push(prefix + attr);
                 });
@@ -419,7 +419,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
     }),
     attribList = [],
     itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : ""),
-    idStr = PFUtils.getRepeatingIDStr(id),
+    idStr = SWUtils.getRepeatingIDStr(id),
     item_entry = 'repeating_spells_' + idStr,
     attributes = ["range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
     commonAttributes = ["spell-attack-type","name"];
@@ -483,7 +483,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         }
     }),
     itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : ""),
-    item_entry = 'repeating_spells_' + PFUtils.getRepeatingIDStr(itemId),
+    item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId),
     attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : ""),
     attributes=[];
     if (attrib){
@@ -559,7 +559,7 @@ function resetSpellsPrepared () {
     getSectionIDs("repeating_spells", function (ids) {
         var fieldarray = [];
         _.each(ids, function (id) {
-            var idStr = PFUtils.getRepeatingIDStr(id),
+            var idStr = SWUtils.getRepeatingIDStr(id),
             prefix = "repeating_spells_" + idStr;
             fieldarray.push(prefix + "used");
             fieldarray.push(prefix + "prepared_state");
@@ -567,7 +567,7 @@ function resetSpellsPrepared () {
         getAttrs(fieldarray, function (v) {
             var setter = {};
             _.each(ids, function (id) {
-                var idStr = PFUtils.getRepeatingIDStr(id),
+                var idStr = SWUtils.getRepeatingIDStr(id),
                 prefix = "repeating_spells_" + idStr,
                 uses = parseInt(v[prefix + "used"], 10) || 0,
                 preparedState = parseInt(v[prefix + "prepared_state"], 10) || 0,
@@ -622,7 +622,7 @@ function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
         getSectionIDs("repeating_spells", function (ids) {
             var rowFieldAppnd = ['casterlevel', 'CL_misc', 'spell_class_r', 'spellclass_number', 'spellclass', 'range', 'range_numeric', 'range_pick', 'SP-mod', 'SP_misc', 'Concentration_misc', 'Concentration-mod', 'spell_options'],
             fields = _.reduce(ids, function (memo, id) {
-                var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id), row;
+                var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id), row;
                 row = _.map(rowFieldAppnd, function (field) {
                     return prefix + field;
                 });
@@ -635,7 +635,7 @@ function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                 try {
                     //TAS.debug("updateSpellsCasterLevelRelated,class:"+classIdx+", spells:",v);
                     _.each(ids, function (id) {
-                        var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                        var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                         classNum = parseInt(v[prefix + "spellclass_number"], 10),
                         classRadio = parseInt(v[prefix + "spell_class_r"], 10),
                         chosenRange = v[prefix + "range_pick"] || "",
@@ -779,7 +779,7 @@ function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
                 //TAS.debug("updateSpellsCasterAbilityRelated",classIdx,eventInfo);
                 //TAS.debug(ids);
                 _.each(ids, function (id) {
-                    var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id);
+                    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id);
                     fields = fields.concat([prefix + "spellclass_number", prefix + "spell_level", prefix + "spell_level_r", prefix + "spellclass_number",
                     prefix + "casterlevel", prefix + "DC_misc", prefix + "savedc", prefix + "Concentration-mod", prefix + "Concentration_misc", prefix + "spell_options"]);
                 });
@@ -789,7 +789,7 @@ function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
                     //TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:",v);
                     _.each(ids, function (id) {
                         var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0,
-                        prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                        prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                         optionText = v[prefix + "spell_options"],
                         spellConcentrationMisc = parseInt(v[prefix + "Concentration_misc"], 10) || 0;
                         try {
@@ -866,7 +866,7 @@ function updateSpellSlot (id, eventInfo, callback) {
     done = _.once(function () {
         resetCommandMacro(eventInfo, outerdone);
     }),
-    idStr = PFUtils.getRepeatingIDStr(id),
+    idStr = SWUtils.getRepeatingIDStr(id),
     prefix = "repeating_spells_" + idStr,
     spellLevelRadioField = prefix + "spell_level_r",
     spellSlotField = prefix + "slot",
@@ -935,7 +935,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             callback();
         }
     }),
-    idStr = PFUtils.getRepeatingIDStr(id),
+    idStr = SWUtils.getRepeatingIDStr(id),
     prefix = "repeating_spells_" + idStr,
     classNameField = prefix + "spellclass",
     classRadioField = prefix + "spell_class_r",
@@ -1536,5 +1536,5 @@ function registerEventHandlers  () {
     }));
 }
 registerEventHandlers();
-PFConsole('   PFSpells module loaded         ' );
+PFConsole.log('   PFSpells module loaded         ' );
 PFLog.modulecount++;

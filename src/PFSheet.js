@@ -297,7 +297,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 		done();
 	}
 }
-function migrate (oldversion, callback, errorCallback) {
+export function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
@@ -476,7 +476,7 @@ function recalculateCore (callback, silently, oldversion) {
 *@param {function} callback when done if no errors
 *@param {function} errorCallback  call this if we get an error
 */
-function recalculate (oldversion, callback, silently) {
+export function recalculate (oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {

@@ -243,7 +243,7 @@ function getTopOfMenu (callback,isNPC){
 		done(newMacro);
 	}
 }
-function resetCommandMacro (callback){
+export function resetCommandMacro (callback){
 	getAttrs(['is_npc'],function(v){
 		var isNPC = parseInt(v.is_npc,10)||0;
 		getTopOfMenu ( function(header){
@@ -265,7 +265,7 @@ function resetCommandMacro (callback){
 		}
 	});
 }
-function importFromCompendium (callback,eventInfo){
+export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){
 		resetCommandMacro();
 		TAS.debug("leaving PFAbility.importFromCompendium");
@@ -483,7 +483,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 *@param {boolean} silently setattrs silent:true
 *@param {object} eventInfo if id is null get id from here.
 */
-function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
+export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFAbility.createAttackEntryFromRow");
 		if (typeof callback === "function") {
@@ -492,7 +492,7 @@ function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) 
 	}),
 	attribList = [],
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : ""),
-	//idStr = PFUtils.getRepeatingIDStr(itemId),
+	//idStr = SWUtils.getRepeatingIDStr(itemId),
 	item_entry = 'repeating_ability_' + itemId + '_',
 	slaPrefix = item_entry , //'repeating_ability_' + idStr,
 	attributes = ["range_numeric","damage-macro-text","damage-type","abil-sr","savedc","save","abil-attack-type", "name"]
@@ -552,7 +552,7 @@ function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) 
 		}
 	});
 }
-function updateAssociatedAttack (id, callback, silently, eventInfo) {
+export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFAbility.updateAssociatedAttack");
 		if (typeof callback === "function") {
@@ -561,7 +561,7 @@ function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	}),
 	itemId = "", item_entry = "",attrib = "", attributes=[];
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-	item_entry = 'repeating_spells_' + PFUtils.getRepeatingIDStr(itemId);
+	item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
 	attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
 	attributes=[];
 	//TAS.debug("at PF Spell like abilities updateAssociatedAttack: for row" + id   );
@@ -615,7 +615,7 @@ function updateCharLevel (id,callback,eventInfo){
 			callback();
 		}
 	}),
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_ability_"+idStr;
 	getAttrs([prefix+"CL-misc-mod",prefix+"CL-basis-mod",prefix+"casterlevel",prefix+"ability_type","buff_CasterLevel-total", "CasterLevel-Penalty"],function(v){
 		var clBase=0,cl=0,misc=0,pen=0,isSP=0,setter={};
@@ -649,7 +649,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 			callback();
 		}
 	}),
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_ability_"+idStr;
 	getAttrs([prefix+"range_pick",prefix+"range",prefix+"range_numeric",prefix+"casterlevel",prefix+"ability_type"], function(v){
 		var  newRange=0,currRange=0,cl=0,setter={},isSP=0,currPosRange=0;
@@ -812,7 +812,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		});
 	});
 }
-function migrateRepeatingMacros (callback){
+export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAbility.migrateRepeatingMacros");
 		if (typeof callback === "function") {
@@ -847,7 +847,7 @@ function migrateRepeatingMacros (callback){
 		}
 	});
 }
-function migrate (callback){
+export function migrate (callback){
 	var done = function(){
 		TAS.debug("leaving PFAbility.migrate");
 		if (typeof callback === "function"){
@@ -856,7 +856,7 @@ function migrate (callback){
 	};
 	migrateRepeatingMacros(done);
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {

@@ -42,7 +42,7 @@ events = {
 //why did i make this? it just repeats the ability scores
 allBuffColumns = buffColumns; //buffColumns.concat(PFAbilityScores.abilities),
 /* this is so old no one will be using it*/
-function migrate (outerCallback) {
+export function migrate (outerCallback) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFBuffs.migrate");
 		if (typeof outerCallback === "function") {
@@ -81,7 +81,7 @@ function migrate (outerCallback) {
  * @param {jsobjectmap} newRowAttrs - object of {name:value} to pass to setAttrs
  * @return {jsobjectmap} return newRowAttrs after adding maps to it.
  */
-function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
+export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
 	var newRowId = generateRowID();
 	newRowAttrs = newRowAttrs||{};
 	newRowAttrs["repeating_buff_" + newRowId + "_buff-name"] = name;
@@ -177,7 +177,7 @@ function setBuff (id, col, callback, silently) {
 			callback();
 		}
 	},
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_buff_" + idStr + "buff-" + col;
 	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,done);
 }
@@ -226,7 +226,7 @@ function updateBuffTotals (col, callback) {
 		done();
 	}
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		resetStatuspanel();
 		TAS.debug("Leaving PFBuffs.recalculate");

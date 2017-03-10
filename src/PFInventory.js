@@ -45,7 +45,7 @@ defaultRepeatingMacroMap = {
 },
 defaultDeletedMacroAttrs=[];
 
-function migrateRepeatingMacros(callback){
+export function migrateRepeatingMacros(callback){
     var done = _.once(function () {
         TAS.debug("leaving PFInventory.resetCommandMacro: ");
         if (typeof callback === "function") {
@@ -574,7 +574,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
             });
         });
     },
-    idStr = PFUtils.getRepeatingIDStr(id),
+    idStr = SWUtils.getRepeatingIDStr(id),
     item_entry = 'repeating_item_' + idStr,
     realItemID = id || (eventInfo ? (SWUtils.getRowId(eventInfo.sourceAttribute) || "") : ""),
     prefix = 'repeating_item_' + realItemID + "_",
@@ -842,7 +842,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
     }),
     attribList = [],
     itemId = SWUtils.getRowId(source),
-    idStr = PFUtils.getRepeatingIDStr(itemId),
+    idStr = SWUtils.getRepeatingIDStr(itemId),
     item_entry = 'repeating_item_' + idStr;
 
     //TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
@@ -1398,7 +1398,7 @@ function deleteWornRow (source){
         }
     });
 }
-function setNewDefaults (callback, oldversion){
+export function setNewDefaults (callback, oldversion){
     var done = _.once(function(){
         TAS.debug("leaving PFInventory.setNewDefaults");
         if(typeof callback === "function"){

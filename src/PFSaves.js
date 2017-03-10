@@ -13,7 +13,7 @@ events = {
 	saveEventsPlayer: "change:REPLACE-trait change:REPLACE-enhance change:REPLACE-resist change:REPLACE-misc"
 };
 
-function applyConditions (callback, silently) {
+export function applyConditions (callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -59,7 +59,7 @@ function updateSave (save, callback, silently) {
 	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc", "saves-cond", "buff_" + save + "-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {

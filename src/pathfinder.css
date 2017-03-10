@@ -611,7 +611,7 @@ also need 1 more level in selector or base css will override border */
 }
 .sheet-linked-custom-roll textarea,
 .sheet-linked-custom-roll .sheet-inline-textarea {
-	display:inline;
+/*	display:inline;*/
 }
 
 .sheet-linked-custom-wideinputs .sheet-divider-db,

@@ -273,10 +273,10 @@ function updateSize (eventInfo, callback, silently) {
 		}
 	});
 }
-function migrate (callback){
+export function migrate (callback){
 	PFMigrate.migrateSize(callback);
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("Leaving PFSize.recalculate");
 		if (typeof callback === "function") {

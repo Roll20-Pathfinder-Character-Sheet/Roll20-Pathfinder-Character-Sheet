@@ -254,7 +254,7 @@ function setToPFS (callback,eventInfo){
 		}
 	});
 }
-function migrate (callback, oldversion){
+export function migrate (callback, oldversion){
 	var done = _.once(function(){
 		TAS.debug("leaving PFHealth.migrate 2");
 		if (typeof callback === "function"){
@@ -263,7 +263,7 @@ function migrate (callback, oldversion){
 	});
 	PFMigrate.migrateHPMisc(done);
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFHealth.recalculate");
 		if (typeof callback === "function") {

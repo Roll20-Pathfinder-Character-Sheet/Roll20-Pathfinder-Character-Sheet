@@ -1,12 +1,12 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 
-var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_time_notes", "toggle_spell_duration_notes", 
+export var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_time_notes", "toggle_spell_duration_notes", 
     "toggle_spell_saving_throw_notes", "toggle_spell_sr_notes", "toggle_spell_range_notes", "toggle_spell_targets_notes", 
     "toggle_spell_description_notes", "toggle_spell_concentration_notes", "toggle_spell_concentration_check", 
     "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", 
@@ -41,8 +41,10 @@ optionTemplates = {
     spelldamage: "{{spelldamage=REPLACE}}",
     spelldamagetype: "{{spelldamagetype=REPLACE}}"
 },
+optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
+
 /* non repeating */
-optionAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
+var optionAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
 optionTogglesPlusOptionAttrs = optionToggles.concat(optionAttrs),
 /* repeating*/
 repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", 
@@ -65,7 +67,6 @@ rowattrToOptionToggleMap = {
     "damage-macro-text": "toggle_spell_damage_notes",
     "damage-type": "toggle_spell_damage_notes"
 },
-optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates),
 events = {
     spellOptionEventsPlayer: ["school", "cast-time", "components", "duration", "save", "sr", "range", "targets", "damage-macro-text", "damage-type"]
  };
@@ -74,7 +75,7 @@ events = {
  * @param {obj} eventInfo 
  * @param {string} fieldUpdated 
  */
-function updateSpellOption (eventInfo, fieldUpdated) {
+export function updateSpellOption (eventInfo, fieldUpdated) {
     var fieldName = "repeating_spells_" + fieldUpdated,
     toggleField = rowattrToOptionToggleMap[fieldUpdated];
     getAttrs([fieldName, "repeating_spells_spell_options", "repeating_spells_spell_lvlstr", toggleField, "repeating_spells_SP-mod", "repeating_spells_savedc"], function (v) {
@@ -158,8 +159,8 @@ function updateSpellOption (eventInfo, fieldUpdated) {
 *@param {object} rowValues values from getAttrs of row attributes
 *@returns {string}
 */
-function getOptionText (id, eventInfo, toggleValues, rowValues) {
-    var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+export function getOptionText (id, eventInfo, toggleValues, rowValues) {
+    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     customConcentration = parseInt(rowValues[prefix + "Concentration_misc"], 10) || 0,
     customCasterlevel = parseInt(rowValues[prefix + "CL_misc"], 10) || 0,
     classNum = parseInt(rowValues[prefix + "spellclass_number"], 10),
@@ -284,7 +285,7 @@ function getOptionText (id, eventInfo, toggleValues, rowValues) {
 *@param {jsobj} eventInfo NOT USED
 */
 export function resetOption (id, eventInfo) {
-    var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     allFields;
     allFields = _.map(repeatingOptionAttrsToGet, function (field) {
         return prefix + field;
@@ -302,7 +303,7 @@ export function resetOption (id, eventInfo) {
         setter = {};
         optionText = getOptionText(id, eventInfo, toggleValues, v)||"";
         //TAS.debug("resetOption","About to set",setter);
-        setter["repeating_spells_" + PFUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
+        setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
         setAttrs(setter, {
             silent: true
         });

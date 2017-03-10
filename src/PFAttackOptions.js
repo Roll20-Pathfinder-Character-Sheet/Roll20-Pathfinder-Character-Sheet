@@ -80,7 +80,7 @@ export function resetOption (id, eventInfo, callback) {
             callback();
         }
     }),
-    prefix = "repeating_weapon_" + PFUtils.getRepeatingIDStr(id),
+    prefix = "repeating_weapon_" + SWUtils.getRepeatingIDStr(id),
     rowfields = _.map(repeatingOptionGetAttrs, function (attr) {
         return prefix + attr;
     }),
