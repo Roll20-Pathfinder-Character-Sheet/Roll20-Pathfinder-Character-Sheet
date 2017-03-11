@@ -26,7 +26,7 @@ function setToNPC (callback,eventInfo){
 	});
 }
 export function migrate (callback){
-	PFMigrate.migrateNPC(done,silently);
+	PFMigrate.migrateNPC(callback,silently);
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {

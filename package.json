@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "curl https://raw.githubusercontent.com/shdwjk/TheAaronSheet/master/TheAaronSheet.js -o node_modules/TheAaronSheet.js",
-    "build": "webpack --config webpack.config.js && del dist\\index.js"
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "",

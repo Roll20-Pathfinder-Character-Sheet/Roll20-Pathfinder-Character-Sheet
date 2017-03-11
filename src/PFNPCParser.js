@@ -1025,7 +1025,7 @@ function parseSkillRacialBonuses (racialstr) {
 			mod = parseInt(matches[1], 10) || 0;
 			modded = matches[2];
 			if (!_.contains(allCoreSkillsLower, modded.toLowerCase())) {
-				TAS.warn("does not match " + modded);
+				//TAS.warn("does not match " + modded);
 				// +8 Sleight of Hand
 				tempskill = _.find(skillsWithSpaces, function (skill) {
 					return modstrlower.indexOf(skill) >= 0;
@@ -1044,6 +1044,7 @@ function parseSkillRacialBonuses (racialstr) {
 				});
 				modded = temparray.join('-');
 				exceptionstr = exceptionstr.slice(tempskill.length - tempskill.indexOf(' ') + 1);
+				TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
 			}
 			if (exceptionstr) {
 				//entire thing is a "when" exception
