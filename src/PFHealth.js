@@ -7,13 +7,13 @@ import * as PFMigrate from './PFMigrate';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
 
 /*setWoundLevel sets would level based on current HP when you already have all fields.
-* sets  @{condition-Wounds} based on :
-*@hp current hp
-*@grazed {int} hp  value for grazed level
-*@wounded {int} hp value for wounded level
-*@critical {int} hp value for critical level
-*@currWounds {int}  value of @{condition-Wounds}
-*/
+ * sets  @{condition-Wounds} based on :
+ *@hp current hp
+ *@grazed {int} hp  value for grazed level
+ *@wounded {int} hp value for wounded level
+ *@critical {int} hp value for critical level
+ *@currWounds {int}  value of @{condition-Wounds}
+ */
 function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	var setWounds = 0;
 	if (hp <= grazed) {
@@ -33,9 +33,9 @@ function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	}
 }
 /*setWoundLevelLookup - looks up data needed to set current would level.
-* calls setWoundLevel
-* @hp {int} the current hit points. will look up if this is not set.
-*/
+ * calls setWoundLevel
+ * @hp {int} the current hit points. will look up if this is not set.
+ */
 function setWoundLevelLookup (hp) {
 	//TAS.debug"PFHealth.setWoundLevelLookup, hp passed in is:" + hp);
 	getAttrs(["HP", "HP_grazed", "HP_wounded", "HP_critical", "condition-Wounds"], function (v) {
@@ -47,12 +47,12 @@ function setWoundLevelLookup (hp) {
 	});
 }
 /*setWoundThreshholds - sets wound thresholds when you already have hp data.
-* Also calls setWoundLevel
-* @hp {int} = current hit points @{HP}
-* @maxHP {int} = max hp @{HP|max}
-* @currWoundLevel {int} = @{condition-Wounds}
-* @abilityMod {int} = usually @{CON-mod} or mod of whataver ability is used. 0 if no ability (like undead)
-*/
+ * Also calls setWoundLevel
+ * @hp {int} = current hit points @{HP}
+ * @maxHP {int} = max hp @{HP|max}
+ * @currWoundLevel {int} = @{condition-Wounds}
+ * @abilityMod {int} = usually @{CON-mod} or mod of whataver ability is used. 0 if no ability (like undead)
+ */
 function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod) {
 	var grazed = Math.floor(maxHP * 0.75),
 	wounded = Math.floor(maxHP * 0.5),
@@ -79,10 +79,10 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod) {
 	setWoundLevel(hp, grazed, wounded, critical, currWoundLevel);
 }
 /*setWoundThreshholdsLookup
-* Sets wound thresholds by looking up values for "are we even useing wound threshold rules?" and the max hit points.
-* Calls the other setWoundThresholds
-* If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
-*/
+ * Sets wound thresholds by looking up values for "are we even useing wound threshold rules?" and the max hit points.
+ * Calls the other setWoundThresholds
+ * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
+ */
 function setWoundThreshholdsLookup (eventInfo) {
 	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
@@ -130,13 +130,13 @@ function updateCurrHPLookup () {
 	});
 }
 /** updateMaxHPLookup
-* sets max HP
-* @param {function} callback when done
-* @param {boolean} silently if T then call setAttrs with {silent:True}
-* @param {boolean} forceReset recalculates max HP and sets HP to it.
-* @param {object} eventInfo unused
-*/
-function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
+ * sets max HP
+ * @param {function} callback when done
+ * @param {boolean} silently if T then call setAttrs with {silent:True}
+ * @param {boolean} forceReset recalculates max HP and sets HP to it.
+ * @param {object} eventInfo unused
+ */
+export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 	var done = _.once(function () {
 		TAS.debug("leaving updateMaxHPLookup");
 		if (typeof callback === "function") {
@@ -203,8 +203,8 @@ function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 	});
 }
 /* updateTempMaxHP
-* sets temp hp
-*/
+ * sets temp hp
+ */
 function updateTempMaxHP (callback, silently,forceReset) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
@@ -241,7 +241,7 @@ function updateTempMaxHP (callback, silently,forceReset) {
 		}
 	});
 }
-function setToPFS (callback,eventInfo){
+export function setToPFS (callback,eventInfo){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();

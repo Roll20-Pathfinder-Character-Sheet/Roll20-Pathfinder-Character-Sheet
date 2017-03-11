@@ -48,12 +48,12 @@ function splitMacro (macrostr){
     return newsplit;
 }
 /** arrayToMap Splits array of {{x=y}} to mapping of '{{x=': 'y}}' 
-* and splits &{template:templatename} on the :
-* unless the item has no equals sign then the value = map.
-*    e.g. @{option}  is returned as @{option}=@{option}
-*@param {Array} currArray of strings for rolltemplate {{key=value}}
-*@returns {jsobj} of each array entry split in half
-*/
+ * and splits &{template:templatename} on the :
+ * unless the item has no equals sign then the value = map.
+ *    e.g. @{option}  is returned as @{option}=@{option}
+ *@param {Array} currArray of strings for rolltemplate {{key=value}}
+ *@returns {jsobj} of each array entry split in half
+ */
 function arrayToMap (currArray,removeWhisper){
     return _.reduce(currArray,function(memo,val){
         var spliteq=val.split('=');
@@ -72,17 +72,17 @@ function arrayToMap (currArray,removeWhisper){
     },{});
 }
 /**mergeMacroMaps merges currMap into defaultMap 
-*@param {jsobj} currMap map of the current macro text on a sheet created by arrayToMap:
+ *@param {jsobj} currMap map of the current macro text on a sheet created by arrayToMap:
                             {rollqueryleft: rollqueryright}
-*@param {jsobj} defaultMap {rollqueryleft : {
+ *@param {jsobj} defaultMap {rollqueryleft : {
                             current:rollqueryright, 
                             old:[  oldrollqueryright1, oldrollqueryright2 ], 
                             replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] 
                             }
                         }
-*@param {Array} sameAsKeys array of strings of keys in defaultMap where value.current is the same string as the key
-*@returns {Array} of strings for macro entries.
-*/
+ *@param {Array} sameAsKeys array of strings of keys in defaultMap where value.current is the same string as the key
+ *@returns {Array} of strings for macro entries.
+ */
 function mergeMacroMaps (currMap,defaultMap,sameAsKeys){
     var currKeys=[],newKeys=[],customKeys=[], newArray=[] , customizedMap={}, userDefinedMap={};
     try {
@@ -166,22 +166,22 @@ function mergeMacroMaps (currMap,defaultMap,sameAsKeys){
     }
 }
 /**migrateMacro makes sure one macro is up to date, synchronous.
-*@param {string} currMacro current macro from sheet
-*@param {string} defaultMacro default / new correct macro string
-*@param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
+ *@param {string} currMacro current macro from sheet
+ *@param {string} defaultMacro default / new correct macro string
+ *@param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
                         }} defaultMap {rollqueryleft : {
                             current:rollqueryright, 
                             old:[  oldrollqueryright1, oldrollqueryright2 ], 
                             replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] 
                             }
                         }
-*@param {[string]} deleteArray array of strings to just delete from the currMacro.
-*@param {[string]} sameAsKeys array of strings of keys in defaultMap where value.current is the same string as the key
-*@returns {string} one of 3 values:
+ *@param {[string]} deleteArray array of strings to just delete from the currMacro.
+ *@param {[string]} sameAsKeys array of strings of keys in defaultMap where value.current is the same string as the key
+ *@returns {string} one of 3 values:
             null if caller should NOT update macro, 
             "BLANK" if caller should update macro attribute with "" to reset it.
             any other string: the new macro (if the user customized it, then this is the new one with updates)
-*/
+ */
 export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sameAsKeys) {
    var currMacroArray, currMacroMap,newMacroArray,newMacroString=null;
     try {
@@ -287,23 +287,23 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
     });		
 }
 /**Calls migrateRepeatingMacros once for each version of the parameters in replaceArray
-* each parameter below potentially has the word 'REPLACE' in it, for each element in replaceArray,
-* replace the word REPLACE with that element.
-* This is not the most efficient, but it was alot easier than rewriting migrateRepeatingMacros 
-*@param {function} callback after calling setAttrs with the new macros
-*@param {string} section  name after "repeating_"
-*@param {string} fieldname  the attribute name containing the macro after "id_"
-*@param {string} defaultMacro the current Macro in the page
-*@param {jsobj} defaultMap map of "{{rolltemplatekey=" to right side "var}}"
+ * each parameter below potentially has the word 'REPLACE' in it, for each element in replaceArray,
+ * replace the word REPLACE with that element.
+ * This is not the most efficient, but it was alot easier than rewriting migrateRepeatingMacros 
+ *@param {function} callback after calling setAttrs with the new macros
+ *@param {string} section  name after "repeating_"
+ *@param {string} fieldname  the attribute name containing the macro after "id_"
+ *@param {string} defaultMacro the current Macro in the page
+ *@param {jsobj} defaultMap map of "{{rolltemplatekey=" to right side "var}}"
         {rollqueryleft : {
             current:rollqueryright, 
             old:[  oldrollqueryright1, oldrollqueryright2 ], 
             replacements:[  { from: fromstring, to:tostring}, {from:fromstring, to:tostring}] 
             }
         }
-*@param {Array} deleteArray array of strings of old rolltemplate entries that are not used (entire entry not just left side )
-*@param {Array} replaceArray array of strings to replace the word 'REPLACE' with that are found in the other params.
-*/
+ *@param {Array} deleteArray array of strings of old rolltemplate entries that are not used (entire entry not just left side )
+ *@param {Array} replaceArray array of strings to replace the word 'REPLACE' with that are found in the other params.
+ */
 export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray,replaceArray, whisper){
    var done=_.once(function(){
         TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);

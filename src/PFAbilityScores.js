@@ -42,7 +42,7 @@ export function getAllAttributes (){
  * @param {Map} setter map of values to pass to setAttrs. or null
  * @returns {Map}  same setter passed in, with added values if necessary
  */
-function getAbilityScore (ability, values, setter) {
+export function getAbilityScore (ability, values, setter) {
     var base = 0,
     newVal = 0,
     rawDmg = 0,
@@ -127,7 +127,7 @@ function getAbilityScore (ability, values, setter) {
  * @param {function} callback when done
  * @param {boolean} silently if silent:true or not
  */
-function updateAbilityScore (ability,eventInfo,callback,silently){
+export function updateAbilityScore (ability,eventInfo,callback,silently){
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -151,7 +151,7 @@ function updateAbilityScore (ability,eventInfo,callback,silently){
  * @param {function} callback when done
  * @param {boolean} silently if silent:true or not
  */
-function updateAbilityScores (callback, silently) {
+export function updateAbilityScores (callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();

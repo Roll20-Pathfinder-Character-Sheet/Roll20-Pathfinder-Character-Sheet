@@ -9,13 +9,13 @@ import * as PFConst from './PFConst';
 NO asynchronous FUNCTIONS SHOULD GO HERE
 ************************************************************************************** */
 /** findAbilityInString - returns the attribute referenced by a dropdown option value.
-* Looks at a string for instances of an ability modifier DEX-mod, STR-mod,  etc and returns the modifier it finds.
-* if none are found, or if the first character is "0", return ""
-* NOTE: YOU MUST PUT ANY NEW DROPDOWN VALUES HERE! 
-* (if they are references to other fields. obviously, dropdowns with 0, 1, 2 as values are not needed here)
-*@param {string} stringToSearch the value of the dropdown option selected
-*@returns {string} the attribute referenced by a dropdown option value.
-*/
+ * Looks at a string for instances of an ability modifier DEX-mod, STR-mod,  etc and returns the modifier it finds.
+ * if none are found, or if the first character is "0", return ""
+ * NOTE: YOU MUST PUT ANY NEW DROPDOWN VALUES HERE! 
+ * (if they are references to other fields. obviously, dropdowns with 0, 1, 2 as values are not needed here)
+ *@param {string} stringToSearch the value of the dropdown option selected
+ *@returns {string} the attribute referenced by a dropdown option value.
+ */
 export function findAbilityInString  (stringToSearch) {
     if (!stringToSearch) {
         return "";
@@ -109,9 +109,9 @@ export function findAbilityInString  (stringToSearch) {
     }
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
-*@param {int} casterlevel level of caster
-*@returns {jsobject} mapping like this: {close:int,medium:int,long:int}
-*/
+ *@param {int} casterlevel level of caster
+ *@returns {jsobject} mapping like this: {close:int,medium:int,long:int}
+ */
 export function calculateSpellRanges  (casterlevel) {
     casterlevel = casterlevel || 0;
     return {
@@ -121,11 +121,11 @@ export function calculateSpellRanges  (casterlevel) {
     };
 }
 /**findSpellRange -  calculates range number based on spell settings
-* @param {int} customRangeVal value that is in the custom range field, for "per level" or "custom" choices
-* @param {string} rangeDropdown selected value from spell range dropdown
-* @param {int} casterlevel the level of caster
-* @returns {int_or_""} the spell range
-*/
+ * @param {int} customRangeVal value that is in the custom range field, for "per level" or "custom" choices
+ * @param {string} rangeDropdown selected value from spell range dropdown
+ * @param {int} casterlevel the level of caster
+ * @returns {int_or_""} the spell range
+ */
 export function findSpellRange  (customRangeVal, rangeDropdown, casterlevel) {
     var newRange = 0,
     ranges = calculateSpellRanges(casterlevel);
@@ -164,11 +164,11 @@ export function findSpellRange  (customRangeVal, rangeDropdown, casterlevel) {
     return newRange;
 }
 /** getWoundPenalty - applies Endurance feat or Gritty Mode to wound level.
-*@param {int} woundLevel value of wounds attribute
-*@param {boolean} hasEndurance if char has Endurance feat (lessens penalty by 1)
-*@param {boolean} grittyMode if using grittyMode (doubles penalty, applied before hasEndurance)
-*@returns {int} value to apply.
-*/
+ *@param {int} woundLevel value of wounds attribute
+ *@param {boolean} hasEndurance if char has Endurance feat (lessens penalty by 1)
+ *@param {boolean} grittyMode if using grittyMode (doubles penalty, applied before hasEndurance)
+ *@returns {int} value to apply.
+ */
 export function getWoundPenalty  (woundLevel, hasEndurance, grittyMode) {
     return (woundLevel !== 0) ? (-1 * ((woundLevel * (grittyMode + 1)) - hasEndurance)) : 0;
 }
@@ -177,10 +177,10 @@ export function isOptionTemplateReversed  (spellOptionKey) {
     return spellOptionKey === "range_pick";
 }
 /** getOptionsCompiledRegexMap - finds {{key=*}} in a string to search rolltemplate macros
-* uses lookahead and lookbehind  to ensure must be preceeded by start or }} , followed by end or {{ 
-* @param {jsobj map} options map {} of key , only key looked at.
-* @returns {jsobj map} of key to "{{key=*}}" but as a compiled regex 
-*/
+ * uses lookahead and lookbehind  to ensure must be preceeded by start or }} , followed by end or {{ 
+ * @param {jsobj map} options map {} of key , only key looked at.
+ * @returns {jsobj map} of key to "{{key=*}}" but as a compiled regex 
+ */
 export function getOptionsCompiledRegexMap  (options) {
     return _.mapObject(options, function (outputstr, key) {
         if (!isOptionTemplateReversed(key)) {
@@ -190,10 +190,10 @@ export function getOptionsCompiledRegexMap  (options) {
     });
 }
 /** shouldNotDisplayOption- returns true if the value is the default so we know not to bother displaying in roll.
-* @param {string} attr: can pass either the attribute or the option name it will be sent to
-* @param {string} val : the value of the attribute
-* @returns {boolean}
-*/
+ * @param {string} attr: can pass either the attribute or the option name it will be sent to
+ * @param {string} val : the value of the attribute
+ * @returns {boolean}
+ */
 export function shouldNotDisplayOption  (attr, val) {
     if (!val) {
         return true;
@@ -211,11 +211,11 @@ export function shouldNotDisplayOption  (attr, val) {
     }
 }
 /** deleteOption - removes option text from string and adds {{optionKey=}}
-* @param {string} optionText the string of a rolltemplate macro
-* @param {string} optionKey the key from rolltemplate setting, as in: {{optionKey=xxxx}}
-* @param {string} regexMap output of keys, what to search for from getOptionsCompiledRegexMap()
-* @returns {string} optionText with the optionKey portion of macro replaced with empty value
-*/
+ * @param {string} optionText the string of a rolltemplate macro
+ * @param {string} optionKey the key from rolltemplate setting, as in: {{optionKey=xxxx}}
+ * @param {string} regexMap output of keys, what to search for from getOptionsCompiledRegexMap()
+ * @returns {string} optionText with the optionKey portion of macro replaced with empty value
+ */
 export function deleteOption  (optionText, optionKey, regexMap) {
     var repStr = isOptionTemplateReversed(optionKey) ? "{{=" + optionKey + "}}" : "{{" + optionKey + "=}}";
     //TAS.debug("deleteOption optionKey"+optionKey+", regexMap[optionKey]:"+regexMap[optionKey]+", repStr:"+repStr);
@@ -225,14 +225,14 @@ export function deleteOption  (optionText, optionKey, regexMap) {
     return optionText;
 }
 /**getAvgHP returns average hp for given hit dice and die
-* also can return 75% or 100% of max hp
-* @param {int} hdice # of dice
-* @param {int} hdie # of sides (4,6,8,10,12,etc)
-* @param {float} mult optional percent of max to average, must be .5 (average), .75, or 1. If null then assume .5
-* @param {boolean} firstMax if true then 1st level gets 100% hp
-* @param {boolean} ispfs if true then round up EVERY level.
-* @returns {int} hit point average. 
-*/
+ * also can return 75% or 100% of max hp
+ * @param {int} hdice # of dice
+ * @param {int} hdie # of sides (4,6,8,10,12,etc)
+ * @param {float} mult optional percent of max to average, must be .5 (average), .75, or 1. If null then assume .5
+ * @param {boolean} firstMax if true then 1st level gets 100% hp
+ * @param {boolean} ispfs if true then round up EVERY level.
+ * @returns {int} hit point average. 
+ */
 export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     var hp=0, bonus=1;
     //TAS.debug("PFUtils.getAvgHP called with hdice:"+hdice+", hdie:"+hdie+", mult:"+mult+", firstMax:"+firstMax);
@@ -260,9 +260,9 @@ export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     return hp;
 }
 /** takes value of auto hit point radio and returns percent it represents 50,75,100.
-*@param {int} autohp_percent the value of attr_autohp_percent 
-*@returns {decimal} either 0.5, 0.75,  or 1.00
-*/
+ * @param {int} autohp_percent the value of attr_autohp_percent 
+ * @returns {decimal} either 0.5, 0.75,  or 1.00
+ */
 export function getAutoHPPercentMultiplier  (autohp_percent) {
     var  newhealth=0;
     autohp_percent = parseInt(autohp_percent,10)||0;
@@ -276,13 +276,13 @@ export function getAutoHPPercentMultiplier  (autohp_percent) {
     return newhealth;
 }
 /** parseSpellRangeText - Initial parse of a string from spell , it returns the value to set in the dropdown,
-* plus whether to run the range text through a secondary parse for numbers.
-* returns object with keys: dropdown, useorig, number, rangetext
-* (number only returned if number is a flat number)
-* @param {string} range the range string from a spell
-* @param {string} area the area or target string from a spell (whichever filled in, only 1 will be)
-* @returns {jsobj} map format: {"dropdown":newRangeDropdown,"useorig":useOrigRangeText if special,"number":flatRange,"rangetext":newRangeText if we need to fill in text}
-*/
+ * plus whether to run the range text through a secondary parse for numbers.
+ * returns object with keys: dropdown, useorig, number, rangetext
+ * (number only returned if number is a flat number)
+ * @param {string} range the range string from a spell
+ * @param {string} area the area or target string from a spell (whichever filled in, only 1 will be)
+ * @returns {jsobj} map format: {"dropdown":newRangeDropdown,"useorig":useOrigRangeText if special,"number":flatRange,"rangetext":newRangeText if we need to fill in text}
+ */
 export function parseSpellRangeText  (range, area) {
     var newRangeDropdown = "",
     tempRange = 0,
@@ -452,9 +452,9 @@ export function parseSpellRangeText  (range, area) {
     };
 }
 /** parseCost gets cost in gp 
-*@param {string} str the string containing the cost: 35gp, 20sp, etc 
-*@returns {int} cost in gp.
-*/
+ * @param {string} str the string containing the cost: 35gp, 20sp, etc 
+ * @returns {int} cost in gp.
+ */
 export function getCostInGP  (str){
     var temp=0,
     matches = str.match(/(\d+)/);

@@ -7,19 +7,16 @@ import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFSpells from './PFSpells';
 
-
-
-var classColumns = ["hp", "fchp", "skill", "fcskill", "fcalt", "bab", "Fort", "Ref", "Will", "level"],
+export var classColumns = ["hp", "fchp", "skill", "fcskill", "fcalt", "bab", "Fort", "Ref", "Will", "level"],
 raceColumns = ['hp', 'bab', 'Fort', 'Ref', 'Will', 'hd-num', 'skill'],
-classRows = ["0", "1", "2", "3", "4", "5"],
-events = {
+classRows = ["0", "1", "2", "3", "4", "5"];
+var events = {
     basehp: "change:auto_calc_hp change:autohp_percent change:maxhp_lvl1 ",
     racialhp: "change:npc-hd-num change:npc-hd ",
     perClassRowhp: "change:class-REPLACE-level change:class-REPLACE-hd "
 };
 
-
-function setMulticlassed (){
+export function setMulticlassed (){
     var fields =['multiclassed','class-0-level','class-1-level','class-2-level','class-3-level','class-4-level','class-5-level','npc-hd-num'];
     //TAS.debug("at PFClassRaceGrid.setMulticlassed");
     getAttrs(fields,function(v){
@@ -39,10 +36,10 @@ function setMulticlassed (){
     });
 }
 /** PFClassRaceGrid.updateClassInformation Updates totals at bottom of Class Information grid
-*@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns 
-*@param {function} callback optional call when finished updating
-*@param {bool} silently if true then call setAttrs with PFConst.silentParams
-*/
+ *@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns 
+ *@param {function} callback optional call when finished updating
+ *@param {bool} silently if true then call setAttrs with PFConst.silentParams
+ */
 function updateClassInformation  (col, callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
@@ -160,7 +157,7 @@ function updateClassInformation  (col, callback, silently) {
     }
 
 }
-function autoCalcClassHpGrid (callback,silently,eventInfo){
+export function autoCalcClassHpGrid (callback,silently,eventInfo){
     var done = _.once(function(){ if (typeof callback === "function") { 
         TAS.debug("Leaving updateClassHpGrid");
         callback();}

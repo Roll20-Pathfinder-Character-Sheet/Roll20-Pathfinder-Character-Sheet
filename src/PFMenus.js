@@ -22,26 +22,26 @@ var menuMap={
 };
 
 /** creates a command macro button for a repeating section
-* it also extends to add old lists using "extendbysections"
-* @param {jsmap} baseAttribs object of schema:
-*  name:string ex:'abilities',
-*  template:string ex:'pf_generic',
-*  header:string ex:'header_image-pf_generic',
-*  section:string the name after 'repeating_' e.g. weapon,item, spells, etc
-*  bonusField:string bonus attr to add at the end of the name attr of each row, put into parenthesis, such as Burning Hands (Sp),
-*  usesField:string used or attr name with |max if instead to print uses/max,
-*  nameField:string name of header of menu written to {{#name}}
-*  linkField:string the attr of the roll button 'roll'
-*  npclinkField:string if necessary, different link field to use if the char is an NPC
-*  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
-*  filterValue:string if filter should be custom (not 1/0) then fill in value ex: 'Sp', cannot be '0' (zero)
-*  groupByField:string optional name of attr to group by
-*  translateGroup: if ^{} should be placed around groupby field value
-*  translateBonus: if ^{} should be placed around bonus field value
-*  groupMap:{key:string,key:string} if instead of grouping by the groupField itself, pass the value to a map and group by the result.
-* @param {function(string)} callback Pass string for command macro as first param, or ""
-*/
-function getRepeatingCommandMacro (baseAttribs,callback,header){
+ * it also extends to add old lists using "extendbysections"
+ * @param {jsmap} baseAttribs object of schema:
+ *  name:string ex:'abilities',
+ *  template:string ex:'pf_generic',
+ *  header:string ex:'header_image-pf_generic',
+ *  section:string the name after 'repeating_' e.g. weapon,item, spells, etc
+ *  bonusField:string bonus attr to add at the end of the name attr of each row, put into parenthesis, such as Burning Hands (Sp),
+ *  usesField:string used or attr name with |max if instead to print uses/max,
+ *  nameField:string name of header of menu written to {{#name}}
+ *  linkField:string the attr of the roll button 'roll'
+ *  npclinkField:string if necessary, different link field to use if the char is an NPC
+ *  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
+ *  filterValue:string if filter should be custom (not 1/0) then fill in value ex: 'Sp', cannot be '0' (zero)
+ *  groupByField:string optional name of attr to group by
+ *  translateGroup: if ^{} should be placed around groupby field value
+ *  translateBonus: if ^{} should be placed around bonus field value
+ *  groupMap:{key:string,key:string} if instead of grouping by the groupField itself, pass the value to a map and group by the result.
+ * @param {function(string)} callback Pass string for command macro as first param, or ""
+ */
+export function getRepeatingCommandMacro (baseAttribs,callback,header){
     var done = function (macro) { 
             if (typeof callback === "function") { callback(macro); } 
         },
@@ -272,12 +272,12 @@ function getRepeatingCommandMacro (baseAttribs,callback,header){
     });
 }
 /**resetOneCommandMacro sets command button macro with all rows from one ability list.
-* calls PFMenus.getRepeatingCommandMacro
-* sets the returned string to macro with attribute name: section+"_buttons_macro"
-*@param {string} section name after "repeating_"
-*@param {boolean} isNPC  true if npc false or not needed otherwise.
-*@param {function} callback  when done
-*/
+ * calls PFMenus.getRepeatingCommandMacro
+ * sets the returned string to macro with attribute name: section+"_buttons_macro"
+ *@param {string} section name after "repeating_"
+ *@param {boolean} isNPC  true if npc false or not needed otherwise.
+ *@param {function} callback  when done
+ */
 export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     var done = _.once(function () {
             //TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
@@ -320,9 +320,9 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     },header);
 }
 /** same as resetOneCommandMacro if you do not know the npc status 
-*@param {string} section name after "repeating_"
-*@param {function} callback  when done
-*/
+ *@param {string} section name after "repeating_"
+ *@param {function} callback  when done
+ */
 export function resetOneCommandMacroNoNPC (section,callback,header){
     getAttrs(['is_npc'],function(v){
         resetOneCommandMacro(section, (parseInt(v.is_npc,10)||0), callback,header);

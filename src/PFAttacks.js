@@ -158,11 +158,11 @@ function setRepeatingWeaponInsertMacro (id, eventInfo) {
 	});
 }
 /* updateRepeatingWeaponAttack - calculates total-attack
-* also updates attk-effect-total-copy
-* @id {string} optional = id of row, if blank we are within the context of the row
-* @overrideAttr {string} optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
-* @overrideValue {number} optional = if overrideAttr then this should be a number usually int but it won't check
-*/
+ * also updates attk-effect-total-copy
+ * @id {string} optional = id of row, if blank we are within the context of the row
+ * @overrideAttr {string} optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
+ * @overrideValue {number} optional = if overrideAttr then this should be a number usually int but it won't check
+ */
 function updateRepeatingWeaponAttack (id, eventInfo) {
 	//is it faster to not do the idstr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
@@ -551,7 +551,7 @@ function recalcCalculatedFields (ids,callback){
 		}
 	});
 }
-export function recalculateRepeatingWeapons (callback){
+function recalculateRepeatingWeapons (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.recalculateRepeatingWeapons");
 		if (typeof callback === "function"){

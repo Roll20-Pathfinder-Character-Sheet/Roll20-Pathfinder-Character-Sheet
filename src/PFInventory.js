@@ -86,9 +86,9 @@ export function resetCommandMacro(callback){
     });
 }
 /** Gets the worn item grid row name corresponding to location number in dropdown
-*@param {int} location a value from repeating_item_$X_location
-*@returns {string} name of "worn-space" to set
-*/
+ *@param {int} location a value from repeating_item_$X_location
+ *@returns {string} name of "worn-space" to set
+ */
 function getWornItemNameField (location) {
     var wornSlot = "";
     if (location > 1 && wornEquipmentRowsPlusCarried[location]) {
@@ -104,9 +104,9 @@ function getWornItemNameField (location) {
     return wornSlot;
 }
 /** updateRepeatingItems totals columns 
-*@param {function} callback to call when done
-*@param {bool} silently if true send PFConst.silentParams to setAttrs
-*/
+ *@param {function} callback to call when done
+ *@param {bool} silently if true send PFConst.silentParams to setAttrs
+ */
 function updateRepeatingItems (callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -150,9 +150,9 @@ function updateRepeatingItems (callback, silently) {
     }
 }
 /** updateCarriedCurrency  totals weight for carried currency 
-*@param {function} callback to call when done
-*@param {bool} silently if true send PFConst.silentParams to setAttrs
-*/
+ *@param {function} callback to call when done
+ *@param {bool} silently if true send PFConst.silentParams to setAttrs
+ */
 function updateCarriedCurrency  (callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
@@ -183,9 +183,9 @@ function updateCarriedCurrency  (callback, silently) {
     });
 }
 /** updateCarriedTotal- updates the total for carried weight
-*@param {function} callback to call when done
-*@param {bool} silently if true send PFConst.silentParams to setAttrs
-*/
+ *@param {function} callback to call when done
+ *@param {bool} silently if true send PFConst.silentParams to setAttrs
+ */
 function updateCarriedTotal (callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
@@ -214,10 +214,10 @@ function updateCarriedTotal (callback, silently) {
     });
 }
 /** Got rid of the Worn Equipment section, so migrate any values to the Equipment as repeating entries.
-* Worn Armor & Worn Shield are now disabled and controlled by the Equipment section in the Inventory tab.
-*@param {function} callback to call when done
-*@param {bool} silently if true send PFConst.silentParams to setAttrs
-*/
+ * Worn Armor & Worn Shield are now disabled and controlled by the Equipment section in the Inventory tab.
+ *@param {function} callback to call when done
+ *@param {bool} silently if true send PFConst.silentParams to setAttrs
+ */
 function migrateWornEquipment (callback) {
     var done = _.once(function () {
         TAS.debug("leaving PFInventory.migrateWornEquipment");
@@ -524,11 +524,11 @@ function migrateWornEquipment (callback) {
     });
 }
 /** set old location to the new location, and unset other items set to this location, also updates loctype-tab
-*@param {string} id id of row updated, or null
-*@param {function} callback to call when done
-*@param {boolean} silently if true call setAttrs with {silent:true}
-*@param {object} eventInfo USED - from event, to get id from sourceAttribute
-*/
+ *@param {string} id id of row updated, or null
+ *@param {function} callback to call when done
+ *@param {boolean} silently if true call setAttrs with {silent:true}
+ *@param {object} eventInfo USED - from event, to get id from sourceAttribute
+ */
 function updateEquipmentLocation (id, callback, silently, eventInfo) {
     var done = _.once(function () {
         //TAS.debug("leaving PFInventory.updateEquipmentLocation for id "+id);
@@ -662,12 +662,12 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
     }
 }
 /** replace the values on the Defenses tab in disabled fields with this row's values
-* from the equipment. Some fields like Armor Bonus, ACP, and Max Dex are not available in the equipment, so they
-* will need to be edited manually after making this change.
-*@param {int} location the value of location attribute in repeating_item
-*@param {string} sourceAttribute eventInfo sourceAttribute of change user made that called this
-*@param {function} callback call when done
-*/
+ * from the equipment. Some fields like Armor Bonus, ACP, and Max Dex are not available in the equipment, so they
+ * will need to be edited manually after making this change.
+ *@param {int} location the value of location attribute in repeating_item
+ *@param {string} sourceAttribute eventInfo sourceAttribute of change user made that called this
+ *@param {function} callback call when done
+ */
 function updateWornArmorAndShield  (location, sourceAttribute, callback) {
     var done = _.once(function () {
         TAS.debug("leaving PFInventory.updateWornArmorAndShield");
@@ -802,7 +802,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
 }
 /**  calls updateEquipmentLocation for all items
 can be refactored to be faster to do all at once
-*/
+ */
 function updateLocations (callback){
     var done = _.once(function(){
         TAS.debug("Leaving PFInventory.updateLocations");
@@ -830,9 +830,9 @@ function updateLocations (callback){
     });
 }
 /** Triggered from a button in repeating_items, it will create a repeating attack entry from the item entry
-* @param {string} source the eventItem.sourceAttribute
-* @param {string} weaponId if the row already exists, overwrite all fields but 'name'
-*/
+ * @param {string} source the eventItem.sourceAttribute
+ * @param {string} weaponId if the row already exists, overwrite all fields but 'name'
+ */
 export function createAttackEntryFromRow (source, callback, silently, weaponId) {
     var done = _.once(function () {
         //TAS.debug("leaving PFInventory.createAttackEntryFromRow");
@@ -927,7 +927,6 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
         }
     });
 }
-
 export function updateAssociatedAttack (source, callback) {
     var done = _.once(function () {
         TAS.debug("leaving PFInventory.updateAssociatedAttack");
@@ -1020,10 +1019,10 @@ export function updateAssociatedAttack (source, callback) {
     });
 }
 /** Determines the equipment type from looking at the name. 
-* DOES NOT WORK for armor or weapons, this is for after you have already determined it is not an armor or weapon type.
-*@param {string} name the name field 
-*/
-function getEquipmentTypeFromName (name){
+ * DOES NOT WORK for armor or weapons, this is for after you have already determined it is not an armor or weapon type.
+ *@param {string} name the name field 
+ */
+export function getEquipmentTypeFromName (name){
     var tempstr, currType=equipMap.noEquipType, matches;
     if(!name){return currType;}
     tempstr=name.toLowerCase();

@@ -9,7 +9,7 @@ import * as PFMigrate from './PFMigrate';
 import * as PFEncumbrance from './PFEncumbrance';
 
 
-var sizeModToEasySizeMap={
+export var sizeModToEasySizeMap={
 	'-8':8,
 	'-4':7,
 	'-2':6,
@@ -21,10 +21,10 @@ var sizeModToEasySizeMap={
 	 '8':0
 };
 /** getSizeFromText - returns size mod based on size display name
-* @param {string} sizeDisplay size in english (medium, large, gargantuan, tiny, etc)
-* @returns {jsobj} map of {"size":size mod for AC,"skillSize": size mod for fly}
-*/
-function getSizeFromText (sizeDisplay) {
+ * @param {string} sizeDisplay size in english (medium, large, gargantuan, tiny, etc)
+ * @returns {jsobj} map of {"size":size mod for AC,"skillSize": size mod for fly}
+ */
+export function getSizeFromText (sizeDisplay) {
 	var sizeMap = {
 		"size": 0,
 		"skillSize": 0
@@ -80,13 +80,13 @@ function getSizeFromText (sizeDisplay) {
 	}
 }
 /**returns number of levels size went up or down
-* ex: Med to Lg is +1, Med to Sm is -1, Md to Tiny is -2, etc
-@param {int} currSize new size mod , usually value of @{size}
-@param {int} defaultSize default size mod, for sheet it is value of @{default_char_size}
-		  for weapon it is @{repeating_weapon_$X_default_size}
-@returns {int} difference in sizes (not difference in size mods)
-*/
-function getSizeLevelChange (currSize,defaultSize) {
+ * ex: Med to Lg is +1, Med to Sm is -1, Md to Tiny is -2, etc
+ * @param {int} currSize new size mod , usually value of @{size}
+ * @param {int} defaultSize default size mod, for sheet it is value of @{default_char_size}
+ * 		  for weapon it is @{repeating_weapon_$X_default_size}
+ * @returns {int} difference in sizes (not difference in size mods)
+ */
+export function getSizeLevelChange (currSize,defaultSize) {
 	var newSize,oldSize,levelChange;
 	newSize=sizeModToEasySizeMap[String(currSize)];
 	oldSize=sizeModToEasySizeMap[String(defaultSize)];
@@ -94,13 +94,13 @@ function getSizeLevelChange (currSize,defaultSize) {
 	return levelChange;
 }
 /**updateDamageDice returns new dice for weapon/attack damage change due to size
-*@param {int} sizediff difference in LEVELS of size (Medium to Large is 1, Medium to Small is -1)
-*@param {int} defaultSize size modifier, necessary since different rules for small
-*@param {int} currDice num dice from 1 to n
-*@param {int} currDie num sides of die : valid only from 1 to 12
-*@returns {jsobj} {dice:n,die:n}
-*/
-function updateDamageDice (sizediff,defaultSize,currDice,currDie){
+ *@param {int} sizediff difference in LEVELS of size (Medium to Large is 1, Medium to Small is -1)
+ *@param {int} defaultSize size modifier, necessary since different rules for small
+ *@param {int} currDice num dice from 1 to n
+ *@param {int} currDie num sides of die : valid only from 1 to 12
+ *@returns {jsobj} {dice:n,die:n}
+ */
+export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 	var diceSizes = { 1:["1d1"], 2:["1d2"], 3:["1d3"],   
 		4:["1d4"],
 		5:["1d6"],
@@ -176,7 +176,7 @@ function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return {"dice":currDice,"die":currDie};
 	}
 }
-function updateSize (eventInfo, callback, silently) {
+export function updateSize (eventInfo, callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
