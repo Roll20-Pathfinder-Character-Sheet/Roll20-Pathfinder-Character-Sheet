@@ -5,16 +5,28 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 
 /* updateInitiative * updates the init*/
-export function updateInitiative (callback, silently) {
+export function updateInitiative (callback, silently,force) {
 	getAttrs(['nodex-toggle'],function(v){
 		if (parseInt(v['nodex-toggle'],10)) {
 			//if lose dex then lose ability mod no matter what ability it is, since init is a dex check:
 			//http://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9tga
-			SWUtils.updateRowTotal(["init", "init-trait", "init-misc-mod","checks-cond"], 0, ["condition-Deafened"], false, callback, silently);
+			SWUtils.updateRowTotal(["init", "init-trait", "init-misc-mod","checks-cond"], 0, ["condition-Deafened"], false, callback, silently, force);
 		} else {
-			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond"], 0, ["condition-Deafened"], false, callback, silently);
+			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond"], 0, ["condition-Deafened"], false, callback, silently, force);
 		}
 	});
+}
+export function migrate(callback,oldversion){
+	var done = function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	};
+	if (oldversion < 1.18){
+		updateInitiative(done,false,true);
+	} else {
+		done();
+	}
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
@@ -23,7 +35,9 @@ export function recalculate (callback, silently, oldversion) {
 			callback();
 		}
 	});
-	updateInitiative(done, silently);
+	migrate ( function(){
+		updateInitiative(done, silently);
+	},oldversion);
 }
 function registerEventHandlers () {
 	on("change:init-trait change:condition-Deafened ", TAS.callback(function eventUpdateInitPlayer(eventInfo) {

@@ -254,6 +254,26 @@ export function setToPFS (callback,eventInfo){
 		}
 	});
 }
+function ensureNPCHPZero(callback){
+	getAttrs(['npc-hd','npc-hd-num','NPC-HP','is_npc'],function(v){
+		var npcHD = parseInt(v['npc-hd'],10)||0,
+		npcLevels = parseInt(v['npc-hd-num'],10)||0,
+		npcHP = parseInt(v['NPC-HP'],10)||0,
+		isNPC = parseInt(v.is_npc,10)||0;
+		if (!isNPC){
+			if (!npcHD && !npcLevels && npcHP){
+				setAttrs({'npc-hd-num':'','NPC-HP':0});
+			}
+		} else {
+			setAttrs({
+			'npc-hd-num2':0,
+			'npc-hd2':0,
+			'HP-misc':'',
+			'HP-misc-mod':0
+			});
+		}
+	});
+}
 export function migrate (callback, oldversion){
 	var done = _.once(function(){
 		TAS.debug("leaving PFHealth.migrate 2");
@@ -262,6 +282,9 @@ export function migrate (callback, oldversion){
 		}
 	});
 	PFMigrate.migrateHPMisc(done);
+	if (oldversion < 1.18){
+		ensureNPCHPZero();
+	}
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
