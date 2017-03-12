@@ -352,7 +352,11 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInventory.migrate(function(){PFInventory.resetCommandMacro();});
 			}
 		} else {
-			//future updates here. any above will recalc whole sheet after callback
+			if (oldversion < 1.18){
+				//future updates here. any above will recalc whole sheet after callback
+				PFInitiative.recalculate(null,false,oldversion);
+				PFHealth.recalculate(null,false,oldversion);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
