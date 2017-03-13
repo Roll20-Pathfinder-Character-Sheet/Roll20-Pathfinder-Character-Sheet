@@ -257,7 +257,7 @@ function updateMaxSkills (eventInfo, callback) {
  * @param {function} callback = a function that takes a a boolean as a first parameter.
  *   called with true if skill is part of valid list, or false if not.
  */
-function verifyHasSkill (skill, callback) {
+export function verifyHasSkill (skill, callback) {
 	var first3 = '',
 		first4 = '',
 		core = false,
@@ -312,7 +312,7 @@ function verifyHasSkill (skill, callback) {
  * @param {function} callback = callback after done with params newvalue, oldvalue.
  * @param {boolean} silently = whether to update silently or not. ignored, always silent.
  */
-function updateSkill (skill, callback, silently) {
+export function updateSkill (skill, callback, silently) {
 	var done = function (newVal, oldVal) {
 		if (typeof callback === "function") {
 			callback(newVal, oldVal);

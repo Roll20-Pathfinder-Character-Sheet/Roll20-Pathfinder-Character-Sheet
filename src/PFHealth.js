@@ -83,7 +83,7 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod) {
  * Calls the other setWoundThresholds
  * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
  */
-function setWoundThreshholdsLookup (eventInfo) {
+export function setWoundThreshholdsLookup (eventInfo) {
 	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
 			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0);
@@ -121,7 +121,7 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 	}
 }
 /* updateCurrHPLookup - looks up data and calls updateCurrHP */
-function updateCurrHPLookup () {
+export function updateCurrHPLookup () {
 	getAttrs(["HP", "HP-temp", "non-lethal-damage", "wound_threshold-show", "HP-ability", "HP-ability-mod", "condition-Staggered"], function (v) {
 		//TAS.debug("PFHealth.updateCurrHPLookup",v);
 		updateCurrHP(parseInt(v["HP"], 10) || 0, parseInt(v["HP-temp"], 10) || 0, 
@@ -205,7 +205,7 @@ export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 /* updateTempMaxHP
  * sets temp hp
  */
-function updateTempMaxHP (callback, silently,forceReset) {
+export function updateTempMaxHP (callback, silently,forceReset) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -254,7 +254,7 @@ export function setToPFS (callback,eventInfo){
 		}
 	});
 }
-function ensureNPCHPZero(callback){
+export function ensureNPCHPZero(callback){
 	getAttrs(['npc-hd','npc-hd-num','NPC-HP','is_npc'],function(v){
 		var npcHD = parseInt(v['npc-hd'],10)||0,
 		npcLevels = parseInt(v['npc-hd-num'],10)||0,
