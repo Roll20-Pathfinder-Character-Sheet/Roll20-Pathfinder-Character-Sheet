@@ -1556,14 +1556,14 @@ h2.sheet-clickheader {
 	content:' ';
 }
 .sheet-readonly-show:checked + span::before {
-	background-color:black !important;
-	background: url("http://i.imgur.com/YLJ8xSh.png");
+	background-color:#4a6486 !important;
+	background: url("http://i.imgur.com/HcLvjwY.png");
 	background-position: -1px -1px;
 	content:' ';
 }
 .sheet-readonly-show:checked + span:hover::before {
-	background-color:black !important;
-	background: url("http://i.imgur.com/8t7Ms1b.png");	
+	background-color:#4a6486 !important;
+	background: url("http://i.imgur.com/HcLvjwY.png");	
 	background-position: -1px -1px;
 	content:' ';
 }
