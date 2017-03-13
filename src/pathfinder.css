@@ -1540,8 +1540,8 @@ h2.sheet-clickheader {
     padding: 5px 0 0 0 !important;
 }
 .sheet-readonly-show + span::before {
-	background-color:black !important;
-	background: url("http://i.imgur.com/YLJ8xSh.png") ;
+	background-color:white !important;
+	background: url("http://i.imgur.com/C8lPQRS.png");
 	background-position: -1px -1px;
 	content:' ';
 	width: 1.45rem;
@@ -1550,20 +1550,20 @@ h2.sheet-clickheader {
 	margin: 3px 0px -5px 4px;
 }
 .sheet-readonly-show + span:hover::before {
-	background-color:black !important;
-	background: url("http://i.imgur.com/8t7Ms1b.png") ;
+	background-color:white !important;
+	background: url("http://i.imgur.com/MEXe7NT.png");
 	background-position: -1px -1px;
 	content:' ';
 }
 .sheet-readonly-show:checked + span::before {
-	background-color:white !important;
-	background: url("http://i.imgur.com/C8lPQRS.png") ;
+	background-color:black !important;
+	background: url("http://i.imgur.com/YLJ8xSh.png");
 	background-position: -1px -1px;
 	content:' ';
 }
 .sheet-readonly-show:checked + span:hover::before {
-	background-color:white !important;
-	background: url("http://i.imgur.com/MEXe7NT.png") ;
+	background-color:black !important;
+	background: url("http://i.imgur.com/8t7Ms1b.png");	
 	background-position: -1px -1px;
 	content:' ';
 }
@@ -3694,6 +3694,14 @@ input[type="text"].sheet-skill-conds {
     clear: none;
     float: left;
 	height: auto;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section > .sheet-h2-section .sheet-h3-section:not(.sheet-wide-readonly).sheet-section-oldslas {
+    width: calc(100% - .25em);
+	display: block;
+    margin: .125em;
+    clear: none;
+    float: left;
+	height: auto;   
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-h2-section:not(.sheet-noborder-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-h2arrow:not(:checked) ~ .sheet-h2-section:not(.sheet-noborder-readonly),
