@@ -99,10 +99,10 @@ events = {
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
 };
 /** sets tab for an ability. these have multiple checkboxes, not a radio
-*@param {string} id optional id of row
-*@param {function} callback call when done
-*@param {obj} eventInfo from 'on' event change:rule_category
-*/
+ *@param {string} id optional id of row
+ *@param {function} callback call when done
+ *@param {obj} eventInfo from 'on' event change:rule_category
+ */
 function setRuleTab (id,callback, eventInfo){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_ability_" + idStr,
@@ -145,8 +145,8 @@ function setRuleTabs (){
 }
 
 /** returns all rule_category and ability_type used
-* @returns {jsobj} {'rules':[values of rule_category], 'types':[valuesof ability_type]}
-*/
+ * @returns {jsobj} {'rules':[values of rule_category], 'types':[valuesof ability_type]}
+ */
 function getAbilityTypes (callback){
 	var done= function(typeObj){
 		//TAS.debug('PFFeatures.getAbilityTypes returning with ',typeObj);
@@ -200,8 +200,8 @@ function getAbilityTypes (callback){
 	});
 }
 /** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus)
-*@param {function} callback call when done	
-*/
+ *@param {function} callback call when done	
+ */
 function getTopOfMenu (callback,isNPC){
 	var done = function (str) {
 		TAS.debug("leaving PFAbility.getTopOfMenu");
@@ -243,7 +243,7 @@ function getTopOfMenu (callback,isNPC){
 		done(newMacro);
 	}
 }
-function resetCommandMacro (callback){
+export function resetCommandMacro (callback){
 	getAttrs(['is_npc'],function(v){
 		var isNPC = parseInt(v.is_npc,10)||0;
 		getTopOfMenu ( function(header){
@@ -265,7 +265,7 @@ function resetCommandMacro (callback){
 		}
 	});
 }
-function importFromCompendium (callback,eventInfo){
+export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){
 		resetCommandMacro();
 		TAS.debug("leaving PFAbility.importFromCompendium");
@@ -419,7 +419,7 @@ function setClassName (id,callback,eventInfo){
 		}
 	});
 }
-function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
+export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 	var notes="",attackType="";
 	setter = setter||{};
 	try {
@@ -478,12 +478,12 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 	}
 }
 /**Triggered from a button in repeating spells 
-*@param {string} id the row id or null
-*@param {function} callback when done
-*@param {boolean} silently setattrs silent:true
-*@param {object} eventInfo if id is null get id from here.
-*/
-function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
+ *@param {string} id the row id or null
+ *@param {function} callback when done
+ *@param {boolean} silently setattrs silent:true
+ *@param {object} eventInfo if id is null get id from here.
+ */
+export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFAbility.createAttackEntryFromRow");
 		if (typeof callback === "function") {
@@ -492,13 +492,11 @@ function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) 
 	}),
 	attribList = [],
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : ""),
-	//idStr = PFUtils.getRepeatingIDStr(itemId),
+	//idStr = SWUtils.getRepeatingIDStr(itemId),
 	item_entry = 'repeating_ability_' + itemId + '_',
 	slaPrefix = item_entry , //'repeating_ability_' + idStr,
 	attributes = ["range_numeric","damage-macro-text","damage-type","abil-sr","savedc","save","abil-attack-type", "name"]
 	;
-	//the disabled ones never show up
-//		TAS.debug("at PFAbility creatattack entry ");
 	if(!itemId){
 		TAS.warn("Cannot create usable attack entry from SLA since we cannot identify the row id");
 	}
@@ -552,7 +550,7 @@ function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) 
 		}
 	});
 }
-function updateAssociatedAttack (id, callback, silently, eventInfo) {
+export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFAbility.updateAssociatedAttack");
 		if (typeof callback === "function") {
@@ -561,7 +559,7 @@ function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	}),
 	itemId = "", item_entry = "",attrib = "", attributes=[];
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-	item_entry = 'repeating_spells_' + PFUtils.getRepeatingIDStr(itemId);
+	item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
 	attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
 	attributes=[];
 	//TAS.debug("at PF Spell like abilities updateAssociatedAttack: for row" + id   );
@@ -615,7 +613,7 @@ function updateCharLevel (id,callback,eventInfo){
 			callback();
 		}
 	}),
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_ability_"+idStr;
 	getAttrs([prefix+"CL-misc-mod",prefix+"CL-basis-mod",prefix+"casterlevel",prefix+"ability_type","buff_CasterLevel-total", "CasterLevel-Penalty"],function(v){
 		var clBase=0,cl=0,misc=0,pen=0,isSP=0,setter={};
@@ -649,7 +647,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 			callback();
 		}
 	}),
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_ability_"+idStr;
 	getAttrs([prefix+"range_pick",prefix+"range",prefix+"range_numeric",prefix+"casterlevel",prefix+"ability_type"], function(v){
 		var  newRange=0,currRange=0,cl=0,setter={},isSP=0,currPosRange=0;
@@ -684,10 +682,10 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 	});
 }
 /** to use in calls to _.invoke or otherwise, sets switch variables to setter for given row
-* @param {jsobj} setter to pass in first var of setAttrs
-* @param {string} id the id of this row, or null if we are within the row context already
-* @param {jsobj} v the values needed returned by getAttrs
-*/
+ * @param {jsobj} setter to pass in first var of setAttrs
+ * @param {string} id the id of this row, or null if we are within the row context already
+ * @param {jsobj} v the values needed returned by getAttrs
+ */
 function resetOption (setter, id, v, eventInfo){
 	var idStr=SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_ability_'+idStr,
@@ -812,7 +810,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		});
 	});
 }
-function migrateRepeatingMacros (callback){
+export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAbility.migrateRepeatingMacros");
 		if (typeof callback === "function") {
@@ -847,7 +845,7 @@ function migrateRepeatingMacros (callback){
 		}
 	});
 }
-function migrate (callback){
+export function migrate (callback){
 	var done = function(){
 		TAS.debug("leaving PFAbility.migrate");
 		if (typeof callback === "function"){
@@ -856,7 +854,7 @@ function migrate (callback){
 	};
 	migrateRepeatingMacros(done);
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {

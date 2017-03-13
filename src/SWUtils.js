@@ -104,7 +104,7 @@ function convertKL1KH1toMinMax  (str) {
 *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
 *@param {function(Number)} callback a function taking one parameter - could be int or float
 */
-function evaluateExpression (exprStr, callback) {
+export function evaluateExpression (exprStr, callback) {
 	var bmatches1 = 0, bmatches2 = 0, pmatches1 = 0, pmatches2 = 0, smatches1 = 0, smatches2 = 0;
 	if (typeof callback !== "function") {
 		return;
@@ -442,21 +442,16 @@ export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback
 	getRowTotal(fields, bonus, penalties, totalIsFloat, function (newValue, currValue) {
 		var setter = {},
 		params = {};
-		try {
-			if (newValue !== currValue) {
-				setter[fields[0]] = newValue;
+		if (newValue !== currValue) {
+			setter[fields[0]] = newValue;
+		}
+		if (_.size(setter) > 0) {
+			if (silently) {
+				params.silent=true;
 			}
-		} catch (err) {
-			TAS.error("PFUtilsAsync.updateRowTotal", err);
-		} finally {
-			if (_.size(setter) > 0) {
-				if (silently) {
-					params.silent=true;
-				}
-				setAttrs(setter, params, done);
-			} else {
-				done();
-			}
+			setAttrs(setter, params, done);
+		} else {
+			done();
 		}
 	}, done);
 }

@@ -253,9 +253,9 @@ function updateCurrentLoad (callback, silently) {
     });
 }
 /* updateLoadsAndLift
-* updates the load and lift numbers
-*/
-function updateLoadsAndLift (callback, silently) {
+ * updates the load and lift numbers
+ */
+export function updateLoadsAndLift (callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -429,7 +429,7 @@ function updateLoadsAndLift (callback, silently) {
     });
 }
 /* updateModifiedSpeed
-* updates the modified speed and run values  */
+ * updates the modified speed and run values  */
 function updateModifiedSpeed  (callback) {
     var done = _.once(function () {
         if (typeof callback === "function") {

@@ -80,7 +80,7 @@ function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 	return "";
 }
 function updateRepeatingAddInMacro (id, eventInfo) {
-	var idStr = PFUtils.getRepeatingIDStr(id),
+	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
 	attackType = prefix + "attack-type",
 	tattackPlusNm = prefix + "toggle_attack_macro_insert",
@@ -138,7 +138,7 @@ function setAdvancedMacroCheckbox () {
 /********* REPEATING WEAPON FIELDSET *********/
 function setRepeatingWeaponInsertMacro (id, eventInfo) {
 	var done = function () { }, //updateRepeatingAddInMacro(id,eventInfo);},
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
 	attkTypeField = prefix + "attack-type";
 	getAttrs([attkTypeField], function (v) {
@@ -158,17 +158,17 @@ function setRepeatingWeaponInsertMacro (id, eventInfo) {
 	});
 }
 /* updateRepeatingWeaponAttack - calculates total-attack
-* also updates attk-effect-total-copy
-* @id {string} optional = id of row, if blank we are within the context of the row
-* @overrideAttr {string} optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
-* @overrideValue {number} optional = if overrideAttr then this should be a number usually int but it won't check
-*/
+ * also updates attk-effect-total-copy
+ * @id {string} optional = id of row, if blank we are within the context of the row
+ * @overrideAttr {string} optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
+ * @overrideValue {number} optional = if overrideAttr then this should be a number usually int but it won't check
+ */
 function updateRepeatingWeaponAttack (id, eventInfo) {
 	//is it faster to not do the idstr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
 	},
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	enhanceField = "repeating_weapon_" + idStr + "enhance",
 	mwkField = "repeating_weapon_" + idStr + "masterwork",
 	attkTypeModField = "repeating_weapon_" + idStr + "attack-type-mod",
@@ -196,7 +196,7 @@ function updateRepeatingWeaponDamage (id, eventInfo) {
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
 	},
-	idStr = PFUtils.getRepeatingIDStr(id),
+	idStr = SWUtils.getRepeatingIDStr(id),
 	maxname = "repeating_weapon_" + idStr + "damage-ability-max",
 	modname = "repeating_weapon_" + idStr + "damage-ability-mod",
 	totalDamageField = "repeating_weapon_" + idStr + "total-damage",
@@ -231,7 +231,7 @@ function updateRepeatingWeaponDamage (id, eventInfo) {
 	});
 }
 function updateRepeatingWeaponCrit (id, eventInfo) {
-	var idStr = PFUtils.getRepeatingIDStr(id),
+	var idStr = SWUtils.getRepeatingIDStr(id),
 	critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
 	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
 	attkTypeField = "repeating_weapon_" + idStr + "attack-type",
@@ -262,7 +262,7 @@ function updateRepeatingWeaponsFromCrit (attacktype, eventInfo) {
 	getSectionIDs("repeating_weapon", function (ids) {
 		var attrs = [globalCritBonusField];
 		_.each(ids, function (id) {
-			var idStr = PFUtils.getRepeatingIDStr(id);
+			var idStr = SWUtils.getRepeatingIDStr(id);
 			attrs.push("repeating_weapon_" + idStr + "crit_conf_mod");
 			attrs.push("repeating_weapon_" + idStr + "crit_confirm");
 			attrs.push("repeating_weapon_" + idStr + "attack-type");
@@ -272,7 +272,7 @@ function updateRepeatingWeaponsFromCrit (attacktype, eventInfo) {
 			var globalCritBonus = parseInt(v[globalCritBonusField], 10) || 0,
 			setter = {};
 			_.each(ids, function (id) {
-				var idStr = PFUtils.getRepeatingIDStr(id),
+				var idStr = SWUtils.getRepeatingIDStr(id),
 				attackTypeField = "repeating_weapon_" + idStr + "attack-type",
 				rowCritTotField = "",
 				rowCrit = 0,
@@ -299,7 +299,7 @@ function updateRepeatingWeaponsFromCrit (attacktype, eventInfo) {
 	});
 }
 function setRepeatingWeaponRangedFlag (id){
-	var idStr = PFUtils.getRepeatingIDStr(id),
+	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
 	attypeAttr=prefix+"attack-type",
 	isRangedAttr=prefix+"isranged";
@@ -373,7 +373,7 @@ function updateRepeatingWeaponDamages (callback) {
 }		
 
 /* this is faster than looping through the 3 parent lists */
-function updateAssociatedAttacksFromParents (callback){
+export function updateAssociatedAttacksFromParents (callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -478,7 +478,7 @@ function getRecalculatedAttack (id,v){
 			}
 		}
 	} catch (err){
-		TAS.error("PFAttacks.recalculateAttack for id " + id,err);
+		TAS.error("PFAttacks.getRecalculatedAttack for id " + id,err);
 	} finally {
 		return localsetter;
 	}
@@ -564,7 +564,7 @@ function recalculateRepeatingWeapons (callback){
 		});
 	});
 }
-function setNewDefaults (callback){
+export function setNewDefaults (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.setNewDefaults");
 		if(typeof callback === "function"){

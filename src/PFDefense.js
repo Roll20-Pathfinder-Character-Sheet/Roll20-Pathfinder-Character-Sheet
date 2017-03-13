@@ -1,21 +1,21 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
 
-var defenseDropdowns = {
+export var defenseDropdowns = {
     "AC-ability": "AC-ability-mod",
     "FF-ability": "FF-DEX",
     "CMD-ability1": "CMD-STR",
     "CMD-ability2": "CMD-DEX",
     "CMD-ability": "FF-CMD-DEX"
-},
-defenseLowerToMixed = {
+};
+var defenseLowerToMixed = {
     "ac-ability": "AC-ability",
     "ff-ability": "FF-ability",
     "cmd-ability1": "CMD-ability1",
@@ -41,7 +41,7 @@ events = {
  *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-function updateDefenses ( callback, silently, eventInfo) {
+export function updateDefenses ( callback, silently, eventInfo) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.updateDefenses");
         if (typeof callback === "function") {
@@ -272,7 +272,7 @@ function updateDefenses ( callback, silently, eventInfo) {
  *@param {object} the eventInfo object USED, this is checked for uncanny_dodge flag 
  *@param {boolean} doNotCallUpdateDefenseAfter if not set call updateDefenses after updating dropdown mod.
  */
-function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
+export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.setDefenseDropdownMod");
         if (typeof callback === "function") {
@@ -358,7 +358,7 @@ function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, do
  *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-function updateArmor (callback, silently, eventInfo) {
+export function updateArmor (callback, silently, eventInfo) {
     var done = function () { if (typeof callback === "function") { callback(); } },
     params = {};
     getAttrs(defenseArmorFields, function (v) {

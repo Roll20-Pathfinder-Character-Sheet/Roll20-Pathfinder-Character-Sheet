@@ -42,10 +42,10 @@ events = {
 
 /********* REPEATING WEAPON FIELDSET *********/
 /** getOptionText - resets entire macro options text for a repeating_weapon row
-*@param {string} prefix repeating_weapon_id_
-*@param {map} toggleValues map of ".showxxxx" where xxxx is what to display, already calculated for us
-*@param {map} rowValues output from getAttrs
-*/
+ *@param {string} prefix repeating_weapon_id_
+ *@param {map} toggleValues map of ".showxxxx" where xxxx is what to display, already calculated for us
+ *@param {map} rowValues output from getAttrs
+ */
 export function getOptionText  (prefix, toggleValues, rowValues) {
     var 
     attackType = PFUtils.findAbilityInString(rowValues[prefix + "attack-type"]),
@@ -72,7 +72,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
     return optionText;
 }
 /* resets one row of repeating_weapons
-* note this is almost exactly like resetOption suggesting there is a way to refactor these*/
+ * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
 export function resetOption (id, eventInfo, callback) {
     var done = _.once(function(){
         TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
@@ -80,7 +80,7 @@ export function resetOption (id, eventInfo, callback) {
             callback();
         }
     }),
-    prefix = "repeating_weapon_" + PFUtils.getRepeatingIDStr(id),
+    prefix = "repeating_weapon_" + SWUtils.getRepeatingIDStr(id),
     rowfields = _.map(repeatingOptionGetAttrs, function (attr) {
         return prefix + attr;
     }),
@@ -157,7 +157,6 @@ export function migrate (callback){
 export function recalculate  (callback) {
     resetOptions(callback);
 }
-
 function registerEventHandlers () {
     _.each(optionToggles, function (toggleField) {
         on("change:" + toggleField, TAS.callback(function toggleAttackNoteOption(eventInfo) {

@@ -32,10 +32,10 @@ var npcCompendiumAttributesPlayer = ["character_name", "type_compendium", "dr_co
 /* ******************************** PARSING ******************************** */
 
 /** returns number from a string, first looks at end of string, then beginning, then anywhere in middle
-* so it works with both compendium (number at end) and SRD ("init " number at beginning) or just a string number
-*@param {string} initstring from the compendium entry
-*@returns {int} the initiative modifier
-*/
+ * so it works with both compendium (number at end) and SRD ("init " number at beginning) or just a string number
+ *@param {string} initstring from the compendium entry
+ *@returns {int} the initiative modifier
+ */
 function getNPCInit (initstring) {
 	var numberInit;
 	if ((/[\-\+]{0,1}\d+$/).test(initstring)) {
@@ -53,9 +53,9 @@ function getNPCInit (initstring) {
 	return 0;
 }
 /**getAbilityAndMod- returns the number and mod for an ability
-* @param {string} numberAsString the ability score -a number in string form
-* @returns {base: number or '-', mod:number}
-*/
+ * @param {string} numberAsString the ability score -a number in string form
+ * @returns {base: number or '-', mod:number}
+ */
 function getAbilityAndMod (numberAsString) {
 	var base = parseInt(numberAsString, 10),
 	mod = 0;
@@ -78,11 +78,11 @@ function getAbilityAndMod (numberAsString) {
 	};
 }
 /** parseNPChp - parses statblock hp string such as 203 (14d10+126)
-* @param {string} hpstring - string format: "15 (3d8 + 2d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
-* @param {int} abilityMod: number representing ability score mod (normally CON-mod)
-* @returns {object} {hp:0,hdie1:0,hdice1:0,hdie2:0,hdice2:0,misc:0,heal:""}
-*  where hdie1 d hdice1 is racial, and 2 is class, can go up to n classes
-*/
+ * @param {string} hpstring - string format: "15 (3d8 + 2d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
+ * @param {int} abilityMod: number representing ability score mod (normally CON-mod)
+ * @returns {object} {hp:0,hdie1:0,hdice1:0,hdie2:0,hdice2:0,misc:0,heal:""}
+ *  where hdie1 d hdice1 is racial, and 2 is class, can go up to n classes
+ */
 function parseNPChp (hpstring, abilityMod) {
 	var newHP = 0,
 	plus = 0,
@@ -188,15 +188,15 @@ function parseNPChp (hpstring, abilityMod) {
 	return hparray;
 }
 /** parseNPCAC - parses AC string from statblock
-* @param {string} acstring - format: "24, Touch 24, Flat-footed 16 (+6 Deflection, +7 Dex, +1 Dodge, +1 Armor, +1 Shield, +1 Size, +6 Natural) some note can go here"
-* can start with "AC " or not.
-* if it doesn't add up then the bonus will be added to misc.
-* (others include: Luck, Sacred/Profane, Circumstance, Enhancement, Insight, Morale) - these ALL go to CMD too (and dodge, deflection).
-* @param {string} cmdStr string for cmd , just checks for a number in the string
-* @param {int} abilityMod - to apply, usually dex.
-* @param {int} sizeMod - ac mod due to size.
-* @returns {ac:10,touch:10,ff:10,armor:0,shield:0,deflect:0,dex:0,dodge:0,natural:0,misc:0,note:,size:0,acbuff:0,altability:""}
-*/
+ * @param {string} acstring - format: "24, Touch 24, Flat-footed 16 (+6 Deflection, +7 Dex, +1 Dodge, +1 Armor, +1 Shield, +1 Size, +6 Natural) some note can go here"
+ * can start with "AC " or not.
+ * if it doesn't add up then the bonus will be added to misc.
+ * (others include: Luck, Sacred/Profane, Circumstance, Enhancement, Insight, Morale) - these ALL go to CMD too (and dodge, deflection).
+ * @param {string} cmdStr string for cmd , just checks for a number in the string
+ * @param {int} abilityMod - to apply, usually dex.
+ * @param {int} sizeMod - ac mod due to size.
+ * @returns {ac:10,touch:10,ff:10,armor:0,shield:0,deflect:0,dex:0,dodge:0,natural:0,misc:0,note:,size:0,acbuff:0,altability:""}
+ */
 function parseNPCAC (acstring, cmdStr, abilityMod, sizeMod) {
 	var matches,
 	tempnum = 0,
@@ -356,9 +356,9 @@ function parseSpeed (speedstr) {
 	return retobj;
 }
 /* getAtkNameFromStr get names of an attack or special attack
-* { Name :(full str up to first parens) , abilityName (without pluses the base ability ), basename (ability name lower case no spces)}
-* for instance: Mwk Longsword +6/+1 would be : {name:Mwk longsword +6/+1, abilityName:Longsword, basename: longsword}
-*/
+ * { Name :(full str up to first parens) , abilityName (without pluses the base ability ), basename (ability name lower case no spces)}
+ * for instance: Mwk Longsword +6/+1 would be : {name:Mwk longsword +6/+1, abilityName:Longsword, basename: longsword}
+ */
 function getAtkNameFromStr (abilitystr) {
 	var matches = abilitystr.match(/^\s*([^\(]+)/),
 	name = '',
@@ -381,10 +381,10 @@ function getAtkNameFromStr (abilitystr) {
 	};
 }
 /*parseReach - parses reach string from compendium or statblock
-* returns the default reach, rest of the string (if any), and an array of exceptions and reaches if any.
-*  (for instance, diplodacus
-* @returns = {reach:number (5,10,15 etc), reachNotes:"rest of string", reachExceptions:[['Bite':10],['Claw':5]]}
-*/
+ * returns the default reach, rest of the string (if any), and an array of exceptions and reaches if any.
+ *  (for instance, diplodacus
+ * @returns = {reach:number (5,10,15 etc), reachNotes:"rest of string", reachExceptions:[['Bite':10],['Claw':5]]}
+ */
 function parseReach (reachStr) {
 	var numerator = 0,
 	denominator = 1,
@@ -497,9 +497,9 @@ function getCreatureClassSkills (creatureType) {
 	}
 }
 /*assignPrimarySecondary
-* to each attack in array, assigns attack.naturaltype='primary|secondary' and sometimes attack.dmgMult=1.5
-* returns attacks for chaining.
-*/
+ * to each attack in array, assigns attack.naturaltype='primary|secondary' and sometimes attack.dmgMult=1.5
+ * returns attacks for chaining.
+ */
 function assignPrimarySecondary (attacks) {
 	var attackGroups,
 	attacksToCheck = _.filter(attacks, function (attack) {
@@ -534,10 +534,10 @@ function assignPrimarySecondary (attacks) {
 	return attacks;
 }
 /*buildImportantFeatObj - saves feats that require updates to the sheet in an object, no spaces and all lowercase.
-* returns sub objects for feats that only apply to certain attacks, and a criticaldamage subobject.
-* for instance:::  obj.weaponfinesse=1 obj.criticaldamage.bleedingcritical:1 obj.longsword.weaponfocus:1
-* @returns object of feats   as  {featname:1,feat2name:1, attacks:{attack1name:{featname:1}}, criticaldamage:{featname:1}}
-*/
+ * returns sub objects for feats that only apply to certain attacks, and a criticaldamage subobject.
+ * for instance:::  obj.weaponfinesse=1 obj.criticaldamage.bleedingcritical:1 obj.longsword.weaponfocus:1
+ * @returns object of feats   as  {featname:1,feat2name:1, attacks:{attack1name:{featname:1}}, criticaldamage:{featname:1}}
+ */
 function buildImportantFeatObj (featlist) {
 	return _.chain(featlist)
 	.filter( function(feat){if (!feat) {return false;} return true;})
@@ -623,10 +623,10 @@ function buildImportantFeatObj (featlist) {
 	}, {}).value();
 }
 /* parseAttacks -parse atttack string one at a time, returns arrays grouped by full attacks
-* the name of the attack starts with Group 0, Group 1, etc.
-* @atktypestr "melee" or "ranged"
-* @returns array of {enh:0,mwk:0,name:"",atktype:"melee",type:"",countFullBAB:1,plus:"",plusamount:"",plustype:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0}
-*/
+ * the name of the attack starts with Group 0, Group 1, etc.
+ * @atktypestr "melee" or "ranged"
+ * @returns array of {enh:0,mwk:0,name:"",atktype:"melee",type:"",countFullBAB:1,plus:"",plusamount:"",plustype:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0}
+ */
 function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 	var matches, currpos = 0, name = "", iteratives, i = 0, tempInt = 0,
 		beforeBetweenAfterParens, bonus = "", origStr = atkstr, countspaces = 0,
@@ -1025,7 +1025,7 @@ function parseSkillRacialBonuses (racialstr) {
 			mod = parseInt(matches[1], 10) || 0;
 			modded = matches[2];
 			if (!_.contains(allCoreSkillsLower, modded.toLowerCase())) {
-				TAS.warn("does not match " + modded);
+				//TAS.warn("does not match " + modded);
 				// +8 Sleight of Hand
 				tempskill = _.find(skillsWithSpaces, function (skill) {
 					return modstrlower.indexOf(skill) >= 0;
@@ -1044,6 +1044,7 @@ function parseSkillRacialBonuses (racialstr) {
 				});
 				modded = temparray.join('-');
 				exceptionstr = exceptionstr.slice(tempskill.length - tempskill.indexOf(' ') + 1);
+				TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
 			}
 			if (exceptionstr) {
 				//entire thing is a "when" exception
@@ -1530,13 +1531,13 @@ function parseSLAs (spLAstr) {
 	}
 }
 /** parseSpells - parses spell string from compendium and returns js object
-*@param {string} spellstr the block of spells known text ex: "Sorcerer Spells Known (CL 8th)\r\n3rd (3/day)-Fireball (DC12)," etc
-*@returns {jsobject} {classname:"name",CL:#,concentration:#,
-* spells:{
-*	0:[{name:spellname,DC:#}],
-*   1:[{name:spellname},{name:spellname}]
-* }}
-*/
+ *@param {string} spellstr the block of spells known text ex: "Sorcerer Spells Known (CL 8th)\r\n3rd (3/day)-Fireball (DC12)," etc
+ *@returns {jsobject} {classname:"name",CL:#,concentration:#,
+ * spells:{
+ *	0:[{name:spellname,DC:#}],
+ *   1:[{name:spellname},{name:spellname}]
+ * }}
+ */
 function parseSpells (spellstr) {
 	var lines, spells = {};
 	spells.classLevel = -1;
@@ -1756,17 +1757,17 @@ function setCasterFields (setter, casterObj, classidx) {
 	}
 }
 /** createSpellEntries
-*@param {jsobject} setter - map to pass to setAttrs
-*@param {jsobject} spellObj obj like: {classname:"name",CL:#,concentration:#,
-*	spells:{
-*		0:[{name:spellname,DC:#}],
-*		1:[{name:spellname},{name:spellname}]
-*	}}
-*@param {?} casterObj ?
-*@param {?} section ?
-*@returns {jsobject} setter
-*/
-function createSpellEntries (setter, spellObj, casterObj, section) {
+ *@param {jsobject} setter - map to pass to setAttrs
+ *@param {jsobject} spellObj obj like: {classname:"name",CL:#,concentration:#,
+ *	spells:{
+ *		0:[{name:spellname,DC:#}],
+ *		1:[{name:spellname},{name:spellname}]
+ *	}}
+ *@param {?} casterObj ?
+ *@param {?} section ?
+ *@returns {jsobject} setter
+ */
+export function createSpellEntries (setter, spellObj, casterObj, section) {
 	section = section || 'spells';
 	setter = setter || {};
 	if (!spellObj || !casterObj) {
@@ -1813,7 +1814,7 @@ function createSpellEntries (setter, spellObj, casterObj, section) {
 	});
 	return setter;
 }
-function createSLAEntries (setter, slaObj, casterObj, section) {
+export function createSLAEntries (setter, slaObj, casterObj, section) {
 	var defaultLevel=0;
 	section = section || 'ability';
 	setter = setter || {};
@@ -1849,7 +1850,7 @@ function createSLAEntries (setter, slaObj, casterObj, section) {
 				if(setter['race']){
 					memo[prefix+"class-name"]=setter['race'];
 				}
-//					//TAS.debug"CREATE SLA casterObj.CL: " + casterObj.CL + ", level:" + setter.level + " when processing "+ SLA );
+				//TAS.debug"CREATE SLA casterObj.CL: " + casterObj.CL + ", level:" + setter.level + " when processing "+ SLA );
 				if(casterObj.CL){
 					tempint = setter.level||0;
 					if (tempint > 0){
@@ -1966,11 +1967,11 @@ function createSLAEntries (setter, slaObj, casterObj, section) {
 	return setter;
 }
 /*createAttacks - creates rows in repeating_weapon
-* @attacklist = array of {enh:0,name:"",type:"",countFullBAB:1,plus:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0};
-* @setter = the map to pass to setAttrs
-* @returns setterf
-*/
-function createAttacks (attacklist, setter, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches, sizeMap) {
+ * @attacklist = array of {enh:0,name:"",type:"",countFullBAB:1,plus:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0};
+ * @setter = the map to pass to setAttrs
+ * @returns setterf
+ */
+export function createAttacks (attacklist, setter, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches, sizeMap) {
 	setter = setter || {};
 	if (!attacklist || _.size(attacklist)===0) {
 		return setter;
@@ -2158,7 +2159,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 	//TAS.debug("end of create attacks returning:", setter);
 	return setter;
 }
-function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, bab) {
+export function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, bab) {
 	var acAbility = "DEX",
 	acDexDef = abilityScores.dex.mod,
 	calcCMD=0,
@@ -2247,7 +2248,7 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		return setter;
 	}
 }
-function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, isUndead) {
+export function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, isUndead) {
 	var npcSkillsWithFillInNames = ["Craft", "Perform", "Profession"],
 	craftLevel = -1, performLevel = -1, professionLevel = -1, runningTot = 0, counter = 0,
 	tempAbilities = PFSkills.coreSkillAbilityDefaults,
@@ -2354,7 +2355,7 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 		return setter;
 	}
 }
-function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
+export function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 	var initMisc = 0;
 	try {
 		initMisc = baseInit - abilityScores.dex.mod;
@@ -2368,7 +2369,7 @@ function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 		return setter;
 	}
 }
-function createHPAbilityModEntry (setter, abilityScores, isUndead) {
+export function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 	try {
 		if (isUndead || abilityScores.con.base === "-") {
 			setter["HP-ability"] = "@{CHA-mod}";
@@ -2380,7 +2381,7 @@ function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 		return setter;
 	}
 }
-function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
+export function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
 	var currlevel=0;
 	try {
 		setter["npc-hd-num"] = hpMap.hdice1;
@@ -2408,7 +2409,7 @@ function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
 		return setter;
 	}
 }
-function createSpeedEntries (setter, speedMap, importantFeats) {
+export function createSpeedEntries (setter, speedMap, importantFeats) {
 	var tempstr = "";
 	try {
 		_.each(speedMap, function (speed, stype) {
@@ -2450,7 +2451,7 @@ function createSpeedEntries (setter, speedMap, importantFeats) {
 		return setter;
 	}
 }
-function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
+export function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 	var fortMisc,
 	refMisc,
 	willMisc,
@@ -2502,7 +2503,7 @@ function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 		return setter;
 	}
 }
-function createAbilityScoreEntries (setter, abilityScores) {
+export function createAbilityScoreEntries (setter, abilityScores) {
 	try {
 		setter["STR-base"] = abilityScores.str.base;
 		setter["DEX-base"] = abilityScores.dex.base;
@@ -2617,8 +2618,8 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 	}
 }
 /*createFeatEntries
-*@returns setter */
-function createFeatEntries (setter, featlist) {
+ *@returns setter */
+export function createFeatEntries (setter, featlist) {
 	return _.reduce(featlist, function (memo, feat) {
 		var newRowId = generateRowID(),
 		prefix="repeating_ability_"+newRowId+"_";
@@ -2637,8 +2638,8 @@ function createFeatEntries (setter, featlist) {
 	}, setter);
 }
 /*createFeatureEntries
-*@returns setter */
-function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
+ *@returns setter */
+export function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
 	var attrs = {}, creatureRace = "", tempint=0,dc=0,abilityMod=0,charlevel=0,calcDC=0;
 	try {
 		//TAS.debug("at createFeatureEntries:", abilitylist);
@@ -2776,11 +2777,11 @@ function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
 	}
 }
 /** appends values of objects in sa2 to sa1 if name already exists in sa1
-* by reference
-* @param {Array} sa1 Array of {} js objects:list of special abilities maps. Must have 'name' property to compare
-* @param {Array} sa2 Array of {} js objects:list of special abilities maps. Must have 'name' property to compare
-* @returns {Array} sa2 concatenated with sa2, for any duplicates, we add properties from the sa2 version to sa1, but do not overwrite.
-*/
+ * by reference
+ * @param {Array} sa1 Array of {} js objects:list of special abilities maps. Must have 'name' property to compare
+ * @param {Array} sa2 Array of {} js objects:list of special abilities maps. Must have 'name' property to compare
+ * @returns {Array} sa2 concatenated with sa2, for any duplicates, we add properties from the sa2 version to sa1, but do not overwrite.
+ */
 function combineSpecialAbilities (sa1, sa2) {
 	var combined;
 	combined = _.map(sa1, function ( sa) {
@@ -2815,7 +2816,7 @@ function combineSpecialAbilities (sa1, sa2) {
 	combined = _.union(combined, sa2);
 	return combined;
 }
-function createClassEntries (setter, characterClass) {
+export function createClassEntries (setter, characterClass) {
 	var sumlvls =0, currlvls = 0,i=0,startidx=0,alreadyPresent=false;
 	try {
 		if (characterClass.CL && characterClass.classname){
@@ -2849,7 +2850,7 @@ function createClassEntries (setter, characterClass) {
 
 /**************************** THE BIG ONE ***********************/
 /*importFromCompendium - imports all stuff*/
-function importFromCompendium (eventInfo, callback, errorCallback) {
+export function importFromCompendium (eventInfo, callback, errorCallback) {
 	var done = _.once(function(){
 		TAS.info("##############################################");
 		TAS.info("Leaving importFromCompendium");
@@ -3050,7 +3051,7 @@ function importFromCompendium (eventInfo, callback, errorCallback) {
 					setter = createSLAEntries(setter, SLAs, casterObj);
 				}
 			}
-//TAS.debug("before parsing special abilities are:", specialAbilities);
+			//TAS.debug("before parsing special abilities are:", specialAbilities);
 			// content and special abilities ***************************
 			if (v.content_compendium) {
 				//TAS.debug("before parseSpecialAbilities attrnum:"+_.size(setter));

@@ -4,9 +4,9 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as PFUtils  from './PFUtils';
 /* PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
-* Reads in condition that affect Ability and Skill checks and updates condition fields.
-* checks-cond, Phys-skills-cond, Perception-cond.
-*/
+ * Reads in condition that affect Ability and Skill checks and updates condition fields.
+ * checks-cond, Phys-skills-cond, Perception-cond.
+ */
 export function applyConditions (callback, silently) {
 	var done = function () {
 		if (typeof callback === "function") {

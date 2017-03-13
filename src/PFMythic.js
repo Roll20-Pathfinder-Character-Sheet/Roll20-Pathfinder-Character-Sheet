@@ -74,7 +74,12 @@ function updateTierMythicPower (callback, silently) {
 		}
 	});
 }
-function recalculate (callback, silently, oldversion) {
+export function migrate (callback){
+	if (typeof callback === "function"){
+		callback();
+	}
+}
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("Leaving PFMythic.recalculate");
 		if (typeof callback === "function") {

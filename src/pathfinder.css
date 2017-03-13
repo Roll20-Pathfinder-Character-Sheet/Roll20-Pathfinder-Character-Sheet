@@ -611,7 +611,7 @@ also need 1 more level in selector or base css will override border */
 }
 .sheet-linked-custom-roll textarea,
 .sheet-linked-custom-roll .sheet-inline-textarea {
-	display:inline;
+/*	display:inline;*/
 }
 
 .sheet-linked-custom-wideinputs .sheet-divider-db,
@@ -1925,6 +1925,7 @@ button[type="roll"].sheet-blank-roll-button::before {
 }
 .sheet-nontable-repeating .sheet-options span input[type="checkbox"] {
     margin-left: .5em;
+    margin-bottom: .25em;
 }
 .sheet-section-condbuffedit {
     margin-bottom: .25rem;
@@ -2084,9 +2085,10 @@ input.sheet-highlight[readonly]
 .sheet-repeating-id .sheet-small-label2 span.sheet-selectable  {
 	border:1pt solid lightgrey;
 }
+/*not necessary?
 .sheet-small-label2 > * {
     max-width: 100%;
-}
+}*/
 .sheet-small-label2 > input,
 .sheet-small-label2 > select,
 .sheet-small-label2 > .sheet-calc {
@@ -2103,23 +2105,18 @@ input.sheet-highlight[readonly]
 .sheet-small-label2 input::-moz-focus-inner {
     padding: 0;
 }
-/* chrome displays checkbox height incorrectly and all the way to the left because  1.825em throws it off */
 
+/* webkit (chrome) needs different css firefox centers perfectly, not chrome.must make it equal to 1.825 */
 .sheet-small-label2 > input[type="checkbox"],
 .sheet-small-label2 > input[type="radio"] {
-    -webkit-logical-height: initial;
-    -webkit-margin-before: .8em;
+    -webkit-logical-height: 1em;
+    -webkit-margin-before: .5em;
+    -webkit-margin-after: .325em;
     width: 100%;
 	border: none;
 	box-shadow: none;
-	margin-top: .5em;
-	margin-bottom: .5em;
 }
-.sheet-table-cell > input[type="checkbox"], 
-.sheet-table-cell > input[type="radio"]{
-	height: 1.5em;
-	margin-top: .25em;
-}
+
 .sheet-hit-points {
     width: calc(30% - 4px);
     display: inline-block;

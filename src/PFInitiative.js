@@ -5,7 +5,7 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 
 /* updateInitiative * updates the init*/
-function updateInitiative (callback, silently) {
+export function updateInitiative (callback, silently) {
 	getAttrs(['nodex-toggle'],function(v){
 		if (parseInt(v['nodex-toggle'],10)) {
 			//if lose dex then lose ability mod no matter what ability it is, since init is a dex check:
@@ -16,7 +16,7 @@ function updateInitiative (callback, silently) {
 		}
 	});
 }
-function recalculate (callback, silently, oldversion) {
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFInitiative.recalculate");
 		if (typeof callback === "function") {

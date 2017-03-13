@@ -6,7 +6,7 @@ import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFMigrate from './PFMigrate';
 
-var attackGridFields = {
+export var attackGridFields = {
     "melee": {
         "size": "size",
         "atk": "attk-melee",
@@ -67,8 +67,8 @@ var attackGridFields = {
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
         "damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
     }
-},
-attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
+};
+var attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
 attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
 attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields);
 
@@ -76,14 +76,14 @@ attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields);
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  */
-function updateDamage (callback, silently) {
+export function updateDamage (callback, silently) {
     SWUtils.updateRowTotal(["DMG-mod", "buff_DMG-total"], 0, ["condition-Sickened"], false, callback, silently);
 }
 /** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
-*@param {function} callback optional call when done
-*@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
-*@param {eventInfo} eventInfo unused eventInfo from on method
-*/
+ *@param {function} callback optional call when done
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ *@param {eventInfo} eventInfo unused eventInfo from on method
+ */
 export function applyConditions  (callback, silently, eventInfo) {
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -93,13 +93,13 @@ export function applyConditions  (callback, silently, eventInfo) {
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
 }
 /** updateAttack - updates one row of attack grid (left most column in grid)
-* Updates the attack type totals at top of attack page for one row of grid
-* @param {string} attype = key for attackGridFields to indicate which row from attack grid
-* @param {eventInfo } eventInfo unused
-* @param {function} callback optional call when done
-* @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
-*/
-function updateAttack  (attype, eventInfo, callback, silently) {
+ * Updates the attack type totals at top of attack page for one row of grid
+ * @param {string} attype = key for attackGridFields to indicate which row from attack grid
+ * @param {eventInfo } eventInfo unused
+ * @param {function} callback optional call when done
+ * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ */
+export function updateAttack  (attype, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -114,7 +114,6 @@ function updateAttack  (attype, eventInfo, callback, silently) {
         done();
     }
 }
-
 export function resetCommandMacro  (eventInfo, callback) {
     var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
     baseAttacks = "{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|REPLACENPCMelee-Attack-Roll) [^{ranged}](~@{character_id}|REPLACENPCRanged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|REPLACENPCCMB-Check) [^{melee2}](~@{character_id}|REPLACENPCMelee2-Attack-Roll) REPLACE}}",
@@ -309,7 +308,6 @@ export function resetCommandMacro  (eventInfo, callback) {
         });
     });
 }
-
 export function migrate (callback, oldversion){
     var done = function () {
         TAS.debug("leaving PFAttackGrid.migrate");
@@ -321,10 +319,10 @@ export function migrate (callback, oldversion){
     done();
 }
 /** recalculates all write-to fields in module 
-* @param {function} callback optional call when done
-* @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
-* @param {number} oldversion the version upgrading from 
-*/
+ * @param {function} callback optional call when done
+ * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ * @param {number} oldversion the version upgrading from 
+ */
 export function recalculate  (callback, silently, oldversion) {
     var done = function () {
         TAS.debug("leaving PFAttackGrid.recalculate");
@@ -345,7 +343,6 @@ export function recalculate  (callback, silently, oldversion) {
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
 }
-
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {

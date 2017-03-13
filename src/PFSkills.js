@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
@@ -10,9 +10,9 @@ import * as PFMigrate from './PFMigrate';
 import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFAbilityScores from './PFAbilityScores';
 
-var regularCoreSkills = ["Appraise", "Acrobatics", "Bluff", "Climb", "Diplomacy", "Disable-Device", "Disguise", "Escape-Artist", "Fly", "Handle-Animal", "Heal", "Intimidate", "Linguistics", "Perception", "Ride", "Sense-Motive", "Sleight-of-Hand", "Spellcraft", "Stealth", "Survival", "Swim", "Use-Magic-Device"],
+export var regularCoreSkills = ["Appraise", "Acrobatics", "Bluff", "Climb", "Diplomacy", "Disable-Device", "Disguise", "Escape-Artist", "Fly", "Handle-Animal", "Heal", "Intimidate", "Linguistics", "Perception", "Ride", "Sense-Motive", "Sleight-of-Hand", "Spellcraft", "Stealth", "Survival", "Swim", "Use-Magic-Device"],
 regularBackgroundSkills = ["Appraise", "Handle-Animal", "Linguistics", "Sleight-of-Hand"],
-regularAdventureSkills = ["Acrobatics", "Bluff", "Climb", "Diplomacy", "Disable-Device", "Disguise", "Escape-Artist", "Fly", "Heal", "Intimidate", "Perception", "Ride", "Sense-Motive", "Sleight-of-Hand", "Spellcraft", "Stealth", "Survival", "Swim", "Use-Magic-Device"],
+regularAdventureSkills = ["Acrobatics", "Bluff", "Climb", "Diplomacy", "Disable-Device", "Disguise", "Escape-Artist", "Fly", "Heal", "Intimidate", "Perception", "Ride", "Sense-Motive", "Spellcraft", "Stealth", "Survival", "Swim", "Use-Magic-Device"],
 regularBackgroundSkillsPlusKnow = regularBackgroundSkills.concat(["Knowledge-Engineering", "Knowledge-Geography", "Knowledge-History", "Knowledge-Nobility"]).sort(),
 regularAdventurePlusKnow = regularAdventureSkills.concat(["Knowledge-Arcana", "Knowledge-Dungeoneering", "Knowledge-Local", "Knowledge-Nature", "Knowledge-Planes", "Knowledge-Religion"]).sort(),
 //number that is appended to 10 versions of skills with subskills.
@@ -165,11 +165,11 @@ function migrateMacros (callback){
 }
 
 /**appendToSubSkills - util to append the string to all 10 names of one type of skill (perform, craft, knowledge, etc)
-* adds the numbers from 0-9 or 1-10 or knowledge, then appends the string , to generate all 10 versions.
-* @param {string} skilllist The name of the skill in, member of skillsWithSubSkills
-* @param {string} appendToEnd The string to append.
-* @returns {Array[string]} array of skill names
-*/
+ * adds the numbers from 0-9 or 1-10 or knowledge, then appends the string , to generate all 10 versions.
+ * @param {string} skilllist The name of the skill in, member of skillsWithSubSkills
+ * @param {string} appendToEnd The string to append.
+ * @returns {Array[string]} array of skill names
+ */
 function appendToSubSkills (skilllist, appendToEnd) {
 	return _.reduce(skilllist, function (memo, skill) {
 		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
@@ -178,10 +178,10 @@ function appendToSubSkills (skilllist, appendToEnd) {
 	}, []);
 }
 /* updateMaxSkills Calculates and sets maximum skill ranks. Minimum 1 per level.
-*  divides by 2 if using consolidated skills
-* @param {event} eventInfo - from event 
-* @callback {function} - callback when done
-*/
+ *  divides by 2 if using consolidated skills
+ * @param {event} eventInfo - from event 
+ * @callback {function} - callback when done
+ */
 function updateMaxSkills (eventInfo, callback) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
@@ -253,10 +253,10 @@ function updateMaxSkills (eventInfo, callback) {
 	});
 }
 /** verifyHasSkill - Checks to see if skill is in list of valid skills for this character (consolidated, background, core).
-* @param {string} skill = the skill name
-* @param {function} callback = a function that takes a a boolean as a first parameter.
-*   called with true if skill is part of valid list, or false if not.
-*/
+ * @param {string} skill = the skill name
+ * @param {function} callback = a function that takes a a boolean as a first parameter.
+ *   called with true if skill is part of valid list, or false if not.
+ */
 function verifyHasSkill (skill, callback) {
 	var first3 = '',
 		first4 = '',
@@ -308,10 +308,10 @@ function verifyHasSkill (skill, callback) {
 	}
 }
 /** updates one  skill row
-* @param {string} skill to update, must have same capitalization as on HTML
-* @param {function} callback = callback after done with params newvalue, oldvalue.
-* @param {boolean} silently = whether to update silently or not. ignored, always silent.
-*/
+ * @param {string} skill to update, must have same capitalization as on HTML
+ * @param {function} callback = callback after done with params newvalue, oldvalue.
+ * @param {boolean} silently = whether to update silently or not. ignored, always silent.
+ */
 function updateSkill (skill, callback, silently) {
 	var done = function (newVal, oldVal) {
 		if (typeof callback === "function") {
@@ -415,10 +415,10 @@ function updateSkill (skill, callback, silently) {
 	});
 }
 /**recalculateSkillDropdowns recalculates ability dropdowns for all skills in list silently
-* @param {Array} skills list of skills
-* @param {function} callback callback when done
-* @param {function} errorCallback callback if error encountered creating field list to get.
-*/
+ * @param {Array} skills list of skills
+ * @param {function} callback callback when done
+ * @param {function} errorCallback callback if error encountered creating field list to get.
+ */
 function recalculateSkillDropdowns (skills, callback, errorCallback) {
 	var doneDrop = _.once(function () {
 		TAS.debug("Leaving PFSkills.recalculateSkillDropdowns");
@@ -493,11 +493,11 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
 	});
 }
 /** recalculateSkillArray recalculates skills first dropdown, then misc mod, then skill total.
-* calls updateSkill for each. Does all dropdowns at once since they are easy to merge into one.
-* @param {Array} skills array of skills to update.
-* @param {function} callback when done
-* @param {boolean} silently whether to call setAttrs of skill total with silent or not.
-*/
+ * calls updateSkill for each. Does all dropdowns at once since they are easy to merge into one.
+ * @param {Array} skills array of skills to update.
+ * @param {function} callback when done
+ * @param {boolean} silently whether to call setAttrs of skill total with silent or not.
+ */
 function recalculateSkillArray (skills, callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
@@ -551,13 +551,13 @@ function recalculateSkills (callback, silently) {
 	});
 }
 /** updates the macros for only the 7 subskill rolltemplates 
-* @param {boolean} background -if background skills turned on
-* @param {boolean} rt - if Enforce Requires Training checked 
-* @param {event} eventInfo ?
-* @param {jsobject_map} currMacros map of parent skill button name to command macro. (knowledge, Perform, etc)
-* @param {boolean} isNPC - if sheet is NPC
-* @param {boolean} showBonus - if skill total should be displayed on button.
-*/
+ * @param {boolean} background -if background skills turned on
+ * @param {boolean} rt - if Enforce Requires Training checked 
+ * @param {event} eventInfo ?
+ * @param {jsobject_map} currMacros map of parent skill button name to command macro. (knowledge, Perform, etc)
+ * @param {boolean} isNPC - if sheet is NPC
+ * @param {boolean} showBonus - if skill total should be displayed on button.
+ */
 function updateSubSkillMacroBook (background, rt, eventInfo, currMacros, isNPC, showBonus) {
 	var headerString = isNPC ? npcSkillHeaderMacro : skillHeaderMacro,
 	skillPrefix = isNPC ? "NPC-" : "",
@@ -849,9 +849,9 @@ export function applyConditions (callback,silently,eventInfo){
 	});
 }
 /** migrate skills
-* @param {function} callback callback when done
-* @param {number} oldversion old version , -1 if hit recalc
-*/
+ * @param {function} callback callback when done
+ * @param {number} oldversion old version , -1 if hit recalc
+ */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFSkills.migrate");
@@ -873,20 +873,11 @@ export function migrate (callback, oldversion) {
 		migrateClassSkill = function (skill) {
 			var csNm = skill + "-cs";
 			getAttrs([csNm], function (v) {
-				var cs = 0,
-				setter = {};
-				cs = parseInt(v[csNm], 10);
-				if (isNaN(cs)) {
-					if (v[csNm] == "0") {
-						cs = 0;
-					} else if (v[csNm] && (parseInt(v[csNm], 10) || 0) !== 3) {
-						cs = 3;
-					} else if (!v[csNm]) {
-						cs = 0;
-					}
-					if (cs === 3) {
+				var setter = {};
+				if (isNaN(parseInt(v[csNm], 10))) {
+					if (! (!v[csNm] || v[csNm] == "0") ) {
 						//TAS.debug({"function":"migrateClassSkill","raw":v[csNm],"cs":cs});
-						setter[csNm] = cs;
+						setter[csNm] = 3;
 						setAttrs(setter, PFConst.silentParams);
 					}
 				}
@@ -926,7 +917,7 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	};
-	TAS.debug("at PFSkills.migrate");
+	//TAS.debug("at PFSkills.migrate");
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);

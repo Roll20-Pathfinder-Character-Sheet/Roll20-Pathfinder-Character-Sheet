@@ -297,7 +297,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 		done();
 	}
 }
-function migrate (oldversion, callback, errorCallback) {
+export function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
@@ -476,7 +476,7 @@ function recalculateCore (callback, silently, oldversion) {
 *@param {function} callback when done if no errors
 *@param {function} errorCallback  call this if we get an error
 */
-function recalculate (oldversion, callback, silently) {
+export function recalculate (oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
@@ -624,7 +624,7 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			getAttrs(['npc_import_now'], function (v) {
 				if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
-					PFNPCParser.importNPC(eventInfo, function(){
+					PFNPCParser.importFromCompendium(eventInfo, function(){
 						//instead of just calling recalculate set recalc button and call checkforupdate
 						//so users sees something is happening.
 						setAttrs({recalc1:1},PFConst.silentParams,function(){

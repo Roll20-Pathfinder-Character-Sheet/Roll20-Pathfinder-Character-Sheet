@@ -8,8 +8,8 @@ import * as PFUtils  from './PFUtils';
 import * as PFMacros from './PFMacros';
 import * as PFMenus from './PFMenus';
 
-var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'],
-baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
+export var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'];
+var baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
 otherCommandMacros = {
 	'class-ability':" [^{original-class-features-list}](~@{character_id}|class-ability_button)",
 	'mythic':" [^{mythic-abilities}](~@{character_id}|mythic-ability_button) [^{mythic-feats}](~@{character_id}|mythic-feat_button)",
@@ -101,9 +101,9 @@ events = {
 };
 
 /** resetTopCommandMacro sets orig_ability_header_macro  (macro to plug into pf_block, read by PFAbility.resetCommandMacro)
-*@param {function} callback call when done	
-*/
-function resetTopCommandMacro (callback){
+ *@param {function} callback call when done	
+ */
+export function resetTopCommandMacro (callback){
 	var done = _.once(function () {
 		TAS.debug("leaving PFFeatures.resetTopCommandMacro");
 		if (typeof callback === "function") {
@@ -175,8 +175,8 @@ function resetTopCommandMacro (callback){
 	});
 }
 /** resets the chat menu macro for all repeating lists in abilities tab
-*@param {function} callback call when done
-*/
+ *@param {function} callback call when done
+ */
 export function resetCommandMacro (callback){
 	var done = _.once(function () {
 		TAS.debug("leaving PFFeatures.resetCommandMacro");
@@ -247,13 +247,13 @@ export function resetCommandMacro (callback){
 	});
 }
 /** recalculateRepeatingMaxUsed - Parses the macro text "...max-calculation" in the repeating items
-* (such as class-abilities, feats, traits, racial-traits)
-* and sets the used|max value.
-* Loops through all rows in the given repeating section.
-* @param {string} section= the name of the section after the word "repeating_"
-* @param {function} callback when done
-* @param {boolean} silently if T then call setAttrs with {silent:true}
-*/
+ * (such as class-abilities, feats, traits, racial-traits)
+ * and sets the used|max value.
+ * Loops through all rows in the given repeating section.
+ * @param {string} section= the name of the section after the word "repeating_"
+ * @param {function} callback when done
+ * @param {boolean} silently if T then call setAttrs with {silent:true}
+ */
 function recalculateRepeatingMaxUsed (section, callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
@@ -273,7 +273,7 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 		}
 	});
 }
-function setNewDefaults (callback,section){
+export function setNewDefaults (callback,section){
 	var done = _.once(function(){
 		TAS.debug("leaving PFFeatures.setNewDefaults");
 		if(typeof callback === "function"){
@@ -320,7 +320,7 @@ function setNewDefaults (callback,section){
 		}
 	});
 }
-function migrateRepeatingMacros (callback){
+export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
 		if (typeof callback === "function") {

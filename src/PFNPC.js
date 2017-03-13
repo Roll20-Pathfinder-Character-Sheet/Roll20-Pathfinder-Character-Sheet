@@ -25,12 +25,15 @@ function setToNPC (callback,eventInfo){
 		}
 	});
 }
-function recalculate (callback, silently, oldversion) {
+export function migrate (callback){
+	PFMigrate.migrateNPC(callback);
+}
+export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFNPC.recalculate");
 		if (typeof callback === "function") { callback(); }
 	});
-	PFMigrate.migrateNPC(done,silently);
+	migrate(done);
 }
 function registerEventHandlers () {
 	on("change:is_npc", TAS.callback(function eventSetIsNPCFlag(eventInfo) {

@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import {PFLog,PFConsole} from './PFLog';
+import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
@@ -87,10 +87,10 @@ var oldSpellUserFieldDefaults = {
 };
 
 /** breaks the damage dropdown into 2 dropdowns, one for the multiplier and one for the attribute
-* done as part of migration to .60
-*@param {Array} ids array of strings which are the row ids
-*@param {function} callback when done
-*/
+ * done as part of migration to .60
+ *@param {Array} ids array of strings which are the row ids
+ *@param {function} callback when done
+ */
 export function migrateRepeatingDamage (ids,callback) {
     var done=_.once(function(){
         if (typeof callback === "function") {
@@ -172,8 +172,8 @@ export function migrateRepeatingDamage (ids,callback) {
     });
 }
 /** sets old dropdown  max dex and acp values to new ones for Magik's updates. 
-* because old values were so different, new values are set to either "none" or "armor and load"
-*/
+ * because old values were so different, new values are set to either "none" or "armor and load"
+ */
 export function migrateMaxDexAndACP () {
     getAttrs(["max-dex-source"], function (v) {
         var newMaxDex = 0,
@@ -185,7 +185,7 @@ export function migrateMaxDexAndACP () {
     });
 }
 /** updates repeating_spells ranges from text to dropdown and custom text field, and range number 
-* @param {function} callback call after finishing */
+ * @param {function} callback call after finishing */
 export function migrateSpellRanges (callback) {
     var done = function () {
         if (typeof callback === "function") {
@@ -201,7 +201,7 @@ export function migrateSpellRanges (callback) {
         getSectionIDs("repeating_spells", function (ids) {
             var fields = [];
             fields = _.reduce(ids, function (memo, id) {
-                var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                 row = _.map(rangeFields, function (field) {
                     return prefix + field;
                 });
@@ -210,7 +210,7 @@ export function migrateSpellRanges (callback) {
             getAttrs(fields, function (v) {
                 var setter = {};
                 _.each(ids, function (id) {
-                    var prefix = "repeating_spells_" + PFUtils.getRepeatingIDStr(id),
+                    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                     casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 1,
                     chosenRange = v[prefix + "range_pick"],
                     rangeText = v[prefix + "range"] || "",
@@ -254,10 +254,10 @@ export function migrateSpellRanges (callback) {
     });
 }
 /** copies spells from repeating-lvl-*-spells and npc spells to repeating_spells 
-* there are bugs in this, but it's so old we never were able to find them all and fix them. 
-* @param {function} callback call when done
-* @param {boolean} silently if true call setAttrs with PFConst.silentParams 
-*/
+ * there are bugs in this, but it's so old we never were able to find them all and fix them. 
+ * @param {function} callback call when done
+ * @param {boolean} silently if true call setAttrs with PFConst.silentParams 
+ */
 export function migrateSpells (callback) {
     var done = function () {
         if (typeof callback === "function") {
@@ -302,7 +302,7 @@ export function migrateSpells (callback) {
         if (section.indexOf("lvl") !== 0 && section.indexOf("npc") !== 0) {
             return;
         }
-        var idStr = PFUtils.getRepeatingIDStr(id),
+        var idStr = SWUtils.getRepeatingIDStr(id),
         isNPC = section.indexOf("npc") >= 0 ? 1 : 0,
         prefix = "repeating_" + section + "_" + idStr,
         spellclassField = prefix + "spellclass",
@@ -661,15 +661,15 @@ export function migrateRollTemplateImages () {
     });
 }
 /**addNumberToMacro adds the value to the end of the macro string. 
-* so the evaluated value of the returned string equals macroVal + miscVal
-* either "macroText + miscVal" or "macroText - miscVal"
-* This is for conversions only, if we are removing the miscfield. it is pretty useless otherwise.
-*@param {string} macroText the text of the macro to add to. if it is wrapped in [[ ]] make sure to remove that before passing macro in or it will be added outside of the brackets!
-*@param {int} macroVal the value the macro currently evaluates to.
-*@param {string} miscMacroText text of 2nd macro to add to macroText if there is one
-*@param {int} miscVal the value we are adding to macroText , it is value of miscMacroText if there is a macro
-*@returns {string} the resulting new macro text
-*/
+ * so the evaluated value of the returned string equals macroVal + miscVal
+ * either "macroText + miscVal" or "macroText - miscVal"
+ * This is for conversions only, if we are removing the miscfield. it is pretty useless otherwise.
+ *@param {string} macroText the text of the macro to add to. if it is wrapped in [[ ]] make sure to remove that before passing macro in or it will be added outside of the brackets!
+ *@param {int} macroVal the value the macro currently evaluates to.
+ *@param {string} miscMacroText text of 2nd macro to add to macroText if there is one
+ *@param {int} miscVal the value we are adding to macroText , it is value of miscMacroText if there is a macro
+ *@returns {string} the resulting new macro text
+ */
 export function addNumberToMacro (macroText, macroVal, miscMacroText, miscVal){
     //TAS.debug("at addNumberToMacro:" );
     macroText=macroText||"";
@@ -696,15 +696,15 @@ export function addNumberToMacro (macroText, macroVal, miscMacroText, miscVal){
     return {  'macroText':macroText, 'macroVal':macroVal};
 }
 /** adds the value to the end of the macro string. either "macro + miscVal" or "macro - miscVal"
-* saves new macro to the sheet
-*@param {function} callback call when done
-*@param {migrateFlag} the sheet attribute to check, if 1 do nothing, if 1 then perform migration then set to 1
-*@param {string} macroAttr the attribute name of macro we will update
-*@param {string} modAttr the attribute name containing the # evaluated from macroAttr
-*@param {string} miscMacroAttr the attribute name of macro to remove and whose value to add to macroAttr
-*@param {string} miscAttr the attribute name of a number field, standalone if macroAttr is null, or it is the 
+ * saves new macro to the sheet
+ *@param {function} callback call when done
+ *@param {migrateFlag} the sheet attribute to check, if 1 do nothing, if 1 then perform migration then set to 1
+ *@param {string} macroAttr the attribute name of macro we will update
+ *@param {string} modAttr the attribute name containing the # evaluated from macroAttr
+ *@param {string} miscMacroAttr the attribute name of macro to remove and whose value to add to macroAttr
+ *@param {string} miscAttr the attribute name of a number field, standalone if macroAttr is null, or it is the 
             field containing evaluted number of miscMacroAttr
-*/
+ */
 export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,miscMacroAttr,miscAttr) {
     var done=_.once(function(){
         //TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
@@ -749,24 +749,24 @@ export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,
     });
 }
 /**migrateHPMisc copies HP-misc into HP-formula-macro-text and HP-formula-mod 
-* This modifies the same fields aas migrateNPC so make sure to call them in sequence not at the same time!
-*@param {function} callback when done.
-*/
+ * This modifies the same fields aas migrateNPC so make sure to call them in sequence not at the same time!
+ *@param {function} callback when done.
+ */
 export function migrateHPMisc(callback){
     //TAS.debug("at migrateHPMisc");
     migrateMoveIntIntoMacro(callback,"migrated_hp_misc","HP-formula-macro-text","HP-formula-mod","", "HP-misc");
 }
 /**migrateHPMisc copies Max-Skill-Ranks-Misc2 into Max-Skill-Ranks-Misc
-*@param {function} callback when done.
-*/
+ *@param {function} callback when done.
+ */
 export function migrateMaxSkills (callback){
     //TAS.debug("at migrateMaxSkills");
     migrateMoveIntIntoMacro(callback,"migrated_maxskill_misc","Max-Skill-Ranks-Misc","Max-Skill-Ranks-mod","","Max-Skill-Ranks-Misc2");
 }
 /** updates NPC from pre v 1.00 to version 1.00 
-* @param {function} callback call when done
-* @param {number} oldversion the sheet attribute PFVersion.
-*/
+ * @param {function} callback call when done
+ * @param {number} oldversion the sheet attribute PFVersion.
+ */
 export function migrateNPC (callback, oldversion) {
     var done = _.once(function () {
         TAS.debug("Leaving migrateNPC");
@@ -941,7 +941,7 @@ export function migrateNPC (callback, oldversion) {
     });
 }
 /** looks at dropdowns for cmb2 and ranged2 and if they are set to anything then check the 'show' checkboxes on config 
-* @param {function} callback call when done */
+ * @param {function} callback call when done */
 export function migrateAltAttackGridrowFlags  (callback) {
     var done = function () { if (typeof callback === "function") { callback(); } };
     getAttrs(["ranged_2_show", "cmb_2_show", "ranged2-ability", "CMB2-ability","migratedAttack2row"], function (v) {
@@ -1044,7 +1044,7 @@ export function migrateSize (callback){
     });
 }
 /** migrates repeating_item name, short-description, type, and weight to have item- prefix to avoid duplicate attributes
-* @param {function} callback call after finishing */
+ * @param {function} callback call after finishing */
 export function migrateRepeatingItemAttributes (callback) {
     var done = function () {
         if (typeof callback === "function") {
@@ -1066,7 +1066,7 @@ export function migrateRepeatingItemAttributes (callback) {
                 return;
             }
             fields = _.reduce(ids, function (memo, id) {
-                var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id),
+                var prefix = "repeating_item_" + SWUtils.getRepeatingIDStr(id),
                 row = [];
                 _.each(duplicateFields,function(field){
                     row.push(prefix+field);
@@ -1081,7 +1081,7 @@ export function migrateRepeatingItemAttributes (callback) {
                 var setter = {};
                 try {
                     _.each(ids, function (id) {
-                        var prefix = "repeating_item_" + PFUtils.getRepeatingIDStr(id);
+                        var prefix = "repeating_item_" + SWUtils.getRepeatingIDStr(id);
                         duplicateFields.forEach(function (attr) {
                             var newInt= parseInt(v[prefix+attr],10)||0;
                             if (v[prefix + attr] && newInt!==0 ) {
