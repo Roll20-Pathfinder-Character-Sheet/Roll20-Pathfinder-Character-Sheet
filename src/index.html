@@ -13,7 +13,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" name="attr_expandall" value="1" class="sheet-offscreen" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" name="attr_attentionv1-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" name="attr_attentionv118-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<div style="margin-right: 43%;float: right;" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-condition-exists" role="Presentation"><label style="font-size:1rem; padding:.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
@@ -22,6 +22,14 @@
 		<div class="sheet-footer" style="text-align:left; padding:5px; margin:5px;">
 			<label class="sheet-small-label2 sheet-number" ><input type="text" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly title="A non-blank version indicates attributes have been successfully recalculated." /><span data-i18n="version">Version</span></label>
 			<h2 data-i18n="new-features">New Features and Updates</h2>
+			<ol>
+				<li data-i18n="announcements-23">In this version (1.18): Extra hit points in PC racial hp fixed. Reset init to try to fix GroupInit bug.</li>
+				<li data-i18n="announcements-24">Click <strong>⛭ Settings</strong> button next to Pathfinder logo to toggle Settings page.</li>
+				<li data-i18n="announcements-25">Check <strong>Display roll templates for customization</strong> on <em>Settings</em> page to customize rolls.</li>
+				<li data-i18n="announcements-26">Check <strong>Use Spell Points</strong> on <em>Settings</em> page if you use spell points.</li>
+				<li data-i18n="announcements-27">Extra calculated numbers available on <em>Notes</em> page for point pools, or for use in tokens bars, etc</li>
+			</ol>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv118-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<ol>
 				<li data-i18n="announcements-0">New Abilities section on it's own tab - special abilities tabs, linked attacks, pf_ability roll template.</li>
 				<li data-i18n="announcements-1">New Hero Lab character importer - import Hero Lab characters using an XML to json file.</li>
@@ -51,7 +59,6 @@
 				<li data-i18n="announcements-22">New Notes page - create custom macros, rolls or add notes.</li>
 				<li data-i18n="announcements-99">and more...</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv1-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
@@ -10840,6 +10847,31 @@
 							<div class="sheet-divider-db-lg">/</div>
 							<input type="number" name="attr_customa6-mod_max" title="@{customa6-mod|max}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
 							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customa6-name" title="@{customa6-name}"  /></span>
+						</div>
+						<br/>
+						<div class="sheet-linked-custom">
+							<input type="checkbox" name="attr_customa7-mod_max_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_customa7" title="@{customa7}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight"></textarea>
+							<input type="number" name="attr_customa7-mod" title="@{customa7-mod}" value="0" class="sheet-narrow-numbers"  />
+							<div class="sheet-divider-db-lg">/</div>
+							<input type="number" name="attr_customa7-mod_max" title="@{customa7-mod|max}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customa7-name" title="@{customa7-name}"  /></span>
+						</div>
+						<div class="sheet-linked-custom">
+							<input type="checkbox" name="attr_customa8-mod_max_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_customa8" title="@{customa8}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight"></textarea>
+							<input type="number" name="attr_customa8-mod" title="@{customa8-mod}" value="0" class="sheet-narrow-numbers"  />
+							<div class="sheet-divider-db-lg">/</div>
+							<input type="number" name="attr_customa8-mod_max" title="@{customa8-mod|max}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customa8-name" title="@{customa8-name}"  /></span>
+						</div>
+						<div class="sheet-linked-custom">
+							<input type="checkbox" name="attr_customa9-mod_max_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_customa9" title="@{customa9}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight"></textarea>
+							<input type="number" name="attr_customa9-mod" title="@{customa9-mod}" value="0" class="sheet-narrow-numbers"  />
+							<div class="sheet-divider-db-lg">/</div>
+							<input type="number" name="attr_customa9-mod_max" title="@{customa9-mod|max}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customa9-name" title="@{customa9-name}"  /></span>
 						</div>
 					</div>
 				</div>
