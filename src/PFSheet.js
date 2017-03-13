@@ -517,7 +517,7 @@ function checkForUpdate () {
 		currVer = parseFloat(v.PFSheet_Version, 10) || 0,
 		setUpgradeFinished = function() {
 			setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
-			character_sheet: 'Pathinder_Necerosv'+String(PFConst.version),
+			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
 			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
 					recalculate(currVer, null, false);
