@@ -1488,7 +1488,7 @@
   "strength-calculation-abbrv": "STR Calc",
   "strength-penalized": "STR Penalized",
   "strength-penalized-title": "Strength Penalized. Penalties to ability scores only change the modifier, not the score itself. For every 2 points of damage or penalty you take to an ability, apply a –1 penalty to relevant skills and statistics.",
-  "stunned": " Stunned",
+  "stunned": "Stunned",
   "sum-uses-from-spells": "Sum of 'Uses' fields in spell rows",
   "sum-uses-spells": "Spontaneous<br/># Used",
   "supernatural-abbrv": "Su",
