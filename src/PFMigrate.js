@@ -1165,7 +1165,33 @@ export function migrateAbilityListFlags (callback){
         }
     });
 }
-export function migrateConfigFlags (callback){
+export function migrateSpellPointFlag (callback,oldversion){
+    var done = _.once(function(){
+        if (typeof callback === "function"){
+            callback();
+        }
+    });
+    TAS.notice("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
+    if (oldversion > 1.18){
+        done();
+    }
+    getAttrs(['spellclass-0-spell-points-class','spellclass-0-spell-points-bonus','spellclass-0-spell-points-misc',
+        'spellclass-1-spell-points-class','spellclass-1-spell-points-bonus','spellclass-1-spell-points-misc',
+        'spellclass-2-spell-points-class','spellclass-2-spell-points-bonus','spellclass-2-spell-points-misc',
+        'use_spell_points'
+        ], function(v){
+            var usesPoints=parseInt('spellclass-0-spell-points-class',10) || parseInt('spellclass-0-spell-points-bonus',10) || parseInt('spellclass-0-spell-points-misc',10) ||
+                parseInt('spellclass-1-spell-points-class',10) || parseInt('spellclass-1-spell-points-bonus',10) || parseInt('spellclass-1-spell-points-misc',10) ||
+                parseInt('spellclass-2-spell-points-class',10) || parseInt('spellclass-2-spell-points-bonus',10) || parseInt('spellclass-2-spell-points-misc',10);
+                TAS.debug("PFMigrate.migrateSpellPointFlag found ",v);
+            if (usesPoints && (! parseInt(v.use_spell_points,10))) {
+                setAttrs({'uses_spell_points':1},PFConst.silentParams,done);
+            } else{
+                done();
+            }
+    });
+}
+export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
         TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
@@ -1177,6 +1203,7 @@ export function migrateConfigFlags (callback){
     migrateUsesSpellFlag();
     migrateAbilityListFlags();
     migrateExperience();
+    migrateSpellPointFlag(null,oldversion);
 }
 export function getAllMigrateFlags (v){
     TAS.debug("at PFMigrate.getAllMigrateFlags");
