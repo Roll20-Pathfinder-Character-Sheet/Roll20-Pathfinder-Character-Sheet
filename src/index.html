@@ -6930,18 +6930,21 @@
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-0-casting_type" value="1" title="@{spellclass-0-casting_type}" checked /><b><span data-i18n-title="display-spells-known" data-i18n-aria-label="display-spells-known" data-i18n="spontaneous"> Spontaneous</span></b></label>
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-0-casting_type" value="2" title="@{spellclass-0-casting_type}" /><b><span data-i18n="prepared"> Prepared</span></b></label>
 								</div>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-0-hide_unprepared" value="1" title="@{spellclass-0-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only spells with 'uses' in spellbook</b></label>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-0-show_domain_spells" value="1" title="@{spellclass-0-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
-								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="spontaneous" />
-								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="prepared" />
+								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-sect2-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="spontaneous" />
+								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-sect3-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="prepared" />
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-0-hide_unprepared" value="1" title="@{spellclass-0-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only spells with 'uses' in spellbook</b></label>
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-0-show_domain_spells" value="1" title="@{spellclass-0-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
+								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_total_spells_manually" value="1" title="@{total_spells_manually}" /><b data-i18n-title="add-custom-column" data-i18n-aria-label="total-spells-manually" data-i18n="total-spells-manually">Total Spells Manually</b></label>
+								<input type="checkbox" value="1" class="sheet-or-A-show sheet-noshow" name="attr_use_advanced_options" role="presentation" />
+								<input type="checkbox" value="1" class="sheet-or-B-show sheet-noshow sheet-subsect-show-inverse" name="attr_total_spells_manually" role="presentation" />
 								<div class="sheet-table" role="grid">
 									<span class="sheet-table-name" data-i18n="spells-per-day">Spells Per Day</span>
 									<div class="sheet-table-group-head">
 										<div class="sheet-table-row">
 											<span class="sheet-table-header" data-i18n="save-difficulty-class">Save DC</span>
 											<span class="sheet-table-header sheet-right-border" data-i18n="level-abbrv">Lvl</span>
-											<span class="sheet-table-header sheet-sect3" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
-											<span class="sheet-table-header sheet-sect2" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
+											<span class="sheet-table-header sheet-sect3 sheet-sect-inverse" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
+											<span class="sheet-table-header sheet-sect2 sheet-sect-inverse" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
 											<span class="sheet-table-header sheet-divider"></span>
 											<span class="sheet-table-header" data-i18n="spells-per-day">Spells/Day</span>
 											<span class="sheet-table-header sheet-divider"></span>
@@ -6952,15 +6955,15 @@
 											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-0-user_defined_column" title="@{spellclass-0-user_defined_column}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 											<span class="sheet-table-header sheet-sect2 sheet-left-border" data-i18n="spells-known">Spells Known</span>
 											<span class="sheet-table-header sheet-sect2" data-i18n="total-listed">Total spells in list</span>
-											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-0-user_defined_column2" title="@{spellclass-0-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
+											<span class="sheet-table-header sheet-either-or-sect sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-0-user_defined_column2" title="@{spellclass-0-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
 										</div>
 									</div>
 									<div class="sheet-table-group">
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-0-savedc}" type="number" name="attr_spellclass-0-level-0-savedc" value="10" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border">0</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-0-spells-prepared}" type="number" name="attr_spellclass-0-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-0-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-0-spells-prepared}" type="number" name="attr_spellclass-0-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-0-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-0-spells-per-day|max}" type="number" name="attr_spellclass-0-level-0-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -6981,13 +6984,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-0-misc}" type="number" name="attr_spellclass-0-level-0-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-0-spells-known}" type="number" name="attr_spellclass-0-level-0-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-0-total-listed}" type="number" name="attr_spellclass-0-level-0-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-0-user}" type="number" name="attr_spellclass-0-level-0-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-0-user}" type="number" name="attr_spellclass-0-level-0-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-1-savedc}" type="number" name="attr_spellclass-0-level-1-savedc" value="11" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="1-ordinal" >1st</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-1-spells-prepared}" type="number" name="attr_spellclass-0-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-1-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-1-spells-prepared}" type="number" name="attr_spellclass-0-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-1-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-1-spells-per-day|max}" type="number" name="attr_spellclass-0-level-1-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -6998,13 +7001,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-1-misc}" type="number" name="attr_spellclass-0-level-1-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-1-spells-known}" type="number" name="attr_spellclass-0-level-1-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-1-total-listed}" type="number" name="attr_spellclass-0-level-1-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-1-user}" type="number" name="attr_spellclass-0-level-1-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-1-user}" type="number" name="attr_spellclass-0-level-1-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-2-savedc}" type="number" name="attr_spellclass-0-level-2-savedc" value="22" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="2-ordinal">2nd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-2-spells-prepared}" type="number" name="attr_spellclass-0-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-2-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-2-spells-prepared}" type="number" name="attr_spellclass-0-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-2-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-2-spells-per-day|max}" type="number" name="attr_spellclass-0-level-2-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7015,13 +7018,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-2-misc}" type="number" name="attr_spellclass-0-level-2-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-2-spells-known}" type="number" name="attr_spellclass-0-level-2-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-2-total-listed}" type="number" name="attr_spellclass-0-level-2-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-2-user}" type="number" name="attr_spellclass-0-level-2-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-2-user}" type="number" name="attr_spellclass-0-level-2-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-3-savedc}" type="number" name="attr_spellclass-0-level-3-savedc" value="33" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="3-ordinal">3rd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-3-spells-prepared}" type="number" name="attr_spellclass-0-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-3-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-3-spells-prepared}" type="number" name="attr_spellclass-0-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-3-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-3-spells-per-day|max}" type="number" name="attr_spellclass-0-level-3-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7032,13 +7035,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-3-misc}" type="number" name="attr_spellclass-0-level-3-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-3-spells-known}" type="number" name="attr_spellclass-0-level-3-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-3-total-listed}" type="number" name="attr_spellclass-0-level-3-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-3-user}" type="number" name="attr_spellclass-0-level-3-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-3-user}" type="number" name="attr_spellclass-0-level-3-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-4-savedc}" type="number" name="attr_spellclass-0-level-4-savedc" value="44" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="4-ordinal">4th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-4-spells-prepared}" type="number" name="attr_spellclass-0-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-4-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-4-spells-prepared}" type="number" name="attr_spellclass-0-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-4-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-4-spells-per-day|max}" type="number" name="attr_spellclass-0-level-4-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7049,13 +7052,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-4-misc}" type="number" name="attr_spellclass-0-level-4-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-4-spells-known}" type="number" name="attr_spellclass-0-level-4-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-4-total-listed}" type="number" name="attr_spellclass-0-level-4-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-4-user}" type="number" name="attr_spellclass-0-level-4-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-4-user}" type="number" name="attr_spellclass-0-level-4-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-5-savedc}" type="number" name="attr_spellclass-0-level-5-savedc" value="55" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="5-ordinal">5th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-5-spells-prepared}" type="number" name="attr_spellclass-0-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-5-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-5-spells-prepared}" type="number" name="attr_spellclass-0-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-5-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-5-spells-per-day|max}" type="number" name="attr_spellclass-0-level-5-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7066,13 +7069,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-5-misc}" type="number" name="attr_spellclass-0-level-5-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-5-spells-known}" type="number" name="attr_spellclass-0-level-5-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-5-total-listed}" type="number" name="attr_spellclass-0-level-5-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-5-user}" type="number" name="attr_spellclass-0-level-5-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-5-user}" type="number" name="attr_spellclass-0-level-5-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-6-savedc}" type="number" name="attr_spellclass-0-level-6-savedc" value="66" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="6-ordinal">6th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-6-spells-prepared}" type="number" name="attr_spellclass-0-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-6-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-6-spells-prepared}" type="number" name="attr_spellclass-0-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-6-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-6-spells-per-day|max}" type="number" name="attr_spellclass-0-level-6-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7083,13 +7086,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-6-misc}" type="number" name="attr_spellclass-0-level-6-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-6-spells-known}" type="number" name="attr_spellclass-0-level-6-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-6-total-listed}" type="number" name="attr_spellclass-0-level-6-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-6-user}" type="number" name="attr_spellclass-0-level-6-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-6-user}" type="number" name="attr_spellclass-0-level-6-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-7-savedc}" type="number" name="attr_spellclass-0-level-7-savedc" value="77" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="7-ordinal">7th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-7-spells-prepared}" type="number" name="attr_spellclass-0-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-7-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-7-spells-prepared}" type="number" name="attr_spellclass-0-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-7-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-7-spells-per-day|max}" type="number" name="attr_spellclass-0-level-7-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7100,13 +7103,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-7-misc}" type="number" name="attr_spellclass-0-level-7-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-7-spells-known}" type="number" name="attr_spellclass-0-level-7-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-7-total-listed}" type="number" name="attr_spellclass-0-level-7-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-7-user}" type="number" name="attr_spellclass-0-level-7-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-7-user}" type="number" name="attr_spellclass-0-level-7-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-8-savedc}" type="number" name="attr_spellclass-0-level-8-savedc" value="88" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="8-ordinal">8th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-8-spells-prepared}" type="number" name="attr_spellclass-0-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-8-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-8-spells-prepared}" type="number" name="attr_spellclass-0-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-8-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-8-spells-per-day|max}" type="number" name="attr_spellclass-0-level-8-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7117,13 +7120,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-8-misc}" type="number" name="attr_spellclass-0-level-8-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-8-spells-known}" type="number" name="attr_spellclass-0-level-8-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-8-total-listed}" type="number" name="attr_spellclass-0-level-8-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-8-user}" type="number" name="attr_spellclass-0-level-8-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-8-user}" type="number" name="attr_spellclass-0-level-8-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-9-savedc}" type="number" name="attr_spellclass-0-level-9-savedc" value="99" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="9-ordinal">9th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-0-level-9-spells-prepared}" type="number" name="attr_spellclass-0-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-9-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-0-level-9-spells-prepared}" type="number" name="attr_spellclass-0-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-0-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-0-level-9-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-0-level-9-spells-per-day|max}" type="number" name="attr_spellclass-0-level-9-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7134,7 +7137,7 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-0-level-9-misc}" type="number" name="attr_spellclass-0-level-9-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-0-level-9-spells-known}" type="number" name="attr_spellclass-0-level-9-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-0-level-9-total-listed}" type="number" name="attr_spellclass-0-level-9-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-0-level-9-user}" type="number" name="attr_spellclass-0-level-9-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-0-level-9-user}" type="number" name="attr_spellclass-0-level-9-user" value="0" /></span>
 										</div>
 									</div>
 								</div>
@@ -7375,18 +7378,21 @@
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-1-casting_type" value="1" title="@{spellclass-1-casting_type}" /><b><span data-i18n-title="display-spells-known" data-i18n-aria-label="display-spells-known" data-i18n="spontaneous"> Spontaneous</span></b></label>
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-1-casting_type" value="2" title="@{spellclass-1-casting_type}" checked /><b><span data-i18n="prepared"> Prepared</span></b></label>
 								</div>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-1-hide_unprepared" value="1" title="@{spellclass-1-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only prepared spells in spellbook menu</b></label>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-1-show_domain_spells" value="1" title="@{spellclass-1-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
-								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-noshow" name="attr_spellclass-1-casting_type" role="presentation" aria-label="spontaneous" />
-								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-noshow" name="attr_spellclass-1-casting_type" role="presentation" aria-label="prepared" />
+								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-sect2-show sheet-noshow" name="attr_spellclass-1-casting_type" role="presentation" aria-label="spontaneous" />
+								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-sect3-show sheet-noshow" name="attr_spellclass-1-casting_type" role="presentation" aria-label="prepared" />
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-1-hide_unprepared" value="1" title="@{spellclass-1-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only prepared spells in spellbook menu</b></label>
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-1-show_domain_spells" value="1" title="@{spellclass-1-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
+								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_total_spells_manually" value="1" title="@{total_spells_manually}" /><b data-i18n-title="add-custom-column" data-i18n-aria-label="total-spells-manually" data-i18n="total-spells-manually">Total Spells Manually</b></label>
+								<input type="checkbox" value="1" class="sheet-or-A-show sheet-noshow" name="attr_use_advanced_options" role="presentation" />
+								<input type="checkbox" value="1" class="sheet-or-B-show sheet-noshow" name="attr_total_spells_manually" role="presentation" />
 								<div class="sheet-table">
 									<span class="sheet-table-name" data-i18n="spells-per-day">Spells Per Day</span>
 									<div class="sheet-table-group-head">
 										<div class="sheet-table-row">
 											<span class="sheet-table-header" data-i18n="save-difficulty-class">Save DC</span>
 											<span class="sheet-table-header sheet-right-border" data-i18n="level-abbrv">Lvl</span>
-											<span class="sheet-table-header sheet-sect3" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
-											<span class="sheet-table-header sheet-sect2" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
+											<span class="sheet-table-header sheet-sect3 sheet-sect-inverse" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
+											<span class="sheet-table-header sheet-sect2 sheet-sect-inverse" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
 											<span class="sheet-table-header sheet-divider"></span>
 											<span class="sheet-table-header" data-i18n="spells-per-day">Spells/Day</span>
 											<span class="sheet-table-header sheet-divider"></span>
@@ -7397,15 +7403,15 @@
 											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-1-user_defined_column" title="@{spellclass-1-user_defined_column}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 											<span class="sheet-table-header sheet-sect2 sheet-left-border" data-i18n="spells-known">Spells Known</span>
 											<span class="sheet-table-header sheet-sect2" data-i18n="total-listed">Total spells in list</span>
-											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-1-user_defined_column2" title="@{spellclass-1-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
+											<span class="sheet-table-header sheet-either-or-sect sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-1-user_defined_column2" title="@{spellclass-1-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
 										</div>
 									</div>
 									<div class="sheet-table-group">
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-0-savedc}" type="number" name="attr_spellclass-1-level-0-savedc" value="10" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border">0</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-0-spells-prepared}" type="number" name="attr_spellclass-1-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-0-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-0-spells-prepared}" type="number" name="attr_spellclass-1-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-0-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-0-spells-per-day|max}" type="number" name="attr_spellclass-1-level-0-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7426,13 +7432,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-0-misc}" type="number" name="attr_spellclass-1-level-0-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-0-spells-known}" type="number" name="attr_spellclass-1-level-0-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-0-total-listed}" type="number" name="attr_spellclass-1-level-0-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-0-user}" type="number" name="attr_spellclass-1-level-0-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-0-user}" type="number" name="attr_spellclass-1-level-0-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-1-savedc}" type="number" name="attr_spellclass-1-level-1-savedc" value="11" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="1-ordinal" >1st</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-1-spells-prepared}" type="number" name="attr_spellclass-1-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-1-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-1-spells-prepared}" type="number" name="attr_spellclass-1-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-1-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-1-spells-per-day|max}" type="number" name="attr_spellclass-1-level-1-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7443,13 +7449,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-1-misc}" type="number" name="attr_spellclass-1-level-1-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-1-spells-known}" type="number" name="attr_spellclass-1-level-1-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-1-total-listed}" type="number" name="attr_spellclass-1-level-1-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-1-user}" type="number" name="attr_spellclass-1-level-1-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-1-user}" type="number" name="attr_spellclass-1-level-1-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-2-savedc}" type="number" name="attr_spellclass-1-level-2-savedc" value="22" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="2-ordinal">2nd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-2-spells-prepared}" type="number" name="attr_spellclass-1-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-2-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-2-spells-prepared}" type="number" name="attr_spellclass-1-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-2-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-2-spells-per-day|max}" type="number" name="attr_spellclass-1-level-2-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7459,13 +7465,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-2-misc}" type="number" name="attr_spellclass-1-level-2-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-2-spells-known}" type="number" name="attr_spellclass-1-level-2-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-2-total-listed}" type="number" name="attr_spellclass-1-level-2-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-2-user}" type="number" name="attr_spellclass-1-level-2-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-2-user}" type="number" name="attr_spellclass-1-level-2-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-3-savedc}" type="number" name="attr_spellclass-1-level-3-savedc" value="33" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="3-ordinal">3rd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-3-spells-prepared}" type="number" name="attr_spellclass-1-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-3-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-3-spells-prepared}" type="number" name="attr_spellclass-1-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-3-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-3-spells-per-day|max}" type="number" name="attr_spellclass-1-level-3-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7476,13 +7482,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-3-misc}" type="number" name="attr_spellclass-1-level-3-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-3-spells-known}" type="number" name="attr_spellclass-1-level-3-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-3-total-listed}" type="number" name="attr_spellclass-1-level-3-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-3-user}" type="number" name="attr_spellclass-1-level-3-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-3-user}" type="number" name="attr_spellclass-1-level-3-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-4-savedc}" type="number" name="attr_spellclass-1-level-4-savedc" value="44" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="4-ordinal">4th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-4-spells-prepared}" type="number" name="attr_spellclass-1-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-4-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-4-spells-prepared}" type="number" name="attr_spellclass-1-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-4-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-4-spells-per-day|max}" type="number" name="attr_spellclass-1-level-4-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7493,13 +7499,13 @@
 											<span class="sheet-divider sheet-advanced-spell-option">+</span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-4-spells-known}" type="number" name="attr_spellclass-1-level-4-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-4-total-listed}" type="number" name="attr_spellclass-1-level-4-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-4-user}" type="number" name="attr_spellclass-1-level-4-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-4-user}" type="number" name="attr_spellclass-1-level-4-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-5-savedc}" type="number" name="attr_spellclass-1-level-5-savedc" value="55" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="5-ordinal">5th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-5-spells-prepared}" type="number" name="attr_spellclass-1-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-5-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-5-spells-prepared}" type="number" name="attr_spellclass-1-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-5-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-5-spells-per-day|max}" type="number" name="attr_spellclass-1-level-5-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7509,13 +7515,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-5-misc}" type="number" name="attr_spellclass-1-level-5-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-5-spells-known}" type="number" name="attr_spellclass-1-level-5-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-5-total-listed}" type="number" name="attr_spellclass-1-level-5-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-5-user}" type="number" name="attr_spellclass-1-level-5-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-5-user}" type="number" name="attr_spellclass-1-level-5-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-6-savedc}" type="number" name="attr_spellclass-1-level-6-savedc" value="66" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="6-ordinal">6th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-6-spells-prepared}" type="number" name="attr_spellclass-1-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-6-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-6-spells-prepared}" type="number" name="attr_spellclass-1-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-6-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-6-spells-per-day|max}" type="number" name="attr_spellclass-1-level-6-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7526,13 +7532,13 @@
 											<span class="sheet-divider sheet-advanced-spell-option">+</span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-6-spells-known}" type="number" name="attr_spellclass-1-level-6-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-6-total-listed}" type="number" name="attr_spellclass-1-level-6-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-6-user}" type="number" name="attr_spellclass-1-level-6-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-6-user}" type="number" name="attr_spellclass-1-level-6-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-7-savedc}" type="number" name="attr_spellclass-1-level-7-savedc" value="77" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="7-ordinal">7th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-7-spells-prepared}" type="number" name="attr_spellclass-1-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-7-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-7-spells-prepared}" type="number" name="attr_spellclass-1-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-7-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-7-spells-per-day|max}" type="number" name="attr_spellclass-1-level-7-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7543,13 +7549,13 @@
 											<span class="sheet-divider sheet-advanced-spell-option">+</span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-7-spells-known}" type="number" name="attr_spellclass-1-level-7-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-7-total-listed}" type="number" name="attr_spellclass-1-level-7-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-7-user}" type="number" name="attr_spellclass-1-level-7-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-7-user}" type="number" name="attr_spellclass-1-level-7-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-8-savedc}" type="number" name="attr_spellclass-1-level-8-savedc" value="88" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="8-ordinal">8th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-8-spells-prepared}" type="number" name="attr_spellclass-1-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-8-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-8-spells-prepared}" type="number" name="attr_spellclass-1-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-8-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-8-spells-per-day|max}" type="number" name="attr_spellclass-1-level-8-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7559,13 +7565,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-1-level-8-misc}" type="number" name="attr_spellclass-1-level-8-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-8-spells-known}" type="number" name="attr_spellclass-1-level-8-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-8-total-listed}" type="number" name="attr_spellclass-1-level-8-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-8-user}" type="number" name="attr_spellclass-1-level-8-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-8-user}" type="number" name="attr_spellclass-1-level-8-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-9-savedc}" type="number" name="attr_spellclass-1-level-9-savedc" value="99" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell sheet-right-border" data-i18n="9-ordinal">9th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-1-level-9-spells-prepared}" type="number" name="attr_spellclass-1-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-9-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-1-level-9-spells-prepared}" type="number" name="attr_spellclass-1-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-1-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-1-level-9-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-1-level-9-spells-per-day|max}" type="number" name="attr_spellclass-1-level-9-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7576,7 +7582,7 @@
 											<span class="sheet-divider sheet-advanced-spell-option">+</span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-1-level-9-spells-known}" type="number" name="attr_spellclass-1-level-9-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-1-level-9-total-listed}" type="number" name="attr_spellclass-1-level-9-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-1-level-9-user}" type="number" name="attr_spellclass-1-level-9-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-1-level-9-user}" type="number" name="attr_spellclass-1-level-9-user" value="0" /></span>
 										</div>
 									</div>
 								</div>
@@ -7817,18 +7823,21 @@
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-2-casting_type" value="1" title="@{spellclass-2-casting_type}" /><b><span data-i18n-title="display-spells-known" data-i18n-aria-label="display-spells-known" data-i18n="spontaneous"> Spontaneous</span></b></label>
 									<label><input class="sheet-boldlabel-check" type="radio" name="attr_spellclass-2-casting_type" value="2" title="@{spellclass-2-casting_type}" checked /><b><span data-i18n="prepared"> Prepared</span></b></label>
 								</div>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-2-hide_unprepared" value="1" title="@{spellclass-2-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only spells with 'uses' in spellbook</b></label>
-								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-2-show_domain_spells" value="1" title="@{spellclass-2-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
-								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-noshow" name="attr_spellclass-2-casting_type" role="presentation" aria-label="spontaneous" />
-								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-noshow" name="attr_spellclass-2-casting_type" role="presentation" aria-label="prepared" />
+								<input type="checkbox" value="1" class="sheet-subsect2-show sheet-sect3-show sheet-noshow" name="attr_spellclass-2-casting_type" role="presentation" aria-label="spontaneous" />
+								<input type="checkbox" value="2" class="sheet-subsect3-show sheet-sect3-show sheet-noshow" name="attr_spellclass-2-casting_type" role="presentation" aria-label="prepared" />
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-2-hide_unprepared" value="1" title="@{spellclass-2-hide_unprepared}" /><b data-i18n-title="prepared-spells-explanation" data-i18n-aria-label="prepared-spells-explanation" data-i18n="spellbook-only-prepared-spells"> Show only spells with 'uses' in spellbook</b></label>
+								<label style="margin-left:.5em;" class="sheet-sect3"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_spellclass-2-show_domain_spells" value="1" title="@{spellclass-2-show_domain_spells}" /><b data-i18n-title="domain-spells-explanation" data-i18n-aria-label="domain-spells-explanation" data-i18n="always-show-domain-spells"> Always show spells marked 'domain' in spellbook menu</b></label>
+								<label style="margin-left:.5em;"><input class="sheet-selectedlabel-check" type="checkbox" name="attr_total_spells_manually" value="1" title="@{total_spells_manually}" /><b data-i18n-title="add-custom-column" data-i18n-aria-label="total-spells-manually" data-i18n="total-spells-manually">Total Spells Manually</b></label>
+								<input type="checkbox" value="1" class="sheet-or-A-show sheet-noshow" name="attr_use_advanced_options" role="presentation" />
+								<input type="checkbox" value="1" class="sheet-or-B-show sheet-noshow" name="attr_total_spells_manually" role="presentation" />
 								<div class="sheet-table">
 									<span class="sheet-table-name" data-i18n="spells-per-day">Spells Per Day</span>
 									<div class="sheet-table-group-head">
 										<div class="sheet-table-row">
 											<span class="sheet-table-header" data-i18n="save-difficulty-class">Save DC</span>
 											<span class="sheet-table-header sheet-right-border" data-i18n="level-abbrv">Lvl</span>
-											<span class="sheet-table-header sheet-sect3" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
-											<span class="sheet-table-header sheet-sect2" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
+											<span class="sheet-table-header sheet-sect3 sheet-sect-inverse" data-i18n-title="sum-prepared-from-spells" data-i18n-aria-label="sum-prepared-from-spells" data-i18n="number-prepared-abbrv"># Prep'd</span>
+											<span class="sheet-table-header sheet-sect2 sheet-sect-inverse" data-i18n-title="sum-uses-spells" data-i18n-aria-label="sum-uses-spells" data-i18n="number-used"># Used</span>
 											<span class="sheet-table-header sheet-divider"></span>
 											<span class="sheet-table-header" data-i18n="spells-per-day">Spells/Day</span>
 											<span class="sheet-table-header sheet-divider"></span>
@@ -7839,15 +7848,15 @@
 											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-2-user_defined_column" title="@{spellclass-2-user_defined_column}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 											<span class="sheet-table-header sheet-sect2 sheet-left-border" data-i18n="spells-known">Spells Known</span>
 											<span class="sheet-table-header sheet-sect2" data-i18n="total-listed">Total spells in list</span>
-											<span class="sheet-table-header sheet-advanced-spell-option sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-2-user_defined_column2" title="@{spellclass-2-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
+											<span class="sheet-table-header sheet-either-or-sect sheet-entry-med sheet-entry-custom-header sheet-left-border"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-2-user_defined_column2" title="@{spellclass-2-user_defined_column2}" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>											
 										</div>
 									</div>
 									<div class="sheet-table-group">
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-0-savedc}" type="number" name="attr_spellclass-2-level-0-savedc" value="10" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell">0</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-0-spells-prepared}" type="number" name="attr_spellclass-2-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-0-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-0-spells-prepared}" type="number" name="attr_spellclass-2-level-0-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-0-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-0-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-0-spells-per-day|max}" type="number" name="attr_spellclass-2-level-0-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7868,13 +7877,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-0-misc}" type="number" name="attr_spellclass-2-level-0-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-0-spells-known}" type="number" name="attr_spellclass-2-level-0-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-0-total-listed}" type="number" name="attr_spellclass-2-level-0-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-0-user}" type="number" name="attr_spellclass-2-level-0-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-0-user}" type="number" name="attr_spellclass-2-level-0-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-1-savedc}" type="number" name="attr_spellclass-2-level-1-savedc" value="11" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" >1st</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-1-spells-prepared}" type="number" name="attr_spellclass-2-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-1-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-1-spells-prepared}" type="number" name="attr_spellclass-2-level-1-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-1-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-1-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-1-spells-per-day|max}" type="number" name="attr_spellclass-2-level-1-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7885,13 +7894,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-1-misc}" type="number" name="attr_spellclass-2-level-1-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-1-spells-known}" type="number" name="attr_spellclass-2-level-1-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-1-total-listed}" type="number" name="attr_spellclass-2-level-1-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-1-user}" type="number" name="attr_spellclass-2-level-1-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-1-user}" type="number" name="attr_spellclass-2-level-1-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-2-savedc}" type="number" name="attr_spellclass-2-level-2-savedc" value="22" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="2-ordinal">2nd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-2-spells-prepared}" type="number" name="attr_spellclass-2-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-2-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-2-spells-prepared}" type="number" name="attr_spellclass-2-level-2-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-2-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-2-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-2-spells-per-day|max}" type="number" name="attr_spellclass-2-level-2-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7902,13 +7911,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-2-misc}" type="number" name="attr_spellclass-2-level-2-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-2-spells-known}" type="number" name="attr_spellclass-2-level-2-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-2-total-listed}" type="number" name="attr_spellclass-2-level-2-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-2-user}" type="number" name="attr_spellclass-2-level-2-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-2-user}" type="number" name="attr_spellclass-2-level-2-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-3-savedc}" type="number" name="attr_spellclass-2-level-3-savedc" value="33" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="3-ordinal">3rd</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-3-spells-prepared}" type="number" name="attr_spellclass-2-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-3-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-3-spells-prepared}" type="number" name="attr_spellclass-2-level-3-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-3-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-3-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-3-spells-per-day|max}" type="number" name="attr_spellclass-2-level-3-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7919,13 +7928,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-3-misc}" type="number" name="attr_spellclass-2-level-3-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-3-spells-known}" type="number" name="attr_spellclass-2-level-3-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-3-total-listed}" type="number" name="attr_spellclass-2-level-3-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-3-user}" type="number" name="attr_spellclass-2-level-3-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-3-user}" type="number" name="attr_spellclass-2-level-3-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-4-savedc}" type="number" name="attr_spellclass-2-level-4-savedc" value="44" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="4-ordinal">4th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-4-spells-prepared}" type="number" name="attr_spellclass-2-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-4-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-4-spells-prepared}" type="number" name="attr_spellclass-2-level-4-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-4-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-4-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-4-spells-per-day|max}" type="number" name="attr_spellclass-2-level-4-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7936,13 +7945,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-4-misc}" type="number" name="attr_spellclass-2-level-4-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-4-spells-known}" type="number" name="attr_spellclass-2-level-4-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-4-total-listed}" type="number" name="attr_spellclass-2-level-4-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-4-user}" type="number" name="attr_spellclass-2-level-4-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-4-user}" type="number" name="attr_spellclass-2-level-4-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-5-savedc}" type="number" name="attr_spellclass-2-level-5-savedc" value="55" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="5-ordinal">5th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-5-spells-prepared}" type="number" name="attr_spellclass-2-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-5-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-5-spells-prepared}" type="number" name="attr_spellclass-2-level-5-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-5-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-5-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-5-spells-per-day|max}" type="number" name="attr_spellclass-2-level-5-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7953,13 +7962,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-5-misc}" type="number" name="attr_spellclass-2-level-5-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-5-spells-known}" type="number" name="attr_spellclass-2-level-5-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-5-total-listed}" type="number" name="attr_spellclass-2-level-5-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-5-user}" type="number" name="attr_spellclass-2-level-5-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-5-user}" type="number" name="attr_spellclass-2-level-5-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-6-savedc}" type="number" name="attr_spellclass-2-level-6-savedc" value="66" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="6-ordinal">6th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-6-spells-prepared}" type="number" name="attr_spellclass-2-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-6-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-6-spells-prepared}" type="number" name="attr_spellclass-2-level-6-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-6-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-6-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-6-spells-per-day|max}" type="number" name="attr_spellclass-2-level-6-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7970,13 +7979,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-6-misc}" type="number" name="attr_spellclass-2-level-6-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-6-spells-known}" type="number" name="attr_spellclass-2-level-6-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-6-total-listed}" type="number" name="attr_spellclass-2-level-6-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-6-user}" type="number" name="attr_spellclass-2-level-6-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-6-user}" type="number" name="attr_spellclass-2-level-6-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-7-savedc}" type="number" name="attr_spellclass-2-level-7-savedc" value="77" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="7-ordinal">7th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-7-spells-prepared}" type="number" name="attr_spellclass-2-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-7-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-7-spells-prepared}" type="number" name="attr_spellclass-2-level-7-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-7-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-7-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-7-spells-per-day|max}" type="number" name="attr_spellclass-2-level-7-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -7987,13 +7996,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-7-misc}" type="number" name="attr_spellclass-2-level-7-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-7-spells-known}" type="number" name="attr_spellclass-2-level-7-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-7-total-listed}" type="number" name="attr_spellclass-2-level-7-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-7-user}" type="number" name="attr_spellclass-2-level-7-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-7-user}" type="number" name="attr_spellclass-2-level-7-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-8-savedc}" type="number" name="attr_spellclass-2-level-8-savedc" value="88" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="8-ordinal">8th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-8-spells-prepared}" type="number" name="attr_spellclass-2-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-8-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-8-spells-prepared}" type="number" name="attr_spellclass-2-level-8-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-8-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-8-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-8-spells-per-day|max}" type="number" name="attr_spellclass-2-level-8-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -8004,13 +8013,13 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-8-misc}" type="number" name="attr_spellclass-2-level-8-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-8-spells-known}" type="number" name="attr_spellclass-2-level-8-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-8-total-listed}" type="number" name="attr_spellclass-2-level-8-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-8-user}" type="number" name="attr_spellclass-2-level-8-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-8-user}" type="number" name="attr_spellclass-2-level-8-user" value="0" /></span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-9-savedc}" type="number" name="attr_spellclass-2-level-9-savedc" value="99" class="sheet-calc" readonly /></span>
 											<span class="sheet-table-cell" data-i18n="9-ordinal">9th</span>
-											<span class="sheet-table-cell sheet-sect3"><input title="@{spellclass-2-level-9-spells-prepared}" type="number" name="attr_spellclass-2-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-9-spells-per-day" value="0" /></span>
+											<span class="sheet-table-cell sheet-sect3 sheet-sect-inverse"><input title="@{spellclass-2-level-9-spells-prepared}" type="number" name="attr_spellclass-2-level-9-spells-prepared" value="0" class="sheet-calc" readonly /></span>
+											<span class="sheet-table-cell sheet-sect2 sheet-sect-inverse"><input title="@{spellclass-2-level-9-spells-per-day}" class="sheet-calc" type="number" name="attr_spellclass-2-level-9-spells-per-day" value="0" /></span>
 											<span class="sheet-divider">/</span>
 											<span class="sheet-table-cell"><input title="@{spellclass-2-level-9-spells-per-day|max}" type="number" name="attr_spellclass-2-level-9-spells-per-day_max" value="0" class="sheet-calc" readonly /></span>
 											<span class="sheet-divider">=</span>
@@ -8021,7 +8030,7 @@
 											<span class="sheet-table-cell sheet-advanced-spell-option"><input title="@{spellclass-2-level-9-misc}" type="number" name="attr_spellclass-2-level-9-misc" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2 sheet-left-border"><input title="@{spellclass-2-level-9-spells-known}" type="number" name="attr_spellclass-2-level-9-spells-known" value="0" /></span>
 											<span class="sheet-table-cell sheet-sect2"><input title="@{spellclass-2-level-9-total-listed}" type="number" name="attr_spellclass-2-level-9-total-listed" value="0" class="sheet-calc" readonly /></span>
-											<span class="sheet-table-cell sheet-advanced-spell-option sheet-left-border"><input title="@{spellclass-2-level-9-user}" type="number" name="attr_spellclass-2-level-9-user" value="0" /></span>
+											<span class="sheet-table-cell sheet-either-or-sect sheet-left-border"><input title="@{spellclass-2-level-9-user}" type="number" name="attr_spellclass-2-level-9-user" value="0" /></span>
 										</div>
 									</div>
 								</div>
