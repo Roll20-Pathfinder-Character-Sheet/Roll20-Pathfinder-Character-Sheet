@@ -329,7 +329,7 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAbility.migrate(doneOne,oldversion);
 				PFFeatures.migrate(doneOne,oldversion);
 				PFSpells.migrate(doneOne,oldversion);
-			}));
+			}),oldversion);
 		} else if (oldversion < 1.17) {
 			if (oldversion < 1.02) {
 				PFAbility.migrate(null,oldversion);
@@ -356,6 +356,7 @@ export function migrate (oldversion, callback, errorCallback) {
 				//future updates here. any above will recalc whole sheet after callback
 				PFInitiative.recalculate(null,false,oldversion);
 				PFHealth.recalculate(null,false,oldversion);
+				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
 		}
 	} catch (err) {
@@ -470,7 +471,7 @@ function recalculateCore (callback, silently, oldversion) {
 		PFBuffs.recalculate(abilityAffectingConditionsOnce, silently, oldversion);
 	});
 
-	PFMigrate.migrateConfigFlags(buffsOnce);
+	PFMigrate.migrateConfigFlags(buffsOnce,oldversion);
 	
 	//TAS.debug("at recalculateCore!!!!");
 
@@ -526,7 +527,6 @@ function checkForUpdate () {
 		TAS.notice("Attributes at version: " + currVer);
 		if (parseInt(v["recalc1"],10) ){
 			//HIT RECALC
-			currVer = -1;
 			recalc = true;
 		} 
 		if (parseInt(v["migrate1"],10)) {
@@ -545,6 +545,7 @@ function checkForUpdate () {
 		} else if (migrateSheet){
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
+			currVer = -1;
 			recalculate(currVer, done, false);
 		} else  {
 			done();

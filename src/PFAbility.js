@@ -969,6 +969,6 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log(PFLog.l + '   PFAbility module loaded        ' );
+PFConsole.log('   PFAbility module loaded        ' );
 PFLog.modulecount++;
 

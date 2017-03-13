@@ -609,10 +609,6 @@ also need 1 more level in selector or base css will override border */
 	min-width:5em;
 	white-space:nowrap;
 }
-.sheet-linked-custom-roll textarea,
-.sheet-linked-custom-roll .sheet-inline-textarea {
-/*	display:inline;*/
-}
 
 .sheet-linked-custom-wideinputs .sheet-divider-db,
 .sheet-linked-custom-wideinputs .sheet-divider-db-lg,
@@ -4464,6 +4460,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-config-show:checked ~ .sheet-pfsheet,
 .sheet-config-show:not(:checked) ~ .sheet-section-config,
 /* config page toggles override all others: */
+.sheet-spellpoints-show:not(:checked) ~ .sheet-section-spellclass .sheet-spellpoints-sect,
 .sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-advanced-spell-option,
 .sheet-advanced-spell-macro-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-advanced-spell-macro,
 .sheet-spell-multiclassed-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-spell-multiclassed,
