@@ -451,6 +451,6 @@ function registerEventHandlers () {
 	
 }
 registerEventHandlers();
-PFConsole.log(PFLog.l + '   PFFeatures module loaded       ' );
+PFConsole.log('   PFFeatures module loaded       ' );
 PFLog.modulecount++;
 
