@@ -6,6 +6,7 @@ import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFSpells from './PFSpells';
+import * as PFSpellCasterClasses from './PFSpellCasterClasses';
 
 export var classColumns = ["hp", "fchp", "skill", "fcskill", "fcalt", "bab", "Fort", "Ref", "Will", "level"],
 raceColumns = ['hp', 'bab', 'Fort', 'Ref', 'Will', 'hd-num', 'skill'],
@@ -311,7 +312,7 @@ function registerEventHandlers  () {
                 //can we move this to spells? or keep here
                 //or do we even need to do it, isn't roll20 handling?
                 if ( (/level/i).test(eventInfo.sourceAttribute) ) {
-                    PFSpells.updateCasterFromClassLevel(parseInt(row, 10), eventInfo);
+                    PFSpellCasterClasses.updateCasterFromClassLevel(parseInt(row, 10), eventInfo);
                 }
             }
         }));
@@ -321,7 +322,7 @@ function registerEventHandlers  () {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             autoCalcClassHpGrid(null,null,eventInfo);
             if (eventInfo.sourceAttribute === "npc-hd-num"){
-                PFSpells.updateCasterFromClassLevel(6, eventInfo);
+                PFSpellCasterClasses.updateCasterFromClassLevel(6, eventInfo);
             }
         }
     }));

@@ -388,7 +388,7 @@ function updateCasterLevels (dummy, eventInfo, callback, silently) {
 *@param {function} callback - to call when done.
 *@param {bool} silently if true update with PFConst.silentParams
 */
-function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, silently) {
+export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -457,7 +457,7 @@ function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, silentl
 *@param {function} callback - to call when done.
 *@param {bool} silently if true update with PFConst.silentParams
 */
-function updateCasterFromClassLevel (classidx, eventInfo, force, callback, silently) {
+export function updateCasterFromClassLevel (classidx, eventInfo, force, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();

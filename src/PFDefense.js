@@ -14,8 +14,8 @@ export var defenseDropdowns = {
     "CMD-ability1": "CMD-STR",
     "CMD-ability2": "CMD-DEX",
     "CMD-ability": "FF-CMD-DEX"
-};
-var defenseLowerToMixed = {
+},
+defenseLowerToMixed = {
     "ac-ability": "AC-ability",
     "ff-ability": "FF-ability",
     "cmd-ability1": "CMD-ability1",

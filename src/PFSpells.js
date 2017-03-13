@@ -11,7 +11,7 @@ import * as PFSpellOptions from './PFSpellOptions';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 
-var
+export var
 //spell levels for repeating spell sections
 spellLevels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
 //for parsing: classes without their own spell lists plus bloodrager as sorcerer, whose list is not in compendium - hunter handled special
@@ -593,7 +593,7 @@ function resetSpellsPrepared () {
 *@param {object} eventInfo from on event 
 *@param {function} callback when done
 */
-function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
+export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
@@ -752,7 +752,7 @@ function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
 *@param {object} eventInfo from on event 
 *@param {function} callback when done
 */
-function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
+export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
