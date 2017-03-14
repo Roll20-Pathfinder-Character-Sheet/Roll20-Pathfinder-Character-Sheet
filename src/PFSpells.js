@@ -210,8 +210,11 @@ export function resetCommandMacro (eventInfo, callback) {
                                 spellObj.npcChatLink = spellName+"(~@{character_id}|repeating_spells_" + spellObj.id + "_npc-roll)";
                                 return spellObj;
                             }
-                        })
-                        .sortBy('level')
+                        }).value();
+                        if (!customSorted){
+                            spellsByClass = _.sortBy(spellsByClass,'level');
+                        }
+                        spellsByClass = _.chain(spellsByClass)
                         .groupBy('spellClassstr')
                         .mapObject(function(classArray){
                             return _.chain(classArray)
