@@ -21,8 +21,8 @@ classesUsingOtherSpellLists = {
     "warpriest": "cleric",
     "skald": "bard",
     "bloodrager": "sorcerer"
-},
-defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
+};
+var defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
 defaultRepeatingMacroMap = {
     '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
     '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
