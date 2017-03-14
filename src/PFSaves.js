@@ -34,7 +34,7 @@ export function applyConditions (callback, silently) {
 			drained = parseInt(v["condition-Drained"], 10) || 0;
 			wounds = (parseInt(v["wound_threshold-show"], 10) || 0) * PFUtils.getWoundPenalty((parseInt(v["condition-Wounds"], 10) || 0), (parseInt(v.has_endurance_feat, 10) || 0), (parseInt(v.wounds_gritty_mode, 10) || 0));
 			currCond = parseInt(v["saves-cond"], 10) || 0;
-			newCond = drained - fear - sickened - wounds;
+			newCond = drained - fear - sickened + wounds;
 			if (currCond !== newCond) {
 				setter["saves-cond"] = newCond;
 			}

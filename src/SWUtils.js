@@ -290,7 +290,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
  * @param {function(int)} callback pass the value the dropdown selection represents
  *   exceptions: if readField is not found pass in "", if readField is 0 or starts with 0 pass in 0.
  */
-function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
+export function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 	if (!readField || (callback && typeof callback !== "function") || typeof synchrousFindAttributeFunc !== "function") {
 		return;
 	}
@@ -375,7 +375,7 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
  * @param {function(number,number)} callback call this with: new total, current total
  * @param {function} errorCallback call if error attempting to add.
  */
-function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, errorCallback) {
+export function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, errorCallback) {
 	var readFields;
 	if (typeof callback !== "function" || typeof errorCallback !== "function") {
 		return;

@@ -8,7 +8,7 @@ import * as PFMigrate from './PFMigrate';
 /* setToNPC when first setting a sheet , set other default config settings
 * also switch to NPC page for when user leaves ocnfig page.
 */
-function setToNPC (callback,eventInfo){
+export function setToNPC (callback,eventInfo){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
