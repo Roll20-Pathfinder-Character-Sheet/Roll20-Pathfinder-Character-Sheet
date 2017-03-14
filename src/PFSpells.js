@@ -142,7 +142,7 @@ export function resetCommandMacro (eventInfo, callback) {
                         .map(function(id){
                             var prefix = "repeating_spells_"+ SWUtils.getRepeatingIDStr(id),
                             metaMagic = parseInt(values[prefix + "metamagic"], 10)||0,
-                            spellSlot = (metaMagic) ? (values[prefix + "slot"]||(values[prefix + "spell_level"]) : values[prefix + "spell_level"],
+                            spellSlot = (metaMagic) ? (values[prefix + "slot"]||values[prefix + "spell_level"]) : values[prefix + "spell_level"],
                             matches,
                             schoolForGroup=values[prefix + "school"]||"";
                             matches = spellSchoolReg.exec(values[prefix + "school"]||"");
