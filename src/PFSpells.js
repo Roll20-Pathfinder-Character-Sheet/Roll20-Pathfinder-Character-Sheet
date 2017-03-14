@@ -21,8 +21,8 @@ classesUsingOtherSpellLists = {
     "warpriest": "cleric",
     "skald": "bard",
     "bloodrager": "sorcerer"
-},
-defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
+};
+var defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
 defaultRepeatingMacroMap = {
     '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
     '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
@@ -153,9 +153,9 @@ export function resetCommandMacro (eventInfo, callback) {
                             return { id: id,
                                 level: spellSlot,
                                 levelstr: "^{level} "+String(spellSlot),
-                                rawlevel : parseInt(values[prefix + "spell_level"],10),
+                                rawlevel : parseInt(values[prefix + "spell_level"],10)||0,
                                 school: schoolForGroup,
-                                spellClass: (parseInt(values[prefix + "spellclass_number"],10)),
+                                spellClass: (parseInt(values[prefix + "spellclass_number"],10)||0),
                                 spellClassstr: "class"+values[prefix + "spellclass_number"],
                                 isDomain: (parseInt(values[prefix + "isDomain"],10)||0),
                                 isMythic: (usesMythic * parseInt(values[prefix+"isMythic"],10)||0),
@@ -165,7 +165,7 @@ export function resetCommandMacro (eventInfo, callback) {
                         })
                         .omit(function(spellObj){
                             return isNaN(spellObj.rawlevel) || isNaN(spellObj.spellClass) || 
-                                (hideUnprepared[spellObj.spellClass] && spellObj.uses===0 &&
+                                (hideUnprepared[spellObj.spellClass] && isPrepared[spellObj.spellClass] && spellObj.uses===0 &&
                                     (!( showDomain[spellObj.spellClass] && spellObj.isDomain )));
                         })
                         .map(function(spellObj){
