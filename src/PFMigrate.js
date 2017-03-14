@@ -1171,7 +1171,7 @@ export function migrateSpellPointFlag (callback,oldversion){
             callback();
         }
     });
-    TAS.notice("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
+    TAS.debug("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
     if (oldversion > 1.18){
         done();
     }

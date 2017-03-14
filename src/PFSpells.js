@@ -153,7 +153,7 @@ export function resetCommandMacro (eventInfo, callback) {
                             return { id: id,
                                 level: spellSlot,
                                 levelstr: "^{level} "+String(spellSlot),
-                                rawlevel : parseInt(values[prefix + "spell_level"],10)||0,
+                                rawlevel : (parseInt(values[prefix + "spell_level"],10)||0),
                                 school: schoolForGroup,
                                 spellClass: (parseInt(values[prefix + "spellclass_number"],10)||0),
                                 spellClassstr: "class"+values[prefix + "spellclass_number"],
@@ -265,46 +265,73 @@ export function resetCommandMacro (eventInfo, callback) {
 }
 
 function getSpellTotals  (ids, v, setter) {
-    var totalListed,
-    totalPrepped;
-    try {
-        totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
+    var doNotProcess=0,
+        casterTypes = [0,0,0],
+        totalPrepped = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]],
+        totalListed = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
+   try {
+        doNotProcess = parseInt(v.total_spells_manually,10)||0;
+        casterTypes[0] = parseInt(v['spellclass-0-casting_type'],10)||0;
+        if (parseInt(v.spellclasses_multiclassed,10)){
+            casterTypes[1] = parseInt(v['spellclass-1-casting_type'],10)||0;
+            casterTypes[2] = parseInt(v['spellclass-2-casting_type'],10)||0;
+            if (doNotProcess){
+                if (casterTypes[0]===1 && casterTypes[1]<2 && casterTypes[2]<2){
+                    return setter;
+                }
+            }
+        } else {
+            if (doNotProcess && casterTypes[0]===1){
+                return setter;
+            }
+        }
+        
+ /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
             memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
                 imemo[spelllevel] = 0;
                 return imemo;
             }, {});
             return memo;
         }, {});
-        totalListed = _.mapObject(totalPrepped, _.clone);
+        totalListed =  _.mapObject(totalPrepped, _.clone);*/
+         
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
-            spellLevel = parseInt(v[prefix + "spell_level"], 10),
-            classNum = parseInt(v[prefix + "spellclass_number"], 10),
-            metamagic = parseInt(v[prefix + "metamagic"], 10) || 0,
-            slot = isNaN(parseInt(v[prefix + "slot"], 10)) ? spellLevel : parseInt(v[prefix + "slot"], 10),
-            truelevel = metamagic ? slot : spellLevel,
-            uses = parseInt(v[prefix + "used"], 10) || 0;
-            if (!(isNaN(spellLevel) || isNaN(classNum))) {
-                //TAS.debug("resetSpellsTotals", "spellLevel", spellLevel, "classNum", classNum, "metamagic", metamagic, "slot", slot, truelevel, "truelevel", uses, "uses");
-                totalPrepped[classNum][truelevel] += uses;
-                totalListed[classNum][truelevel] += 1;
+                spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
+            spellLevel = parseInt(v[prefix + "spell_level"], 10);
+            if (!isNaN(spellLevel) ) {
+                classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
+                metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
+                slot = isNaN(parseInt(v[prefix + "slot"], 10)) ? spellLevel : parseInt(v[prefix + "slot"], 10);
+                truelevel = metamagic ? slot : spellLevel;
+                //TAS.debug("getSpellTotals", "spellLevel", spellLevel, "classNum", classNum, "metamagic", metamagic, "slot", slot, truelevel, "truelevel", uses, "uses");
+                if (!doNotProcess){
+                    uses = parseInt(v[prefix + "used"], 10) || 0;
+                    totalPrepped[classNum][truelevel] += uses;
+                    totalListed[classNum][truelevel] += 1;
+                } else if (casterTypes[classNum]!==1) {
+                    //if do not total,no need tosee total listed if not spontaneous
+                    totalListed[classNum][truelevel] += 1;
+                }
             } else {
-                TAS.warn("at resetSpellsTotals, ONE OF THESE IS NAN: spellLevel:"+ spellLevel+ ", classNum:"+ classNum);
+                TAS.warn("PFSpells.getSpellTotals: Spelllevel NAN: spellLevel:"+ spellLevel);
             }
         });
+
         _.each(PFConst.spellClassIndexes, function (classidx) {
             _.each(spellLevels, function (spellLevel) {
-                if ((parseInt(v["spellclass-" + classidx + "-level-" + spellLevel + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-total-listed"] = totalListed[classidx][spellLevel];
+                var prefix="spellclass-" + classidx + "-level-" + spellLevel ;
+                if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
+                    setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v["spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
+                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
+                    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
+                    setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                 }
             });
         });
     } catch (err) {
-        TAS.error("PFSpells.updateSpellTotals", err);
+        TAS.error("PFSpells.getSpellTotals", err);
     } finally {
         return setter;
     }
@@ -316,8 +343,9 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
             callback();
         }
     });
+    
     getSectionIDs("repeating_spells", function (ids) {
-        var fields = [],
+        var fields = ['total_spells_manually','spellclasses_multiclassed','spellclass-0-casting_type','spellclass-1-casting_type','spellclass-2-casting_type'],
         rowattrs = ['spellclass_number', 'spell_level', 'slot', 'metamagic', 'used'];
         try {
             _.each(ids, function (id) {
@@ -337,9 +365,7 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 try {
                     setter = getSpellTotals(ids, v, setter);
                     if (_.size(setter)) {
-                        setAttrs(setter, {
-                            silent: true
-                        }, done);
+                        setAttrs(setter, PFConst.silentParams, done);
                     } else {
                         done();
                     }
