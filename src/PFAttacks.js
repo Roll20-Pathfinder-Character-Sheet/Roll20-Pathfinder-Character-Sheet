@@ -404,7 +404,7 @@ export function updateAssociatedAttacksFromParents (callback){
 	});
 }
 
-function getRecalculatedAttack (id,v){
+export function getRecalculatedAttack (id,v,setter){
 	var prefix = 'repeating_weapon_'+id+'_',
 		isRanged=parseInt(v[prefix+"isranged"],10)||0,
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
@@ -429,8 +429,9 @@ function getRecalculatedAttack (id,v){
 		abilityTotDmg=0,
 		newTotalDamage=0,
 		newTotalAttack=0,
-		localsetter={};
+		localsetter;
 	try{
+		localsetter = setter || {};
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
 			localsetter[prefix+ "total-attack"] = newTotalAttack;
@@ -483,16 +484,26 @@ function getRecalculatedAttack (id,v){
 		return localsetter;
 	}
 }
+/**
+ * assumes id has values in it.
+ * @param {[string]} ids 
+ * @param {function} callback 
+ */
 function updateAllRowsNonCalcFields (ids,callback){
 	var done = function(){
 		if(typeof callback ==="function"){
 			callback();
 		}
 	},
-	doneWithAllRows = _.after(_.size(ids),done),
+	doneWithAllRows,
 	fields;
+	if (!ids || _.size(ids)===0){
+		done();
+		return;
+	}
+	doneWithAllRows = _.after(_.size(ids),done);
 	fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,updateRowAttrsLU);
-	fields=fields.concat(updateCharAttrs);
+	fields = fields.concat(updateCharAttrs);
 	getAttrs(fields,function(v){
 		var charAttMap={},	setter;
 		//set global values to int so we don't have to do it over and over per row.
@@ -551,7 +562,7 @@ function recalcCalculatedFields (ids,callback){
 		}
 	});
 }
-function recalculateRepeatingWeapons (callback){
+export function recalculateRepeatingWeapons (callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.recalculateRepeatingWeapons");
 		if (typeof callback === "function"){
@@ -563,6 +574,40 @@ function recalculateRepeatingWeapons (callback){
 			updateAllRowsNonCalcFields(ids,done);
 		});
 	});
+}
+
+export function setNewDefaultsSync (ids,v,setter){
+	var localsetter;
+	try {
+		setter = setter || {};
+		localsetter = _.reduce(ids,function(m,id){
+			var prefix = 'repeating_weapon_'+id+'_';
+			try {
+				m[prefix+'default_size']=defaultSize;
+				if(v[prefix+'damage-dice-num']){
+					m[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num'];
+				} else {
+					m[prefix+'default_damage-dice-num']=0;
+					m[prefix+'damage-dice-num']=0;
+				}
+				if(v[prefix+'damage-die']){
+					m[prefix+'default_damage-die']=v[prefix+'damage-die'];
+				} else {
+					m[prefix+'default_damage-die']=0;
+					m[prefix+'damage-die']=0;
+				}
+			} catch (errin){
+				TAS.error("PFAttacks.setNewDefaultsSync errin id "+id,errin);
+			} finally {
+				return m;
+			}
+		},{});
+		_.extend(setter,localsetter);
+	} catch (errout){
+		TAS.error("PFAttacks.setNewDefaultsSync errout ",errout);
+	} finally {
+		return setter;
+	}
 }
 export function setNewDefaults (callback){
 	var done = _.once(function(){
@@ -592,28 +637,7 @@ export function setNewDefaults (callback){
 			getAttrs(fields,function(v){
 				var setter={};
 				try {
-					setter = _.reduce(ids,function(m,id){
-						var prefix = 'repeating_weapon_'+id+'_';
-						try {
-							m[prefix+'default_size']=defaultSize;
-							if(v[prefix+'damage-dice-num']){
-								m[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num'];
-							} else {
-								m[prefix+'default_damage-dice-num']=0;
-								m[prefix+'damage-dice-num']=0;
-							}
-							if(v[prefix+'damage-die']){
-								m[prefix+'default_damage-die']=v[prefix+'damage-die'];
-							} else {
-								m[prefix+'default_damage-die']=0;
-								m[prefix+'damage-die']=0;
-							}
-						} catch (errin){
-							TAS.error("PFAttacks.setNewDefaults errin id "+id,errin);
-						} finally {
-							return m;
-						}
-					},{});
+					setter = setNewDefaultsSync(ids, v, setter);
 				} catch (errout){
 					TAS.error("PFAttacks.setNewDefaults errout ",errout);
 				} finally {

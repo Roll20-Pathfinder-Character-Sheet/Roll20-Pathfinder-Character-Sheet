@@ -365,7 +365,7 @@ function migrateWornEquipment (callback) {
                 getAttrs(attribList, function (v) {
                     var prefix, matchingField, newRowId = '', newRowAttrs = {}, locationAttrs={},  maxDex=0, attrib = "", isNewRow = true, markedEquipped=0, isWorn=0;
                     try {							
-                        //TAS.notice("PFInventory.copyWornDefenseToNewItem item:"+item+" was already set="+wornAlreadySet,v);
+                        //TAS.debug("PFInventory.copyWornDefenseToNewItem item:"+item+" was already set="+wornAlreadySet,v);
                         markedEquipped=parseInt(v[item + "-equipped"],10)||0;
                         maxDex = parseInt(v[item+"-max-dex"],10);
                         if(isNaN(maxDex)){

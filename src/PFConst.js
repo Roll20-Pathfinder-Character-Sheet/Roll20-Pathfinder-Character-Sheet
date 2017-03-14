@@ -37,7 +37,13 @@ export default {
 		"customa3": "customa3-mod",
 		"customa4": "customa4-mod_max",
 		"customa5": "customa5-mod_max",
-		"customa6": "customa6-mod_max"
+		"customa6": "customa6-mod_max",
+		"customa7": "customa7-mod_max",
+		"customa8": "customa8-mod_max",
+		"customa9": "customa9-mod_max",
+		"customa10": "customa10-mod",
+		"customa11": "customa11-mod",
+		"customa12": "customa12-mod",
 	},
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],
