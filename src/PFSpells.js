@@ -109,7 +109,9 @@ export function resetCommandMacro (eventInfo, callback) {
             }
             getAttrs(["_reporder_repeating_spells"], function (repValues) {
                 //TAS.debug("PFSpells.resetCommandMacro order repValues:",repValues);
-                var spellAttrs = _.chain(idarray)
+                var spellAttrs;
+                try {
+                spellAttrs = _.chain(idarray)
                     .map(function(id){
                         var prefix = 'repeating_spells_'+SWUtils.getRepeatingIDStr(id),
                         retVal = [];
@@ -120,6 +122,11 @@ export function resetCommandMacro (eventInfo, callback) {
                     })
                     .flatten()
                     .value();
+                } catch (errouter2){
+                    TAS.error("PFSpells.resetCommandMacro errouter",errouter2);
+                    done();
+                    return;
+                }
                 getAttrs(spellAttrs, function (values) {
                     //TAS.debug(values);
                     var orderedList, repList, filteredIds, spellsByClass, npcSpellsArray, customSorted=0,
@@ -140,28 +147,42 @@ export function resetCommandMacro (eventInfo, callback) {
                         }
                         spellsByClass = _.chain(orderedList)
                         .map(function(id){
-                            var prefix = "repeating_spells_"+ SWUtils.getRepeatingIDStr(id),
-                            metaMagic = parseInt(values[prefix + "metamagic"], 10)||0,
-                            spellSlot = (metaMagic) ? (values[prefix + "slot"]||values[prefix + "spell_level"]) : values[prefix + "spell_level"],
-                            matches,
-                            schoolForGroup=values[prefix + "school"]||"";
-                            matches = spellSchoolReg.exec(values[prefix + "school"]||"");
-                            if (matches && matches[0]){
-                                schoolForGroup = SWUtils.trimBoth(matches[0]);
-                                schoolForGroup = schoolForGroup[0].toUpperCase() + schoolForGroup.slice(1).toLowerCase();
+                            var prefix='', metaMagic=0,spellSlot=0,matches,schoolForGroup='',levelstr='',
+                            rawlevel=0,spellClass='',classStr='',isDomain=0,isMythic=0,uses=0,name='';
+                            try {
+                                prefix = "repeating_spells_"+ SWUtils.getRepeatingIDStr(id);
+                                metaMagic = parseInt(values[prefix + "metamagic"], 10)||0;
+                                spellSlot = (metaMagic) ? (values[prefix + "slot"]||values[prefix + "spell_level"]) : values[prefix + "spell_level"];
+                                schoolForGroup=values[prefix + "school"]||"";
+                                matches = spellSchoolReg.exec(values[prefix + "school"]||"");
+                                if (matches && matches[0]){
+                                    schoolForGroup = SWUtils.trimBoth(matches[0]);
+                                    schoolForGroup = schoolForGroup[0].toUpperCase() + schoolForGroup.slice(1).toLowerCase();
+                                }
+                                levelstr = "^{level} "+String(spellSlot);
+                                rawlevel = parseInt(values[prefix + "spell_level"],10)||0;
+                                spellClass = parseInt(values[prefix + "spellclass_number"],10)||0;
+                                classStr = "class"+ (values[prefix + "spellclass_number"]||"0");
+                                isDomain = parseInt(values[prefix + "isDomain"],10)||0;
+                                isMythic = usesMythic * parseInt(values[prefix+"isMythic"],10)||0;
+                                uses = parseInt(values[prefix + "used"],10)||0;
+                                name = values[prefix+"name"]||"";
+                            } catch (errmap){
+                                TAS.error("PFSpells.resetCommandMacro errmap on id "+id,errmap);
+                            } finally {
+                                return { 'id': id,
+                                    'level': spellSlot,
+                                    'levelstr': levelstr,
+                                    'rawlevel': rawlevel,
+                                    'school': schoolForGroup,
+                                    'spellClass': spellClass,
+                                    'spellClassstr': classStr,
+                                    'isDomain': isDomain,
+                                    'isMythic': isMythic,
+                                    'uses': uses,
+                                    'name': name
+                                };
                             }
-                            return { id: id,
-                                level: spellSlot,
-                                levelstr: "^{level} "+String(spellSlot),
-                                rawlevel : (parseInt(values[prefix + "spell_level"],10)||0),
-                                school: schoolForGroup,
-                                spellClass: (parseInt(values[prefix + "spellclass_number"],10)||0),
-                                spellClassstr: "class"+ (values[prefix + "spellclass_number"]||"0"),
-                                isDomain: (parseInt(values[prefix + "isDomain"],10)||0),
-                                isMythic: (usesMythic * parseInt(values[prefix+"isMythic"],10)||0),
-                                uses: (parseInt(values[prefix + "used"],10)||0),
-                                name: (values[prefix+"name"]||"")
-                            };
                         })
                         .omit(function(spellObj){
                             return (hideUnprepared[spellObj.spellClass] && isPrepared[spellObj.spellClass] && spellObj.uses===0 &&
