@@ -479,7 +479,7 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
 				//TAS.debug("PFSkills.recalculateSkillDropdowns setting",setter);
 				if (_.size(setter) > 0) {
 					setAttrs(setter, PFConst.silentParams, function(){
-						TAS.notice("PFSkills.recalculateSkillDropdowns resturned from setAttrs!");
+						//TAS.debug("PFSkills.recalculateSkillDropdowns resturned from setAttrs!");
 						doneDrop();
 					});
 				} else {
