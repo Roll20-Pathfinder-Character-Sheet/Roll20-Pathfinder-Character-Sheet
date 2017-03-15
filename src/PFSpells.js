@@ -109,7 +109,9 @@ export function resetCommandMacro (eventInfo, callback) {
             }
             getAttrs(["_reporder_repeating_spells"], function (repValues) {
                 //TAS.debug("PFSpells.resetCommandMacro order repValues:",repValues);
-                var spellAttrs = _.chain(idarray)
+                var spellAttrs;
+                try {
+                spellAttrs = _.chain(idarray)
                     .map(function(id){
                         var prefix = 'repeating_spells_'+SWUtils.getRepeatingIDStr(id),
                         retVal = [];
@@ -120,6 +122,11 @@ export function resetCommandMacro (eventInfo, callback) {
                     })
                     .flatten()
                     .value();
+                } catch (errouter2){
+                    TAS.error("PFSpells.resetCommandMacro errouter",errouter2);
+                    done();
+                    return;
+                }
                 getAttrs(spellAttrs, function (values) {
                     //TAS.debug(values);
                     var orderedList, repList, filteredIds, spellsByClass, npcSpellsArray, customSorted=0,
@@ -140,33 +147,46 @@ export function resetCommandMacro (eventInfo, callback) {
                         }
                         spellsByClass = _.chain(orderedList)
                         .map(function(id){
-                            var prefix = "repeating_spells_"+ SWUtils.getRepeatingIDStr(id),
-                            metaMagic = parseInt(values[prefix + "metamagic"], 10)||0,
-                            spellSlot = (metaMagic) ? values[prefix + "slot"] : values[prefix + "spell_level"],
-                            matches,
-                            schoolForGroup=values[prefix + "school"]||"";
-                            matches = spellSchoolReg.exec(values[prefix + "school"]||"");
-                            if (matches && matches[0]){
-                                schoolForGroup = SWUtils.trimBoth(matches[0]);
-                                schoolForGroup = schoolForGroup[0].toUpperCase() + schoolForGroup.slice(1).toLowerCase();
+                            var prefix='', metaMagic=0,spellSlot=0,matches,schoolForGroup='',levelstr='',
+                            rawlevel=0,spellClass='',classStr='',isDomain=0,isMythic=0,uses=0,name='';
+                            try {
+                                prefix = "repeating_spells_"+ SWUtils.getRepeatingIDStr(id);
+                                metaMagic = parseInt(values[prefix + "metamagic"], 10)||0;
+                                spellSlot = (metaMagic) ? (values[prefix + "slot"]||values[prefix + "spell_level"]) : values[prefix + "spell_level"];
+                                schoolForGroup=values[prefix + "school"]||"";
+                                matches = spellSchoolReg.exec(values[prefix + "school"]||"");
+                                if (matches && matches[0]){
+                                    schoolForGroup = SWUtils.trimBoth(matches[0]);
+                                    schoolForGroup = schoolForGroup[0].toUpperCase() + schoolForGroup.slice(1).toLowerCase();
+                                }
+                                levelstr = "^{level} "+String(spellSlot);
+                                rawlevel = parseInt(values[prefix + "spell_level"],10)||0;
+                                spellClass = parseInt(values[prefix + "spellclass_number"],10)||0;
+                                classStr = "class"+ (values[prefix + "spellclass_number"]||"0");
+                                isDomain = parseInt(values[prefix + "isDomain"],10)||0;
+                                isMythic = usesMythic * parseInt(values[prefix+"isMythic"],10)||0;
+                                uses = parseInt(values[prefix + "used"],10)||0;
+                                name = values[prefix+"name"]||"";
+                            } catch (errmap){
+                                TAS.error("PFSpells.resetCommandMacro errmap on id "+id,errmap);
+                            } finally {
+                                return { 'id': id,
+                                    'level': spellSlot,
+                                    'levelstr': levelstr,
+                                    'rawlevel': rawlevel,
+                                    'school': schoolForGroup,
+                                    'spellClass': spellClass,
+                                    'spellClassstr': classStr,
+                                    'isDomain': isDomain,
+                                    'isMythic': isMythic,
+                                    'uses': uses,
+                                    'name': name
+                                };
                             }
-                            return { id: id,
-                                level: spellSlot,
-                                levelstr: "^{level} "+String(spellSlot),
-                                rawlevel : parseInt(values[prefix + "spell_level"],10)||0,
-                                school: schoolForGroup,
-                                spellClass: (parseInt(values[prefix + "spellclass_number"],10)||0),
-                                spellClassstr: "class"+values[prefix + "spellclass_number"],
-                                isDomain: (parseInt(values[prefix + "isDomain"],10)||0),
-                                isMythic: (usesMythic * parseInt(values[prefix+"isMythic"],10)||0),
-                                uses: (parseInt(values[prefix + "used"],10)||0),
-                                name: (values[prefix+"name"]||"")
-                            };
                         })
                         .omit(function(spellObj){
-                            return isNaN(spellObj.rawlevel) || isNaN(spellObj.spellClass) || 
-                                (hideUnprepared[spellObj.spellClass] && isPrepared[spellObj.spellClass] && spellObj.uses===0 &&
-                                    (!( showDomain[spellObj.spellClass] && spellObj.isDomain )));
+                            return (hideUnprepared[spellObj.spellClass] && isPrepared[spellObj.spellClass] && spellObj.uses===0 &&
+                                    !( showDomain[spellObj.spellClass] && spellObj.isDomain ));
                         })
                         .map(function(spellObj){
                             var spellName = spellObj.name, usesStr="",dstr="",mystr="",lvlstr="", spacestr="";
@@ -190,8 +210,11 @@ export function resetCommandMacro (eventInfo, callback) {
                                 spellObj.npcChatLink = spellName+"(~@{character_id}|repeating_spells_" + spellObj.id + "_npc-roll)";
                                 return spellObj;
                             }
-                        })
-                        .sortBy('level')
+                        }).value();
+                        if (!customSorted){
+                            spellsByClass = _.sortBy(spellsByClass,'level');
+                        }
+                        spellsByClass = _.chain(spellsByClass)
                         .groupBy('spellClassstr')
                         .mapObject(function(classArray){
                             return _.chain(classArray)
@@ -265,46 +288,73 @@ export function resetCommandMacro (eventInfo, callback) {
 }
 
 function getSpellTotals  (ids, v, setter) {
-    var totalListed,
-    totalPrepped;
-    try {
-        totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
+    var doNotProcess=0,
+        casterTypes = [0,0,0],
+        totalPrepped = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]],
+        totalListed = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
+   try {
+        doNotProcess = parseInt(v.total_spells_manually,10)||0;
+        casterTypes[0] = parseInt(v['spellclass-0-casting_type'],10)||0;
+        if (parseInt(v.spellclasses_multiclassed,10)){
+            casterTypes[1] = parseInt(v['spellclass-1-casting_type'],10)||0;
+            casterTypes[2] = parseInt(v['spellclass-2-casting_type'],10)||0;
+            if (doNotProcess){
+                if (casterTypes[0]===1 && casterTypes[1]<2 && casterTypes[2]<2){
+                    return setter;
+                }
+            }
+        } else {
+            if (doNotProcess && casterTypes[0]===1){
+                return setter;
+            }
+        }
+        
+ /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
             memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
                 imemo[spelllevel] = 0;
                 return imemo;
             }, {});
             return memo;
         }, {});
-        totalListed = _.mapObject(totalPrepped, _.clone);
+        totalListed =  _.mapObject(totalPrepped, _.clone);*/
+         
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
-            spellLevel = parseInt(v[prefix + "spell_level"], 10),
-            classNum = parseInt(v[prefix + "spellclass_number"], 10),
-            metamagic = parseInt(v[prefix + "metamagic"], 10) || 0,
-            slot = isNaN(parseInt(v[prefix + "slot"], 10)) ? spellLevel : parseInt(v[prefix + "slot"], 10),
-            truelevel = metamagic ? slot : spellLevel,
-            uses = parseInt(v[prefix + "used"], 10) || 0;
-            if (!(isNaN(spellLevel) || isNaN(classNum))) {
-                //TAS.debug("resetSpellsTotals", "spellLevel", spellLevel, "classNum", classNum, "metamagic", metamagic, "slot", slot, truelevel, "truelevel", uses, "uses");
-                totalPrepped[classNum][truelevel] += uses;
-                totalListed[classNum][truelevel] += 1;
+                spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
+            spellLevel = parseInt(v[prefix + "spell_level"], 10);
+            if (!isNaN(spellLevel) ) {
+                classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
+                metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
+                slot = isNaN(parseInt(v[prefix + "slot"], 10)) ? spellLevel : parseInt(v[prefix + "slot"], 10);
+                truelevel = metamagic ? slot : spellLevel;
+                //TAS.debug("getSpellTotals", "spellLevel", spellLevel, "classNum", classNum, "metamagic", metamagic, "slot", slot, truelevel, "truelevel", uses, "uses");
+                if (!doNotProcess){
+                    uses = parseInt(v[prefix + "used"], 10) || 0;
+                    totalPrepped[classNum][truelevel] += uses;
+                    totalListed[classNum][truelevel] += 1;
+                } else if (casterTypes[classNum]!==1) {
+                    //if do not total,no need tosee total listed if not spontaneous
+                    totalListed[classNum][truelevel] += 1;
+                }
             } else {
-                TAS.warn("at resetSpellsTotals, ONE OF THESE IS NAN: spellLevel:"+ spellLevel+ ", classNum:"+ classNum);
+                TAS.warn("PFSpells.getSpellTotals: Spelllevel NAN: spellLevel:"+ spellLevel);
             }
         });
+
         _.each(PFConst.spellClassIndexes, function (classidx) {
             _.each(spellLevels, function (spellLevel) {
-                if ((parseInt(v["spellclass-" + classidx + "-level-" + spellLevel + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-total-listed"] = totalListed[classidx][spellLevel];
+                var prefix="spellclass-" + classidx + "-level-" + spellLevel ;
+                if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
+                    setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v["spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
-                    setter["spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
+                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
+                    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
+                    setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                 }
             });
         });
     } catch (err) {
-        TAS.error("PFSpells.updateSpellTotals", err);
+        TAS.error("PFSpells.getSpellTotals", err);
     } finally {
         return setter;
     }
@@ -316,8 +366,9 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
             callback();
         }
     });
+    
     getSectionIDs("repeating_spells", function (ids) {
-        var fields = [],
+        var fields = ['total_spells_manually','spellclasses_multiclassed','spellclass-0-casting_type','spellclass-1-casting_type','spellclass-2-casting_type'],
         rowattrs = ['spellclass_number', 'spell_level', 'slot', 'metamagic', 'used'];
         try {
             _.each(ids, function (id) {
@@ -337,9 +388,7 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 try {
                     setter = getSpellTotals(ids, v, setter);
                     if (_.size(setter)) {
-                        setAttrs(setter, {
-                            silent: true
-                        }, done);
+                        setAttrs(setter, PFConst.silentParams, done);
                     } else {
                         done();
                     }
