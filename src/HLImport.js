@@ -1,5 +1,8 @@
 'use strict';
-
+import _ from 'underscore';
+import TAS from 'exports-loader?TAS!TheAaronSheet';
+import {PFLog, PFConsole} from './PFLog';
+import * as PFSheet from './PFSheet';
 function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -7,7 +10,7 @@ function parseNum (num)
 	return (parseInt(num) || 0);
 }
 
-function buildList (objArray, propName) { return _.map(objArray, function (item) { return item[propName]; }).join(", "); },
+function buildList (objArray, propName) { return _.map(objArray, function (item) { return item[propName]; }).join(", "); }
 
 function getSizeMod (size)
 {
@@ -40,7 +43,7 @@ function getSizeMod (size)
 		default:
 			return 0;
 	}
-},
+}
 
 // Make sure "stuff" is an array
 function arrayify (stuff)
@@ -50,14 +53,14 @@ function arrayify (stuff)
 	if (Array.isArray(stuff))
 		return stuff;
 	return new Array(stuff);
-},
+}
 
 function importInit (attrs,initObj)
 {
 	attrs["init-misc"] = parseNum(initObj._total)-parseNum(initObj._attrtext);
 	attrs["init-ability"] = "@{"+initObj._attrname.substr(0,3).toUpperCase()+"-mod}";
 	attrs["init_notes"] = initObj.situationalmodifiers._text;
-},
+}
 
 function importAbilityScores (attrs,attributes)
 {
@@ -72,7 +75,7 @@ function importAbilityScores (attrs,attributes)
 		else
 			attrs[abName+"-penalty"] = modifier;
 	});
-},
+}
 
 function importSaves (attrs,saves)
 {
@@ -93,7 +96,7 @@ function importSaves (attrs,saves)
 			
 	}
 	attrs["Save-notes"] = saveNotes.trim();
-},
+}
 
 // Find an existing repeatable item with the same name, or generate new row ID
 function getOrMakeRowID (featIDList,name)
@@ -118,7 +121,7 @@ function getOrMakeRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return rows[_.indexOf(attrNames,attrMatch)];
 	return generateRowID();
-},
+}
 
 // Find an existing repeatable item with the same name, or generate new row ID; extra processing for items
 function getOrMakeItemRowID (featIDList,name)
@@ -144,7 +147,7 @@ function getOrMakeItemRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return rows[_.indexOf(attrNames,attrMatch)];
 	return generateRowID();
-},
+}
 
 // Find an existing repeatable item with the same name and spellclass, or generate new row ID
 function getOrMakeSpellRowID (featIDList,name,spellclass)
@@ -158,7 +161,7 @@ function getOrMakeSpellRowID (featIDList,name,spellclass)
 	if (!_.isUndefined(attrMatch))
 		return attrMatch.rowID;
 	return generateRowID();
-},
+}
 
 function getOrMakeClassRowID (featIDList,name)
 {
@@ -179,7 +182,7 @@ function getOrMakeClassRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return attrMatch.rowID;
 	return generateRowID();
-},
+}
 
 function importFeats (attrs,feats,featIDList,resources)
 {
@@ -209,7 +212,7 @@ function importFeats (attrs,feats,featIDList,resources)
 		if (_.contains(Object.keys(resources),feat._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[feat._name]._max;
 	});
-},
+}
 
 // Hero Lab stores armor and shields identically, so so assume anything with "shield" or "klar" in the name is a shield
 function nameIsShield (name)
@@ -217,7 +220,7 @@ function nameIsShield (name)
 	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
 		return true;
 	return false;
-},
+}
 
 function importItems (items,resources,armorPenalties,armor,weapons)
 {
@@ -367,7 +370,7 @@ function importItems (items,resources,armorPenalties,armor,weapons)
 			setAttrs(attrs);
 		});
 	});
-},
+}
 
 function importTraits (attrs,traits,traitIDList,resources)
 {
@@ -383,7 +386,7 @@ function importTraits (attrs,traits,traitIDList,resources)
 		if (_.contains(Object.keys(resources),trait._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[trait._name]._max;
 	});
-},
+}
 
 function importSLAs (attrs,SLAs,SLAsIDList,resources)
 {
@@ -400,7 +403,7 @@ function importSLAs (attrs,SLAs,SLAsIDList,resources)
 		if (_.contains(Object.keys(resources),SLA._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[SLA._name]._max;
 	});
-},
+}
 
 function importFeatures (attrs,featureList,specials,archetypes,resources)
 {
@@ -448,7 +451,7 @@ function importFeatures (attrs,featureList,specials,archetypes,resources)
 		if (!_.isUndefined(special._type))
 			attrs[repeatPrefix+"_ability_type"] = special._type.substr(0,2);
 	});
-},
+}
 
 function importClasses (attrs, classes)
 {
@@ -471,7 +474,7 @@ function importClasses (attrs, classes)
 	}
 
 	return classList;
-},
+}
 
 // Import spellclasses; presence in spellclasses node means it's a spellcaster, but some of the data is in the classes node
 function importSpellClasses (attrs, spellclasses,classes,abScores)
@@ -578,7 +581,7 @@ function importSpellClasses (attrs, spellclasses,classes,abScores)
 		attrs["spellclasses_multiclassed"] = 1;
 
 	return spellClassesList;
-},
+}
 
 function importSpells (spells,spellclasses)
 {
@@ -676,7 +679,7 @@ function importSpells (spells,spellclasses)
 			setAttrs(attrs);
 		});
 	});
-},
+}
 
 function calcHitDice (hitdice)
 {
@@ -689,7 +692,7 @@ function calcHitDice (hitdice)
 		i++;
 	}
 	return numDice;
-},
+}
 
 // Builds an object collection of archetypes, with the appropriate classes as the keys, in the order they're entered in the character sheet; use this to determine class specials come from
 function buildArchetypeArray (classes)
@@ -708,7 +711,7 @@ function buildArchetypeArray (classes)
 		archetypes[className] = archeList;
 	});
 	return archetypes;
-},
+}
 
 // Returns the array number of the class that grants a feature; returns -1 if we can't find the class
 function getClassSource (sources,archetypes)
@@ -731,9 +734,9 @@ function getClassSource (sources,archetypes)
 		return classes.indexOf(className);
 		
 	return -1;
-},
+}
 
-function bonusSpellSlots (abilMod,spellLevel) { return Math.max(0, Math.floor((abilMod + 4 - spellLevel) / 4)); },
+function bonusSpellSlots (abilMod,spellLevel) { return Math.max(0, Math.floor((abilMod + 4 - spellLevel) / 4)); }
 
 function importSkills (attrs,skills,size,ACP)
 {
@@ -971,7 +974,7 @@ function importSkills (attrs,skills,size,ACP)
 			attrs[skillAttrPrefix+"-macro"] = macro;
 		}
 	}
-},
+}
 
 // Import ACP and Max Dex; these aren't included under items, but the final values are listed in penalties
 function importPenalties (attrs,penalties)
@@ -990,7 +993,7 @@ function importPenalties (attrs,penalties)
 		i++;
 	}
 	return ACP;
-},
+}
 
 function importAC (attrs,acObj)
 {
@@ -1014,7 +1017,7 @@ function importAC (attrs,acObj)
 		else
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 	}
-},
+}
 
 function importCharacter (characterObj)
 {
