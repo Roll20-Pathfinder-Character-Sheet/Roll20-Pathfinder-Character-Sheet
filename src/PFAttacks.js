@@ -31,6 +31,8 @@ defaultRepeatingMacroMap={
 	'&{template:':{'current':'pf_attack}',old:['pf_generic}','pf_block}']},
 	'@{toggle_attack_accessible}':{'current':'@{toggle_attack_accessible}'},
 	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
+//	'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
+//	'{{switch=':{'current':'~@{character_id}|NPCREPLACEattacks}}'},
 	'{{color=':{'current':'@{rolltemplate_color}}}'},
 	'{{character_name=':{'current':'@{character_name}}}'},
 	'{{character_id=':{'current':'@{character_id}}}'},
@@ -577,9 +579,10 @@ export function recalculateRepeatingWeapons (callback){
 }
 
 export function setNewDefaultsSync (ids,v,setter){
-	var localsetter;
+	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
+		defaultSize = parseInt(v['size'],10)||0;
 		localsetter = _.reduce(ids,function(m,id){
 			var prefix = 'repeating_weapon_'+id+'_';
 			try {
@@ -620,13 +623,11 @@ export function setNewDefaults (callback){
 		setAttrs({'migrated_attacklist_defaults111':1},PFConst.silentParams,done);
 	});
 	//TAS.debug("At PFAttacks.setNewDefaults");
-	getAttrs(['size','migrated_attacklist_defaults111'],function(vsize){
-		var defaultSize = 0;
+	getAttrs(['migrated_attacklist_defaults111'],function(vsize){
 		if(parseInt(vsize['migrated_attacklist_defaults111'],10)){
 			done();
 			return;
 		}
-		defaultSize = parseInt(vsize['size'],10)||0;
 		getSectionIDs('repeating_weapon',function(ids){
 			var fields;
 			if (!(ids || _.size(ids))){
@@ -634,6 +635,7 @@ export function setNewDefaults (callback){
 				return;
 			}
 			fields= SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_damage-dice-num','_damage-die']);
+			fields.push('size');
 			getAttrs(fields,function(v){
 				var setter={};
 				try {
