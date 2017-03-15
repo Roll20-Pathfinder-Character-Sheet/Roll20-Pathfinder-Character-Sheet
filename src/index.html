@@ -402,20 +402,20 @@
 				<input type="checkbox" name="attr_spellclass-0-exists" class="sheet-spellclass0-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-1-exists" class="sheet-spellclass1-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-2-exists" class="sheet-spellclass2-show sheet-noshow" value="1" />
-				<button type="roll" name="roll_ability_checks" class="sheet-command-button" value="@{ability_checks_macro}" title="%{selected|ability_checks}" data-i18n="ability-checks">Ability Checks</button>
+				<button type="roll" name="roll_ability_checks" class="sheet-command-button" value="@{ability_checks_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-ability_checks}}" title="%{selected|ability_checks}" data-i18n="ability-checks">Ability Checks</button>
 				<button type="roll" name="roll_Roll-for-initiative" class="sheet-command-button" value="@{PC-whisper} @{init-macro-text}" title="%{selected|Roll-for-initiative}" data-i18n="initiative-abbrv">Init</button>
-				<button type="roll" name="roll_defenses" class="sheet-command-button" value="@{defenses-macro}" title="%{selected|defenses}" data-i18n="defenses">Defenses</button>
-				<button type="roll" name="roll_attacks" class="sheet-command-button" value="@{attacks-macro}" title="%{selected|attacks}" data-i18n="attacks">Attacks</button>
-				<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro}" title="%{selected|abilities}" data-i18n="abilities">Abilities</button>
-				<button type="roll" name="roll_combat_skills" class="sheet-command-button" value="@{combat_skills-macro}" title="%{selected|combat_skills}" data-i18n="combat-skills">Combat Skills</button>
-				<button type="roll" name="roll_skills" class="sheet-command-button" value="@{skills-macro}" title="%{selected|skills}" data-i18n="all-skills">All Skills</button>
-				<button type="roll" name="roll_adventure_skills" class="sheet-command-button sheet-bg-only" value="@{adventure_skills-macro}" title="%{selected|adventure_skills}" data-i18n="adventure">Adventure</button>
-				<button type="roll" name="roll_background_skills" class="sheet-command-button sheet-bg-only" value="@{background_skills-macro}" title="%{selected|background_skills}" data-i18n="background">Background</button>
-				<button type="roll" name="roll_consolidated_skills" class="sheet-command-button sheet-consolidated" value="@{consolidated_skills-macro}" title="%{selected|consolidated_skills}" data-i18n="consolidated">Consolidated</button>
-				<button type="roll" name="roll_spellbook-0" class="sheet-command-button sheet-sect2 sheet-sect-spellclass0" value="@{spellclass-0-book}" title="%{selected|spellbook-0}"><span name="attr_spellclass-0-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book}" title="%{selected|spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_items" class="sheet-command-button" value="@{item_buttons_macro}" title="%{selected|items}" data-i18n="items">Items</button>
+				<button type="roll" name="roll_defenses" class="sheet-command-button" value="@{defenses-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-defenses}} " title="%{selected|defenses}" data-i18n="defenses">Defenses</button>
+				<button type="roll" name="roll_attacks" class="sheet-command-button" value="@{attacks-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-attacks}}" title="%{selected|attacks}" data-i18n="attacks">Attacks</button>
+				<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-abilities}}" title="%{selected|abilities}" data-i18n="abilities">Abilities</button>
+				<button type="roll" name="roll_combat_skills" class="sheet-command-button" value="@{combat_skills-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-combat_skills}}" title="%{selected|combat_skills}" data-i18n="combat-skills">Combat Skills</button>
+				<button type="roll" name="roll_skills" class="sheet-command-button" value="@{skills-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-skills}}" title="%{selected|skills}" data-i18n="all-skills">All Skills</button>
+				<button type="roll" name="roll_adventure_skills" class="sheet-command-button sheet-bg-only" value="@{adventure_skills-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-adventure_skills}}" title="%{selected|adventure_skills}" data-i18n="adventure">Adventure</button>
+				<button type="roll" name="roll_background_skills" class="sheet-command-button sheet-bg-only" value="@{background_skills-macro} {{switch=~@{character_id}|NPC-background_skills}}" title="%{selected|background_skills}" data-i18n="background">Background</button>
+				<button type="roll" name="roll_consolidated_skills" class="sheet-command-button sheet-consolidated" value="@{consolidated_skills-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-consolidated_skills}}" title="%{selected|consolidated_skills}" data-i18n="consolidated">Consolidated</button>
+				<button type="roll" name="roll_spellbook-0" class="sheet-command-button sheet-sect2 sheet-sect-spellclass0" value="@{spellclass-0-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-0}}" title="%{selected|spellbook-0}"><span name="attr_spellclass-0-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-1}}" title="%{selected|spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-2}}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_items" class="sheet-command-button" value="@{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
 				<input type="hidden" name="attr_ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
 				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{toggle_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
@@ -444,20 +444,20 @@
 				<input type="checkbox" name="attr_spellclass-0-exists" class="sheet-spellclass0-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-1-exists" class="sheet-spellclass1-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-2-exists" class="sheet-spellclass2-show sheet-noshow" value="1" />
-				<button type="roll" name="roll_NPC-ability_checks" class="sheet-command-button" value="@{NPC-ability_checks_macro}" title="%{selected|NPC-ability_checks}" data-i18n="ability-checks">Ability Checks</button>
+				<button type="roll" name="roll_NPC-ability_checks" class="sheet-command-button" value="@{NPC-ability_checks_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|ability_checks}}" title="%{selected|NPC-ability_checks}" data-i18n="ability-checks">Ability Checks</button>
 				<button type="roll" name="roll_NPC-Initiative-Roll" class="sheet-command-button" value="@{NPC-whisper} @{init-macro-text}" title="%{selected|NPC-Initiative-Roll}" data-i18n="initiative-abbrv">Init</button>
-				<button type="roll" name="roll_NPC-defenses" class="sheet-command-button" title="%{selected|NPC-defenses}" value="@{NPC-defenses-macro}" data-i18n="defenses">Defenses</button>
-				<button type="roll" name="roll_NPC-attacks_buttons" class="sheet-command-button" value="@{attacks-macro-npc}" title="%{selected|NPC-attacks}" data-i18n="attacks">Attacks</button>
-				<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro}" title="%{selected|NPC-abilities}" data-i18n="abilities">Abilities</button>
-				<button type="roll" name="roll_NPC-combat_skills" class="sheet-command-button" value="@{NPC-combat_skills-macro}" title="%{selected|NPC-combat_skills}" data-i18n="combat-skills">Combat Skills</button>
-				<button type="roll" name="roll_NPC-skills" class="sheet-command-button" value="@{NPC-skills-macro}" title="%{selected|NPC-skills}" data-i18n="all-skills">All Skills</button>
-				<button type="roll" name="roll_NPC-adventure_skills" class="sheet-command-button sheet-bg-only" value="@{NPC-adventure_skills-macro}" title="%{selected|NPC-adventure_skills}" data-i18n="adventure">Adventure</button>
-				<button type="roll" name="roll_NPC-background_skills" class="sheet-command-button sheet-bg-only" value="@{NPC-background_skills-macro}" title="%{selected|NPC-background_skills}" data-i18n="background">Background</button>
-				<button type="roll" name="roll_NPC-consolidated_skills" class="sheet-command-button sheet-consolidated" value="@{NPC-consolidated_skills-macro}" title="%{selected|NPC-consolidated_skills}" data-i18n="consolidated">Consolidated</button>
-				<button type="roll" name="roll_NPC-spellbook-0" class="sheet-command-button sheet-sect2 sheet-sect-spellclass0" value="@{spellclass-0-book-npc}" title="%{selected|NPC-spellbook-0}"><span name="attr_spellclass-0-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_NPC-spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book-npc}" title="%{selected|NPC-spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_NPC-spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book-npc}" title="%{selected|NPC-spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
-				<button type="roll" name="roll_NPC-items" class="sheet-command-button" value="@{NPC-item_buttons_macro}" title="%{selected|NPC-items}" data-i18n="items">Items</button>
+				<button type="roll" name="roll_NPC-defenses" class="sheet-command-button" title="%{selected|NPC-defenses}" value="@{NPC-defenses-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|NPC-defenses}}" data-i18n="defenses">Defenses</button>
+				<button type="roll" name="roll_NPC-attacks_buttons" class="sheet-command-button" value="@{attacks-macro-npc} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|attacks}}" title="%{selected|NPC-attacks}" data-i18n="attacks">Attacks</button>
+				<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|abilities}}" title="%{selected|NPC-abilities}" data-i18n="abilities">Abilities</button>
+				<button type="roll" name="roll_NPC-combat_skills" class="sheet-command-button" value="@{NPC-combat_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|combat_skills}}" title="%{selected|NPC-combat_skills}" data-i18n="combat-skills">Combat Skills</button>
+				<button type="roll" name="roll_NPC-skills" class="sheet-command-button" value="@{NPC-skills-macro}" title="%{selected|NPC-skills} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|skills}}" data-i18n="all-skills">All Skills</button>
+				<button type="roll" name="roll_NPC-adventure_skills" class="sheet-command-button sheet-bg-only" value="@{NPC-adventure_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|adventure_skills}}" title="%{selected|NPC-adventure_skills}" data-i18n="adventure">Adventure</button>
+				<button type="roll" name="roll_NPC-background_skills" class="sheet-command-button sheet-bg-only" value="@{NPC-background_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|background_skills}}" title="%{selected|NPC-background_skills}" data-i18n="background">Background</button>
+				<button type="roll" name="roll_NPC-consolidated_skills" class="sheet-command-button sheet-consolidated" value="@{NPC-consolidated_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|consolidated_skills}}" title="%{selected|NPC-consolidated_skills}" data-i18n="consolidated">Consolidated</button>
+				<button type="roll" name="roll_NPC-spellbook-0" class="sheet-command-button sheet-sect2 sheet-sect-spellclass0" value="@{spellclass-0-book-npc} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|spellbook-0}}" title="%{selected|NPC-spellbook-0}"><span name="attr_spellclass-0-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_NPC-spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="@{spellclass-1-book-npc} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|spellbook-1}}" title="%{selected|NPC-spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_NPC-spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{spellclass-2-book-npc} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|spellbook-2}}" title="%{selected|NPC-spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
+				<button type="roll" name="roll_NPC-items" class="sheet-command-button" value="@{NPC-item_buttons_macro}" title="%{selected|NPC-items} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|items}}" data-i18n="items">Items</button>
 				<input type="hidden" name="attr_NPC-ability_checks_macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{npc} ^{ability-checks}}} {{row01=[^{strength-abbrv}](~@{character_id}|NPC-STR-Check) [^{dexterity-abbrv}](~@{character_id}|NPC-DEX-Check) [^{constitution-abbrv}](~@{character_id}|NPC-CON-Check) [^{intelligence-abbrv}](~@{character_id}|NPC-INT-Check) [^{wisdom-abbrv}](~@{character_id}|NPC-WIS-Check) [^{charisma-abbrv}](~@{character_id}|NPC-CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|NPC-Initiative-Roll)}}" />
 				<input type="hidden" name="attr_NPC-defenses-macro" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{npc} ^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|NPC-Fort-Save) [^{reflex-abbrv}](~@{character_id}|NPC-Ref-Save) [^{willpower-abbrv}](~@{character_id}|NPC-Will-Save) [^{all-saves}](~@{character_id}|NPC-All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|NPC-defense-stats)}}" />
 				<input type="hidden" name="attr_attacks-macro-npc" value="/w &quot;@{character_name}&quot; &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{attacks}}} {{description=^{none-available} }}" />
@@ -5862,14 +5862,14 @@
 								<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
 								<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
 								<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
-								<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro}" title="%{selected|abilities}"><span data-i18n="abilities">Abilities</span></button>
-								<button type="roll" name="roll_ex_button" class="sheet-command-button" value="@{ex_buttons_macro}" title="%{selected|ex_button}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
-								<button type="roll" name="roll_sp_button" class="sheet-command-button" value="@{sp_buttons_macro}" title="%{selected|sp_button}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
-								<button type="roll" name="roll_su_button" class="sheet-command-button" value="@{su_buttons_macro}" title="%{selected|su_button}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
+								<button type="roll" name="roll_abilities" class="sheet-command-button" value="@{ability_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-abilities}}" title="%{selected|abilities}"><span data-i18n="abilities">Abilities</span></button>
+								<button type="roll" name="roll_ex_button" class="sheet-command-button" value="@{ex_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-ex_button}}" title="%{selected|ex_button}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
+								<button type="roll" name="roll_sp_button" class="sheet-command-button" value="@{sp_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-sp_button}}" title="%{selected|sp_button}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
+								<button type="roll" name="roll_su_button" class="sheet-command-button" value="@{su_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-su_button}}" title="%{selected|su_button}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
 								<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_buttons_macro}" title="%{selected|class-ability_button}"><span data-i18n="original-class-features-list">Orig Class Features</span></button>
-								<button type="roll" name="roll_feat_button" class="sheet-command-button sheet-section-featlist" value="@{feat_buttons_macro}" title="%{selected|feat_button}"><span data-i18n="original-feats-list">Orig Feats</span></button>
+								<button type="roll" name="roll_feat_button" class="sheet-command-button sheet-section-featlist" value="@{feat_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-feat_button}}" title="%{selected|feat_button}"><span data-i18n="original-feats-list">Orig Feats</span></button>
 								<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_button}"><span data-i18n="original-traits-list">Orig Traits</span></button>
-								<button type="roll" name="roll_racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{racial-trait_buttons_macro}" title="%{selected|racial-trait_button}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
+								<button type="roll" name="roll_racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{racial-trait_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-racial-trait_button}}" title="%{selected|racial-trait_button}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
 								<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_button}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
 								<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_button}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
 								<button type="roll" name="roll_spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|spell-like-abilities_button}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
@@ -5898,14 +5898,14 @@
 								<input type="checkbox" class="sheet-featlist-show" name="attr_use_feats" value="1" role="presentation" />
 								<input type="checkbox" class="sheet-classfeatures-show" name="attr_use_class_features" value="1" role="presentation" />
 								<input type="checkbox" class="sheet-oldslas-show" name="attr_use_spell-like-abilities" value="1" role="presentation" />
-								<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro}" title="%{selected|NPC-abilities}"><span data-i18n="abilities">Abilities</span></button>
-								<button type="roll" name="roll_NPC-ex_button" class="sheet-command-button" value="@{NPC-ex_buttons_macro}" title="%{selected|NPC-ex_button}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
-								<button type="roll" name="roll_NPC-sp_button" class="sheet-command-button" value="@{NPC-sp_buttons_macro}" title="%{selected|NPC-sp_button}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
-								<button type="roll" name="roll_NPC-su_button" class="sheet-command-button" value="@{NPC-su_buttons_macro}" title="%{selected|NPC-su_button}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
+								<button type="roll" name="roll_NPC-abilities" class="sheet-command-button" value="@{NPC-ability_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|abilities}}" title="%{selected|NPC-abilities}"><span data-i18n="abilities">Abilities</span></button>
+								<button type="roll" name="roll_NPC-ex_button" class="sheet-command-button" value="@{NPC-ex_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|ex_button}}" title="%{selected|NPC-ex_button}"><span data-i18n="extraordinary-abilities-menu">Ex</span></button>
+								<button type="roll" name="roll_NPC-sp_button" class="sheet-command-button" value="@{NPC-sp_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|sp_button}}" title="%{selected|NPC-sp_button}"><span data-i18n="spell-like-abilities-menu">Sp</span></button>
+								<button type="roll" name="roll_NPC-su_button" class="sheet-command-button" value="@{NPC-su_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|su_button}}" title="%{selected|NPC-su_button}"><span data-i18n="supernatural-abilities-menu">Su</span></button>
 								<button type="roll" name="roll_class-ability_button" class="sheet-command-button sheet-section-classfeatureslist" value="@{class-ability_button}" title="%{selected|class-ability_buttons_macro}"><span data-i18n="original-class-features-list">Class Features</span></button>
-								<button type="roll" name="roll_NPC-feat_button" class="sheet-command-button sheet-section-featlist" value="@{NPC-feat_buttons_macro}" title="%{selected|NPC-feat_button}"><span data-i18n="original-feats-list">Orig Feats</span></button>
+								<button type="roll" name="roll_NPC-feat_button" class="sheet-command-button sheet-section-featlist" value="@{NPC-feat_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|feat_button}}" title="%{selected|NPC-feat_button}"><span data-i18n="original-feats-list">Orig Feats</span></button>
 								<button type="roll" name="roll_trait_button" class="sheet-command-button sheet-section-traits" value="@{trait_buttons_macro}" title="%{selected|trait_button}"><span data-i18n="original-traits-list">Orig Traits</span></button>
-								<button type="roll" name="roll_NPC-racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{NPC-racial-trait_buttons_macro}" title="%{selected|NPC-racial-trait_button}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
+								<button type="roll" name="roll_NPC-racial-trait_button" class="sheet-command-button sheet-section-racial-traits" value="@{NPC-racial-trait_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|racial-trait_button}}" title="%{selected|NPC-racial-trait_button}"><span data-i18n="original-racial-traits-list">Orig Racial Traits</span></button>
 								<button type="roll" name="roll_mythic-feat_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-feat_buttons_macro}" title="%{selected|mythic-feat_button}"><span data-i18n="mythic-feats">Orig Mythic Feats</span></button>
 								<button type="roll" name="roll_mythic-ability_button" class="sheet-command-button sheet-section-mythic" value="@{mythic-ability_buttons_macro}" title="%{selected|mythic-ability_button}"><span data-i18n="mythic-abilities">Orig Mythic Abilities</span></button>
 								<button type="roll" name="roll_npc-spell-like-abilities_button" class="sheet-command-button sheet-section-oldslas" value="@{npc-spell-like-abilities_buttons_macro}" title="%{selected|npc-spell-like-abilities_button}"><span data-i18n="original-spell-like-abilities-list">Orig spell-like abilities</span></button>
@@ -11357,14 +11357,14 @@
 						<label>
 							<span data-i18n="whisper-non-player-character-rolls" data-i18n-title="whisper-non-player-character-rolls-title" data-i18n-aria-label="whisper-non-player-character-rolls-title" title="All NPC rolls will be whispered to the GM.">NPC rolls: Whisper to GM or broadcast publicly</span>
 							<select name="attr_NPC-whisper" title="@{NPC-whisper}" style="display:inline;">
-								<option value="&nbsp;" data-i18n="public-rolls">Public Rolls</option>
+								<option value="" data-i18n="public-rolls">Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
 							</select>
 						</label>
 						<label>
 							<span data-i18n="whisper-character-rolls" data-i18n-title="whisper-character-rolls-title" data-i18n-aria-label="whisper-character-rolls-title" title="All PC rolls will be whispered to the GM.">PC rolls: Whisper to GM or broadcast publicly</span>
 							<select name="attr_PC-whisper" title="@{PC-whisper}" style="display:inline;">
-								<option value="&nbsp;" data-i18n="public-rolls" selected>Public Rolls</option>
+								<option value="" data-i18n="public-rolls" selected>Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master">Whisper GM</option>
 							</select>
 						</label>
@@ -13617,6 +13617,13 @@
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
+				{{#switch}}
+					<div class="sheet-roll-group">
+						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
+						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
+					</div>
+				{{/switch}}
+				{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check"></span>:**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
@@ -13638,9 +13645,9 @@
 				</div>
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
-						{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 }}
+						{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 }}
+						{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13667,6 +13674,11 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
+				{{#switch}}
+					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
+					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
+				{{/switch}}
+				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#check}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="check"></span>:** {{check}}</span></label>{{/check}}
 				{{#class}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="class"></span>:** {{class}}</span></label>{{/class}}
 				{{#lefttext_1}}<label><span>{{lefttext_1}}</span></label>{{/lefttext_1}}
@@ -13679,9 +13691,9 @@
 				{{#righttext_4}}<label><span class="sheet-right">{{righttext_4}}</span></label>{{/righttext_4}}
 				{{#lefttext_5}}<label><span>{{lefttext_5}}</span></label>{{/lefttext_5}}
 				{{#righttext_5}}<label><span class="sheet-right">{{righttext_5}}</span></label>{{/righttext_5}}
-				{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 }}
+				{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
 				<label><span>**{{key}}**</span><span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 }}
+				{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
 				{{#lefttext_6}}<label><span>{{lefttext_6}}</span></label>{{/lefttext_6}}
 				{{#righttext_6}}<label><span class="sheet-right">{{righttext_6}}</span></label>{{/righttext_6}}
 				{{#lefttext_7}}<label><span>{{lefttext_7}}</span></label>{{/lefttext_7}}
@@ -13723,8 +13735,11 @@
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
-					{{#whisper}}{{#switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">(<span data-i18n="whisper-gm">Roll: GM</span>)</div></div>{{/switch}}{{/whisper}}
-					{{^whisper}}{{#switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">(<span data-i18n="public-roll">Roll: Public</span>{{switch}})</div></div>{{/switch}}{{/whisper}}
+					{{#switch}}
+						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
+						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
+					{{/switch}}
+					{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
 					{{#hasuses}}<div class="sheet-roll-row"><div class="sheet-roll-cell"><span data-i18n="quantity-abbrv">Qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</div></div>{{/hasuses}}
 					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
@@ -13745,8 +13760,11 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#whisper}}{{#switch}}<label class="sheet-right">(<span data-i18n="whisper-gm">Roll: GM</span> {{whisper}} {{switch}})</label>{{/switch}}{{/whisper}}
-				{{^whisper}}{{#switch}}<label class="sheet-right">(<span data-i18n="public-roll">Roll: Public</span>{{switch}}</label>){{/switch}}{{/whisper}}		
+				{{#switch}}
+					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
+					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
+				{{/switch}}
+				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
 				{{#hasuses}}<label><span><span data-i18n="quantity-abbrv">qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</span></label>{{/hasuses}}
 				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
