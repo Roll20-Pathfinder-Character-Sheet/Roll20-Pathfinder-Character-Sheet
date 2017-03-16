@@ -4,6 +4,7 @@
     "eqeqeq": true,
     "latedef": true,
     "undef": true,
+    "asi": true,
     "plusplus": false,
     "onevar": true,
     "bitwise"       : true,   // Prohibit bitwise operators (&, |, ^, etc.)
