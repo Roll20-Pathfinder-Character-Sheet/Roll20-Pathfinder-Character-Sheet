@@ -25,7 +25,7 @@
 			"optiontranslationkeys": ["public-rolls","whisper-to-game-master"],
 			"default": "",
 			"description": "All PC rolls will be whispered to the GM",
-			"descriptiontranslationkey": "whisper-character-rolls-title"
+			"descriptiontranslationkey": "whisper-rolls-title"
 		},
 		{
 			"attribute": "NPC-whisper",
@@ -36,7 +36,7 @@
 			"optiontranslationkeys": ["public-rolls","whisper-to-game-master"],
 			"default": "/ gm",
 			"description": "All NPC rolls will be whispered to the GM",
-			"descriptiontranslationkey": "whisper-non-player-character-rolls-title"
+			"descriptiontranslationkey": "whisper-rolls-title"
 		},
 		{
 			"attribute": "set_pfs",
