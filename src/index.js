@@ -8,11 +8,11 @@ import * as HLImport from './HLImport';
 
 TAS.config({
  logging: {
-   info: true,
-   debug: true
+   info: false,
+   debug: false
  }
 });
-TAS.debugMode();
+//TAS.debugMode();
 PFConsole.log('       ,## /##                    ');
 PFConsole.log('      /#/ /  ##                   ');
 PFConsole.log('     / / /    ##                  ');
