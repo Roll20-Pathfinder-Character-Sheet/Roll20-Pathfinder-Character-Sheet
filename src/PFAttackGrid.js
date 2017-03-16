@@ -2,9 +2,11 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
+import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFMigrate from './PFMigrate';
+import * as PFMenus from './PFMenus';
 
 export var attackGridFields = {
     "melee": {
@@ -70,7 +72,11 @@ export var attackGridFields = {
 };
 var attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
 attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
-attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields);
+attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
+groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
+        '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
+        '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
+
 
 /** updates DMG-mod
  * @param {function} callback optional call when done
@@ -114,7 +120,32 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         done();
     }
 }
-export function resetCommandMacro  (eventInfo, callback) {
+
+export function resetCommandMacro (callback){
+	getAttrs(['is_npc'],function(v){
+		var isNPC = parseInt(v.is_npc,10)||0,
+        header="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}",
+        npcHeader="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|NPC-Melee-Attack-Roll) [^{ranged}](~@{character_id}|NPC-Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|NPC-CMB-Check) [^{melee2}](~@{character_id}|NPC-Melee2-Attack-Roll) }}";
+ TAS.debug("at PFAttackGrid.resetCommandMacro");
+        PFMenus.resetOneCommandMacro('attacks',true,null,header,groupMapForMenu);
+        PFMenus.resetOneCommandMacro('attacks',false,null,npcHeader,groupMapForMenu);
+/*
+		getTopOfMenu ( function(header){
+			PFMenus.resetOneCommandMacro('ability',isNPC,null,header);
+		}, isNPC);
+		if (isNPC){
+			getTopOfMenu ( function(header){
+				PFMenus.resetOneCommandMacro('ability',false,null,header);
+			});
+		}
+        */
+		if (typeof callback === "function"){
+			callback();
+		}
+	});
+}
+
+export function resetCommandMacroOld  (callback) {
     var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
     baseAttacks = "{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|REPLACENPCMelee-Attack-Roll) [^{ranged}](~@{character_id}|REPLACENPCRanged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|REPLACENPCCMB-Check) [^{melee2}](~@{character_id}|REPLACENPCMelee2-Attack-Roll) REPLACE}}",
     ranged2BaseAttacks = "[^{ranged2}](~@{character_id}|REPLACENPCRanged2-Attack-Roll)",
@@ -144,7 +175,7 @@ export function resetCommandMacro  (eventInfo, callback) {
             baseMacro += baseAttacks;
         }
         
-        //TAS.debug("PFAttackGrid.resetCommandMacro baseMacro: " + baseMacro);
+        TAS.debug("PFAttackGrid.resetCommandMacro baseMacro: " + baseMacro);
         getSectionIDs("repeating_weapon", function (idarray) {
             //if no attacks just set the base melee, ranged, cmb attacks
             if (!idarray || idarray.length === 0) {
@@ -155,9 +186,7 @@ export function resetCommandMacro  (eventInfo, callback) {
                     attrs["attacks-macro-npc"] = baseMacro;
                 }
                 if (_.size(attrs)) {
-                    setAttrs(attrs, {
-                        silent: true
-                    }, done);
+                    setAttrs(attrs, PFConst.silentParams, done);
                 } else {
                     done();
                 }
