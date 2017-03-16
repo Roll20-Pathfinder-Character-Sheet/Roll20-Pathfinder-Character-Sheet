@@ -1,15 +1,21 @@
 'use strict';
-
-function parseNum (num)
+import _ from 'underscore';
+import TAS from 'exports-loader?TAS!TheAaronSheet';
+import {PFLog, PFConsole} from './PFLog';
+import * as PFSheet from './PFSheet';
+export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
 		return 0;
 	return (parseInt(num) || 0);
 }
 
-function buildList (objArray, propName) { return _.map(objArray, function (item) { return item[propName]; }).join(", "); },
+export function bonusSpellSlots (abilMod,spellLevel) { return Math.max(0, Math.floor((abilMod + 4 - spellLevel) / 4)); }
 
-function getSizeMod (size)
+
+export function buildList (objArray, propName) { return _.map(objArray, function (item) { return item[propName]; }).join(", "); }
+
+export function getSizeMod (size)
 {
 	switch(size.toLowerCase())
 	{
@@ -40,26 +46,26 @@ function getSizeMod (size)
 		default:
 			return 0;
 	}
-},
+}
 
 // Make sure "stuff" is an array
-function arrayify (stuff)
+export function arrayify (stuff)
 {
 	if (_.isUndefined(stuff))
 		return [];
 	if (Array.isArray(stuff))
 		return stuff;
 	return new Array(stuff);
-},
+}
 
-function importInit (attrs,initObj)
+export function importInit (attrs,initObj)
 {
 	attrs["init-misc"] = parseNum(initObj._total)-parseNum(initObj._attrtext);
 	attrs["init-ability"] = "@{"+initObj._attrname.substr(0,3).toUpperCase()+"-mod}";
 	attrs["init_notes"] = initObj.situationalmodifiers._text;
-},
+}
 
-function importAbilityScores (attrs,attributes)
+export function importAbilityScores (attrs,attributes)
 {
 	attributes.forEach(function(abScore) {
 		var abName = abScore._name.substr(0,3).toUpperCase();
@@ -72,9 +78,9 @@ function importAbilityScores (attrs,attributes)
 		else
 			attrs[abName+"-penalty"] = modifier;
 	});
-},
+}
 
-function importSaves (attrs,saves)
+export function importSaves (attrs,saves)
 {
 	// Since the XML doesn't break this down by class, add it all to class 0
 	var i = 0;
@@ -93,10 +99,10 @@ function importSaves (attrs,saves)
 			
 	}
 	attrs["Save-notes"] = saveNotes.trim();
-},
+}
 
 // Find an existing repeatable item with the same name, or generate new row ID
-function getOrMakeRowID (featIDList,name)
+export function getOrMakeRowID (featIDList,name)
 {
 	var attrNames = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
@@ -118,10 +124,10 @@ function getOrMakeRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return rows[_.indexOf(attrNames,attrMatch)];
 	return generateRowID();
-},
+}
 
 // Find an existing repeatable item with the same name, or generate new row ID; extra processing for items
-function getOrMakeItemRowID (featIDList,name)
+export function getOrMakeItemRowID (featIDList,name)
 {
 	var attrNames = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
@@ -144,10 +150,10 @@ function getOrMakeItemRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return rows[_.indexOf(attrNames,attrMatch)];
 	return generateRowID();
-},
+}
 
 // Find an existing repeatable item with the same name and spellclass, or generate new row ID
-function getOrMakeSpellRowID (featIDList,name,spellclass)
+export function getOrMakeSpellRowID (featIDList,name,spellclass)
 {
 	var attrMatch = _.find(featIDList, function(currentFeat)
 	{
@@ -158,9 +164,9 @@ function getOrMakeSpellRowID (featIDList,name,spellclass)
 	if (!_.isUndefined(attrMatch))
 		return attrMatch.rowID;
 	return generateRowID();
-},
+}
 
-function getOrMakeClassRowID (featIDList,name)
+export function getOrMakeClassRowID (featIDList,name)
 {
 	var attrObjs = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
@@ -179,9 +185,9 @@ function getOrMakeClassRowID (featIDList,name)
 	if (!_.isUndefined(attrMatch))
 		return attrMatch.rowID;
 	return generateRowID();
-},
+}
 
-function importFeats (attrs,feats,featIDList,resources)
+export function importFeats (attrs,feats,featIDList,resources)
 {
 	var repeatPrefix = "repeating_ability";
 	var skipList = [];
@@ -209,17 +215,17 @@ function importFeats (attrs,feats,featIDList,resources)
 		if (_.contains(Object.keys(resources),feat._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[feat._name]._max;
 	});
-},
+}
 
 // Hero Lab stores armor and shields identically, so so assume anything with "shield" or "klar" in the name is a shield
-function nameIsShield (name)
+export function nameIsShield (name)
 {
 	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
 		return true;
 	return false;
-},
+}
 
-function importItems (items,resources,armorPenalties,armor,weapons)
+export function importItems (items,resources,armorPenalties,armor,weapons)
 {
 	var repeatPrefix = "repeating_item";
 	getSectionIDs(repeatPrefix, function(idarray) {
@@ -367,9 +373,9 @@ function importItems (items,resources,armorPenalties,armor,weapons)
 			setAttrs(attrs);
 		});
 	});
-},
+}
 
-function importTraits (attrs,traits,traitIDList,resources)
+export function importTraits (attrs,traits,traitIDList,resources)
 {
 	var repeatPrefix = "repeating_ability";
 	traits.forEach(function(trait)
@@ -383,9 +389,9 @@ function importTraits (attrs,traits,traitIDList,resources)
 		if (_.contains(Object.keys(resources),trait._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[trait._name]._max;
 	});
-},
+}
 
-function importSLAs (attrs,SLAs,SLAsIDList,resources)
+export function importSLAs (attrs,SLAs,SLAsIDList,resources)
 {
 	var repeatPrefix = "repeating_ability";
 	SLAs.forEach(function(SLA)
@@ -400,9 +406,9 @@ function importSLAs (attrs,SLAs,SLAsIDList,resources)
 		if (_.contains(Object.keys(resources),SLA._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[SLA._name]._max;
 	});
-},
+}
 
-function importFeatures (attrs,featureList,specials,archetypes,resources)
+export function importFeatures (attrs,featureList,specials,archetypes,resources)
 {
 	var specNameList = _.map(specials,function(special) { return special._name;});
 	var skipList = [];
@@ -448,9 +454,9 @@ function importFeatures (attrs,featureList,specials,archetypes,resources)
 		if (!_.isUndefined(special._type))
 			attrs[repeatPrefix+"_ability_type"] = special._type.substr(0,2);
 	});
-},
+}
 
-function importClasses (attrs, classes)
+export function importClasses (attrs, classes)
 {
 	var classList = new Object();
 	
@@ -471,10 +477,10 @@ function importClasses (attrs, classes)
 	}
 
 	return classList;
-},
+}
 
 // Import spellclasses; presence in spellclasses node means it's a spellcaster, but some of the data is in the classes node
-function importSpellClasses (attrs, spellclasses,classes,abScores)
+export function importSpellClasses (attrs, spellclasses,classes,abScores)
 {
 	var spellClassesList = new Object();
 
@@ -578,9 +584,9 @@ function importSpellClasses (attrs, spellclasses,classes,abScores)
 		attrs["spellclasses_multiclassed"] = 1;
 
 	return spellClassesList;
-},
+}
 
-function importSpells (spells,spellclasses)
+export function importSpells (spells,spellclasses)
 {
 	console.log("Import spells");
 	var repeatPrefix = "repeating_spells";
@@ -676,9 +682,9 @@ function importSpells (spells,spellclasses)
 			setAttrs(attrs);
 		});
 	});
-},
+}
 
-function calcHitDice (hitdice)
+export function calcHitDice (hitdice)
 {
 	var dice = hitdice.match(/\d+d\d/g);
 	var numDice = 0;
@@ -689,10 +695,10 @@ function calcHitDice (hitdice)
 		i++;
 	}
 	return numDice;
-},
+}
 
 // Builds an object collection of archetypes, with the appropriate classes as the keys, in the order they're entered in the character sheet; use this to determine class specials come from
-function buildArchetypeArray (classes)
+export function buildArchetypeArray (classes)
 {
 	var archetypes = new Object();
 	
@@ -708,10 +714,10 @@ function buildArchetypeArray (classes)
 		archetypes[className] = archeList;
 	});
 	return archetypes;
-},
+}
 
 // Returns the array number of the class that grants a feature; returns -1 if we can't find the class
-function getClassSource (sources,archetypes)
+export function getClassSource (sources,archetypes)
 {
 	// If there's no listed source, it isn't from a class
 	if (!sources.length)
@@ -731,11 +737,10 @@ function getClassSource (sources,archetypes)
 		return classes.indexOf(className);
 		
 	return -1;
-},
+}
 
-function bonusSpellSlots (abilMod,spellLevel) { return Math.max(0, Math.floor((abilMod + 4 - spellLevel) / 4)); },
 
-function importSkills (attrs,skills,size,ACP)
+export function importSkills (attrs,skills,size,ACP)
 {
 	// Ripped from the PF character sheet JS
 	var skillSize;
@@ -971,10 +976,10 @@ function importSkills (attrs,skills,size,ACP)
 			attrs[skillAttrPrefix+"-macro"] = macro;
 		}
 	}
-},
+}
 
 // Import ACP and Max Dex; these aren't included under items, but the final values are listed in penalties
-function importPenalties (attrs,penalties)
+export function importPenalties (attrs,penalties)
 {
 	var ACP = 0;
 	var i = 0;
@@ -990,9 +995,9 @@ function importPenalties (attrs,penalties)
 		i++;
 	}
 	return ACP;
-},
+}
 
-function importAC (attrs,acObj)
+export function importAC (attrs,acObj)
 {
 	attrs["AC-natural"] = parseNum(acObj._fromnatural);
 	attrs["AC-deflect"] = parseNum(acObj._fromdeflect);
@@ -1014,9 +1019,9 @@ function importAC (attrs,acObj)
 		else
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 	}
-},
+}
 
-function importCharacter (characterObj)
+export function importCharacter (characterObj)
 {
 	var attrs = {};
 	
@@ -1230,10 +1235,11 @@ function importCharacter (characterObj)
 		characterObj.favoredclasses.favoredclass = arrayify(characterObj.favoredclasses.favoredclass);
 		attrs["class-favored"] = buildList(characterObj.favoredclasses.favoredclass, "_name");
 	}
-	setAttrs(attrs,{},function() { PFSheet.recalculateCore(); });
+	setAttrs(attrs,{},function() { PFSheet.recalculate(); });
 }
-function registerEventHandlers () {
+export function registerEventHandlers () {
 	on("change:herolab_import", function(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
 		if (eventInfo.sourceType !== "player")
 			return;
 		getAttrs(["herolab_import"], function(values) {

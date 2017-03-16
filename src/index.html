@@ -8252,7 +8252,7 @@
 								<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
 								<label class="sheet-small-label2 sheet-entry-12p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
 								<label class="sheet-small-label2 sheet-entry-small">
-									<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance">
+									<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
 										<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
 										<option value="Yes" data-i18n="yes">Yes</option>
 										<option value="No" data-i18n="no">No</option>
@@ -8262,7 +8262,7 @@
 									<span data-i18n="spell-resistance-abbrv">SR</span>
 								</label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
-								<label class="sheet-small-label2 sheet-entry-short sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-short">
 									<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
 										<option value="blank" data-i18n="blank" selected>Blank</option>
 										<option value="close" data-i18n="close">Close</option>
@@ -8289,7 +8289,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
 								<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-								<label class="sheet-small-label2 sheet-entry-8p"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
+								<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
 								<div style="display:none;">
 									<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
@@ -9807,7 +9807,7 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
 									<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
 									<label class="sheet-small-label2 sheet-entry-small">
-										<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance">
+										<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
 											<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
 											<option value="Yes" data-i18n="yes">Yes</option>
 											<option value="No" data-i18n="no">No</option>
@@ -9816,8 +9816,8 @@
 										</select>
 										<span data-i18n="spell-resistance-abbrv">SR</span>
 									</label>
-									<label class="sheet-small-label2 sheet-entry-12p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
-									<label class="sheet-small-label2 sheet-entry-short sheet-sect">
+									<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
+									<label class="sheet-small-label2 sheet-entry-short">
 										<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
 											<option value="blank" data-i18n="blank" selected>Blank</option>
 											<option value="close" data-i18n="close">Close</option>
@@ -9844,7 +9844,7 @@
 									</label>
 									<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
 									<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-									<label class="sheet-small-label2 sheet-entry-8p"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
+									<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
 									<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
 									<div style="display:none;">
 										<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
@@ -11355,14 +11355,14 @@
 					<span class="sheet-table-config-row-name" data-i18n="roll-configuration" style="border-bottom: none;">Roll Configuration</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<span data-i18n="whisper-non-player-character-rolls" data-i18n-title="whisper-non-player-character-rolls-title" data-i18n-aria-label="whisper-non-player-character-rolls-title" title="All NPC rolls will be whispered to the GM.">NPC rolls: Whisper to GM or broadcast publicly</span>
+							<span data-i18n-title="whisper-rolls-title" data-i18n-aria-label="whisper-non-player-character-rolls" data-i18n="whisper-non-player-character-rolls" >NPC rolls:</span>
 							<select name="attr_NPC-whisper" title="@{NPC-whisper}" style="display:inline;">
 								<option value="" data-i18n="public-rolls">Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
 							</select>
 						</label>
 						<label>
-							<span data-i18n="whisper-character-rolls" data-i18n-title="whisper-character-rolls-title" data-i18n-aria-label="whisper-character-rolls-title" title="All PC rolls will be whispered to the GM.">PC rolls: Whisper to GM or broadcast publicly</span>
+							<span data-i18n-title="whisper-rolls-title" data-i18n-aria-label="whisper-character-rolls"  data-i18n="whisper-character-rolls" >PC rolls:</span>
 							<select name="attr_PC-whisper" title="@{PC-whisper}" style="display:inline;">
 								<option value="" data-i18n="public-rolls" selected>Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master">Whisper GM</option>
