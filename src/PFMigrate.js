@@ -791,10 +791,11 @@ export function migrateNPC (callback, oldversion) {
         });
         getAttrs(["HP-ability", "HP-ability-mod", "npc-type", "CON-mod", "CHA-mod", "total-hp","level","bab", "HP-formula-macro-text", "HP-formula-mod", 
             "class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level",
+            "class-0-hp","class-1-hp","class-2-hp","class-3-hp","class-4-hp","class-5-hp",
             "is_undead",
             "npc-hd-misc", "npc-hd-misc-mod","npc-hd", "npc-hd-num", "npc-hd2", "npc-hd-num2", 'npc-bab'], function (v) {
             var isUndead=0,abilityMod=0,ability='',classLevels=0,classhd=0,level=0,totalhp=0,hitdice=0,hitdie=0,basehp=0,
-                tempInt=0,classhp=0,classNum=0,abilityModTot=0,
+                tempInt=0,classhp=0,classNum=0,abilityModTot=0,tempLvl=0,temphp=0,
                 currLevel=0,currHP=0,setter={},bab=0,npcbab=0,newbab=0,newFormula={},hdMiscVal=0,currhpFormVal=0;
             try {
                 hitdice=parseInt(v['npc-hd-num'],10)||0;
@@ -847,7 +848,8 @@ export function migrateNPC (callback, oldversion) {
                     //should be class-0-name, if not, something is really wrong.
                     for (classNum=0;classNum<6;classNum++){
                         tempInt=  parseInt(v['class-'+classNum+'-level'],10);
-                        if(  tempInt === 0 ||  tempInt === classLevels  ){
+                        temphp =  parseInt(v['class-'+classNum+'-hp'],10);
+                        if( ! tempInt && !temphp  ){
                             break;
                         }
                     }
