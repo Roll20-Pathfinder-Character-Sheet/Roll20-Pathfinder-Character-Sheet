@@ -2,9 +2,11 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
+import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFMigrate from './PFMigrate';
+import * as PFMenus from './PFMenus';
 
 export var attackGridFields = {
     "melee": {
@@ -70,7 +72,11 @@ export var attackGridFields = {
 };
 var attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
 attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
-attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields);
+attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
+groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
+        '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
+        '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
+
 
 /** updates DMG-mod
  * @param {function} callback optional call when done
@@ -114,200 +120,70 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         done();
     }
 }
-export function resetCommandMacro  (eventInfo, callback) {
-    var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
-    baseAttacks = "{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|REPLACENPCMelee-Attack-Roll) [^{ranged}](~@{character_id}|REPLACENPCRanged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|REPLACENPCCMB-Check) [^{melee2}](~@{character_id}|REPLACENPCMelee2-Attack-Roll) REPLACE}}",
-    ranged2BaseAttacks = "[^{ranged2}](~@{character_id}|REPLACENPCRanged2-Attack-Roll)",
-    cmb2BaseAttacks = "[^{combat-maneuver-bonus-abbrv2}](~@{character_id}|REPLACENPCCMB2-Check)",
-    //           012 345678901234567890 23
-    baseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}}",
-    npcBaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{attacks}}}";
-    getAttrs(["is_npc", "attacks-macro", "attacks-macro-npc", "include_attack_totals", "ranged_2_show", "cmb_2_show"], function (currMacros) {
-        var showBonus = parseInt(currMacros["include_attack_totals"], 10) || 0,
-        isNPC = parseInt(currMacros.is_npc, 10) || 0,
-        npcStr = isNPC ? "npc-" : "";
-        baseAttacks = baseAttacks.replace(/REPLACENPC/g, npcStr);
-        if (parseInt(currMacros.ranged_2_show, 10)) {
-            ranged2BaseAttacks = ranged2BaseAttacks.replace(/REPLACENPC/g, npcStr)||"";
-        } else {
-            ranged2BaseAttacks = "";
-        }
-        if (parseInt(currMacros.cmb_2_show, 10)) {
-            cmb2BaseAttacks = cmb2BaseAttacks.replace(/REPLACENPC/g, npcStr)||"";
-        } else {
-            cmb2BaseAttacks = "";
-        }
-        baseAttacks = baseAttacks.replace(/REPLACE/, (ranged2BaseAttacks + ' ' + cmb2BaseAttacks))||"";
-        if (isNPC){
-            baseMacro = npcBaseMacro + baseAttacks;
-        } else {
-            baseMacro += baseAttacks;
-        }
-        
-        //TAS.debug("PFAttackGrid.resetCommandMacro baseMacro: " + baseMacro);
-        getSectionIDs("repeating_weapon", function (idarray) {
-            //if no attacks just set the base melee, ranged, cmb attacks
-            if (!idarray || idarray.length === 0) {
-                var attrs = {};
-                if (!isNPC && currMacros["attacks-macro"].slice(13) !== baseMacro.slice(13)) {
-                    attrs["attacks-macro"] = baseMacro;
-                } else if (isNPC && currMacros["attacks-macro-npc"].slice(13) !== baseMacro.slice(13)) {
-                    attrs["attacks-macro-npc"] = baseMacro;
-                }
-                if (_.size(attrs)) {
-                    setAttrs(attrs, {
-                        silent: true
-                    }, done);
-                } else {
-                    done();
-                }
-                return;
-            }
-            getAttrs(["_reporder_repeating_weapon"], function (repValues) {
-                var atkattrs = [];
-                //TAS.debug("PFAttackGrid.resetCommandMacro values:", repValues);
-                _.each(idarray, function (id) {
-                    atkattrs.push("repeating_weapon_" + id + "_attack-type");
-                    atkattrs.push("repeating_weapon_" + id + "_name");
-                    atkattrs.push("repeating_weapon_" + id + "_group");
-                    if (showBonus) {
-                        atkattrs.push("repeating_weapon_" + id + "_total-attack");
-                    }
-                });
-                getAttrs(atkattrs, function (values) {
-                    var repList,
-                    orderedList,
-                    attackIDList,
-                    melee = "",
-                    ranged = "",
-                    cmb = "",
-                    misc = "",
-                    attrs = {},
-                    otherGroups = {},
-                    other = "",
-                    tempstr="",
-                    rowcounter=10,
-                    newMacro="";
-                    try {
-                        if (!_.isUndefined(repValues._reporder_repeating_weapon) && repValues._reporder_repeating_weapon !== "") {
-                            repList = repValues._reporder_repeating_weapon.split(",");
-                            repList = _.map(repList, function (ID) {
-                                return ID.toLowerCase();
-                            });
-                        }
-                        orderedList = _.union(repList, idarray);
-                        attackIDList = _.object(_.map(orderedList, function (id) {
-                            return [id, values["repeating_weapon_" + id + "_attack-type"]];
-                        }));
-                        orderedList = _.filter(orderedList, function (ID) {
-                            if (typeof values["repeating_weapon_" + ID + "_name"] === "undefined" || typeof values["repeating_weapon_" + ID + "_attack-type"] === "undefined") {
-                                return false;
-                            }
-                            return true;
-                        });
-                        _.each(orderedList, function (ID) {
-                            var temproll = "",
-                            NPCtemproll = "",
-                            value = "",
-                            buttonName = "",
-                            bonusStr = showBonus ? (" + @{repeating_weapon_" + ID + "_total-attack}") : "",
-                            attackName = values["repeating_weapon_" + ID + "_name"],
-                            groupName = values["repeating_weapon_" + ID + "_group"];
-                            buttonName = attackName + bonusStr;
-                            buttonName = SWUtils.escapeForChatLinkButton(buttonName);
-                            buttonName = SWUtils.escapeForRollTemplate(buttonName);
 
-                            temproll = " [" + buttonName + "](~@{character_id}|repeating_weapon_" + ID + "_attack-" + npcStr + "roll)";
-
-                            if (attackIDList[ID]) {
-                                if (groupName) {
-                                    if (!otherGroups[groupName]) {
-                                        otherGroups[groupName] = "";
-                                    }
-                                    otherGroups[groupName] += temproll;
-                                } else {
-                                    value = PFUtils.findAbilityInString(attackIDList[ID]);
-                                    switch (value) {
-                                        case 'attk-melee':
-                                        case 'attk-melee2':
-                                            melee += temproll;
-                                            break;
-                                        case 'attk-ranged':
-                                        case 'attk-ranged2':
-                                            ranged += temproll;
-                                            break;
-                                        case 'CMB':
-                                        case 'CMB2':
-                                            cmb += temproll;
-                                            break;
-                                        default:
-                                            misc += temproll;
-                                            break;
-                                    }
-                                }
-                            }
-                        });
-                        if (otherGroups && _.size(otherGroups) > 0) {
-                            other = _.reduce(otherGroups, function (memo, str, loopgroup) {
-                                memo += " {{row"+rowcounter +"=**"+ loopgroup + "**}}" ;
-                                rowcounter++;
-                                memo += " {{row"+rowcounter +"="+ str.trim() + "}}";
-                                rowcounter++;
-                                return memo;
-                            }, other);
-                        }
-                        other = other||"";
-                        if (melee) {
-                            tempstr = " {{row"+rowcounter +"=**^{melee}**}}";
-                            rowcounter++;
-                            tempstr += " {{row"+rowcounter +"="+ melee.trim() + "}}";
-                            rowcounter++;
-                            melee = tempstr;
-                        }
-                        if (ranged) {
-                            tempstr = " {{row"+rowcounter +"=**^{ranged}**}}";
-                            rowcounter++;
-                            tempstr += " {{row"+rowcounter +"=" + ranged.trim() + "}}";
-                            rowcounter++;
-                            ranged = tempstr;
-                        }
-                        if (cmb) {
-                            tempstr = " {{row"+rowcounter +"=**^{combat-maneuver-bonus-abbrv}**}}";
-                            rowcounter++;
-                            tempstr += " {{row"+rowcounter +"=" + cmb.trim() + "}}";
-                            rowcounter++;
-                            cmb = tempstr;
-                        }
-                        if (misc) {
-                            tempstr = " {{row"+rowcounter +"=**^{miscellaneous-abbrv}**}}";
-                            rowcounter++;
-                            tempstr += " {{row"+rowcounter +"=" + cmb.trim() + "}}";
-                            rowcounter++;
-                            misc = tempstr;
-                        }
-
-                        newMacro = baseMacro + other + melee + ranged + cmb + misc;
-                        if (newMacro){
-                            if (!isNPC && currMacros["attacks-macro"].slice(13) !== newMacro.slice(13)) {
-                                attrs["attacks-macro"] = newMacro;
-                            } else if (isNPC && currMacros["attacks-macro-npc"].slice(13) !== newMacro.slice(13)) {
-                                attrs["attacks-macro-npc"] = newMacro;
-                            }
-                        }
-                    } catch (err) {
-                        TAS.error("PFAttackGrid.resetCommandMacro", err);
-                    } finally {
-                        if (_.size(attrs) > 0) {
-                            setAttrs(attrs, { silent: true }, done);
-                        } else {
-                            done();
-                        }
-                    }
-                });
-            });
-        });
+function getTopMacros(setter,v){
+    var header="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll)",
+        npcHeader="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|NPC-Melee-Attack-Roll) [^{ranged}](~@{character_id}|NPC-Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|NPC-CMB-Check) [^{melee2}](~@{character_id}|NPC-Melee2-Attack-Roll)",
+        extraattacks="",
+        npcextraattacks="",
+        ranged2BaseAttacks = " [^{ranged2}](~@{character_id}|Ranged2-Attack-Roll)",
+        cmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|CMB2-Check)",
+        npcranged2BaseAttacks = " [^{ranged2}](~@{character_id}|npc-Ranged2-Attack-Roll)",
+        npccmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|npc-CMB2-Check)";
+    try {
+        TAS.debug("at PFAttackGrid.getTopMacros",v);
+        setter = setter||{};
+        if (parseInt(v.ranged_2_show, 10)) {
+            extraattacks+=ranged2BaseAttacks;
+            npcextraattacks+=npcranged2BaseAttacks;
+        }
+        if (parseInt(v.cmb_2_show, 10)) {
+            extraattacks+=cmb2BaseAttacks;
+            npcextraattacks+=npccmb2BaseAttacks;
+        }
+        header += extraattacks + " }}";
+        npcHeader += npcextraattacks + " }}";
+        //TAS.debug("PFAtackGrid.getTopMenus new macros are: ", header, npcHeader);
+        if (v.attacks_header_macro !== header || v["NPC-attacks_header_macro"] !== npcHeader ){
+            setter.attacks_header_macro = header;
+            setter["NPC-attacks_header_macro"] = npcHeader;
+        }
+    } catch (err){
+        TAS.error("PFAttackGrid.getTopMacros",err);
+    } finally {
+        return setter;
+    }
+}
+function setTopMacros (callback){
+    var done = _.once(function(){
+        if (typeof callback === "function"){
+            callback();
+        }
+    });
+    //TAS.debug("at PFAttackGrid.setTopMacros");
+    getAttrs(["attacks_header_macro","NPC-attacks_header_macro", "ranged_2_show", "cmb_2_show"],function(v){
+        var setter = {};
+        getTopMacros(setter,v);
+        if (_.size(setter) && (v.attacks_header_macro !== setter.attacks_header_macro || 
+                v["NPC-attacks_header_macro"] !== setter["NPC-attacks_header_macro"] ) ) {
+            setAttrs(setter,PFConst.silentParams,done);
+        } else {
+            done();
+        }
     });
 }
+
+export function resetCommandMacro (callback){
+    var done = _.after(2,function(){
+        if (typeof callback === "function"){
+            callback();
+        }
+    });
+    TAS.debug("at PFAttackGrid.resetCommandMacro");
+    PFMenus.resetOneCommandMacro('attacks',true,done," @{attacks_header_macro}",groupMapForMenu);
+    PFMenus.resetOneCommandMacro('attacks',false,done," @{NPC-attacks_header_macro}",groupMapForMenu);
+}
+
 export function migrate (callback, oldversion){
     var done = function () {
         TAS.debug("leaving PFAttackGrid.migrate");
@@ -342,6 +218,7 @@ export function recalculate  (callback, silently, oldversion) {
     });
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
+    setTopMacros();
 }
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
@@ -381,6 +258,12 @@ function registerEventHandlers () {
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         applyConditions();
+    }));
+    on("change:cmb_2_show change:ranged_2_show", TAS.callback(function displayRangedOrCMB2(eventInfo){
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        if (eventInfo.sourceType==="player" || eventInfo.sourceType === "api"){
+            setTopMacros();
+        }
     }));
 }
 registerEventHandlers();
