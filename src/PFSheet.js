@@ -358,6 +358,10 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
+			if (oldversion <1.19){
+				PFAttackGrid.recalculate();
+				PFAttackGrid.resetcommandmacro;
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
