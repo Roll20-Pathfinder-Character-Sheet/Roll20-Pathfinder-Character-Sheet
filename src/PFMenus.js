@@ -245,7 +245,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                             return retObj;
                         }
                     })
-                    .tap(function(item){TAS.debug('at item',item);})
+                    .tap(function(item){TAS.debug('PFMENU at item',item);})
                     .filter(function(o){return o.showinmenu;})
                     .sortBy('group');
                     if(groupByField==='frequency'){
@@ -322,6 +322,10 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
             }
             if (menuMap[menuName].npcMacroSuffix){
                 params.macroSuffix = menuMap[menuName].npcMacroSuffix;
+            }
+        } else {
+            if (params.npcName){
+                params.npcName = '';
             }
         }
     } else {
