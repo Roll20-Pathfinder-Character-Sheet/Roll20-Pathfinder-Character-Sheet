@@ -154,7 +154,7 @@ function getTopMacros(setter,v){
         return setter;
     }
 }
-function setTopMacros (callback){
+export function setTopMacros (callback){
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();

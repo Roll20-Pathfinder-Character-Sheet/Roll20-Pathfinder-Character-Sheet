@@ -22,6 +22,7 @@ import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFAbility from './PFAbility';
 import * as PFNPC from './PFNPC';
+import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttacks from './PFAttacks';
 import * as PFFeatures from './PFFeatures';
@@ -358,9 +359,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
-			if (oldversion <1.19){
-				PFAttackGrid.recalculate();
-				PFAttackGrid.resetcommandmacro;
+			if (oldversion < 1.19){
+				PFAttackGrid.resetCommandMacro();
+				PFAttackGrid.setTopMacros();
 			}
 		}
 	} catch (err) {

@@ -775,7 +775,7 @@ export function migrateNPC (callback, oldversion) {
         }
     }),
     migrateNPCConfig = function(callback){
-            setAttrs({ 'auto_calc_hp':1, 'normal_macro_show': 1,
+            setAttrs({ 'normal_macro_show': 1,
                 'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 }, 
                 PFConst.silentParams,callback);
     },
@@ -797,9 +797,11 @@ export function migrateNPC (callback, oldversion) {
                 tempInt=0,classhp=0,classNum=0,abilityModTot=0,
                 currLevel=0,currHP=0,setter={},bab=0,npcbab=0,newbab=0,newFormula={},hdMiscVal=0,currhpFormVal=0;
             try {
-                setter["auto_calc_hp"]= "1";
                 hitdice=parseInt(v['npc-hd-num'],10)||0;
                 hitdie=parseInt(v["npc-hd"], 10) || 0;
+                if (hitdice > 0 && hitdie > 0){
+                    setter["auto_calc_hp"]= "1";
+                }
                 classLevels=parseInt(v['npc-hd-num2'],10)||0;
                 classhd=parseInt(v['npc-hd2'],10)||0;
 
