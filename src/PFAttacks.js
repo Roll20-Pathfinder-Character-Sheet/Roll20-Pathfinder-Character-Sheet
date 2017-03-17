@@ -812,7 +812,7 @@ function registerEventHandlers () {
 	on("remove:repeating_weapon change:repeating_weapon:attack-type change:_reporder_repeating_weapon change:repeating_weapon:group change:repeating_weapon:name change:include_attack_totals", TAS.callback(function eventRepeatingWeaponChange(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			PFAttackGrid.resetCommandMacro(eventInfo);
+			PFAttackGrid.resetCommandMacro();
 		}
 	}));
 	

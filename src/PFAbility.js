@@ -52,8 +52,6 @@ defaultMacros={
 			'&{template:':{'current':'pf_ability}'},
 			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
 			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-//			'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
-//			'{{switch=':{'current':'~@{character_id}|NPCREPLACEabilities}}'},
 			'{{color=':{'current':'@{rolltemplate_color}}}'},
 			'{{header_image=':{'current':'@{header_image-pf_ability}}}','old':['@{header_image-pf_block}}}']},
 			'{{character_name=':{'current':'@{character_name}}}'},
