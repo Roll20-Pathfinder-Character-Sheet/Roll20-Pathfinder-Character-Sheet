@@ -1693,7 +1693,7 @@ function registerEventHandlers  () {
     on("change:repeating_item:showinmenu change:repeating_item:equip-type change:repeating_item:name", TAS.callback(function eventShowItemInMenu(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            resetCommandMacro(eventInfo );
+            resetCommandMacro( );
         }
     }));
     on("change:repeating_item:equip-type", TAS.callback(function eventItemEquipTypeChange(eventInfo){
