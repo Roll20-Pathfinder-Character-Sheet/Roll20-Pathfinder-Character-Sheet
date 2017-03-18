@@ -82,7 +82,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         filterField=baseAttribs.filterField||filterField;
         altUsesField=baseAttribs.altUsesField||altUsesField;
         altGroupByField=baseAttribs.altGroupBy||'';
-        TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
+        // TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
     } catch (outerErr){
         TAS.error("PFMenus.getRepeatingCommandMacro outererror for "+ baseAttribs.section, outerErr);
         done("");
@@ -92,7 +92,6 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         var fields=[],prefix="repeating_"+baseAttribs.section+"_";
         try {
             if (!ids || _.size(ids)<=0){
-                TAS.error("It says "+baseAttribs.section+" has no rows!");
                 done(baseMacro+ noRows);
                 return;
             }
@@ -245,7 +244,6 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                             return retObj;
                         }
                     })
-                    .tap(function(item){TAS.debug('PFMENU at item',item);})
                     .filter(function(o){return o.showinmenu;})
                     .sortBy('group');
                     if(groupByField==='frequency'){
@@ -336,10 +334,10 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     if (groupMap && params.groupBy){
         params.groupMap = groupMap;
     }
-    TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
+    //TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
     getRepeatingCommandMacro( params,function(newMacro){
         var setter={};
-        TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
+        //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
         setter[macroName + params.macroSuffix]=newMacro||"";
         setAttrs(setter,PFConst.silentParams,done);
     },header);
