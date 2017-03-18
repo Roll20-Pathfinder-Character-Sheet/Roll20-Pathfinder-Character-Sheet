@@ -232,8 +232,10 @@ function parseNPCAC (acstring, cmdStr, abilityMod, sizeMod) {
 			acstring = acstring.slice(3);
 		}
 		acMap.ac = parseInt(acstring,10)||0;
-		matches=cmdStr.match(/^[\s\-\+]*(\d+)/);
-		if (matches){
+
+		matches=cmdStr.match(/(\d+)/);//get first match
+		if (matches && matches[1]){
+			TAS.debug("getting cmd matches is cmd is : "+matches[1],matches);
 			acMap.cmd = parseInt(matches[1],10)||0;
 			tempstr=cmdStr.slice(matches.index+matches[0].length);
 			if(tempstr){
@@ -2208,16 +2210,24 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		altbab=bab;
 		if (importantFeats.defensivecombattraining) {
 			setter['hd_not_bab']=1;
-			altbab = (hpMap.hdice1||0) + (hpMap.hdice2||0);
+			if (setter.level){
+				altbab = parseInt(setter.level,10);
+			} 
+			if (!altbab){
+				altbab = (hpMap.hdice1||0) + (hpMap.hdice2||0);
+			}
 		}
 		try {
-			calcCMD = altbab + abilityScores.str.mod + acDexDef + (-1 * acMap.size);
+			calcCMD = 10 + altbab + abilityScores.str.mod + acDexDef + (-1 * acMap.size);
+
+			TAS.debug("bab:"+altbab+"+ str:"+ abilityScores.str.mod + "+ dex" + acDexDef + " - size: " +acMap.size + ", calcCMD:"+calcCMD+", cmdparsed:"+acMap.cmd);
 			if (isNaN(acMap.cmd) || calcCMD === acMap.cmd) {
 				setter["CMD"]= calcCMD;
 			} else {
 				setter["CMD"] = acMap.cmd;
 				setter["CMD-misc"] = (acMap.cmd - calcCMD);
 			}
+			TAS.notice("set cmd to "+setter.CMD+" and cmd misc to "+ setter["CMD-misc"]);
 		} catch (err2){
 			TAS.error("createACEntries error trying to calculate CMD",err2);
 		}
@@ -2397,6 +2407,7 @@ function createHealthEntries (setter, abilityScores, isUndead, hpMap) {
 		setter["HP_max"] = hpMap.hp;
 		setter["non-lethal-damage_max"] = hpMap.hp;
 		setter["auto_calc_hp"] = "1";
+		setter["both_whisper_show"] = "1";
 		//NPC: add to race row of class/race grid
 		if (hpMap.basehp) {
 			setter["NPC-HP"] = hpMap.basehp;
@@ -2538,10 +2549,12 @@ function createAbilityScoreEntries (setter, abilityScores) {
 function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, bab, attackGrid, reachObj, v) {
 	var attacklist,
 	attackArrays,
+	matches,
+	tempstr='',
 	defReach = 5,
-	tempCMB=0,
+	tempCMB,
 	miscCMB=0,
-	newCMB=0,
+	calcCMB=0,
 	reachExceptions = [];
 	try {
 		if (reachObj) {
@@ -2579,21 +2592,29 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 			if (importantFeats.agilemaneuvers) {
 				setter["CMB-ability"] = "@{DEX-mod}";
 				setter["CMB-ability-mod"] = abilityScores.dex.mod;
-				newCMB=abilityScores.dex.mod + bab - sizeMap.size;
+				calcCMB=abilityScores.dex.mod + bab - sizeMap.size;
 				setter["cmb_desc"] = 'Agile Maneuvers';
 			} else {
 				setter["CMB-ability-mod"] = abilityScores.str.mod;
-				newCMB=abilityScores.str.mod + bab - sizeMap.size;
+				calcCMB=abilityScores.str.mod + bab - sizeMap.size;
 			}
-			tempCMB = parseInt(v.cmb_compendium,10);
-			if (newCMB === tempCMB || isNaN(tempCMB)){
-				setter["CMB"] = newCMB;
-				attackGrid.cmb = newCMB;
-			} else {
-				miscCMB = tempCMB - newCMB;
+			matches = v.cmb_compendium.match(/\d+/);
+			if (matches){
+				tempCMB = parseInt(matches[0],10);
+				miscCMB = tempCMB - calcCMB;
 				setter["CMB"] = tempCMB;
 				attackGrid.cmb = tempCMB;
-				setter["attk-CMB-misc"] = miscCMB;
+				if(miscCMB){
+					setter["attk-CMB-misc"] = miscCMB;
+				}
+				tempstr = v.cmb_compendium.slice(matches.index+matches[0].length);
+				if(tempstr){
+					attackGrid.cmbnotes=tempstr;
+					setter["CMB-notes"]=tempstr;
+				}
+			} else {
+				setter["CMB"] = calcCMB;
+				attackGrid.cmb = calcCMB;
 			}
 			
 		} catch (errC) {
