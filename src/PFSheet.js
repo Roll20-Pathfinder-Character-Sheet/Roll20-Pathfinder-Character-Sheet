@@ -22,6 +22,7 @@ import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFAbility from './PFAbility';
 import * as PFNPC from './PFNPC';
+import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttacks from './PFAttacks';
 import * as PFFeatures from './PFFeatures';
@@ -358,6 +359,10 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
+			if (oldversion < 1.19){
+				PFAttackGrid.resetCommandMacro();
+				PFAttackGrid.setTopMacros();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
@@ -494,8 +499,8 @@ export function recalculate (oldversion, callback, silently) {
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
 		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
 	});
+	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);
-
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
 *  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
@@ -583,7 +588,6 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber(read, write);
 		}));
 	});
-
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
