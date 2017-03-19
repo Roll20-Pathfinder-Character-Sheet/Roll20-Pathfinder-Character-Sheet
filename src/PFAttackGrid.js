@@ -180,8 +180,8 @@ export function resetCommandMacro (callback){
         }
     });
     TAS.debug("at PFAttackGrid.resetCommandMacro");
-    PFMenus.resetOneCommandMacro('attacks',true,done," @{attacks_header_macro}",groupMapForMenu);
-    PFMenus.resetOneCommandMacro('attacks',false,done," @{NPC-attacks_header_macro}",groupMapForMenu);
+    PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
+    PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
 
 export function migrate (callback, oldversion){
