@@ -235,7 +235,7 @@ function parseNPCAC (acstring, cmdStr, abilityMod, sizeMod) {
 
 		matches=cmdStr.match(/(\d+)/);//get first match
 		if (matches && matches[1]){
-			TAS.debug("getting cmd matches is cmd is : "+matches[1],matches);
+			//TAS.debug("getting cmd matches is cmd is : "+matches[1],matches);
 			acMap.cmd = parseInt(matches[1],10)||0;
 			tempstr=cmdStr.slice(matches.index+matches[0].length);
 			if(tempstr){
@@ -917,10 +917,10 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 		if (atkarray.length > 1) {
 			addgroups = true;
 		}
-		TAS.debug('parseattacks outer group: ' + groupidx);
+		//TAS.debug('parseattacks outer group: ' + groupidx);
 		attacks = _.reduce(atkarray, function (memo, atkstr) {
 			var retobj;
-			TAS.debug('parseattacks: ' + atkstr);
+			//TAS.debug('parseattacks: ' + atkstr);
 			retobj = parseAttack(atkstr, atktypestr, addgroups, groupidx, cmbval);
 			if (retobj) {
 				memo.push(retobj);
@@ -2219,15 +2219,13 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		}
 		try {
 			calcCMD = 10 + altbab + abilityScores.str.mod + acDexDef + (-1 * acMap.size);
-
-			TAS.debug("bab:"+altbab+"+ str:"+ abilityScores.str.mod + "+ dex" + acDexDef + " - size: " +acMap.size + ", calcCMD:"+calcCMD+", cmdparsed:"+acMap.cmd);
+			//TAS.debug("bab:"+altbab+"+ str:"+ abilityScores.str.mod + "+ dex" + acDexDef + " - size: " +acMap.size + ", calcCMD:"+calcCMD+", cmdparsed:"+acMap.cmd);
 			if (isNaN(acMap.cmd) || calcCMD === acMap.cmd) {
 				setter["CMD"]= calcCMD;
 			} else {
 				setter["CMD"] = acMap.cmd;
 				setter["CMD-misc"] = (acMap.cmd - calcCMD);
 			}
-			TAS.notice("set cmd to "+setter.CMD+" and cmd misc to "+ setter["CMD-misc"]);
 		} catch (err2){
 			TAS.error("createACEntries error trying to calculate CMD",err2);
 		}
@@ -2264,13 +2262,14 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		return setter;
 	}
 }
-function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, isUndead) {
+function createSkillEntries (setter, skills, racial, abilityScores, importantFeats, classSkills, sizeMap, isUndead) {
 	var npcSkillsWithFillInNames = ["Craft", "Perform", "Profession"],
 	craftLevel = -1, performLevel = -1, professionLevel = -1, runningTot = 0, counter = 0,
 	tempAbilities = PFSkills.coreSkillAbilityDefaults,
 	tempstr = "",
 	skillfeats = /skillfocus|intimidatingprowess/i;
 	try {
+		//TAS.debug("PFNPC createSkillEntries sizemap is: ", sizeMap, "skills ", skills , "racial", racial);
 		if (racial) {
 			if (racial.abilitymods && _.size(racial.abilitymods) > 0) {
 				//set default ability for skill and substitute adjustments, make sure to use copy not original
@@ -2340,10 +2339,15 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 					ability = tempAbilities[skill];
 					abilitymod = abilityScores[ability] ? abilityScores[ability].mod : 0;
 					abilitymod = parseInt(abilitymod, 10);
-					//TAS.debug("now setting " + skill + ", total:" + tot);
+					//TAS.debug("now setting " + skill + ", total:" + tot +", size:",sizeMap);
 					memo[skill] = tot;
 					ranks = tot;
 					ranks -= abilitymod;
+					if (skill==='Stealth'){
+						ranks -= (2*sizeMap.skillSize);
+					} else if (skill === 'Fly'){
+						ranks -= sizeMap.skillSize;
+					}
 					if (racial && racial.skillmods && racial.skillmods[skill]) {
 						ranks -= parseInt(racial.skillmods[skill], 10);
 					}
@@ -3149,7 +3153,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 					racialModsMap = parseSkillRacialBonuses(v.racial_mods_compendium);
 				}
 				if (skillsMap && _.size(skillsMap) > 0) {
-					setter = createSkillEntries(setter, skillsMap, racialModsMap, abilityScores, importantFeats, classSkillArray, isUndead);
+					setter = createSkillEntries(setter, skillsMap, racialModsMap, abilityScores, importantFeats, classSkillArray, sizeMap, isUndead);
 					//TAS.debug("after createSkillEntries attrnum:" + _.size(setter));
 				}
 			}
@@ -3160,7 +3164,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
 				TAS.info("##############################################","END OF importFromCompendium");
-				TAS.debug("END OF importFromCompendium",setter);
 				setAttrs(setter, PFConst.silentParams, done);
 			} else {
 				setter["npc_import_now"]=0;
