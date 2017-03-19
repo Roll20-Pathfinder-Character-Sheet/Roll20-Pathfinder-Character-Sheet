@@ -363,6 +363,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttackGrid.resetCommandMacro();
 				PFAttackGrid.setTopMacros();
 			}
+			if (oldversion < 1.20){
+				PFMigrate.migrateWhisperDropdowns();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
