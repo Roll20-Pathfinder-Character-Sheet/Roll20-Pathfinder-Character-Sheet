@@ -13592,13 +13592,6 @@
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
-				{{#switch}}
-					<div class="sheet-roll-group">
-						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
-						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
-					</div>
-				{{/switch}}
-				{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check"></span>:**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
@@ -13649,11 +13642,6 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#switch}}
-					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
-					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
-				{{/switch}}
-				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#check}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="check"></span>:** {{check}}</span></label>{{/check}}
 				{{#class}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="class"></span>:** {{class}}</span></label>{{/class}}
 				{{#lefttext_1}}<label><span>{{lefttext_1}}</span></label>{{/lefttext_1}}
@@ -13710,11 +13698,6 @@
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
-					{{#switch}}
-						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
-						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
-					{{/switch}}
-					{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
 					{{#hasuses}}<div class="sheet-roll-row"><div class="sheet-roll-cell"><span data-i18n="quantity-abbrv">Qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</div></div>{{/hasuses}}
 					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
@@ -13735,11 +13718,6 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#switch}}
-					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
-					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
-				{{/switch}}
-				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
 				{{#hasuses}}<label><span><span data-i18n="quantity-abbrv">qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</span></label>{{/hasuses}}
 				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
