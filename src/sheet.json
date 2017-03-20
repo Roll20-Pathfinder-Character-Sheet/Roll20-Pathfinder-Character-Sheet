@@ -24,7 +24,7 @@
 			"options": ["","/w gm"],
 			"optiontranslationkeys": ["public-rolls","whisper-to-game-master"],
 			"default": "",
-			"description": "All PC rolls will be whispered to the GM",
+			"description": "Whisper to GM or broadcast publicly",
 			"descriptiontranslationkey": "whisper-rolls-title"
 		},
 		{
@@ -35,7 +35,7 @@
 			"options": ["","/w gm"],
 			"optiontranslationkeys": ["public-rolls","whisper-to-game-master"],
 			"default": "/ gm",
-			"description": "All NPC rolls will be whispered to the GM",
+			"description": "Whisper to GM or broadcast publicly",
 			"descriptiontranslationkey": "whisper-rolls-title"
 		},
 		{
@@ -53,6 +53,56 @@
 			"type": "checkbox",
 			"value": "1",
 			"description": "always set to 1 for new sheets"
-		}		
+		},
+		{
+			"attribute": "toggle_accessible_flag",
+			"displayname": "Use Other Simple Templates",
+			"displaytranslationkey": "use-simple-template",
+			"type": "checkbox",
+			"value": "@{var_accessible_flag}",
+			"description": "Use Other Simple Templates",
+			"descriptiontranslationkey": "use-simple-template"
+		},
+		{
+			"attribute": "toggle_attack_accessible",
+			"displayname": "Use Attacks Simple Template",
+			"displaytranslationkey": "use-simple-template-attacks",
+			"type": "checkbox",
+			"value": "@{var_accessible_flag}",
+			"description": "Use simple accessible template for attacks.",
+			"descriptiontranslationkey": "options-attacks-accessible-title"
+		},
+		{
+			"attribute": "toggle_spell_accessible",
+			"displayname": "Use Spells Simple Template",
+			"displaytranslationkey": "use-simple-template-spells",
+			"type": "checkbox",
+			"value": "@{var_accessible_flag}",
+			"description": "Use simple accessible template for spells.",
+			"descriptiontranslationkey": "options-spells-accessible-title"
+		},
+		{
+			"attribute": "use_specfont",
+			"displayname": "Font",
+			"displaytranslationkey": "font",
+			"type": "select",
+			"options": ["0","1","2","3","4","5"],
+			"optiontranslationkeys": ["arial-default","verdana","comic-sans","segoe","lucida","fantasy"],
+			"default": "arial-default",
+			"description": "Extra fonts for Accessiblity"
+		},
+		{
+			"attribute": "max-dex-source",
+			"displayname": "Encumbrance",
+			"displaytranslationkey": "encumbrance",
+			"type": "select",
+			"options": ["0","1","2","3"],
+			"optiontranslationkeys": ["armor-shield-load-default","armor-shield-only","load-only","ignore-encumbrance"],
+			"default": "arial-default",
+			"descrition" : "Encumbrance based on:",
+			"descriptiontranslationkey": "encumbrance-based-on"
+		}
+
+		
 	]
 }
