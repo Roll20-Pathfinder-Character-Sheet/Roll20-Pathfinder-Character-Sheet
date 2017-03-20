@@ -4,6 +4,7 @@
 	"segoe": "Segoe UI",
 	"fantasy": "Fantasy",
 	"font-background": "Font / Background",
+  "font": "Font",
   "1-ordinal": "1st",
   "10-ordinal": "10th",
   "100-at-level-1": " Use max hp for first level/HD",

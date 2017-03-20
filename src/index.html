@@ -20,7 +20,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" name="attr_expandall" value="1" class="sheet-offscreen" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" name="attr_attentionv118-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" name="attr_attentionv119-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<div style="margin-right: 43%;float: right;" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-condition-exists" role="Presentation"><label style="font-size:1rem; padding:.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
@@ -37,51 +37,26 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 				<li> Check <strong>Show both roll menu buttons for Monsters/NPCs</strong> to display NPC buttons on top even when on PC pages</li>
 				<li>Click the <strong>mode</strong> button to enter expanded mode if fields are not found</li>
 				<li data-i18n="announcements-27">Extra calculated numbers available on <em>Notes</em> page for point pools, or for use in tokens bars, etc</li>
-
 			</ul>
 			<h2 data-i18n="new-features">New Features and Updates</h2>
-			<p>In this version (1.18):</p>
+			<p>In this version (1.19):</p>
 			<ol>
-				<li> Attack and skill <strong>macros will not reset</strong> if you re-upgrade backup of v.74</li>
-				<li> Extra hit points in PC racial hp fixed.</li>
-				<li> Hard reset <strong>@{init}</strong> to try to fix GroupInit bug.</li>
-				<li> Hover text over top menu buttons fixed</li>
-				<li> Spell menu now keeps custom list order</li>
-				<li> Fixes to spell menu ignoring options</li>
-				<li> Spell per day section easier to use. Added 'manually track totals' checkbox</li>
-				<li> Slight of Hand no longer appears twice. Text under checkboxes in line. 'vs other' fixed in rolls. </li>
-				<li> Debug text turned off</li>
-			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv118-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
-			<ol>
-				<li data-i18n="announcements-0">New Abilities section on it's own tab - special abilities tabs, linked attacks, pf_ability roll template.</li>
-				<li data-i18n="announcements-1">New Hero Lab character importer - import Hero Lab characters using an XML to json file.</li>
-				<li data-i18n="announcements-2">New Inventory section- sub-type tabs, link armor/shield to defense, link weapons to attacks, slot placement for worn items.</li>
-				<li data-i18n="announcements-3">New NPC/Monster parser - drag/drop from the compendium's bestiary to the NPC page "Monster Statblock Import Section" and hit the parse button... be patient, some of the more complex stat-blocks will require more time.</li>
-				<li data-i18n="announcements-4">New Settings/Configuration features added;
-					<ul>
-						<li data-i18n="announcements-5">Uses Spells - shows spell-related sections</li>
-						<li data-i18n="announcements-6">Lists - shows original ability lists for Traits, Racial Traits, Feats, Class Features, and SLA's. Included to help transition into the updated Abilities list.</li>
-						<li data-i18n="announcements-7">Attacks - Display Alternate Attack types(Alt Ranged and ALT CMB)</li>
-						<li data-i18n="announcements-8">Encumbrance - encumbrance-based-on and dwarf-specific rules</li>
-						<li data-i18n="announcements-9">Hit Points - auto HP and max at 1st lvl/HD</li>
-						<li data-i18n="announcements-10">Defenses - keep DEX when flat-footed, vary ability type for AC and CMB, use HD for CMB</li>
-						<li data-i18n="announcements-11">Advanced - display user-defined fields, roll template macro-text, add to 1d20 rolls(resolved at 'roll-time')</li>
-						<li data-i18n="announcements-12">Roll Configurations - show both PC and NPC menu buttons (choose whether to make a whispered roll or not)</li>
-						<li data-i18n="announcements-13">Rule Options - show additional features including PFS, Unchained, Mythic, and Psionics.</li>
-						<li data-i18n="announcements-14">Header images - additional header images added</li>
-						<li data-i18n="announcements-15">Hero Lab Character Import</li>
-						<li data-i18n="announcements-16">and more...</li>
-					</ul>
+				<li>Now hp updates when updating max hp again</li>
+				<li>Fix to attacks menus</li>
+				<li>Fix skill stealth-trait field</li>
+				<li>Fix to spell-notes</li>
+				<li>Fixes to NPC parsing: 
+					<ul><li>CMD and CMB npc parsing</li>
+					<li>Fix fly and stealth npc import take size into account</li></ul>
 				</li>
-				<li data-i18n="announcements-17">New Sheet Mode button. - Expanded mode(full editing) or Compact mode(important fields only)</li>
-				<li data-i18n="announcements-18">Added Sheet default settings options - "Is NPC" is currently the only option, more to come.</li>
-				<li data-i18n="announcements-19">Added Skill option to use custom rolls.</li>
-				<li data-i18n="announcements-20">Added Spells linked to an attack.</li>
-				<li data-i18n="announcements-21">Additional Menu Buttons for all important rolls with separate macros for PC and NPC with a configuration option to show both sets.</li>
-				<li data-i18n="announcements-22">New Notes page - create custom macros, rolls or add notes.</li>
-				<li data-i18n="announcements-99">and more...</li>
-			</ol>
+				<li>Additional default settings</li>
+				<li>To re-upgrade from a backup of v.74:
+					<ul><li> Attack and skill <strong>macros will not reset</strong> if you re-upgrade backup of v.74</li>
+					<li> Fix to npc upgrade from v.74 will not overwrite any class hp or levels</li></ul>
+				</li>
+			</ol>					
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv119-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
@@ -11176,7 +11151,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_spell_accessible" value="@{var_accessible_flag}" title="@{toggle_spell_spell_accessible}"><b title="Use simple accessible template for spells." data-i18n-title="options-spells-accessible-title" data-i18n-aria-label="options-spells-accessible-title" data-i18n="use-simple-template-spells">Use Spells Simple Template</b>
+							<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_spell_accessible" value="@{var_accessible_flag}" title="@{toggle_spell_accessible}"><b title="Use simple accessible template for spells." data-i18n-title="options-spells-accessible-title" data-i18n-aria-label="options-spells-accessible-title" data-i18n="use-simple-template-spells">Use Spells Simple Template</b>
 						</label>
 					</span>
 				</div>
@@ -11201,16 +11176,13 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 								<option value="1" data-i18n="verdana">Verdana</option>
 								<option value="2" data-i18n="comic-sans">Comic Sans</option>
 								<option value="3" data-i81n="segoe">Segoe UI</option>
-								<option value="4" data-i81n="segoe">Lucida</option>
+								<option value="4" data-i81n="lucida">Lucida</option>
 								<option value="5" data-i81n="fantasy">Fantasy</option>
 							</select>
 						</label>
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-<!--						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_graph_paper" value="1" title="@{use_graph_paper}" />
-							<b><span data-i18n-title="old-school" data-i18n="show-graph-paper"> Show graphpaper background</span></b>
-							-->						
 							<span class="sheet-table-cell" title="Choose a background image." data-i18n-title="background-title" data-i18n="choose-background">Choose Background:</span>
 							<span class="sheet-table-cell">
 								<select name="attr_use_background" title="@{use_background}" class="sheet-select-small">
@@ -11347,7 +11319,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-config-row-name" data-i18n="advanced" style="border-bottom: none;">Advanced</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<input type="checkbox" title="@{use_advanced_options}" name="attr_use_advanced_options" value="1" class="sheet-selectedlabel-check" />
+							<input type="checkbox" title="@{use_advanced_options}" name="attr_use_advanced_options" value="1" class="sheet-selectedlabel-check" checked />
 							<b><span data-i18n-title="display-advanced-options-title" data-i18n-aria-label="display-advanced-options-title" aria-label="display-advanced-options-title" data-i18n="display-advanced-options">Extra miscellaneous fields for computations</span></b>
 						</label>
 					</span>
