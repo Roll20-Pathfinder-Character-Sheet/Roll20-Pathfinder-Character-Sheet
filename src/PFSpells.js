@@ -27,8 +27,6 @@ defaultRepeatingMacroMap = {
     '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
     '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
     '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-//	'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
-//	'{{switch=':{'current':'~@{character_id}|NPCREPLACEspellbook-CLASSIDX}}'},
     '{{color=':{'current':'@{rolltemplate_color}}}'},
     '{{header_image=':{'current':'@{header_image-pf_spell}}}'},
     '{{name=':{'current':'@{name}}}'},
