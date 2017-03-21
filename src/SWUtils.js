@@ -40,6 +40,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 	try {
 		stringToSearch = stringToSearch.split("selected|").join("");
 		stringToSearch = stringToSearch.split("target|").join("");
+		stringToSearch = stringToSearch.replace(/\|max\}/g,'_max}');
 		fieldnames = stringToSearch.match(/\@\{[^}]+\}/g);
 		if (!fieldnames) {
 			callback(stringToSearch);
