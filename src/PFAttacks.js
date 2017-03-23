@@ -14,6 +14,7 @@ import * as PFAttackGrid from './PFAttackGrid';
 import * as PFInventory from './PFInventory';
 import * as PFSpells from './PFSpells';
 import * as PFAbility from './PFAbility';
+import * as PFSize from './PFSize';
 
 /** module for repeating_weapon section  */
 /* **********************************ATTACKS PAGE ********************************** */
@@ -486,6 +487,78 @@ export function getRecalculatedAttack (id,v,setter){
 		return localsetter;
 	}
 }
+// no crap that's why i added default vs new so we don't have to redo 
+function updateWeaponSize(id,currCharSize,v,setter){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+		prefix='repeating_weapon_'+idStr,
+		currDice=0,defDice=0,
+		currDie=0,defDie=0,
+	 	defWeaponSize=0, sizeDiff=0, newDice={};
+	try {
+		if (parseInt(v[prefix+'size_affects'],10)){
+			currDice=parseInt(v[prefix+'damage-dice'],10)||0;
+			currDie=parseInt(v[prefix+'damage-die'],10)||0;
+			if (!(currDice ===0 || currDie === 0)){
+				defWeaponSize=parseInt(v[prefix+'default_size'],10);
+				defDice=parseInt(v[prefix+'default_damage-dice'],10)||0;
+				defDie=parseInt(v[prefix+'default_damage-die'],10)||0;
+				//check for errors 
+				if (isNaN(defWeaponSize)){
+					defWeaponSize = currCharSize;
+					setter[prefix+'default_size']=defWeaponSize;
+				}
+				if ( defDice===0 ||  defDie === 0){
+					defDice = currDice;
+					defDie = currDie;
+					setter[prefix+'default_damage-dice']=defDice;
+					setter[prefix+'default_damage-die']=defDie;
+				}
+				//end of check for errors
+				if (currCharSize !== defWeaponSize){
+					setter[prefix+'not_default_size']=1;
+					sizeDiff=PFSize.getSizeLevelChange(defWeaponSize,currCharSize);
+					newDice= PFSize.updateDamageDice (sizeDiff,defWeaponSize,defDice,defDie);
+					if(currDice!==newDice.dice || currDie!==newDice.die  ){
+						setter[prefix+'damage-dice-num']=newDice.dice;
+						setter[prefix+'damage-die']=newDice.die;
+					}
+				} else {
+					if (parseInt(v[prefix+'not_default_size'],10)){
+						setter[prefix+'not_default_size']=0;
+					}
+					if(currDice !== defDice || currDie !== defDie){
+						setter[prefix+'damage-dice-num']=defDice;
+						setter[prefix+'damage-die']=defDie;
+					}
+				}
+			} else {
+				//size affects was 1, but no damage dice
+				setter[prefix+'size_affects']=0;
+			}
+		}
+	} catch (err){
+		TAS.error("PFAttacks.updateWeaponSize",err);
+	} finally {
+		return setter;
+	}
+}
+var sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice','damage-die','size_affects'],
+sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice','_damage-die','_size_affects'];
+function updateWeaponSizeAsync(id,callback){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+	prefix='repeating_weapon_'+idStr;
+	getAttrs(['size',prefix+'size_affects',prefix+'default_damage-dice-num',prefix+'default_damage-die',prefix+'default_size',prefix+'not_default_size',prefix+'damage-dice',prefix+'damage-die'],function(v){
+		var  defWeaponSize=0, sizeDiff=0, newDice={}, setter={},currCharSize=0;
+		try {
+			currCharSize=parseInt(v.size,10)||0;
+			updateWeaponSize(id,currCharSize,v,setter);
+		} finally {
+			if (_.size(setter)){
+				setAttrs(setter);
+			}
+		}
+	});
+}
 /**
  * assumes id has values in it.
  * @param {[string]} ids 
@@ -793,22 +866,18 @@ function registerEventHandlers () {
 			updateRepeatingWeaponCrit(null, eventInfo);
 		}
 	}));
-	on("change:repeating_weapon:damage-dice-num change:repeating_weapon:damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
+	on("change:repeating_weapon:default_size", TAS.callback(function eventWeaponSize(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		updateWeaponSizeAsync(null,null);
+	}));
+	
+	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			getAttrs([eventInfo.sourceAttribute,'size','repeating_weapon_default_size'],function(v){
-				var attr=SWUtils.getAttributeName(eventInfo.sourceAttribute),
-				newname='repeating_weapon_default_'+attr,
-				currSize =parseInt(v.size,10)||0,
-				defSize=parseInt(v.repeating_weapon_default_size,10)||0,
-				setter={};
-				if(defSize===currSize){
-					setter[newname]=v[eventInfo.sourceAttribute];
-					setAttrs(setter,PFConst.silentParams);
-				}
-			});
+			updateWeaponSizeAsync(null,null);
 		}
 	}));
+
 	on("remove:repeating_weapon change:repeating_weapon:attack-type change:_reporder_repeating_weapon change:repeating_weapon:group change:repeating_weapon:name change:include_attack_totals", TAS.callback(function eventRepeatingWeaponChange(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
