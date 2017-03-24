@@ -541,7 +541,7 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
@@ -551,7 +551,7 @@ function checkForUpdate () {
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
-			recalculate(currVer, done, false);
+			recalculate(currVer, done, true);
 		} else  {
 			done();
 		}
