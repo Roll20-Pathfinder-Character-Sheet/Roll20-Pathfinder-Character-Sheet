@@ -1195,6 +1195,37 @@ export function migrateSpellPointFlag (callback,oldversion){
             }
     });
 }
+
+export function migrateWhisperDropdowns (callback){
+    var done = _.once(function(){ 
+        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        if (typeof callback === "function") { callback(); }
+    });
+    getAttrs(['migrated_whispers','PC-whisper','NPC-whisper'],function(v){
+        var setter={};
+        try{
+            if(!parseInt(v.migrated_whispers,10)){
+                if (v['PC-whisper']==='&nbsp;'|| v['PC-whisper']===' ' || 
+                    (v['PC-whisper'] && v['PC-whisper']!=='/w gm')) {
+                    setter['PC-whisper']='';
+                }
+                if (v['NPC-whisper']==='&nbsp;'|| v['NPC-whisper']===' ' || 
+                    (v['NPC-whisper'] && v['NPC-whisper']!=='/w gm')) {
+                    setter['NPC-whisper']='';
+                }
+            }
+        } catch (err){
+            TAS.error("PFMigrate.migrateWhispers",err);
+        } finally {
+            if(_.size(setter)){
+                setAttrs(setter,PFConst.silentParams,done);
+            } else {
+                done();
+            }
+        }
+    });
+}
+
 export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
         TAS.debug("leaving PFMigrate migrateConfigFlags");
@@ -1208,7 +1239,9 @@ export function migrateConfigFlags (callback,oldversion){
     migrateAbilityListFlags();
     migrateExperience();
     migrateSpellPointFlag(null,oldversion);
+    migrateWhisperDropdowns();
 }
+
 export function getAllMigrateFlags (v){
     TAS.debug("at PFMigrate.getAllMigrateFlags");
     v=v||{};
