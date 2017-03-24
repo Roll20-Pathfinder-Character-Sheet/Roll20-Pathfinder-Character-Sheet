@@ -363,6 +363,10 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttackGrid.resetCommandMacro();
 				PFAttackGrid.setTopMacros();
 			}
+			if (oldversion < 1.20){
+				PFHealth.recalculate();
+				PFSpells.resetSpellsTotals(null,null,null,true);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);

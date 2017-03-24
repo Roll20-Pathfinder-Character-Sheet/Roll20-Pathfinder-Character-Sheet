@@ -351,7 +351,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
-function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
+export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
