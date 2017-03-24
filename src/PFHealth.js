@@ -55,13 +55,13 @@ function setWoundLevelLookup (hp) {
  * @currWoundLevel {int} = @{condition-Wounds}
  * @abilityMod {int} = usually @{CON-mod} or mod of whataver ability is used. 0 if no ability (like undead)
  */
-function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
-	var setter={}, grazed=0,wounded=0,critical=0,disabled=0;
-	try {
-		grazed = Math.floor(maxHP * 0.75);
-		wounded = Math.floor(maxHP * 0.5);
-		critical = Math.floor(maxHP * 0.25);
-		disabled = ((abilityMod > 0 ? abilityMod : 0) * -1);
+function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod) {
+	var grazed = Math.floor(maxHP * 0.75),
+	wounded = Math.floor(maxHP * 0.5),
+	critical = Math.floor(maxHP * 0.25),
+	disabled = ((abilityMod > 0 ? abilityMod : 0) * -1);
+	getAttrs(["HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], function (v) {
+		var setter = {};
 		if ((parseInt(v["HP_grazed"], 10) || 0) !== grazed) {
 			setter["HP_grazed"] = grazed;
 		}
@@ -74,17 +74,11 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
 		if ((parseInt(v["HP_disabled"], 10) || 0) !== disabled) {
 			setter["HP_disabled"] = disabled;
 		}
-	} catch (err){
-		TAS.error("PFHealth.setWoundThresholds",err);
-	} finally {
 		if (_.size(setter) > 0) {
-			setAttrs(setter, PFConst.silentParams, function(){
-				setWoundLevel(hp, grazed, wounded, critical, currWoundLevel);
-			});
-		} else {
-			setWoundLevel(hp, grazed, wounded, critical, currWoundLevel);
+			setAttrs(setter, PFConst.silentParams);
 		}
-	}
+	});
+	setWoundLevel(hp, grazed, wounded, critical, currWoundLevel);
 }
 /*setWoundThreshholdsLookup
  * Sets wound thresholds by looking up values for "are we even useing wound threshold rules?" and the max hit points.
@@ -92,9 +86,9 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
  * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
  */
 export function setWoundThreshholdsLookup (eventInfo) {
-	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod","HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], function (v) {
+	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
-			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0, v);
+			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0);
 		} else if ((parseInt(v["condition-Wounds"], 10) || 0) > 0) {
 			setAttrs({
 				"condition-Wounds": "0"
@@ -153,8 +147,7 @@ export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 	});
 	getAttrs(["HP", "HP_max", "HP-ability", "HP-ability-mod", "level", "total-hp", 
 		"total-mythic-hp", "condition-Drained", "HP-formula-mod", "HP-temp", "mythic-adventures-show", "wound_threshold-show", 
-		"condition-Wounds", "non-lethal-damage", "non-lethal-damage_max","condition-Staggered", "hp_ability_bonus",
-		"HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], 
+		"condition-Wounds", "non-lethal-damage", "non-lethal-damage_max","condition-Staggered", "hp_ability_bonus"], 
 		function (v) {
 		var abilityMod = 0,	abilityBonus =  0, currHPMax = 0, currHP =  0, tempHP =  0, newHP = 0,
 			nonLethal = 0, newHPMax = 0, mythic = 0, currWoundLevel = 0, usesWounds = 0, setter={};
@@ -209,9 +202,7 @@ export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 				setAttrs(setter, PFConst.silentParams, function(){
 					if (increaseHPWhenMaxHPIncreases && !(forceReset || currHPMax === newHPMax)){
 						updateCurrHP(newHP , tempHP, nonLethal, 0, v["HP-ability"], abilityMod, v["condition-Staggered"]);
-						if (usesWounds){
-							setWoundThreshholds(newHP + tempHP, newHPMax, currWoundLevel, abilityMod, v);
-						}
+						setWoundThreshholds(newHP + tempHP, newHPMax, currWoundLevel, abilityMod);
 					}
 					done();
 				});
@@ -312,12 +303,8 @@ export function recalculate (callback, silently, oldversion) {
 			callback();
 		}
 	}),
-	resetWounds = _.once(function(){
-		setWoundThreshholdsLookup();
-		done();
-	}),
 	callUpdateMaxHPLookup = _.once(function () {
-		updateMaxHPLookup(resetWounds, silently);
+		updateMaxHPLookup(done, silently);
 	}),
 	callUpdateTempHP = _.once(function () {
 		updateTempMaxHP(callUpdateMaxHPLookup);

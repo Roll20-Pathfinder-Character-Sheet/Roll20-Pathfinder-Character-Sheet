@@ -308,7 +308,16 @@ function getSpellTotals  (ids, v, setter) {
                 return setter;
             }
         }
-
+        
+ /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
+            memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
+                imemo[spelllevel] = 0;
+                return imemo;
+            }, {});
+            return memo;
+        }, {});
+        totalListed =  _.mapObject(totalPrepped, _.clone);*/
+         
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                 spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
@@ -338,8 +347,7 @@ function getSpellTotals  (ids, v, setter) {
                 if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
                     setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel] || 
-                        (parseInt(v[prefix + "-spells-per-day"], 10) || 0)  !== totalPrepped[classidx][spellLevel]  ) {
+                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
                     setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
                     setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                 }
@@ -351,7 +359,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
-export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
+function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
@@ -373,7 +381,6 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 _.each(spellLevels, function (spellLevel) {
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-total-listed");
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared");
-                    fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day");
                 });
             });
             getAttrs(fields, function (v) {

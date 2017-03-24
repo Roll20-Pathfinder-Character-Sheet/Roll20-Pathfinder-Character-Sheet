@@ -6148,7 +6148,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									</select>
 									<span data-i18n-title="rule-category" data-i18n-aria-label="rule-category" data-i18n="rule">Rule</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-vshort sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
 										<option value="0" data-i18n="custom" >Custom</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
@@ -6405,7 +6405,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									<span style="display:none;" class="sheet-table-cell sheet-small-label sheet-sect" >
 										<input name="attr_rule_category" type="text" value="class-features" title="@{repeating_class-ability_$X_rule_category}" data-i18n-aria-label="rule-category" readonly />
 									</span>
-									<span class="sheet-table-cell sheet-small-label sheet-sect sheet-sect sheet-hide-readonly sheet-entry-vshort" >
+									<span class="sheet-table-cell sheet-small-label sheet-sect sheet-sect sheet-hide-readonly" >
 										<select title="@{repeating_class-ability_$X_class-number}" name="attr_class-number" class="sheet-select-small sheet-select-class">
 											<option value="@{class-0-name}" data-i18n="class-0-default" selected>•0 class</option>
 											<option value="@{class-1-name}" data-i18n="class-1">1st</option>
@@ -13606,6 +13606,13 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
+				{{#switch}}
+					<div class="sheet-roll-group">
+						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
+						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
+					</div>
+				{{/switch}}
+				{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check"></span>:**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
@@ -13656,6 +13663,11 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
+				{{#switch}}
+					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
+					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
+				{{/switch}}
+				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#check}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="check"></span>:** {{check}}</span></label>{{/check}}
 				{{#class}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="class"></span>:** {{class}}</span></label>{{/class}}
 				{{#lefttext_1}}<label><span>{{lefttext_1}}</span></label>{{/lefttext_1}}
@@ -13712,6 +13724,11 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
+					{{#switch}}
+						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
+						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
+					{{/switch}}
+					{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
 					{{#hasuses}}<div class="sheet-roll-row"><div class="sheet-roll-cell"><span data-i18n="quantity-abbrv">Qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</div></div>{{/hasuses}}
 					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
@@ -13732,6 +13749,11 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
+				{{#switch}}
+					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
+					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
+				{{/switch}}
+				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
 				{{#hasuses}}<label><span><span data-i18n="quantity-abbrv">qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</span></label>{{/hasuses}}
 				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
