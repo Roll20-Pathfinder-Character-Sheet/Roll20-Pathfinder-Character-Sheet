@@ -1239,7 +1239,7 @@ export function migrateConfigFlags (callback,oldversion){
     migrateAbilityListFlags();
     migrateExperience();
     migrateSpellPointFlag(null,oldversion);
-    //migrateWhisperDropdowns();
+    migrateWhisperDropdowns();
 }
 
 export function getAllMigrateFlags (v){
