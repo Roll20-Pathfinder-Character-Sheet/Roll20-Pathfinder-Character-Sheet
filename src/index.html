@@ -88,7 +88,7 @@
 		<input type="checkbox" name="attr_is_undead" value="1" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_normal_macro_show" value="1" class="sheet-all-macro-text-show" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_adv_macro_show" value="1" class="sheet-advanced-macro-show" role="presentation" />
-		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-show-npc-tab" style="display:none;" data-i18n-aria-label="is-npc-check-caps" />
+		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-show-npc-tab" style="display:none;" />
 		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab" style="margin-right:.5em;display:none;" data-i18n-aria-label="uses-spells-title" role="presentation" />		
 		<div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-status-section" class="sheet-section-status" >
 			<div class="sheet-status-panel" role="status" aria-live="polite" aria-label="Current Conditions" data-i18n-aria-label="current-conditions">
@@ -11257,7 +11257,7 @@
 					</span>
 				</div>
 				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name" data-i18n="hit-points">Hit Points</span>
+					<span class="sheet-table-config-row-name" data-i18n="hit-points" style="border-bottom: none;">Hit Points</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
 							<input type="checkbox" class="sheet-sect2-show sheet-selectedlabel-check" style="display:inline;" value="1" name="attr_auto_calc_hp" aria-label="check to autocalc hp/lvl"  /><b><span data-i18n="automatically-calculate-hit-points-abbrv">Auto calc hp</span></b>
@@ -11274,6 +11274,16 @@
 						<label class="sheet-sect2">
 							<input type="checkbox" value="1" name="attr_maxhp_lvl1" class="sheet-selectedlabel-check" /><b><span data-i18n-title="100-at-level-1-title" data-i18n="100-at-level-1">Use Max hp for first level/HD</span></b>
 						</label>
+					</span>					
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" ></span>
+					<span class="sheet-table-cell sheet-left">
+						<label>
+							<input type="checkbox" value="1" name="attr_increase_hp" title="@{increase_hp}" checked  class="sheet-selectedlabel-check" data-i18n-aria-label="update-hp-when-max-changes" /><b><span data-i18n-title="update-hp-when-max-changes-title" data-i18n="update-hp-when-max-changes"> Update curr HP when max HP changes</span></b>
+						</label>
+					</span>
+					<span class="sheet-table-cell sheet-left">
 					</span>					
 				</div>
 				<div class="sheet-table-row">
@@ -12802,7 +12812,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>03/22/2017 11:18pm &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>03/27/2017 01:00am Est &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
