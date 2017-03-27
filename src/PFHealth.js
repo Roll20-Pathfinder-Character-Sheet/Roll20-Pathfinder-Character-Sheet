@@ -6,8 +6,6 @@ import PFConst from './PFConst';
 import * as PFMigrate from './PFMigrate';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
 
-var increaseHPWhenMaxHPIncreases = true;
-
 /*setWoundLevel sets would level based on current HP when you already have all fields.
  * sets  @{condition-Wounds} based on :
  *@hp current hp
@@ -18,6 +16,7 @@ var increaseHPWhenMaxHPIncreases = true;
  */
 function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	var setWounds = 0;
+	TAS.debug("at PFHealth.setWoundLevel, hp is " + hp);
 	if (hp <= grazed) {
 		if (hp > wounded) {
 			setWounds = 1;
@@ -40,12 +39,15 @@ function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
  */
 function setWoundLevelLookup (hp) {
 	//TAS.debug"PFHealth.setWoundLevelLookup, hp passed in is:" + hp);
-	getAttrs(["HP", "HP_grazed", "HP_wounded", "HP_critical", "condition-Wounds"], function (v) {
-		if (isNaN(parseInt(hp, 10))) {
-			hp = parseInt(v["HP"], 10) || 0;
+	TAS.debug("at PFHealth.setWoundLevelLookup, hp is " + hp);
+	getAttrs(["HP", "HP_grazed", "HP_wounded", "HP_critical", "condition-Wounds", "wound_threshold-show"], function (v) {
+		if(parseInt(v["wound_threshold-show"],10)){
+			if (isNaN(parseInt(hp, 10))) {
+				hp = parseInt(v["HP"], 10) || 0;
+			}
+			//TAS.debug("PFHealth.setWoundLevelLookup",v);
+			setWoundLevel(hp, parseInt(v["HP_grazed"], 10) || 0, parseInt(v["HP_wounded"], 10) || 0, parseInt(v["HP_critical"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0);
 		}
-		//TAS.debug("PFHealth.setWoundLevelLookup",v);
-		setWoundLevel(hp, parseInt(v["HP_grazed"], 10) || 0, parseInt(v["HP_wounded"], 10) || 0, parseInt(v["HP_critical"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0);
 	});
 }
 /*setWoundThreshholds - sets wound thresholds when you already have hp data.
@@ -58,6 +60,7 @@ function setWoundLevelLookup (hp) {
 function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
 	var setter={}, grazed=0,wounded=0,critical=0,disabled=0;
 	try {
+		TAS.debug("at PFHealth.setWoundThreshholds, hp is"+hp);
 		grazed = Math.floor(maxHP * 0.75);
 		wounded = Math.floor(maxHP * 0.5);
 		critical = Math.floor(maxHP * 0.25);
@@ -91,11 +94,12 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
  * Calls the other setWoundThresholds
  * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
  */
-export function setWoundThreshholdsLookup (eventInfo) {
+export function setWoundThreshholdsLookup () {
+	TAS.debug("at PFHealth.setWoundThreshholdsLookup");
 	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod","HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
 			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0, v);
-		} else if ((parseInt(v["condition-Wounds"], 10) || 0) > 0) {
+		} else if ((parseInt(v["condition-Wounds"], 10) || 0) !== 0) {
 			setAttrs({
 				"condition-Wounds": "0"
 			});
@@ -154,11 +158,13 @@ export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 	getAttrs(["HP", "HP_max", "HP-ability", "HP-ability-mod", "level", "total-hp", 
 		"total-mythic-hp", "condition-Drained", "HP-formula-mod", "HP-temp", "mythic-adventures-show", "wound_threshold-show", 
 		"condition-Wounds", "non-lethal-damage", "non-lethal-damage_max","condition-Staggered", "hp_ability_bonus",
-		"HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], 
+		"HP_grazed", "HP_wounded", "HP_critical", "HP_disabled","increase_hp"], 
 		function (v) {
 		var abilityMod = 0,	abilityBonus =  0, currHPMax = 0, currHP =  0, tempHP =  0, newHP = 0,
+			increaseHPWhenMaxHPIncreases=0,
 			nonLethal = 0, newHPMax = 0, mythic = 0, currWoundLevel = 0, usesWounds = 0, setter={};
 		try {
+			increaseHPWhenMaxHPIncreases = parseInt(v.increase_hp,10)||0;
 			abilityMod = parseInt(v["HP-ability-mod"], 10) || 0;
 			abilityBonus = (abilityMod * (parseInt(v["level"], 10) || 0));
 			currHPMax = parseInt(v["HP_max"], 10) || 0;
