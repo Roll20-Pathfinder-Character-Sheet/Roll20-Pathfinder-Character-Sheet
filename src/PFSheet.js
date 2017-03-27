@@ -558,7 +558,7 @@ function checkForUpdate () {
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
-			recalculate(currVer, done, false);
+			recalculate(currVer, done, true);
 		} else  {
 			done();
 		}
