@@ -8,19 +8,9 @@ import PFDB from './PFDB';
 import * as PFMigrate from './PFMigrate';
 import * as PFUtils  from './PFUtils';
 import * as PFSize from './PFSize';
-//import * as PFUtilsAsync  from './PFUtilsAsync';
-//import * as PFMacros from './PFMacros';
-//import * as PFMenus from './PFMenus';
-//import * as PFInitiative from './PFInitiative';
-//import * as PFSpellCasterClasses from './PFSpellCasterClasses';
 import * as PFSkills from './PFSkills';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFBuffs from './PFBuffs';
-//import * as PFSaves from './PFSaves';
-//import * as PFAttackGrid from './PFAttackGrid';
-//import * as PFDefense from './PFDefense';
-//import * as PFHealth from  './PFHealth';
-//import * as PFChecks from './PFChecks';
 
 var npcCompendiumAttributesPlayer = [ "npc-spellike-ability-text","npc-spells-known-text",
 	"character_name","cr_compendium","xp_compendium","alignment","size_compendium","type_compendium","init_compendium",
@@ -80,6 +70,14 @@ function getAbilityAndMod (numberAsString) {
 		"mod": 0
 	};
 }
+/** Splits string into array, based on commas (ignoring commas between parenthesis) 
+ * @param {string} featstring 
+ * @returns {[string]} feats
+ */
+function parseFeats (featstring) {
+	return SWUtils.splitByCommaIgnoreParens(featstring);
+}
+
 /** parseNPChp - parses statblock hp string such as 203 (14d10+126)
  * @param {string} hpstring - string format: "15 (3d8 + 2d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
  * @param {int} abilityMod: number representing ability score mod (normally CON-mod)
@@ -504,7 +502,7 @@ function getCreatureClassSkills (creatureType) {
 		return [];
 	}
 }
-/*assignPrimarySecondary
+/* assignPrimarySecondary
  * to each attack in array, assigns attack.naturaltype='primary|secondary' and sometimes attack.dmgMult=1.5
  * returns attacks for chaining.
  */
@@ -630,14 +628,9 @@ function buildImportantFeatObj (featlist) {
 		}
 	}, {}).value();
 }
-/* parseAttacks -parse atttack string one at a time, returns arrays grouped by full attacks
- * the name of the attack starts with Group 0, Group 1, etc.
- * @atktypestr "melee" or "ranged"
- * @returns array of {enh:0,mwk:0,name:"",atktype:"melee",type:"",countFullBAB:1,plus:"",plusamount:"",plustype:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0}
- */
 function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 	var matches, currpos = 0, name = "", iteratives, i = 0, tempInt = 0,
-		beforeBetweenAfterParens, bonus = "", origStr = atkstr, countspaces = 0,
+		beforeBetweenAfterParens, bonus = "", origStr = atkstr, countspaces = 0, specCMB = 0,
 		abilityBaseName = '', tempstr = "", tempidx = 0, names, attackdescs,
 	retobj = {
 		enh: 0,
@@ -690,8 +683,12 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			retobj.type = "weapon";
 			atkstr = atkstr.slice(matches[0].length);
 		}
-		//TAS.debug("############################","PFNPCParser.parseAttacks the regex is: "+PFDB.combatManeuversRegExp);
-		if (atktypestr === 'melee' && PFDB.combatManeuversRegExp.test(retobj.basename)) {
+		if (PFDB.cmbPlusStrsrch.test(retobj.basename)) {
+			retobj.atktype = 'cmb';
+			retobj.vs = 'cmd';
+			retobj.type = 'natural';
+			specCMB = 1;
+		} else if (atktypestr === 'melee' && PFDB.combatManeuversRegExp.test(retobj.basename)) {
 			retobj.atktype = 'cmb';
 			retobj.vs = 'cmd';
 		} else if (PFDB.cmbMonsterSrch.test(retobj.basename)) {
@@ -792,9 +789,13 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 				// find damage
 				//damage dice and die
 				matches = tempstr.match(/^(\d+)d(\d+)\s*/i);
-				if (matches && matches[1]) {
-					retobj.dmgdice = parseInt(matches[1], 10) || 0;
-					tempInt = parseInt(matches[2], 10) || 0;
+				if (matches) {
+					if(matches[1]){
+						retobj.dmgdice = parseInt(matches[1], 10) || 0;
+					}
+					if(matches[2]){
+						tempInt = parseInt(matches[2], 10) || 0;
+					}
 					//compendium bug no minus:
 					if ( (tempInt!==3 && tempInt % 2) || tempInt > 12) {
 						retobj.dmgdie = Math.floor(tempInt / 10);
@@ -802,23 +803,40 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					} else {
 						retobj.dmgdie = tempInt;
 					}
-					bonus = tempstr.slice(matches[0].length);
-				} else {
+					tempstr = tempstr.slice(matches[0].length);
+				}
+				if(!retobj.dmgbonus) {
 					//flat damage
 					matches = tempstr.match(/^([+\-]??\d+)\s*/);
+					if(specCMB){ 
+						TAS.debug("#####Parse attack damage dice looking for bonus: ",bonus, matches )
+					}
 					if (matches) {
 						//flat number
 						retobj.dmgbonus = parseInt(matches[1], 10) || 0;
-						bonus = beforeBetweenAfterParens[1].slice(matches[1].length);
+						bonus = tempstr.slice(matches[0].length);
+						//bonus = beforeBetweenAfterParens[1].slice(matches[1].length);
+					} else {
+						bonus = tempstr;
 					}
+				} else {
+					bonus = tempstr;
 				}
 				//any text after damage is 'plus' or damage type
 				if (bonus) {
+					//if engulf or swallowwhole, there will be inner AC and hp to put in notes
+					if (specCMB){
+						matches = bonus.match(/\sac\s\d+/i);
+						if(matches){
+							retobj.note+=bonus.slice(matches.index);
+							bonus = SWUtils.trimBoth(bonus.slice(0,matches.index));
+						}
+					}
 					//look for plus
 					matches = bonus.match(/plus(.*)/i);
 					if (matches) {
-						tempstr = matches[1].replace(/^\s+|\s+$/g, '');
-						bonus = bonus.slice(0, matches.index).replace(/^\s+|\s+$/g, '');
+						tempstr = SWUtils.trimBoth(matches[1]);
+						bonus = SWUtils.trimBoth(bonus.slice(0, matches.index));
 						if (/\d+d\d+/i.test(tempstr)) {
 							matches = tempstr.match(/(\d+d\d+)\s*([\w\s]*)/);
 							retobj.plusamount = matches[1];
@@ -829,11 +847,10 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 							retobj.plus = tempstr;
 						}
 					}
-					bonus = bonus.replace(/^\s+|\s+$/g, '');
-					matches = bonus.match(/\s|\//g);
-					if (matches) {
-						countspaces = matches.length - 1;
-					}
+					//matches = bonus.match(/\s|\//g);
+					//if (matches) {
+					//	countspaces = matches.length - 1;
+					//}
 					if (retobj.dmgbonus === 0) {
 						matches = bonus.match(/\s|\//g);
 						if (matches) {
@@ -857,8 +874,8 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 								}
 							}
 						});
+						bonus = bonus.slice(countspaces);
 					}
-					bonus = bonus.slice(countspaces);
 					if (bonus && bonus.length > 0) {
 						retobj.dmgtype += bonus;
 					}
@@ -883,12 +900,12 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			i = 2;
 			while (i < beforeBetweenAfterParens.length) {
 				//can use filter then reduce, or use each, or use easy for loop.
-				retobj.note += beforeBetweenAfterParens[i].replace(/^\s+|\s+$/g, '');
+				retobj.note += SWUtils.trimBoth(beforeBetweenAfterParens[i]);
 				i++;
 			}
 		}
 		if (retobj.note) {
-			retobj.note = retobj.note.replace(/^\s+|\s+$/g, '');
+			retobj.note = SWUtils.trimBoth(retobj.note);
 		}
 	} catch (err) {
 		TAS.error("parseAttack: error parsing:" + atkstr, err);
@@ -902,6 +919,13 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 		return retobj;
 	}
 }
+/** parseAttacks parse atttack string one at a time, returns arrays grouped by full attacks
+ * attacks split by commas, full attack groups split by 'or'
+ * the name of the attack starts with Group 0, Group 1, etc.
+ * @param {string} atkstr
+ * @param {string} atktypestr "melee" or "ranged"
+ * @returns {[{enh:0,mwk:0,name:"",atktype:"melee",type:"",countFullBAB:1,plus:"",plusamount:"",plustype:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0}]}
+ */
 function parseAttacks (atkstr, atktypestr, cmbval) {
 	var atkarrayout,
 	atkarraysub,
@@ -930,15 +954,7 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 		return memoout.concat(attacks);
 	}, []);
 	return attacksouter;
-}
-function parseFeats (featstring) {
-	var feats=[];
-	if (!featstring) {return [];}
-	feats = featstring.match(/((?:[^(),]|\([^()]*\))+)/g);
-	feats = SWUtils.trimBoth(feats);
-	return feats;
-}
-function parseSkillRacialBonuses (racialstr) {
+}function parseSkillRacialBonuses (racialstr) {
 	//abilitymods = modify default ability score for a skill
 	var abilitieslower = _.map(PFAbilityScores.abilities, function (ab) {
 		return ab.toLowerCase();
@@ -1981,11 +1997,11 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 	if (!attacklist || _.size(attacklist)===0) {
 		return setter;
 	}
-	//TAS.debug"create attacks:", attacklist, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches);
+	TAS.debug("##################","create attacks:", attacklist, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches);
 	setter = _.reduce(attacklist, function (memo, attack) {
 		var newRowId = generateRowID(),
-		prefix = "repeating_weapon_" + newRowId + "_",
-		i = 0, iterativeNum = 0, basebonus = 0, tempInt = 0, dmgmult = 1, dmgmod = 0, tohitbonus = 0,
+		prefix = "repeating_weapon_" + newRowId + "_", dmgAbilityStr=false, specCMB=false,
+		i = 0, iterativeNum = 0, basebonus = 0, tempInt = 0, dmgMult = 1, dmgMod = 0, tohitbonus = 0,
 		name = "", tempstr = "", basename = "", iterZero = NaN,
 		reach, newRowId2, prefix2;
 		//TAS.debug"creating attack row id:" + newRowId);
@@ -2005,18 +2021,26 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				memo[prefix + "attack-type"] = "@{attk-ranged}";
 				memo[prefix + "attack-type-mod"] = attackGrid.ranged;
 				memo[prefix + "isranged"] = 1;
+			} else if ( PFDB.cmbPlusStrsrch.test(basename)){
+				basebonus = attackGrid.cmb;
+				memo[prefix + "attack-type"] = "@{CMB}";
+				memo[prefix + "attack-type-mod"] = attackGrid.cmb;
+				dmgAbilityStr=true;
+				dmgMult = 1.5;
+				specCMB=true;
 			} else if (attack.atktype === 'cmb') {
 				basebonus = attackGrid.cmb;
 				memo[prefix + "attack-type"] = "@{CMB}";
 				memo[prefix + "attack-type-mod"] = attackGrid.cmb;
-				basebonus = 0;
 			} else if (attack.atktype === 'special') {
 				basebonus = 0;
 				memo[prefix + "attack-type-mod"] = 0;
 				memo[prefix + "total-attack"] = 0;
 			} else {
-				//assume all attacks use weapon finesse
+				dmgAbilityStr=true;
+				//melee
 				if (importantFeats.weaponfinesse) {
+					//assume all attacks use weapon finesse
 					basebonus = attackGrid.melee2;
 					memo[prefix + "attack-type"] = "@{attk-melee2}";
 					memo[prefix + "attack-type-mod"] = attackGrid.melee2;
@@ -2025,36 +2049,54 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 					memo[prefix + "attack-type"] = "@{attk-melee}";
 					memo[prefix + "attack-type-mod"] = attackGrid.melee;
 				}
-				memo[prefix + "damage-ability"] = "@{STR-mod}";
 				if (attack.type === 'natural') {
 					if (attack.naturaltype === 'secondary') {
-						dmgmult = 0.5;
-						memo[prefix + "damage_ability_mult"] = 0.5;
+						dmgMult = 0.5;
 					} else if (attack.dmgMult && attack.dmgMult === 1.5) {
 						memo[prefix + "damage_ability_mult"] = 1.5;
-						dmgmult = 1.5;
+						dmgMult = 1.5;
 					}
 				}
-				if (dmgmult === 1) {
-					dmgmod = abilityScores.str.mod;
-				} else {
-					dmgmod = Math.floor(dmgmult * abilityScores.str.mod);
-				}
-				memo[prefix + "damage-ability-mod"] = dmgmod;
 			}
+			if(specCMB){
+				TAS.debug("############ SPEC CMB ###############","dmgAbilityStr:"+dmgAbilityStr+" attackbonus:"+basebonus +", mult:"+ dmgMult);
+			}
+			if (dmgAbilityStr || specCMB){
+				if(specCMB && attack.dmgbonus===0){
+					memo[prefix + "damage-ability"] = "0";
+					dmgMod=0;
+				} else {
+					memo[prefix + "damage-ability"] = "@{STR-mod}";
+					if (dmgMult !== 1){
+						dmgMod = Math.floor(dmgMult * abilityScores.str.mod);
+						memo[prefix + "damage_ability_mult"] = dmgMult;
+					} else {
+						dmgMod = abilityScores.str.mod;
+					}
+				}
+				memo[prefix + "damage-ability-mod"] = dmgMod;
+			}			
 			if (attack.enh) {
 				memo[prefix + "enhance"] = attack.enh;
 			}
 			if (attack.mwk) {
 				memo[prefix + "masterwork"] = "1";
 			}
-			if (attack.iter && attack.iter.length > 0) {
+			if (!specCMB && attack.iter && attack.iter.length > 0) {
 				iterZero = parseInt(attack.iter[0], 10);
+			} else if (specCMB) {
+				iterZero = basebonus;
 			}
 			if (!isNaN(iterZero)) {
-				memo[prefix + "attack"] = iterZero - tohitbonus - basebonus;
-				memo[prefix + "attack-mod"] = iterZero - tohitbonus - basebonus;
-				memo[prefix + "total-attack"] = iterZero;
+				if(specCMB){
+					memo[prefix + "attack"] = 0;
+					memo[prefix + "attack-mod"] = 0;
+					memo[prefix + "total-attack"] = basebonus;
+				} else {
+					memo[prefix + "attack"] = iterZero - tohitbonus - basebonus;
+					memo[prefix + "attack-mod"] = iterZero - tohitbonus - basebonus;
+					memo[prefix + "total-attack"] = iterZero;
+				}
 			} else if (attack.atktype === 'cmb') {
 				if ((/swallowwhole|pin/i).test(attack.basename)) {
 					//if confirming crit add +5
@@ -2084,8 +2126,8 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			memo[prefix + "default_damage-dice-num"] = attack.dmgdice;
 			memo[prefix + "damage-die"] = attack.dmgdie;
 			memo[prefix + "default_damage-die"] = attack.dmgdie;
-			memo[prefix + "damage"] = attack.dmgbonus - attack.enh - dmgmod;
-			memo[prefix + "damage-mod"] = attack.dmgbonus - attack.enh - dmgmod;
+			memo[prefix + "damage"] = attack.dmgbonus - attack.enh - dmgMod;
+			memo[prefix + "damage-mod"] = attack.dmgbonus - attack.enh - dmgMod;
 			memo[prefix + "total-damage"] = attack.dmgbonus;
 			if (attack.note) {
 				memo[prefix + "notes"] = "(" + attack.type + ") " + attack.note;
@@ -2620,7 +2662,6 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 				setter["CMB"] = calcCMB;
 				attackGrid.cmb = calcCMB;
 			}
-			
 		} catch (errC) {
 			TAS.error("parseAndCreateAttacks error creating CMB attack types", errC);
 		}

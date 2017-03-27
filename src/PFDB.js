@@ -4,10 +4,11 @@ export default {
 	combatManeuversRegExp : /bull\s*rush|trip|disarm|dirty\s*trick|drag|grapple|overrun|reposition|steal|sunder|trip/i,
 	primaryNaturalAttacksRegExp : /bite|claw|gore|slam|sting|talon/i,
 	importantFeatRegExp : /Weapon Fine|^Run$|Enduran|Defensive Combat Train|Agile Maneuv|Arcane Arm|Combat Cast|Critical Focus|Skill Focus|Critical|Intimidating Prow/i,
-	spAttackAttacks : /blooddrain|touch|energydrain|bleed|burn|constrict|trample|engulf|heat|powerfulcharge|swallowwhole/i,
+	spAttackAttacks : /blooddrain|touch|energydrain|bleed|burn|constrict|trample|engulf|heat|powerfulcharge|swallowwhole|constrict/i,
 	spAttackAttacksPreProcess : /rake|rend|web/i,
 	abilitySrch : /str|dex|con|int|wis|cha/i,
-	cmbMonsterSrch : /swallowwhole|tongue|pull|drag|grab|push/i,
+	cmbMonsterSrch : /tongue|pull|drag|grab|push/i,
+	cmbPlusStrsrch : /swallowwhole|engulf|constrict|swallow/i,
 	casterDefaultAbility : {
 		sorcerer: 'cha',
 		wizard: 'int',
