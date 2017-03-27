@@ -569,7 +569,7 @@
   "display-advanced-macros": " Display 'add-to-roll' rolltime fields",
   "display-advanced-macros-title": "Display Advanced fields to add to rolls. These will add to any 1d20 roll. Evaluated at roll-time, so queries may be used. Each requires '0' as default, and [[]] around rolls",
   "display-advanced-options": " Display user defined and misc fields",
-  "display-advanced-options-title": "Display extra fields for advanced customization, such as columns marked 'misc' or 'user defined'",
+  "display-advanced-options-title": "Display extra fields for advanced customization, such as columns marked 'user defined'",
   "display-both-whispers": "Show both roll menu buttons for Monsters/NPCs",
   "display-both-whispers-title": "Display both sets of menu buttons at top of page: for PC-Whisper and NPC-Whisper",
   "display-cmb-2": " Display Alt CMB attack type",
