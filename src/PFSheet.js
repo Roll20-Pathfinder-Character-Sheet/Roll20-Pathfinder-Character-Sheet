@@ -230,7 +230,7 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		setAttrs({'is_newsheet':0, 'is_v1':1, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -362,6 +362,10 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.19){
 				PFAttackGrid.resetCommandMacro();
 				PFAttackGrid.setTopMacros();
+			}
+			if (oldversion < 1.20){
+				PFHealth.recalculate();
+				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
 		}
 	} catch (err) {
@@ -541,7 +545,7 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
@@ -551,7 +555,7 @@ function checkForUpdate () {
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
-			recalculate(currVer, done, false);
+			recalculate(currVer, done, true);
 		} else  {
 			done();
 		}
