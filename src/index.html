@@ -20,7 +20,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" name="attr_expandall" value="1" class="sheet-offscreen" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" name="attr_attentionv119-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" name="attr_attentionv120-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<div style="margin-right: 43%;float: right;" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-condition-exists" role="Presentation"><label style="font-size:1rem; padding:.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
@@ -28,6 +28,14 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
 		<div class="sheet-footer" style="text-align:left; padding:5px; margin:5px;">
 			<label class="sheet-small-label2 sheet-number" ><input type="text" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly title="A non-blank version indicates attributes have been successfully recalculated." /><span data-i18n="version">Version</span></label>
+			<h2 data-i18n="new-features">New Features and Updates</h2>
+			<p>In this version (1.20):</p>
+			<ol>
+				<li><em>Settings page:</em> added setting to turn <strong>update curr hp when max hp changes</strong> on or off	</li>
+				<li>Fix to "critical" wounds turning on</li>
+				<li>Fix to spell totals for spontaneous casters</li>
+				<li>Fix to monster parsing: engulf, swallow whole, constrict, and hitpoints</li>
+			</ol>					
 			<h2>Where did stuff go?</h2>
 			<ul>
 				<li data-i18n="announcements-24">Click <strong>⛭ Settings</strong> button next to Pathfinder logo to toggle Settings page.</li>
@@ -38,25 +46,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 				<li>Click the <strong>mode</strong> button to enter expanded mode if fields are not found</li>
 				<li data-i18n="announcements-27">Extra calculated numbers available on <em>Notes</em> page for point pools, or for use in tokens bars, etc</li>
 			</ul>
-			<h2 data-i18n="new-features">New Features and Updates</h2>
-			<p>In this version (1.19):</p>
-			<ol>
-				<li>Now hp updates when updating max hp again</li>
-				<li>Fix to attacks menus</li>
-				<li>Fix skill stealth-trait field</li>
-				<li>Fix to spell-notes</li>
-				<li>Fixes to NPC parsing: 
-					<ul><li>CMD and CMB npc parsing</li>
-					<li>Fix fly and stealth npc import take size into account</li></ul>
-				</li>
-				<li>Additional default settings</li>
-				<li>To re-upgrade from a backup of v.74:
-					<ul><li> Attack and skill <strong>macros will not reset</strong> if you re-upgrade backup of v.74</li>
-					<li> Fix to npc upgrade from v.74 will not overwrite any class hp or levels</li></ul>
-				</li>
-			</ol>					
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv119-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
-
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
@@ -95,7 +85,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 		<input type="checkbox" name="attr_is_undead" value="1" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_normal_macro_show" value="1" class="sheet-all-macro-text-show" style="display:none;" role="presentation" />
 		<input type="checkbox" name="attr_adv_macro_show" value="1" class="sheet-advanced-macro-show" role="presentation" />
-		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-show-npc-tab" style="display:none;" data-i18n-aria-label="is-npc-check-caps" />
+		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-show-npc-tab" style="display:none;" />
 		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab" style="margin-right:.5em;display:none;" data-i18n-aria-label="uses-spells-title" role="presentation" />		
 		<div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-status-section" class="sheet-section-status" >
 			<div class="sheet-status-panel" role="status" aria-live="polite" aria-label="Current Conditions" data-i18n-aria-label="current-conditions">
@@ -6148,7 +6138,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									</select>
 									<span data-i18n-title="rule-category" data-i18n-aria-label="rule-category" data-i18n="rule">Rule</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-vshort sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
 										<option value="0" data-i18n="custom" >Custom</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
@@ -6405,7 +6395,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									<span style="display:none;" class="sheet-table-cell sheet-small-label sheet-sect" >
 										<input name="attr_rule_category" type="text" value="class-features" title="@{repeating_class-ability_$X_rule_category}" data-i18n-aria-label="rule-category" readonly />
 									</span>
-									<span class="sheet-table-cell sheet-small-label sheet-sect sheet-sect sheet-hide-readonly" >
+									<span class="sheet-table-cell sheet-small-label sheet-sect sheet-sect sheet-hide-readonly sheet-entry-vshort" >
 										<select title="@{repeating_class-ability_$X_class-number}" name="attr_class-number" class="sheet-select-small sheet-select-class">
 											<option value="@{class-0-name}" data-i18n="class-0-default" selected>•0 class</option>
 											<option value="@{class-1-name}" data-i18n="class-1">1st</option>
@@ -11271,7 +11261,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					</span>
 				</div>
 				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name" data-i18n="hit-points">Hit Points</span>
+					<span class="sheet-table-config-row-name" data-i18n="hit-points" style="border-bottom: none;">Hit Points</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
 							<input type="checkbox" class="sheet-sect2-show sheet-selectedlabel-check" style="display:inline;" value="1" name="attr_auto_calc_hp" aria-label="check to autocalc hp/lvl"  /><b><span data-i18n="automatically-calculate-hit-points-abbrv">Auto calc hp</span></b>
@@ -11288,6 +11278,16 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<label class="sheet-sect2">
 							<input type="checkbox" value="1" name="attr_maxhp_lvl1" class="sheet-selectedlabel-check" /><b><span data-i18n-title="100-at-level-1-title" data-i18n="100-at-level-1">Use Max hp for first level/HD</span></b>
 						</label>
+					</span>					
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" ></span>
+					<span class="sheet-table-cell sheet-left">
+						<label>
+							<input type="checkbox" value="1" name="attr_increase_hp" title="@{increase_hp}" checked  class="sheet-selectedlabel-check" data-i18n-aria-label="update-hp-when-max-changes" /><b><span data-i18n-title="update-hp-when-max-changes-title" data-i18n="update-hp-when-max-changes"> Update curr HP when max HP changes</span></b>
+						</label>
+					</span>
+					<span class="sheet-table-cell sheet-left">
 					</span>					
 				</div>
 				<div class="sheet-table-row">
@@ -12816,7 +12816,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>03/22/2017 11:18pm &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>03/27/2017 01:00am Est &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
