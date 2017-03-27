@@ -230,7 +230,7 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		setAttrs({'is_newsheet':0, 'is_v1':1, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -364,8 +364,12 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttackGrid.setTopMacros();
 			}
 			if (oldversion < 1.20){
-				PFMigrate.migrateWhisperDropdowns();
+				PFHealth.recalculate();
+				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
+      if (oldversion < 1.30){
+        PFMigrate.migrateWhisperDropdowns();
+      }
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
