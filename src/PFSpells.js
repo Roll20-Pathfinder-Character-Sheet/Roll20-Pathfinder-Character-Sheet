@@ -27,8 +27,6 @@ defaultRepeatingMacroMap = {
     '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
     '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
     '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-//	'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
-//	'{{switch=':{'current':'~@{character_id}|NPCREPLACEspellbook-CLASSIDX}}'},
     '{{color=':{'current':'@{rolltemplate_color}}}'},
     '{{header_image=':{'current':'@{header_image-pf_spell}}}'},
     '{{name=':{'current':'@{name}}}'},
@@ -310,16 +308,7 @@ function getSpellTotals  (ids, v, setter) {
                 return setter;
             }
         }
-        
- /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
-            memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
-                imemo[spelllevel] = 0;
-                return imemo;
-            }, {});
-            return memo;
-        }, {});
-        totalListed =  _.mapObject(totalPrepped, _.clone);*/
-         
+
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                 spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
@@ -349,7 +338,8 @@ function getSpellTotals  (ids, v, setter) {
                 if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
                     setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
+                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel] || 
+                        (parseInt(v[prefix + "-spells-per-day"], 10) || 0)  !== totalPrepped[classidx][spellLevel]  ) {
                     setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
                     setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                 }
@@ -361,7 +351,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
-function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
+export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
@@ -383,6 +373,7 @@ function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 _.each(spellLevels, function (spellLevel) {
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-total-listed");
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared");
+                    fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day");
                 });
             });
             getAttrs(fields, function (v) {

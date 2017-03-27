@@ -775,7 +775,7 @@ export function migrateNPC (callback, oldversion) {
         }
     }),
     migrateNPCConfig = function(callback){
-            setAttrs({ 'auto_calc_hp':1, 'normal_macro_show': 1,
+            setAttrs({ 'normal_macro_show': 1,
                 'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 }, 
                 PFConst.silentParams,callback);
     },
@@ -791,15 +791,18 @@ export function migrateNPC (callback, oldversion) {
         });
         getAttrs(["HP-ability", "HP-ability-mod", "npc-type", "CON-mod", "CHA-mod", "total-hp","level","bab", "HP-formula-macro-text", "HP-formula-mod", 
             "class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level",
+            "class-0-hp","class-1-hp","class-2-hp","class-3-hp","class-4-hp","class-5-hp",
             "is_undead",
             "npc-hd-misc", "npc-hd-misc-mod","npc-hd", "npc-hd-num", "npc-hd2", "npc-hd-num2", 'npc-bab'], function (v) {
             var isUndead=0,abilityMod=0,ability='',classLevels=0,classhd=0,level=0,totalhp=0,hitdice=0,hitdie=0,basehp=0,
-                tempInt=0,classhp=0,classNum=0,abilityModTot=0,
+                tempInt=0,classhp=0,classNum=0,abilityModTot=0,tempLvl=0,temphp=0,
                 currLevel=0,currHP=0,setter={},bab=0,npcbab=0,newbab=0,newFormula={},hdMiscVal=0,currhpFormVal=0;
             try {
-                setter["auto_calc_hp"]= "1";
                 hitdice=parseInt(v['npc-hd-num'],10)||0;
                 hitdie=parseInt(v["npc-hd"], 10) || 0;
+                if (hitdice > 0 && hitdie > 0){
+                    setter["auto_calc_hp"]= "1";
+                }
                 classLevels=parseInt(v['npc-hd-num2'],10)||0;
                 classhd=parseInt(v['npc-hd2'],10)||0;
 
@@ -845,7 +848,8 @@ export function migrateNPC (callback, oldversion) {
                     //should be class-0-name, if not, something is really wrong.
                     for (classNum=0;classNum<6;classNum++){
                         tempInt=  parseInt(v['class-'+classNum+'-level'],10);
-                        if(  tempInt === 0 ||  tempInt === classLevels  ){
+                        temphp =  parseInt(v['class-'+classNum+'-hp'],10);
+                        if( ! tempInt && !temphp  ){
                             break;
                         }
                     }
@@ -1191,6 +1195,37 @@ export function migrateSpellPointFlag (callback,oldversion){
             }
     });
 }
+
+export function migrateWhisperDropdowns (callback){
+    var done = _.once(function(){ 
+        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        if (typeof callback === "function") { callback(); }
+    });
+    getAttrs(['migrated_whispers','PC-whisper','NPC-whisper'],function(v){
+        var setter={};
+        try{
+            if(!parseInt(v.migrated_whispers,10)){
+                if (v['PC-whisper']==='&nbsp;'|| v['PC-whisper']===' ' || 
+                    (v['PC-whisper'] && v['PC-whisper']!=='/w gm')) {
+                    setter['PC-whisper']='';
+                }
+                if (v['NPC-whisper']==='&nbsp;'|| v['NPC-whisper']===' ' || 
+                    (v['NPC-whisper'] && v['NPC-whisper']!=='/w gm')) {
+                    setter['NPC-whisper']='';
+                }
+            }
+        } catch (err){
+            TAS.error("PFMigrate.migrateWhispers",err);
+        } finally {
+            if(_.size(setter)){
+                setAttrs(setter,PFConst.silentParams,done);
+            } else {
+                done();
+            }
+        }
+    });
+}
+
 export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
         TAS.debug("leaving PFMigrate migrateConfigFlags");
@@ -1204,7 +1239,9 @@ export function migrateConfigFlags (callback,oldversion){
     migrateAbilityListFlags();
     migrateExperience();
     migrateSpellPointFlag(null,oldversion);
+    //migrateWhisperDropdowns();
 }
+
 export function getAllMigrateFlags (v){
     TAS.debug("at PFMigrate.getAllMigrateFlags");
     v=v||{};

@@ -4,6 +4,8 @@ import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 //importing PFSheet imports everything else
 import * as PFSheet from './PFSheet';
+import * as HLImport from './HLImport';
+
 TAS.config({
  logging: {
    info: false,

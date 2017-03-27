@@ -7,18 +7,19 @@ import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 
 var menuMap={
-    'class-ability':{'name':'original-class-features-list','section':'class-ability'},
-    'feat':{'npcMacroName':'NPC-feat','name':'original-feats-list','section':'feat','npcLinkField':'npc-roll'},
-    'racial-trait':{'npcMacroName':'NPC-racial-trait','name':'original-racial-traits-list','section':'racial-trait','npcLinkField':'npc-roll'},
-    'trait':{'name':'original-traits-list','section':'trait'},
-    'mythic-ability':{'name':'mythic-abilities','section':'mythic-ability'},
-    'mythic-feat':{'name':'mythic-feats','section':'mythic-feat'},
-    'npc-spell-like-abilities':{'name':'original-spell-like-abilities-list','section':'npc-spell-like-abilities'},
-    'ability':{'npcMacroName':'NPC-ability','name':'abilities','section':'ability','groupBy':'rule_category','translateGroup':1,'npcLinkField':'npc-roll'},
-    'ex':{'npcMacroName':'NPC-ex','name':'extraordinary-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Ex','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-    'sp':{'npcMacroName':'NPC-sp','name':'spell-like-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Sp','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-    'su':{'npcMacroName':'NPC-su','name':'supernatural-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Su','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll'},
-    'item':{'npcMacroName':'NPC-item','name':'items','section':'item','usesField':'','bonusField':'','groupBy':'equip-type','translateGroup':1,'npcLinkField':'npc-roll'}
+    'class-ability':{'name':'original-class-features-list','section':'class-ability','useshowinmenu':1},
+    'feat':{'npcMacroName':'NPC-feat','npcName':' ^{npc} ','name':'original-feats-list','section':'feat','npcLinkField':'npc-roll','useshowinmenu':1},
+    'racial-trait':{'npcMacroName':'NPC-racial-trait','npcName':' ^{npc} ','name':'original-racial-traits-list','section':'racial-trait','npcLinkField':'npc-roll','useshowinmenu':1},
+    'trait':{'name':'original-traits-list','section':'trait','useshowinmenu':1},
+    'mythic-ability':{'name':'mythic-abilities','section':'mythic-ability','useshowinmenu':1},
+    'mythic-feat':{'name':'mythic-feats','section':'mythic-feat','useshowinmenu':1},
+    'npc-spell-like-abilities':{'name':'original-spell-like-abilities-list','section':'npc-spell-like-abilities','useshowinmenu':1},
+    'ability':{'npcMacroName':'NPC-ability','npcName':' ^{npc} ','name':'abilities','section':'ability','groupBy':'rule_category','translateGroup':1,'npcLinkField':'npc-roll','useshowinmenu':1},
+    'ex':{'npcMacroName':'NPC-ex','npcName':' ^{npc} ','name':'extraordinary-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Ex','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll','useshowinmenu':1},
+    'sp':{'npcMacroName':'NPC-sp','npcName':' ^{npc} ','name':'spell-like-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Sp','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll','useshowinmenu':1},
+    'su':{'npcMacroName':'NPC-su','npcName':' ^{npc} ','name':'supernatural-abilities-menu','section':'ability','filterField':'ability_type','filterValue':'Su','groupBy':'frequency','translateGroup':1,'altUsesField':'rounds_between','npcLinkField':'npc-roll','useshowinmenu':1},
+    'item':{'npcMacroName':'NPC-item','npcName':' ^{npc} ','name':'items','section':'item','usesField':'','bonusField':'','groupBy':'equip-type','translateGroup':1,'npcLinkField':'npc-roll','useshowinmenu':1},
+    'attacks':{'macroSuffix':'-macro','npcMacroSuffix':'-macro-npc','npcName':' ^{npc} ','section':'weapon','name':'attacks','usesField':'','bonusField':'','groupBy':'attack-type','altGroupBy':'group','translateGroup':1,'npcLinkField':'attack-npc-roll','linkField':'attack-roll'}
 };
 
 /** creates a command macro button for a repeating section
@@ -53,6 +54,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         usesField="",
         altUsesField="",
         groupByField="",
+        altGroupByField="",
         linkField="roll",
         filterField="",
         filterValue="",
@@ -60,6 +62,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
+        TAS.error("PFMenus.getRepeatingCommandMacro cannot process",baseAttribs);
         done("");
         return;
     }
@@ -78,7 +81,8 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         groupByField=baseAttribs.groupBy||groupByField;
         filterField=baseAttribs.filterField||filterField;
         altUsesField=baseAttribs.altUsesField||altUsesField;
-        //TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
+        altGroupByField=baseAttribs.altGroupBy||'';
+        // TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
     } catch (outerErr){
         TAS.error("PFMenus.getRepeatingCommandMacro outererror for "+ baseAttribs.section, outerErr);
         done("");
@@ -87,15 +91,19 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
     getSectionIDs("repeating_"+baseAttribs.section,function(ids){
         var fields=[],prefix="repeating_"+baseAttribs.section+"_";
         try {
-            if (_.size(ids)<0){
-                TAS.error("It says "+baseAttribs.section+" has no rows!");
+            if (!ids || _.size(ids)<=0){
                 done(baseMacro+ noRows);
                 return;
             }
             _.each(ids,function(id){
                 var linePrefix=prefix+id+"_";
                 fields.push(linePrefix+nameField);
-                fields.push(linePrefix+'showinmenu');
+                if (baseAttribs.useshowinmenu){
+                    fields.push(linePrefix+'showinmenu');
+                }
+                if (altGroupByField){
+                    fields.push(linePrefix+altGroupByField);
+                }
                 if (bonusField){
                     fields.push(linePrefix+bonusField);
                 }
@@ -122,6 +130,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         getAttrs(fields,function(v){
             var restOfMacro="", totalMacro="",orderedList,repList,customSorted=0, rowCounter=20;
             try {
+                TAS.debug('PFMenus.getRepeatingCommandMacro returned with',v);
                 if (v['_reporder_repeating_'+baseAttribs.section]) {
                     repList = v['_reporder_repeating_'+baseAttribs.section].split(",");
                     repList = _.map(repList, function (ID) {
@@ -145,7 +154,10 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                                 uses = v[linePrefix+usesField]||'';
                                 max = v[linePrefix+usesField+"_max"]||'';
                             }
-                            if (groupByField && v[linePrefix+groupByField]){
+                            if(altGroupByField && v[linePrefix+altGroupByField]){
+                                retObj.group =  v[linePrefix+altGroupByField];
+                                retObj.doNotTranslate=true;
+                            } else if (groupByField && v[linePrefix+groupByField]){
                                 if (baseAttribs.groupMap){
                                     if (baseAttribs.groupMap[v[linePrefix+groupByField]]){
                                         retObj.group = baseAttribs.groupMap[v[linePrefix+groupByField]];
@@ -217,7 +229,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                             } else {
                                 retObj.showinmenu = 1;
                             }
-                            if(retObj.showinmenu){
+                            if(retObj.filterField !== 'showinmenu' && baseAttribs.useshowinmenu){
                                 tempshow=parseInt(v[linePrefix+'showinmenu'],10)||0;
                                 retObj.showinmenu = retObj.showinmenu && tempshow;
                             }
@@ -287,12 +299,15 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         }),
         params={},
         macroName=menuName;
-    params ={
+    //this is here because putting it above cloning was not working, 
+    //so this makes sure new instance gets created each time
+    params = {
         'usesField': 'used',
         'linkField': 'roll',
         'nameField': 'name',
-        'bonusField':'ability_type',
-        'translateBonus':1
+        'bonusField': 'ability_type',
+        'translateBonus':1,
+        'macroSuffix': '_buttons_macro'
         };
     if (menuMap[menuName]) {
         params = _.extend(params,menuMap[menuName]);
@@ -302,11 +317,19 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
             }
             if(menuMap[menuName].npcMacroName){
                 macroName = menuMap[menuName].npcMacroName;
-                params.npcName = ' ^{npc} ';
+            }
+            if (menuMap[menuName].npcMacroSuffix){
+                params.macroSuffix = menuMap[menuName].npcMacroSuffix;
+            }
+        } else {
+            if (params.npcName){
+                params.npcName = '';
             }
         }
     } else {
-        TAS.warn("Could not find parameters for menu "+menuName);			
+        TAS.error("PFMenus.resetOneCommandMacro Could not find parameters for menu "+menuName);
+        done();
+        return;
     }
     if (groupMap && params.groupBy){
         params.groupMap = groupMap;
@@ -314,8 +337,8 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     //TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
     getRepeatingCommandMacro( params,function(newMacro){
         var setter={};
-        //TAS.debug("PFMenus.resetOneCommandMacro returned for "+menuName,newMacro);
-        setter[macroName+"_buttons_macro"]=newMacro||"";
+        //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
+        setter[macroName + params.macroSuffix]=newMacro||"";
         setAttrs(setter,PFConst.silentParams,done);
     },header);
 }

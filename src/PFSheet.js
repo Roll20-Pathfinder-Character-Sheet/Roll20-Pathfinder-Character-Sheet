@@ -22,6 +22,7 @@ import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFAbility from './PFAbility';
 import * as PFNPC from './PFNPC';
+import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttacks from './PFAttacks';
 import * as PFFeatures from './PFFeatures';
@@ -229,7 +230,7 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		setAttrs({'is_newsheet':0, 'is_v1':1, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -357,6 +358,14 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInitiative.recalculate(null,false,oldversion);
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
+			}
+			if (oldversion < 1.19){
+				PFAttackGrid.resetCommandMacro();
+				PFAttackGrid.setTopMacros();
+			}
+			if (oldversion < 1.20){
+				PFHealth.recalculate();
+				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
 		}
 	} catch (err) {
@@ -494,8 +503,8 @@ export function recalculate (oldversion, callback, silently) {
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
 		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
 	});
+	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);
-
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
 *  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
@@ -536,7 +545,7 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
@@ -546,7 +555,7 @@ function checkForUpdate () {
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
-			recalculate(currVer, done, false);
+			recalculate(currVer, done, true);
 		} else  {
 			done();
 		}
@@ -583,7 +592,6 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber(read, write);
 		}));
 	});
-
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
