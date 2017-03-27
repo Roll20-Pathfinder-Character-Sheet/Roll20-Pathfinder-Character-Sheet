@@ -606,6 +606,17 @@ export function trimBoth (val){
 	}
 	return val;
 }
+/** Splits string into array, based on commas (ignoring commas between parenthesis) 
+ * @param {string} str 
+ * @returns {[string]} array of items
+ */
+export function splitByCommaIgnoreParens(str){
+	var ret=[];
+	if (!str) {return [];}
+	ret = str.match(/((?:[^(),]|\([^()]*\))+)/g);
+	ret = trimBoth(ret);
+	return ret;
+}
 
 PFConsole.log( '   SWUtils module loaded          ' );
 PFLog.modulecount++;
