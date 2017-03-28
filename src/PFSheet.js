@@ -367,9 +367,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate();
 				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
-		      if (oldversion >= 1.20 && oldversion < 1.50){
-			PFMigrate.migrateWhisperDropdowns();
-		      }
+			if (oldversion >= 1.20 && oldversion < 1.40){
+				PFMigrate.migrateWhisperDropdowns();
+		    }
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
