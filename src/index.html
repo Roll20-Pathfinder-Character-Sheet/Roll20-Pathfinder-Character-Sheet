@@ -6632,7 +6632,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 							<fieldset class="repeating_npc-spell-like-abilities">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span class="sheet-table-cell"></span>
-								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_npc-spell-like-abilities_$X_roll}" value="@{macro-text}"></button></span>
+								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_npc-spell-like-abilities_$X_roll}" value="@{NPC-whisper} @{macro-text}"></button></span>
 								<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_npc-spell-like-abilities_$X_used}" type="number" name="attr_used" value="0" /><br><span data-i18n="uses-per-day">Uses/Day</span></span>
 								<input type="hidden" value="spell-like-abilities" name="attr_rule_category" />
 								<span class="sheet-table-cell sheet-small-label" style="width:25%;"><input title="@{repeating_npc-spell-like-abilities_$X_name}" type="text" name="attr_name" placeholder="Name" data-i18n-placeholder="name" /><br><span data-i18n="name">Name</span></span>
@@ -6658,7 +6658,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<textarea class="sheet-macro-text" title="@{repeating_npc-spell-like-abilities_$X_macro-text}" name="attr_macro-text">@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{^{level}=[[@{level}]]}} {{^{range}=@{range}}} {{^{duration}=@{duration}}} {{^{save}=@{save}}} {{^{spell-resistance-abbrv}=@{sr}}} {{description=@{short-description}}}</textarea>
+									<textarea class="sheet-macro-text" title="@{repeating_npc-spell-like-abilities_$X_macro-text}" name="attr_macro-text">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{^{level}=[[@{level}]]}} {{^{range}=@{range}}} {{^{duration}=@{duration}}} {{^{save}=@{save}}} {{^{spell-resistance-abbrv}=@{sr}}} {{description=@{short-description}}}</textarea>
 									<div class="sheet-repeating-id">
 										<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 									</div>

@@ -244,26 +244,25 @@ function getTopOfMenu (callback,isNPC){
 	}
 }
 export function resetCommandMacro (callback){
-	getAttrs(['is_npc'],function(v){
-		var isNPC = parseInt(v.is_npc,10)||0;
-		getTopOfMenu ( function(header){
-			PFMenus.resetOneCommandMacro('ability',isNPC,null,header);
-		}, isNPC);
-		PFMenus.resetOneCommandMacro('ex',isNPC);
-		PFMenus.resetOneCommandMacro('sp',isNPC);
-		PFMenus.resetOneCommandMacro('su',isNPC);
-		if (isNPC){
-			getTopOfMenu ( function(header){
-				PFMenus.resetOneCommandMacro('ability',false,null,header);
-			});
-			PFMenus.resetOneCommandMacro('ex');
-			PFMenus.resetOneCommandMacro('sp');
-			PFMenus.resetOneCommandMacro('su');
-		}
+	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
 		}
-	});
+	}),
+	doneOne = _.after(8,done);
+
+	getTopOfMenu ( function(header){
+		PFMenus.resetOneCommandMacro('ability',true,doneOne,header);
+	}, true);
+	getTopOfMenu ( function(header){
+		PFMenus.resetOneCommandMacro('ability',false,doneOne,header);
+	}, false);
+	PFMenus.resetOneCommandMacro('ex',true,doneOne);
+	PFMenus.resetOneCommandMacro('sp',true,doneOne);
+	PFMenus.resetOneCommandMacro('su',true,doneOne);
+	PFMenus.resetOneCommandMacro('ex',false,doneOne);
+	PFMenus.resetOneCommandMacro('sp',false,doneOne);
+	PFMenus.resetOneCommandMacro('su',false,doneOne);
 }
 export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){

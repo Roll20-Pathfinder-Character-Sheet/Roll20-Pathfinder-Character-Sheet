@@ -75,8 +75,8 @@ defaultMacros={
 		defaultDeletedArray: ['{{subtitle}}','{{Class=**Class**: @{class-number}}}']
 	},
 	'spell-like-ability': {
-		defaultRepeatingMacro: '@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{^{level}=[[@{level}]]}} {{^{range}=@{range}}} {{^{duration}=@{duration}}} {{^{save}=@{save}, ^{difficulty-class-abbrv} [[@{savedc}]]}} {{^{spell-resistance-abbrv}=@{abil-sr}}} {{description=@{short-description}}}',
-		defaultRepeatingMacroMap:{'@{NPC-whisper}':{'current':'@{NPC-whisper}'},
+		defaultRepeatingMacro: '&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{^{level}=[[@{level}]]}} {{^{range}=@{range}}} {{^{duration}=@{duration}}} {{^{save}=@{save}, ^{difficulty-class-abbrv} [[@{savedc}]]}} {{^{spell-resistance-abbrv}=@{abil-sr}}} {{description=@{short-description}}}',
+		defaultRepeatingMacroMap:{
 			'&{template:':{'current':'pf_generic}'},
 			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
 			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
@@ -185,9 +185,8 @@ export function resetCommandMacro (callback){
 		}
 	});
 	
-	getAttrs(["is_npc","mythic-adventures-show","use_traits","use_racial_traits","use_class_features","use_feats","use_spell-like-abilities"],function(v){
-		var isNPC = parseInt(v.is_npc,10)||0,
-		featureList = [],
+	getAttrs(["mythic-adventures-show","use_traits","use_racial_traits","use_class_features","use_feats","use_spell-like-abilities"],function(v){
+		var featureList = [],
 		doneWithOneButton,
 		isMythic = 0,
 		usesTraits=0,
@@ -208,37 +207,42 @@ export function resetCommandMacro (callback){
 			//TAS.debug("at PFFeatures.resetCommandMacro",v);
 			if (usesFeats){
 				featureList.push('feat');
+				numberLists += 2;
 			}
 			if (usesTraits){
 				featureList.push('trait');
+				numberLists++;
 			}
 			if (usesRacialTraits){
 				featureList.push('racial-trait');
+				numberLists += 2;
 			}
 			if (isMythic){
 				featureList = featureList.concat(['mythic-ability','mythic-feat']);
+				numberLists += 2;
 			}
 			if (usesClass){
 				featureList.push('class-ability');
+				numberLists++;
 			}
 			if (usesSLAs){
 				featureList.push('npc-spell-like-abilities');
+				numberLists++;
 			}
-			numberLists = _.size(featureList);
 			if (numberLists > 0){
 				doneWithOneButton = _.after(numberLists,done);
 				_.each(featureList,function(section){
-					//TAS.debug"PFFeatures.resetCommandMacros calling resetOne for :"+section);
-					PFMenus.resetOneCommandMacro(section,isNPC,doneWithOneButton);
-					if (isNPC && (section==='racial-trait' || section==='feat'||section==='ability'||section==='item'||
-						section==='ex'||section==='sp'||section==='su') ){
-						PFMenus.resetOneCommandMacro(section);
+					if (section !== 'npc-spell-like-abilities') {
+						PFMenus.resetOneCommandMacro(section,false,doneWithOneButton);
+					}
+					if (section==='racial-trait' || section==='feat'||section === 'npc-spell-like-abilities' ){
+						PFMenus.resetOneCommandMacro(section,true,doneWithOneButton);
 					}
 				});
 			} else {
 				done();
 			}
-		}catch (err){
+		} catch (err){
 			TAS.error("PFFeatures.resetCommandMacro",err);
 			done();
 		} finally {
