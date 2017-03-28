@@ -58,7 +58,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         linkField="roll",
         filterField="",
         filterValue="",
-		baseMacro = "/w \"@{character_name}\" &{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
+		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
