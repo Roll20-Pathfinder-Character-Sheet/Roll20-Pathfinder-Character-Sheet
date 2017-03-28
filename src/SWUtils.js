@@ -61,7 +61,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 				});
 				innermatches=evalstr.match(/\@\{[^}]+\}/g);
 			} catch (err2) {
-				TAS.error("findAndReplaceFields", err2);
+				TAS.error("SWUtils.findAndReplaceFields err2", err2);
 				evalstr = null;
 			} finally {
 				if (innermatches) {
@@ -72,7 +72,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 			}
 		});
 	} catch (err) {
-		TAS.error("findAndReplaceFields", err);
+		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
 }
