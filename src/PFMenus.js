@@ -58,7 +58,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         linkField="roll",
         filterField="",
         filterValue="",
-		baseMacro = "/w \"@{character_name}\" &{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
+		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
@@ -299,48 +299,52 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         }),
         params={},
         macroName=menuName;
-    //this is here because putting it above cloning was not working, 
-    //so this makes sure new instance gets created each time
-    params = {
-        'usesField': 'used',
-        'linkField': 'roll',
-        'nameField': 'name',
-        'bonusField': 'ability_type',
-        'translateBonus':1,
-        'macroSuffix': '_buttons_macro'
-        };
-    if (menuMap[menuName]) {
-        params = _.extend(params,menuMap[menuName]);
-        if(isNPC){
-            if (menuMap[menuName].npcLinkField){
-                params.linkField=menuMap[menuName].npcLinkField;
-            }
-            if(menuMap[menuName].npcMacroName){
-                macroName = menuMap[menuName].npcMacroName;
-            }
-            if (menuMap[menuName].npcMacroSuffix){
-                params.macroSuffix = menuMap[menuName].npcMacroSuffix;
+    try {
+        //this is here because putting it above cloning was not working, 
+        //so this makes sure new instance gets created each time
+        params = {
+            'usesField': 'used',
+            'linkField': 'roll',
+            'nameField': 'name',
+            'bonusField': 'ability_type',
+            'translateBonus':1,
+            'macroSuffix': '_buttons_macro'
+            };
+        if (menuMap[menuName]) {
+            params = _.extend(params,menuMap[menuName]);
+            if(isNPC){
+                if (menuMap[menuName].npcLinkField){
+                    params.linkField=menuMap[menuName].npcLinkField;
+                }
+                if(menuMap[menuName].npcMacroName){
+                    macroName = menuMap[menuName].npcMacroName;
+                }
+                if (menuMap[menuName].npcMacroSuffix){
+                    params.macroSuffix = menuMap[menuName].npcMacroSuffix;
+                }
+            } else {
+                if (params.npcName){
+                    params.npcName = '';
+                }
             }
         } else {
-            if (params.npcName){
-                params.npcName = '';
-            }
+            TAS.error("PFMenus.resetOneCommandMacro Could not find parameters for menu "+menuName);
+            done();
+            return;
         }
-    } else {
-        TAS.error("PFMenus.resetOneCommandMacro Could not find parameters for menu "+menuName);
-        done();
-        return;
+        if (groupMap && params.groupBy){
+            params.groupMap = groupMap;
+        }
+        //TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
+        getRepeatingCommandMacro( params,function(newMacro){
+            var setter={};
+            //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
+            setter[macroName + params.macroSuffix]=newMacro||"";
+            setAttrs(setter,PFConst.silentParams,done);
+        },header);
+    } catch (errouter){
+        TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
     }
-    if (groupMap && params.groupBy){
-        params.groupMap = groupMap;
-    }
-    //TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
-    getRepeatingCommandMacro( params,function(newMacro){
-        var setter={};
-        //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
-        setter[macroName + params.macroSuffix]=newMacro||"";
-        setAttrs(setter,PFConst.silentParams,done);
-    },header);
 }
 /** same as resetOneCommandMacro if you do not know the npc status 
  *@param {string} section name after "repeating_"

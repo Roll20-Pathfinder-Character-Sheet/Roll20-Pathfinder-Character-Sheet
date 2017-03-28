@@ -369,6 +369,11 @@ export function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion >= 1.20 && oldversion < 1.40){
 				PFMigrate.migrateWhisperDropdowns();
+				PFInventory.resetCommandMacro();
+				PFAttacks.resetCommandMacro();
+				PFSkills.resetCommandMacro();
+				PFAbility.resetCommandMacro();
+				PFFeatures.resetCommandMacro();
 		    }
 		}
 	} catch (err) {

@@ -18,22 +18,21 @@ import * as PFSize from './PFSize';
 
 /** module for repeating_weapon section  */
 /* **********************************ATTACKS PAGE ********************************** */
-var damageRowAttrs=["damage-ability-max","damage-ability-mod","damage-mod","damage_ability_mult","enhance","total-damage"],
+export var damageRowAttrs=["damage-ability-max","damage-ability-mod","damage-mod","damage_ability_mult","enhance","total-damage"],
 damageRowAttrsLU=_.map(damageRowAttrs,function(a){return '_'+a;}),
 updateRowAttrs=["attack-mod","attack-type","attack-type-mod","crit_conf_mod","crit_confirm",
 	"isranged","masterwork","proficiency","total-attack",
 	"attack-type_macro_insert","damage-type_macro_insert"].concat(damageRowAttrs),
 updateRowAttrsLU = _.map(updateRowAttrs,function(a){return '_'+a;}),
-updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf", 
-	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod"],
+sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
+sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
+updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod"];
 
-defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
+var defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
 defaultRepeatingMacroMap={
 	'&{template:':{'current':'pf_attack}',old:['pf_generic}','pf_block}']},
 	'@{toggle_attack_accessible}':{'current':'@{toggle_attack_accessible}'},
 	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-//	'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
-//	'{{switch=':{'current':'~@{character_id}|NPCREPLACEattacks}}'},
 	'{{color=':{'current':'@{rolltemplate_color}}}'},
 	'{{character_name=':{'current':'@{character_name}}}'},
 	'{{character_id=':{'current':'@{character_id}}}'},
@@ -487,7 +486,6 @@ export function getRecalculatedAttack (id,v,setter){
 		return localsetter;
 	}
 }
-// no crap that's why i added default vs new so we don't have to redo 
 function updateWeaponSize(id,currCharSize,v,setter){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 		prefix='repeating_weapon_'+idStr,
@@ -546,8 +544,7 @@ function updateWeaponSize(id,currCharSize,v,setter){
 		return setter;
 	}
 }
-var sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
-sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'];
+
 function updateWeaponSizeAsync(id,callback){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_weapon_'+idStr;
@@ -680,7 +677,7 @@ export function recalculateRepeatingWeapons (callback){
 	});
 }
 
-export function setNewDefaultsSync (ids,v,setter){
+export function getNewDefaults (ids,v,setter){
 	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
@@ -709,7 +706,7 @@ export function setNewDefaultsSync (ids,v,setter){
 		},{});
 		_.extend(setter,localsetter);
 	} catch (errout){
-		TAS.error("PFAttacks.setNewDefaultsSync errout ",errout);
+		TAS.error("PFAttacks.getNewDefaults errout ",errout);
 	} finally {
 		return setter;
 	}
@@ -741,7 +738,7 @@ export function setNewDefaults (callback){
 			getAttrs(fields,function(v){
 				var setter={};
 				try {
-					setter = setNewDefaultsSync(ids, v, setter);
+					setter = getNewDefaults(ids, v, setter);
 				} catch (errout){
 					TAS.error("PFAttacks.setNewDefaults errout ",errout);
 				} finally {
