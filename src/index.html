@@ -2176,12 +2176,18 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 								</div>
-								<div class="sheet-linked-fields">
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" min="0" /><span data-i18n="dice">Dice</span></label>
+								<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-nextitem-show sheet-noshow" />
+								<div class="sheet-linked-fields sheet-nextitem">
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" min="0" /><span data-i18n="die">Die</span></label>
-									<input type="number" name="attr_default_damage-dice-num" value="0" class="sheet-noshow"/>
-									<input type="number" name="attr_default_damage-die" value="0" class="sheet-noshow"/>
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
+								</div>
+								<div class="sheet-linked-fields">
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
+									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 								</div>
 								<span class="sheet-divider-db sheet-sect">+</span>
 								<div class="sheet-linked-fields sheet-sect">
@@ -2230,7 +2236,9 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									</select>
 									<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-med sheet-sect">
+								<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked style="margin-bottom: .55em;"/><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+								<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem">
 									<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
 										<option value="-8" data-i18n="size-colossal">Colossal</option>
 										<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
@@ -9212,12 +9220,20 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 									</div>
-									<div class="sheet-linked-fields">
-										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" min="0" /><span data-i18n="dice">Dice</span></label>
+									<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-nextitem-show sheet-noshow" />
+									<div class="sheet-linked-fields sheet-nextitem">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
-										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" min="0" /><span data-i18n="die">Die</span></label>
-										<input type="number" name="attr_default_damage-dice-num" value="0" class="sheet-noshow"/>
-										<input type="number" name="attr_default_damage-die" value="0" class="sheet-noshow"/>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
+										<br/>
+										<span >adj damage dice</span>
+									</div>
+									<div class="sheet-linked-fields">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
+										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
+										<br/>
+										<span>dmg dice</span>
 									</div>
 									<span class="sheet-divider-db sheet-sect">+</span>
 									<div class="sheet-linked-fields sheet-sect">
@@ -9266,6 +9282,8 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 										</select>
 										<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
 									</label>
+									<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked style="margin-bottom: .55em;"/><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+									<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
 									<label class="sheet-small-label2 sheet-entry-med sheet-sect">
 										<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
 											<option value="-8" data-i18n="size-colossal">Colossal</option>
