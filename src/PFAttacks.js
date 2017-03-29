@@ -548,12 +548,14 @@ function updateWeaponSize(id,currCharSize,v,setter){
 function updateWeaponSizeAsync(id,callback){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_weapon_'+idStr;
-	getAttrs(['size',prefix+'size_affects',prefix+'default_damage-dice-num',prefix+'default_damage-die',prefix+'default_size',prefix+'not_default_size',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
+	getAttrs(['modify_dmg_by_size','size',prefix+'size_affects',prefix+'default_damage-dice-num',prefix+'default_damage-die',prefix+'default_size',prefix+'not_default_size',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
 		var  setter={},currCharSize=0;
 		try {
 			TAS.debug("at PFAttacks.updateWeaponSizeAsync for id "+id+", got ",v);
-			currCharSize=parseInt(v.size,10)||0;
-			updateWeaponSize(id,currCharSize,v,setter);
+			if (parseInt(v['modify_dmg_by_size'],10)) {
+				currCharSize=parseInt(v.size,10)||0;
+				updateWeaponSize(id,currCharSize,v,setter);
+			}
 		} finally {
 			if (_.size(setter)){
 				setAttrs(setter);
@@ -564,17 +566,21 @@ function updateWeaponSizeAsync(id,callback){
 
 export function updateWeaponsDamageDueToSizeAsync(){
 	TAS.debug("at updateWeaponsDamageDueToSizeAsync");
-		getSectionIDs('repeating_weapon',function(ids){
-			var fields;
-			if (!(ids || _.size(ids))){
-				
-				return;
-			}
-			TAS.debug("at PFAttacks.updateWeaponDamageDueToSizeAsync: ",ids);
-			_.each(ids,function(id){
-				updateWeaponSizeAsync(id);
+	getAttrs(['modify_dmg_by_size'], function(v){
+		if (parseInt(v['modify_dmg_by_size'],10)) {
+			getSectionIDs('repeating_weapon',function(ids){
+				var fields;
+				if (!(ids || _.size(ids))){
+					
+					return;
+				}
+				TAS.debug("at PFAttacks.updateWeaponDamageDueToSizeAsync: ",ids);
+				_.each(ids,function(id){
+					updateWeaponSizeAsync(id);
+				});
 			});
-		});
+		}
+	});
 	
 }
 
@@ -893,12 +899,7 @@ function registerEventHandlers () {
 		}
 	}));
 
-	on("change:repeating_weapon:default_size", TAS.callback(function eventWeaponSize(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		updateWeaponSizeAsync(null,null);
-	}));
-	
-	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
+	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_damage-die change:repeating_weapon:default_size", TAS.callback(function eventWeaponDice(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateWeaponSizeAsync(null,null);
