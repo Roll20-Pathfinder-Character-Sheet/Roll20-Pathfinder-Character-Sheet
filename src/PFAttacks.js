@@ -14,25 +14,25 @@ import * as PFAttackGrid from './PFAttackGrid';
 import * as PFInventory from './PFInventory';
 import * as PFSpells from './PFSpells';
 import * as PFAbility from './PFAbility';
+import * as PFSize from './PFSize';
 
 /** module for repeating_weapon section  */
 /* **********************************ATTACKS PAGE ********************************** */
-var damageRowAttrs=["damage-ability-max","damage-ability-mod","damage-mod","damage_ability_mult","enhance","total-damage"],
+export var damageRowAttrs=["damage-ability-max","damage-ability-mod","damage-mod","damage_ability_mult","enhance","total-damage"],
 damageRowAttrsLU=_.map(damageRowAttrs,function(a){return '_'+a;}),
 updateRowAttrs=["attack-mod","attack-type","attack-type-mod","crit_conf_mod","crit_confirm",
 	"isranged","masterwork","proficiency","total-attack",
 	"attack-type_macro_insert","damage-type_macro_insert"].concat(damageRowAttrs),
 updateRowAttrsLU = _.map(updateRowAttrs,function(a){return '_'+a;}),
-updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf", 
-	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod"],
+sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
+sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
+updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod"];
 
-defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
+var defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
 defaultRepeatingMacroMap={
 	'&{template:':{'current':'pf_attack}',old:['pf_generic}','pf_block}']},
 	'@{toggle_attack_accessible}':{'current':'@{toggle_attack_accessible}'},
 	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-//	'{{whisper=':{'current':'@{NPCANTIREPLACEWhisper}}}'},
-//	'{{switch=':{'current':'~@{character_id}|NPCREPLACEattacks}}'},
 	'{{color=':{'current':'@{rolltemplate_color}}}'},
 	'{{character_name=':{'current':'@{character_name}}}'},
 	'{{character_id=':{'current':'@{character_id}}}'},
@@ -486,6 +486,98 @@ export function getRecalculatedAttack (id,v,setter){
 		return localsetter;
 	}
 }
+function updateWeaponSize(id,currCharSize,v,setter){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+		prefix='repeating_weapon_'+idStr,
+		currDice=0,defDice=0,
+		currDie=0,defDie=0,
+	 	defWeaponSize=0, sizeDiff=0, newDice={};
+	try {
+		if (parseInt(v[prefix+'size_affects'],10)){
+			currDice=parseInt(v[prefix+'damage-dice-num'],10)||0;
+			currDie=parseInt(v[prefix+'damage-die'],10)||0;
+			TAS.debug("PFAttacks.updateWeaponSize curr size:"+ currCharSize+" and current dmg: "+currDice+"d"+currDie);
+			if (!(currDice ===0 || currDie === 0)){
+				defWeaponSize=parseInt(v[prefix+'default_size'],10);
+				defDice=parseInt(v[prefix+'default_damage-dice-num'],10)||0;
+				defDie=parseInt(v[prefix+'default_damage-die'],10)||0;
+				TAS.debug("PFAttacks.updateWeaponSize default is:"+defDice+"d"+defDie+", for size:"+defWeaponSize);
+				//check for errors 
+				if (isNaN(defWeaponSize)){
+					defWeaponSize = currCharSize;
+					setter[prefix+'default_size']=defWeaponSize;
+				}
+				if ( defDice===0 ||  defDie === 0){
+					defDice = currDice;
+					defDie = currDie;
+					setter[prefix+'default_damage-dice-num']=defDice;
+					setter[prefix+'default_damage-die']=defDie;
+				}
+				//end of check for errors
+				if (currCharSize !== defWeaponSize){
+					setter[prefix+'not_default_size']=1;
+					sizeDiff=PFSize.getSizeLevelChange(defWeaponSize,currCharSize);
+					newDice= PFSize.updateDamageDice (sizeDiff,defWeaponSize,defDice,defDie);
+					TAS.debug("###########","PFAttacks.updateWeaponSize NEW DAMAGE is:"+newDice.dice+"d"+newDice.die+", for sizeDiff:"+sizeDiff);
+					if(currDice!==newDice.dice || currDie!==newDice.die  ){
+						setter[prefix+'damage-dice-num']=newDice.dice;
+						setter[prefix+'damage-die']=newDice.die;
+					}
+				} else {
+					if (parseInt(v[prefix+'not_default_size'],10)){
+						setter[prefix+'not_default_size']=0;
+					}
+					if(currDice !== defDice || currDie !== defDie){
+						setter[prefix+'damage-dice-num']=defDice;
+						setter[prefix+'damage-die']=defDie;
+					}
+				}
+			} else {
+				//size affects was 1, but no damage dice
+				setter[prefix+'size_affects']=0;
+			}
+		}
+	} catch (err){
+		TAS.error("PFAttacks.updateWeaponSize",err);
+	} finally {
+		TAS.debug("PFAttacks.updateWeaponSize returning with ",setter);
+		return setter;
+	}
+}
+
+function updateWeaponSizeAsync(id,callback){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+	prefix='repeating_weapon_'+idStr;
+	getAttrs(['size',prefix+'size_affects',prefix+'default_damage-dice-num',prefix+'default_damage-die',prefix+'default_size',prefix+'not_default_size',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
+		var  setter={},currCharSize=0;
+		try {
+			TAS.debug("at PFAttacks.updateWeaponSizeAsync for id "+id+", got ",v);
+			currCharSize=parseInt(v.size,10)||0;
+			updateWeaponSize(id,currCharSize,v,setter);
+		} finally {
+			if (_.size(setter)){
+				setAttrs(setter);
+			}
+		}
+	});
+}
+
+export function updateWeaponsDamageDueToSizeAsync(){
+	TAS.debug("at updateWeaponsDamageDueToSizeAsync");
+		getSectionIDs('repeating_weapon',function(ids){
+			var fields;
+			if (!(ids || _.size(ids))){
+				
+				return;
+			}
+			TAS.debug("at PFAttacks.updateWeaponDamageDueToSizeAsync: ",ids);
+			_.each(ids,function(id){
+				updateWeaponSizeAsync(id);
+			});
+		});
+	
+}
+
 /**
  * assumes id has values in it.
  * @param {[string]} ids 
@@ -514,9 +606,16 @@ function updateAllRowsNonCalcFields (ids,callback){
 		}));
 		_.extend(v,charAttMap);
 		setter = _.reduce(ids,function(m,id){
-			var xtra=getRecalculatedAttack(id,v);
-			_.extend(m,xtra);
-			return m;
+			var xtra={}
+			try {
+				xtra=getRecalculatedAttack(id,v);
+				_.extend(m,xtra);
+				updateWeaponSizeAsync(id);
+			} catch (erri){
+				TAS.error("PFAttacks.updateAllRowsNonCalcFields erri",erri);
+			} finally {
+				return m;
+			}
 		},{});
 		if(_.size(setter)){
 			setAttrs(setter,{},done);
@@ -578,7 +677,7 @@ export function recalculateRepeatingWeapons (callback){
 	});
 }
 
-export function setNewDefaultsSync (ids,v,setter){
+export function getNewDefaults (ids,v,setter){
 	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
@@ -607,7 +706,7 @@ export function setNewDefaultsSync (ids,v,setter){
 		},{});
 		_.extend(setter,localsetter);
 	} catch (errout){
-		TAS.error("PFAttacks.setNewDefaultsSync errout ",errout);
+		TAS.error("PFAttacks.getNewDefaults errout ",errout);
 	} finally {
 		return setter;
 	}
@@ -639,7 +738,7 @@ export function setNewDefaults (callback){
 			getAttrs(fields,function(v){
 				var setter={};
 				try {
-					setter = setNewDefaultsSync(ids, v, setter);
+					setter = getNewDefaults(ids, v, setter);
 				} catch (errout){
 					TAS.error("PFAttacks.setNewDefaults errout ",errout);
 				} finally {
@@ -793,22 +892,19 @@ function registerEventHandlers () {
 			updateRepeatingWeaponCrit(null, eventInfo);
 		}
 	}));
-	on("change:repeating_weapon:damage-dice-num change:repeating_weapon:damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
+
+	on("change:repeating_weapon:default_size", TAS.callback(function eventWeaponSize(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		updateWeaponSizeAsync(null,null);
+	}));
+	
+	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			getAttrs([eventInfo.sourceAttribute,'size','repeating_weapon_default_size'],function(v){
-				var attr=SWUtils.getAttributeName(eventInfo.sourceAttribute),
-				newname='repeating_weapon_default_'+attr,
-				currSize =parseInt(v.size,10)||0,
-				defSize=parseInt(v.repeating_weapon_default_size,10)||0,
-				setter={};
-				if(defSize===currSize){
-					setter[newname]=v[eventInfo.sourceAttribute];
-					setAttrs(setter,PFConst.silentParams);
-				}
-			});
+			updateWeaponSizeAsync(null,null);
 		}
 	}));
+
 	on("remove:repeating_weapon change:repeating_weapon:attack-type change:_reporder_repeating_weapon change:repeating_weapon:group change:repeating_weapon:name change:include_attack_totals", TAS.callback(function eventRepeatingWeaponChange(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

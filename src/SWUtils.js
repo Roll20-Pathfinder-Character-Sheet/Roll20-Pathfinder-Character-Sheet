@@ -40,6 +40,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 	try {
 		stringToSearch = stringToSearch.split("selected|").join("");
 		stringToSearch = stringToSearch.split("target|").join("");
+		stringToSearch = stringToSearch.replace(/\|max\}/g,'_max}');
 		fieldnames = stringToSearch.match(/\@\{[^}]+\}/g);
 		if (!fieldnames) {
 			callback(stringToSearch);
@@ -60,7 +61,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 				});
 				innermatches=evalstr.match(/\@\{[^}]+\}/g);
 			} catch (err2) {
-				TAS.error("findAndReplaceFields", err2);
+				TAS.error("SWUtils.findAndReplaceFields err2", err2);
 				evalstr = null;
 			} finally {
 				if (innermatches) {
@@ -71,7 +72,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 			}
 		});
 	} catch (err) {
-		TAS.error("findAndReplaceFields", err);
+		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
 }
@@ -604,6 +605,17 @@ export function trimBoth (val){
 		return val.replace(/^\s*|\s*$/g,'');
 	}
 	return val;
+}
+/** Splits string into array, based on commas (ignoring commas between parenthesis) 
+ * @param {string} str 
+ * @returns {[string]} array of items
+ */
+export function splitByCommaIgnoreParens(str){
+	var ret=[];
+	if (!str) {return [];}
+	ret = str.match(/((?:[^(),]|\([^()]*\))+)/g);
+	ret = trimBoth(ret);
+	return ret;
 }
 
 PFConsole.log( '   SWUtils module loaded          ' );
