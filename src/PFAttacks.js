@@ -486,6 +486,40 @@ export function getRecalculatedAttack (id,v,setter){
 		return localsetter;
 	}
 }
+function syncDamageDiceAsync(id){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+		prefix='repeating_weapon_'+idStr;
+	getAttrs(['modify_dmg_by_size',prefix+'size_affects',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
+		var setter={};
+		if (!(parseInt(v.modify_dmg_by_size,10) && parseInt(v[prefix+'size_affects'],10))){
+			setter[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num'];
+			setter[prefix+'default_damage-die']=v[prefix+'damage-die'];
+			setAttrs(setter,PFConst.silentParams);
+		}
+	});
+}
+export function syncAllDamageDiceAsync(){
+	getAttrs(['modify_dmg_by_size'],function(vout){
+		var modifyDMG = parseInt(vout.modify_dmg_by_size,10)||0;
+		getSectionIDs('repeating_weapons',function(ids){
+			var setter={},fields;
+			if(_.size(ids)){
+				fields= SWUtils.cartesianAppend(['repeating_weapon_',ids,['_damage-dice-num','_damage-die','_size_affects']]);
+				getAttrs(fields,function(v){
+					_.each(ids,function(id){
+						var idStr = SWUtils.getRepeatingIDStr(id),
+							prefix='repeating_weapon_'+idStr;
+						if (!modifyDMG || !parseInt(v[prefix+'size_affects'],10)){
+							setter[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num'];
+							setter[prefix+'default_damage-die']=v[prefix+'damage-die'];
+						}
+					});
+					setAttrs(setter,PFConst.silentParams);
+				});
+			}
+		});
+	});
+}
 function updateWeaponSize(id,currCharSize,v,setter){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 		prefix='repeating_weapon_'+idStr,
@@ -544,7 +578,6 @@ function updateWeaponSize(id,currCharSize,v,setter){
 		return setter;
 	}
 }
-
 function updateWeaponSizeAsync(id,callback){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_weapon_'+idStr;
@@ -571,7 +604,6 @@ export function updateWeaponsDamageDueToSizeAsync(){
 			getSectionIDs('repeating_weapon',function(ids){
 				var fields;
 				if (!(ids || _.size(ids))){
-					
 					return;
 				}
 				TAS.debug("at PFAttacks.updateWeaponDamageDueToSizeAsync: ",ids);
@@ -583,7 +615,9 @@ export function updateWeaponsDamageDueToSizeAsync(){
 	});
 	
 }
-
+function resetWeaponSizeAndDamage(){
+	
+}
 /**
  * assumes id has values in it.
  * @param {[string]} ids 
@@ -827,6 +861,7 @@ export function recalculate (callback, silently, oldversion) {
 			PFAttackGrid.resetCommandMacro();
 			PFAttackOptions.recalculate();
 			updateAssociatedAttacksFromParents();
+			syncAllDamageDiceAsync();
 			done();
 		},oldversion);
 	}  ,silently,oldversion);
@@ -905,7 +940,12 @@ function registerEventHandlers () {
 			updateWeaponSizeAsync(null,null);
 		}
 	}));
-
+	on("change:repeating_weapon:damage-dice-num change:repeating_weapon:damage-die", TAS.callback(function eventWeaponDice(eventInfo) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			syncDamageDiceAsync();
+		}
+	}));
 	on("remove:repeating_weapon change:repeating_weapon:attack-type change:_reporder_repeating_weapon change:repeating_weapon:group change:repeating_weapon:name change:include_attack_totals", TAS.callback(function eventRepeatingWeaponChange(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
