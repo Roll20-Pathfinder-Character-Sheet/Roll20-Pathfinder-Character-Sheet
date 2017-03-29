@@ -616,7 +616,7 @@ export function updateWeaponsDamageDueToSizeAsync(){
 	
 }
 function resetWeaponSizeAndDamage(){
-	
+
 }
 /**
  * assumes id has values in it.
@@ -858,10 +858,11 @@ export function recalculate (callback, silently, oldversion) {
 		migrate(function(){
 			setAdvancedMacroCheckbox();
 			recalculateRepeatingWeapons();
+			updateWeaponsDamageDueToSizeAsync();
+			syncAllDamageDiceAsync();
 			PFAttackGrid.resetCommandMacro();
 			PFAttackOptions.recalculate();
 			updateAssociatedAttacksFromParents();
-			syncAllDamageDiceAsync();
 			done();
 		},oldversion);
 	}  ,silently,oldversion);
