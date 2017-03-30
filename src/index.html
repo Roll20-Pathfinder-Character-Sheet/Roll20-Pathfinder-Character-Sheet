@@ -2124,6 +2124,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_weapon-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_weapon-column-show" value="1" /><span></span>
 					<input type="checkbox" name="attr_adv_macro_show" class="sheet-repeating-sect-show" value="1" role="presentation" />
+					<input name="attr_modify_dmg_by_size" type="checkbox" value="1" class="sheet-use-size-show" />
 					<div class="sheet-repeating-fields">
 						<fieldset class="repeating_weapon">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -2175,14 +2176,21 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 								</div>
-								<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-nextitem-show sheet-noshow" />
-								<div class="sheet-linked-fields sheet-nextitem">
+								<input name="attr_size_affects"  type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
+								<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-sect3-show sheet-size-affects-show sheet-noshow" />
+								<div class="sheet-linked-fields sheet-dont-use-size">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
+								</div>
+								<div class="sheet-linked-fields sheet-sect3 sheet-use-size">
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
+									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
 									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
 								</div>
-								<div class="sheet-linked-fields">
+								<div class="sheet-linked-fields sheet-use-size">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
@@ -2235,9 +2243,9 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 									</select>
 									<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
 								</label>
-								<label class="sheet-small-label2 sheet-sect" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
-								<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem">
+								<label class="sheet-small-label2 sheet-sect sheet-use-size-only" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+								<input type="checkbox" name="attr_size_affects" value="1" class="sheet-nextitem-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only">
 									<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
 										<option value="-8" data-i18n="size-colossal">Colossal</option>
 										<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
@@ -9168,346 +9176,355 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcweapon-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcweapon-column-show" value="1" /><span></span>
 						<input type="checkbox" name="attr_adv_macro_show" class="sheet-repeating-sect-show" value="1" role="presentation" />
+						<input name="attr_modify_dmg_by_size" type="checkbox" value="1" class="sheet-use-size-show sheet-noshow" />
 						<div class="sheet-repeating-fields">
-						<fieldset class="repeating_weapon">
-							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-							<div class="sheet-nontable-repeating">
-								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-								<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
-								<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
-								<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
-								<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name"  value="" title="@{repeating_weapon_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
-								<div class="sheet-linked-fields sheet-sect">
-									<input type="checkbox" name="attr_attack-mod_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-entry-med sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
-								</div>
-								<span class="sheet-divider-db sheet-sect">+</span>
-								<label class="sheet-small-label2 sheet-entry-short">
-									<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
-										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="@{attk-melee}" data-i18n="melee">Melee</option>
-										<option value="@{attk-melee2}" data-i18n="melee2">Melee2</option>
-										<option value="@{attk-ranged}" data-i18n="ranged">Ranged</option>
-										<option value="@{attk-ranged2}" data-i18n="ranged2">Ranged2</option>
-										<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
-										<option value="@{CMB2}" data-i18n="combat-maneuver-bonus-abbrv2">CMB2</option>
-									</select>
-									<span data-i18n="attack-type">Attack Type</span>
-								</label>
-								<span class="sheet-divider-db sheet-sect">=</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly /><span data-i18n="attack">Attack</span></label>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
-									<select class="sheet-select-small" name="attr_vs">
-										<option value="ac" data-i18n="armor-class-abbrv-default" selected>&#8226;AC</option>
-										<option value="touch" data-i18n="touch">Touch</option>
-										<option value="ff" data-i18n="flat-footed-armor-class-abbrv">FF</option>
-										<option value="fft" data-i18n="flat-footed-touch-abbrv">FF Touch</option>
-										<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">CMD</option>
-										<option value="cmb" data-i18n="opposed-combat-maneuver-bonus-abbrv">Opposed CMB</option>
-										<option value="other" data-i18n="other">Other</option>
-									</select>
-									<span data-i18n="versus-abbrv">Vs.</span>
-								</label>
-								<div class="sheet-linked-fields">
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-target" title="@{repeating_weapon_$X_crit-target}" value="20" min="0" max="20" /><span data-i18n="critical-abbrv">Crit</span></label>
-									<span class="sheet-divider-db-lg" style="width:1em; padding-bottom:10px;">/x</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
-								</div>
-								<div class="sheet-linked-fields">
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
-								</div>
-								<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-nextitem-show sheet-noshow" />
-								<div class="sheet-linked-fields sheet-nextitem">
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
-									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
-									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
-								</div>
-								<div class="sheet-linked-fields">
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
-									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
-									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
-								</div>
-								<span class="sheet-divider-db sheet-sect">+</span>
-								<div class="sheet-linked-fields sheet-sect">
-									<input type="checkbox" name="attr_damage-mod_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-entry-short sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
-								</div>
-								<span class="sheet-divider-db">+</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
-								<span class="sheet-divider-db-lg sheet-sect">*</span>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
-									<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
-										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-										<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-										<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-										<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
-									</select>
-									<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
-								</label>
-								<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-								<span class="sheet-divider-db sheet-sect sheet-sect2">(</span>
-								<label class="sheet-small-label2 sheet-sect sheet-sect2" style="width:1.75em;">
-									<input style="min-width:.5em;" type="text" name="attr_damage-ability-max" title="@{repeating_weapon_$X_damage-ability-max}" value="" placeholder="NA" data-i18n-placeholder="not-applicable" />
-									<span data-i18n-title="maximum-damage-ability-title" data-i18n-aria-label="maximum-damage-ability-title" title="Maximum damage ability applied (for strength score, etc.)" data-i18n="maximum-abbrv">Max</span>
-								</label>
-								<span class="sheet-divider-db sheet-sect sheet-sect2">)</span>
-								<span class="sheet-divider-db sheet-sect">=</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
-								<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
-								<label class="sheet-small-label2 sheet-narrow-numbers">
-									<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
+							<fieldset class="repeating_weapon">
+								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
+								<div class="sheet-nontable-repeating">
+									<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
+									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
+									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
+									<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
+									<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name"  value="" title="@{repeating_weapon_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
+									<div class="sheet-linked-fields sheet-sect">
+										<input type="checkbox" name="attr_attack-mod_error" class="sheet-error-mshow" value="1" />
+										<label class="sheet-small-label2 sheet-entry-med sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
+										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+									</div>
+									<span class="sheet-divider-db sheet-sect">+</span>
+									<label class="sheet-small-label2 sheet-entry-short">
+										<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
+											<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+											<option value="@{attk-melee}" data-i18n="melee">Melee</option>
+											<option value="@{attk-melee2}" data-i18n="melee2">Melee2</option>
+											<option value="@{attk-ranged}" data-i18n="ranged">Ranged</option>
+											<option value="@{attk-ranged2}" data-i18n="ranged2">Ranged2</option>
+											<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
+											<option value="@{CMB2}" data-i18n="combat-maneuver-bonus-abbrv2">CMB2</option>
+										</select>
+										<span data-i18n="attack-type">Attack Type</span>
+									</label>
+									<span class="sheet-divider-db sheet-sect">=</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly /><span data-i18n="attack">Attack</span></label>
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+										<select class="sheet-select-small" name="attr_vs">
+											<option value="ac" data-i18n="armor-class-abbrv-default" selected>&#8226;AC</option>
+											<option value="touch" data-i18n="touch">Touch</option>
+											<option value="ff" data-i18n="flat-footed-armor-class-abbrv">FF</option>
+											<option value="fft" data-i18n="flat-footed-touch-abbrv">FF Touch</option>
+											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">CMD</option>
+											<option value="cmb" data-i18n="opposed-combat-maneuver-bonus-abbrv">Opposed CMB</option>
+											<option value="other" data-i18n="other">Other</option>
+										</select>
+										<span data-i18n="versus-abbrv">Vs.</span>
+									</label>
+									<div class="sheet-linked-fields">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-target" title="@{repeating_weapon_$X_crit-target}" value="20" min="0" max="20" /><span data-i18n="critical-abbrv">Crit</span></label>
+										<span class="sheet-divider-db-lg" style="width:1em; padding-bottom:10px;">/x</span>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
+									</div>
+									<div class="sheet-linked-fields">
+										<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
+										<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
+									</div>
+									<input name="attr_size_affects"  type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
+									<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
+									<div class="sheet-linked-fields sheet-dont-use-size">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
+										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
+									</div>
+									<div class="sheet-linked-fields sheet-sect3 sheet-use-size">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
+										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
+									</div>
+									<div class="sheet-linked-fields sheet-use-size">
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
+										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
+									</div>
+									<span class="sheet-divider-db sheet-sect">+</span>
+									<div class="sheet-linked-fields sheet-sect">
+										<input type="checkbox" name="attr_damage-mod_error" class="sheet-error-mshow" value="1" />
+										<label class="sheet-small-label2 sheet-entry-short sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
+										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+									</div>
+									<span class="sheet-divider-db">+</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+									<span class="sheet-divider-db-lg sheet-sect">*</span>
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+										<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
+											<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+											<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
+											<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
+											<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
+											<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
+											<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
+											<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+										</select>
+										<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
+									</label>
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-									<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
-									<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
-								</label>
-								<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" placeholder="Group by name for attackbook buttons" data-i18n-placeholder="group-name" /><span data-i18n="group">Group name</span></label>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
-									<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
-										<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
-										<option value="-4" data-i18n="no">No</option>
-									</select>
-									<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
-								</label>
-								<label class="sheet-small-label2 sheet-sect" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
-								<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem">
-									<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
-										<option value="-8" data-i18n="size-colossal">Colossal</option>
-										<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
-										<option value="-2" data-i18n="size-huge">Huge</option>
-										<option value="-1" data-i18n="size-large">Large</option>
-										<option value="0" data-i18n="medium-abbrv-default" selected>&#8226;Medium</option>
-										<option value="1" data-i18n="size-small">Small</option>
-										<option value="2" data-i18n="size-tiny">Tiny</option>
-										<option value="4" data-i18n="size-diminutive">Diminutive</option>
-										<option value="8" data-i18n="size-fine">Fine</option>
-									</select>
-									<span data-i18n="default-size">Default Size</span>
-								</label>
-								<div class="sheet-small-label2 sheet-sect" style="width:60%;height:auto;clear:both;margin-bottom:0;">
-									<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
-									<span data-i18n="notes">Notes</span>
-								</div>
-								<div class="sheet-cheat"></div>
-								<input type="hidden" name="attr_attack-type_macro_insert" value="@{toggle_global_melee_macro_insert}" />
-								<input type="hidden" name="attr_damage-type_macro_insert" value="@{toggle_global_melee_damage_macro_insert}" />
-								<input type="hidden" name="attr_macro_options" value="" />
-								<input type="hidden" name="attr_iterative_attacks" value="@{toggle_iterative_attack2} @{toggle_iterative_attack3} @{toggle_iterative_attack4} @{toggle_iterative_attack5} @{toggle_iterative_attack6} @{toggle_iterative_attack7} @{toggle_iterative_attack8}" />
-								<input type="hidden" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
-								<input type="hidden" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
-								<div class="sheet-sect sheet-expand">
-									<input type="checkbox" class="sheet-showarrow sheet-extra-damage-show" name="attr_add-damage-show" value="1" title="Add additional, precision, or extra critical damage" data-i18n-title="additional-damage-title" aria-label="Show Additional Damage" data-i18n-aria-label="additional-damage" />
-									<label class="sheet-showsect sheet-extra-damage-showlabel" data-i18n="precision-abbrv">Extra Dmg</label>
-									<input type="checkbox" class="sheet-showarrow sheet-iterations-show" title="iterative-attacks-title" data-i18n-title="iterative-attacks-title" data-i18n-aria-label="iterative-attacks-title" aria-label="Show Iterative Attacks" name="attr_iterative-attacks-show" value="1" />
-									<label class="sheet-showsect sheet-iterations-showlabel" data-i18n="iterative-attacks-abbrv">Iterative Atks</label>
-									<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
-									<label class="sheet-showsect sheet-advmacro-text-showlabel" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
-									<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
-									<label class="sheet-showsect sheet-macro-text-showlabel" data-i18n="macro-text">Macro Text</label>
-									<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
-									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
-									<hr class="sheet-subnav-hr">
+									<span class="sheet-divider-db sheet-sect sheet-sect2">(</span>
+									<label class="sheet-small-label2 sheet-sect sheet-sect2" style="width:1.75em;">
+										<input style="min-width:.5em;" type="text" name="attr_damage-ability-max" title="@{repeating_weapon_$X_damage-ability-max}" value="" placeholder="NA" data-i18n-placeholder="not-applicable" />
+										<span data-i18n-title="maximum-damage-ability-title" data-i18n-aria-label="maximum-damage-ability-title" title="Maximum damage ability applied (for strength score, etc.)" data-i18n="maximum-abbrv">Max</span>
+									</label>
+									<span class="sheet-divider-db sheet-sect sheet-sect2">)</span>
+									<span class="sheet-divider-db sheet-sect">=</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
+									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
+									<label class="sheet-small-label2 sheet-narrow-numbers">
+										<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
+										<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
+										<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
+										<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
+									</label>
+									<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
+									<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" placeholder="Group by name for attackbook buttons" data-i18n-placeholder="group-name" /><span data-i18n="group">Group name</span></label>
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+										<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
+											<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
+											<option value="-4" data-i18n="no">No</option>
+										</select>
+										<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
+									</label>
+									<label class="sheet-small-label2 sheet-sect sheet-use-size-only" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+									<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
+									<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only">
+										<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
+											<option value="-8" data-i18n="size-colossal">Colossal</option>
+											<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
+											<option value="-2" data-i18n="size-huge">Huge</option>
+											<option value="-1" data-i18n="size-large">Large</option>
+											<option value="0" data-i18n="medium-abbrv-default" selected>&#8226;Medium</option>
+											<option value="1" data-i18n="size-small">Small</option>
+											<option value="2" data-i18n="size-tiny">Tiny</option>
+											<option value="4" data-i18n="size-diminutive">Diminutive</option>
+											<option value="8" data-i18n="size-fine">Fine</option>
+										</select>
+										<span data-i18n="default-size">Default Size</span>
+									</label>
+									<div class="sheet-small-label2 sheet-sect" style="width:60%;height:auto;clear:both;margin-bottom:0;">
+										<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
+										<span data-i18n="notes">Notes</span>
+									</div>
 									<div class="sheet-cheat"></div>
-									<div class="sheet-extra-damage sheet-center">
-										<label class="sheet-small-label2" style="width:23.85%;">
-											<span class="sheet-super sheet-note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
-											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
-										</label>
-										<label class="sheet-small-label2" style="width:23.85%;">
-											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
-											<input style="height:2.15em;" type="text" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
-										</label>
-										<label class="sheet-small-label2" style="width:23.85%;">
-											<span class="sheet-super sheet-note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
-											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
-										</label>
-										<label class="sheet-small-label2" style="width:23.85%;">
-											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
-											<input style="height:2.15em;" type="text" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
-										</label>
-									</div>
-									<div class="sheet-table sheet-iterative_attack_section">
-										<span class="sheet-secondary-table-name" data-i18n="iterative-attacks">Iterative Attacks</span>
-										<div class="sheet-table-row">
-											<span class="sheet-table-header" style="width: 14em;" data-i18n="include-attacks-?">Include Attack?</span>
-											<span class="sheet-table-header" style="width: 20%;" data-i18n="custom-name">Custom Name</span>
-											<span class="sheet-table-header" style="width: 7em;" data-i18n="attack-modifier-abbrv">Attack Mod</span>
-											<span class="sheet-table-header sheet-super sheet-note-d" data-i18n="macro-text">Macro</span>
-										</div>										
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<b data-i18n="primary-attack">Primary attack</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack1_name" title="@{repeating_weapon_$X_iterative_attack1_name}" value="" data-i18n-placeholder="attack-1">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly>
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">&nbsp;</span>
-										</div>										
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack2" title="@{repeating_weapon_$X_toggle_iterative_attack2}" value="@{var_iterative_attack2_macro}" /><b title="Include a second attack to your weapon?" data-i18n="include-second-attack">Include a 2nd attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack2_name" title="@{repeating_weapon_$X_iterative_attack2_name}" value="" data-i18n-placeholder="attack-2">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack2_value" title="@{repeating_weapon_$X_iterative_attack2_value}" value="-5" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack2_macro" title="@{repeating_weapon_$X_var_iterative_attack2_macro}">{{attack2=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack2_value} ]] [iterative] ]]}} {{damage2=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm2=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack2_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage2=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg21=@{precision_dmg_macro}}} {{precision_dmg22=@{global_precision_dmg_macro}}} {{critical_dmg21=@{critical_dmg_macro}}} {{critical_dmg22=@{global_critical_dmg_macro}}} {{attack2name=@{iterative_attack2_name}}}</textarea>
-											</span>
+									<input type="hidden" name="attr_attack-type_macro_insert" value="@{toggle_global_melee_macro_insert}" />
+									<input type="hidden" name="attr_damage-type_macro_insert" value="@{toggle_global_melee_damage_macro_insert}" />
+									<input type="hidden" name="attr_macro_options" value="" />
+									<input type="hidden" name="attr_iterative_attacks" value="@{toggle_iterative_attack2} @{toggle_iterative_attack3} @{toggle_iterative_attack4} @{toggle_iterative_attack5} @{toggle_iterative_attack6} @{toggle_iterative_attack7} @{toggle_iterative_attack8}" />
+									<input type="hidden" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
+									<input type="hidden" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
+									<div class="sheet-sect sheet-expand">
+										<input type="checkbox" class="sheet-showarrow sheet-extra-damage-show" name="attr_add-damage-show" value="1" title="Add additional, precision, or extra critical damage" data-i18n-title="additional-damage-title" aria-label="Show Additional Damage" data-i18n-aria-label="additional-damage" />
+										<label class="sheet-showsect sheet-extra-damage-showlabel" data-i18n="precision-abbrv">Extra Dmg</label>
+										<input type="checkbox" class="sheet-showarrow sheet-iterations-show" title="iterative-attacks-title" data-i18n-title="iterative-attacks-title" data-i18n-aria-label="iterative-attacks-title" aria-label="Show Iterative Attacks" name="attr_iterative-attacks-show" value="1" />
+										<label class="sheet-showsect sheet-iterations-showlabel" data-i18n="iterative-attacks-abbrv">Iterative Atks</label>
+										<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
+										<label class="sheet-showsect sheet-advmacro-text-showlabel" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
+										<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
+										<label class="sheet-showsect sheet-macro-text-showlabel" data-i18n="macro-text">Macro Text</label>
+										<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
+										<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
+										<hr class="sheet-subnav-hr">
+										<div class="sheet-cheat"></div>
+										<div class="sheet-extra-damage sheet-center">
+											<label class="sheet-small-label2" style="width:23.85%;">
+												<span class="sheet-super sheet-note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
+												<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
+											</label>
+											<label class="sheet-small-label2" style="width:23.85%;">
+												<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+												<input style="height:2.15em;" type="text" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
+											</label>
+											<label class="sheet-small-label2" style="width:23.85%;">
+												<span class="sheet-super sheet-note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
+												<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
+											</label>
+											<label class="sheet-small-label2" style="width:23.85%;">
+												<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+												<input style="height:2.15em;" type="text" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
+											</label>
 										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack3" title="@{repeating_weapon_$X_toggle_iterative_attack3}" value="@{var_iterative_attack3_macro}" /><b title="Include a third attack to your weapon?" data-i18n="include-third-attack">Include a 3rd attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack3_name" title="@{repeating_weapon_$X_iterative_attack3_name}" value="" data-i18n-placeholder="attack-3">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack3_value" title="@{repeating_weapon_$X_iterative_attack3_value}" value="-10" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack3_macro" title="@{repeating_weapon_$X_var_iterative_attack3_macro}">{{attack3=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack3_value} ]] [iterative] ]]}} {{damage3=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm3=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack3_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage3=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1]]) ]]}} {{precision_dmg31=@{precision_dmg_macro}}} {{precision_dmg32=@{global_precision_dmg_macro}}} {{critical_dmg31=@{critical_dmg_macro}}} {{critical_dmg32=@{global_critical_dmg_macro}}} {{attack3name=@{iterative_attack3_name}}}</textarea>
-											</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack4" title="@{repeating_weapon_$X_toggle_iterative_attack4}" value="@{var_iterative_attack4_macro}" /><b title="Include a fourth attack to your weapon?" data-i18n="include-fourth-attack">Include a 4th attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack4_name" title="@{repeating_weapon_$X_iterative_attack4_name}" value="" data-i18n-placeholder="attack-4">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack4_value" title="@{repeating_weapon_$X_iterative_attack4_value}" value="-15" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack4_macro" title="@{repeating_weapon_$X_var_iterative_attack4_macro}">{{attack4=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack4_value} ]] [iterative] ]]}} {{damage4=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm4=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack4_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage4=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg41=@{precision_dmg_macro}}} {{precision_dmg42=@{global_precision_dmg_macro}}} {{critical_dmg41=@{critical_dmg_macro}}} {{critical_dmg42=@{global_critical_dmg_macro}}} {{attack4name=@{iterative_attack4_name}}}</textarea>
-											</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack5" title="@{repeating_weapon_$X_toggle_iterative_attack5}" value="@{var_iterative_attack5_macro}" /><b title="Include a fifth attack to your weapon?" data-i18n="include-fifth-attack">Include a 5th attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack5_name" title="@{repeating_weapon_$X_iterative_attack5_name}" value="" data-i18n-placeholder="attack-5">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack5_value" title="@{repeating_weapon_$X_iterative_attack5_value}" value="-20" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack5_macro" title="@{repeating_weapon_$X_var_iterative_attack5_macro}">{{attack5=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack5_value} ]] [iterative] ]]}} {{damage5=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm5=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack5_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage5=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg51=@{precision_dmg_macro}}} {{precision_dmg52=@{global_precision_dmg_macro}}} {{critical_dmg51=@{critical_dmg_macro}}} {{critical_dmg52=@{global_critical_dmg_macro}}} {{attack5name=@{iterative_attack5_name}}}</textarea>
-											</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack6" title="@{repeating_weapon_$X_toggle_iterative_attack6}" value="@{var_iterative_attack6_macro}" /><b title="Include a sixth attack to your weapon?" data-i18n="include-sixth-attack">Include a 6th attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack6_name" title="@{repeating_weapon_$X_iterative_attack6_name}" value="" data-i18n-placeholder="attack-6">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack6_value" title="@{repeating_weapon_$X_iterative_attack6_value}" value="-25" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack6_macro" title="@{repeating_weapon_$X_var_iterative_attack6_macro}">{{attack6=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack6_value} ]] [iterative] ]]}} {{damage6=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm6=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack6_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage6=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg61=@{precision_dmg_macro}}} {{precision_dmg62=@{global_precision_dmg_macro}}} {{critical_dmg61=@{critical_dmg_macro}}} {{critical_dmg62=@{global_critical_dmg_macro}}} {{attack6name=@{iterative_attack6_name}}}</textarea>
-											</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack7" title="@{repeating_weapon_$X_toggle_iterative_attack7}" value="@{var_iterative_attack7_macro}" /><b title="Include a seventh attack to your weapon?" data-i18n="include-seventh-attack">Include a 7th attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack7_name" title="@{repeating_weapon_$X_iterative_attack7_name}" value="" data-i18n-placeholder="attack-7">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack7_value" title="@{repeating_weapon_$X_iterative_attack7_value}" value="-30" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack7_macro" title="@{repeating_weapon_$X_var_iterative_attack7_macro}">{{attack7=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack7_value} ]] [iterative] ]]}} {{damage7=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm7=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack7_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage7=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg71=@{precision_dmg_macro}}} {{precision_dmg72=@{global_precision_dmg_macro}}} {{critical_dmg71=@{critical_dmg_macro}}} {{critical_dmg72=@{global_critical_dmg_macro}}} {{attack7name=@{iterative_attack7_name}}}</textarea>
-											</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell">
-												<label>
-													<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack8" title="@{repeating_weapon_$X_toggle_iterative_attack8}" value="@{var_iterative_attack8_macro}" /><b title="Include an eighth attack to your weapon?" data-i18n="include-eighth-attack">Include an 8th attack?</b>
-												</label>
-											</span>
-											<span class="sheet-table-cell">
-												<input type="text" name="attr_iterative_attack8_name" title="@{repeating_weapon_$X_iterative_attack8_name}" value="" data-i18n-placeholder="attack-8">
-											</span>
-											<span class="sheet-table-cell">
-												<input type="number" name="attr_iterative_attack8_value" title="@{repeating_weapon_$X_iterative_attack8_value}" value="-35" max="0" />
-											</span>
-											<span class="sheet-table-cell sheet-macro-text-tohide">
-												<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack8_macro" title="@{repeating_weapon_$X_var_iterative_attack8_macro}">{{attack8=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack8_value} ]] [iterative] ]]}} {{damage8=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm8=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack8_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage8=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg81=@{precision_dmg_macro}}} {{precision_dmg82=@{global_precision_dmg_macro}}} {{critical_dmg81=@{critical_dmg_macro}}} {{critical_dmg82=@{global_critical_dmg_macro}}} {{attack8name=@{iterative_attack8_name}}}</textarea>
-											</span>
-										</div>
-									</div>
-									<div class="sheet-advanced-macros" style="width:100%;height:auto;clear:both;">
-										<div class="sheet-center sheet-repeating-hidesect">
-											<div class="sheet-insertmacrocell" style="width:48.5%">
-												<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
-												<label class="sheet-small-label2">
-													<span class="sheet-super sheet-note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
-													<input type="hidden" name="attr_var_attack_macro_insert" value="[[ @{attack_macro_insert} ]] [Macro]" />
-													<textarea class="sheet-inline-textarea sheet-both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" placeholder="Macro/Query" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
-												</label>
+										<div class="sheet-table sheet-iterative_attack_section">
+											<span class="sheet-secondary-table-name" data-i18n="iterative-attacks">Iterative Attacks</span>
+											<div class="sheet-table-row">
+												<span class="sheet-table-header" style="width: 14em;" data-i18n="include-attacks-?">Include Attack?</span>
+												<span class="sheet-table-header" style="width: 20%;" data-i18n="custom-name">Custom Name</span>
+												<span class="sheet-table-header" style="width: 7em;" data-i18n="attack-modifier-abbrv">Attack Mod</span>
+												<span class="sheet-table-header sheet-super sheet-note-d" data-i18n="macro-text">Macro</span>
+											</div>										
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<b data-i18n="primary-attack">Primary attack</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack1_name" title="@{repeating_weapon_$X_iterative_attack1_name}" value="" data-i18n-placeholder="attack-1">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly>
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">&nbsp;</span>
+											</div>										
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack2" title="@{repeating_weapon_$X_toggle_iterative_attack2}" value="@{var_iterative_attack2_macro}" /><b title="Include a second attack to your weapon?" data-i18n="include-second-attack">Include a 2nd attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack2_name" title="@{repeating_weapon_$X_iterative_attack2_name}" value="" data-i18n-placeholder="attack-2">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack2_value" title="@{repeating_weapon_$X_iterative_attack2_value}" value="-5" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack2_macro" title="@{repeating_weapon_$X_var_iterative_attack2_macro}">{{attack2=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack2_value} ]] [iterative] ]]}} {{damage2=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm2=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack2_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage2=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg21=@{precision_dmg_macro}}} {{precision_dmg22=@{global_precision_dmg_macro}}} {{critical_dmg21=@{critical_dmg_macro}}} {{critical_dmg22=@{global_critical_dmg_macro}}} {{attack2name=@{iterative_attack2_name}}}</textarea>
+												</span>
 											</div>
-											<div class="sheet-insertmacrocell" style="width:48.5%">
-												<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_damage_macro_insert" value="@{var_damage_macro_insert}" title="@{toggle_damage_macro_insert}" checked />
-												<label class="sheet-small-label2">
-													<span class="sheet-super sheet-note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
-													<input type="hidden" name="attr_var_damage_macro_insert" value="[[ @{damage_macro_insert} ]] [Macro]" />
-													<textarea class="sheet-inline-textarea sheet-both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place" placeholder="Macro/Query" title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
-												</label>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack3" title="@{repeating_weapon_$X_toggle_iterative_attack3}" value="@{var_iterative_attack3_macro}" /><b title="Include a third attack to your weapon?" data-i18n="include-third-attack">Include a 3rd attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack3_name" title="@{repeating_weapon_$X_iterative_attack3_name}" value="" data-i18n-placeholder="attack-3">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack3_value" title="@{repeating_weapon_$X_iterative_attack3_value}" value="-10" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack3_macro" title="@{repeating_weapon_$X_var_iterative_attack3_macro}">{{attack3=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack3_value} ]] [iterative] ]]}} {{damage3=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm3=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack3_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage3=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1]]) ]]}} {{precision_dmg31=@{precision_dmg_macro}}} {{precision_dmg32=@{global_precision_dmg_macro}}} {{critical_dmg31=@{critical_dmg_macro}}} {{critical_dmg32=@{global_critical_dmg_macro}}} {{attack3name=@{iterative_attack3_name}}}</textarea>
+												</span>
+											</div>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack4" title="@{repeating_weapon_$X_toggle_iterative_attack4}" value="@{var_iterative_attack4_macro}" /><b title="Include a fourth attack to your weapon?" data-i18n="include-fourth-attack">Include a 4th attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack4_name" title="@{repeating_weapon_$X_iterative_attack4_name}" value="" data-i18n-placeholder="attack-4">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack4_value" title="@{repeating_weapon_$X_iterative_attack4_value}" value="-15" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack4_macro" title="@{repeating_weapon_$X_var_iterative_attack4_macro}">{{attack4=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack4_value} ]] [iterative] ]]}} {{damage4=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm4=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack4_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage4=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg41=@{precision_dmg_macro}}} {{precision_dmg42=@{global_precision_dmg_macro}}} {{critical_dmg41=@{critical_dmg_macro}}} {{critical_dmg42=@{global_critical_dmg_macro}}} {{attack4name=@{iterative_attack4_name}}}</textarea>
+												</span>
+											</div>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack5" title="@{repeating_weapon_$X_toggle_iterative_attack5}" value="@{var_iterative_attack5_macro}" /><b title="Include a fifth attack to your weapon?" data-i18n="include-fifth-attack">Include a 5th attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack5_name" title="@{repeating_weapon_$X_iterative_attack5_name}" value="" data-i18n-placeholder="attack-5">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack5_value" title="@{repeating_weapon_$X_iterative_attack5_value}" value="-20" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack5_macro" title="@{repeating_weapon_$X_var_iterative_attack5_macro}">{{attack5=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack5_value} ]] [iterative] ]]}} {{damage5=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm5=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack5_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage5=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg51=@{precision_dmg_macro}}} {{precision_dmg52=@{global_precision_dmg_macro}}} {{critical_dmg51=@{critical_dmg_macro}}} {{critical_dmg52=@{global_critical_dmg_macro}}} {{attack5name=@{iterative_attack5_name}}}</textarea>
+												</span>
+											</div>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack6" title="@{repeating_weapon_$X_toggle_iterative_attack6}" value="@{var_iterative_attack6_macro}" /><b title="Include a sixth attack to your weapon?" data-i18n="include-sixth-attack">Include a 6th attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack6_name" title="@{repeating_weapon_$X_iterative_attack6_name}" value="" data-i18n-placeholder="attack-6">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack6_value" title="@{repeating_weapon_$X_iterative_attack6_value}" value="-25" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack6_macro" title="@{repeating_weapon_$X_var_iterative_attack6_macro}">{{attack6=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack6_value} ]] [iterative] ]]}} {{damage6=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm6=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack6_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage6=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg61=@{precision_dmg_macro}}} {{precision_dmg62=@{global_precision_dmg_macro}}} {{critical_dmg61=@{critical_dmg_macro}}} {{critical_dmg62=@{global_critical_dmg_macro}}} {{attack6name=@{iterative_attack6_name}}}</textarea>
+												</span>
+											</div>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack7" title="@{repeating_weapon_$X_toggle_iterative_attack7}" value="@{var_iterative_attack7_macro}" /><b title="Include a seventh attack to your weapon?" data-i18n="include-seventh-attack">Include a 7th attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack7_name" title="@{repeating_weapon_$X_iterative_attack7_name}" value="" data-i18n-placeholder="attack-7">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack7_value" title="@{repeating_weapon_$X_iterative_attack7_value}" value="-30" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack7_macro" title="@{repeating_weapon_$X_var_iterative_attack7_macro}">{{attack7=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack7_value} ]] [iterative] ]]}} {{damage7=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm7=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack7_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage7=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg71=@{precision_dmg_macro}}} {{precision_dmg72=@{global_precision_dmg_macro}}} {{critical_dmg71=@{critical_dmg_macro}}} {{critical_dmg72=@{global_critical_dmg_macro}}} {{attack7name=@{iterative_attack7_name}}}</textarea>
+												</span>
+											</div>
+											<div class="sheet-table-row">
+												<span class="sheet-table-cell">
+													<label>
+														<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_iterative_attack8" title="@{repeating_weapon_$X_toggle_iterative_attack8}" value="@{var_iterative_attack8_macro}" /><b title="Include an eighth attack to your weapon?" data-i18n="include-eighth-attack">Include an 8th attack?</b>
+													</label>
+												</span>
+												<span class="sheet-table-cell">
+													<input type="text" name="attr_iterative_attack8_name" title="@{repeating_weapon_$X_iterative_attack8_name}" value="" data-i18n-placeholder="attack-8">
+												</span>
+												<span class="sheet-table-cell">
+													<input type="number" name="attr_iterative_attack8_value" title="@{repeating_weapon_$X_iterative_attack8_value}" value="-35" max="0" />
+												</span>
+												<span class="sheet-table-cell sheet-macro-text-tohide">
+													<textarea class="sheet-inline-textarea" data-i18n-placeholder="full-macro-place" name="attr_var_iterative_attack8_macro" title="@{repeating_weapon_$X_var_iterative_attack8_macro}">{{attack8=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attack8_value} ]] [iterative] ]]}} {{damage8=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirm8=[[ 1d20 + [[ @{attack_macro} + @{iterative_attack8_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage8=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmg81=@{precision_dmg_macro}}} {{precision_dmg82=@{global_precision_dmg_macro}}} {{critical_dmg81=@{critical_dmg_macro}}} {{critical_dmg82=@{global_critical_dmg_macro}}} {{attack8name=@{iterative_attack8_name}}}</textarea>
+												</span>
 											</div>
 										</div>
-									</div>
-									<div class="sheet-macro-text" style="width:100%;height:auto;clear:both;">
-										<label class="sheet-small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:2px;padding-right:2px;">
-											<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
-											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
-											<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
-										</label>
-									</div>
-									<div class="sheet-repeating-id">
-										<label class="sheet-small-label2 sheet-left" style="width:32%;"><span data-i18n="row-identification-for-macros">Row ID for macros</span>:&nbsp;<span class="sheet-selectable" name="attr_row_id"></span></label>
-										<label class="sheet-small-label2" title="ID of the Item from the Inventory tab that, when changed, updates this attack entry" data-i18n-title="source-item-title" data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" placeholder="Linked Item ID" data-i18n-placeholder="source-item-placeholder" /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
-										<label class="sheet-small-label2" title="ID of the spell from the spells tab that, when changed, updates this attack entry" data-i18n-title="source-spell-title" data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" placeholder="Linked Spell ID" data-i18n-placeholder="source-spell-placeholder" /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
-										<label class="sheet-small-label2" title="ID of the ability from the abilities tab that, when changed, updates this attack entry" data-i18n-title="source-ability-title" data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" placeholder="Linked ability ID" data-i18n-placeholder="source-ability-placeholder" /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
+										<div class="sheet-advanced-macros" style="width:100%;height:auto;clear:both;">
+											<div class="sheet-center sheet-repeating-hidesect">
+												<div class="sheet-insertmacrocell" style="width:48.5%">
+													<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
+													<label class="sheet-small-label2">
+														<span class="sheet-super sheet-note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
+														<input type="hidden" name="attr_var_attack_macro_insert" value="[[ @{attack_macro_insert} ]] [Macro]" />
+														<textarea class="sheet-inline-textarea sheet-both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" placeholder="Macro/Query" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
+													</label>
+												</div>
+												<div class="sheet-insertmacrocell" style="width:48.5%">
+													<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_damage_macro_insert" value="@{var_damage_macro_insert}" title="@{toggle_damage_macro_insert}" checked />
+													<label class="sheet-small-label2">
+														<span class="sheet-super sheet-note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
+														<input type="hidden" name="attr_var_damage_macro_insert" value="[[ @{damage_macro_insert} ]] [Macro]" />
+														<textarea class="sheet-inline-textarea sheet-both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place" placeholder="Macro/Query" title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="sheet-macro-text" style="width:100%;height:auto;clear:both;">
+											<label class="sheet-small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:2px;padding-right:2px;">
+												<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
+												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+											</label>
+										</div>
+										<div class="sheet-repeating-id">
+											<label class="sheet-small-label2 sheet-left" style="width:32%;"><span data-i18n="row-identification-for-macros">Row ID for macros</span>:&nbsp;<span class="sheet-selectable" name="attr_row_id"></span></label>
+											<label class="sheet-small-label2" title="ID of the Item from the Inventory tab that, when changed, updates this attack entry" data-i18n-title="source-item-title" data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" placeholder="Linked Item ID" data-i18n-placeholder="source-item-placeholder" /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
+											<label class="sheet-small-label2" title="ID of the spell from the spells tab that, when changed, updates this attack entry" data-i18n-title="source-spell-title" data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" placeholder="Linked Spell ID" data-i18n-placeholder="source-spell-placeholder" /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
+											<label class="sheet-small-label2" title="ID of the ability from the abilities tab that, when changed, updates this attack entry" data-i18n-title="source-ability-title" data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" placeholder="Linked ability ID" data-i18n-placeholder="source-ability-placeholder" /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
+										</div>
 									</div>
 								</div>
-							</div>
-						</fieldset>
+							</fieldset>
+						
 						</div>
 					</div>
 					<div class="sheet-cheat"></div>
@@ -9604,8 +9621,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 							</div>
 						</div>
 					</div>
-
-					
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_npc-spells-show" data-i18n-aria-label="spells" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 					<h3 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spells">Spells</label></h3>
@@ -11241,10 +11256,9 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					</span>
 					<span class="sheet-table-cell sheet-left">
 					</span>
-				</div>
-				
+				</div>		
 				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name" data-i18n="attacks">Attacks</span>
+					<span class="sheet-table-config-row-name" style="border-bottom: none;" data-i18n="attacks">Attacks</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
 							<input type="checkbox" title="@{ranged_2_show}" name="attr_ranged_2_show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="display-ranged-2">Display Alt Ranged attack type</span></b>
@@ -11254,6 +11268,16 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<label>
 							<input type="checkbox" title="@{cmb_2_show}" name="attr_cmb_2_show" value="1" class="sheet-selectedlabel-check"/><b><span data-i18n="display-cmb-2">Display Alt CMB attack type</span></b>
 						</label>
+					</span>					
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" ></span>
+					<span class="sheet-table-cell sheet-left">
+						<label>
+							<input type="checkbox" title="@{modify_dmg_by_size}" name="attr_modify_dmg_by_size" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="adjust-damage-by-size"> Adjust damage based on size</span></b>
+						</label>
+					</span>
+					<span class="sheet-table-cell sheet-left">
 					</span>					
 				</div>
 				<div class="sheet-table-row">				
@@ -11316,7 +11340,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-cell sheet-left">
 						<label>
 							<input type="checkbox" title="@{hd_not_bab}" name="attr_hd_not_bab" value="1" class="sheet-selectedlabel-check"/>
-							<b><span data-i18n="hd-not-bab">CMD: Use HD instead of BAB</span></b>
+							<b><span data-i18n="hd-not-bab">Use HD instead of BAB for CMD</span></b>
 						</label>
 					</span>
 				</div>
@@ -11334,7 +11358,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-config-row-name" data-i18n="advanced" style="border-bottom: none;">Advanced</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<input type="checkbox" title="@{use_advanced_options}" name="attr_use_advanced_options" value="1" class="sheet-selectedlabel-check" checked />
+							<input type="checkbox" title="@{use_advanced_options}" name="attr_use_advanced_options" value="1" class="sheet-selectedlabel-check" />
 							<b><span data-i18n-title="display-advanced-options-title" data-i18n-aria-label="display-advanced-options-title" aria-label="display-advanced-options-title" data-i18n="display-advanced-options">Display user defined and misc fields</span></b>
 						</label>
 					</span>

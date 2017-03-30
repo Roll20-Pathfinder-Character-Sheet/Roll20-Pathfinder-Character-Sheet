@@ -374,6 +374,7 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFSkills.resetCommandMacro();
 				PFAbility.resetCommandMacro();
 				PFFeatures.resetCommandMacro();
+				PFAttacks.recalculate();
 		    }
 		}
 	} catch (err) {
