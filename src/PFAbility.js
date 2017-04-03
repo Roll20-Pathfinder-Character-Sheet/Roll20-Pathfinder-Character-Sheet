@@ -772,6 +772,11 @@ function resetOptionAsync (id, callback , eventInfo){
 		}
 	});
 }
+
+export function createAbilities(callback,abilities){
+//get version of this from the PFNPCParser
+}
+
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAbility.recalcAbilities");
