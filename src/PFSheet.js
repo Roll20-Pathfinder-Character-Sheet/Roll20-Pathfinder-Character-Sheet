@@ -367,6 +367,15 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate();
 				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
+			if (oldversion >= 1.20 && oldversion < 1.40){
+				PFMigrate.migrateWhisperDropdowns();
+				PFInventory.resetCommandMacro();
+				PFAttacks.resetCommandMacro();
+				PFSkills.resetCommandMacro();
+				PFAbility.resetCommandMacro();
+				PFFeatures.resetCommandMacro();
+				PFAttacks.recalculate();
+		    }
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
@@ -545,7 +554,7 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		}
+		} 
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
