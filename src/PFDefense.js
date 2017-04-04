@@ -492,8 +492,7 @@ export function applyConditions (callback, silently,eventInfo) {
             hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
             grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
             woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
-            subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
-            subTotPenalty += (parseInt(v["condition-Pinned"], 10) || 0);
+            subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Pinned"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
             subTotPenalty += woundPenalty;
             newCMD = drained + subTotPenalty;
             if (AC !== subTotPenalty) {

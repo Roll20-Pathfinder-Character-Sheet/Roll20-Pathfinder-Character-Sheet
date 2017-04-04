@@ -273,10 +273,11 @@ export function setToPFS (callback,eventInfo){
 		}
 	});
 	setAttrs({'use_prestige_fame':1, 'auto_calc_hp':1, 'autohp_percent':1,'maxhp_lvl1':1},
-	PFConst.silentParams, function (){
-		if (eventInfo){
-			PFClassRaceGrid.autoCalcClassHpGrid(done,false,eventInfo);
-		}
+		PFConst.silentParams,
+		function (){
+			if (eventInfo){
+				PFClassRaceGrid.setHitPoints(done,false,eventInfo);
+			}
 	});
 }
 export function ensureNPCHPZero(callback){

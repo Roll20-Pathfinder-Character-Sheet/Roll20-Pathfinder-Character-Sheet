@@ -293,7 +293,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		updateSize();
 		PFEncumbrance.updateLoadsAndLift();
-		PFAttacks.updateWeaponsDamageDueToSizeAsync();
+		PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 	}));
 }
 registerEventHandlers();
