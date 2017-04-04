@@ -360,21 +360,21 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
 			if (oldversion < 1.19){
-				PFAttackGrid.resetCommandMacro();
 				PFAttackGrid.setTopMacros();
 			}
 			if (oldversion < 1.20){
 				PFHealth.recalculate();
 				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
-			if (oldversion >= 1.20 && oldversion < 1.40){
+			if (oldversion < 1.40){
 				PFMigrate.migrateWhisperDropdowns();
 				PFInventory.resetCommandMacro();
-				PFAttacks.resetCommandMacro();
+				PFAttackGrid.resetCommandMacro();
 				PFSkills.resetCommandMacro();
 				PFAbility.resetCommandMacro();
 				PFFeatures.resetCommandMacro();
 				PFAttacks.recalculate();
+				PFClassRaceGrid.setHitPoints();
 		    }
 		}
 	} catch (err) {
