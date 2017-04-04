@@ -8,13 +8,11 @@ import * as HLImport from './HLImport';
 
 TAS.config({
  logging: {
-   info: process.env.NODE_ENV !== 'production',
-   debug: process.env.NODE_ENV !== 'production'
+   info: false,
+   debug: false
  }
 });
-if (process.env.NODE_ENV !== 'production') {
-  TAS.debugMode();
-}
+
 PFConsole.log('       ,## /##                    ');
 PFConsole.log('      /#/ /  ##                   ');
 PFConsole.log('     / / /    ##                  ');
