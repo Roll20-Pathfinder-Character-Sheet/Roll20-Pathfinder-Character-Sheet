@@ -45,14 +45,13 @@ export function resetCommandMacro (eventInfo, callback) {
             callback();
         }
     }),
-    repeatingSpellAttrs = ["spell_level","spellclass_number","name","school",
-        "slot","metamagic","used","isDomain","isMythic"],
-    class0BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    class1BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    class2BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass0BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass1BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass2BaseMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    repeatingSpellAttrs = ["spell_level","spellclass_number","name","school","slot","metamagic","used","isDomain","isMythic"],
+    class0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    class1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    class2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
     pcBaseMacro=[class0BaseMacro,class1BaseMacro,class2BaseMacro],
     npcBaseMacro=[npcClass0BaseMacro,npcClass1BaseMacro,npcClass2BaseMacro],
     resetToDefault = function(configV){
@@ -308,7 +307,16 @@ function getSpellTotals  (ids, v, setter) {
                 return setter;
             }
         }
-
+        
+ /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
+            memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
+                imemo[spelllevel] = 0;
+                return imemo;
+            }, {});
+            return memo;
+        }, {});
+        totalListed =  _.mapObject(totalPrepped, _.clone);*/
+         
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
                 spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
@@ -338,8 +346,7 @@ function getSpellTotals  (ids, v, setter) {
                 if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
                     setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel] || 
-                        (parseInt(v[prefix + "-spells-per-day"], 10) || 0)  !== totalPrepped[classidx][spellLevel]  ) {
+                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
                     setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
                     setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                 }
@@ -351,7 +358,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
-export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
+function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
@@ -373,7 +380,6 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 _.each(spellLevels, function (spellLevel) {
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-total-listed");
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared");
-                    fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day");
                 });
             });
             getAttrs(fields, function (v) {

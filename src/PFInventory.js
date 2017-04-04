@@ -74,16 +74,10 @@ export function resetCommandMacro(callback){
         if (typeof callback === "function") {
             callback();
         }
-    });
-    getAttrs(['is_npc'],function(v){
-        var isNPC=parseInt(v.is_npc,10)||0, 
-        numToDo=isNPC?2:1, 
-        doneOne=_.after(numToDo,done);
-        PFMenus.resetOneCommandMacro('item',isNPC,doneOne,'',groupMapForMenu);
-        if (isNPC){
-            PFMenus.resetOneCommandMacro('item',false,doneOne,'',groupMapForMenu);
-        }
-    });
+    }),
+    doneOne=_.after(2,done);
+    PFMenus.resetOneCommandMacro('item',true,doneOne,'',groupMapForMenu);
+    PFMenus.resetOneCommandMacro('item',false,doneOne,'',groupMapForMenu);
 }
 /** Gets the worn item grid row name corresponding to location number in dropdown
  *@param {int} location a value from repeating_item_$X_location

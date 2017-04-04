@@ -12,7 +12,7 @@ TAS.config({
    debug: false
  }
 });
-//TAS.debugMode();
+
 PFConsole.log('       ,## /##                    ');
 PFConsole.log('      /#/ /  ##                   ');
 PFConsole.log('     / / /    ##                  ');
