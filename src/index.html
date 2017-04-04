@@ -388,8 +388,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="@{CHAR-whisper} @{spellclass-2-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-2}}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_items" class="sheet-command-button" value="@{CHAR-whisper} @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
 
-				<input type="hidden" name="attr_STATS-whisper" value="/w gm" />
-				<input type="hidden" name="attr_CHAR-whisper" value="/w &quot;@{character_name}&quot;" />
 				<input type="hidden" name="attr_fort-macro-text" value="[[ 1d20 + [[ @{Fort} ]] ]]" />
 				<input type="hidden" name="attr_ref-macro-text" value="[[ 1d20 + [[ @{Ref} ]] ]]" />
 				<input type="hidden" name="attr_will-macro-text" value="[[ 1d20 + [[ @{Will} ]] ]]" />
@@ -11383,14 +11381,14 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-config-row-name" data-i18n="roll-configuration" style="border-bottom: none;">Roll Configuration</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<span data-i18n-title="whisper-rolls-title" data-i18n-aria-label="whisper-non-player-character-rolls" data-i18n="whisper-non-player-character-rolls" >NPC rolls:</span>
+							<span data-i18n="whisper-non-player-character-rolls" >NPC rolls:</span>
 							<select name="attr_NPC-whisper" title="@{NPC-whisper}" style="display:inline;">
 								<option value="" data-i18n="public-rolls">Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
 							</select>
 						</label>
 						<label>
-							<span data-i18n-title="whisper-rolls-title" data-i18n-aria-label="whisper-character-rolls"  data-i18n="whisper-character-rolls" >PC rolls:</span>
+							<span  data-i18n="whisper-character-rolls" >PC rolls:</span>
 							<select name="attr_PC-whisper" title="@{PC-whisper}" style="display:inline;">
 								<option value="" data-i18n="public-rolls" selected>Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master">Whisper GM</option>
@@ -11401,6 +11399,24 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<label>
 							<input type="checkbox" title="@{both_whisper_show}" name="attr_both_whisper_show" value="1" class="sheet-selectedlabel-check" />
 							<b><span data-i18n-title="display-both-whispers-title" data-i18n-aria-label="display-both-whispers-title" aria-label="display-advanced-macros-title" data-i18n="display-both-whispers">Show both roll menu buttons for NPCs</span></b>
+						</label>
+					</span>
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" style="border-bottom: none;">&nbsp;</span>
+					<span class="sheet-table-cell sheet-left">
+						<label>
+							<span data-i18n-title="statistics-rolls-title" data-i18n="statistics-rolls-abbrv" >Stats rolls:</span>
+							<select name="attr_STATS-whisper" title="@{STATS-whisper}" style="display:inline;">
+								<option value="" data-i18n="public-rolls">Public Rolls</option>
+								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
+							</select>
+						</label>
+					</span>
+					<span class="sheet-table-cell sheet-left">
+						<label style="width:98%;">
+							<span data-i18n="menu-whisper">Menu Whisper:</span>
+							<input style="display:inline;max-width:60%;" type="text" name="attr_CHAR-whisper" title="@{CHAR-whisper}" value="/w &quot;@{character_name}&quot;" />
 						</label>
 					</span>
 				</div>
