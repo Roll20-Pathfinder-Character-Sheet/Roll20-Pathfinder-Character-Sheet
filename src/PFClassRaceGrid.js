@@ -155,19 +155,23 @@ export function setHitPoints (callback,silently,eventInfo){
         try {
             //TAS.debug("at autocalc hp",v);
             auto =parseInt(v.auto_calc_hp,10)||0;
-            if(auto){
-                isPFS = parseInt(v.set_pfs,10)||0;
-                isNPC = parseInt(v.is_npc,10)||0;
-                //isPFS = isPFS && (!isNPC);
-                mult= PFUtils.getAutoHPPercentMultiplier(v.autohp_percent);
-                maxFirst=parseInt(v.maxhp_lvl1,10)||0;
-            }
             if (eventInfo && eventInfo.sourceAttribute){
                 matches = eventInfo.sourceAttribute.match(/(\d)/);
                 if (matches && matches[1]) {
                     rowUpdated = parseInt(matches[1],10)||0;
                 } else if ((/NPC/i).test(eventInfo.sourceAttribute)){
                     rowUpdated = 6;
+                }
+            }
+            if(auto){
+                isPFS = parseInt(v.set_pfs,10)||0;
+                isNPC = parseInt(v.is_npc,10)||0;
+                mult= PFUtils.getAutoHPPercentMultiplier(v.autohp_percent);
+                maxFirst=parseInt(v.maxhp_lvl1,10)||0;
+                if (maxFirst) {
+                    if (rowUpdated===6){
+                        rowUpdated=-1;
+                    }
                 }
             }
             //TAS.debug("at autocalc hp, rowupdated is:" + rowUpdated);
@@ -190,10 +194,15 @@ export function setHitPoints (callback,silently,eventInfo){
                 }
                 if (maxFirst){ maxFirst = 0;}
                 //TAS.debug("adding "+currrowhp);
+            } else if (hd===0){
+                if (currrowhp !==0){
+                    setter['NPC-HP']=0;
+                }
             }
 
             _.each(classRows,function(rowindex){
-                var fchp=0;
+                var fchp=0,
+                row=parseInt(rowindex,10);
                 rowhp=0;
                 level = parseInt(v["class-"+rowindex+"-level"],10)||0;
                 hd = parseInt(v["class-"+rowindex+"-hd"],10);
@@ -202,7 +211,7 @@ export function setHitPoints (callback,silently,eventInfo){
                 if (isNaN(hd)||!auto){
                     totalhp += currrowhp + fchp;
                 } else if(level > 0 && hd > 0){
-                    if (rowUpdated===-1 || rowUpdated===parseInt(rowindex,10)){
+                    if (rowUpdated===-1 || rowUpdated===row){
                         rowhp = PFUtils.getAvgHP(level,hd,mult,maxFirst,isPFS) ;
                         totalhp += rowhp + fchp;
                         if (rowhp !== currrowhp){
@@ -212,6 +221,10 @@ export function setHitPoints (callback,silently,eventInfo){
                         totalhp += currrowhp + fchp;
                     }
                     if (maxFirst){ maxFirst = 0;}
+                } else if (hd===0 ){
+                    if (currrowhp !==0){
+                        setter["class-"+rowindex+"-hp"]=0;
+                    }
                 }
             });
             if (totalhp !== parseInt(v['total-hp'],10)){
@@ -229,8 +242,7 @@ export function setHitPoints (callback,silently,eventInfo){
                 done();
             }
         }
-    });
-    
+    });  
 }
 export function migrate (callback,oldversion){
     if (typeof callback === "function"){
