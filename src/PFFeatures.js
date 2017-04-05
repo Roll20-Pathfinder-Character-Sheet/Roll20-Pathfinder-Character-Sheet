@@ -8,6 +8,15 @@ import * as PFUtils  from './PFUtils';
 import * as PFMacros from './PFMacros';
 import * as PFMenus from './PFMenus';
 
+TAS.config({
+ logging: {
+   info: process.env.NODE_ENV !== 'production',
+   debug: process.env.NODE_ENV !== 'production'
+ }
+});
+if (process.env.NODE_ENV !== 'production') {
+  TAS.debugMode();
+}
 
 export var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'],
 migrateMap  = {
@@ -525,21 +534,21 @@ export function recalculate (callback, silently, oldversion) {
 function registerEventHandlers () {
 	var tempstr="";
 
-	on("change:merge_traits_now, change:merge_race_traits_now, change:merge_feats_now, change:merge_class_features_now, change:merge_slas_now",
-	TAS.callback(function eventMergeOldList(eventInfo){
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+	on("change:merge_traits_now change:merge_race_traits_now change:merge_feats_now change:merge_class_features_now change:merge_slas_now",
+		TAS.callback(function eventMergeOldList(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			getAbilities(function(list){
-				TAS.debug("PFFeatures returned from get Abilities list is: ",list);
-			},function(){
-				TAS.error("PFFeatures ################# error trying to migrate "+migrateButtonMap[eventInfo.sourceAttribute]);
-			},migrateButtonMap[eventInfo.sourceAttribute]);
-		}
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+				getAbilities(function(list){
+					TAS.debug("PFFeatures returned from get Abilities list is: ",list);
+				},function(){
+					TAS.error("PFFeatures ################# error trying to migrate "+migrateButtonMap[eventInfo.sourceAttribute]);
+				},migrateButtonMap[eventInfo.sourceAttribute]);
+			}
 	}));
-	on("change:delete_traits_now, change:delete_race_traits_now, change:delete_feats_now, change:delete_class_features_now, change:delete_slas_now",
+	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",
 	TAS.callback(function eventDeleteOldList(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		}
 	}));
 	//GENERIC REPEATING LISTS USED MAX
