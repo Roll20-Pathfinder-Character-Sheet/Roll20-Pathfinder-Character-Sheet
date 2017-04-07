@@ -7,16 +7,7 @@ import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFMacros from './PFMacros';
 import * as PFMenus from './PFMenus';
-
-TAS.config({
- logging: {
-   info: process.env.NODE_ENV !== 'production',
-   debug: process.env.NODE_ENV !== 'production'
- }
-});
-if (process.env.NODE_ENV !== 'production') {
-  TAS.debugMode();
-}
+import * as PFAbility from './PFAbility';
 
 export var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'],
 migrateMap  = {
@@ -32,7 +23,7 @@ migrateMap  = {
 		'ruleCategory':'racial-traits'},
 	'trait':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','ability_type'],
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_ability_type'],
-		'classDefault':'0',
+		'classDefault':'@{level}',
 		'ruleCategory':'traits'},
 	'class-ability':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation'],
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_class-number'],
@@ -319,7 +310,7 @@ export function convertNameToLevel (name){
 	var classnum ;
 	if ((/\d/).test(name)){
 		classnum = parseInt(  name.match(/\d/)[0],10 )||0;
-		return '@{class-'+classnum+'-level';
+		return '@{class-'+classnum+'-level}';
 	} else if ((/race/i).test(name)){
 		return '@{level}';
 	} else {
@@ -368,7 +359,7 @@ export function getAbilities (callback,errorcallback,section){
 									m[attr]=v[prefix+attr]||'';
 									return m;
 								},{});
-								obj['_CL-basis'] = defaultClass || convertNameToLevel(v[prefix+'class-number']);
+								obj['CL-basis'] = defaultClass || convertNameToLevel(v[prefix+'class-number']);
 								//
 								obj['macro-text'] = v[prefix+macrotextAttr]||'';
 								obj['rule_category']=migrateMap[section].ruleCategory;
@@ -397,6 +388,29 @@ export function getAbilities (callback,errorcallback,section){
 			notDone();
 		}
 	});
+}
+export function copyToAbilities(callback,section,eventInfo){
+	var done = _.once(function(param){
+		var setter;
+		if(eventInfo && eventInfo.sourceAttribute){
+			setter={};
+			setter[eventInfo.sourceAttribute]=0;
+			setAttrs(setter,PFConst.silentParams);
+		}
+		PFMenus.resetOneCommandMacro(section,false);
+		PFMenus.resetOneCommandMacro(section,true);
+		if (typeof callback === "function"){
+			callback(param);
+		}
+	});
+	TAS.debug("at PFFeatures.copyToAbilities");
+	getAbilities(function(list){
+		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
+		TAS.debug("now calling PFAbilitycopytoAbilities");
+		PFAbility.copyToAbilities(done,list);
+	},function(){
+		TAS.error("PFFeatures ################# error trying to migrate "+section);
+	},section);
 }
 export function setNewDefaults (callback,section){
 	var done = _.once(function(){
@@ -538,11 +552,7 @@ function registerEventHandlers () {
 		TAS.callback(function eventMergeOldList(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
-				getAbilities(function(list){
-					TAS.debug("PFFeatures returned from get Abilities list is: ",list);
-				},function(){
-					TAS.error("PFFeatures ################# error trying to migrate "+migrateButtonMap[eventInfo.sourceAttribute]);
-				},migrateButtonMap[eventInfo.sourceAttribute]);
+				copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
 			}
 	}));
 	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",

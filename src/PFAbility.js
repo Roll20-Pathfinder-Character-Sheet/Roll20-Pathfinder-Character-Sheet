@@ -199,6 +199,63 @@ function getAbilityTypes (callback){
 		});
 	});
 }
+function getNewAbilityAttrs (ability){
+	 var setter={}, id ='', prefix='',matches;
+	 try {
+		 id = generateRowID();
+		 prefix = 'repeating_ability_'+id+'_';
+		 setter[prefix+'rowid']=id;
+		 setter[prefix+'showinmenu']=ability['showinmenu']||0;
+		 setter[prefix+'name']=ability.name||'';
+		 setter[prefix+'used']=ability['used']||'';
+		 setter[prefix+'used_max']=ability['used_max']||'';
+		 setter[prefix+'max-calculation']=ability['max-calculation']||'';
+		 setter[prefix+'short-description']=ability['short-description']||'';
+		 setter[prefix+'description']=ability['description']||'';
+		 setter[prefix+'rule_category']=ability['rule_category']||'';
+		 setter[prefix+'CL-basis']=ability['CL-basis']||'0';
+		 if (ability.rule_category === 'spell-like-abilities') {
+			 setter[prefix+'ability_type']='Sp';
+		 } else {
+			 matches=ability.name.match(/\b(Sp|Su|Ex)\b/i);
+			 if(matches && matches[1]){
+				 setter[prefix+'ability_type']=matches[0][0].toUpperCase()+matches[0][1].toLowerCase();
+			 } else {
+				 setter[prefix+'ability_type']='';
+			 }
+		 }
+		 setter[prefix+'macro-text']=ability['macro-text']||'';
+	 } catch (err){
+		TAS.error("PFAbility.getNewAbilityAttrs",err,ability);
+	 } finally {
+		 return setter;
+	 }
+}
+export function copyToAbilities(callback,abilities) {
+	var done = _.once(function(){
+		TAS.debug("leaving PFAbility.copyToAbilities");
+		if (typeof callback === "function")  {
+			callback();
+		}
+	}), 
+	setter={};
+	TAS.debug("At PFAbility.copyToAbilities");
+	if (_.size(abilities)){
+		_.each(abilities,function(ability){
+			var xtra= getNewAbilityAttrs(ability);
+			TAS.debug("PFAbility.copyToAbilities adding ",xtra);
+			_.extend(setter,xtra);
+		});
+		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
+	}
+	if(_.size(setter)){
+		 setAttrs(setter,PFConst.silentParams,done);
+	} else {
+		 done();
+	}
+}
+
+
 /** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus)
  *@param {function} callback call when done	
  */
@@ -375,7 +432,6 @@ export function importFromCompendium (callback,eventInfo){
 				done();
 			}
 		}
-		
 	});
 }
 function setClassName (id,callback,eventInfo){
@@ -770,10 +826,6 @@ function resetOptionAsync (id, callback , eventInfo){
 			}
 		}
 	});
-}
-
-export function createAbilities(callback,abilities){
-//get version of this from the PFNPCParser
 }
 
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
