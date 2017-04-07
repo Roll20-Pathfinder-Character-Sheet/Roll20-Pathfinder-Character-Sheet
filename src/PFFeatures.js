@@ -7,9 +7,38 @@ import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFMacros from './PFMacros';
 import * as PFMenus from './PFMenus';
+import * as PFAbility from './PFAbility';
 
-export var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'];
-var baseCommandMacro = "&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
+export var featureLists = ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat",'npc-spell-like-abilities'],
+migrateMap  = {
+	'feat':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','ability_type'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_ability_type'],
+		'classDefault':'0',
+		'hasNPCMacro':true,
+		'ruleCategory':'feats'},
+	'racial-trait':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','ability_type'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_ability_type'],
+		'hasNPCMacro':true,
+		'classDefault':'@{level}',
+		'ruleCategory':'racial-traits'},
+	'trait':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','ability_type'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_ability_type'],
+		'classDefault':'@{level}',
+		'ruleCategory':'traits'},
+	'class-ability':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_class-number'],
+		'ruleCategory':'class-features',
+		'convertClass':true},
+		
+};
+var migrateButtonMap = {
+	merge_traits_now:'trait',
+	merge_race_traits_now:'racial-trait',
+	merge_feats_now:'feat',
+	merge_class_features_now:'class-ability',
+	merge_slas_now:'npc-spell-like-abilities'
+},
+baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
 otherCommandMacros = {
 	'class-ability':" [^{original-class-features-list}](~@{character_id}|class-ability_button)",
 	'mythic':" [^{mythic-abilities}](~@{character_id}|mythic-ability_button) [^{mythic-feats}](~@{character_id}|mythic-feat_button)",
@@ -277,6 +306,112 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 		}
 	});
 }
+export function convertNameToLevel (name){
+	var classnum ;
+	if ((/\d/).test(name)){
+		classnum = parseInt(  name.match(/\d/)[0],10 )||0;
+		return '@{class-'+classnum+'-level}';
+	} else if ((/race/i).test(name)){
+		return '@{level}';
+	} else {
+		return '';
+	}
+}
+/** Converts the 4 "old" feature lists into array of objecs for repeating_ability
+ * 
+ * @param {function([{}])} callback 
+ * @param {function} errorcallback 
+ * @param {string} section 
+ */
+export function getAbilities (callback,errorcallback,section){
+	var done = _.once(function(param){
+		if (typeof callback === "function"){
+			callback(param);
+		}
+	}), 
+	notDone =_.once(function(){
+		if (typeof errorcallback === "function"){
+			errorcallback();
+		} else {
+			done();
+		}
+	});
+	if (!section){notDone();return;}
+	getSectionIDs('repeating_'+section,function(ids){
+		var fields;
+		try {
+			if(_.size(ids)){
+				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,migrateMap[section].LU);
+				fields.push('is_npc');
+				getAttrs(fields,function(v){
+					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text';
+					try {
+						isNPC = parseInt(v.is_npc,10)||0;
+						if(migrateMap[section].hasNPCMacro && isNPC){
+							macrotextAttr='npc-macro-text';
+						}
+						defaultClass = migrateMap[section].classDefault||'';
+						abilities = _.map(ids,function(id){
+							var prefix , obj;
+							try {
+								prefix = 'repeating_'+section+'_'+id+'_';
+								obj= _.reduce(migrateMap[section].copyAttrs,function(m,attr){
+									m[attr]=v[prefix+attr]||'';
+									return m;
+								},{});
+								obj['CL-basis'] = defaultClass || convertNameToLevel(v[prefix+'class-number']);
+								//
+								obj['macro-text'] = v[prefix+macrotextAttr]||'';
+								obj['rule_category']=migrateMap[section].ruleCategory;
+								return obj;
+							} catch (errorinner) {
+								TAS.error("PFFeatures.getAbilities errorinner on " +id ,errorinner);
+							}
+						});
+					} catch (errmid){
+						TAS.error("PFFeatures.getAbilities errmid",errmid);
+					} finally {
+						if (_.size(abilities)){
+							done(abilities);
+						} else {
+							TAS.warn("PFFeatures.getAbilities none generated for "+ section+" even though there are ids");
+							notDone();
+						}
+					}
+				});
+			} else {
+				done([]);
+				return;
+			}
+		} catch (err) {
+			TAS.error("PFFeatures.copyFeatsToAbilities",err);
+			notDone();
+		}
+	});
+}
+export function copyToAbilities(callback,section,eventInfo){
+	var done = _.once(function(param){
+		var setter;
+		if(eventInfo && eventInfo.sourceAttribute){
+			setter={};
+			setter[eventInfo.sourceAttribute]=0;
+			setAttrs(setter,PFConst.silentParams);
+		}
+		PFMenus.resetOneCommandMacro(section,false);
+		PFMenus.resetOneCommandMacro(section,true);
+		if (typeof callback === "function"){
+			callback(param);
+		}
+	});
+	TAS.debug("at PFFeatures.copyToAbilities");
+	getAbilities(function(list){
+		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
+		TAS.debug("now calling PFAbilitycopytoAbilities");
+		PFAbility.copyToAbilities(done,list);
+	},function(){
+		TAS.error("PFFeatures ################# error trying to migrate "+section);
+	},section);
+}
 export function setNewDefaults (callback,section){
 	var done = _.once(function(){
 		TAS.debug("leaving PFFeatures.setNewDefaults");
@@ -410,11 +545,23 @@ export function recalculate (callback, silently, oldversion) {
 		done();
 	}
 }
-
 function registerEventHandlers () {
 	var tempstr="";
-	//GENERIC REPEATING LISTS USED MAX
 
+	on("change:merge_traits_now change:merge_race_traits_now change:merge_feats_now change:merge_class_features_now change:merge_slas_now",
+		TAS.callback(function eventMergeOldList(eventInfo){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+				copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+			}
+	}));
+	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",
+	TAS.callback(function eventDeleteOldList(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+		}
+	}));
+	//GENERIC REPEATING LISTS USED MAX
 	_.each(PFConst.repeatingMaxUseSections, function (section) {
 		var maxEvent = "change:repeating_" + section + ":max-calculation";
 		on(maxEvent, TAS.callback(function eventRepeatingMaxUseSections(eventInfo) {
