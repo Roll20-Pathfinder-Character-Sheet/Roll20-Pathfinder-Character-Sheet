@@ -8930,7 +8930,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 							<span data-i18n="npc-statblock-parse-instructions">Drag a monster from the compendium here, or type in the statblock values below. Then hit the parse button. The parser will populate the sheet with the underlying stats and attacks.</span>
 							<span data-i18n="npc-statblock-textarea-instructions">For multiline textareas, paste in exactly as appears in source. Keep newlines in input.</span> 
 							<br/>
- 							<input class="sheet-csstextbutton sheet-npcparsebutton sheet-sect-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
+ 							<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
 							<span class="sheet-sect sheet-progress-icon"><img src="http://i.imgur.com/XKktDjC.gif" />&nbsp;<span data-i18n="loading">Loading...</span></span>
 							<span class="sheet-compendium-note sheet-hide-readonly" >
 								<span class="sheet-compendium-icon">i</span>
@@ -11233,24 +11233,34 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-config-row-name" style="border-bottom:none;" data-i18n="lists">Lists</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_traits}" name="attr_use_traits" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-traits">Use Separate Traits List</span></b></span></label>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_traits_now}" name="attr_merge_traits_now" value="1" /><span data-i18n-title="merge-traits" data-i18n="merge">Merge</span>						
+ 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_traits_now}" name="attr_delete_traits_now" value="1" /><span data-i18n-title="delete-traits" data-i18n="delete">delete</span>	-->
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_racial_traits}" name="attr_use_racial_traits" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-racial-traits">Use Separate Racial Traits List</span></b></span></label>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_race_traits_now}" name="attr_merge_race_traits_now" value="1" /><span data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>						
+ 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_race_traits_now}" name="attr_delete_race_traits_now" value="1" /><span data-i18n-title="delete-race-traits" data-i18n="delete">delete</span>		-->
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" style="border-bottom:none;">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_feats}" name="attr_use_feats" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-feats">Use Separate feats List</span></b></span></label>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_feats_now}" name="attr_merge_feats_now" value="1" /><span data-i18n-title="merge-feats" data-i18n="merge">Merge</span>						
+ 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_feats_now}" name="attr_delete_feats_now" value="1" /><span data-i18n-title="delete-feats" data-i18n="delete">delete</span>		-->
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_class_features}" name="attr_use_class_features" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-class-features">Use Separate Class Features List</span></b></span></label>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_class_features_now}" name="attr_merge_class_features_now" value="1" /><span data-i18n-title="merge-class_features" data-i18n="merge">Merge</span>						
+ 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_class_features_now}" name="attr_delete_class_features_now" value="1" /><span data-i18n-title="delete-class_features" data-i18n="delete">delete</span>	-->
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_spell-like-abilities}" name="attr_use_spell-like-abilities" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-spell-like-abilities">Use Separate Spell-like ability List</span></b></span></label>
+ 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_slas_now}" name="attr_merge_slas_now" value="1" /><span data-i18n-title="merge-slas" data-i18n="merge">Merge</span>						
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_slas_now}" name="attr_delete_slas_now" value="1" /><span data-i18n-title="delete-slas" data-i18n="delete">delete</span>	-->
 					</span>
 					<span class="sheet-table-cell sheet-left">
 					</span>
@@ -11383,14 +11393,14 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<label>
 							<span data-i18n="whisper-non-player-character-rolls" >NPC rolls:</span>
 							<select name="attr_NPC-whisper" title="@{NPC-whisper}" style="display:inline;">
-								<option value="" data-i18n="public-rolls">Public Rolls</option>
+								<option value="&nbsp;" data-i18n="public-rolls">Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
 							</select>
 						</label>
 						<label>
 							<span  data-i18n="whisper-character-rolls" >PC rolls:</span>
 							<select name="attr_PC-whisper" title="@{PC-whisper}" style="display:inline;">
-								<option value="" data-i18n="public-rolls" selected>Public Rolls</option>
+								<option value="&nbsp;" data-i18n="public-rolls" selected>Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master">Whisper GM</option>
 							</select>
 						</label>
@@ -11408,15 +11418,15 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<label>
 							<span data-i18n-title="statistics-rolls-title" data-i18n="statistics-rolls-abbrv" >Stats rolls:</span>
 							<select name="attr_STATS-whisper" title="@{STATS-whisper}" style="display:inline;">
-								<option value="" data-i18n="public-rolls">Public Rolls</option>
+								<option value="&nbsp;" data-i18n="public-rolls">Public Rolls</option>
 								<option value="/w gm" data-i18n="whisper-to-game-master" selected>Whisper GM</option>
 							</select>
 						</label>
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label style="width:98%;">
-							<span data-i18n="menu-whisper">Menu Whisper:</span>
-							<input style="display:inline;max-width:60%;" type="text" name="attr_CHAR-whisper" title="@{CHAR-whisper}" value="/w &quot;@{character_name}&quot;" />
+						
+							<input  type="hidden" name="attr_CHAR-whisper"  value="/w &quot;@{character_name}&quot;" />
 						</label>
 					</span>
 				</div>
@@ -13661,13 +13671,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
-				{{#switch}}
-					<div class="sheet-roll-group">
-						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
-						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
-					</div>
-				{{/switch}}
-				{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check"></span>:**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
@@ -13718,11 +13721,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#switch}}
-					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
-					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
-				{{/switch}}
-				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#check}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="check"></span>:** {{check}}</span></label>{{/check}}
 				{{#class}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="class"></span>:** {{class}}</span></label>{{/class}}
 				{{#lefttext_1}}<label><span>{{lefttext_1}}</span></label>{{/lefttext_1}}
@@ -13779,11 +13777,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
-					{{#switch}}
-						{{#whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[W]({{switch}})</div></div>{{/whisper}}
-						{{^whisper}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">[P]({{switch}})</div></div>{{/whisper}}
-					{{/switch}}
-					{{#whisper}}{{^switch}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">W</div></div>{{/switch}}{{/whisper}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
 					{{#hasuses}}<div class="sheet-roll-row"><div class="sheet-roll-cell"><span data-i18n="quantity-abbrv">Qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</div></div>{{/hasuses}}
 					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
@@ -13804,11 +13797,6 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#switch}}
-					{{#whisper}}<label class="sheet-right">[W]({{switch}})</label>{{/whisper}}
-					{{^whisper}}<label class="sheet-right">[P]({{switch}})</label>{{/whisper}}		
-				{{/switch}}
-				{{#whisper}}{{^switch}}<label class="sheet-right">W</label>{{/switch}}{{/whisper}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
 				{{#hasuses}}<label><span><span data-i18n="quantity-abbrv">qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</span></label>{{/hasuses}}
 				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
