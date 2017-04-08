@@ -617,16 +617,8 @@ export function splitByCommaIgnoreParens(str){
 	ret = trimBoth(ret);
 	return ret;
 }
-export function deleteRepeating(callback,section,eventInfo){
+export function deleteRepeating(callback,section){
 	var done = _.once(function(){
-		var setter;
-		TAS.debug("leaving deleteRepeating");
-		if(eventInfo && (/delete/i).test(eventInfo.sourceAttribute)){
-			setter={};
-			setter[eventInfo.sourceAttribute]=0;
-			TAS.debug("turn button off",setter);
-			setAttrs(setter,{silent:true});
-		}
 		if (typeof callback === "function"){
 			callback();
 		}

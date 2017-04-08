@@ -596,13 +596,23 @@ function registerEventHandlers () {
 				});
 			}
 	}));
-	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",
+	on("change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
 	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
 			getAttrs([eventInfo.sourceAttribute],function(v){
+				var section="";
 				if (parseInt(v[eventInfo.sourceAttribute],10)){
-					SWUtils.deleteRepeating(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+					section = eventInfo.sourceAttribute.replace('repeating_','');
+					SWUtils.deleteRepeating(
+						function(){
+							var setter;
+							TAS.debug("leaving deleteRepeating");
+							setter={};
+							setter[eventInfo.sourceAttribute]=0;
+							TAS.debug("turn button off",setter);
+							setAttrs(setter,{silent:true});							
+						},section);
 				}
 			});
 		}
@@ -615,7 +625,6 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber("repeating_" + section + "_max-calculation", "repeating_" + section + "_used_max");
 		}));
 	});
-
 	on("change:mythic-adventures-show change:use_traits change:use_racial_traits change:use_class_features change:use_feats change:use_spell-like-abilities", TAS.callback(function eventEnableMythicConfig(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
