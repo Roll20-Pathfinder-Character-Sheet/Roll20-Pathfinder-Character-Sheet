@@ -40,7 +40,12 @@ var migrateButtonMap = {
 	merge_race_traits_now:'racial-trait',
 	merge_feats_now:'feat',
 	merge_class_features_now:'class-ability',
-	merge_slas_now:'npc-spell-like-abilities'
+	merge_slas_now:'npc-spell-like-abilities',
+	delete_traits_now:'trait',
+	delete_race_traits_now:'racial-trait',
+	delete_feats_now:'feat',
+	delete_class_features_now:'class-ability',
+	delete_slas_now:'npc-spell-like-abilities'
 },
 baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
 otherCommandMacros = {
@@ -595,6 +600,11 @@ function registerEventHandlers () {
 	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+			getAttrs([eventInfo.sourceAttribute],function(v){
+				if (parseInt(v[eventInfo.sourceAttribute],10)){
+					SWUtils.deleteRepeating(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+				}
+			});
 		}
 	}));
 	//GENERIC REPEATING LISTS USED MAX
