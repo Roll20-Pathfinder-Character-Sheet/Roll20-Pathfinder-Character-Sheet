@@ -29,7 +29,11 @@ migrateMap  = {
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_class-number'],
 		'ruleCategory':'class-features',
 		'convertClass':true},
-		
+	'npc-spell-like-abilities':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','level','range','duration','save','sr'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_level','_range','_duration','_save','_sr'],
+		'hasNPCMacro':false,
+		'classDefault':'@{level}',
+		'ruleCategory':'spell-like-abilities'},		
 };
 var migrateButtonMap = {
 	merge_traits_now:'trait',
@@ -336,13 +340,19 @@ export function getAbilities (callback,errorcallback,section){
 			done();
 		}
 	});
+	TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
 		var fields;
 		try {
 			if(_.size(ids)){
 				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,migrateMap[section].LU);
-				fields.push('is_npc');
+				fields = fields.concat(["is_npc","race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"]);
+				if (section === "npc-spell-like-abilities"){
+					fields = fields.concat(["spellclass-0-level-total","spellclass-1-level-total","spellclass-2-level-total",
+					"spellclass-0","spellclass-1","spellclass-2","level","npc-hd-num",
+					"class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level"]);
+				}
 				getAttrs(fields,function(v){
 					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text';
 					try {
@@ -360,6 +370,18 @@ export function getAbilities (callback,errorcallback,section){
 									return m;
 								},{});
 								obj['CL-basis'] = defaultClass || convertNameToLevel(v[prefix+'class-number']);
+								if (obj['CL-basis']){
+									if (obj['CL-basis']==="@{level}"){
+										obj["class-name"]=v['race'];
+									} else if (v[prefix+'class-number']){
+										TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
+										obj["class-name"]=v[v[prefix+'class-number']];
+									} else {
+										obj["class-name"]="";
+									}
+								} else {
+									obj["class-name"]="";
+								}
 								//
 								obj['macro-text'] = v[prefix+macrotextAttr]||'';
 								obj['rule_category']=migrateMap[section].ruleCategory;
@@ -392,24 +414,34 @@ export function getAbilities (callback,errorcallback,section){
 export function copyToAbilities(callback,section,eventInfo){
 	var done = _.once(function(param){
 		var setter;
-		if(eventInfo && eventInfo.sourceAttribute){
+		if(eventInfo && (/merge/i).test(eventInfo.sourceAttribute)){
 			setter={};
 			setter[eventInfo.sourceAttribute]=0;
 			setAttrs(setter,PFConst.silentParams);
 		}
-		PFMenus.resetOneCommandMacro(section,false);
-		PFMenus.resetOneCommandMacro(section,true);
 		if (typeof callback === "function"){
 			callback(param);
 		}
+	}),
+	merged = _.once(function(){
+		PFAbility.recalculate(function(){
+			done();
+			PFMenus.resetOneCommandMacro(section,false);
+			PFMenus.resetOneCommandMacro(section,true);
+		},true,0);
 	});
-	TAS.debug("at PFFeatures.copyToAbilities");
+	TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
 		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
-		TAS.debug("now calling PFAbilitycopytoAbilities");
-		PFAbility.copyToAbilities(done,list);
+		if(list && _.size(list)>0){
+			TAS.debug("now calling PFAbilitycopytoAbilities");
+			PFAbility.copyToAbilities(merged,list);
+		} else {
+			done();
+		}
 	},function(){
 		TAS.error("PFFeatures ################# error trying to migrate "+section);
+		done();
 	},section);
 }
 export function setNewDefaults (callback,section){
@@ -552,7 +584,11 @@ function registerEventHandlers () {
 		TAS.callback(function eventMergeOldList(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
-				copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+				getAttrs([eventInfo.sourceAttribute],function(v){
+					if (parseInt(v[eventInfo.sourceAttribute],10)){
+						copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+					}
+				});
 			}
 	}));
 	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",
@@ -576,11 +612,9 @@ function registerEventHandlers () {
 			resetTopCommandMacro(null,eventInfo);
 		}
 	}));
-
 	_.each(featureLists, function (section) {
 		var macroEvent = "remove:repeating_"+section+" ",
 			singleEvent = "change:repeating_" + section + ":";
-
 		macroEvent = _.reduce(events.commandMacroFields,function(m,a){
 			m+= singleEvent + a + " ";
 			return m;
@@ -599,7 +633,6 @@ function registerEventHandlers () {
 			}
 		}));
 	});
-	
 }
 registerEventHandlers();
 PFConsole.log('   PFFeatures module loaded       ' );
