@@ -29,7 +29,7 @@ migrateMap  = {
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_class-number'],
 		'ruleCategory':'class-features',
 		'convertClass':true},
-	'npc-spell-like-abilities':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','level','range','duration','save','sr'],
+	'npc-spell-like-abilities':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','duration','save','range'],
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_level','_range','_duration','_save','_sr'],
 		'hasNPCMacro':false,
 		'classDefault':'@{level}',
@@ -348,8 +348,11 @@ export function getAbilities (callback,errorcallback,section){
 	TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
-		var fields;
+		var fields,isSLA=0;
 		try {
+			if (section==="npc-spell-like-abilities"){
+				isSLA=1;
+			}
 			if(_.size(ids)){
 				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,migrateMap[section].LU);
 				fields = fields.concat(["is_npc","race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"]);
@@ -359,7 +362,7 @@ export function getAbilities (callback,errorcallback,section){
 					"class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level"]);
 				}
 				getAttrs(fields,function(v){
-					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text';
+					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text',tempInt;
 					try {
 						isNPC = parseInt(v.is_npc,10)||0;
 						if(migrateMap[section].hasNPCMacro && isNPC){
@@ -387,9 +390,34 @@ export function getAbilities (callback,errorcallback,section){
 								} else {
 									obj["class-name"]="";
 								}
-								//
+								if (isSLA){
+									obj["abil-sr"]=v[prefix+'sr']||'';
+									if(v[prefix+'level']){
+										tempInt=parseInt(v[prefix+'level'],10);
+										if(!isNaN(tempInt)){
+											obj['spell_level-misc']=tempInt;
+											obj['spell_level-misc-mod']=tempInt;
+											obj['spell_level-basis']='0';
+										}
+									}
+									if(v[prefix+'range']){
+										tempInt=parseInt(v[prefix+'range'],10);
+										obj['range_pick']='number';
+										if(!isNaN(tempInt)){
+											obj['range_numeric']=tempInt;
+										}
+									}
+									if(v[prefix+'used']){
+										tempInt=parseInt(v[prefix+'used'],10);
+										if(!isNaN(tempInt)){
+											obj['used_max']=tempInt;
+											obj['max-calculation']=tempInt;
+										}
+									}
+								}
 								obj['macro-text'] = v[prefix+macrotextAttr]||'';
 								obj['rule_category']=migrateMap[section].ruleCategory;
+								
 								return obj;
 							} catch (errorinner) {
 								TAS.error("PFFeatures.getAbilities errorinner on " +id ,errorinner);
