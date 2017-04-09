@@ -670,6 +670,7 @@ function registerEventHandlers () {
 							var setter;
 							setter={};
 							setter[eventInfo.sourceAttribute]=0;
+							setter[eventInfo.sourceAttribute+'_btn']=0;
 							setAttrs(setter,{silent:true});							
 						},section);
 				}
