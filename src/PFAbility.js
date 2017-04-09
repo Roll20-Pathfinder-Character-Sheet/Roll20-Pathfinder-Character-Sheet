@@ -216,6 +216,22 @@ function getNewAbilityAttrs (ability){
 		 setter[prefix+'class-name']=ability['class-name']||'';
 		 if (ability.rule_category === 'spell-like-abilities') {
 			 setter[prefix+'ability_type']='Sp';
+			 if(ability['spell_level-misc']){
+			 	setter[prefix+'spell_level-misc']=ability['spell_level-misc'];
+				setter[prefix+'spell_level-misc-mod']=ability['spell_level-misc-mod'];
+				setter[prefix+'spell_level-basis']=ability['spell_level-basis'];
+			 }
+			 if(ability['range_numeric']){
+				setter[prefix+'range']=ability['range'];
+				setter[prefix+'range_numeric']=ability['range_numeric'];
+				setter[prefix+'range_pick']=ability['range_pick'];
+			 }
+			 if(ability["abil-sr"]){
+				setter[prefix+'abil-sr']=ability["abil-sr"];
+			 }
+			 if(ability['save']){
+				 setter[prefix+'save']=ability['save'];
+			 }
 		 } else {
 			 matches=ability.name.match(/\b(Sp|Su|Ex)\b/i);
 			 if(matches && matches[1]){
