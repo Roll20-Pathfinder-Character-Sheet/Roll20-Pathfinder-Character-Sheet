@@ -1410,14 +1410,18 @@ h2.sheet-clickheader {
     margin-right: -1.5rem;
 }
 
-.sheet-lock-show,
-.sheet-split-column-show,
-.sheet-minimize-show,
-.sheet-readonly-show,
-.sheet-createattackbutton {
+.sheet-minimize-show {
     margin: 0 -1.4rem 2px .33rem;
 }
-
+.sheet-lock-show,
+.sheet-split-column-show,
+.sheet-readonly-show,
+.sheet-createattackbutton {
+    margin: 0 -1.4rem 2px 0;
+}
+.sheet-deletebutton {
+    margin: 0 -1.4rem 2px 2rem;
+}
 .sheet-cssbutton.sheet-refreshbutton {
 	margin-left:20%;
 }
@@ -1501,6 +1505,16 @@ h2.sheet-clickheader {
 	padding-top: 1px;
 	vertical-align: top;
 }
+
+.sheet-deletebutton + span::before {
+	font-family: "Pictos" !important;
+	content: '#';
+	padding-left: 2px;
+	padding-top: 0px;
+	vertical-align: top;
+}
+
+
 .sheet-refreshbutton + span::before {
     font-family: "Pictos" !important;
     content: '1';
@@ -1568,6 +1582,10 @@ h2.sheet-clickheader {
 	background-position: -1px -1px;
 	content:' ';
 }
+.sheet-allrows-note {
+    vertical-align: middle;
+}
+
 .sheet-small-label2 .sheet-createattackbutton + span::before {
     padding: 4px;
     margin-top: 2px;
