@@ -199,6 +199,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 				<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_buff-min-show" value="1" /><span></span>
 				<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_buff-expand-show" value="1" /><span></span>
 				<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_buff-column-show" value="1" /><span></span>
+				<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_buff" value="1" /><span data-i18n-title="delete-buffs" data-i18n="delete-all">delete</span>
 				<div class="sheet-sect-buff sheet-repeating-fields">
 					<fieldset class="repeating_buff">
 						<div class="sheet-nontable-repeating">
@@ -2121,6 +2122,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_weapon-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_weapon-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_weapon-column-show" value="1" /><span></span>
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_weapon" value="1" /><span data-i18n-title="delete-attacks" data-i18n="delete-all">delete</span>
 					<input type="checkbox" name="attr_adv_macro_show" class="sheet-repeating-sect-show" value="1" role="presentation" />
 					<input name="attr_modify_dmg_by_size" type="checkbox" value="1" class="sheet-use-size-show" />
 					<div class="sheet-repeating-fields">
@@ -6108,6 +6110,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_abilities-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_abilities-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_abilities-column-show" value="1" /><span></span>
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_ability" value="1" /><span data-i18n-title="delete-abilities" data-i18n="delete-all">delete</span>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
 						<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
@@ -6398,6 +6401,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_class-ability-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_class-ability-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_class-ability-column-show" value="1" /><span></span>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_class-ability" value="1" /><span data-i18n-title="delete-class_features" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_class-ability">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -6457,6 +6461,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_feat-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_feat-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_feat-column-show" value="1" /><span></span>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_feat" value="1" /><span data-i18n-title="delete-feats" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_feat">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -6500,6 +6505,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_mythic-feats-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_mythic-feats-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_mythic-feats-column-show" value="1" /><span></span>
+						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_mythic-feat" value="1" /><span data-i18n-title="delete-mythic-feats" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_mythic-feat">
 								<div class="sheet-table-repeating">
@@ -6541,6 +6547,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_racial-trait-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_racial-trait-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_racial-trait-column-show" value="1" /><span></span>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_racial-trait" value="1" /><span data-i18n-title="delete-race-traits" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_racial-trait">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -6593,6 +6600,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_traits-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_traits-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_traits-column-show" value="1" /><span></span>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_trait" value="1" /><span data-i18n-title="delete-traits" data-i18n="delete-all">delete</span>	
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_trait">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -6634,6 +6642,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" title="Minimize all rows." name="attr_npc-spell-like-abilities-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" title="Collapse or expand all rows." name="attr_npc-spell-like-abilities-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" title="Split into two columns" name="attr_npc-spell-like-abilities-column-show" value="1" /><span></span>
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_npc-spell-like-abilities" value="1" /><span data-i18n-title="delete-slas" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields">
 							<fieldset class="repeating_npc-spell-like-abilities">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -6678,6 +6687,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_mythic-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_mythic-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_mythic-column-show" value="1" /><span></span>
+						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_mythic-ability" value="1" /><span data-i18n-title="delete-mythic-abilities" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_mythic-ability">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -8202,6 +8212,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 					<input type="checkbox" value="1" class="sheet-subsect2-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="spontaneous spellcasting" />
 					<input type="checkbox" value="2" class="sheet-subsect3-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="prepared spellcasting" />
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_spells" value="1" /><span data-i18n-title="delete-spelss" data-i18n="delete-all">delete</span>
 					<div class="sheet-spells sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_spells">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-delete-row">Error! You must delete this row before editing any items in this section.</span></span>
@@ -8610,6 +8621,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_item-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_item-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_item-column-show" value="1" /><span></span>
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_item" value="1" /><span data-i18n-title="delete-items" data-i18n="delete-all">delete</span>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
 						<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
@@ -9173,6 +9185,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npcweapon-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcweapon-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcweapon-column-show" value="1" /><span></span>
+						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_weapon" value="1" /><span data-i18n-title="delete-weapons" data-i18n="delete-all">delete</span>
 						<input type="checkbox" name="attr_adv_macro_show" class="sheet-repeating-sect-show" value="1" role="presentation" />
 						<input name="attr_modify_dmg_by_size" type="checkbox" value="1" class="sheet-use-size-show sheet-noshow" />
 						<div class="sheet-repeating-fields">
@@ -9580,6 +9593,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 							<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" title="Minimize all rows." name="attr_npc-spell-like-abilities-min-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" title="Collapse or expand all rows." name="attr_npc-spell-like-abilities-expand-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" title="Split into two columns" name="attr_npc-spell-like-abilities-column-show" value="1" /><span></span>
+							<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_npc-spell-like-abilities" value="1" /><span data-i18n-title="delete-slas" data-i18n="delete-all">delete</span>
 							<div class="sheet-repeating-fields">
 								<fieldset class="repeating_npc-spell-like-abilities">
 									<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -9766,6 +9780,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 							<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npcnewspells-min-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcnewspells-expand-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcnewspells-column-show" value="1" /><span></span>
+							<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_spells" value="1" /><span data-i18n-title="delete-spells" data-i18n="delete-all">delete</span>
 							<span class="sheet-compendium-note sheet-hide-readonly" >
 								<span class="sheet-compendium-icon">i</span>
 								<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
@@ -9995,10 +10010,10 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<h3 class="sheet-clickheader sheet-showsect sheet-section-featlist"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="non-player-character-feats">NPC Feats</label></h3>
 						<div class="sheet-h3-section sheet-repeating-sect sheet-section-featlist">
 							<span class="sheet-nontable-name" data-i18n="feats">Feats</span>
-							
 							<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npcfeat-min-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcfeat-expand-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcfeat-column-show" value="1" /><span></span>
+							<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_feat" value="1" /><span data-i18n-title="delete-feats" data-i18n="delete-all">delete</span>
 							<div class="sheet-repeating-fields sheet-table">
 								<fieldset class="repeating_feat">
 									<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -10048,6 +10063,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 						<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npcmythic-feats-min-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npcmythic-feats-expand-show" value="1" /><span></span>
 						<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npcmythic-feats-column-show" value="1" /><span></span>
+						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_mythic-feat" value="1" /><span data-i18n-title="delete-mythic-feats" data-i18n="delete-all">delete</span>
 						<div class="sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_mythic-feat">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -10509,6 +10525,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_abilities-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_abilities-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_abilities-column-show" value="1" /><span></span>
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_ability" value="1" /><span data-i18n-title="delete-abilities" data-i18n="delete-all">delete</span>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
 						<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
@@ -10801,6 +10818,7 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npc-special-abilities-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npc-special-abilities-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npc-special-abilities-column-show" value="1" /><span></span>
+					<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_delete_repeating_racial-trait" value="1" /><span data-i18n-title="delete-race-traits" data-i18n="delete-all">delete</span>
 					<div class="sheet-sect sheet-repeating-fields sheet-table">
 							<fieldset class="repeating_racial-trait">
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -11233,34 +11251,29 @@ DEVELOPMENT NOT FOR PROD SUPPORT YET
 					<span class="sheet-table-config-row-name" style="border-bottom:none;" data-i18n="lists">Lists</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_traits}" name="attr_use_traits" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-traits">Use Separate Traits List</span></b></span></label>
- 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_traits_now}" name="attr_merge_traits_now" value="1" /><span data-i18n-title="merge-traits" data-i18n="merge">Merge</span>						
- 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_traits_now}" name="attr_delete_traits_now" value="1" /><span data-i18n-title="delete-traits" data-i18n="delete">delete</span>	-->
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_merge_traits_now" value="1" /><span data-i18n-title="merge-traits" data-i18n="merge">Merge</span>						
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_racial_traits}" name="attr_use_racial_traits" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-racial-traits">Use Separate Racial Traits List</span></b></span></label>
- 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_race_traits_now}" name="attr_merge_race_traits_now" value="1" /><span data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>						
- 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_race_traits_now}" name="attr_delete_race_traits_now" value="1" /><span data-i18n-title="delete-race-traits" data-i18n="delete">delete</span>		-->
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_merge_race_traits_now" value="1" /><span data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>						
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" style="border-bottom:none;">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_feats}" name="attr_use_feats" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-feats">Use Separate feats List</span></b></span></label>
- 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_feats_now}" name="attr_merge_feats_now" value="1" /><span data-i18n-title="merge-feats" data-i18n="merge">Merge</span>						
- 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_feats_now}" name="attr_delete_feats_now" value="1" /><span data-i18n-title="delete-feats" data-i18n="delete">delete</span>		-->
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_merge_feats_now" value="1" /><span data-i18n-title="merge-feats" data-i18n="merge">Merge</span>						
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_class_features}" name="attr_use_class_features" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-class-features">Use Separate Class Features List</span></b></span></label>
- 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_class_features_now}" name="attr_merge_class_features_now" value="1" /><span data-i18n-title="merge-class_features" data-i18n="merge">Merge</span>						
- 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_class_features_now}" name="attr_delete_class_features_now" value="1" /><span data-i18n-title="delete-class_features" data-i18n="delete">delete</span>	-->
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_merge_class_features_now" value="1" /><span data-i18n-title="merge-class_features" data-i18n="merge">Merge</span>						
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
 						<label><span><input type="checkbox" title="@{use_spell-like-abilities}" name="attr_use_spell-like-abilities" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-spell-like-abilities">Use Separate Spell-like ability List</span></b></span></label>
- 				<!--		<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{merge_slas_now}" name="attr_merge_slas_now" value="1" /><span data-i18n-title="merge-slas" data-i18n="merge">Merge</span>						
- 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" title="@{delete_slas_now}" name="attr_delete_slas_now" value="1" /><span data-i18n-title="delete-slas" data-i18n="delete">delete</span>	-->
+ 						<input class="sheet-csstextbutton sheet-sect-show" type="checkbox" name="attr_merge_slas_now" value="1" /><span data-i18n-title="merge-slas" data-i18n="merge">Merge</span>						
 					</span>
 					<span class="sheet-table-cell sheet-left">
 					</span>

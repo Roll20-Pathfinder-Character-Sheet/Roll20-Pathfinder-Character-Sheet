@@ -29,14 +29,23 @@ migrateMap  = {
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_max-calculation','_class-number'],
 		'ruleCategory':'class-features',
 		'convertClass':true},
-		
+	'npc-spell-like-abilities':{'copyAttrs':['name','short-description','used','used_max','showinmenu','description','max-calculation','duration','save','range'],
+		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_level','_range','_duration','_save','_sr'],
+		'hasNPCMacro':false,
+		'classDefault':'@{level}',
+		'ruleCategory':'spell-like-abilities'},		
 };
 var migrateButtonMap = {
 	merge_traits_now:'trait',
 	merge_race_traits_now:'racial-trait',
 	merge_feats_now:'feat',
 	merge_class_features_now:'class-ability',
-	merge_slas_now:'npc-spell-like-abilities'
+	merge_slas_now:'npc-spell-like-abilities',
+	delete_traits_now:'trait',
+	delete_race_traits_now:'racial-trait',
+	delete_feats_now:'feat',
+	delete_class_features_now:'class-ability',
+	delete_slas_now:'npc-spell-like-abilities'
 },
 baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
 otherCommandMacros = {
@@ -336,15 +345,24 @@ export function getAbilities (callback,errorcallback,section){
 			done();
 		}
 	});
+	TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
-		var fields;
+		var fields,isSLA=0;
 		try {
+			if (section==="npc-spell-like-abilities"){
+				isSLA=1;
+			}
 			if(_.size(ids)){
 				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,migrateMap[section].LU);
-				fields.push('is_npc');
+				fields = fields.concat(["is_npc","race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"]);
+				if (section === "npc-spell-like-abilities"){
+					fields = fields.concat(["spellclass-0-level-total","spellclass-1-level-total","spellclass-2-level-total",
+					"spellclass-0","spellclass-1","spellclass-2","level","npc-hd-num",
+					"class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level"]);
+				}
 				getAttrs(fields,function(v){
-					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text';
+					var abilities,defaultClass='',isNPC=0,macrotextAttr='macro-text',tempInt;
 					try {
 						isNPC = parseInt(v.is_npc,10)||0;
 						if(migrateMap[section].hasNPCMacro && isNPC){
@@ -360,9 +378,46 @@ export function getAbilities (callback,errorcallback,section){
 									return m;
 								},{});
 								obj['CL-basis'] = defaultClass || convertNameToLevel(v[prefix+'class-number']);
-								//
+								if (obj['CL-basis']){
+									if (obj['CL-basis']==="@{level}"){
+										obj["class-name"]=v['race'];
+									} else if (v[prefix+'class-number']){
+										TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
+										obj["class-name"]=v[v[prefix+'class-number']];
+									} else {
+										obj["class-name"]="";
+									}
+								} else {
+									obj["class-name"]="";
+								}
+								if (isSLA){
+									obj["abil-sr"]=v[prefix+'sr']||'';
+									if(v[prefix+'level']){
+										tempInt=parseInt(v[prefix+'level'],10);
+										if(!isNaN(tempInt)){
+											obj['spell_level-misc']=tempInt;
+											obj['spell_level-misc-mod']=tempInt;
+											obj['spell_level-basis']='0';
+										}
+									}
+									if(v[prefix+'range']){
+										tempInt=parseInt(v[prefix+'range'],10);
+										obj['range_pick']='number';
+										if(!isNaN(tempInt)){
+											obj['range_numeric']=tempInt;
+										}
+									}
+									if(v[prefix+'used']){
+										tempInt=parseInt(v[prefix+'used'],10);
+										if(!isNaN(tempInt)){
+											obj['used_max']=tempInt;
+											obj['max-calculation']=tempInt;
+										}
+									}
+								}
 								obj['macro-text'] = v[prefix+macrotextAttr]||'';
 								obj['rule_category']=migrateMap[section].ruleCategory;
+								
 								return obj;
 							} catch (errorinner) {
 								TAS.error("PFFeatures.getAbilities errorinner on " +id ,errorinner);
@@ -392,24 +447,34 @@ export function getAbilities (callback,errorcallback,section){
 export function copyToAbilities(callback,section,eventInfo){
 	var done = _.once(function(param){
 		var setter;
-		if(eventInfo && eventInfo.sourceAttribute){
+		if(eventInfo && (/merge/i).test(eventInfo.sourceAttribute)){
 			setter={};
 			setter[eventInfo.sourceAttribute]=0;
 			setAttrs(setter,PFConst.silentParams);
 		}
-		PFMenus.resetOneCommandMacro(section,false);
-		PFMenus.resetOneCommandMacro(section,true);
 		if (typeof callback === "function"){
 			callback(param);
 		}
+	}),
+	merged = _.once(function(){
+		PFAbility.recalculate(function(){
+			done();
+			PFMenus.resetOneCommandMacro(section,false);
+			PFMenus.resetOneCommandMacro(section,true);
+		},true,0);
 	});
-	TAS.debug("at PFFeatures.copyToAbilities");
+	TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
 		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
-		TAS.debug("now calling PFAbilitycopytoAbilities");
-		PFAbility.copyToAbilities(done,list);
+		if(list && _.size(list)>0){
+			TAS.debug("now calling PFAbilitycopytoAbilities");
+			PFAbility.copyToAbilities(merged,list);
+		} else {
+			done();
+		}
 	},function(){
 		TAS.error("PFFeatures ################# error trying to migrate "+section);
+		done();
 	},section);
 }
 export function setNewDefaults (callback,section){
@@ -552,14 +617,12 @@ function registerEventHandlers () {
 		TAS.callback(function eventMergeOldList(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
-				copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+				getAttrs([eventInfo.sourceAttribute],function(v){
+					if (parseInt(v[eventInfo.sourceAttribute],10)){
+						copyToAbilities(null,migrateButtonMap[eventInfo.sourceAttribute],eventInfo);
+					}
+				});
 			}
-	}));
-	on("change:delete_traits_now change:delete_race_traits_now change:delete_feats_now change:delete_class_features_now change:delete_slas_now",
-	TAS.callback(function eventDeleteOldList(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
-		}
 	}));
 	//GENERIC REPEATING LISTS USED MAX
 	_.each(PFConst.repeatingMaxUseSections, function (section) {
@@ -569,18 +632,15 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber("repeating_" + section + "_max-calculation", "repeating_" + section + "_used_max");
 		}));
 	});
-
 	on("change:mythic-adventures-show change:use_traits change:use_racial_traits change:use_class_features change:use_feats change:use_spell-like-abilities", TAS.callback(function eventEnableMythicConfig(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
 			resetTopCommandMacro(null,eventInfo);
 		}
 	}));
-
 	_.each(featureLists, function (section) {
 		var macroEvent = "remove:repeating_"+section+" ",
 			singleEvent = "change:repeating_" + section + ":";
-
 		macroEvent = _.reduce(events.commandMacroFields,function(m,a){
 			m+= singleEvent + a + " ";
 			return m;
@@ -599,7 +659,6 @@ function registerEventHandlers () {
 			}
 		}));
 	});
-	
 }
 registerEventHandlers();
 PFConsole.log('   PFFeatures module loaded       ' );

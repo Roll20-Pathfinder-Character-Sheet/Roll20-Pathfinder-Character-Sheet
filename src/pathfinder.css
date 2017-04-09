@@ -1423,8 +1423,8 @@ h2.sheet-clickheader {
 }
 
 .sheet-csstextbutton {
-	width:4em;
-	margin-right:-4em;
+	width:5em;
+	margin-right:-5em;
 }
 
 .sheet-cssbutton + span::before {
