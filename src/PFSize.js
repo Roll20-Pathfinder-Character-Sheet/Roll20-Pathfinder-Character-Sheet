@@ -7,6 +7,7 @@ import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFMigrate from './PFMigrate';
 import * as PFEncumbrance from './PFEncumbrance';
+import * as PFAttacks from './PFAttacks';
 
 
 export var sizeModToEasySizeMap={
@@ -90,7 +91,7 @@ export function getSizeLevelChange (currSize,defaultSize) {
 	var newSize,oldSize,levelChange;
 	newSize=sizeModToEasySizeMap[String(currSize)];
 	oldSize=sizeModToEasySizeMap[String(defaultSize)];
-	levelChange = newSize-oldSize;
+	levelChange = oldSize-newSize;
 	return levelChange;
 }
 /**updateDamageDice returns new dice for weapon/attack damage change due to size
@@ -292,6 +293,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		updateSize();
 		PFEncumbrance.updateLoadsAndLift();
+		PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 	}));
 }
 registerEventHandlers();

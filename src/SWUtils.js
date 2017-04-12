@@ -40,6 +40,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 	try {
 		stringToSearch = stringToSearch.split("selected|").join("");
 		stringToSearch = stringToSearch.split("target|").join("");
+		stringToSearch = stringToSearch.replace(/\|max\}/g,'_max}');
 		fieldnames = stringToSearch.match(/\@\{[^}]+\}/g);
 		if (!fieldnames) {
 			callback(stringToSearch);
@@ -60,7 +61,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 				});
 				innermatches=evalstr.match(/\@\{[^}]+\}/g);
 			} catch (err2) {
-				TAS.error("findAndReplaceFields", err2);
+				TAS.error("SWUtils.findAndReplaceFields err2", err2);
 				evalstr = null;
 			} finally {
 				if (innermatches) {
@@ -71,7 +72,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 			}
 		});
 	} catch (err) {
-		TAS.error("findAndReplaceFields", err);
+		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
 }
@@ -616,6 +617,31 @@ export function splitByCommaIgnoreParens(str){
 	ret = trimBoth(ret);
 	return ret;
 }
+export function deleteRepeating(callback,section){
+	var done = _.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	});
+	if(!section){
+		done();
+		return;
+	}
+	TAS.debug("SWUtils.deleteFeatures",section);
+	getSectionIDs(section,function(ids){
+		var prefix="repeating_"+section+"_";
+		if(ids && _.size(ids)){
+			ids.forEach(function(id) {
+				TAS.debug("deleting "+prefix+id);
+				removeRepeatingRow(prefix+id);
+			});
+			done();
+		} else {
+			done();
+		}
+	});
+}
+
 
 PFConsole.log( '   SWUtils module loaded          ' );
 PFLog.modulecount++;

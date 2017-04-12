@@ -360,13 +360,22 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
 			if (oldversion < 1.19){
-				PFAttackGrid.resetCommandMacro();
 				PFAttackGrid.setTopMacros();
 			}
 			if (oldversion < 1.20){
 				PFHealth.recalculate();
 				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
+			if (oldversion < 1.40){
+				PFMigrate.migrateWhisperDropdowns();
+				PFInventory.resetCommandMacro();
+				PFAttackGrid.resetCommandMacro();
+				PFSkills.resetCommandMacro();
+				PFAbility.resetCommandMacro();
+				PFFeatures.resetCommandMacro();
+				PFAttacks.recalculate();
+				PFClassRaceGrid.setHitPoints();
+		    }
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
@@ -545,7 +554,7 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		}
+		} 
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
@@ -644,6 +653,26 @@ function registerEventHandlers () {
 							checkForUpdate();
 						});
 					});
+				}
+			});
+		}
+	}));
+	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
+	TAS.callback(function eventDeleteOldList(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+			getAttrs([eventInfo.sourceAttribute],function(v){
+				var section="";
+				if (parseInt(v[eventInfo.sourceAttribute],10)){
+					section = eventInfo.sourceAttribute.replace('delete_repeating_','');
+					SWUtils.deleteRepeating(
+						function(){
+							var setter;
+							setter={};
+							setter[eventInfo.sourceAttribute]=0;
+							setter[eventInfo.sourceAttribute+'_btn']=0;
+							setAttrs(setter,{silent:true});							
+						},section);
 				}
 			});
 		}

@@ -34,6 +34,9 @@ var webpackConfig = {
       template: path.join(__dirname, 'src/index.html'),
       inlineSource: '.js$'
     }),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    }),
     new HtmlWebpackInlineSourcePlugin(),
     function RegexReplace(...args) {
       const onPath = path.join(__dirname, 'stubs/on');
@@ -62,7 +65,7 @@ var webpackConfig = {
     }
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, process.env.NODE_ENV === 'production' ? 'prod' : 'dist'),
     filename: 'index.js'
   }
 };
