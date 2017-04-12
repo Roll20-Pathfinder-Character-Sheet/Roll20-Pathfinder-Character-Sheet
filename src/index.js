@@ -3,8 +3,8 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 
 TAS.config({
  logging: {
-   info: false,
-   debug: false
+   info: process.env.NODE_ENV !== 'production',
+   debug: process.env.NODE_ENV !== 'production'
  }
 });
 if (process.env.NODE_ENV !== 'production') {
