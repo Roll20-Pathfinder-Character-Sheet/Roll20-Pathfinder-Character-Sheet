@@ -617,6 +617,31 @@ export function splitByCommaIgnoreParens(str){
 	ret = trimBoth(ret);
 	return ret;
 }
+export function deleteRepeating(callback,section){
+	var done = _.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	});
+	if(!section){
+		done();
+		return;
+	}
+	TAS.debug("SWUtils.deleteFeatures",section);
+	getSectionIDs(section,function(ids){
+		var prefix="repeating_"+section+"_";
+		if(ids && _.size(ids)){
+			ids.forEach(function(id) {
+				TAS.debug("deleting "+prefix+id);
+				removeRepeatingRow(prefix+id);
+			});
+			done();
+		} else {
+			done();
+		}
+	});
+}
+
 
 PFConsole.log( '   SWUtils module loaded          ' );
 PFLog.modulecount++;

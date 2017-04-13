@@ -13,8 +13,7 @@ import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFFeatures from './PFFeatures';
 
-var 
-optionFields= ['is_sp','hasposrange','hasuses','hasattack','abil-attacktypestr'],
+var optionFields= ['is_sp','hasposrange','hasuses','hasattack','abil-attacktypestr'],
 optionRepeatingHelperFields =['ability_type','range_numeric','frequency','abil-attack-type'],
 allOptionRepeatingFields=optionFields.concat(optionRepeatingHelperFields),
 tabRuleSorted ={
@@ -149,7 +148,7 @@ function setRuleTabs (){
  */
 function getAbilityTypes (callback){
 	var done= function(typeObj){
-		//TAS.debug('PFFeatures.getAbilityTypes returning with ',typeObj);
+		//TAS.debug('Ability.getAbilityTypes returning with ',typeObj);
 		if (typeof callback === "function"){
 			callback(typeObj);
 		}
@@ -199,6 +198,80 @@ function getAbilityTypes (callback){
 		});
 	});
 }
+function getNewAbilityAttrs (ability){
+	 var setter={}, id ='', prefix='',matches;
+	 try {
+		 id = generateRowID();
+		 prefix = 'repeating_ability_'+id+'_';
+		 setter[prefix+'row_id']=id;
+		 setter[prefix+'showinmenu']=ability['showinmenu']||0;
+		 setter[prefix+'name']=ability.name||'';
+		 setter[prefix+'used']=ability['used']||'';
+		 setter[prefix+'used_max']=ability['used_max']||'';
+		 setter[prefix+'max-calculation']=ability['max-calculation']||'';
+		 setter[prefix+'short-description']=ability['short-description']||'';
+		 setter[prefix+'description']=ability['description']||'';
+		 setter[prefix+'rule_category']=ability['rule_category']||'';
+		 setter[prefix+'CL-basis']=ability['CL-basis']||'0';
+		 setter[prefix+'class-name']=ability['class-name']||'';
+		 if (ability.rule_category === 'spell-like-abilities') {
+			 setter[prefix+'ability_type']='Sp';
+			 if(ability['spell_level-misc']){
+			 	setter[prefix+'spell_level-misc']=ability['spell_level-misc'];
+				setter[prefix+'spell_level-misc-mod']=ability['spell_level-misc-mod'];
+				setter[prefix+'spell_level-basis']=ability['spell_level-basis'];
+			 }
+			 if(ability['range_numeric']){
+				setter[prefix+'range']=ability['range'];
+				setter[prefix+'range_numeric']=ability['range_numeric'];
+				setter[prefix+'range_pick']=ability['range_pick'];
+			 }
+			 if(ability["abil-sr"]){
+				setter[prefix+'abil-sr']=ability["abil-sr"];
+			 }
+			 if(ability['save']){
+				 setter[prefix+'save']=ability['save'];
+			 }
+		 } else {
+			 matches=ability.name.match(/\b(Sp|Su|Ex)\b/i);
+			 if(matches && matches[1]){
+				 setter[prefix+'ability_type']=matches[0][0].toUpperCase()+matches[0][1].toLowerCase();
+			 } else {
+				 setter[prefix+'ability_type']='';
+			 }
+		 }
+		 setter[prefix+'macro-text']=ability['macro-text']||'';
+	 } catch (err){
+		TAS.error("PFAbility.getNewAbilityAttrs",err,ability);
+	 } finally {
+		 return setter;
+	 }
+}
+export function copyToAbilities(callback,abilities) {
+	var done = _.once(function(){
+		TAS.debug("leaving PFAbility.copyToAbilities");
+		if (typeof callback === "function")  {
+			callback();
+		}
+	}), 
+	setter={};
+	TAS.debug("At PFAbility.copyToAbilities");
+	if (_.size(abilities)){
+		_.each(abilities,function(ability){
+			var xtra= getNewAbilityAttrs(ability);
+			TAS.debug("PFAbility.copyToAbilities adding ",xtra);
+			_.extend(setter,xtra);
+		});
+		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
+	}
+	if(_.size(setter)){
+		 setAttrs(setter,PFConst.silentParams,done);
+	} else {
+		 done();
+	}
+}
+
+
 /** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus)
  *@param {function} callback call when done	
  */
@@ -375,7 +448,6 @@ export function importFromCompendium (callback,eventInfo){
 				done();
 			}
 		}
-		
 	});
 }
 function setClassName (id,callback,eventInfo){
@@ -771,6 +843,7 @@ function resetOptionAsync (id, callback , eventInfo){
 		}
 	});
 }
+
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAbility.recalcAbilities");
