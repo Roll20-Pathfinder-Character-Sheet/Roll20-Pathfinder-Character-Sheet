@@ -812,7 +812,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
         return;
     }
     getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc", "spellclasses_multiclassed"],function(vout){
-        var abilityMod, classConcentrationMisc,multiclassed,setter = {};
+        var abilityMod, classConcentrationMisc,multiclassed;
         try {
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0;
             classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0;
@@ -833,73 +833,84 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                 });
                 getAttrs(fields, function (v) {
                     var newConcentration = 0,
-                    casterlevel = 0;
-                    //TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:",v);
-                    _.each(ids, function (id) {
-                        var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0,
-                        prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
-                        optionText = v[prefix + "spell_options"],
-                        spellConcentrationMisc = parseInt(v[prefix + "Concentration_misc"], 10) || 0;
-                        try {
-                            if (!multiclassed || parseInt(v[prefix + "spellclass_number"], 10) === classIdx) {
-                                spellLevel = parseInt(v[prefix + "spell_level"], 10);
-                                spellLevelRadio = parseInt(v[prefix + "spell_level_r"], 10);
-                                if (isNaN(spellLevel)) {
-                                    TAS.warn("spell level is NaN for " + prefix);
-                                    if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
-                                        setter[prefix + "spell_level_r"] = "-1";
-                                        setter[prefix + "savedc"] = "";
-                                    }
-                                } else {
-                                    if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
-                                        setter[prefix + "spell_level_r"] = spellLevel;
-                                    }
-                                    newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
-                                    if (newDC !== (parseInt(v[prefix + "savedc"], 10) || 0)) {
-                                        setter[prefix + "savedc"] = newDC;
-                                        if (optionText) {
-                                            optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
-                                            setOption = 1;
-                                        }
-                                    }
-                                    casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
-                                    if (!isNaN(casterlevel)) {
-                                        newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
-                                        if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
-                                            setter[prefix + "Concentration-mod"] = newConcentration;
-                                            if (optionText) {
-                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration, PFSpellOptions.optionTemplates.Concentration.replace("REPLACE", newConcentration));
-                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration_chk, PFSpellOptions.optionTemplates.Concentration_chk.replace("REPLACE", newConcentration));
-                                                setOption = 1;
-                                            }
+                    casterlevel = 0,
+                    setter = {};
+                    try {
+                        TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:", v);
+                        _.each(ids, function (id) {
+                            var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0, currDC = 0,
+                            prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
+                            optionText = v[prefix + "spell_options"],
+                            spellConcentrationMisc = parseInt(v[prefix + "Concentration_misc"], 10) || 0;
+                            try {
+                                if (!multiclassed || parseInt(v[prefix + "spellclass_number"], 10) === classIdx) {
+                                    spellLevel = parseInt(v[prefix + "spell_level"], 10);
+                                    spellLevelRadio = parseInt(v[prefix + "spell_level_r"], 10);
+                                    if (isNaN(spellLevel)) {
+                                        TAS.warn("spell level is NaN for " + prefix);
+                                        if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
+                                            setter[prefix + "spell_level_r"] = "-1";
+                                            setter[prefix + "savedc"] = "";
                                         }
                                     } else {
-                                        TAS.warn("spell casterlevel is NaN for " + prefix);
-                                        if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
-                                            setter[prefix + "Concentration-mod"] = "";
+                                        if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
+                                            setter[prefix + "spell_level_r"] = spellLevel;
+                                        }
+                                        newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
+                                        currDC = parseInt(v[prefix + "savedc"], 10) || 0;
+                                        TAS.debug("PFSpells.updateSpellsCasterAbilityRelated comparing "+newDC +" and "+ currDC);
+                                        if (newDC !== currDC) {
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated SETTING savedc to "+newDC );
+                                            setter[prefix + "savedc"] = newDC;
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated savedc to "+setter[prefix + "savedc"] );
+                                            if (optionText) {
+                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
+                                                setOption = 1;
+                                            }
+                                        } else {
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated  DCs are equal! "+newDC+" and "+ currDC);
+                                        }
+                                        casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
+                                        if (!isNaN(casterlevel)) {
+                                            newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
+                                            if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
+                                                setter[prefix + "Concentration-mod"] = newConcentration;
+                                                if (optionText) {
+                                                    optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration, PFSpellOptions.optionTemplates.Concentration.replace("REPLACE", newConcentration));
+                                                    optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration_chk, PFSpellOptions.optionTemplates.Concentration_chk.replace("REPLACE", newConcentration));
+                                                    setOption = 1;
+                                                }
+                                            }
+                                        } else {
+                                            TAS.warn("spell casterlevel is NaN for " + prefix);
+                                            if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
+                                                setter[prefix + "Concentration-mod"] = "";
+                                            }
                                         }
                                     }
+                                    if (setOption) {
+                                        //TAS.debug("setting option for id "+ id +" to "+optionText);
+                                        setter[prefix + "spell_options"] = optionText;
+                                    }
                                 }
-                                if (setOption) {
-                                    //TAS.debug("setting option for id "+ id +" to "+optionText);
-                                    setter[prefix + "spell_options"] = optionText;
-                                }
+                            } catch (innererror){
+                                TAS.error("updateSpellsCasterAbilityRelated innererror on id:"+id,innererror);
                             }
-                        } catch (innererror){
-                            TAS.error("updateSpellsCasterAbilityRelated innererror on id:"+id,innererror);
-                        } 
-                    });
+                        });
+                    } catch(miderr){
+                        TAS.error("updateSpellsCasterAbilityRelated miderr :",miderr);
+                    }finally {
+                        if (_.size(setter) > 0) {
+                            TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
+                            setAttrs(setter, PFConst.silentParams, done());
+                        } else {
+                            done();
+                        }
+                    }
                 });
             });
         } catch(err){
             TAS.error("updateSpellsCasterAbilityRelated outer error:",err);
-        }finally {
-            if (_.size(setter) > 0) {
-                //TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
-                setAttrs(setter, PFConst.silentParams, done());
-            } else if (typeof callback === "function") {
-                done();
-            }
         }
     });
 
