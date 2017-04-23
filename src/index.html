@@ -52,8 +52,8 @@
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
-
-	<input type="checkbox" name="attr_is_npc" value="1" class="sheet-npc-show sheet-condition-exists" role="presentation" />
+	<div class="sheet-cheat"></div>
+	<input type="checkbox" name="attr_is_npc" value="1" class="sheet-npc-show sheet-noshow" role="presentation" />
 	<div class="sheet-monster-indicator sheet-npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-condition-exists" role="Presentation"><label style="font-size:1rem; padding:.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
 	</div>
@@ -68,9 +68,7 @@
 	<span class="sheet-cssbutton-label" data-i18n="recalculate-abbrv">Recalc</span>
 	<span class="sheet-progress-icon" ><img src="http://i.imgur.com/XKktDjC.gif" />&nbsp;<span data-i18n="loading">Loading...</span></span>
 	<input type="checkbox" name="attr_config-show" value="1" class="sheet-cssbutton sheet-configbutton sheet-config-show" data-i18n-aria-label="display-settings-config" style="width:3em;" checked /><span></span>
-	<span class="sheet-cssbutton-label" data-i18n="settings">Settings</span>
-
-	
+	<span class="sheet-cssbutton-label" data-i18n="settings">Settings</span>	
 	<label class="sheet-small-label2 sheet-entry-20p"><input title="@{character_name}" type="text" name="attr_character_name" placeholder="Character Name" data-i18n-placeholder="character-name" /><span data-i18n="character-name">Character Name</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-entry-15p"><input title="@{player-name}" type="text" name="attr_player-name" placeholder="Player Name" data-i18n-placeholder="player-name" /><span data-i18n="player-name">Player Name</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-entry-15p"><input title="@{class-0-name}" type="text" name="attr_class-0-name" placeholder="Class" data-i18n-placeholder="class" /><span data-i18n="class">Class</span></label>
@@ -78,7 +76,8 @@
 	<label class="sheet-small-label2 sheet-npc-only sheet-entry-8p"><input class="sheet-narrow-numbers" title="@{npc-cr}" type="text" name="attr_npc-cr" value="0" /><span data-i18n="challenge-rating-abbrv">CR</span></label>
 	<label class="sheet-small-label2 sheet-npc-only sheet-narrow-numbers"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /><span data-i18n="hit-dice-abbrv">HD</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="sheet-calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
-	<br/>
+	<div class="sheet-cheat"></div>
+
 	<div class="sheet-pfsheet">
 		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
 		<input type="checkbox" name="attr_is_undead" value="1" style="display:none;" role="presentation" />
@@ -12899,7 +12898,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>04/22/2017 11:00pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>04/23/2017 4:15pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
