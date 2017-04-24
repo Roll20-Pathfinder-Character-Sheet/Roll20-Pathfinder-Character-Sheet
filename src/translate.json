@@ -1060,7 +1060,7 @@
   "next-cast": "Next cast",
   "next-level": "Next Level",
   "no": "No",
-  "no-harmless": "No Harmless",
+  "no-harmless": "No (Harmless)",
   "no-skills-available": "None Available",
   "nobility": "Nobility",
   "non-lethal-abbrv": "NL",
@@ -1701,6 +1701,7 @@
   "yellow": "Yellow",
   "yes": "Yes",
   "yes-default": "•Yes",
-  "yes-harmless": "Yes Harmless",
+  "yes-harmless": "Yes (Harmless)",
+  "yes-object": "Yes (Object)",
   "yes-or-custom": "Yes or Custom"
 }
