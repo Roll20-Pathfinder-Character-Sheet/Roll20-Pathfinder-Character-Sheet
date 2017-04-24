@@ -358,7 +358,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
-function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
+export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
@@ -796,10 +796,10 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     });
 }
 /** updates all spells when caster ability or DCs are updated 
-*@param {int} classIdx 0..2
-*@param {object} eventInfo from on event 
-*@param {function} callback when done
-*/
+ *@param {int} classIdx 0..2
+ *@param {map} eventInfo from on event 
+ *@param {function} callback when done
+ */
 export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
     var done = _.once(function(){
         if (typeof callback === "function"){
@@ -812,7 +812,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
         return;
     }
     getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc", "spellclasses_multiclassed"],function(vout){
-        var abilityMod, classConcentrationMisc,multiclassed,setter = {};
+        var abilityMod, classConcentrationMisc,multiclassed;
         try {
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0;
             classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0;
@@ -833,73 +833,84 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                 });
                 getAttrs(fields, function (v) {
                     var newConcentration = 0,
-                    casterlevel = 0;
-                    //TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:",v);
-                    _.each(ids, function (id) {
-                        var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0,
-                        prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
-                        optionText = v[prefix + "spell_options"],
-                        spellConcentrationMisc = parseInt(v[prefix + "Concentration_misc"], 10) || 0;
-                        try {
-                            if (!multiclassed || parseInt(v[prefix + "spellclass_number"], 10) === classIdx) {
-                                spellLevel = parseInt(v[prefix + "spell_level"], 10);
-                                spellLevelRadio = parseInt(v[prefix + "spell_level_r"], 10);
-                                if (isNaN(spellLevel)) {
-                                    TAS.warn("spell level is NaN for " + prefix);
-                                    if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
-                                        setter[prefix + "spell_level_r"] = "-1";
-                                        setter[prefix + "savedc"] = "";
-                                    }
-                                } else {
-                                    if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
-                                        setter[prefix + "spell_level_r"] = spellLevel;
-                                    }
-                                    newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
-                                    if (newDC !== (parseInt(v[prefix + "savedc"], 10) || 0)) {
-                                        setter[prefix + "savedc"] = newDC;
-                                        if (optionText) {
-                                            optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
-                                            setOption = 1;
-                                        }
-                                    }
-                                    casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
-                                    if (!isNaN(casterlevel)) {
-                                        newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
-                                        if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
-                                            setter[prefix + "Concentration-mod"] = newConcentration;
-                                            if (optionText) {
-                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration, PFSpellOptions.optionTemplates.Concentration.replace("REPLACE", newConcentration));
-                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration_chk, PFSpellOptions.optionTemplates.Concentration_chk.replace("REPLACE", newConcentration));
-                                                setOption = 1;
-                                            }
+                    casterlevel = 0,
+                    setter = {};
+                    try {
+                        TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:", v);
+                        _.each(ids, function (id) {
+                            var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0, currDC = 0,
+                            prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
+                            optionText = v[prefix + "spell_options"],
+                            spellConcentrationMisc = parseInt(v[prefix + "Concentration_misc"], 10) || 0;
+                            try {
+                                if (!multiclassed || parseInt(v[prefix + "spellclass_number"], 10) === classIdx) {
+                                    spellLevel = parseInt(v[prefix + "spell_level"], 10);
+                                    spellLevelRadio = parseInt(v[prefix + "spell_level_r"], 10);
+                                    if (isNaN(spellLevel)) {
+                                        TAS.warn("spell level is NaN for " + prefix);
+                                        if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
+                                            setter[prefix + "spell_level_r"] = "-1";
+                                            setter[prefix + "savedc"] = "";
                                         }
                                     } else {
-                                        TAS.warn("spell casterlevel is NaN for " + prefix);
-                                        if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
-                                            setter[prefix + "Concentration-mod"] = "";
+                                        if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
+                                            setter[prefix + "spell_level_r"] = spellLevel;
+                                        }
+                                        newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
+                                        currDC = parseInt(v[prefix + "savedc"], 10) || 0;
+                                        TAS.debug("PFSpells.updateSpellsCasterAbilityRelated comparing "+newDC +" and "+ currDC);
+                                        if (newDC !== currDC) {
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated SETTING savedc to "+newDC );
+                                            setter[prefix + "savedc"] = newDC;
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated savedc to "+setter[prefix + "savedc"] );
+                                            if (optionText) {
+                                                optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
+                                                setOption = 1;
+                                            }
+                                        } else {
+                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated  DCs are equal! "+newDC+" and "+ currDC);
+                                        }
+                                        casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
+                                        if (!isNaN(casterlevel)) {
+                                            newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
+                                            if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
+                                                setter[prefix + "Concentration-mod"] = newConcentration;
+                                                if (optionText) {
+                                                    optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration, PFSpellOptions.optionTemplates.Concentration.replace("REPLACE", newConcentration));
+                                                    optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.Concentration_chk, PFSpellOptions.optionTemplates.Concentration_chk.replace("REPLACE", newConcentration));
+                                                    setOption = 1;
+                                                }
+                                            }
+                                        } else {
+                                            TAS.warn("spell casterlevel is NaN for " + prefix);
+                                            if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
+                                                setter[prefix + "Concentration-mod"] = "";
+                                            }
                                         }
                                     }
+                                    if (setOption) {
+                                        //TAS.debug("setting option for id "+ id +" to "+optionText);
+                                        setter[prefix + "spell_options"] = optionText;
+                                    }
                                 }
-                                if (setOption) {
-                                    //TAS.debug("setting option for id "+ id +" to "+optionText);
-                                    setter[prefix + "spell_options"] = optionText;
-                                }
+                            } catch (innererror){
+                                TAS.error("updateSpellsCasterAbilityRelated innererror on id:"+id,innererror);
                             }
-                        } catch (innererror){
-                            TAS.error("updateSpellsCasterAbilityRelated innererror on id:"+id,innererror);
-                        } 
-                    });
+                        });
+                    } catch(miderr){
+                        TAS.error("updateSpellsCasterAbilityRelated miderr :",miderr);
+                    }finally {
+                        if (_.size(setter) > 0) {
+                            TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
+                            setAttrs(setter, PFConst.silentParams, done());
+                        } else {
+                            done();
+                        }
+                    }
                 });
             });
         } catch(err){
             TAS.error("updateSpellsCasterAbilityRelated outer error:",err);
-        }finally {
-            if (_.size(setter) > 0) {
-                //TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
-                setAttrs(setter, PFConst.silentParams, done());
-            } else if (typeof callback === "function") {
-                done();
-            }
         }
     });
 
@@ -961,11 +972,11 @@ function updateSpellSlot (id, eventInfo, callback) {
     });
 }
 /** updates a spell
-*@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
-*@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
-*@param {function} callback - to call when done.
-*@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
-*/
+ *@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
+ *@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
+ *@param {function} callback - to call when done.
+ *@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
+ */
 function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     var spellLevelUndefined = false,
     classNumWasUndefined=false,
@@ -1203,11 +1214,11 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     });
 }
 /** - updates all spells
-*@param {function} callback when done
-*@param {silently} if should call setAttrs with {silent:true}
-*@param {object} eventInfo not used
-*/
-function updateSpells (callback, silently, eventInfo) {
+ *@param {function} callback when done
+ *@param {silently} if should call setAttrs with {silent:true}
+ *@param {object} eventInfo not used
+ */
+export function updateSpells (callback, silently, eventInfo) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.updateSpells");
         if (typeof callback === "function") {
@@ -1254,13 +1265,13 @@ function updateSpellsOld  (callback, silently, eventInfo) {
 }
 
 /** gets level and class from repeating_spells_spell_lvlstr then updates spell
-* matches class name in compendium against current spell classes in this order:
-* spell class already selected by spell dropdown, spellclass0, spellclass1, spellclass2
-* then sets spell level to the matching level for that class
-* if it cannot find then sets class name to the class level string and updates silently.
-*@param {string} id the id of the row
-*@param {object} eventInfo used to find row id since id param will be null
-*/
+ * matches class name in compendium against current spell classes in this order:
+ * spell class already selected by spell dropdown, spellclass0, spellclass1, spellclass2
+ * then sets spell level to the matching level for that class
+ * if it cannot find then sets class name to the class level string and updates silently.
+ *@param {string} id the id of the row
+ *@param {object} eventInfo used to find row id since id param will be null
+ */
 export function importFromCompendium (id, eventInfo) {
     var trueId = "";
 

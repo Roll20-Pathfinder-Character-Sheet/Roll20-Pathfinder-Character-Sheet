@@ -530,27 +530,31 @@ export function migrate (callback,oldversion){
     if (oldversion > 0 && oldversion < 0.50) {
         PFMigrate.migrateMaxDexAndACP();
     }
-    getAttrs(['CMD-ability2','unlock_def_ability','AC-ability'],function(v){
-        var ac='',cmd='',configflag=0, setter={};
-        try {
-            ac = PFUtils.findAbilityInString(v['AC-ability']);
-            cmd = PFUtils.findAbilityInString(v['CMD-ability2']);
-            configflag = parseInt(v.unlock_def_ability,10)||0;
-            if (ac && cmd && ac !== cmd && !configflag){
-                setter.unlock_def_ability=1;
-            } else if (configflag){
-                setter.unlock_def_ability=0;
+    if (oldversion > 0 && oldversion < 1.20){
+        getAttrs(['CMD-ability2','unlock_def_ability','AC-ability'],function(v){
+            var ac='',cmd='',configflag=0, setter={};
+            try {
+                ac = PFUtils.findAbilityInString(v['AC-ability']);
+                cmd = PFUtils.findAbilityInString(v['CMD-ability2']);
+                configflag = parseInt(v.unlock_def_ability,10)||0;
+                if (ac && cmd && ac !== cmd && !configflag){
+                    setter.unlock_def_ability=1;
+                } else if (configflag){
+                    setter.unlock_def_ability=0;
+                }
+            } catch (err){
+                TAS.error("PFDefense.migrate",err);
+            } finally {
+                if (_.size(setter)>0){
+                    setAttrs(setter,PFConst.silentParams,done);
+                } else {
+                    done();
+                }
             }
-        } catch (err){
-            TAS.error("PFDefense.migrate",err);
-        } finally {
-            if (_.size(setter)>0){
-                setAttrs(setter,PFConst.silentParams,done);
-            } else {
-                done();
-            }
-        }
-    });
+        });
+    } else {
+        done();
+    }
 }
 
 /** recalculate defense grid
