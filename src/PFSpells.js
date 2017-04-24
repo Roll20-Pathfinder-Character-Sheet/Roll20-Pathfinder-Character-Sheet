@@ -796,10 +796,10 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     });
 }
 /** updates all spells when caster ability or DCs are updated 
-*@param {int} classIdx 0..2
-*@param {object} eventInfo from on event 
-*@param {function} callback when done
-*/
+ *@param {int} classIdx 0..2
+ *@param {map} eventInfo from on event 
+ *@param {function} callback when done
+ */
 export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
     var done = _.once(function(){
         if (typeof callback === "function"){
@@ -972,11 +972,11 @@ function updateSpellSlot (id, eventInfo, callback) {
     });
 }
 /** updates a spell
-*@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
-*@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
-*@param {function} callback - to call when done.
-*@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
-*/
+ *@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
+ *@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
+ *@param {function} callback - to call when done.
+ *@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
+ */
 function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     var spellLevelUndefined = false,
     classNumWasUndefined=false,
@@ -1214,11 +1214,11 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     });
 }
 /** - updates all spells
-*@param {function} callback when done
-*@param {silently} if should call setAttrs with {silent:true}
-*@param {object} eventInfo not used
-*/
-function updateSpells (callback, silently, eventInfo) {
+ *@param {function} callback when done
+ *@param {silently} if should call setAttrs with {silent:true}
+ *@param {object} eventInfo not used
+ */
+export function updateSpells (callback, silently, eventInfo) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.updateSpells");
         if (typeof callback === "function") {
@@ -1265,13 +1265,13 @@ function updateSpellsOld  (callback, silently, eventInfo) {
 }
 
 /** gets level and class from repeating_spells_spell_lvlstr then updates spell
-* matches class name in compendium against current spell classes in this order:
-* spell class already selected by spell dropdown, spellclass0, spellclass1, spellclass2
-* then sets spell level to the matching level for that class
-* if it cannot find then sets class name to the class level string and updates silently.
-*@param {string} id the id of the row
-*@param {object} eventInfo used to find row id since id param will be null
-*/
+ * matches class name in compendium against current spell classes in this order:
+ * spell class already selected by spell dropdown, spellclass0, spellclass1, spellclass2
+ * then sets spell level to the matching level for that class
+ * if it cannot find then sets class name to the class level string and updates silently.
+ *@param {string} id the id of the row
+ *@param {object} eventInfo used to find row id since id param will be null
+ */
 export function importFromCompendium (id, eventInfo) {
     var trueId = "";
 

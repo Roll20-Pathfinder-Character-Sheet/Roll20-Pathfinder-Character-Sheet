@@ -376,6 +376,10 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttacks.recalculate();
 				PFClassRaceGrid.setHitPoints();
 		    }
+			if (oldversion < 1.43){
+				PFSpells.recalculate();
+				PFInventory.updateRepeatingItems();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
