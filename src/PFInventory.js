@@ -115,13 +115,14 @@ function updateRepeatingItems (callback, silently) {
                 if (r.I.qty > 0 && (r.I.location !== locationMap.NotCarried)) {
                     if (r.I.qty_max === 0 || r.I.qty_max===1) {
                         m['item-weight'] += r.F['item-weight'] * r.I.qty;
+                        m.value += r.I.value * r.I.qty;
                     } else {
                         m['item-weight'] += r.F['item-weight'];
+                        m.value += r.I.value;
                     }
                 }
                 m['item-hp'] += r.I['item-hp'];
                 m['item-hp_max'] += r.I['item-hp_max'];
-                m.value += r.I.value * r.I.qty;
             } catch (errinner) {
                 TAS.error("PFInventory.updateRepeatingItems inner error", errinner);
             } finally {

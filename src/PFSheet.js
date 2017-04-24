@@ -370,12 +370,16 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFMigrate.migrateWhisperDropdowns();
 				PFInventory.resetCommandMacro();
 				PFAttackGrid.resetCommandMacro();
-				PFSkills.resetCommandMacro();
 				PFAbility.resetCommandMacro();
 				PFFeatures.resetCommandMacro();
 				PFAttacks.recalculate();
 				PFClassRaceGrid.setHitPoints();
 		    }
+			if (oldversion < 1.43){
+				PFSpells.recalculate();
+				PFInventory.updateRepeatingItems();
+				PFSkills.resetCommandMacro();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
