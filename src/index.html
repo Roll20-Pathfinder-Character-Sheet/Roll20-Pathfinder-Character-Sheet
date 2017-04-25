@@ -1698,13 +1698,14 @@
 								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental Mods</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
-							<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-mshow" value="1" />
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-highlight">
-								<input type="text" name="attr_sanity_score_misc" title="@{repeating_weapon_$X_sanity_score_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea" />
+								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="text" name="attr_sanity_score_misc" title="@{repeating_weapon_$X_sanity_score_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight" />
 								<br/><span class="sheet-super sheet-note-a" data-i18n-title="score-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv" >Misc</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-highlight">
-								<input type="number" name="attr_sanity_score_misc-mod" title="@{repeating_weapon_$X_sanity_score_misc-mod}" value="0" class="sheet-calc" readonly />
+								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="number" name="attr_sanity_score_misc-mod" title="@{repeating_weapon_$X_sanity_score_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-left-border sheet-narrow-numbers">
@@ -1726,13 +1727,14 @@
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
-							<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-mshow" value="1" />
-							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-highlight">
-								<input type="text" name="attr_sanity_threshold_misc" title="@{repeating_weapon_$X_sanity_threshold_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" />
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
+								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="text" name="attr_sanity_threshold_misc" title="@{repeating_weapon_$X_sanity_threshold_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline sheet-highlight" />
 								<br/><span class="sheet-super sheet-note-a" data-i18n-title="threshold-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv">Misc</span>
 							</div>
-							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-highlight sheet-left">
-								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{repeating_weapon_$X_sanity_threshold_misc-mod}" value="0" class="sheet-calc" readonly />
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-left">
+								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{repeating_weapon_$X_sanity_threshold_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
