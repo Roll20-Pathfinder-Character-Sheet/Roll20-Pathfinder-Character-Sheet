@@ -702,7 +702,7 @@ also need 1 more level in selector or base css will override border */
     width: 100%;
 }
 .sheet-select-class{
-	max-width:4.75em;
+	width:100%;
 }
 
 .sheet-select-spelllvl {
@@ -1158,14 +1158,11 @@ input.sheet-tabinput {
 /***************** collapse/expand rows arrow added after text found preceding span ******************************/
 /* standalone generic toggles */
 .sheet-noshow,
-.sheet-show-spell-cell,
-.sheet-sect-show.sheet-sect-show-inverse,
-.sheet-sect-show.sheet-noshow,
 .sheet-deletesect-show,
 .sheet-wounds-show,
-.sheet-sect2-show.sheet-noshow,
+.sheet-sect2-show.sheet-expand-arrow,
+.sheet-sect3-show.sheet-expand-arrow,
 .sheet-wider-readonly.sheet-noshow,
-.sheet-misc-show:not(.sheet-showarrow),
 .sheet-spontaneous-show,
 .sheet-mythic-show,
 .sheet-psionic-show,
@@ -1189,9 +1186,7 @@ input.sheet-tabinput {
 .sheet-error-show,
 .sheet-warn-show,
 .sheet-error-mshow,
-.sheet-warn-mshow,
-.sheet-sect2-show:not(.sheet-showarrow),
-.sheet-sect3-show:not(.sheet-showarrow) {
+.sheet-warn-mshow {
     display: none;
 }
 /* ARROWS */
@@ -1716,28 +1711,25 @@ input.sheet-refreshbutton {
 }
 
 /*selected text */
-.sheet-selectedlabel-check + b:not(.sheet-offCase),
-.sheet-selectedlabel-check + label b:not(.sheet-offCase) {
-    color: darkslategrey;
-	display: inline;
+.sheet-selectedlabel-check + b:not(.sheet-offCase) {
+    color: dimgrey;
     font-size: .75rem;
     line-height: 1.5em;
     padding: 1px .5em 1px .25em;
-    cursor: pointer;
+}
+.sheet-corerules .sheet-table-row .sheet-table-cell {
+    padding-left:.5em;
+}
+.sheet-selectedlabel-check:hover + b:not(.sheet-offCase),
+.sheet-selectedlabel-check:focus + b:not(.sheet-offCase),
+.sheet-selectedlabel-check:checked:hover + b:not(.sheet-offCase),
+.sheet-selectedlabel-check:checked:focus + b:not(.sheet-offCase) {
+    color: red;
+}
+.sheet-selectedlabel-check:checked + b:not(.sheet-offCase) {
+    color: black;
 }
 
-.sheet-selectedlabel-check + b:not(.sheet-offCase):hover,
-.sheet-selectedlabel-check + label b:not(.sheet-offCase):hover {
-    color: red;
-	font-weight: bold;
-}
-.sheet-selectedlabel-check:checked + b:not(.sheet-offCase),
-.sheet-selectedlabel-check:checked + label b:not(.sheet-offCase) {
-    color: black;
-	font-weight: bold;
-    display: inline;
-    cursor: pointer;
-}
 .sheet-conditions .sheet-table-row {
     height: 1.85em;
 }
@@ -2781,7 +2773,7 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-subsect3-show:not(:checked) ~ div .sheet-sect3,
 .sheet-deletesect-show:not(:checked) ~ .sheet-deletesect,
 /* buttons */
-.sheet-progress-show ~ .sheet-progress-icon,
+.sheet-progress-show:not(:checked) ~ .sheet-progress-icon,
 /*
 .sheet-nextitem-show:not(:checked) + *,
 */

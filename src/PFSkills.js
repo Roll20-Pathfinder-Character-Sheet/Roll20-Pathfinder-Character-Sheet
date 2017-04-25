@@ -707,90 +707,55 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 		coreArray;
 		if (!consolidated) {
 			updateSubSkillMacroBook(background, rt, eventInfo, v, isNPC, showBonus);
-			//skills without sub skills
-			if (rt) {
-				getAttrs(SWUtils.cartesianAppend(regularCoreSkills, checkRTArray), function (v) {
-					var canshowarray = [],
-					tempRTMacro = "",
-					temparray = [];
-					try {
-						if (background) {
-							canshowarray = assembleSkillButtonArray(regularBackgroundSkills, rt, v) || [];
-							temparray = temparray.concat(canshowarray);
-							canshowarray = canshowarray.concat(skillsWithSubSkills).sort();
-							tempRTMacro = baseGenMacro + getSkillButtonMacro("background-skills", canshowarray, showBonus, isNPC);
-							if (v[skillPrefix + "background_skills-macro"] !== tempRTMacro) {
-								setter[skillPrefix + "background_skills-macro"] = tempRTMacro;
-							}
-							canshowarray = assembleSkillButtonArray(regularAdventureSkills, rt, v) || [];
-							temparray = temparray.concat(canshowarray);
-							canshowarray = canshowarray.concat(["Knowledge","Misc-Skill"]).sort();
-							tempRTMacro = baseGenMacro + getSkillButtonMacro("adventure-skills", canshowarray, showBonus, isNPC);
-							if (v[skillPrefix + "adventure_skills-macro"] !== tempRTMacro) {
-								setter[skillPrefix + "adventure_skills-macro"] = tempRTMacro;
-							}
-							temparray = temparray.concat(skillsWithSubSkills).sort();
-						} else {
-							canshowarray = assembleSkillButtonArray(regularCoreSkills, rt, v) || [];
-							temparray = temparray.concat(canshowarray).concat(coreSkillsWithSubSkills).sort();
-						}
-						tempRTMacro = baseGenMacro + getSkillButtonMacro("skills", temparray, showBonus, isNPC);
-						if (v[skillPrefix + "skills-macro"] !== tempRTMacro) {
-							setter[skillPrefix + "skills-macro"] = tempRTMacro;
-						}
-					} catch (errRT){
-						TAS.error("PFSkills.resetOneCommandMacro errRT",errRT);
-					} finally {
-						if (_.size(setter) > 0) {
-							setAttrs(setter, PFConst.silentParams, done);
-						} else {
-							done();
-						}
-					}
-				});
-			} else {
+			getAttrs(SWUtils.cartesianAppend(regularCoreSkills, checkRTArray), function (v) {
+				var canshowarray = [],
+				tempRTMacro = "",
+				temparray = [];
 				try {
-					coreArray = regularCoreSkills.concat(coreSkillsWithSubSkills);
-					//no require training
 					if (background) {
-						coreArray = coreArray.concat(["Artistry", "Lore"]).sort();
-						allskillstitle = "all-skills";
-						tempSkillArray = regularBackgroundSkills.concat(skillsWithSubSkills).sort();
-						tempMacro = getSkillButtonMacro("background-skills", tempSkillArray, showBonus, isNPC);
-						setter[skillPrefix + "background_skills-macro"] = baseGenMacro + tempMacro;
-						tempSkillArray = regularAdventureSkills.concat(["Knowledge"]).sort();
-						tempMacro = getSkillButtonMacro("adventure-skills", tempSkillArray, showBonus, isNPC);
-						setter[skillPrefix + "adventure_skills-macro"] = baseGenMacro + tempMacro;
+						canshowarray = assembleSkillButtonArray(regularBackgroundSkills, rt, v) || [];
+						temparray = temparray.concat(canshowarray);
+						canshowarray = canshowarray.concat(skillsWithSubSkills).sort();
+						tempRTMacro = baseGenMacro + getSkillButtonMacro("background-skills", canshowarray, showBonus, isNPC);
+						if (v[skillPrefix + "background_skills-macro"] !== tempRTMacro) {
+							setter[skillPrefix + "background_skills-macro"] = tempRTMacro;
+						}
+						canshowarray = assembleSkillButtonArray(regularAdventureSkills, rt, v) || [];
+						temparray = temparray.concat(canshowarray);
+						canshowarray = canshowarray.concat(["Knowledge","Misc-Skill"]).sort();
+						tempRTMacro = baseGenMacro + getSkillButtonMacro("adventure-skills", canshowarray, showBonus, isNPC);
+						if (v[skillPrefix + "adventure_skills-macro"] !== tempRTMacro) {
+							setter[skillPrefix + "adventure_skills-macro"] = tempRTMacro;
+						}
+						temparray = temparray.concat(skillsWithSubSkills).sort();
+					} else {
+						canshowarray = assembleSkillButtonArray(regularCoreSkills, rt, v) || [];
+						temparray = temparray.concat(canshowarray).concat(coreSkillsWithSubSkills).sort();
 					}
-					tempMacro = baseGenMacro + getSkillButtonMacro(allskillstitle, coreArray, showBonus, isNPC);
-					if (v[skillPrefix + "skills-macro"] !== tempMacro) {
-						setter[skillPrefix + "skills-macro"] = tempMacro;
+					tempRTMacro = baseGenMacro + getSkillButtonMacro("skills", temparray, showBonus, isNPC);
+					if (v[skillPrefix + "skills-macro"] !== tempRTMacro) {
+						setter[skillPrefix + "skills-macro"] = tempRTMacro;
 					}
-				} catch (errReg){
-					TAS.error("PFSkills.resetOneCommandMacro errReg",errReg);
+				} catch (errRT){
+					TAS.error("PFSkills.resetOneCommandMacro errRT",errRT);
 				} finally {
-					if (_.size(setter>0)){
-						setAttrs(setter,PFConst.silentParams, done);
+					if (_.size(setter) > 0) {
+						setAttrs(setter, PFConst.silentParams, done);
 					} else {
 						done();
 					}
 				}
-			}
+			});
 		} else {
 			//consolidated
-			if (rt) {
-				getAttrs(SWUtils.cartesianAppend(consolidatedSkills, ["-ReqTrain", "-ranks"]), function (sv) {
-					var canshowarray, setter = {}, tempMacro ;
-					canshowarray = assembleSkillButtonArray(consolidatedSkills, rt, sv);
-					tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
-					setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
-					setAttrs(setter,PFConst.silentParams, done);
-				});
-			} else {
-				tempMacro = getSkillButtonMacro("skills", consolidatedSkills, showBonus);
+			getAttrs(SWUtils.cartesianAppend(consolidatedSkills, ["-ReqTrain", "-ranks"]), function (sv) {
+				var canshowarray, setter = {}, tempMacro ;
+				canshowarray = assembleSkillButtonArray(consolidatedSkills, rt, sv);
+				tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
 				setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
 				setAttrs(setter,PFConst.silentParams, done);
-			}
+			});
+
 		}
 	});
 }
