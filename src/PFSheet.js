@@ -33,7 +33,7 @@ import * as PFMythic from './PFMythic';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
 import * as PFConditions from './PFConditions';
 import * as PFNPCParser from './PFNPCParser';
-
+import * as PFHorror from './PFHorror';
 function expandAll  () {
 	getAttrs(["expandall"], function (v) {
 		var skilltab = "4",
@@ -403,7 +403,8 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		PFSkills.recalculate,
 		PFAbility.recalculate,
 		PFInitiative.recalculate,
-		PFAttacks.recalculate
+		PFAttacks.recalculate,
+		PFHorror.recalculate
 	],		
 	numberModules = _.size(parallelRecalcFuncs),
 	doneOneModuleInner = _.after(numberModules, done),
