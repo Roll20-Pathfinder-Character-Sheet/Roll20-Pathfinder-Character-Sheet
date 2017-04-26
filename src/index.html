@@ -84,12 +84,13 @@
 	<label class="sheet-small-label2 sheet-pc-only sheet-narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="sheet-calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
 	<div class="sheet-cheat"></div>
 
+	<input type="checkbox" name="attr_use_horror_adventures" value="1" class="sheet-horror-show sheet-noshow" />
 	<div class="sheet-pfsheet">
 		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
-		<input type="checkbox" name="attr_is_undead" value="1" style="display:none;" role="presentation" />
-		<input type="checkbox" name="attr_normal_macro_show" value="1" class="sheet-all-macro-text-show" style="display:none;" role="presentation" />
-		<input type="checkbox" name="attr_adv_macro_show" value="1" class="sheet-advanced-macro-show" role="presentation" />
-		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab" style="margin-right:.5em;display:none;" data-i18n-aria-label="uses-spells-title" role="presentation" />		
+		<input type="checkbox" name="attr_is_undead" value="1" class="sheet-noshow" role="presentation" />
+		<input type="checkbox" name="attr_normal_macro_show" value="1" class="sheet-all-macro-text-show sheet-noshow" style="display:none;" role="presentation" />
+		<input type="checkbox" name="attr_adv_macro_show" value="1" class="sheet-advanced-macro-show sheet-noshow" role="presentation" />
+		<input type="checkbox" name="attr_use_spells" value="1" class="sheet-show-spell-tab sheet-noshow" data-i18n-aria-label="uses-spells-title" role="presentation" />		
 		<div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-status-section" class="sheet-section-status" >
 			<div class="sheet-status-panel" role="status" aria-live="polite" aria-label="Current Conditions" data-i18n-aria-label="current-conditions">
 				<div class="sheet-options">
@@ -396,6 +397,7 @@
 				<input type="hidden" name="attr_fort-macro-text" value="[[ 1d20 + [[ @{Fort} ]] ]]" />
 				<input type="hidden" name="attr_ref-macro-text" value="[[ 1d20 + [[ @{Ref} ]] ]]" />
 				<input type="hidden" name="attr_will-macro-text" value="[[ 1d20 + [[ @{Will} ]] ]]" />
+
 
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
@@ -1654,6 +1656,93 @@
 								<input type="hidden" name="attr_spell-fail-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{spell-failure}}} {{^{spell-failure-chance}=[[ @{spell-fail} ]]&nbsp;%&nbsp;}} {{check=[[ 1d100cf<[[ @{spell-fail} ]]cs>[[ @{spell-fail}+1 ]] ]]&nbsp;%&nbsp;}} {{lefttext_6=@{SpellFailureNote}}}" />
 							</label>
 						</div>
+					</div>
+				</div>
+				<div class="sheet-cheat"></div>
+				<input class="sheet-showarrow sheet-h2arrow sheet-horror-sect" type="checkbox" name="attr_sanity-show" data-i18n-aria-label="sanity" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+				<h2 class="sheet-clickheader sheet-showsect sheet-horror-sect"><label class="sheet-horror-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="sanity">Sanity</label></h2>
+				<span class="sheet-nontable-name sheet-horror-sect" data-i18n="sanity">Sanity</span>
+				<div class="sheet-h2-section sheet-nontable sheet-sanity-sect sheet-medium-numbers sheet-horror-sect" role="section" data-i18n-aria-label="sanity" >
+					<input type="checkbox" value="1" name="attr_extra_fields_san_show" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
+					<div class="sheet-cheat"></div>
+					<div class="sheet-table">
+						<div class="sheet-table-row">
+							<div class="sheet-table-cell sheet-small-label">
+								<button class="sheet-text-button sheet-pc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{PC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-abbrv">SAN</span></button>
+								<button class="sheet-text-button sheet-npc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{NPC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-npc-abbrv">NPC SAN</span></button>
+								<input type="hidden" name="attr_san-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-san-macro-text}}} {{^{sanity-score}=@{sanity_score_max}}} {{^{sanity-edge}=@{sanity_edge}}} {{^{sanity-threshold}=@{sanity_threshold}}} @{toggle_save_notes}" />
+								<input type="hidden" name="attr_will-san-macro-text" value="[[ 1d20 + [[ @{Will} ]] + [[ @{san-save-misc-macro-text} ]] ]]" />
+							</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
+								<textarea type="text" name="attr_san-save-misc-macro-text" title="@{san-save-misc-macro-text}" class="sheet-inline-textarea" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place">0</textarea>
+								<br/><span data-i18n-aria-label="sanity-save-custom-modifier" data-i18n-title="sanity-save-custom-modifier" data-i18n="modifier-abbrv" class="sheet-super sheet-note-c">Sanity will save bonus</span>								
+							</div>
+							<div class="sheet-table-cell sheet-left-border sheet-small-label">
+								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="@{sanity_score}" value="0"  />
+								<br/><span data-i18n-aria-label="sanity-damage" data-i18n-title="sanity-damage" data-i18n="damage-abbrv">Dmg</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly">/</div>
+							<div class="sheet-table-cell sheet-small-label sheet-narrow-numbers">
+								<input type="number" name="attr_sanity_score_max" title="@{sanity_score|max}" value="0" class="sheet-calc" readonly />
+								<br/><span data-i18n-aria-label="sanity-score" data-i18n-title="sanity-score" data-i18n="score">Score</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">(</div>
+							<div class="sheet-table-cell sheet-small-label sheet-narrow-numbers">
+								<input type="number" name="attr_sanity_edge" title="@{sanity_edge}" value="0" class="sheet-calc" readonly  />
+								<br/><span data-i18n-aria-label="sanity-edge" data-i18n-title="sanity-edge" data-i18n="edge">Edge</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">)</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers">
+								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS-mod}+@{INT-mod}+@{CHA-mod})" class="sheet-number" disabled />
+								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental Mods</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-highlight">
+								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="text" name="attr_sanity_score_misc" title="@{repeating_weapon_$X_sanity_score_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight" />
+								<br/><span class="sheet-super sheet-note-a" data-i18n-title="score-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv" >Misc</span>
+							</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-highlight">
+								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="number" name="attr_sanity_score_misc-mod" title="@{repeating_weapon_$X_sanity_score_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+								<br/><span data-i18n="modifier-abbrv">Mod</span>
+							</div>
+							<div class="sheet-table-cell sheet-small-label sheet-left-border sheet-narrow-numbers">
+								<input type="number" name="attr_sanity_threshold" title="@{sanity_threshold}" value="0" class="sheet-calc" readonly />
+								<br/><span data-i18n-aria-label="sanity-threshold" data-i18n-title="sanity-threshold" data-i18n="threshold">Threshold</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
+							<div class="sheet-table-cell sheet-small-label">
+								<select title="@{sanity-ability}" name="attr_sanity-ability" class="sheet-select-small">
+									<option value="" data-i18n="pick-highest">Pick Highest</option>
+									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
+									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+								</select>
+								<br/><span data-i18n-aria-label="highest-mental-ability" data-i18n-title="highest-mental-ability"  data-i18n="ability">Ability</span>
+							</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-narrow-numbers">
+								<input type="number" name="attr_sanity-ability-mod" title="@{sanity-ability-mod}" value="0" class="sheet-calc" readonly />
+								<br/><span data-i18n="modifier-abbrv">Mod</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
+								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="text" name="attr_sanity_threshold_misc" title="@{repeating_weapon_$X_sanity_threshold_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline sheet-highlight" />
+								<br/><span class="sheet-super sheet-note-a" data-i18n-title="threshold-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv">Misc</span>
+							</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-left">
+								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
+								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{repeating_weapon_$X_sanity_threshold_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+								<br/><span data-i18n="modifier-abbrv">Mod</span>
+							</div>
+							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
+						</div>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span data-i18n="madnesses">Madnesses:</span>
+						<textarea name="attr_madnesses" class="sheet-inline-textarea sheet-half" data-i18n-placeholder="madnesss-and-effects" placeholder="Madnesses and effects" ></textarea>
 					</div>
 				</div>
 				<div class="sheet-cheat"></div>
@@ -6134,7 +6223,7 @@
 									<select class="sheet-select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
 										<option value="class-features" data-i18n="class-features">Class Features</option>
-										<!-- confusing since defensive abilities already a textbox<option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
+										<!-- confusing since defensive abilities already an <option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
 										<option value="feats" data-i18n="feats">Feats</option>
 										<option value="monster-rule" data-i18n="monster-rule">Monster Rule</option>
 										<option value="special-abilities" data-i18n="special-abilities">Special Abilities</option>
@@ -10540,7 +10629,7 @@
 									<select class="sheet-select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
 										<option value="class-features" data-i18n="class-features">Class Features</option>
-										<!-- confusing since defensive abilities already a textbox<option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
+										<!-- confusing since defensive abilities already an <option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
 										<option value="feats" data-i18n="feats">Feats</option>
 										<option value="monster-rule" data-i18n="monster-rule">Monster Rule</option>
 										<option value="special-abilities" data-i18n="special-abilities">Special Abilities</option>
@@ -11483,8 +11572,16 @@
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{psionics-show}" name="attr_psionics-show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="toggle-psionics">Display/Enable Psionics Character Sheet Items</span></b>
 					</span>
-				</div>				
-			</div>
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" data-i18n="horror-adventures">Horror Adventures</span>
+					<span class="sheet-table-cell sheet-left">
+						<label>
+							<input type="checkbox" title="@{use_horror_adventures}" name="attr_use_horror_adventures" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="toggle-horror-adventures-long" /><b><span data-i18n-title="toggle-horror-adventures-long" data-i18n="toggle-horror-adventures"> Enable Horror Adventures</span></b>
+						</label>
+					</span>
+				</div>
+			</div>			
 		</div>
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_header-image-show" data-i18n-aria-label="header-image" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />

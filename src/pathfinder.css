@@ -742,21 +742,6 @@ input[type="number"]:not(:hover)::-webkit-inner-spin-button {
     padding-right: .25em;
 }
 
-.sheet-text-button,
-button.sheet-text-button {
-    font-size: 1rem;
-    color: White;
-    background-color: Black;
-    border: 0;
-    width: 90%;
-    text-align: left;
-    padding: .125em .125em .125em .25em;
-    font-weight: normal;
-}
-span.sheet-text-button {
-    padding-left: 1.8em;
-}
-
 .sheet-table-cell.sheet-right-border,
 .sheet-table-header.sheet-right-border {
 	border-right:1px solid dimgrey;
@@ -835,17 +820,6 @@ button[type=roll].sheet-command-button:hover {
   color: #f00;
   box-shadow: 1px 1px 2px #333;
 }
-
-/*
-button[type=roll].sheet-command-button {
-    background-color: #ce0f69;
-    color: #FFFFFF;
-	font-size: 1.1em; 
-	padding: 0 3px 0 3px; 
-	margin: 0 0 2px 0;
-	border-radius: 4px;
-}
-*/
 
 button[type=roll].sheet-text-button,
 button[type=roll].sheet-spellcaster-button {
@@ -1178,6 +1152,7 @@ input.sheet-tabinput {
 .sheet-advanced-macro-show,
 .sheet-buff-exists,
 .sheet-condition-exists,
+.sheet-horror-show,
 .sheet-section-state,
 .sheet-bg-show,
 .sheet-unchained-show,
@@ -2092,6 +2067,28 @@ input.sheet-highlight[readonly]
     position: relative;
     bottom: 0;
 }
+.sheet-text-button,
+button.sheet-text-button {
+    border: 0;
+    width: 90%;
+    padding: .125em .125em .125em .25em;
+}
+
+span.sheet-text-button {
+    padding-left: 1.8em;
+}
+.sheet-small-label2 .sheet-text-button span,
+.sheet-text-button,
+button.sheet-text-button,
+.sheet-text-button span {
+    text-align: left;
+    font-size: 1rem;
+    background-color: Black;
+    font-weight: normal;
+    font-style: normal;
+    color: White;
+}
+
 .sheet-small-label2.sheet-autoexpand span:not(.sheet-autoexpand) {
 		white-space:nowrap;
 }
@@ -2772,6 +2769,10 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-subsect2-show:not(:checked) ~ div .sheet-sect2,
 .sheet-subsect3-show:not(:checked) ~ div .sheet-sect3,
 .sheet-deletesect-show:not(:checked) ~ .sheet-deletesect,
+.sheet-extra-show:not(:checked) ~ .sheet-extra-sect,
+.sheet-extra-show:not(:checked) ~ div .sheet-extra-sect,
+.sheet-extra-show:checked ~ .sheet-extra-sect-inverse,
+.sheet-extra-show:checked ~ div .sheet-extra-sect-inverse,
 /* buttons */
 .sheet-progress-show:not(:checked) ~ .sheet-progress-icon,
 /*
@@ -2866,7 +2867,7 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-iterations-show:not(:checked) ~ .sheet-iterative_attack_section,
 .sheet-armor-attributes-show:not(:checked)~.sheet-armor-attributes,
 .sheet-weapon-attributes-show:not(:checked)~.sheet-weapon-attributes,
-
+.sheet-horror-show:not(:checked)~.sheet-pfsheet .sheet-horror-sect, 
 /* skills */
 .sheet-custom-skill-2-show:not(:checked) ~ .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-2,
 .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-3,
