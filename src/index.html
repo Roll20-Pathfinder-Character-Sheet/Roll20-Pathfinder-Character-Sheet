@@ -1671,11 +1671,11 @@
 								<button class="sheet-text-button sheet-pc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{PC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-abbrv">SAN</span></button>
 								<button class="sheet-text-button sheet-npc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{NPC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-npc-abbrv">NPC SAN</span></button>
 								<input type="hidden" name="attr_san-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-san-macro-text}}} {{^{sanity-score}=@{sanity_score_max}}} {{^{sanity-edge}=@{sanity_edge}}} {{^{sanity-threshold}=@{sanity_threshold}}} @{toggle_save_notes}" />
-								<input type="hidden" name="attr_will-san-macro-text" value="[[ 1d20 + [[ @{Will} ]] + [[ @{SAN-Save-misc-macro-text} ]] ]]" />
+								<input type="hidden" name="attr_will-san-macro-text" value="[[ 1d20 + [[ @{Will} ]] + [[ @{san-save-misc-macro-text} ]] ]]" />
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
-								<textarea type="text" name="attr_SAN-Save-misc-macro-text" title="@{SAN-Save-misc-macro-text}" class="sheet-inline-textarea" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place"></textarea>
-								<br/><span data-i18n-aria-label="sanity-save-custom-modifier" data-i18n-title="sanity-save-custom-modifier" data-i18n="modifier-abbrv" class="sheet-super sheet-note-b">Sanity will save bonus</span>								
+								<textarea type="text" name="attr_san-save-misc-macro-text" title="@{san-save-misc-macro-text}" class="sheet-inline-textarea" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place">0</textarea>
+								<br/><span data-i18n-aria-label="sanity-save-custom-modifier" data-i18n-title="sanity-save-custom-modifier" data-i18n="modifier-abbrv" class="sheet-super sheet-note-c">Sanity will save bonus</span>								
 							</div>
 							<div class="sheet-table-cell sheet-left-border sheet-small-label">
 								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="@{sanity_score}" value="0"  />
