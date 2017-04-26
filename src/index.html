@@ -84,7 +84,7 @@
 	<label class="sheet-small-label2 sheet-pc-only sheet-narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="sheet-calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
 	<div class="sheet-cheat"></div>
 
-	<input type="checkbox" name="attr_horror-adventures-show" value="1" class="sheet-horror-show sheet-noshow" />
+	<input type="checkbox" name="attr_use_horror_adventures" value="1" class="sheet-horror-show sheet-noshow" />
 	<div class="sheet-pfsheet">
 		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
 		<input type="checkbox" name="attr_is_undead" value="1" class="sheet-noshow" role="presentation" />
@@ -1678,23 +1678,23 @@
 								<br/><span data-i18n-aria-label="sanity-save-custom-modifier" data-i18n-title="sanity-save-custom-modifier" data-i18n="modifier-abbrv" class="sheet-super sheet-note-b">Sanity will save bonus</span>								
 							</div>
 							<div class="sheet-table-cell sheet-left-border sheet-small-label">
-								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="@{sanity_score}" />
+								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="@{sanity_score}" value="0"  />
 								<br/><span data-i18n-aria-label="sanity-damage" data-i18n-title="sanity-damage" data-i18n="damage-abbrv">Dmg</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly">/</div>
 							<div class="sheet-table-cell sheet-small-label sheet-narrow-numbers">
-								<input type="number" name="attr_sanity_score_max" title="@{sanity_score|max}" class="sheet-calc" readonly />
+								<input type="number" name="attr_sanity_score_max" title="@{sanity_score|max}" value="0" class="sheet-calc" readonly />
 								<br/><span data-i18n-aria-label="sanity-score" data-i18n-title="sanity-score" data-i18n="score">Score</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">(</div>
 							<div class="sheet-table-cell sheet-small-label sheet-narrow-numbers">
-								<input type="number" name="attr_sanity_edge" title="@{sanity_edge}" class="sheet-calc" readonly  />
+								<input type="number" name="attr_sanity_edge" title="@{sanity_edge}" value="0" class="sheet-calc" readonly  />
 								<br/><span data-i18n-aria-label="sanity-edge" data-i18n-title="sanity-edge" data-i18n="edge">Edge</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">)</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers">
-								<input type="number" name="attr_mental_mods_total" title="@{mental_mods_total}" class="sheet-calc" readonly />
+								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS-mod}+@{INT-mod}+@{CHA-mod})" class="sheet-number" disabled />
 								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental Mods</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
@@ -1709,7 +1709,7 @@
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-left-border sheet-narrow-numbers">
-								<input type="number" name="attr_sanity_threshold" title="@{sanity_threshold}" class="sheet-calc" readonly />
+								<input type="number" name="attr_sanity_threshold" title="@{sanity_threshold}" value="0" class="sheet-calc" readonly />
 								<br/><span data-i18n-aria-label="sanity-threshold" data-i18n-title="sanity-threshold" data-i18n="threshold">Threshold</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
@@ -1723,7 +1723,7 @@
 								<br/><span data-i18n-aria-label="highest-mental-ability" data-i18n-title="highest-mental-ability"  data-i18n="ability">Ability</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-narrow-numbers">
-								<input type="number" name="attr_sanity-ability-mod" title="@{sanity-ability-mod}" class="sheet-calc" readonly />
+								<input type="number" name="attr_sanity-ability-mod" title="@{sanity-ability-mod}" value="0" class="sheet-calc" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
@@ -11577,7 +11577,7 @@
 					<span class="sheet-table-config-row-name" data-i18n="horror-adventures">Horror Adventures</span>
 					<span class="sheet-table-cell sheet-left">
 						<label>
-							<input type="checkbox" title="@{horror-adventures-show}" name="attr_horror-adventures-show" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="toggle-horror-adventures-long" /><b><span data-i18n-title="toggle-horror-adventures-long" data-i18n="toggle-horror-adventures"> Enable Horror Adventures</span></b>
+							<input type="checkbox" title="@{use_horror_adventures}" name="attr_use_horror_adventures" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="toggle-horror-adventures-long" /><b><span data-i18n-title="toggle-horror-adventures-long" data-i18n="toggle-horror-adventures"> Enable Horror Adventures</span></b>
 						</label>
 					</span>
 				</div>
