@@ -364,7 +364,6 @@ export function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.20){
 				PFHealth.recalculate();
-				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
 			if (oldversion < 1.40){
 				PFMigrate.migrateWhisperDropdowns();
@@ -379,6 +378,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFSpells.recalculate();
 				PFInventory.updateRepeatingItems();
 				PFSkills.resetCommandMacro();
+			}
+			if (oldversion < 1.44){
+				PFSpells.resetSpellsTotals(null,null,null,true);
 			}
 		}
 	} catch (err) {
