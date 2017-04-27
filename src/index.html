@@ -1694,8 +1694,13 @@
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">)</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers">
-								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS-mod}+@{INT-mod}+@{CHA-mod})" class="sheet-number" disabled />
-								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental Mods</span>
+								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS}+@{INT}+@{CHA})" class="sheet-number" disabled />+
+								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental</span>
+							</div>
+							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">-</div>
+							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers">
+								<input type="text" name="attr_mental_dmg_total" title="@{mental_dmg_total}" value="(-1*(@{WIS}+@{INT}+@{CHA}+@{WIS-damage}+@{INT-damage}+@{CHA-damage}+@{WIS-penalty}+@{INT-penalty}+@{CHA-penalty}+@{buff_WIS-total_penalty}+@{buff_INT-total_penalty}+@{buff_CHA-total_penalty}))" class="sheet-number" disabled />
+								<br/><span data-i18n-title="damage-abbrv" data-i18n-aria-label="damage-abbrv" data-i18n="damage-abbrv">dmg</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-highlight">
