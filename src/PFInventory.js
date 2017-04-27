@@ -132,7 +132,7 @@ function updateRepeatingItems (callback, silently) {
             'item-weight': 0,
             'item-hp': 0,
             'item-hp_max': 0,
-            value: 0
+            'value': 0
         }, function (m, r, a) {
             a.S['item_total_weight'] = m['item-weight'];
             a.S['item-total-hp'] = m['item-hp'];
