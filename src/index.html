@@ -1705,12 +1705,12 @@
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-highlight">
 								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
-								<input type="text" name="attr_sanity_score_misc" title="@{repeating_weapon_$X_sanity_score_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight" />
+								<input type="text" name="attr_sanity_score_misc" title="@{sanity_score_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight" />
 								<br/><span class="sheet-super sheet-note-a" data-i18n-title="score-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv" >Misc</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-highlight">
 								<input type="checkbox" name="attr_sanity_score_misc-mod_error" class="sheet-error-show" value="1" />
-								<input type="number" name="attr_sanity_score_misc-mod" title="@{repeating_weapon_$X_sanity_score_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+								<input type="number" name="attr_sanity_score_misc-mod" title="@{sanity_score_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-left-border sheet-narrow-numbers">
@@ -1734,12 +1734,12 @@
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">+</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
 								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
-								<input type="text" name="attr_sanity_threshold_misc" title="@{repeating_weapon_$X_sanity_threshold_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline sheet-highlight" />
+								<input type="text" name="attr_sanity_threshold_misc" title="@{sanity_threshold_misc}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline sheet-highlight" />
 								<br/><span class="sheet-super sheet-note-a" data-i18n-title="threshold-miscellaneous-abbrv" data-i18n="miscellaneous-abbrv">Misc</span>
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers sheet-left">
 								<input type="checkbox" name="attr_sanity_threshold_misc-mod_error" class="sheet-error-show" value="1" />
-								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{repeating_weapon_$X_sanity_threshold_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{sanity_threshold_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
 							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
@@ -2206,6 +2206,19 @@
 						</div>
 					</div>
 				</div>
+				<div class="sheet-cheat sheet-show-readonly"></div>
+				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_two-weapon-show" data-i18n-aria-label="two-weapon" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="two-weapon">Two Weapon</label></h2>
+				<div class="sheet-h2-section sheet-two-weapon sheet-wide-readonly">
+					<div class="sheet-small-label2" ><input type="checkbox" name="attr_create_twoweapon_attack" value="1"><span data-i18n="create">Create</span></div>
+					<div class="sheet-small-label2" ><input type="text" name="attr_mainhand_id" value="" class="sheet-entry-long" /><span data-i18n="mainhand-id" ></span></div>
+					<div class="sheet-small-label2" ><input type="number" name="attr_mainhand_penalty" value="0" /><span data-i18n="mainhand-penalty" ></span></div>
+					<div class="sheet-small-label2" ><input type="text" name="attr_offhand_id" value="" class="sheet-entry-long" /><span data-i18n="offhand-id" ></span></div>
+					<div class="sheet-small-label2" ><input type="number" name="attr_offhand_penalty" value="0" /><span data-i18n="offhand-penalty" ></span></div>
+					<div class="sheet-small-label2" ><input type="checkbox" name="attr_offhand_improved" value="1" /><span data-i18n="improved" ></span></div>
+				</div>
+
+
 				<div class="sheet-cheat sheet-show-readonly"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attacks-show" data-i18n-aria-label="attacks" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="attacks">Attacks</label></h2>

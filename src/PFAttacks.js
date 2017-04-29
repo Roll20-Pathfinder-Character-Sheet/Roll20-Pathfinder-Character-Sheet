@@ -601,14 +601,6 @@ function adjustDamageDice(id,currCharSize,v,setter,prefix){
 			TAS.debug("PFAttacks.adjustDamageDice: size_affects is blank so reset regular to default")
 				setter[prefix+'damage-dice-num']=v[prefix+'default_damage-dice-num'];
 				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
-		/*	currDice=parseInt(v[prefix+'damage-dice-num'],10)||0;
-			currDie=parseInt(v[prefix+'damage-die'],10)||0;
-			defDice=parseInt(v[prefix+'default_damage-dice-num'],10)||0;
-			defDie=parseInt(v[prefix+'default_damage-die'],10)||0;
-			if (currDice !== defDice || currDie !== currDie){
-				setter[prefix+'damage-dice-num']=v[prefix+'default_damage-dice-num'];
-				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
-			}*/
 		}
 	} catch (err){
 		TAS.error("PFAttacks.adjustDamageDice",err);
@@ -780,6 +772,145 @@ export function recalculateRepeatingWeapons (callback){
 		recalcEquationFields(ids,function(){
 			recalcOtherFields(ids,done);
 		});
+	});
+}
+
+/**
+ * call when bab changes, or when name changes but how to know? must keep them in linked fields.
+ * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,
+ * 	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int }  } params 
+ * @param {map} setter 
+ * @return {map} setter
+ */
+export function setDualWieldVals (params,setter,id){
+	var fields,id,numAttacks=1,currAttack=1,totAttacks=2,
+	macroText='@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} @{macro_options} ',
+	macroEnd = '{{weapon_notes=@{repeating_weapon_' + params.mainhand_id + '_notes} @{repeating_weapon_' + params.offhand_id + '_notes}}} ' +
+			'{{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} ',
+	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_total-attack} + @{repeating_weapon_REPLACEHAND_toggle_attack_macro_insert} + @{repeating_weapon_REPLACEHAND_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_total-attack} + @{repeating_weapon_REPLACEHAND_toggle_attack_macro_insert} + @{repeating_weapon_REPLACEHAND_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
+	tempInt=0,
+	tempStr='';
+
+	try {
+		TAS.debug("PFAttacks.setDualWieldVals",params);
+		setter=setter||{};
+		if (!id){
+			id = generateRowID();
+		}
+		TAS.debug("the new id is "+id);
+		try{
+			tempStr=getTranslationByKey('dual-wield');
+		} catch (er2){
+			tempStr = "Dual Wield ";
+		}
+		setter['repeating_weapon_'+id+'_source-main']=params.mainhand_id;
+		setter['repeating_weapon_'+id+'_source-off']=params.offhand_id;
+		setter['repeating_weapon_'+id+'_name']= getTranslationByKey('dual-wield')+' '+params.mainhand_name + '/'+params.offhand_name;
+		//by filling it in we make sure template rolls
+		setter['repeating_weapon_'+id+'_attack-type']="dual";
+		setter['repeating_weapon_'+id+'_attack-type-mod']=0;
+
+		setter['repeating_weapon_'+id+'_damage-ability']="dual";
+		setter['repeating_weapon_'+id+'_damage-ability-mod']=0;
+
+		//macroText
+		//mainhand attack:
+		tempStr='{{attack=[[ 1d20cs>[[ @{repeating_weapon_' + params.mainhand_id + '_crit-target} ]] + [[@{repeating_weapon_' + params.mainhand_id + '_total-attack} + @{repeating_weapon_' + params.mainhand_id + '_toggle_attack_macro_insert} + @{repeating_weapon_' + params.mainhand_id + '_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{attack-mod} ]]}} ' +
+			'{{damage=[[@{repeating_weapon_' + params.mainhand_id + '_damage-dice-num}d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + @{repeating_weapon_' + params.mainhand_id + '_total-damage} + @{repeating_weapon_' + params.mainhand_id + '_toggle_damage_macro_insert} + @{repeating_weapon_' + params.mainhand_id + '_damage-type_macro_insert} + @{toggle_global_damage_macro_insert}]]}} ' +
+			'{{crit_confirm=[[ 1d20 + [[ @{repeating_weapon_' + params.mainhand_id + '_total-attack} + @{repeating_weapon_' + params.mainhand_id + '_toggle_attack_macro_insert} + @{repeating_weapon_' + params.mainhand_id + '_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{repeating_weapon_' + params.mainhand_id + '_crit_conf_mod} + @{attack-mod} ]]}} ' +
+			'{{crit_damage=[[ [[ @{repeating_weapon_' + params.mainhand_id + '_damage-dice-num} * (@{repeating_weapon_' + params.mainhand_id + '_crit-multiplier} - 1) ]]d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + ((@{repeating_weapon_' + params.mainhand_id + '_total-damage} + @{repeating_weapon_' + params.mainhand_id + '_toggle_damage_macro_insert} + @{repeating_weapon_' + params.mainhand_id + '_damage-type_macro_insert} + @{toggle_global_damage_macro_insert}) * [[ @{repeating_weapon_' + params.mainhand_id + '_crit-multiplier} - 1 ]]) ]]}} ' +
+			'{{precision_dmg1=@{repeating_weapon_' + params.mainhand_id + '_precision_dmg_macro}}} {{precision_dmg1_type=@{repeating_weapon_' + params.mainhand_id + '_precision_dmg_type}}} ' +
+			'{{critical_dmg1=@{repeating_weapon_' + params.mainhand_id + '_critical_dmg_macro}}} {{critical_dmg1_type=@{repeating_weapon_' + params.mainhand_id + '_critical_dmg_type}}} ' +
+			'{{attack1name=@{iterative_attack1_name}}} ';
+		macroText += tempStr;
+
+		setter['repeating_weapon_'+id+'_iterative_attack1_name']=params.mainhand_name;
+		setter['repeating_weapon_'+id+'_attack']=params.mainhand_penalty;
+		setter['repeating_weapon_'+id+'_attack-mod']=params.mainhand_penalty;
+		setter['repeating_weapon_'+id+'_total-attack']=params.mainhand_penalty;
+		//rest of attacks
+		numAttacks= Math.floor(params.bab / 5)+1;
+		if (params.offhand_improved){
+			totAttacks = numAttacks * 2;
+		} else {
+			totAttacks = numAttacks + 1;
+		}
+		currAttack = 2;
+		while (currAttack <= totAttacks){
+			tempInt = (currAttack % 2) * (-5) ;
+			if ( (!params.offhand_improved && currAttack!==2) || (params.offhand_improved && currAttack % 2===1) ){
+				//mainhand
+				tempStr = macroIter.replace(/REPLACEHAND/g,params.mainhand_id);
+				tempInt += params.mainhand_penalty;
+				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.mainhand_name;
+			} else {
+				//offhand
+				tempStr = macroIter.replace(/REPLACEHAND/g,params.offhand_id);
+				tempInt += params.offhand_penalty;
+				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.offhand_name;
+			}
+			tempStr = tempStr.replace(/REPLACEITER/g,currAttack);
+			macroText += tempStr;
+			setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_value']=tempInt;
+			currAttack ++;
+		}
+		macroText += macroEnd;
+		setter['repeating_weapon_'+id+'_macro-text']=macroText;
+		setter['repeating_weapon_'+id+'_NPC-macro-text']=macroText;
+	} catch (err){
+		TAS.error("PFAttacks.setDualWieldVals outererr",err);
+	} finally {
+		TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
+		return setter;
+	}
+}
+export function createDualWield (callback){
+	var done = _.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	});
+	getAttrs(['create_twoweapon_attack','mainhand_id','mainhand_penalty','offhand_id','offhand_penalty','offhand_improved','bab'],function(v){
+		var params={},id,setter={};
+		if(parseInt(v.create_twoweapon_attack,10)===1){
+			getSectionIDs('repeating_weapon',function(ids){
+				TAS.debug("at PFAttacks.createDualWield values are ",v,ids);
+				if(_.contains(ids,v.mainhand_id) && _.contains(ids,v.offhand_id)){
+					TAS.debug("they are there!");
+					getAttrs(['repeating_weapon_'+v.mainhand_id+'_name','repeating_weapon_'+v.offhand_id+'_name'],function(w){
+						try {
+							params.mainhand_id = v.mainhand_id;
+							params.offhand_id = v.offhand_id;
+							params.mainhand_penalty = parseInt(v.mainhand_penalty,10)||0;
+							params.offhand_penalty = parseInt(v.offhand_penalty,10)||0;
+							params.offhand_improved = parseInt(v.offhand_improved,10)||0;
+							params.bab = parseInt(v.bab,10)||0;
+							params.mainhand_name = w['repeating_weapon_'+v.mainhand_id+'_name'];
+							params.offhand_name = w['repeating_weapon_'+v.offhand_id+'_name'];
+							TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+							setter=setDualWieldVals(params,setter);
+						} catch (outererr){
+							TAS.error("PFAttacks.createDualWield outererr",outererr);
+						} finally {
+							if(_.size(setter)){
+								setter.create_twoweapon_attack = 0;
+								setAttrs(setter,PFConst.silentParams,function(){
+									PFAttackGrid.resetCommandMacro();
+									done();
+								});
+							} else {
+								setter.create_twoweapon_attack = 0;
+								setAttrs(setter,PFConst.silentParams,done);
+							}
+						}
+					});
+				} else {
+					TAS.debug("they are not there1");
+					setter.create_twoweapon_attack = 0;
+					setAttrs(setter,PFConst.silentParams,done);
+				}
+			});
+		}
 	});
 }
 export function getNewDefaults (ids,v,setter){
@@ -1021,6 +1152,12 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "sheetworker") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateRepeatingWeaponDamages(eventInfo);
+		}
+	}));
+	on("change:create_twoweapon_attack", TAS.callback(function eventCreateTwoWeaponAttack(eventInfo) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			createDualWield();
 		}
 	}));
 }
