@@ -789,6 +789,7 @@ export function setDualWieldVals (params,setter,id){
 			'{{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} ',
 	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_total-attack} + @{repeating_weapon_REPLACEHAND_toggle_attack_macro_insert} + @{repeating_weapon_REPLACEHAND_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_total-attack} + @{repeating_weapon_REPLACEHAND_toggle_attack_macro_insert} + @{repeating_weapon_REPLACEHAND_attack-type_macro_insert} + @{toggle_global_attack_macro_insert} ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
 	tempInt=0,
+	tempIterInt=0,
 	tempStr='';
 
 	try {
@@ -824,7 +825,7 @@ export function setDualWieldVals (params,setter,id){
 			'{{attack1name=@{iterative_attack1_name}}} ';
 		macroText += tempStr;
 
-		setter['repeating_weapon_'+id+'_iterative_attack1_name']=params.mainhand_name;
+		setter['repeating_weapon_'+id+'_iterative_attack1_name']=params.mainhand_name + ' [[@{repeating_weapon_' + params.mainhand_id +'_total-attack} + ' + params.mainhand_penalty + ']]';
 		setter['repeating_weapon_'+id+'_attack']=params.mainhand_penalty;
 		setter['repeating_weapon_'+id+'_attack-mod']=params.mainhand_penalty;
 		setter['repeating_weapon_'+id+'_total-attack']=params.mainhand_penalty;
@@ -837,21 +838,22 @@ export function setDualWieldVals (params,setter,id){
 		}
 		currAttack = 2;
 		while (currAttack <= totAttacks){
-			tempInt = (currAttack % 2) * (-5) ;
+			tempIterInt = (currAttack % 2) * (-5) ;
 			if ( (!params.offhand_improved && currAttack!==2) || (params.offhand_improved && currAttack % 2===1) ){
 				//mainhand
 				tempStr = macroIter.replace(/REPLACEHAND/g,params.mainhand_id);
-				tempInt += params.mainhand_penalty;
-				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.mainhand_name;
+				tempInt = tempIterInt + params.mainhand_penalty;
+				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.mainhand_name + ' [[@{repeating_weapon_' + params.mainhand_id +'_total-attack} - ' + Math.abs(tempIterInt) + ' - ' + Math.abs(params.mainhand_penalty) + ']]';
 			} else {
 				//offhand
 				tempStr = macroIter.replace(/REPLACEHAND/g,params.offhand_id);
-				tempInt += params.offhand_penalty;
-				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.offhand_name;
+				tempInt = tempIterInt + params.offhand_penalty;
+				setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_name']=params.offhand_name + ' [[@{repeating_weapon_' + params.offhand_id +'_total-attack} - ' + Math.abs(tempIterInt) + ' - ' + Math.abs(params.offhand_penalty) + ']]';
 			}
 			tempStr = tempStr.replace(/REPLACEITER/g,currAttack);
 			macroText += tempStr;
 			setter['repeating_weapon_'+id+'_iterative_attack'+currAttack+'_value']=tempInt;
+			setter['repeating_weapon_'+id+'_toggle_iterative_attack'+currAttack]=1;
 			currAttack ++;
 		}
 		macroText += macroEnd;
