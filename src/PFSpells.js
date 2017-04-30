@@ -10,7 +10,7 @@ import * as PFMacros from './PFMacros';
 import * as PFSpellOptions from './PFSpellOptions';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
-
+import * as PFAttacks from './PFAttacks';
 export var
 //spell levels for repeating spell sections
 spellLevels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -562,6 +562,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                 setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
                 setter[prefix + "source-spell"] = itemId;
                 setter[prefix+"group"]="Spell";
+				setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
             }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);

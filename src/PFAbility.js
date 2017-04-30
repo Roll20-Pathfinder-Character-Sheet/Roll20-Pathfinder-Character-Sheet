@@ -12,6 +12,7 @@ import * as PFDB from './PFDB';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFFeatures from './PFFeatures';
+import * as PFAttacks from './PFAttacks';
 
 var optionFields= ['is_sp','hasposrange','hasuses','hasattack','abil-attacktypestr'],
 optionRepeatingHelperFields =['ability_type','range_numeric','frequency','abil-attack-type'],
@@ -597,6 +598,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
 				setter[prefix + "source-ability"] = itemId;
 				setter[prefix+"group"]="Special";
+				setter[prefix+'link_type']=PFAttacks.linkedAttackType.ability;
 			}
 		} catch (err) {
 			TAS.error("PFAbility.createAttackEntryFromRow", err);

@@ -26,7 +26,8 @@ updateRowAttrs=["attack-mod","attack-type","attack-type-mod","crit_conf_mod","cr
 updateRowAttrsLU = _.map(updateRowAttrs,function(a){return '_'+a;}),
 sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
 sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
-updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod","size","modify_dmg_by_size"];
+updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","DMG-mod","size","modify_dmg_by_size"],
+linkedAttackType = { 'equipment':1, 'spell':2, 'ability':3,  'weapon':4};
 
 var defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
 defaultRepeatingMacroMap={
@@ -599,8 +600,10 @@ function adjustDamageDice(id,currCharSize,v,setter,prefix){
 			}
 		} else {
 			TAS.debug("PFAttacks.adjustDamageDice: size_affects is blank so reset regular to default")
+			if (!(currDice ===0 || currDie === 0)){
 				setter[prefix+'damage-dice-num']=v[prefix+'default_damage-dice-num'];
 				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
+			}
 		}
 	} catch (err){
 		TAS.error("PFAttacks.adjustDamageDice",err);
@@ -806,7 +809,9 @@ export function setDualWieldVals (params,setter,id){
 		}
 		setter['repeating_weapon_'+id+'_source-main']=params.mainhand_id;
 		setter['repeating_weapon_'+id+'_source-off']=params.offhand_id;
+		setter['repeating_weapon_'+id+'_link_type']=linkedAttackType.weapon;
 		setter['repeating_weapon_'+id+'_name']= getTranslationByKey('dual-wield')+' '+params.mainhand_name + '/'+params.offhand_name;
+		setter['repeating_weapon_'+id+'_size_affects']=0;
 		//by filling it in we make sure template rolls
 		setter['repeating_weapon_'+id+'_attack-type']="dual";
 		setter['repeating_weapon_'+id+'_attack-type-mod']=0;
@@ -1005,6 +1010,54 @@ export function migrateRepeatingMacro (callback){
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
 }
+export function migrateLinkedAttacks (callback, oldversion){
+	var done=_.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	});
+	if (oldversion <= 0 && oldversion > 1.45){
+		done();
+		return;
+	}
+	getSectionIDs('repeating_weapon',function(ids){
+		var fields ;
+		if (!ids || _.size(ids)===0){
+			done();
+			return;
+		}
+		fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-item','_source-spell','_source-ability','_source-main','_source-off','_source-spell-name','_source-ability-name']);
+		//TAS.debug("PFAttacks.migrateLinkedAttacks FIELDS are ",fields);
+		getAttrs(fields,function(v){
+			var setter={};
+			TAS.debug("PFAttacks.migrateLinkedAttacks values are ",v);
+			ids.forEach(function(id){
+				var toSet=0;
+				if (v['repeating_weapon_'+id+'_source-item']){
+					toSet = linkedAttackType.equipment;
+				} else if (v['repeating_weapon_'+id+'_source-spell']){
+					toSet = linkedAttackType.spell;
+				} else if (v['repeating_weapon_'+id+'_source-ability']){
+					toSet = linkedAttackType.ability;
+					if (v['repeating_weapon_'+id+'_source-spell-name'] && !v['repeating_weapon_'+id+'_source-ability-name']){
+						setter['repeating_weapon_'+id+'_source-ability-name']=v['repeating_weapon_'+id+'_source-spell-name'];
+						setter['repeating_weapon_'+id+'_source-spell-name']='';
+					}
+				} else if (v['repeating_weapon_'+id+'_source-main'] || v['repeating_weapon_'+id+'_source-off']){
+					toSet = linkedAttackType.weapon;
+				}
+				setter['repeating_weapon_'+id+'_link_type']=toSet;
+			});
+			if (_.size(setter)){
+				TAS.debug("PFAttacks.migrateLinkedAttacks setting",setter);
+				setAttrs(setter,PFConst.silentParams,done);
+			} else {
+				done();
+			}
+		});
+	});
+}
+
 export function migrate (callback, oldversion){
 	var done=_.once(function(){
 		TAS.debug("leaving PFAttacks.migrate");
@@ -1025,7 +1078,9 @@ export function migrate (callback, oldversion){
 					return;
 				}
 				callSetDefaults = function(){
-					setNewDefaults(done);
+					setNewDefaults(function(){
+						migrateLinkedAttacks(done);
+					});
 				};
 				callmigrateMacrostov1=function(){
 					if(!migrateMacrosv1){migrateRepeatingMacro(callSetDefaults);}

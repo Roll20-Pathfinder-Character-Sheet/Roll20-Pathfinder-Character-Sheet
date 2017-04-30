@@ -11,6 +11,7 @@ import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFAttackOptions from  './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
+import * as PFAttacks from './PFAttacks';
 
 var wornEquipBaseRowsOld = ["Belt", "Body", "Chest", "Eyes", "Feet", "Hands", "Head", "Headband", "Neck", "Ring1", "Ring2", "Shoulders", "Wrist"],
 wornEquipBaseRowsNew = wornEquipBaseRowsOld.concat(["Armor3","Shield3"]),
@@ -924,6 +925,8 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
             silentSetter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
+            setter[prefix+'link_type']=PFAttacks.linkedAttackType.equipment;
+
             //TAS.debug("creating new attack", setter);
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
