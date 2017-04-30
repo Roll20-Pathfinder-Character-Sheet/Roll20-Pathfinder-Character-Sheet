@@ -382,6 +382,7 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.44){
 				PFSpells.resetSpellsTotals(null,null,null,true);
 				PFInventory.updateRepeatingItems();
+				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
 		}
 	} catch (err) {
