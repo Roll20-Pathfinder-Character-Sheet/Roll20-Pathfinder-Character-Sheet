@@ -2866,6 +2866,7 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-armor-attributes-show:not(:checked)~.sheet-armor-attributes,
 .sheet-weapon-attributes-show:not(:checked)~.sheet-weapon-attributes,
 .sheet-horror-show:not(:checked)~.sheet-pfsheet .sheet-horror-sect, 
+.sheet-dual-wield-show:not(:checked)~.dual-wield-sect,
 /* skills */
 .sheet-custom-skill-2-show:not(:checked) ~ .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-2,
 .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-3,

@@ -1660,7 +1660,7 @@
 				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow sheet-horror-sect" type="checkbox" name="attr_sanity-show" data-i18n-aria-label="sanity" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect sheet-horror-sect"><label class="sheet-horror-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="sanity">Sanity</label></h2>
+				<h2 class="sheet-clickheader sheet-showsect sheet-horror-sect"><label class="sheet-horror-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="sanity-beta">Sanity (BETA)</label></h2>
 				<span class="sheet-nontable-name sheet-horror-sect" data-i18n="sanity">Sanity</span>
 				<div class="sheet-h2-section sheet-nontable sheet-sanity-sect sheet-medium-numbers sheet-horror-sect" role="section" data-i18n-aria-label="sanity" >
 					<input type="checkbox" value="1" name="attr_extra_fields_san_show" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
@@ -2207,9 +2207,10 @@
 					</div>
 				</div>
 				<div class="sheet-cheat sheet-show-readonly"></div>
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_two-weapon-show" data-i18n-aria-label="two-weapon" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="two-weapon">Two Weapon</label></h2>
-				<div class="sheet-h2-section sheet-two-weapon sheet-wide-readonly">
+				<input type="checkbox" name="attr_use_dual_wield" value="1" class="sheet-dual-wield-show sheet-noshow" />
+				<input class="sheet-showarrow sheet-h2arrow dual-wield-sect" type="checkbox" name="attr_two-weapon-show" data-i18n-aria-label="two-weapon" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+				<h2 class="sheet-clickheader sheet-showsect dual-wield-sect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="dual-wield-beta">Dual Wield (BETA)</label></h2>
+				<div class="sheet-h2-section  dual-wield-sect sheet-wide-readonly">
 					<div class="sheet-small-label2" ><input type="checkbox" name="attr_create_twoweapon_attack" value="1"><span data-i18n="create">Create</span></div>
 					<div class="sheet-small-label2" ><input type="text" name="attr_mainhand_id" value="" class="sheet-entry-long" /><span data-i18n="mainhand-id" ></span></div>
 					<div class="sheet-small-label2" ><input type="number" name="attr_mainhand_penalty" value="0" /><span data-i18n="mainhand-penalty" ></span></div>
@@ -11276,6 +11277,7 @@
 						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_accessible_flag" value="@{var_accessible_flag}" title="@{toggle_accessible_flag}" /><b><span data-i18n="use-simple-templates">Use Other Simple Templates</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
+						<input type="checkbox" title="@{use_dual_wield}" name="attr_use_dual_wield" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-dual-wield-beta"> Use Dual Wield (BETA)</span></b>
 					</span>
 				</div>
 				<div class="sheet-table-row">
