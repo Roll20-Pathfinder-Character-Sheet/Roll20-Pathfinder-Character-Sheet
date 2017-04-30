@@ -499,7 +499,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			if(!noName){
 				setter[weaponPrefix + "name"] = v[spellPrefix + "name"];
 			}
-			setter[weaponPrefix + "source-spell-name"] = v[spellPrefix + "name"];
+			setter[weaponPrefix + "source-ability-name"] = v[spellPrefix + "name"];
 		}
 		if (attackType) {
 			setter[weaponPrefix + "attack-type"] = v[spellPrefix + "abil-attack-type"];
@@ -630,7 +630,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	}),
 	itemId = "", item_entry = "",attrib = "", attributes=[];
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-	item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
+	item_entry = 'repeating_ability_' + SWUtils.getRepeatingIDStr(itemId);
 	attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
 	attributes=[];
 	//TAS.debug("at PF Spell like abilities updateAssociatedAttack: for row" + id   );
