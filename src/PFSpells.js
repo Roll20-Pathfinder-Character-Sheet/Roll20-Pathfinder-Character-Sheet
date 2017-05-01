@@ -392,19 +392,19 @@ function getSpellTotals  (ids, v, setter) {
                 if (total!== totalListed[classidx][spellLevel]) {
                     setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                prepped  = parseInt(v[prefix + "-spells-prepared"], 10) || 0;
+                //prepped  = parseInt(v[prefix + "-spells-prepared"], 10) || 0;
                 perday = parseInt(v[prefix + "-spells-per-day"], 10) || 0;
                 if ( casterTypes[classidx]>0 && !doNotProcess){
-                    if (prepped !== totalPrepped[classidx][spellLevel]) {
-                        setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
-                    }
+                    //if (prepped !== totalPrepped[classidx][spellLevel]) {
+                    //    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
+                    //}
                     if (perday !== totalPrepped[classidx][spellLevel]) {
                         setter[prefix + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
                     }
                 } else {
-                    if (prepped !== 0){
-                        setter[prefix + "-spells-prepared"] =0;
-                    }
+                    //if (prepped !== 0){
+                    //    setter[prefix + "-spells-prepared"] =0;
+                    //}
                     if (perday !== 0){
                         setter[prefix + "-spells-per-day"] = 0;
                     }
