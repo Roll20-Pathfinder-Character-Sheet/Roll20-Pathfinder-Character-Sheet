@@ -376,10 +376,9 @@ export function migrate (oldversion, callback, errorCallback) {
 		    }
 			if (oldversion < 1.43){
 				PFSpells.recalculate();
-				PFInventory.updateRepeatingItems();
 				PFSkills.resetCommandMacro();
 			}
-			if (oldversion < 1.45){
+			if (oldversion < 1.46){
 				PFSpells.resetSpellsTotals(null,null,null,true);
 				PFInventory.updateRepeatingItems();
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
@@ -387,7 +386,7 @@ export function migrate (oldversion, callback, errorCallback) {
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
-		//errorDone();
+		errorDone();
 	} finally {
 		done();
 	}
