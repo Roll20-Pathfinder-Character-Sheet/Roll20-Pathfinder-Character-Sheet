@@ -535,7 +535,8 @@ export function escapeForChatLinkButton (str){
 export function getRowId  (sourceAttribute) {
 	if (!sourceAttribute) { return ""; }
 	var strs = sourceAttribute.split('_');
-	if (strs && _.size(strs) >= 4) {
+	//only 3 if is is from remove:repeating_section, 4 otherwise
+	if (strs && _.size(strs) >= 3) {
 		return strs[2];
 	}
 	return "";

@@ -379,9 +379,10 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInventory.updateRepeatingItems();
 				PFSkills.resetCommandMacro();
 			}
-			if (oldversion < 1.44){
+			if (oldversion < 1.45){
 				PFSpells.resetSpellsTotals(null,null,null,true);
 				PFInventory.updateRepeatingItems();
+				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
 		}
 	} catch (err) {

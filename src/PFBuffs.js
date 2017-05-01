@@ -31,6 +31,8 @@ events = {
 	},
 	// events do NOT pass in column updated
 	buffTotalEventsNoParam: {
+		"Melee": [PFAttackGrid.updateMelee],
+		"Ranged": [PFAttackGrid.updateRanged],
 		"DMG": [PFAttackGrid.updateDamage],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
