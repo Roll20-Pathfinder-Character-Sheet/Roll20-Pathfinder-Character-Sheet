@@ -1148,7 +1148,7 @@ export function migrateLinkedAttacks (callback, oldversion){
 			callback();
 		}
 	});
-	if (oldversion <= 0 && oldversion > 1.45){
+	if (oldversion <= 0 && oldversion >= 1.5){
 		done();
 		return;
 	}

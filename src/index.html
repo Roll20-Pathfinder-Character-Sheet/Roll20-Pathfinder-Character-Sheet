@@ -19,42 +19,43 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-2">Screenreader users please turn on reading of Title attributes. A lot of information is still in the titles.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
-	<input type="checkbox" name="attr_expandall" value="1" class="sheet-offscreen" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" name="attr_attentionv143-show" value="1" class="sheet-showarrow sheet-ack-button" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv15-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
 		<div class="sheet-footer" style="text-align:left; padding:5px; margin:5px;">
 			<label class="sheet-small-label2 sheet-number" ><input type="text" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly title="A non-blank version indicates attributes have been successfully recalculated." /><span data-i18n="version">Version</span></label>
 			<h2 data-i18n="new-features">New Features and Updates</h2>
-			<p>In this version (1.43):</p>
+			<p>In this version (1.5):</p>
 			<ol>
+				<li><strong>New Setting: SETUP DUAL WIELD</strong> enable on <em>Settings</em> page to display new fields just above Attacks list.</li>
+				<li><strong>New Setting: Horror Adventures</strong> enable on <em>Settings</em> page to display <em>Sanity</em> on <em>Defenses</em> page below saves.</li>
+				<li>Above new features still in Beta. Please provide feedback at http://tinyurl.com/PF-Thread</li>
+				<li><strong>Spells per day</strong> removed "-prepared" field. Now totals spells in "spells-per-day" and "spells-per-day|max" for both spontaneous and prepared casters.</li>
+				<li>Bugs fixes:
+					<ol><li>value and weight totals for equipment list calculate correctly both for 'recalc' and updating individual rows</li>
+						<li>Spells per day calculates correctly</li>
+						<li>Class grid arrow on left fixed (adding more classes)</li>
+						<li>Attack links to spells, abilities, items, and other attacks improved for edge cases</li>
+						<li>More HTML fixes to mitigate locking</li>
+						<li></li>
+					</ol></li>
 				<li><strong>If you experience locking</strong> 
 					<ol><li>refresh the browser.</li>
 					<li>Make sure only one user has a sheet open at a time.</li>
 					<li>If you still have a problem please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong> </li>
 					</ol></li>
-				<li>HTML changes to try to mitigate locking</li>
-				<li>Spell DCs will now update when Casting Ability modifier changes</li>
-				<li>Value total for equipment list updates properly for ammo</li>
-				<li>Fix Abilities and NPC-Abilities menus printing as public</li>
-				<li>Fix problems with Skills menus</li>
-				<li><em>Recalc</em> no longer resets the "Allow AC and CMD to use different ability scores" button</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv143-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv15-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
-			<p>In last version (1.42):</p>
-			<ol>
-				<li>GMs can now <strong>Update all sheets</strong> from 'Experimental' section -> Apply Default Settings  link in Settings in game. Note it's experimental so do so on a copy of your campaign first.</li>
-				<li>Defense stats have custom whisper</li>
-			</ol>					
 			<h2>Where did stuff go?</h2>
 			<ul>
 				<li data-i18n="announcements-24">Click <strong>⛭ Settings</strong> button next to Pathfinder logo to toggle Settings page.</li>
 				<li data-i18n="announcements-25">Check <strong>Display roll templates for customization</strong> on <em>Settings</em> page to customize rolls.</li>
 				<li data-i18n="announcements-26">Check <strong>Use Spell Points</strong> on <em>Settings</em> page if you use spell points.</li>
-				<li> Monster hp and hit dice found in Class and Race grid. Monsters now use PC fields.</li>
-				<li> Check <strong>Show both roll menu buttons for Monsters/NPCs</strong> to display NPC buttons on top even when on PC pages</li>
+				<li>Monster hp and hit dice found in Class and Race grid. Monsters now use PC fields.</li>
+				<li>Check <strong>Show both roll menu buttons for Monsters/NPCs</strong> to display NPC buttons on top even when on PC pages</li>
 				<li>Click the <strong>mode</strong> button to enter expanded mode if fields are not found</li>
 				<li data-i18n="announcements-27">Extra calculated numbers available on <em>Notes</em> page for point pools, or for use in tokens bars, etc</li>
 			</ul>
@@ -66,7 +67,6 @@
 	<div class="sheet-monster-indicator sheet-npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
 		<input type="checkbox" name="attr_is_npc" value="1" class="sheet-condition-exists" role="Presentation"><label style="font-size:1rem; padding:.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
 	</div>
-
 	<div class="sheet-small-label2" style="display:inline;" role="presentation">
 		<img src="http://i.imgur.com/h1t4ERY.png?1" style="max-height: 70px;width: 140px;margin-bottom: -.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
 	</div>
@@ -161,9 +161,9 @@
 			</div>
 		</div>
 		<div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-edit-section" class="sheet-section-condbuffedit">
-			<input type="checkbox" name="attr_conditions-show" value="1" class="sheet-showarrow sheet-conditions-show" title="Click to expand condition edit area." data-i18n-title="conditions-showsect-cmd" aria-labeledby="Set Conditions" data-i18n-aria-label="conditions-set" />
+			<input type="checkbox" class="sheet-showarrow sheet-conditions-show" name="attr_conditions-show" value="1" title="Click to expand condition edit area." data-i18n-title="conditions-showsect-cmd" aria-labeledby="Set Conditions" data-i18n-aria-label="conditions-set" />
 			<h2 class="sheet-showsect" style="width:49%;margin-right:.25em;margin-bottom:0;"><label data-i18n="conditions-set">Set Conditions</label></h2>
-			<input type="checkbox" name="attr_buffstop-show" value="1" class="sheet-showarrow sheet-buffs-show" title="Click to expand buff edit area." data-i18n-title="buffs-showsect-cmd" aria-labeledby="Set Buffs" data-i18n-aria-label="buffs-set" />
+			<input type="checkbox" class="sheet-showarrow sheet-buffs-show" name="attr_buffstop-show" value="1" title="Click to expand buff edit area." data-i18n-title="buffs-showsect-cmd" aria-labeledby="Set Buffs" data-i18n-aria-label="buffs-set" />
 			<h2 class="sheet-showsect" style="margin-bottom:0;"><label data-i18n="buffs-set">Set Buffs</label></h2>
 			<div class="sheet-cheat"></div>
 			<div class="sheet-table sheet-conditions">
@@ -926,7 +926,7 @@
 									</div>
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="width:4em;">
-											<input type="checkbox" name="attr_HP_reset" value="1" class="sheet-cssbutton sheet-maxhealbutton" title="Recalculate HP and reset to max." data-i18n-title="recalculate-hit-points" data-i18n-aria-label="recalculate-hit-points"><span></span>
+											<input type="checkbox" class="sheet-cssbutton sheet-maxhealbutton" name="attr_HP_reset" value="1" title="Recalculate HP and reset to max." data-i18n-title="recalculate-hit-points" data-i18n-aria-label="recalculate-hit-points"><span></span>
 											<br/>
 											<span data-i18n-title="recalculate-hit-points" data-i18n-aria-label="recalculate-hit-points" data-i18n="maximum-abbrv">Max</span>
 										</span>
@@ -1754,6 +1754,30 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_defense-notes-show" data-i18n-aria-label="defense-notes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="special-defense-notes">Special Defenses and Notes</label></h2>
 				<span class="sheet-nontable-name" data-i18n="special-defense-notes">Special Defenses and Notes </span>
+				<div class="sheet-h2-section sheet-special-defenses sheet-wide-readonly">
+					<div class="sheet-table">
+						<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="special-defense">Special Defenses</span>
+						<div class="sheet-table-group">
+							<div class="sheet-table-row">
+								<span class="sheet-table-header sheet-entry-12p-shrink" title="Damage Reduction: The amount of damage ignored and the type of weapon that negates the ability. (e.g. 5/silver)" data-i18n-title="damage-resistance-title" data-i18n-aria-label="damage-resistance-title" data-i18n="damage-resistance-abbrv">DR</span>
+								<span class="sheet-table-header sheet-macro-text-inline sheet-hide-readonly sheet-super sheet-note-a" title="Spell Resistance: Avoids the effects of spells and spell-like abilities that directly affect it. Caster Level check vs SR to negate resistance." data-i18n-title="spell-resistance-title" data-i18n-aria-label="spell-resistance-title" data-i18n="spell-resistance-abbrv2">Spell Resist</span>
+								<span class="sheet-table-header sheet-number sheet-header-expand" title="Spell Resistance Modifier that is the result of the macro formula." data-i18n="spell-resist-bonus-abbrv">SR Bonus</span>
+								<span class="sheet-table-header" title="Ignores some damage of the indicated type each time it takes damage of that kind. (e.g. acid 10)" data-i18n-title="resistances-title" data-i18n-aria-label="resistances-title" data-i18n="resistance">Resistances</span>
+								<span class="sheet-table-header" title="Takes no damage from listed sources. (e.g. acid, fire, paralysis)" data-i18n-title="immunities-title" data-i18n-aria-label="immunities-title" data-i18n="immunities">Immunities</span>
+								<span class="sheet-table-header" title="Adverse conditions may apply if applicable. (e.g. sunlight powerlessness/staggered)" data-i18n-title="weaknesses-title" data-i18n-aria-label="weaknesses-title" data-i18n="weaknesses">Weaknesses</span>
+							</div>
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell"><input title="@{DR}" type="text" name="attr_DR" placeholder="Damage Reduction" data-i18n-placeholder="damage-reduction" value=""/></span>
+								<input type="checkbox" name="attr_SR_error" class="sheet-error-mshow" value="1" />
+								<span class="sheet-table-cell sheet-hide-readonly sheet-macro-text-inline sheet-highlight"><textarea class="sheet-inline-textarea" title="@{SR-macro-text}" name="attr_SR-macro-text" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></textarea></span>
+								<span class="sheet-table-cell sheet-number sheet-left sheet-highlight"><input title="@{SR}" type="number" name="attr_SR" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><textarea title="@{resistances}" name="attr_resistances" class="sheet-inline-textarea" placeholder="Resistances" data-i18n-placeholder="resistances"></textarea></span>
+								<span class="sheet-table-cell"><textarea title="@{immunities}" name="attr_immunities" class="sheet-inline-textarea" placeholder="Immunities" data-i18n-placeholder="immunities"></textarea></span>
+								<span class="sheet-table-cell"><textarea title="@{weaknesses}" name="attr_weaknesses" class="sheet-inline-textarea" placeholder="Weaknesses" data-i18n-placeholder="weaknesses"></textarea></span>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="sheet-h2-section sheet-table sheet-defense-notes">
 					<div class="sheet-table ">
 						<span class="sheet-table-name sheet-secondary-table-name" data-i18n="defense-notes">Defense Notes</span>
@@ -1783,30 +1807,6 @@
 										<span class="sheet-table-cell sheet-left sheet-notes-cell"><textarea class="sheet-notes" title="@{defense-notes}" name="attr_defense-notes" placeholder="Put notes about context-sensitive defense bonuses here." data-i18n-placeholder="defense-notes-place"></textarea></span>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="sheet-h2-section sheet-special-defenses sheet-wide-readonly">
-					<div class="sheet-table">
-						<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="special-defense">Special Defenses</span>
-						<div class="sheet-table-group">
-							<div class="sheet-table-row">
-								<span class="sheet-table-header sheet-entry-12p-shrink" title="Damage Reduction: The amount of damage ignored and the type of weapon that negates the ability. (e.g. 5/silver)" data-i18n-title="damage-resistance-title" data-i18n-aria-label="damage-resistance-title" data-i18n="damage-resistance-abbrv">DR</span>
-								<span class="sheet-table-header sheet-macro-text-inline sheet-hide-readonly sheet-super sheet-note-a" title="Spell Resistance: Avoids the effects of spells and spell-like abilities that directly affect it. Caster Level check vs SR to negate resistance." data-i18n-title="spell-resistance-title" data-i18n-aria-label="spell-resistance-title" data-i18n="spell-resistance-abbrv2">Spell Resist</span>
-								<span class="sheet-table-header sheet-number sheet-header-expand" title="Spell Resistance Modifier that is the result of the macro formula." data-i18n="spell-resist-bonus-abbrv">SR Bonus</span>
-								<span class="sheet-table-header" title="Ignores some damage of the indicated type each time it takes damage of that kind. (e.g. acid 10)" data-i18n-title="resistances-title" data-i18n-aria-label="resistances-title" data-i18n="resistance">Resistances</span>
-								<span class="sheet-table-header" title="Takes no damage from listed sources. (e.g. acid, fire, paralysis)" data-i18n-title="immunities-title" data-i18n-aria-label="immunities-title" data-i18n="immunities">Immunities</span>
-								<span class="sheet-table-header" title="Adverse conditions may apply if applicable. (e.g. sunlight powerlessness/staggered)" data-i18n-title="weaknesses-title" data-i18n-aria-label="weaknesses-title" data-i18n="weaknesses">Weaknesses</span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><input title="@{DR}" type="text" name="attr_DR" placeholder="Damage Reduction" data-i18n-placeholder="damage-reduction" value=""/></span>
-								<input type="checkbox" name="attr_SR_error" class="sheet-error-mshow" value="1" />
-								<span class="sheet-table-cell sheet-hide-readonly sheet-macro-text-inline sheet-highlight"><textarea class="sheet-inline-textarea" title="@{SR-macro-text}" name="attr_SR-macro-text" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></textarea></span>
-								<span class="sheet-table-cell sheet-number sheet-left sheet-highlight"><input title="@{SR}" type="number" name="attr_SR" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-table-cell"><textarea title="@{resistances}" name="attr_resistances" class="sheet-inline-textarea" placeholder="Resistances" data-i18n-placeholder="resistances"></textarea></span>
-								<span class="sheet-table-cell"><textarea title="@{immunities}" name="attr_immunities" class="sheet-inline-textarea" placeholder="Immunities" data-i18n-placeholder="immunities"></textarea></span>
-								<span class="sheet-table-cell"><textarea title="@{weaknesses}" name="attr_weaknesses" class="sheet-inline-textarea" placeholder="Weaknesses" data-i18n-placeholder="weaknesses"></textarea></span>
 							</div>
 						</div>
 					</div>
@@ -2109,10 +2109,10 @@
 				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attack-options-show" data-i18n-aria-label="macro-options" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="macro-options">Macro Options</label></h2>
+				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="extra-damage-or-attack-modifiers">Extra Damage or Attack Modifiers</label></h2>
 				<div class="sheet-h2-section sheet-extra-damage-section" style="margin-top:.5em;">
 					<div class="sheet-table sheet-extra-damage sheet-options sheet-named" style="width:100%;">
-						<div class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="additional-damage">Additional Damage</div>
+						<div class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="additional-damage">Extra Damage</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell sheet-small-label" >
 								<textarea class="sheet-inline-textarea sheet-both" name="attr_global_precision_dmg_macro" title="@{global_precision_dmg_macro}" value="" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place"></textarea>
@@ -2363,7 +2363,7 @@
 										<option value="4" data-i18n="size-diminutive">Diminutive</option>
 										<option value="8" data-i18n="size-fine">Fine</option>
 									</select>
-									<span data-i18n="default-size">Default Size</span>
+									<span data-i18n="normal-size">Normal Size</span>
 								</label>
 								<div class="sheet-small-label2 sheet-sect" style="width:60%;height:auto;clear:both;margin-bottom:0;">
 									<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
@@ -2782,7 +2782,7 @@
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skills">Skills</label></h2>
 				<div class="sheet-h2-section sheet-skilllist sheet-wide-readonly">
 					<input type="checkbox" name="attr_adv_macro_show" class="sheet-advanced-macro-show" value="1" role="presentation" />
-					<input type="checkbox" class="sheet-boldlabel-check" name="attr_skill_onetimecolumns_show" title="@{skill_onetimecolumns_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-columns-title" data-i18n-aria-label="show-onetime-columns-title" title="show feat and race and onetime columns" data-i18n="show-more-fields">Show more fields</b>
+					<input type="checkbox" class="sheet-selectedlabel-check" name="attr_skill_onetimecolumns_show" title="@{skill_onetimecolumns_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-columns-title" data-i18n-aria-label="show-onetime-columns-title" title="show feat and race and onetime columns" data-i18n="show-more-fields">Show more fields</b>
 					<input type="checkbox" class="sheet-skill-onetime-show sheet-noshow" name="attr_skill_onetimecolumns_show" title="@{skill_onetimecolumns_show}" value="1" role="presentation" checked />
 					<input type="checkbox" class="sheet-unchained-show" name="attr_unchained_skills-show" value="1" role="presentation" />
 					<input type="checkbox" class="sheet-consolidated-show" name="attr_BG-Skill-Use" value="0" role="presentation" />
@@ -8532,9 +8532,6 @@
 							</div>
 						</div>
 					</div>
-					<div class="sheet-cheat"></div>
-					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_loads-show" data-i18n-aria-label="loads-and-lift" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-					<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="loads-and-lift">Loads and Lift</label></h2>
 					<div class="sheet-h2-section sheet-loads-and-lift">
 						<div class="sheet-table sheet-sect sheet-wide-numbers sheet-lift-modifiers">
 							<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name" data-i18n="lift-modifiers">Lift Modifiers</span>
@@ -8749,7 +8746,10 @@
 					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-wider-tab" name="attr_equipment_tab" value="11" data-i18n-aria-label="not-carried" data-i18n-title="not-carried" title="Not Carried" />
 					<label role="menuitem" class="sheet-tab sheet-tab10 sheet-wider-tab" data-i18n-title="not-carried" data-i18n-aria-label="not-carried" title="Carried" data-i18n="not-carried">Not Carried</label>
 					<span class="sheet-nontable-name" >&nbsp;</span>
-					<div class="sheet-table">
+					<!-- hide/show some fields -->
+					<label style="position: absolute;margin-top: -1.75em;"></label>
+					<input type="checkbox" class="sheet-selectedlabel-check sheet-inventory-onetime-show" name="attr_inventory_onetime_show" title="@{inventory_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item equipment type, hardness, item-hp, item-hp|max, and value." data-i18n="show-more-fields">Show more fields</b>
+					<div class="sheet-table" style="display:sheet-inline-table;width:60%;float:right;" >
 						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
 						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals:</b></span>
 						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly="">
@@ -8761,9 +8761,6 @@
 						<input title="@{item-total-hp|max}" type="hidden" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly="">
 					</div>
 
-					<!-- hide/show some fields -->
-					<label style="position: absolute;margin-top: -1.75em;"><input type="checkbox" class="sheet-boldlabel-check" name="attr_inventory_onetime_show" title="@{inventory_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item equipment type, hardness, item-hp, item-hp|max, and value." data-i18n="show-more-fields">Show more fields</b></label>							
-					<input type="checkbox" class="sheet-inventory-onetime-show sheet-noshow" name="attr_inventory_onetime_show" value="1" role="presentation" checked />		
 					<div class="sheet-sect sheet-table sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_item">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -10210,7 +10207,7 @@
 							<span class="sheet-table-cell sheet-left">
 								<label>
 									<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" />
-									<b title="Only affects skillbook buttons" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
+									<b title="Hide untrained skills in menu (if they require trainig, and can't be used untrained at all)" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
 								</label>
 								<br>
 								<label>
@@ -10626,9 +10623,9 @@
 					<div class="sheet-cheat"></div>
 					<span class="sheet-nontable-name sheet-selected-tabtitle" data-i18n="all-abilities">All Abilities</span>
 					<div></div> <!--prevents the repeating buttons(expand/collapse, split-view) from changing position when sheet is in collapsed mode-->
-					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_abilities-min-show" value="1" /><span></span>
-					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_abilities-expand-show" value="1" /><span></span>
-					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_abilities-column-show" value="1" /><span></span>
+					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npc-abilities-min-show" value="1" /><span></span>
+					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npc-abilities-expand-show" value="1" /><span></span>
+					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_npc-abilities-column-show" value="1" /><span></span>
 					<input class="sheet-deletebutton sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_ability_btn" value="1" data-i18n-title="delete-ability" data-i18n-aria-label="delete-ability-must-confirm-next-checkbox" /><span></span><label class="sheet-deletesect sheet-allrows-note"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_ability" data-i18n-aria-label="confirm-delete-ability" data-i18n-title="confirm-delete-ability" value="1" /><b data-i18n="delete-all-rows-are-you-sure">delete all rows are you sure</b></label>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
@@ -11265,7 +11262,6 @@
 							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn10-name" title="@{customn10-name}" /></span>
 							<textarea name="attr_customn10" title="@{customn10}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
 						</div>
-					
 				</div>
 			</div>
 		</div>
@@ -11295,8 +11291,7 @@
 						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_accessible_flag" value="@{var_accessible_flag}" title="@{toggle_accessible_flag}" /><b><span data-i18n="use-simple-templates">Use Other Simple Templates</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" title="@{use_dual_wield}" name="attr_use_dual_wield" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-dual-wield-beta"> Use Dual Wield (BETA)</span></b>
-					</span>
+					</span>					
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="font-background" >Font / background</span>
@@ -11373,7 +11368,7 @@
 					<span class="sheet-table-config-row-name" style="border-bottom: none;" data-i18n="attacks">Attacks</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{ranged_2_show}" name="attr_ranged_2_show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="display-ranged-2">Display Alt Ranged attack type</span></b>
-					</span>
+				</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{cmb_2_show}" name="attr_cmb_2_show" value="1" class="sheet-selectedlabel-check"/><b><span data-i18n="display-cmb-2">Display Alt CMB attack type</span></b>
 					</span>					
@@ -11384,7 +11379,8 @@
 						<input type="checkbox" title="@{modify_dmg_by_size}" name="attr_modify_dmg_by_size" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="adjust-damage-by-size"> Adjust damage based on size</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-					</span>					
+						<input type="checkbox" title="@{use_dual_wield}" name="attr_use_dual_wield" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-dual-wield-beta"> Use Dual Wield (BETA)</span></b>
+					</span>
 				</div>
 				<div class="sheet-table-row">				
 					<span class="sheet-table-config-row-name" data-i18n="encumbrance">Encumbrance</span>
@@ -11548,55 +11544,37 @@
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="core-rules" >Core Options</span>
 					<span class="sheet-table-cell sheet-left">
-						
-							<input type="checkbox" title="@{set_pfs}" name="attr_set_pfs" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="enable-pfs">Enable PFS config settings</span></b>
-						
+						<input type="checkbox" title="@{set_pfs}" name="attr_set_pfs" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="enable-pfs">Enable PFS config settings</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-								<input type="checkbox" title="@{use_prestige_fame}" name="attr_use_prestige_fame" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-prestige-fame">Use Prestige and Fame Points</span></b>
+						<input type="checkbox" title="@{use_prestige_fame}" name="attr_use_prestige_fame" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-prestige-fame">Use Prestige and Fame Points</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-								<input type="checkbox" title="@{use_hero_points}" name="attr_use_hero_points" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-hero-points">Use Hero Points</span></b>
+						<input type="checkbox" title="@{use_hero_points}" name="attr_use_hero_points" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="use-hero-points">Use Hero Points</span></b>
 					</span>
 				</div>
 			</div>
-			<div class="sheet-corerules sheet-table">
+			<div class="sheet-corerules sheet-onecolumn sheet-table">
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="pathfinder-unchained" style="border-bottom:none;">Pathfinder Unchained</span>
 					<span class="sheet-table-cell sheet-left">
-						<label>
-								<input type="checkbox" title="@{unchained_skills-show}" name="attr_unchained_skills-show" value="1" class="sheet-selectedlabel-check" /><b><span title="Use the Unchained Skills variants." data-i18n="toggle-unchained-skills"> Display/Enable Unchained Skills</span></b>
-						</label>
-					</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-sect2-show sheet-noshow" name="attr_unchained_skills-show" value="1" role="presentation" />
+						<input type="checkbox" title="@{unchained_skills-show}" name="attr_unchained_skills-show" value="1" class="sheet-selectedlabel-check sheet-sect2-show" /><b><span title="Use the Unchained Skills variants." data-i18n="toggle-unchained-skills"> Display/Enable Unchained Skills</span></b>
 						<input type="radio" title="@{BG-Skill-Use}" name="attr_BG-Skill-Use" value="1" class="sheet-selectedlabel-check sheet-sect2" checked /><b class="sheet-sect2"><span title="Background skills ranks are awarded at a rate of two per level and can be spent on any background skill." data-i18n="background-skills"> Background Skills</span></b>
-					</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-sect2-show sheet-noshow" name="attr_unchained_skills-show" value="1" role="presentation" />
 						<input type="radio" title="@{BG-Skill-Use}" name="attr_BG-Skill-Use" value="0" class="sheet-selectedlabel-check sheet-sect2" /><b class="sheet-sect2"><span title="Consolidated skills ranks are awarded at 1/2 normal skill points." data-i18n="toggle-consolidated-skills">Consolidated Skills.</span></b>
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name">&nbsp;</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" title="@{wound_threshold-show}" name="attr_wound_threshold-show" value="1" class="sheet-selectedlabel-check" /><b><span title="In the wound thresholds variant, a character divides her hit point total into four quarters, and takes penalties whenever she's not in her top quarter." data-i18n="toggle-wound-threshold">Display Wound Thresholds.</span></b>
-					</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-sect2-show sheet-noshow" name="attr_wound_threshold-show" value="1" />
+						<input type="checkbox" title="@{wound_threshold-show}" name="attr_wound_threshold-show" value="1" class="sheet-selectedlabel-check sheet-sect2-show" /><b><span title="In the wound thresholds variant, a character divides her hit point total into four quarters, and takes penalties whenever she's not in her top quarter." data-i18n="toggle-wound-threshold">Display Wound Thresholds.</span></b>
 						<input type="checkbox" title="@{has_endurance_feat}" name="attr_has_endurance_feat" value="1" class="sheet-selectedlabel-check sheet-sect2" /><b class="sheet-sect2"><span title="Endurance affects wounds by changing the penalty." data-i18n="toggle-endurance-feat">Has Endurance Feat</span></b>
-					</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_wound_threshold-show" value="1" />
 						<input type="checkbox" title="@{wounds_gritty_mode}" name="attr_wounds_gritty_mode" value="1" class="sheet-selectedlabel-check sheet-sect2" /><b class="sheet-sect2"><span  title="Gritty mode doubles penalties." data-i18n="toggle-gritty-mode">Gritty Mode</span></b>
 					</span>
 				</div>
-			</div>
-			<div class="sheet-corerules sheet-onecolumn sheet-table">
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="pathfinder-mythic-adventures">Pathfinder Mythic Adventures</span>
 					<span class="sheet-table-cell sheet-left">
-							<input type="checkbox" title="@{mythic-adventures-show}" name="attr_mythic-adventures-show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="toggle-mythic-adventures">Display/Enable Mythic Adventures Character Sheet Items</span></b>
+						<input type="checkbox" title="@{mythic-adventures-show}" name="attr_mythic-adventures-show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="toggle-mythic-adventures">Display/Enable Mythic Adventures Character Sheet Items</span></b>
 					</span>
 				</div>
 				<div class="sheet-table-row">
@@ -11608,9 +11586,7 @@
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="horror-adventures">Horror Adventures</span>
 					<span class="sheet-table-cell sheet-left">
-						<label>
-							<input type="checkbox" title="@{use_horror_adventures}" name="attr_use_horror_adventures" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="toggle-horror-adventures-long" /><b><span data-i18n-title="toggle-horror-adventures-long" data-i18n="toggle-horror-adventures"> Enable Horror Adventures</span></b>
-						</label>
+						<input type="checkbox" title="@{use_horror_adventures}" name="attr_use_horror_adventures" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="toggle-horror-adventures-long" /><b><span data-i18n-title="toggle-horror-adventures-long" data-i18n="toggle-horror-adventures"> Enable Horror Adventures</span></b>
 					</span>
 				</div>
 			</div>			
