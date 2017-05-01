@@ -80,6 +80,34 @@ h4,h5,h6 {
     font-size: .8125rem;
     color: initial;
 }
+/* standalone generic toggles */
+.sheet-wounds-show,
+.sheet-mythic-show,
+.sheet-psionic-show,
+.sheet-racial-traits-show,
+.sheet-traits-show,
+.sheet-featlist-show,
+.sheet-classfeatures-show,
+.sheet-oldslas-show,
+.sheet-nextitem-show,
+.sheet-use-size-show,
+.sheet-repeating-sect-show,
+.sheet-advanced-macro-show,
+.sheet-buff-exists,
+.sheet-condition-exists,
+.sheet-horror-show,
+.sheet-section-state,
+.sheet-bg-show,
+.sheet-unchained-show,
+.sheet-consolidated-show,
+.sheet-tabcopy,
+.sheet-error-show,
+.sheet-warn-show,
+.sheet-error-mshow,
+.sheet-warn-mshow {
+    display: none ;
+}
+
 .sheet-clickheader {
 	display:inline;
 }
@@ -2821,8 +2849,6 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-buff-exists:checked ~.sheet-panel-name,
 .sheet-buffs-show:not(:checked) ~ .sheet-buffs,
 /* spells per day section */
-.sheet-spontaneous-show:not(:checked) ~ div .sheet-spontaneous,
-.sheet-spontaneous-show:checked ~ div .sheet-spontaneous-inverse,
 .sheet-spellclass0-show:not(:checked) ~ .sheet-sect-spellclass0,
 .sheet-spellclass1-show:not(:checked) ~ .sheet-sect-spellclass1,
 .sheet-spellclass2-show:not(:checked) ~ .sheet-sect-spellclass2,
@@ -4463,36 +4489,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	text-indent:1.25em;
 }
 
-/* standalone generic toggles */
-.sheet-noshow,
-.sheet-deletesect-show,
-.sheet-wounds-show,
-.sheet-wider-readonly.sheet-noshow,
-.sheet-spontaneous-show,
-.sheet-mythic-show,
-.sheet-psionic-show,
-.sheet-racial-traits-show,
-.sheet-traits-show,
-.sheet-featlist-show,
-.sheet-classfeatures-show,
-.sheet-oldslas-show,
-.sheet-sp-show,
-.sheet-nextitem-show,
-.sheet-use-size-show,
-.sheet-repeating-sect-show,
-.sheet-advanced-macro-show,
-.sheet-buff-exists,
-.sheet-condition-exists,
-.sheet-horror-show,
-.sheet-section-state,
-.sheet-bg-show,
-.sheet-unchained-show,
-.sheet-consolidated-show,
-.sheet-tabcopy,
-.sheet-error-show,
-.sheet-warn-show,
-.sheet-error-mshow,
-.sheet-warn-mshow {
+.sheet-noshow{
     display: none !important;
 }
 
