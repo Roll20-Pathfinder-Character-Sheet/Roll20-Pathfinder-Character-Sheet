@@ -50,132 +50,164 @@ function expandAll  () {
 				skills_tab: "99",
 				spellclass_tab: "99",
 				spells_tab: "99",
-				npc_spellclass_tab: "0",
+				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-				"conditions-show": "1",
-				"buffstop-show": "1",
-				"character-details-show": "",
-				"ability-scores-show": "",
-				"health-and-wounds-show": "",
-				"initiative-and-speeds-show": "",
-				"experience-and-hero-points-show": "",
-				"class-info-show": "",
-				"mythic-info-show": "",
-				"psionic-info-show": "",
-				"abilities-show": "",
-				"defense-values-show": "",
-				"special-defenses-show": "",
-				"armor-penalties-show": "",
-				"saves-show": "",
-				"armor-shield-show": "",
-				"defense-notes-show": "",
-				"attack-bonuses-show": "",
-				"attack-notes-show": "",
-				"attack-options-show": "",
-				"attacks-show": "",
-				"skills-show": "",
-				"skill_options-show": "",
-				"skill-ranks-show": "",
-				"skill-notes-show": "",
-				"artistry-show": "",
-				"craft-show": "",
-				"knowledge-show": "",
-				"lore-show": "",
-				"perform-show": "",
-				"profession-show": "",
-				"misc-show": "",
-				"currency-show": "",
-				"inventory-show": "",
-				"carried-weight-show": "",
-				"loads-show": "",
-				"domains0-show": "",
-				"spellsPerDay0-show": "",
-				"spell_ranges0-show": "",
-				"domains1-show": "",
-				"spellsPerDay1-show": "",
-				"spell_ranges1-show": "",
-				"domains2-show": "",
-				"spellsPerDay2-show": "",
-				"spell_ranges2-show": "",
-				"spelloptions-show": "",
-				"newspells-show": "",
-				"npc-quick_stats-show": "",
-				"npc-defense-show": "",
-				"options_defense_options-show": "",
-				"npc-offense-show": "",
-				"npc-speed-show": "",
-				"npc-space-show": "",
-				"npc-special-attacks-show": "",
-				"npc-repeating_weapons-show": "",
-				"npc-spell-like-abilities-show": "",
-				"npc-spells-show": "",
-				"npc-tactics-show": "",
-				"npc-before-combat-show": "",
-				"npc-during-combat-show": "",
-				"npc-morale-show": "",
-				"npc-base-statistics-show": "",
-				"npc-statistics-show": "",
-				"npc-feats-show": "",
-				"npc-mythic-feats-show": "",
-				"npc-skills-show": "",
-				"npc-cgear-show": "",
-				"npc-ogear-show": "",
-				"npc-special-abilities-show": "",
-				"header-image-show": "",
-				"pathfinder-unchained-show": "",
-				"pathfinder-mythic-adventures-show": "",
-				"pathfinder-psionics-show": "",
-				"roll-template-info-show": "",
-				"sheet-config-show": "",
-				"sheetcleanup-show": "",
-				"buff-min-show": "",
-				"buff-expand-show": "",
-				"buff-column-show": "",
-				"class-ability-min-show": "",
-				"class-ability-expand-show": "",
-				"class-ability-column-show": "",
-				"feat-min-show": "",
-				"feat-expand-show": "",
-				"feat-column-show": "",
-				"racial-trait-min-show": "0",
-				"racial-trait-expand-show": "",
-				"racial-trait-column-show": "",
-				"traits-min-show": "0",
-				"traits-expand-show": "",
-				"traits-column-show": "",
-				"mythic-min-show": "0",
-				"mythic-expand-show": "",
-				"mythic-column-show": "",
-				"mythic-feats-min-show": "",
-				"mythic-feats-expand-show": "",
-				"mythic-feats-column-show": "",
-				"weapon-min-show": "",
-				"weapon-expand-show": "",
-				"weapon-column-show": "",
-				"item-min-show": "",
-				"item-expand-show": "",
-				"item-column-show": "",
-				"newspells-min-show": "",
-				"newspells-expand-show": "",
-				"newspells-column-show": "",
-				"npcweapon-min-show": "",
-				"npcweapon-expand-show": "",
-				"npcweapon-column-show": "",
-				"npc-spell-like-abilities-min-show": "",
-				"npc-spell-like-abilities-expand-show": "",
-				"npc-spell-like-abilities-column-show": "",
-				"npcnewspells-min-show": "",
-				"npcnewspells-expand-show": "",
-				"npcnewspells-column-show": "",
-				"npcfeat-min-show": "",
-				"npcfeat-expand-show": "",
-				"npcfeat-column-show": "",
-				"npcmythic-feats-min-show": "",
-				"npcmythic-feats-expand-show": "",
-				"npcmythic-feats-column-show": "",
-				"npc-special-abilities-min-show": "",
-				"npc-special-abilities-expand-show": "",
-				"npc-special-abilities-column-show": ""
+				'sheet-conditions-show':0,
+				'buffstop-show':0,
+				'command-buttons-show':0,
+				'NPC-command-buttons-show':0,
+				'character-details-show':0,
+				'ability-scores-show':0,
+				'class-info-show':0,
+				'class1_show':0,
+				'class2_show':0,
+				'class3_show':0,
+				'health-and-wounds-show':0,
+				'initiative-show':0,
+				'macro-text-show':0,
+				'notes-show':0,
+				'saves-show':0,
+				'defense-values-show':0,
+				'armor-shield-show':0,
+				'sanity-show':0,
+				'defense-notes-show':0,
+				'attack-bonuses-show':0,
+				'atkm2_show':0,
+				'attack-notes-show':0,
+				'attack-options-show':0,
+				'two-weapon-show':0,
+				'attacks-show':0,
+				'skill-ranks-show':0,
+				'skill_options-show':0,
+				'skills-show':0,
+				'artistry-show':0,
+				'craft-show':0,
+				'knowledge-show':0,
+				'lore-show':0,
+				'perform-show':0,
+				'profession-show':0,
+				'misc-show':0,
+				'skill-notes-show':0,
+				'ability-command-buttons-show':0,
+				'NPC-ability-command-buttons-show':0,
+				'feats-show':0,
+				'mythic-info-show':0,
+				'psionic-info-show':0,
+				'abilities-show':0,
+				'spellclasses-show':0,
+				'spellclass-0-show':0,
+				'spellclass-0-spellpoints-show':0,
+				'spellclass-0-spells-notes-show':0,
+				'spellclass-0-perday-show':0,
+				'spellclass-0-domains-show':0,
+				'domain02_show':0,
+				'domain03_show':0,
+				'spellclass-1-show':0,
+				'spellclass-1-spellpoints-show':0,
+				'spellclass-1-spells-notes-show':0,
+				'spellclass-1-perday-show':0,
+				'spellclass-1-domains-show':0,
+				'domain02_show':0,
+				'domain03_show':0,
+				'spellclass-2-show':0,
+				'spellclass-2-spellpoints-show':0,
+				'spellclass-2-spells-notes-show':0,
+				'spellclass-2-perday-show':0,
+				'spellclass-2-domains-show':0,
+				'domain02_show':0,
+				'domain03_show':0,
+				'spelloptions-show':0,
+				'spell-lists-show':0,
+				'currency-show':0,
+				'carried-weight-show':0,
+				'loads-show':0,
+				'worn-items-show':0,
+				'other-items-show':0,
+				'equipment-show':0,
+				'npc-compimport-show':0,
+				'npc-details-show':0,
+				'npc-defense-show':0,
+				'npc-offense-show':0,
+				'npc-speed-show':0,
+				'npc-repeating-weapons-show':0,
+				'npc-spell-like-abilities-show':0,
+				'npc-tactics-show':0,
+				'npc-statistics-show':0,
+				'npc-feats-show':0,
+				'npc-mythic-feats-show':0,
+				'skill_options-show':0,
+				'skill-notes-show':0,
+				'npc-skills-show':0,
+				'npc-ecology-show':0,
+				'npc-special-abilities-show':0,
+				'custom-attr-sect-a-show':0,
+				'custom-attr-sect-c-show':0,
+				'custom-attr-sect-b-show':0,
+				'custom-attr-sect-d-show':0,
+				'custom-attr-sect-n-show':0,
+				'header-image-show':0,
+				'sheet-import-show':0,
+				'roll-template-info-show':0,
+				'macros-show':0,
+				'migrations-show':0,
+				'cleanup-show':0,
+				'buff-min-show':0,
+				'buff-expand-show':0,
+				'buff-column-show':0,
+				'weapon-min-show':0,
+				'weapon-expand-show':0,
+				'weapon-column-show':0,
+				'abilities-min-show':0,
+				'abilities-expand-show':0,
+				'abilities-column-show':0,
+				'class-ability-min-show':0,
+				'class-ability-expand-show':0,
+				'class-ability-column-show':0,
+				'feat-min-show':0,
+				'feat-expand-show':0,
+				'feat-column-show':0,
+				'mythic-feats-min-show':0,
+				'mythic-feats-expand-show':0,
+				'mythic-feats-column-show':0,
+				'racial-trait-min-show':0,
+				'racial-trait-expand-show':0,
+				'racial-trait-column-show':0,
+				'traits-min-show':0,
+				'traits-expand-show':0,
+				'traits-column-show':0,
+				'npc-spell-like-abilities-min-show':0,
+				'npc-spell-like-abilities-expand-show':0,
+				'npc-spell-like-abilities-column-show':0,
+				'mythic-min-show':0,
+				'mythic-expand-show':0,
+				'mythic-column-show':0,
+				'newspells-min-show':0,
+				'newspells-expand-show':0,
+				'newspells-column-show':0,
+				'item-min-show':0,
+				'item-expand-show':0,
+				'item-column-show':0,
+				'npcweapon-min-show':0,
+				'npcweapon-expand-show':0,
+				'npcweapon-column-show':0,
+				'npc-spell-like-abilities-min-show':0,
+				'npc-spell-like-abilities-expand-show':0,
+				'npc-spell-like-abilities-column-show':0,
+				'npcnewspells-min-show':0,
+				'npcnewspells-expand-show':0,
+				'npcnewspells-column-show':0,
+				'npcfeat-min-show':0,
+				'npcfeat-expand-show':0,
+				'npcfeat-column-show':0,
+				'npcmythic-feats-min-show':0,
+				'npcmythic-feats-expand-show':0,
+				'npcmythic-feats-column-show':0,
+				'npc-abilities-min-show':0,
+				'npc-abilities-expand-show':0,
+				'npc-abilities-column-show':0,
+				'npc-special-abilities-min-show':0,
+				'npc-special-abilities-expand-show':0,
+				'npc-special-abilities-column-show':0
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -185,18 +217,17 @@ function expandAll  () {
 						var prefix = rsection + "_" + id + "_";
 						switch (section) {
 							case 'weapon':
-								memo[prefix + "add-damage-show"] = "";
-								memo[prefix + "iterative-attacks-show"] = "";
-								memo[prefix + "macro-text-show"] = "";
+								memo[prefix + "add-damage-show"] = 0;
+								memo[prefix + "iterative-attacks-show"] = 0;
+								memo[prefix + "advmacro-text-show"] = 0;
 								break;
 							case 'buff':
-								memo[prefix + "options-show"] = "";
-								memo[prefix + "description-show"] = "";
+								memo[prefix + "options-show"] = 0;
+								memo[prefix + "description-show"] = 0;
 								break;
 							case 'spells':
-								memo[prefix + "spell-misc-show"] = "";
-								memo[prefix + "description-show"] = "";
-								memo[prefix + "macro-text-show"] = "";
+								memo[prefix + "spell-misc-show"] = 0;
+								memo[prefix + "description-show"] = 0;
 								break;
 							case 'class-ability':
 							case 'feat':
@@ -205,15 +236,26 @@ function expandAll  () {
 							case 'mythic-ability':
 							case 'mythic-feat':
 							case 'item':
-								memo[prefix + "description-show"] = "";
-								memo[prefix + "macro-text-show"] = "";
+								memo[prefix + "description-show"] = 0;
+								memo[prefix + "armor-attributes-show"] = 0;
+								memo[prefix + "weapon-attributes-show"] = 0;
 								break;
 							case 'npc-spell-like-abilities':
-								memo[prefix + "macro-text-show"] = "";
+								memo[prefix + "attack-show"] = 0;
+								break;
+							case 'ability':
+								memo[prefix + "options-show"] = 0;
+								memo[prefix + "description-show"] = 0;
+								memo[prefix + "misc-show"] = 0;
+								memo[prefix + "showextrafields"] = 0;
+								memo[prefix + "range-show"] = 0;
 								break;
 						}
-						memo[prefix + "row-show"] = "";
-						memo[prefix + "ids-show"] = "";
+						memo[prefix + "row-show"] = 0;
+						memo[prefix + "ids-show"] = 0;
+						if (section !== 'buff'){
+							memo[prefix + "macro-text-show"] = 0;
+						}
 						return memo;
 					}, {});
 					setAttrs(setter, {
@@ -376,10 +418,9 @@ export function migrate (oldversion, callback, errorCallback) {
 		    }
 			if (oldversion < 1.43){
 				PFSpells.recalculate();
-				PFInventory.updateRepeatingItems();
 				PFSkills.resetCommandMacro();
 			}
-			if (oldversion < 1.45){
+			if (oldversion < 1.5){
 				PFSpells.resetSpellsTotals(null,null,null,true);
 				PFInventory.updateRepeatingItems();
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
@@ -387,7 +428,7 @@ export function migrate (oldversion, callback, errorCallback) {
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
-		//errorDone();
+		errorDone();
 	} finally {
 		done();
 	}

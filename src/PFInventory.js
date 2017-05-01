@@ -103,7 +103,7 @@ function getWornItemNameField (location) {
  *@param {function} callback to call when done
  *@param {bool} silently if true send PFConst.silentParams to setAttrs
  */
-function updateRepeatingItems (callback, silently, attrToUpdate) {
+export function updateRepeatingItems (callback, silently, attrToUpdate) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
