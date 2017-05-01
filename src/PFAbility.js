@@ -958,12 +958,18 @@ function registerEventHandlers () {
 	macroEvent = "remove:repeating_ability ",
 	singleEvent = "change:repeating_ability:";
 
+
+	on("remove:repeating_ability", TAS.callback(function eventRemoveAbility(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		PFAttacks.removeLinkedAttack(null,PFAttacks.linkedAttackType.ability,SWUtils.getRowId(eventInfo.sourceAttribute));
+	}));
 	macroEvent = _.reduce(events.commandMacroFields,function(m,a){
 		m+= singleEvent + a + " ";
 		return m;
 	},macroEvent);
 	on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
 		var attr;
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
 		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && attr==='used_max')) {
 			PFFeatures.resetTopCommandMacro(null,eventInfo);

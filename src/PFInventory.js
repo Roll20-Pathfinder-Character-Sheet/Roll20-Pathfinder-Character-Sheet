@@ -395,7 +395,7 @@ function migrateWornEquipment (callback) {
                         //TAS.debug("matchingField=" + matchingField);
                         if (matchingField) {
                             isNewRow = false;
-                            newRowId = SWUtils.getRowId(matchingField);//.replace("repeating_item_", "").replace("_name", "");
+                            newRowId = SWUtils.getRowId(matchingField);
                         } else {
                             newRowId = generateRowID();
                         }
@@ -1629,26 +1629,15 @@ function registerEventHandlers  () {
             });
         }
     }));
+
     on('remove:repeating_item', TAS.callback(function eventRemoveItem(eventInfo) {
         var source='',setter = {}, itemId ='';
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             updateRepeatingItems();
             deleteWornRow(eventInfo.sourceAttribute);
         }
-        // Find matching source-item in repeating_weapon then clear the source-item and source-item-name attributes for each
-        itemId = eventInfo.sourceAttribute.replace("repeating_item_", "");
-        getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
-            _.each(idarray, function (currentID) { // loop through the set
-                getAttrs(["repeating_weapon_" + currentID + "_source-item"], function (v) {
-                    if (itemId === v["repeating_weapon_" + currentID + "_source-item"]) {
-                        setter["repeating_weapon_" + currentID + "_source-item"] = "";
-                        setter["repeating_weapon_" + currentID + "_source-item-name"] = "";
-                        //TAS.debug"clearing source-item for attack entry " + currentID, setter);
-                        setAttrs(setter, PFConst.silentParams);
-                    }
-                });
-            });
-        });
+        PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.equipment , SWUtils.getRowId(eventInfo.sourceAttribute));
     }));
     on('change:CP change:SP change:GP change:PP', TAS.callback(function eventUpdateCarriedCurrency(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

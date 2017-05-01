@@ -1647,6 +1647,8 @@
   "unlock-defense-dropdowns": "Allow AC and CMD to use different ability scores",
   "unlock-defense-dropdowns-title": "If checked, CMD could use different ability in 2nd dropdown than AC uses. For instance, DEX for AC and INT for CMD, instead of DEX or WIS for both.",
   "upcoming-changes": "Upcoming Changes",
+  "update": "Update",
+  "update-weapons": "Update dual wield attacks with new penalties or improved state",
   "update-spell-macros": "Update spell macros",
   "use-class-features": " Use Separate Class Features List",
   "use-dwarf-encumbrance": " Uses dwarf encumbrance rules",
