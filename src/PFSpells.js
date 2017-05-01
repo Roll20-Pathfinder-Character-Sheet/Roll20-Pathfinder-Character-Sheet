@@ -10,7 +10,7 @@ import * as PFMacros from './PFMacros';
 import * as PFSpellOptions from './PFSpellOptions';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
-
+import * as PFAttacks from './PFAttacks';
 export var
 //spell levels for repeating spell sections
 spellLevels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -562,6 +562,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                 setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
                 setter[prefix + "source-spell"] = itemId;
                 setter[prefix+"group"]="Spell";
+				setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
             }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
@@ -1624,6 +1625,12 @@ function registerEventHandlers  () {
             resetCommandMacro();
         }
     }));
+
+   	on("remove:repeating_spells", TAS.callback(function eventUpdateRemoveLinkedSpell(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.spell , SWUtils.getRowId(eventInfo.sourceAttribute));
+	}));	
+    
     on("remove:repeating_spells change:repeating_spells:spellclass_number change:repeating_spells:spell_level change:repeating_spells:slot change:repeating_spells:used change:repeating_spells:school change:repeating_spells:metamagic change:repeating_spells:isDomain change:repeating_spells:isMythic change:_reporder_repeating_spells", TAS.callback(function eventRepeatingSpellAffectingMenu(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {

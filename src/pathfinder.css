@@ -123,7 +123,7 @@ input[readonly], input[disabled] {
     -webkit-user-select: text !important;
     -ms-user-select: text !important;
     pointer-events: auto;
-	cursor:text;
+	cursor:text !important;
 }
 .sheet-progress-icon {
 	position:absolute;
@@ -1130,38 +1130,6 @@ input.sheet-tabinput {
 }
 
 /***************** collapse/expand rows arrow added after text found preceding span ******************************/
-/* standalone generic toggles */
-.sheet-noshow,
-.sheet-deletesect-show,
-.sheet-wounds-show,
-.sheet-wider-readonly.sheet-noshow,
-.sheet-spontaneous-show,
-.sheet-mythic-show,
-.sheet-psionic-show,
-.sheet-racial-traits-show,
-.sheet-traits-show,
-.sheet-featlist-show,
-.sheet-classfeatures-show,
-.sheet-oldslas-show,
-.sheet-sp-show,
-.sheet-nextitem-show,
-.sheet-use-size-show,
-.sheet-repeating-sect-show,
-.sheet-advanced-macro-show,
-.sheet-buff-exists,
-.sheet-condition-exists,
-.sheet-horror-show,
-.sheet-section-state,
-.sheet-bg-show,
-.sheet-unchained-show,
-.sheet-consolidated-show,
-.sheet-tabcopy,
-.sheet-error-show,
-.sheet-warn-show,
-.sheet-error-mshow,
-.sheet-warn-mshow {
-    display: none;
-}
 /* ARROWS */
 input.sheet-csstextbutton,
 .sheet-csstextbutton,
@@ -2866,6 +2834,7 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-armor-attributes-show:not(:checked)~.sheet-armor-attributes,
 .sheet-weapon-attributes-show:not(:checked)~.sheet-weapon-attributes,
 .sheet-horror-show:not(:checked)~.sheet-pfsheet .sheet-horror-sect, 
+.sheet-dual-wield-show:not(:checked)~.sheet-dual-wield-sect,
 /* skills */
 .sheet-custom-skill-2-show:not(:checked) ~ .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-2,
 .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-3,
@@ -4492,6 +4461,39 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-inspecial {
 	display:block;
 	text-indent:1.25em;
+}
+
+/* standalone generic toggles */
+.sheet-noshow,
+.sheet-deletesect-show,
+.sheet-wounds-show,
+.sheet-wider-readonly.sheet-noshow,
+.sheet-spontaneous-show,
+.sheet-mythic-show,
+.sheet-psionic-show,
+.sheet-racial-traits-show,
+.sheet-traits-show,
+.sheet-featlist-show,
+.sheet-classfeatures-show,
+.sheet-oldslas-show,
+.sheet-sp-show,
+.sheet-nextitem-show,
+.sheet-use-size-show,
+.sheet-repeating-sect-show,
+.sheet-advanced-macro-show,
+.sheet-buff-exists,
+.sheet-condition-exists,
+.sheet-horror-show,
+.sheet-section-state,
+.sheet-bg-show,
+.sheet-unchained-show,
+.sheet-consolidated-show,
+.sheet-tabcopy,
+.sheet-error-show,
+.sheet-warn-show,
+.sheet-error-mshow,
+.sheet-warn-mshow {
+    display: none !important;
 }
 
 /*skill too crowded*/

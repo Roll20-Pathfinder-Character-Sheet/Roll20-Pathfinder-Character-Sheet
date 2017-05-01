@@ -12,6 +12,7 @@ import * as PFDB from './PFDB';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFFeatures from './PFFeatures';
+import * as PFAttacks from './PFAttacks';
 
 var optionFields= ['is_sp','hasposrange','hasuses','hasattack','abil-attacktypestr'],
 optionRepeatingHelperFields =['ability_type','range_numeric','frequency','abil-attack-type'],
@@ -499,7 +500,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			if(!noName){
 				setter[weaponPrefix + "name"] = v[spellPrefix + "name"];
 			}
-			setter[weaponPrefix + "source-spell-name"] = v[spellPrefix + "name"];
+			setter[weaponPrefix + "source-ability-name"] = v[spellPrefix + "name"];
 		}
 		if (attackType) {
 			setter[weaponPrefix + "attack-type"] = v[spellPrefix + "abil-attack-type"];
@@ -597,6 +598,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
 				setter[prefix + "source-ability"] = itemId;
 				setter[prefix+"group"]="Special";
+				setter[prefix+'link_type']=PFAttacks.linkedAttackType.ability;
 			}
 		} catch (err) {
 			TAS.error("PFAbility.createAttackEntryFromRow", err);
@@ -630,7 +632,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	}),
 	itemId = "", item_entry = "",attrib = "", attributes=[];
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-	item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
+	item_entry = 'repeating_ability_' + SWUtils.getRepeatingIDStr(itemId);
 	attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
 	attributes=[];
 	//TAS.debug("at PF Spell like abilities updateAssociatedAttack: for row" + id   );
@@ -956,12 +958,18 @@ function registerEventHandlers () {
 	macroEvent = "remove:repeating_ability ",
 	singleEvent = "change:repeating_ability:";
 
+
+	on("remove:repeating_ability", TAS.callback(function eventRemoveAbility(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		PFAttacks.removeLinkedAttack(null,PFAttacks.linkedAttackType.ability,SWUtils.getRowId(eventInfo.sourceAttribute));
+	}));
 	macroEvent = _.reduce(events.commandMacroFields,function(m,a){
 		m+= singleEvent + a + " ";
 		return m;
 	},macroEvent);
 	on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
 		var attr;
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
 		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && attr==='used_max')) {
 			PFFeatures.resetTopCommandMacro(null,eventInfo);

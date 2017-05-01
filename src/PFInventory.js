@@ -11,6 +11,7 @@ import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFAttackOptions from  './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
+import * as PFAttacks from './PFAttacks';
 
 var wornEquipBaseRowsOld = ["Belt", "Body", "Chest", "Eyes", "Feet", "Hands", "Head", "Headband", "Neck", "Ring1", "Ring2", "Shoulders", "Wrist"],
 wornEquipBaseRowsNew = wornEquipBaseRowsOld.concat(["Armor3","Shield3"]),
@@ -394,7 +395,7 @@ function migrateWornEquipment (callback) {
                         //TAS.debug("matchingField=" + matchingField);
                         if (matchingField) {
                             isNewRow = false;
-                            newRowId = SWUtils.getRowId(matchingField);//.replace("repeating_item_", "").replace("_name", "");
+                            newRowId = SWUtils.getRowId(matchingField);
                         } else {
                             newRowId = generateRowID();
                         }
@@ -924,6 +925,8 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
             silentSetter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
+            setter[prefix+'link_type']=PFAttacks.linkedAttackType.equipment;
+
             //TAS.debug("creating new attack", setter);
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
@@ -1626,26 +1629,15 @@ function registerEventHandlers  () {
             });
         }
     }));
+
     on('remove:repeating_item', TAS.callback(function eventRemoveItem(eventInfo) {
         var source='',setter = {}, itemId ='';
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             updateRepeatingItems();
             deleteWornRow(eventInfo.sourceAttribute);
         }
-        // Find matching source-item in repeating_weapon then clear the source-item and source-item-name attributes for each
-        itemId = eventInfo.sourceAttribute.replace("repeating_item_", "");
-        getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
-            _.each(idarray, function (currentID) { // loop through the set
-                getAttrs(["repeating_weapon_" + currentID + "_source-item"], function (v) {
-                    if (itemId === v["repeating_weapon_" + currentID + "_source-item"]) {
-                        setter["repeating_weapon_" + currentID + "_source-item"] = "";
-                        setter["repeating_weapon_" + currentID + "_source-item-name"] = "";
-                        //TAS.debug"clearing source-item for attack entry " + currentID, setter);
-                        setAttrs(setter, PFConst.silentParams);
-                    }
-                });
-            });
-        });
+        PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.equipment , SWUtils.getRowId(eventInfo.sourceAttribute));
     }));
     on('change:CP change:SP change:GP change:PP', TAS.callback(function eventUpdateCarriedCurrency(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
