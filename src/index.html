@@ -1,10 +1,3 @@
-<!--
--
--
--DEVELOPMENT NOT FOR PROD SUPPORT YET
--
--
--->
 <input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comic sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
@@ -31,34 +24,21 @@
 			<ol>
 				<li><strong>New Setting: SETUP DUAL WIELD</strong> enable on <em>Settings</em> page to display new fields just above Attacks list.</li>
 				<li><strong>New Setting: Horror Adventures</strong> enable on <em>Settings</em> page to display <em>Sanity</em> on <em>Defenses</em> page below saves.</li>
-				<li>Above new features still in Beta. Please provide feedback at http://tinyurl.com/PF-Thread</li>
-				<li><strong>Spells per day</strong> removed "-prepared" field. Now totals spells in "spells-per-day" and "spells-per-day|max" for both spontaneous and prepared casters.</li>
-				<li>Bugs fixes:
-					<ol><li>value and weight totals for equipment list calculate correctly both for 'recalc' and updating individual rows</li>
-						<li>Spells per day calculates correctly</li>
-						<li>Class grid arrow on left fixed (adding more classes)</li>
-						<li>Attack links to spells, abilities, items, and other attacks improved for edge cases</li>
-						<li>More HTML fixes to mitigate locking</li>
-						<li></li>
-					</ol></li>
+				<li>Spells per day totals: removed "-prepared" field. Now totals spells in "spells-per-day" and "spells-per-day|max" for both spontaneous and prepared casters.</li>
 				<li><strong>If you experience locking</strong> 
 					<ol><li>refresh the browser.</li>
 					<li>Make sure only one user has a sheet open at a time.</li>
 					<li>If you still have a problem please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong> </li>
 					</ol></li>
+				<li>Bug fixes to:
+					<ol><li>Value and weight totals for equipment list</li>
+						<li>Spells per day</li>
+						<li>Arrows to left of class grid</li>
+						<li>Attack links to spells, abilities, items, and other attacks</li>
+					</ol></li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv15-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
-			<h2>Where did stuff go?</h2>
-			<ul>
-				<li data-i18n="announcements-24">Click <strong>⛭ Settings</strong> button next to Pathfinder logo to toggle Settings page.</li>
-				<li data-i18n="announcements-25">Check <strong>Display roll templates for customization</strong> on <em>Settings</em> page to customize rolls.</li>
-				<li data-i18n="announcements-26">Check <strong>Use Spell Points</strong> on <em>Settings</em> page if you use spell points.</li>
-				<li>Monster hp and hit dice found in Class and Race grid. Monsters now use PC fields.</li>
-				<li>Check <strong>Show both roll menu buttons for Monsters/NPCs</strong> to display NPC buttons on top even when on PC pages</li>
-				<li>Click the <strong>mode</strong> button to enter expanded mode if fields are not found</li>
-				<li data-i18n="announcements-27">Extra calculated numbers available on <em>Notes</em> page for point pools, or for use in tokens bars, etc</li>
-			</ul>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
@@ -1694,7 +1674,7 @@
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">)</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">=</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect sheet-narrow-numbers">
-								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS}+@{INT}+@{CHA})" class="sheet-number" disabled />+
+								<input type="text" name="attr_mental_mods_total" title="@{mental_mods_total}" value="(@{WIS}+@{INT}+@{CHA})" class="sheet-number" disabled />
 								<br/><span data-i18n-title="mental-modifiers-total" data-i18n-aria-label="mental-modifiers-total" data-i18n="mental-modifiers-abbrv">Mental</span>
 							</div>
 							<div class="sheet-divider-lg sheet-hide-readonly sheet-extra-sect">-</div>
