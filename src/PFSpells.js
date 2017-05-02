@@ -10,7 +10,7 @@ import * as PFMacros from './PFMacros';
 import * as PFSpellOptions from './PFSpellOptions';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
-
+import * as PFAttacks from './PFAttacks';
 export var
 //spell levels for repeating spell sections
 spellLevels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -286,69 +286,128 @@ export function resetCommandMacro (eventInfo, callback) {
     });
 }
 
+/** update spells if a user changes "uses" on spell row
+ * @param {string} dummy normally id but not used
+ * @param {map} eventInfo from event, not used
+ * @param {function} callbackwhen done
+ * @param {boolean} silently if you want to update silently
+ */
+function updateSpellsPerDay(dummy,eventInfo,callback,silently){
+    var done = _.once(function () {
+        TAS.debug("leaving PFSpells.updateSpellsPerDay");
+        if (typeof callback === "function") {
+            callback();
+        }
+    }),
+    fields = ['total_spells_manually','repeating_spells_used','repeating_spells_spellclass_number', 'repeating_spells_spell_level', 'repeating_spells_slot', 'repeating_spells_metamagic'];
+    getAttrs(fields,function(v){
+        var classNum=0, spellLevel,slot=0,metamagic=0,fieldname='',fieldname2='',initialtot={};
+        TAS.debug("PFSpells.updateSpellsPerDay: ",v);
+        if(!parseInt(v.total_spells_manually,10)){
+            spellLevel= parseInt(v.repeating_spells_spell_level, 10);
+            TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
+            if (!isNaN(spellLevel)){
+                classNum = parseInt(v.repeating_spells_spellclass_number,10)||0;
+                metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
+                if (metamagic){
+                    slot = parseInt(v.repeating_spells_slot,10);
+                    if(!isNaN(slot)){
+                        spellLevel =slot;
+                    }
+                }
+                //now update the spells per day for the associated class idx and spell level
+                fieldname = "spellclass-" + classNum + "-level-" + spellLevel + "-spells-per-day";
+                fieldname2 =  "spellclass-" + classNum + "-level-" + spellLevel + "-spells-prepared";
+                initialtot[fieldname]=0;
+                initialtot[fieldname2]=0;
+                TAS.debug("about to set "+fieldname+", and "+ fieldname2);
+                TAS.repeating('spells').attrs(fieldname,fieldname2).fields('row_id','used', 'spell_level', 'metamagic', 'slot').reduce(function (m, r) {
+                    try {
+                        if (r.I.spell_level===spellLevel || (r.I.metamagic && r.I.slot===spellLevel)){
+                            m+=r.I.used;
+                           // m[fieldname2]+=r.I.used;
+                            TAS.debug("adding "+r.I.used);
+                        }
+                        TAS.debug(fieldname+" now at "+m);//, m);
+                    } catch (innererr){
+                        TAS.error("PFSpells.updateSpellsPerDay innererr",innererr);
+                    } finally {
+                        return m;
+                    }
+                }, 0 , function (m, r, a) {
+                    a.S[fieldname] = m;
+                    a.S[fieldname2] = m;
+                }).execute(done);
+            }  else { 
+                done();
+            }
+        } else {
+            done();
+        }
+    });
+}
+
 function getSpellTotals  (ids, v, setter) {
     var doNotProcess=0,
+        casterTypeMap = {'spontaneous':1, 'prepared':2},
         casterTypes = [0,0,0],
         totalPrepped = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]],
         totalListed = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
    try {
         doNotProcess = parseInt(v.total_spells_manually,10)||0;
         casterTypes[0] = parseInt(v['spellclass-0-casting_type'],10)||0;
-        if (parseInt(v.spellclasses_multiclassed,10)){
+        if (parseInt(v.spellclasses_multiclassed,10)) {
             casterTypes[1] = parseInt(v['spellclass-1-casting_type'],10)||0;
             casterTypes[2] = parseInt(v['spellclass-2-casting_type'],10)||0;
-            if (doNotProcess){
-                if (casterTypes[0]===1 && casterTypes[1]<2 && casterTypes[2]<2){
-                    return setter;
-                }
-            }
-        } else {
-            if (doNotProcess && casterTypes[0]===1){
-                return setter;
-            }
         }
-        
- /*       totalPrepped = _.reduce(PFConst.spellClassIndexes, function (memo, classidx) {
-            memo[classidx] = _.reduce(spellLevels, function (imemo, spelllevel) {
-                imemo[spelllevel] = 0;
-                return imemo;
-            }, {});
-            return memo;
-        }, {});
-        totalListed =  _.mapObject(totalPrepped, _.clone);*/
-         
         _.each(ids, function (id) {
             var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
-                spellLevel, classNum=0, metamagic=0,slot=0,truelevel=0,uses=0;
-            spellLevel = parseInt(v[prefix + "spell_level"], 10);
-            if (!isNaN(spellLevel) ) {
-                classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
-                metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
-                slot = isNaN(parseInt(v[prefix + "slot"], 10)) ? spellLevel : parseInt(v[prefix + "slot"], 10);
-                truelevel = metamagic ? slot : spellLevel;
-                //TAS.debug("getSpellTotals", "spellLevel", spellLevel, "classNum", classNum, "metamagic", metamagic, "slot", slot, truelevel, "truelevel", uses, "uses");
-                if (!doNotProcess){
-                    uses = parseInt(v[prefix + "used"], 10) || 0;
-                    totalPrepped[classNum][truelevel] += uses;
-                    totalListed[classNum][truelevel] += 1;
-                } else if (casterTypes[classNum]!==1) {
-                    //if do not total,no need tosee total listed if not spontaneous
-                    totalListed[classNum][truelevel] += 1;
+                spellLevel, classNum=0, metamagic=0,slot,uses=0;
+            try {
+                spellLevel = parseInt(v[prefix + "spell_level"], 10);
+                if ( !isNaN(spellLevel) ) {
+                    classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
+                    metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
+                    slot = parseInt(v[prefix + "slot"], 10);
+                    if (metamagic && !isNaN(slot)){
+                        spellLevel = slot;
+                    }
+                    totalListed[classNum][spellLevel] += 1;
+                    if (!doNotProcess){
+                        uses = parseInt(v[prefix + "used"], 10) || 0;
+                        totalPrepped[classNum][spellLevel] += uses;
+                    }
+                } else {
+                    TAS.warn("PFSpells.getSpellTotals: Spelllevel NAN: spellLevel:"+ spellLevel);
                 }
-            } else {
-                TAS.warn("PFSpells.getSpellTotals: Spelllevel NAN: spellLevel:"+ spellLevel);
+            } catch (err2){
+                TAS.error("PFSpells.getSpellTotals err2",err2);
             }
         });
 
         _.each(PFConst.spellClassIndexes, function (classidx) {
             _.each(spellLevels, function (spellLevel) {
-                var prefix="spellclass-" + classidx + "-level-" + spellLevel ;
-                if ((parseInt(v[prefix + "-total-listed"], 10) || 0) !== totalListed[classidx][spellLevel]) {
+                var prefix="spellclass-" + classidx + "-level-" + spellLevel , total=0,prepped=0,perday=0;
+                total = parseInt(v[prefix + "-total-listed"], 10) || 0;
+                if (total!== totalListed[classidx][spellLevel]) {
                     setter[prefix + "-total-listed"] = totalListed[classidx][spellLevel];
                 }
-                if ((parseInt(v[prefix + "-spells-prepared"], 10) || 0) !== totalPrepped[classidx][spellLevel]) {
-                    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
-                    setter[prefix + spellLevel + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
+                //prepped  = parseInt(v[prefix + "-spells-prepared"], 10) || 0;
+                perday = parseInt(v[prefix + "-spells-per-day"], 10) || 0;
+                if ( casterTypes[classidx]>0 && !doNotProcess){
+                    //if (prepped !== totalPrepped[classidx][spellLevel]) {
+                    //    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
+                    //}
+                    if (perday !== totalPrepped[classidx][spellLevel]) {
+                        setter[prefix + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
+                    }
+                } else {
+                    //if (prepped !== 0){
+                    //    setter[prefix + "-spells-prepared"] =0;
+                    //}
+                    if (perday !== 0){
+                        setter[prefix + "-spells-per-day"] = 0;
+                    }
                 }
             });
         });
@@ -358,6 +417,7 @@ function getSpellTotals  (ids, v, setter) {
         return setter;
     }
 }
+
 export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.resetSpellsTotals");
@@ -380,6 +440,7 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 _.each(spellLevels, function (spellLevel) {
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-total-listed");
                     fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-prepared");
+                    fields.push("spellclass-" + classidx + "-level-" + spellLevel + "-spells-per-day");
                 });
             });
             getAttrs(fields, function (v) {
@@ -501,6 +562,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                 setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
                 setter[prefix + "source-spell"] = itemId;
                 setter[prefix+"group"]="Spell";
+				setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
             }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
@@ -1527,7 +1589,7 @@ var events = {
     repeatingSpellEventsPlayer: {
         "change:repeating_spells:DC_misc change:repeating_spells:slot change:repeating_spells:Concentration_misc change:repeating_spells:range change:repeating_spells:range_pick change:repeating_spells:CL_misc change:repeating_spells:SP_misc": [updateSpell],
         "change:repeating_spells:spell_lvlstr": [importFromCompendium],
-        "change:repeating_spells:used": [resetSpellsTotals, updatePreparedSpellState],
+        "change:repeating_spells:used": [updateSpellsPerDay, updatePreparedSpellState],
         "change:repeating_spells:slot": [updateSpellSlot]
     },
     repeatingSpellEventsEither: {
@@ -1563,6 +1625,12 @@ function registerEventHandlers  () {
             resetCommandMacro();
         }
     }));
+
+   	on("remove:repeating_spells", TAS.callback(function eventUpdateRemoveLinkedSpell(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.spell , SWUtils.getRowId(eventInfo.sourceAttribute));
+	}));	
+    
     on("remove:repeating_spells change:repeating_spells:spellclass_number change:repeating_spells:spell_level change:repeating_spells:slot change:repeating_spells:used change:repeating_spells:school change:repeating_spells:metamagic change:repeating_spells:isDomain change:repeating_spells:isMythic change:_reporder_repeating_spells", TAS.callback(function eventRepeatingSpellAffectingMenu(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {

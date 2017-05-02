@@ -11,6 +11,7 @@ import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFAttackOptions from  './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
+import * as PFAttacks from './PFAttacks';
 
 var wornEquipBaseRowsOld = ["Belt", "Body", "Chest", "Eyes", "Feet", "Hands", "Head", "Headband", "Neck", "Ring1", "Ring2", "Shoulders", "Wrist"],
 wornEquipBaseRowsNew = wornEquipBaseRowsOld.concat(["Armor3","Shield3"]),
@@ -24,6 +25,7 @@ equipMap = {'noEquipType':0,'Weapon':1,'Armor':2,'Ammo':3,'Consumables':4,'Other
 groupMapForMenu = {0:'',1:'weapons',2:'armor-shield',3:'ammunition',4:'consumables',5:'other-magic-items',6:'gear-tool',7:'other-items',8:'charged-magics',9:'other-items-2'},
 wornEquipmentColumns = ["charges", "weight", "hp", "hp_max", "value"],
 wornLocTab = -1,
+totaledFields = {'value':1,'hp':1,'weight':1},
 commonLinkedAttributes = ["attack-type", "range", "masterwork", "crit-target", "crit-multiplier", "damage-dice-num", "damage-die", "damage",
     "precision_dmg_macro", "precision_dmg_type", "critical_dmg_macro", "critical_dmg_type"],
 defaultRepeatingMacro='&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-item}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{hasuses=@{has_uses}}} {{qty=@{qty}}} {{qtymax=@{qty_max}}} {{shortdesc=@{short-description}}} {{description=@{description}}}',
@@ -101,28 +103,45 @@ function getWornItemNameField (location) {
  *@param {function} callback to call when done
  *@param {bool} silently if true send PFConst.silentParams to setAttrs
  */
-function updateRepeatingItems (callback, silently) {
+export function updateRepeatingItems (callback, silently, attrToUpdate) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
         }
     });
     try {
+        if (!attrToUpdate){
+            attrToUpdate = totaledFields;
+        }
         //TAS.debug("at updateRepeatingItems");
         TAS.repeating('item').attrs('item_total_weight', 'item-total-hp', 'item-total-hp_max', 'item-total-value').fields('item-weight', 'qty', 'qty_max', 'location', 'item-hp', 'item-hp_max', 'value').reduce(function (m, r) {
             try {
                 //TAS.debug("in weight add row, variables: weight: "+r.F['item-weight']+", qty:"+r.I.qty+", max:"+r.I.qty_max +", loc:"+ r.I.location);
-                if (r.I.qty > 0 && (r.I.location !== locationMap.NotCarried)) {
+                if (r.I.qty > 0) {
                     if (r.I.qty_max === 0 || r.I.qty_max===1) {
-                        m['item-weight'] += r.F['item-weight'] * r.I.qty;
-                        m.value += r.I.value * r.I.qty;
+                        if(attrToUpdate.weight && r.I.location !== locationMap.NotCarried) {
+                            m['item-weight'] += r.F['item-weight'] * r.I.qty;
+                        }
+                        if (attrToUpdate.value){
+                            m.value += r.I.value * r.I.qty;
+                        }
+                        if (attrToUpdate.hp){
+                            m['item-hp'] += r.I['item-hp']* r.I.qty;
+                            m['item-hp_max'] += r.I['item-hp_max']* r.I.qty;
+                        }
                     } else {
-                        m['item-weight'] += r.F['item-weight'];
-                        m.value += r.I.value;
+                        if(attrToUpdate.weight && r.I.location !== locationMap.NotCarried) {
+                            m['item-weight'] += r.F['item-weight'];
+                        }
+                        if (attrToUpdate.value){
+                            m.value += r.I.value;
+                        }
+                        if (attrToUpdate.hp){
+                            m['item-hp'] += r.I['item-hp'];
+                            m['item-hp_max'] += r.I['item-hp_max'];
+                        }
                     }
                 }
-                m['item-hp'] += r.I['item-hp'];
-                m['item-hp_max'] += r.I['item-hp_max'];
             } catch (errinner) {
                 TAS.error("PFInventory.updateRepeatingItems inner error", errinner);
             } finally {
@@ -132,12 +151,18 @@ function updateRepeatingItems (callback, silently) {
             'item-weight': 0,
             'item-hp': 0,
             'item-hp_max': 0,
-            value: 0
+            'value': 0
         }, function (m, r, a) {
-            a.S['item_total_weight'] = m['item-weight'];
-            a.S['item-total-hp'] = m['item-hp'];
-            a.S['item-total-hp_max'] = m['item-hp_max'];
-            a.S['item-total-value'] = m.value;
+            if(attrToUpdate.weight){
+                a.S['item_total_weight'] = m['item-weight'];
+            }
+            if (attrToUpdate.hp){
+                a.S['item-total-hp'] = m['item-hp'];
+                a.S['item-total-hp_max'] = m['item-hp_max'];
+            }
+            if (attrToUpdate.value){
+                a.S['item-total-value'] = m.value;
+            }
         }).execute(done);
     } catch (err) {
         TAS.error("PFInventory.updateRepeatingItems", err);
@@ -370,7 +395,7 @@ function migrateWornEquipment (callback) {
                         //TAS.debug("matchingField=" + matchingField);
                         if (matchingField) {
                             isNewRow = false;
-                            newRowId = SWUtils.getRowId(matchingField);//.replace("repeating_item_", "").replace("_name", "");
+                            newRowId = SWUtils.getRowId(matchingField);
                         } else {
                             newRowId = generateRowID();
                         }
@@ -900,6 +925,8 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
             silentSetter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
+            setter[prefix+'link_type']=PFAttacks.linkedAttackType.equipment;
+
             //TAS.debug("creating new attack", setter);
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
@@ -1228,8 +1255,7 @@ export function importFromCompendium (eventInfo){
                     }
                     setter[itemprefix+"defense-type"]=tempstr;
                 }
-                
-            } else  {
+            } else {
                 currType=getEquipmentTypeFromName(name);
             }
             if (currType<0){
@@ -1548,11 +1574,18 @@ function registerEventHandlers  () {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             updateEquipmentLocation(null,null,null,eventInfo);
+            getAttrs(['repeating_item_location','repeating_item_old_location'],function(v){
+                var newLoc=parseInt(v.repeating_item_location,10),oldLoc=parseInt(v.repeating_item_old_location,10);
+                if (newLoc!==locationMap.NotCarried || (oldLoc !== locationMap.NotCarried && oldLoc !== newLoc)){
+                    updateRepeatingItems(null,false,{'weight':1});
+                }
+            });
         }
     }));
     on('change:repeating_item:qty_max', TAS.callback(function eventUpdateItemMaxQty(eventInfo){
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateRepeatingItems();
             getAttrs(['repeating_item_qty_max'],function(v){
                 if(parseInt(v['repeating_item_qty_max'],10) > 1){
                     setAttrs({'repeating_item_has_uses':'true'},PFConst.silentParams);
@@ -1562,76 +1595,49 @@ function registerEventHandlers  () {
             });
         }
     }));
-    on('change:repeating_item:item-weight change:repeating_item:qty change:repeating_item:qty_max change:repeating_item:location', TAS.callback(function eventUpdateItemTotalWeight(eventInfo) {
+    on('change:repeating_item:qty', TAS.callback(function eventUpdateItemTotalQty(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            getAttrs(['repeating_item_location','repeating_item_old_location','repeating_item_item-weight','repeating_item_qty'],function(v){
-                var newloc = parseInt(v.repeating_item_location,10)||0,
-                oldloc = parseInt(v.repeating_item_old_location,10)||0;
-                    TAS.repeating('item').attrs('item_total_weight').fields('item-weight', 'qty', 'qty_max', 'location').reduce(function (m, r) {
-                        //TAS.debug"in weight add row, variables: weight: "+r.F['item-weight']+", qty:"+r.I.qty+", max:"+r.I.qty_max +", loc:"+ r.I.location);
-                        if (r.I.qty > 0 && (r.I.location !== locationMap.NotCarried)) {
-                            //TAS.debug("adding "+r.F['item-weight']);
-                            if (r.I.qty_max === 0 || r.I.qty_max===1) {
-                                m['item-weight'] += r.F['item-weight'] * r.I.qty;
-                            } else {
-                                m['item-weight'] += r.F['item-weight'];
-                            }
-                        }
-                        return m;
-                    }, {
-                        'item-weight': 0
-                    }, function (m, r, a) {
-                        a.S['item_total_weight'] = m['item-weight'];
-                    }).execute();
+            getAttrs(['repeating_item_qty_max'],function(v){
+                var qtymax=parseInt(v.repeating_item_qty_max,10)||0;
+                if (qtymax ===0 || qtymax === 1){
+                    updateRepeatingItems();
+                }
             });
         }
     }));
-    on('change:repeating_item:item-hp change:repeating_item:item-hp_max', TAS.callback(function eventUpdateItemTotalHp(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        TAS.repeating('item').attrs('item-total-hp', 'item-total-hp_max').fields('item-hp', 'item-hp_max').reduce(function (m, r) {
-            m['item-hp'] += r.I['item-hp'];
-            m['item-hp_max'] += r.I['item-hp_max'];
-            return m;
-        }, {
-            'item-hp': 0,
-            'item-hp_max': 0
-        }, function (m, r, a) {
-            a.S['item-total-hp'] = m['item-hp'];
-            a.S['item-total-hp_max'] = m['item-hp_max'];
-        }).execute();
-    }));
+    //hp total removed
+    //on('change:repeating_item:item-hp change:repeating_item:item-hp_max', TAS.callback(function eventUpdateItemTotalHp(eventInfo) {
+    //    TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+    //    if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+    //        updateRepeatingItems(null,true,{'hp':1});
+    //    }
+    //}));
     on('change:repeating_item:value', TAS.callback(function eventUpdateItemTotalValue(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        TAS.repeating('item').attrs('item-total-value').fields('value', 'qty').reduce(function (m, r) {
-            m.value += r.I.value * r.I.qty;
-            return m;
-        }, {
-            value: 0
-        }, function (m, r, a) {
-            a.S['item-total-value'] = m.value;
-        }).execute();
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateRepeatingItems(null,true,{'value':1});
+        }
     }));
+    on('change:repeating_item:item-weight', TAS.callback(function eventUpdateItemTotalWeight(eventInfo) {
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            getAttrs(['repeating_item_location'],function(v){
+                if (parseInt(v.repeating_item_location,10)!==locationMap.NotCarried){
+                    updateRepeatingItems(null,false,{'weight':1});
+                }
+            });
+        }
+    }));
+
     on('remove:repeating_item', TAS.callback(function eventRemoveItem(eventInfo) {
         var source='',setter = {}, itemId ='';
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             updateRepeatingItems();
             deleteWornRow(eventInfo.sourceAttribute);
         }
-        // Find matching source-item in repeating_weapon then clear the source-item and source-item-name attributes for each
-        itemId = eventInfo.sourceAttribute.replace("repeating_item_", "");
-        getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
-            _.each(idarray, function (currentID) { // loop through the set
-                getAttrs(["repeating_weapon_" + currentID + "_source-item"], function (v) {
-                    if (itemId === v["repeating_weapon_" + currentID + "_source-item"]) {
-                        setter["repeating_weapon_" + currentID + "_source-item"] = "";
-                        setter["repeating_weapon_" + currentID + "_source-item-name"] = "";
-                        //TAS.debug"clearing source-item for attack entry " + currentID, setter);
-                        setAttrs(setter, PFConst.silentParams);
-                    }
-                });
-            });
-        });
+        PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.equipment , SWUtils.getRowId(eventInfo.sourceAttribute));
     }));
     on('change:CP change:SP change:GP change:PP', TAS.callback(function eventUpdateCarriedCurrency(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

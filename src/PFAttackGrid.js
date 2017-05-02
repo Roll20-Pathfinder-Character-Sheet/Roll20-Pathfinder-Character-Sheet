@@ -183,7 +183,16 @@ export function resetCommandMacro (callback){
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
-
+export function updateMelee(eventInfo){
+    updateAttack('melee', eventInfo);
+    updateAttack('melee2', eventInfo);
+    updateAttack('CMB', eventInfo);
+    updateAttack('CMB2', eventInfo);
+}
+export function updateRanged(eventInfo){
+    updateAttack('ranged', eventInfo);
+    updateAttack('ranged2', eventInfo);    
+}
 export function migrate (callback, oldversion){
     var done = function () {
         TAS.debug("leaving PFAttackGrid.migrate");
@@ -239,22 +248,6 @@ function registerEventHandlers () {
             }
         }));
     });
-    on("change:buff_Melee-total", TAS.callback(function meleebuffEventMelee(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker") {
-            updateAttack('melee', eventInfo);
-            updateAttack('melee2', eventInfo);
-            updateAttack('CMB', eventInfo);
-            updateAttack('CMB2', eventInfo);
-        }
-    }));
-    on("change:buff_Ranged-total", TAS.callback(function meleebuffEventRanged(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker") {
-            updateAttack('ranged', eventInfo);
-            updateAttack('ranged2', eventInfo);
-        }
-    }));
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         applyConditions();

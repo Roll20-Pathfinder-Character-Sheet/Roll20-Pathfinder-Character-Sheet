@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.43,
+	version: 1.5,
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
 	repeatingSections: ["weapon", "ability", "class-ability", "feat", "racial-trait", "trait", "item", "npc-spell-like-abilities", "mythic-ability", "mythic-feat", "buff", "spells"],
@@ -20,7 +20,8 @@ export default {
 		"ranged-ability": "ranged-ability-mod",
 		"ranged2-ability": "ranged2-ability-mod",
 		"CMB-ability": "CMB-ability-mod",
-		"CMB2-ability": "CMB2-ability-mod"
+		"CMB2-ability": "CMB2-ability-mod",
+		"sanity-ability": "sanity-ability-mod"
 	},
 	//attribute of a macro, mapped to attribute to write evaluation to
 	//all simple macros that do not need to call other functions besides evaluateAndSetNumber
@@ -44,6 +45,8 @@ export default {
 		"customa10": "customa10-mod",
 		"customa11": "customa11-mod",
 		"customa12": "customa12-mod",
+		"sanity_score_misc": "sanity_score_misc-mod",
+		"sanity_threshold_misc": "sanity_threshold_misc-mod"
 	},
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],
