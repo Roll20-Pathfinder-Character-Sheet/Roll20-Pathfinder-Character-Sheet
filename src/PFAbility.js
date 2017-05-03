@@ -509,9 +509,10 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			} else if ((/ranged/i).test(attackType)) {
 				setter[weaponPrefix + "vs"] = "touch";
 				setter[weaponPrefix + "isranged"] = 1;
-				setter[weaponPrefix+"range"] = v[spellPrefix+"range_numeric"];
+				setter[weaponPrefix+"range"] = v[spellPrefix+"range_numeric"]||0;
 			} else {
 				setter[weaponPrefix + "vs"] = "touch";
+				setter[weaponPrefix+"range"] = 0;
 			}
 		}
 
@@ -536,7 +537,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			if (notes) { notes += ", ";}
 			notes += "Save: "+ v[spellPrefix+"save"] + " DC: [[@{" + spellPrefix + "savedc}]]";
 		}
-		if ( v[spellPrefix+"sr"]){
+		if ( v[spellPrefix+"abil-sr"]){
 			if (notes) { notes += ", ";}
 			notes += "Spell resist:"+ v[spellPrefix+"abil-sr"];
 		}
@@ -595,7 +596,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				}
 				idStr = newRowId+"_";
 				prefix += idStr;
-				setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
+				setter = setAttackEntryVals(slaPrefix, prefix,v,setter,weaponId);
 				setter[prefix + "source-ability"] = itemId;
 				setter[prefix+"group"]="Special";
 				setter[prefix+'link_type']=PFAttacks.linkedAttackType.ability;
