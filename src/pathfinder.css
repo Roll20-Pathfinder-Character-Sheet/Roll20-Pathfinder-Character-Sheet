@@ -1488,12 +1488,14 @@ h2.sheet-clickheader {
 	vertical-align: top;
 }
 
-
 .sheet-refreshbutton + span::before {
     font-family: "Pictos" !important;
     content: '1';
     vertical-align: top;	
     margin-top:.5em;
+}
+.sheet-small-label2 .sheet-refreshbutton + span::before {
+    margin-top:2px;
 }
 .sheet-table-cell.sheet-small-label.sheet-cssbutton-cell {
 	padding-top:1em;
@@ -2107,7 +2109,7 @@ button.sheet-text-button,
 .sheet-small-label2 > * {
     max-width: 100%;
 }*/
-.sheet-small-label2 > input,
+.sheet-small-label2 > input:not(.sheet-cssbutton),
 .sheet-small-label2 > select,
 .sheet-small-label2 > .sheet-calc {
     display: block;
@@ -2125,8 +2127,8 @@ button.sheet-text-button,
 }
 
 /* webkit (chrome) needs different css firefox centers perfectly, not chrome.must make it equal to 1.825 */
-.sheet-small-label2 > input[type="checkbox"],
-.sheet-small-label2 > input[type="radio"] {
+.sheet-small-label2 > input[type="checkbox"]:not(.sheet-cssbutton),
+.sheet-small-label2 > input[type="radio"]:not(.sheet-cssbutton) {
     -webkit-logical-height: 1em;
     -webkit-margin-before: .5em;
     -webkit-margin-after: .325em;
