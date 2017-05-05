@@ -156,7 +156,9 @@ input[readonly], input[disabled] {
 .sheet-progress-icon {
 	position:absolute;
 	z-index: 5;
-    top: -3em;
+    top: 4em;
+    color: red;
+    background-color: white;
 }
 .sheet-half,
 .sheet-desc,
