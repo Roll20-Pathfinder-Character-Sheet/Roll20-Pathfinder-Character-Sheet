@@ -80,8 +80,8 @@ export function migrate (outerCallback) {
  * @param {string} bufftype  -string from buffColumns
  * @param {string} buffmacro ?
  * @param {number} modamount - value for the buff
- * @param {jsobjectmap} newRowAttrs - object of {name:value} to pass to setAttrs
- * @return {jsobjectmap} return newRowAttrs after adding maps to it.
+ * @param {map} newRowAttrs - object of {name:value} to pass to setAttrs
+ * @returns {map} return newRowAttrs after adding maps to it.
  */
 export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
 	var newRowId = generateRowID();
@@ -154,14 +154,21 @@ function resetStatuspanel (callback) {
 	}
 }
 /* Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotals. */
+
+/** NO LONGER USED but keep since we're redoing buffs soon
+ * Updates buff_<col>_exists checkbox if the val paramter has a nonzero value
+ * also switches it off
+ * @param {string} col column name of buff to check
+ * @param {int} val value of the buff
+ */
 function toggleBuffStatusPanel (col, val) {
 	var field = "buff_" + col + "_exists";
 	getAttrs([field], function (v) {
 		var setter = {};
 		try {
-			if (val !== 0 && parseInt(v[field],10)!==1) {
+			if (val && parseInt(v[field],10)!==1) {
 				setter[field] = "1";
-			} else if (val === 0 && parseInt(v[field],10)===1) {
+			} else if (!val && parseInt(v[field],10)===1) {
 				setter[field] = "";
 			}
 		} catch (err) {
@@ -173,16 +180,6 @@ function toggleBuffStatusPanel (col, val) {
 		}
 	});
 }
-function setBuff (id, col, callback, silently) {
-	var done = function () {
-		if (typeof callback === "function") {
-			callback();
-		}
-	},
-	idStr = SWUtils.getRepeatingIDStr(id),
-	prefix = "repeating_buff_" + idStr + "buff-" + col;
-	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,done);
-}
 function updateBuffTotals (col, callback) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFBuffs.updateBuffTotals");
@@ -192,7 +189,7 @@ function updateBuffTotals (col, callback) {
 	}),
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
-		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
+		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
@@ -213,11 +210,21 @@ function updateBuffTotals (col, callback) {
 			try {
 				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
 				a.S['buff_' + col + '-total'] = m.mod||0;
-				toggleBuffStatusPanel(col, m.mod);
+				if (m.mod){
+					a.S['buff_' + col + '_exists'] = 1;
+				} else if (a.I['buff_' + col + '_exists']) {
+					a.S['buff_'+ col + '_exists'] = 0;
+				}
+				//toggleBuffStatusPanel(col, m.mod);
 				if (isAbility) {
 					a.S['buff_' + col + '-total_penalty'] = m.pen||0;
 					//TAS.debug("now also check ability penalty status");
-					toggleBuffStatusPanel(col + "_penalty", m.pen);
+					//toggleBuffStatusPanel(col + "_penalty", m.pen);
+					if (m.mod){
+						a.S['buff_' + col + '_penalty_exists'] = 1;
+					} else {
+						a.S['buff_'+ col + '_penalty_exists'] = 0;
+					}
 				}
 			} catch (errfinalset){
 				TAS.error("error setting buff_" + col + "-total");
@@ -227,6 +234,25 @@ function updateBuffTotals (col, callback) {
 		TAS.error("PFBuffs.updateBuffTotals error:" + col, err2);
 		done();
 	}
+}
+
+function setBuff (id, col, callback, silently) {
+	var done = function () {
+		if (typeof callback === "function") {
+			callback();
+		}
+	},
+	idStr = SWUtils.getRepeatingIDStr(id),
+	prefix = "" , setted;
+	prefix = "repeating_buff_" + idStr + "buff-" + col;
+	setted = function(newval,oldval,changed){
+		if(changed){
+			updateBuffTotals(col,done);
+		} else {
+			done();
+		}
+	};
+	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,setted,true,done);
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
@@ -298,23 +324,30 @@ function registerEventHandlers () {
 	//BUFFS
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
-		var eventToWatch = "change:repeating_buff:buff-" + col + "_macro-text";
-		on(eventToWatch, TAS.callback(function eventBuffMacroText(eventInfo) {
+		var prefix = "change:repeating_buff:buff-" + col ;
+		on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + col + ", event: " + eventInfo.sourceType);
 			setBuff(null, col);
 		}));
 		//Update total for a buff upon Mod change
-		eventToWatch = "change:repeating_buff:buff-" + col + " change:repeating_buff:buff-" + col + "-show";
-		on(eventToWatch, TAS.callback(function PFBuffs_updateBuffTotalsShow(eventInfo) {
+		on(prefix, TAS.callback(function PFBuffs_updateBuffRowVal(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker" || /show/i.test(eventInfo.sourceAttribute)) {
+			if (eventInfo.sourceType === "sheetworker" ) {
 				updateBuffTotals(col);
 			}
 		}));
+		on(prefix + "-show", TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
+			var id;
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
+				id = SWUtils.getRowId(eventInfo.sourceAttribute)||'';
+				updateBuffTotals(col);
+			}
+		}));		
 	});
 	on("change:repeating_buff:buff-enable_toggle remove:repeating_buff", TAS.callback(function PFBuffs_updateBuffTotalsToggle(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "sheetworker" || /toggle/i.test(eventInfo.sourceAttribute)) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			_.each(buffColumns, function (col) {
 				updateBuffTotals(col);
 			});
