@@ -11,7 +11,8 @@ import * as PFAttackGrid from './PFAttackGrid';
 import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
-
+import * as PFInitiative from './PFInitiative';
+import * as PFEncumbrance from './PFEncumbrance';
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 var buffColumns = ["Ranged", "Melee","CMB", 
 "DMG", "DMG_Ranged",
@@ -47,7 +48,9 @@ events = {
 		"Touch": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
-		"Check": [PFChecks.applyConditions]
+		"Check": [PFChecks.applyConditions],
+		"initative": [PFInitiative.updateInitiative],
+		"speed": [PFEncumbrance.updateModifiedSpeed]
 	}
 };
 //why did i make this? it just repeats the ability scores
@@ -190,11 +193,11 @@ function updateBuffTotals (col, callback) {
 		if (typeof callback === "function") {
 			callback();
 		}
-	}),
-	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
+	})
+	,	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
 		TAS.debug("at updateBuffTotals for "+ col+", isability:"+ isAbility);
-		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
+		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
@@ -234,6 +237,7 @@ function updateBuffTotals (col, callback) {
 						a.I['buff_'+ col + '_penalty_exists'] = 0;
 					}
 				}
+				TAS.debug("updateBuffTotals setting ",a);
 			} catch (errfinalset){
 				TAS.error("error setting buff_" + col + "-total",errfinalset);
 			}
@@ -310,7 +314,7 @@ export function recalculate (callback, silently, oldversion) {
 				});
 			} else {
 				_.each(buffColumns, function (col) {
-					updateBuffTotals(col, columnDone, silently);
+					updateBuffTotals(col, columnDone);
 				});
 			}
 		} catch (err) {

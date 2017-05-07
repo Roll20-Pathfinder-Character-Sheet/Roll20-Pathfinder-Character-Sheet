@@ -436,7 +436,10 @@ function updateModifiedSpeed  (callback) {
             callback();
         }
     }),
-    attribList = ["current-load", "speed-base", "speed-modified", "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult"];
+    attribList = ["current-load", "speed-base", "speed-modified", 
+    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult",
+    ,"buff-speed-total","buff-speed-total_penalty"
+    ];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -448,6 +451,8 @@ function updateModifiedSpeed  (callback) {
         base = parseInt(v["speed-base"], 10) || 0,
         speedDropdown = parseInt(v["max-dex-source"], 10) || 0,
         origRunMult = isNaN(parseInt(v["run-mult"], 10)) ? 4 : parseInt(v["run-mult"], 10),
+        buff = parseInt(v["buff-speed-total"],10)||0,
+        debuff =  parseInt(v["buff-speed-total_penalty"],10)||0,
         newSpeed = base,
         runMult = origRunMult,
         newRun = base * runMult,
@@ -459,6 +464,7 @@ function updateModifiedSpeed  (callback) {
         armorLoad = 0,
         setter = {};
         try {
+            newSpeed = newSpeed + buff + debuff;
             //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
             // #0: Armor, Shield & Load
             // #1: Armor & Shield only
