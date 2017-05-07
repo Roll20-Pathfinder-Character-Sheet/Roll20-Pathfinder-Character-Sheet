@@ -12,7 +12,16 @@ import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 
-var buffColumns = PFAbilityScores.abilities.concat(["Ranged", "Melee", "DMG", "AC", "Touch", "CMD", "HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel"]),
+//new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
+var buffColumns = ["Ranged", "Melee","CMB", 
+"DMG", "DMG_Ranged",
+ "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
+ "speed", "initiative",
+ "size",
+ "HP-temp", "Fort", "Will", "Ref", "Check","check_ability","check_skills", "CasterLevel",
+ 'STR','DEX','CON','INT','WIS','CHA',
+'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills'
+ ],
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -40,9 +49,9 @@ events = {
 		"HP-temp": [PFHealth.updateTempMaxHP],
 		"Check": [PFChecks.applyConditions]
 	}
-},
+};
 //why did i make this? it just repeats the ability scores
-allBuffColumns = buffColumns; //buffColumns.concat(PFAbilityScores.abilities),
+//buffColumns.concat(PFAbilityScores.abilities),
 /* this is so old no one will be using it*/
 export function migrate (outerCallback) {
 	var done = _.once(function () {
@@ -96,23 +105,17 @@ export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newR
 }
 function resetStatuspanel (callback) {
 	var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
-	buffTotalsColumns, fields;
+	 fields;
 	try {
-		buffTotalsColumns = _.extend(
-		_.map(allBuffColumns, function (col) {
-			return "buff_" + col + "-total";
-		}),
-		_.map(PFAbilityScores.abilities, function (col) {
-			return "buff_" + col + "-total_penalty";
-		})
-		);
 		fields = SWUtils.cartesianAppend(["buff_"], buffColumns, ["-total", "_exists"]).concat(
-			SWUtils.cartesianAppend(["buff_"], PFAbilityScores.abilities, ["-total", "-total_penalty", "_exists", "_penalty_exists"])
+			SWUtils.cartesianAppend(["buff_"], PFAbilityScores.abilities, [ "-total_penalty",  "_penalty_exists"])
+		).concat(
+			SWUtils.cartesianAppend(["buff_"], PFAbilityScores.abilities, [ "_skills-total_penalty",  "_skills_penalty_exists"])
 		);
 		getAttrs(fields, function (v) {
 			var setter = {};
 			try {
-				setter = _.reduce(allBuffColumns, function (memo, col) {
+				setter = _.reduce(buffColumns, function (memo, col) {
 					var val, field, exists;
 					try {
 						val = parseInt(v["buff_" + col + "-total"], 10) || 0; field = "buff_" + col + "_exists"; exists = parseInt(v[field], 10) || 0;
@@ -181,22 +184,27 @@ function toggleBuffStatusPanel (col, val) {
 	});
 }
 function updateBuffTotals (col, callback) {
-	var done = _.once(function () {
-		TAS.debug("leaving PFBuffs.updateBuffTotals");
+	var tempstr='',
+	done = _.once(function () {
+		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
+		TAS.debug("at updateBuffTotals for "+ col+", isability:"+ isAbility);
 		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
-				if (!(isAbility && tempM < 0)) {
-					m.mod += tempM;
-				} else {
-					m.pen += tempM;
+				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod);
+				if(tempM!==0){
+					if (!(isAbility && tempM < 0)) {
+						m.mod += tempM;
+					} else {
+						m.pen += tempM;
+					}
 				}
 			} catch (err) {
 				TAS.error("PFBuffs.updateBuffTotals error:" + col, err);
@@ -209,25 +217,25 @@ function updateBuffTotals (col, callback) {
 		}, function (m, r, a) {
 			try {
 				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
-				a.S['buff_' + col + '-total'] = m.mod||0;
+				a.I['buff_' + col + '-total'] = m.mod||0;
 				if (m.mod){
-					a.S['buff_' + col + '_exists'] = 1;
-				} else if (a.I['buff_' + col + '_exists']) {
-					a.S['buff_'+ col + '_exists'] = 0;
+					a.I['buff_' + col + '_exists'] = 1;
+				} else {
+					a.I['buff_'+ col + '_exists'] = 0;
 				}
 				//toggleBuffStatusPanel(col, m.mod);
 				if (isAbility) {
-					a.S['buff_' + col + '-total_penalty'] = m.pen||0;
+					a.I['buff_' + col + '-total_penalty'] = m.pen||0;
 					//TAS.debug("now also check ability penalty status");
 					//toggleBuffStatusPanel(col + "_penalty", m.pen);
-					if (m.mod){
-						a.S['buff_' + col + '_penalty_exists'] = 1;
+					if (m.pen){
+						a.I['buff_' + col + '_penalty_exists'] = 1;
 					} else {
-						a.S['buff_'+ col + '_penalty_exists'] = 0;
+						a.I['buff_'+ col + '_penalty_exists'] = 0;
 					}
 				}
 			} catch (errfinalset){
-				TAS.error("error setting buff_" + col + "-total");
+				TAS.error("error setting buff_" + col + "-total",errfinalset);
 			}
 		}).execute(done);
 	} catch (err2) {
@@ -243,16 +251,8 @@ function setBuff (id, col, callback, silently) {
 		}
 	},
 	idStr = SWUtils.getRepeatingIDStr(id),
-	prefix = "" , setted;
 	prefix = "repeating_buff_" + idStr + "buff-" + col;
-	setted = function(newval,oldval,changed){
-		if(changed){
-			updateBuffTotals(col,done);
-		} else {
-			done();
-		}
-	};
-	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,setted,true,done);
+	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,done,false);
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
@@ -262,7 +262,7 @@ export function recalculate (callback, silently, oldversion) {
 			callback();
 		}
 	}),
-	numColumns = _.size(allBuffColumns),
+	numColumns = _.size(buffColumns),
 	columnDone = _.after(numColumns, done),
 	colsDoneCount = 0,
 	recalculateBuffColumn = function (ids, col) {
@@ -305,11 +305,11 @@ export function recalculate (callback, silently, oldversion) {
 		//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
 		try {
 			if (_.size(ids) > 0) {
-				_.each(allBuffColumns, function (col) {
+				_.each(buffColumns, function (col) {
 					recalculateBuffColumn(ids, col);
 				});
 			} else {
-				_.each(allBuffColumns, function (col) {
+				_.each(buffColumns, function (col) {
 					updateBuffTotals(col, columnDone, silently);
 				});
 			}

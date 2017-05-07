@@ -239,7 +239,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 				if (currVal !== value) {
 					setter[writeField] = value;
 					setAttrs(setter, params, function () {
-						done(value, currVal, true);
+						done(value, currVal, true,currError);
 					});
 				} else {
 					done(value, currVal, false,currError);
@@ -276,8 +276,9 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			}
 		} catch (err) {
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
-			setter[writeField+'_error']=1;
-			setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
+			errordone(0,0,0,0);
+			//setter[writeField+'_error']=1;
+			//setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 }
