@@ -220,7 +220,7 @@ function updateBuffTotals (col, callback) {
 					a.S['buff_' + col + '-total_penalty'] = m.pen||0;
 					//TAS.debug("now also check ability penalty status");
 					//toggleBuffStatusPanel(col + "_penalty", m.pen);
-					if (m.mod){
+					if (m.pen){
 						a.S['buff_' + col + '_penalty_exists'] = 1;
 					} else {
 						a.S['buff_'+ col + '_penalty_exists'] = 0;
