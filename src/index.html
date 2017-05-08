@@ -1,3 +1,10 @@
+<!--
+-
+-
+-DEVELOPMENT NOT FOR PROD SUPPORT YET
+-
+-
+-->
 <input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comic sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
@@ -53,8 +60,9 @@
 	</div>
 	<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-cssbutton sheet-readonly-show" style="width:3em;" data-i18n-aria-label="edit-mode-title" checked /><span></span><span class="sheet-cssbutton-label" data-i18n="mode">Mode</span>
 	<input type="checkbox" name="attr_migrate1" value="1" class="sheet-noshow" aria-label="for the API to ensure sheets up to date" />
-	<input type="checkbox" name="attr_recalc1" value="1" class="sheet-cssbutton sheet-refreshbutton sheet-progress-show" data-i18n-aria-label="recalculate-cmd" /><span></span><span class="sheet-cssbutton-label" data-i18n="recalculate-abbrv">Recalc</span>
-	<span class="sheet-progress-icon" ><img src="http://i.imgur.com/XKktDjC.gif" />&nbsp;<span data-i18n="Recalculating">Recalculating...</span></span>
+	<input type="checkbox" name="attr_recalc1" value="1" class="sheet-cssbutton sheet-refreshbutton sheet-progress-show" data-i18n-aria-label="recalculate-cmd" /><span></span>
+	<span class="sheet-cssbutton-label" data-i18n="recalculate-abbrv">Recalc</span>
+	<span class="sheet-progress-icon" style="top: 5em; left: 17em;"><img src="http://i.imgur.com/XKktDjC.gif" style="vertical-align:top;"/>&nbsp;<span data-i18n="recalculating">Recalculating...</span></span>
 	<input type="checkbox" name="attr_config-show" value="1" class="sheet-cssbutton sheet-configbutton sheet-config-show" data-i18n-aria-label="display-settings-config" style="width:3em;" checked /><span></span><span class="sheet-cssbutton-label" data-i18n="settings">Settings</span>
 	<label class="sheet-small-label2 sheet-entry-20p"><input title="@{character_name}" type="text" name="attr_character_name" placeholder="Character Name" data-i18n-placeholder="character-name" /><span data-i18n="character-name">Character Name</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-entry-15p"><input title="@{player-name}" type="text" name="attr_player-name" placeholder="Player Name" data-i18n-placeholder="player-name" /><span data-i18n="player-name">Player Name</span></label>
@@ -383,10 +391,12 @@
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
 				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{toggle_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
-				<input type="hidden" name="attr_all_saves-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-abbrv}=@{will-macro-text}}} @{toggle_save_notes}" />
-				<input type="hidden" name="attr_fort-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes}" />
+<!-- moved/exposed in Saves section			
+				<input type="hidden" name="attr_all_saves-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-save}=@{will-macro-text}}} @{toggle_save_notes}" />
+				<input type="hidden" name="attr_fort-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude-abbrv}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes}" />
 				<input type="hidden" name="attr_ref-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{reflex}}} {{^{save}=@{ref-macro-text}}} @{toggle_save_notes}" />
 				<input type="hidden" name="attr_will-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-macro-text}}} @{toggle_save_notes}" />
+-->				
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
@@ -565,10 +575,11 @@
 									<span class="sheet-table-header" data-i18n-title="ability-drain-desc" data-i18n="drain">Drain</span>
 									<span class="sheet-table-header" data-i18n-title="debuff-title" data-i18n="debuff">Debuff</span>
 									<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
+									<span class="sheet-table-header sheet-hide-readonly sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|STR-Check}" type="roll" name="roll_STR-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} ]]  + [[ @{checks-cond}  ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="strength-abbrv">STR</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|STR-Check}" type="roll" name="roll_STR-Check" value="@{STR-check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="strength-abbrv">STR</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{STR}" type="text" name="attr_STR" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_STR-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{STR-mod}" type="number" name="attr_STR-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{STR-base}" type="text" name="attr_STR-base" value="10"/></span>
@@ -581,9 +592,10 @@
 										<span class="sheet-table-cell"><input title="@{STR-drain}" type="number" name="attr_STR-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_STR-total_penalty}" name="attr_buff_STR-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input title="@{STR-cond}" type="number" name="attr_STR-cond" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{STR-Check-macro-text}" name="attr_STR-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|DEX-Check}" type="roll" name="roll_DEX-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="dexterity-abbrv">DEX</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|DEX-Check}" type="roll" name="roll_DEX-Check" value="@{DEX-Check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="dexterity-abbrv">DEX</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{DEX}" type="text" name="attr_DEX" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_DEX-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{DEX-mod}" type="number" name="attr_DEX-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{DEX-base}" type="text" name="attr_DEX-base" value="10"/></span>
@@ -596,9 +608,10 @@
 										<span class="sheet-table-cell"><input title="@{DEX-drain}" type="number" name="attr_DEX-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_DEX-total_penalty}" name="attr_buff_DEX-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{DEX-cond}" type="number" name="attr_DEX-cond" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{DEX-Check-macro-text}" name="attr_DEX-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CON-Check}" type="roll" name="roll_CON-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{constitution}}} {{check=[[ 1d20 + [[ @{CON-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="constitution-abbrv">CON</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CON-Check}" type="roll" name="roll_CON-Check" value="@{CON-Check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="constitution-abbrv">CON</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CON}" type="text" name="attr_CON" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CON-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CON-mod}" type="number" name="attr_CON-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CON-base}" type="text" name="attr_CON-base" value="10"/></span>
@@ -611,9 +624,10 @@
 										<span class="sheet-table-cell"><input title="@{CON-drain}" type="number" name="attr_CON-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_CON-total_penalty}" name="attr_buff_CON-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{CON-cond}" type="number" name="attr_CON-cond" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{CON-Check-macro-text}" type="roll" name="attr_CON-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{constitution}}} {{check=[[ 1d20 + [[ @{CON-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|INT-Check}" type="roll" name="roll_INT-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intelligence}}} {{check=[[ 1d20 + [[ @{INT-mod} ]]  + [[ @{checks-cond}  ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="intelligence-abbrv">INT</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|INT-Check}" type="roll" name="roll_INT-Check" value="@{INT-Check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="intelligence-abbrv">INT</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{INT}" type="text" name="attr_INT" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_INT-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{INT-mod}" type="number" name="attr_INT-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{INT-base}" type="text" name="attr_INT-base" value="10"/></span>
@@ -626,9 +640,10 @@
 										<span class="sheet-table-cell"><input title="@{INT-drain}" type="number" name="attr_INT-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_INT-total_penalty}" name="attr_buff_INT-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{INT-cond}" type="number" name="attr_INT-cond" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{INT-Check-macro-text}" name="attr_INT-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intelligence}}} {{check=[[ 1d20 + [[ @{INT-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|WIS-Check}" type="roll" name="roll_WIS-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{wisdom}}} {{check=[[ 1d20 + [[ @{WIS-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="wisdom-abbrv">WIS</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|WIS-Check}" type="roll" name="roll_WIS-Check" value="@{WIS-Check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="wisdom-abbrv">WIS</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{WIS}" type="text" name="attr_WIS" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_WIS-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{WIS-mod}" type="number" name="attr_WIS-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{WIS-base}" type="text" name="attr_WIS-base" value="10"/></span>
@@ -641,9 +656,10 @@
 										<span class="sheet-table-cell"><input title="@{WIS-drain}" type="number" name="attr_WIS-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_WIS-total_penalty}" name="attr_buff_WIS-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{WIS-cond}" type="number" name="attr_WIS-cond" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{WIS-Check-macro-text}" name="attr_WIS-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{wisdom}}} {{check=[[ 1d20 + [[ @{WIS-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 									<div class="sheet-table-row">
-										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CHA-Check}" type="roll" name="roll_CHA-Check" value="@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{charisma}}} {{check=[[ 1d20 + [[ @{CHA-mod} ]]  + [[ @{checks-cond} ]] ]]}}">&nbsp;<span style="vertical-align: middle;" data-i18n="charisma-abbrv">CHA</span></button></span>
+										<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|CHA-Check}" type="roll" name="roll_CHA-Check" value="@{CHA-Check-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="charisma-abbrv">CHA</span></button></span>
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CHA}" type="text" name="attr_CHA" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CHA-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CHA-mod}" type="number" name="attr_CHA-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CHA-base}" type="text" name="attr_CHA-base" value="10"/></span>
@@ -656,6 +672,7 @@
 										<span class="sheet-table-cell"><input title="@{CHA-drain}" type="number" name="attr_CHA-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_CHA-total_penalty}" name="attr_buff_CHA-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{CHA-cond}" type="number" name="attr_CHA-cond" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" title="@{CHA-Check-macro-text}" name="attr_CHA-Check-macro-text">@{PC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{charisma}}} {{check=[[ 1d20 + [[ @{CHA-mod} ]]  + [[ @{checks-cond}  ]] ]]}}</textarea></span>
 									</div>
 								</div>
 							</div>
@@ -1068,7 +1085,7 @@
 								<div class="sheet-table">
 									<div class="sheet-table-row sheet-sect sheet-expand" style="vertical-align:top;">
 										<input type="checkbox" class="sheet-showarrow sheet-macro-text-show sheet-hide-readonly" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_macro-text-show" value="1" style="margin-left:.25em;">
-										<label class="sheet-showsect sheet-macro-text-showlabel sheet-hide-readonly" data-i18n="macro-text">Macro Text</label>
+										<label class="sheet-showsect sheet-macro-text-showlabel sheet-hide-readonly sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
 										<input type="checkbox" class="sheet-showarrow sheet-init-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:.25em;">
 										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>								
 										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit;">
@@ -1165,6 +1182,7 @@
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="buff">Buff</span>
+							<span class="sheet-table-header sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 						</div>
 						<div class="sheet-table-group">
 							<div class="sheet-table-row sheet-save">
@@ -1196,6 +1214,7 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Fort-total}" type="number" name="attr_buff_Fort-total" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{fort-save-macro-text}" name="attr_fort-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes}</textarea></span>
 							</div>
 							<div class="sheet-table-row sheet-save">
 								<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|Ref-Save}" type="roll" name="roll_Ref-Save" value="@{PC-whisper} @{ref-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="reflex-abbrv">Ref</span></button></span>
@@ -1226,6 +1245,7 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Ref-total}" type="number" name="attr_buff_Ref-total" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{ref-save-macro-text}" name="attr_ref-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{reflex}}} {{^{save}=@{ref-macro-text}}} @{toggle_save_notes}</textarea></span>
 							</div>
 							<div class="sheet-table-row sheet-save">
 								<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|Will-Save}" type="roll" name="roll_Will-Save" value="@{PC-whisper} @{will-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="willpower-abbrv">Will</span></button></span>
@@ -1256,13 +1276,26 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Will-total}" type="number" name="attr_buff_Will-total" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{will-save-macro-text}" name="attr_will-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower}}} {{^{save}=@{will-macro-text}}} @{toggle_save_notes}</textarea></span>
 							</div>
 						</div>
 					</div>
-					<div class="sheet-table sheet-saves-notes-table">
-						<div class="sheet-show-readonly sheet-inverse-readonly" style="margin-top: 1em;">&nbsp;</div> <!-- add whitespace in compact mode -->
-						<span class="sheet-table-cell" style="width:100%;"><textarea class="sheet-inline-textarea" title="@{Save-notes}" name="attr_Save-notes" placeholder="Put notes about context-sensitive Saving Throw bonuses here." data-i18n-placeholder="save-notes-place"></textarea></span>
-						<span class="sheet-table-cell sheet-nowrap"><label><input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}"><b title="Show Save Notes" data-i18n-title="options-defenses-save-title" data-i18n-aria-label="options-defenses-save-title" data-i18n="include-save-notes">Include Save Notes in roll</b></label></span>
+					<div class="sheet-table">
+						<div class="sheet-table-row sheet-sect sheet-expand" style="vertical-align: top;">
+							<input type="checkbox" class="sheet-showarrow sheet-macro-text-show sheet-hide-readonly" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_all-saves-macro-show" value="1" style="margin-left: 0.25em" aria-label="Click to expand">
+							<label class="sheet-showsect sheet-all-saves-macro-showlabel sheet-hide-readonly sheet-super sheet-note-d" data-i18n="all-saves-macro">All Saves Macro</label>
+							<input type="checkbox" class="sheet-showarrow sheet-save-notes-show" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_save-notes-show" value="1" style="margin-left: 0.25em;" aria-label="Click to expand">
+							<label class="sheet-showsect sheet-save-notes-showlabel" data-i18n="notes">Notes</label>        
+							<div class="sheet-macro-text sheet-hide-readonly" style="width: 100% ; height: auto ; clear: both ; padding-bottom: 0.25em ; background-color: inherit;">
+								<textarea class="sheet-inline-textarea" name="attr_all_saves-macro" title="@{all_saves-macro} | Only affects the All Saves roll from the Defenses Menu button." data-i18n-title="all-saves-macro-title">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-save}=@{will-macro-text}}} @{toggle_save_notes}</textarea>
+							</div>        
+							<div class="sheet-save-notes" style="vertical-align: top ; width: 100% ; height: auto ; clear: both;">
+								<div class="sheet-show-readonly sheet-inverse-readonly" style="margin-top: 1em;">&nbsp;</div> <!-- add whitespace in compact mode -->
+								<span class="sheet-table-cell" style="width:100%;">
+								<textarea class="sheet-inline-textarea" title="@{Save-notes}" name="attr_Save-notes" placeholder="Put notes about context-sensitive Saving Throw bonuses here." data-i18n-placeholder="save-notes-place"></textarea></span>
+								<span class="sheet-table-cell sheet-nowrap"><label><input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}"><b title="Show Save Notes" data-i18n-title="options-defenses-save-title" data-i18n-aria-label="options-defenses-save-title" data-i18n="include-save-notes">Include Save Notes in roll</b></label></span>	
+							</div>
+						</div>
 					</div>
 					<input type="hidden" name="attr_var_defensive-abilities_notes" value="{{defensive-abilities_notes=@{npc-defensive-abilities}}}" disabled />
 					<input type="hidden" name="attr_var_dr_notes" value="{{dr_notes=@{DR}}}" disabled />
@@ -1817,15 +1850,15 @@
 						<span class="sheet-table-header sheet-divider">&nbsp;</span>
 						<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 						<span class="sheet-table-header sheet-left-border" data-i18n="confirm-critical-bonus-abbrv" data-i18n-title="crit-confirmation-bonus" data-i18n-aria-label="crit-confirmation-bonus">Crit Conf</span>
-						<span class="sheet-table-header" style="width:18%" data-i18n="description">Description</span>
+						<span class="sheet-table-header sheet-hide-readonly" style="width:15%" data-i18n="description">Description</span>
+						<span class="sheet-table-header sheet-hide-readonly sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 					</div>
 					<div class="sheet-table-group">
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee-Attack-Roll}" name="roll_Melee-Attack-Roll" value="@{PC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee-Attack-Roll}" name="roll_npc-Melee-Attack-Roll" value="@{NPC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>
-								<input type="hidden" name="attr_Melee-Attack-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}}" />
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee-Attack-Roll}" name="roll_npc-Melee-Attack-Roll" value="@{NPC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>								
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee}" type="number" name="attr_attk-melee" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -1852,7 +1885,8 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_melee_desc} : condition" type="text" name="attr_attk_melee_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee_desc} : condition" type="text" name="attr_attk_melee_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}}</textarea></span>
 						</div>
 						<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_atkm2_show" value="1" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
 						<div class="sheet-table-row sheet-sect">
@@ -1860,7 +1894,6 @@
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
 								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
-								<input type="hidden" name="attr_Melee2-Attack-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}}" />
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -1887,14 +1920,14 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-Placeholder="alternate-ability-melee-desc" Placeholder="Alternate ability melee attack" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-Placeholder="alternate-ability-melee-desc" Placeholder="Alternate ability melee attack" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}}</textarea></span>
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged-Attack-Roll}" name="roll_Ranged-Attack-Roll" value="@{PC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged-Attack-Roll}" name="roll_npc-Ranged-Attack-Roll" value="@{NPC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>
-								<input type="hidden" name="attr_Ranged-Attack-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}" />
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged-Attack-Roll}" name="roll_npc-Ranged-Attack-Roll" value="@{NPC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>								
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged}" type="number" name="attr_attk-ranged" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -1921,15 +1954,15 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged_crit_conf}" type="number" name="attr_attk_ranged_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}</textarea></span>
 						</div>
 						<input type="checkbox" class="sheet-nextitem-show" name="attr_ranged_2_show" value="1" role="placeholder" />
 						<div class="sheet-table-row sheet-ranged2">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged2-Attack-Roll}" name="roll_Ranged2-Attack-Roll" value="@{PC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged2-Attack-Roll}" name="roll_npc-Ranged2-Attack-Roll" value="@{NPC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>
-								<input type="hidden" name="attr_Ranged2-Attack-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}}" />
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged2-Attack-Roll}" name="roll_npc-Ranged2-Attack-Roll" value="@{NPC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>								
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged2}" type="number" name="attr_attk-ranged2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -1956,14 +1989,14 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged2_crit_conf}" type="number" name="attr_attk_ranged2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_ranged2_desc}" type="text" name="attr_attk_ranged2_desc" value="" data-i18n-Placeholder="alternate-ability-ranged-desc" Placeholder="Alternate ability ranged attack" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged2_desc}" type="text" name="attr_attk_ranged2_desc" value="" data-i18n-Placeholder="alternate-ability-ranged-desc" Placeholder="Alternate ability ranged attack" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged2-Attack-macro" title="@{Ranged2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}}</textarea></span>
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB-Check}" name="roll_CMB-Check" value="@{PC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB-Check}" name="roll_npc-CMB-Check" value="@{NPC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>
-								<input type="hidden" name="attr_CMB-Check-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}" />
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB-Check}" name="roll_npc-CMB-Check" value="@{NPC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>								
 							</span>
 							<span class="sheet-table-cell"><input title="@{CMB}" type="number" name="attr_CMB" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -1990,15 +2023,15 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb_crit_conf}" type="number" name="attr_attk_cmb_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}</textarea></span>
 						</div>
 						<input type="checkbox" class="sheet-nextitem-show" name="attr_cmb_2_show" value="1" role="placeholder" />
 						<div class="sheet-table-row sheet-cmb2">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB2-Check}" name="roll_CMB2-Check" value="@{PC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB2-Check}" name="roll_npc-CMB2-Check" value="@{NPC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>
-								<input type="hidden" name="attr_CMB2-Check-macro" value="&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}" />
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB2-Check}" name="roll_npc-CMB2-Check" value="@{NPC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>								
 							</span>
 							<span class="sheet-table-cell"><input title="@{CMB2}" type="number" name="attr_CMB2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
@@ -2025,7 +2058,8 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb2_crit_conf}" type="number" name="attr_attk_cmb2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-Placeholder="alternate-ability-cmb-desc" Placeholder="Alternate ability combat maneuver" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-Placeholder="alternate-ability-cmb-desc" Placeholder="Alternate ability combat maneuver" /></span>
+							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}</textarea></span>
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;" data-i18n="damage">Damage</span></span>
@@ -6304,7 +6338,7 @@
 								<label class="sheet-divider-db-lg sheet-nor-sect sheet-sect-inverse">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-highlight sheet-nor-sect sheet-sect-inverse" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -6341,7 +6375,7 @@
 											<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation" >CL basis</span>
 										</label>
 										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>											
-										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink" style="height:auto;">
 											<input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="sheet-error-mshow" />
 											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" style="display:inline-block;"></textarea>
 											<input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="sheet-narrow-numbers sheet-calc sheet-linked-cellfield sheet-highlight" style="display:inline-block;" readonly />
@@ -8771,7 +8805,7 @@
 								<span class="sheet-repeating-rollbutton sheet-npc-only"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_item_$X_npc-roll}" value="@{NPC-whisper} @{macro-text}"></button></span>
 								<label class="sheet-small-label2 sheet-small-label sheet-hide-readonly" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_item_$X_showinmenu}" value="1"  /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
 								<label class="sheet-small-label2 sheet-small-label"><input title="@{repeating_item_$X_name}" type="text" name="attr_name" value="" accept="Name" placeholder="Item Name" data-i18n-placeholder="item-name"><span data-i18n="name">Name</span></label>
-								<label class="sheet-small-label2 sheet-small-label"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_item_$X_short-description}" name="attr_short-description" placeholder="Short Description" data-i18n-placeholder="short-description" data-i18n-aria-label="worn-equipment-short-desc-title" ></textarea><span data-i18n-title="worn-equipment-short-desc-title" data-i18n-aria-label="worn-equipment-short-desc-title" data-i18n="short-description-abbrv">Short Desc</span></label>
+								<label class="sheet-small-label2 sheet-small-label" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_item_$X_short-description}" name="attr_short-description" placeholder="Short Description" data-i18n-placeholder="short-description" data-i18n-aria-label="worn-equipment-short-desc-title" ></textarea><span data-i18n-title="worn-equipment-short-desc-title" data-i18n-aria-label="worn-equipment-short-desc-title" data-i18n="short-description-abbrv">Short Desc</span></label>
 								<label class="sheet-small-label2 sheet-small-label sheet-items-toggle-except-on-all" style="width:15%;">
 									<select title="@{repeating_item_$X_equip-type}" name="attr_equip-type" class="sheet-select-small">
 										<option value="0" data-i18n="select-one-default" selected>Select One</option>
@@ -8930,7 +8964,7 @@
 											<span data-i18n="default-size">Default Size</span>
 										</label>
 										<br/>
-										<label class="sheet-small-label2 sheet-entry-20p-shrink" >
+										<label class="sheet-small-label2 sheet-entry-20p-shrink" style="height:auto;">
 											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_item-precision_dmg_macro" title="@{repeating_item_$X_item-precision_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 											<span class="sheet-super sheet-note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
 										</label>
@@ -8938,7 +8972,7 @@
 											<input style="height:2.15em;" type="text" name="attr_item-precision_dmg_type" title="@{repeating_item_$X_item-precision_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
 											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-20p-shrink">
+										<label class="sheet-small-label2 sheet-entry-20p-shrink" style="height:auto;">
 											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_item-critical_dmg_macro" title="@{repeating_item_$X_item-critical_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 											<span class="sheet-super sheet-note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
 										</label>
@@ -9023,7 +9057,7 @@
 							<span data-i18n="npc-statblock-textarea-instructions">For multiline textareas, paste in exactly as appears in source. Keep newlines in input.</span> 
 							<br/>
  							<input class="sheet-csstextbutton sheet-progress-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
-							<span class="sheet-progress-icon"><img src="http://i.imgur.com/XKktDjC.gif" />&nbsp;<span data-i18n="loading">Loading...</span></span>
+							<span class="sheet-progress-icon"><img src="http://i.imgur.com/XKktDjC.gif" style="vertical-align:top;" />&nbsp;<span data-i18n="loading">Loading...</span></span>
 							<span class="sheet-compendium-note sheet-hide-readonly" >
 								<span class="sheet-compendium-icon">i</span>
 								<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
@@ -10710,7 +10744,7 @@
 								<label class="sheet-divider-db-lg sheet-nor-sect sheet-sect-inverse">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-highlight sheet-nor-sect sheet-sect-inverse" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -10747,7 +10781,7 @@
 											<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation" >CL basis</span>
 										</label>
 										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>											
-										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink" style="height:auto;">
 											<input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="sheet-error-mshow" />
 											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" style="display:inline-block;"></textarea>
 											<input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="sheet-narrow-numbers sheet-calc sheet-linked-cellfield sheet-highlight" style="display:inline-block;" readonly />
@@ -12880,7 +12914,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/02/2017 9:00am ET &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/07/2017 9:50pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
