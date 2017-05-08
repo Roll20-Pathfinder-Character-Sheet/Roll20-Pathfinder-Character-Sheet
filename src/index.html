@@ -13,7 +13,6 @@
 <input type="checkbox" name="attr_use_background" value="1" class="sheet-graph-paper sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_background" value="2" class="sheet-parchment-1 sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_background" value="3" class="sheet-parchment-2 sheet-noshow" role="presentation" />
-
 <div style="width:100%;min-width:100%;margin-top:-1em;" class="sheet-pf-wrapper">
 	<span class="sheet-offscreen" data-i18n="instru-a-3">Screenreader users should check expand all to ensure all content is visible to the reader. It is the second checkbox on this page.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-2">Screenreader users please turn on reading of Title attributes. A lot of information is still in the titles.</span>
@@ -72,7 +71,6 @@
 	<label class="sheet-small-label2 sheet-npc-only sheet-narrow-numbers"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /><span data-i18n="hit-dice-abbrv">HD</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="sheet-calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
 	<div class="sheet-cheat"></div>
-
 	<input type="checkbox" name="attr_use_horror_adventures" value="1" class="sheet-horror-show sheet-noshow" />
 	<div class="sheet-pfsheet">
 		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
@@ -382,21 +380,9 @@
 				<button type="roll" name="roll_spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="/w &quot;@{character_name}&quot; @{spellclass-1-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-1}}" title="%{selected|spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="/w &quot;@{character_name}&quot; @{spellclass-2-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-2}}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_items" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
-
-				<input type="hidden" name="attr_fort-macro-text" value="[[ 1d20 + [[ @{Fort} ]] ]]" />
-				<input type="hidden" name="attr_ref-macro-text" value="[[ 1d20 + [[ @{Ref} ]] ]]" />
-				<input type="hidden" name="attr_will-macro-text" value="[[ 1d20 + [[ @{Will} ]] ]]" />
-
-
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
 				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{toggle_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
-<!-- moved/exposed in Saves section			
-				<input type="hidden" name="attr_all_saves-macro" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-save}=@{will-macro-text}}} @{toggle_save_notes}" />
-				<input type="hidden" name="attr_fort-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude-abbrv}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes}" />
-				<input type="hidden" name="attr_ref-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{reflex}}} {{^{save}=@{ref-macro-text}}} @{toggle_save_notes}" />
-				<input type="hidden" name="attr_will-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-macro-text}}} @{toggle_save_notes}" />
--->				
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
@@ -549,7 +535,6 @@
 						<span class="sheet-cheat"></span>
 						<label class="sheet-small-label2 sheet-wide-textareaparent"><textarea class="sheet-inline-textarea" title="@{character_description}" type="text" name="attr_character_description" placeholder="Description" data-i18n-placeholder="description"></textarea><span data-i18n="description">Description</span></label>
 					</div>
-					
 				<div class="sheet-row sheet-row1 sheet-flex-row">
 					<input class="sheet-prestige-show sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />	
 					<input type="hidden" name="attr_checks-cond" value="0" />
@@ -1151,7 +1136,10 @@
 			<div class="sheet-section2 sheet-section sheet-section-defenses" role="region" aria-label="Defenses" data-i18n-aria-label="defenses">
 				<h1 class="sheet-selected-tabtitle" data-i18n="defenses">Defenses</h1>
 				<div style="display:none;">
-					<button type="roll" name="roll_All-Saves" class="sheet-command-button" value="@{PC-whisper} @{all_saves-macro}" title="%{selected|All-Saves}" data-i18n="all-saves">All Saves</button>
+				<input type="hidden" name="attr_fort-macro-text" value="[[ 1d20 + [[ @{Fort} ]] ]]" />
+				<input type="hidden" name="attr_ref-macro-text" value="[[ 1d20 + [[ @{Ref} ]] ]]" />
+				<input type="hidden" name="attr_will-macro-text" value="[[ 1d20 + [[ @{Will} ]] ]]" />
+				<button type="roll" name="roll_All-Saves" class="sheet-command-button" value="@{PC-whisper} @{all_saves-macro}" title="%{selected|All-Saves}" data-i18n="all-saves">All Saves</button>
 					<button type="roll" name="roll_NPC-All-Saves" class="sheet-command-button" value="@{NPC-whisper} @{all_saves-macro}" title="%{selected|NPC-All-Saves}" data-i18n="all-saves">All Saves</button>
 					<button type="roll" name="roll_defense-stats" class="sheet-command-button" value="@{STATS-whisper} @{defense-stats-macro-text}" title="%{selected|defense-stats-macro-text}" data-i18n="defense-statistics-abbrv">Defense Stats</button>
 					<button type="roll" name="roll_NPC-defense-stats" class="sheet-command-button" value="@{STATS-whisper} @{defense-stats-macro-text} {{name=^{npc} ^{defense-statistics}}}" title="%{selected|NPC-defense-stats}" data-i18n="defense-statistics-abbrv">Defense Stats</button>
@@ -6051,7 +6039,6 @@
 								<input type="hidden" name="attr_NPC-feat_buttons_macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-feats-list}}} {{description=^{none-available} }}" />
 								<input type="hidden" name="attr_NPC-racial-trait_buttons_macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-racial-traits-list}}} {{description=^{none-available} }}" />
 								<input type="hidden" name="attr_npc-spell-like-abilities_buttons_macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{original-spell-like-abilities-list}}} {{description=^{none-available} }}" />								
-
 							</span>
 						</div>
 					</div>
@@ -8782,7 +8769,6 @@
 						<input title="@{item-total-hp}" type="hidden" name="attr_item-total-hp" value="0" class="sheet-calc" readonly="">					
 						<input title="@{item-total-hp|max}" type="hidden" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly="">
 					</div>
-
 					<div class="sheet-sect sheet-table sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_item">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -8937,7 +8923,6 @@
 											</select>
 											<span data-i18n="attack-type">Attack Type</span>
 										</label>
-										
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-wpenhance}" name="attr_item-wpenhance" type="number" value="0" min="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
 										<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input title="@{repeating_item_$X_item-masterwork}" name="attr_item-masterwork" type="checkbox" value="1" /><span data-i18n="masterwork-abbrv">Mwk</span></label>
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-damage-dice-num}" name="attr_item-damage-dice-num" type="number" value="0" min="0" /><span data-i18n="dice">Dice</span></label>
@@ -9657,7 +9642,6 @@
 									</div>
 								</div>
 							</fieldset>
-						
 						</div>
 					</div>
 					<div class="sheet-cheat"></div>
@@ -10140,7 +10124,6 @@
 							<div class="sheet-repeating-fields sheet-table">
 								<fieldset class="repeating_feat">
 									<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-
 									<div class="sheet-table-repeating compendium-drop-target Feats">
 											<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span class="sheet-table-cell"></span>
 											<span style="display:none;" class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_feat_$X_roll}" value="@{macro-text}"></button></span>
@@ -11170,7 +11153,6 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_custom-attr-sect-d-show" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-super sheet-note-d" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="custom-rolls">Custom Rolls</h2>
 				<div class="sheet-h2-section sheet-notes" role="section" >
-					
 						<div class="sheet-linked-custom-roll">
 							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customd1-name" title="@{customd1-name}"  /></span>
 							<div class="sheet-custom-roll-inner">
@@ -11237,13 +11219,11 @@
 							<textarea name="attr_customd6" title="@{customd6}" value="" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place" class="sheet-inline-textarea sheet-half"></textarea>
 							</div>
 						</div>
-					
 				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_custom-attr-sect-n-show" data-i18n-aria-label="quick-stats" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="notes">Notes</h2>
 				<div class="sheet-h2-section sheet-notes" role="section" >
-					
 						<div class="sheet-linked-custom-notes">
 							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn1-name" title="@{customn1-name}" /></span>
 							<textarea name="attr_customn1" title="@{customn1}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
@@ -11512,7 +11492,6 @@
 						</select>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-						
 					</span>
 				</div>
 				<div class="sheet-table-row">
@@ -11522,7 +11501,6 @@
 						<input type="checkbox" name="attr_toggle_rounded_flag" value="@{var_rounded_flag}" title="@{toggle_rounded_flag}" class="sheet-selectedlabel-check" checked /><b><span data-i18n="use-round-corners-on-simple-templates">Round Corners on non simple template.</span></b>
 					</span>					
 					<span class="sheet-table-cell sheet-left">
-					
 						<span data-i18n="heading-border-colors">Heading background and outlines:</span>
 						<select title="@{rolltemplate_color}" name="attr_rolltemplate_color" style="width:8em;display:inline-block;">
 							<option value="" data-i18n="black-default" selected>&#8226;Black</option>
@@ -11552,7 +11530,6 @@
 							<option value="violet" data-i18n="violet">Violet</option>
 							<option value="darkviolet" data-i18n="dark-violet">DarkViolet</option>
 						</select>
-				
 					</span>					
 				</div>
 			</div>			
@@ -11774,7 +11751,6 @@
 				</span>
 			</div>
 		</div>
-
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_roll-template-info-show" data-i18n-aria-label="roll-template-info" title="Click to expand" data-i18n-title="showsect-cmd" value="1"  />
 		<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="roll-template-info">Roll Template Information</label></h2>
@@ -11877,7 +11853,6 @@
 			</div>
 			<hr>
 		</div>
-
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_macros-show" data-i18n-aria-label="macros" title="Click to expand" data-i18n-title="showsect-cmd" value="1" />
 		<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="macros">Macros</label></h2>
@@ -11902,7 +11877,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_migrations-show" data-i18n-aria-label="migrations" title="Click to expand" data-i18n-title="showsect-cmd" value="1" />
 		<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="migrations">migrations</label></h2>
@@ -11949,7 +11923,6 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_cleanup-show" data-i18n-aria-label="spell-migration" title="Click to expand" data-i18n-title="showsect-cmd" value="1" />
 		<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spell-migration">Spell Migration</label></h2>
@@ -11995,7 +11968,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-0-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-0-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-0-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-0-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-0-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12018,7 +11990,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12035,7 +12006,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-0-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-0-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-0-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12043,7 +12013,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-0-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12052,7 +12021,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-0-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12081,7 +12049,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-1-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-1-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-1-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-1-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-1-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12104,7 +12071,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12121,7 +12087,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-1-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-1-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-1-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12129,7 +12094,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-1-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12138,7 +12102,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-1-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12167,7 +12130,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-2-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-2-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-2-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-2-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-2-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12190,7 +12152,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12207,7 +12168,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-2-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-2-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-2-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12215,7 +12175,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-2-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12224,7 +12183,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-2-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12253,7 +12211,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-3-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-3-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-3-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-3-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-3-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12276,7 +12233,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12293,7 +12249,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-3-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-3-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-3-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12301,7 +12256,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-3-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12310,7 +12264,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-3-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12339,7 +12292,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-4-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-4-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-4-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-4-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-4-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12362,7 +12314,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12379,7 +12330,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-4-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-4-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-4-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12387,7 +12337,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-4-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12396,7 +12345,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-4-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12425,7 +12373,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-5-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-5-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-5-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-5-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-5-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12448,7 +12395,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12465,7 +12411,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-5-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-5-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-5-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12473,7 +12418,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-5-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12482,7 +12426,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-5-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12511,7 +12454,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-6-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-6-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-6-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-6-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-6-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12534,7 +12476,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12551,7 +12492,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-6-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-6-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-6-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12559,7 +12499,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-6-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12568,7 +12507,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-6-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12597,7 +12535,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-7-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-7-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-7-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-7-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-7-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12620,7 +12557,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12637,7 +12573,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-7-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-7-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-7-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12645,7 +12580,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-7-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12654,7 +12588,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-7-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12683,7 +12616,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-8-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-8-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-8-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-8-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-8-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12706,7 +12638,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12723,7 +12654,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-8-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-8-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-8-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12731,7 +12661,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-8-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12740,7 +12669,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-8-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12769,7 +12697,6 @@
 							<span class="sheet-table-cell sheet-small-label" style="width:5%;"><input title="@{repeating_lvl-9-spells_$X_spell_level}" type="number" value="0" name="attr_spell_level" /><br><span data-i18n="level">Level</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-9-spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="school" accept="School"><br><span data-i18n="school">School</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-9-spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="casting-time" accept="Casting Time"/><br><span data-i18n="casting-time">Casting Time</span></span>
-
 							<span class="sheet-table-cell sheet-small-label sheet-sect"><input title="@{repeating_lvl-9-spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv"/> <br><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-9-spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="difficulty-class-abbrv">DC</span></span>
 							<div></div>
@@ -12792,7 +12719,6 @@
 								</select>
 								<br><span data-i18n="spell-resistance-abbrv">SR</span>
 							</span>
-
 							<div class="sheet-sect sheet-expand">
 								<div class="sheet-table sheet-spell-misc">
 									<span class="sheet-table-data" style="width:15%;"></span>
@@ -12809,7 +12735,6 @@
 									<span class="sheet-table-cell sheet-small-label"><input title="@{repeating_lvl-9-spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly="readonly" /> <br><span data-i18n="spell-penetration-abbrv">Spell Pen</span></span>
 									<span class="sheet-table-data" style="width:15%;"></span>
 								</div>
-
 								<textarea class="sheet-desc" title="@{repeating_lvl-9-spells_$X_description}" name="attr_description" accept="Content"></textarea>
 								<textarea class="sheet-macro-text" title="@{repeating_lvl-9-spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} @{spell_options}</textarea>
 								<input type="hidden" name="attr_var_casterlevel_check" value="{{casterlevel_chk=[[ 1d20 + [[ @{casterlevel} ]] ]] }}" />
@@ -12817,7 +12742,6 @@
 								<input type="hidden" name="attr_var_Concentration_check" value="{{Concentration_chk=[[ 1d20 + [[ @{Concentration-mod} ]] ]] }}" />
 								<input type="hidden" name="attr_var_cast_def_check" value="{{cast_def_chk=[[ (1d20 + @{cast_def-mod})cs> [[ @{cast_def_dc} ]]cf<[[ @{cast_def_dc} - 1 ]] ]] }}" />
 								<input type="hidden" name="attr_spell_options" value="{{cast_def=[[ @{cast_def_dc} ]] }}{{Concentration=[[ @{Concentration-mod} ]] }}{{spellPen=[[ @{SP-mod} ]] }}{{casterlevel=[[ @{casterlevel} ]] }}{{sr=@{sr}}}{{saving_throw=@{save}}}{{duration=@{duration}}}{{targets=@{targets}}}{{range=@{range}}}{{components=@{components}}}{{dc= [[ @{savedc} ]] }}{{casting_time=@{cast-time}}}{{school=@{school}}}{{level= @{spellclass} @{spell_level}}}@{toggle_casterlevel_check}@{toggle_spellPen_check}@{toggle_Concentration_check}@{toggle_cast_def_check}" />
-
 								<div class="sheet-options sheet-table">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="padding-left:10px;"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_casterlevel_check" value="@{var_casterlevel_check}" title="@{repeating_lvl-9-spells_$X_casterlevel_check}" checked="checked" /><b title="Roll Caster Level Check"><span data-i18n="caster-level-check">Caster Level Check</span></b></label></span>
@@ -12826,7 +12750,6 @@
 										<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_cast_def_check" value="@{var_cast_def_check}" title="@{repeating_lvl-9-spells_$X_cast_def_check}" /><b title="Roll Cast Defensively Check"> <span data-i18n="cast-defensively-check">Cast Defensively Check</span></b></label></span>
 									</div>
 								</div>
-
 								<div class="sheet-repeating-id">
 									<span data-i18n="identification-abbrv">ID</span>: <span class="sheet-selectable" name="attr_row_id" />
 								</div>
@@ -12866,7 +12789,6 @@
 								<hr/>
 							</div>
 						</fieldset>
-
 					</div>
 				</div>
 				<!-- NPC Spells 2 -->
