@@ -783,7 +783,7 @@ export function recalculateRepeatingWeapons (callback){
  * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,
  * 	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int }  } params 
  * @param {map} setter 
- * @return {map} setter
+ * @returns {map} setter
  */
 
 export function setDualWieldVals (params,setter,id,updMode){
