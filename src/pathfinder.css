@@ -1307,6 +1307,7 @@ h2.sheet-clickheader {
 .sheet-sect.sheet-expand .sheet-macro-text-showlabel,
 .sheet-sect.sheet-expand .sheet-advmacro-text-showlabel,
 .sheet-sect.sheet-expand .sheet-init-notes-showlabel,
+.sheet-sect.sheet-expand .sheet-save-notes-showlabel,
 .sheet-sect.sheet-expand .sheet-extra-damage-showlabel {
     width: 9em;
 }
@@ -1317,6 +1318,7 @@ h2.sheet-clickheader {
 .sheet-sect.sheet-expand .sheet-macro-text-show,
 .sheet-sect.sheet-expand .sheet-advmacro-text-show,
 .sheet-sect.sheet-expand .sheet-init-notes-show,
+.sheet-sect.sheet-expand .sheet-save-notes-show,
 .sheet-sect.sheet-expand .sheet-extra-damage-show {
     width: 9em;
     margin-right: -9em;
@@ -1324,13 +1326,15 @@ h2.sheet-clickheader {
 .sheet-sect.sheet-expand .sheet-iterations-showlabel,
 .sheet-sect.sheet-expand .sheet-advmacro-text-showlabel,
 .sheet-sect.sheet-expand .sheet-armor-attributes-showlabel,
-.sheet-sect.sheet-expand .sheet-weapon-attributes-showlabel {
+.sheet-sect.sheet-expand .sheet-weapon-attributes-showlabel,
+.sheet-sect.sheet-expand .sheet-all-saves-macro-showlabel {
     width: 12em;
 }
 .sheet-sect.sheet-expand .sheet-iterations-show,
 .sheet-sect.sheet-expand .sheet-advmacro-text-show,
 .sheet-sect.sheet-expand .sheet-armor-attributes-show,
-.sheet-sect.sheet-expand .sheet-weapon-attributes-show {
+.sheet-sect.sheet-expand .sheet-weapon-attributes-show,
+.sheet-sect.sheet-expand .sheet-all-saves-macro-show {
     width: 12em;
     margin-right: -12em;
 }
@@ -2860,6 +2864,7 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-extra-damage-show:not(:checked) ~ .sheet-extra-damage,
 .sheet-show-spell-cell:not(:checked) ~ div .sheet-spell-cell,
 .sheet-init-notes-show:not(:checked)~.sheet-init-notes,
+.sheet-save-notes-show:not(:checked)~.sheet-save-notes,
 .sheet-iterations-show:not(:checked) ~ .sheet-iterative_attack_section,
 .sheet-armor-attributes-show:not(:checked)~.sheet-armor-attributes,
 .sheet-weapon-attributes-show:not(:checked)~.sheet-weapon-attributes,
@@ -4511,8 +4516,18 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-spell-multiclassed-show:not(:checked) ~  .sheet-repeating-sect  .sheet-spell-multiclassed,
 .sheet-all-macro-text-show:not(:checked) ~ div .sheet-macro-text,
 .sheet-all-macro-text-show:not(:checked) ~ div .sheet-showsect.sheet-macro-text-showlabel,
+.sheet-all-macro-text-show:not(:checked) ~ div .sheet-showsect.sheet-all-saves-macro-showlabel,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head .sheet-table-header:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group .sheet-table-row .sheet-table-cell:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group .sheet-table-cell:last-child,
+
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group .sheet-table-cell:last-child,
+
+
 .sheet-wounds-show:not(:checked) ~ .sheet-wound-threshold,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advanced-macros,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advmacro-text-showlabel,
