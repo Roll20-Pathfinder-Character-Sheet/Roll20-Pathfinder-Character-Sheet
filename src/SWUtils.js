@@ -239,7 +239,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 				if (currVal !== value) {
 					setter[writeField] = value;
 					setAttrs(setter, params, function () {
-						done(value, currVal, true);
+						done(value, currVal, true,currError);
 					});
 				} else {
 					done(value, currVal, false,currError);
