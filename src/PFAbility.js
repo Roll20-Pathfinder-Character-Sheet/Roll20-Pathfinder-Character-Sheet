@@ -145,7 +145,7 @@ function setRuleTabs (){
 }
 
 /** returns all rule_category and ability_type used
- * @returns {jsobj} {'rules':[values of rule_category], 'types':[valuesof ability_type]}
+ * @returns {'rules':[values of rule_category], 'types':[valuesof ability_type]} object of rules
  */
 function getAbilityTypes (callback){
 	var done= function(typeObj){

@@ -3,7 +3,7 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import SWUtils from './SWUtils';
-import * as PFConst from './PFConst';
+import PFConst from './PFConst';
 
 /****************************SYNCHRONOUS UTILITIES ***********************************
 NO asynchronous FUNCTIONS SHOULD GO HERE
