@@ -865,7 +865,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
     idStr = SWUtils.getRepeatingIDStr(itemId),
     item_entry = 'repeating_item_' + idStr;
 
-    //TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
+    TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
     attribList.push(item_entry + "name");
     commonLinkedAttributes.forEach(function (attr) {
         attribList.push(item_entry + "item-" + attr);
@@ -877,7 +877,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
     getAttrs(attribList, function (v) {
         var newRowId,
         setter = {},
-        silentSetter={},
+       // silentSetter={},
         enhance = 0,
         prof = 0,
         params = silently?PFUtils.silentParams:{};
@@ -888,13 +888,13 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             } else {
                 newRowId = weaponId;
             }
-            //TAS.debug("the new row id is: "+newRowId);
+            TAS.debug("the new row id is: "+newRowId);
             //TAS.debug("v[" + item_entry + "name]=" + v[item_entry + "name"]);
             if (v[item_entry + "name"]) {
                 if (!weaponId){
                     setter["repeating_weapon_" + newRowId + "_name"] = v[item_entry + "name"];
                 }
-                silentSetter["repeating_weapon_" + newRowId + "_source-item-name"] = v[item_entry + "name"];
+                setter["repeating_weapon_" + newRowId + "_source-item-name"] = v[item_entry + "name"];
             }
             commonLinkedAttributes.forEach(function (attr) {
                 //TAS.debug("v[" + item_entry + "item-" + attr + "]=" + v[item_entry + "item-" + attr]);
@@ -924,24 +924,25 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             }
             setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
-            silentSetter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
-            setter["repeating_weapon_" + newRowId +'link_type']=PFAttacks.linkedAttackType.equipment;
+            setter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
+            setter["repeating_weapon_" + newRowId +'_link_type']=PFAttacks.linkedAttackType.equipment;
 
-            //TAS.debug("creating new attack", setter);
+            
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
         } finally {
             if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
+TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
                 setAttrs(setter, params, function(){
                     //can do these in parallel
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
                     done();
                 });
-                if (_.size(silentSetter)){
-                    setAttrs(silentSetter,PFConst.silentParams);
-                }
+                //if (_.size(silentSetter)){
+                //    setAttrs(silentSetter,PFConst.silentParams);
+                //}
             } else {
                 setter[item_entry + "create-attack-entry"] = 0;
                 setAttrs(setter,PFConst.silentParams,done);

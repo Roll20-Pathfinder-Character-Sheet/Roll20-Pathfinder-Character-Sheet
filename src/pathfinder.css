@@ -4366,20 +4366,61 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-defense-grid .sheet-defense-table .sheet-table-cell:nth-of-type(n+13) {
     display: none;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(n+3),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(n+3) {
+
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(8),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(9),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(10),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(11),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(14),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(15),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(8),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(9),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(10),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(11),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(14),
+.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(15) {
+    display:none;
+}
+
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(3),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(4),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(5),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(7),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(8),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(9),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(10),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(11),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(12),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(n+14),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(3),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(4),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(5),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(7),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(8),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(9),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(10),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(11),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(12),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(n+14) {
     display: none;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-divider,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-divider-lg {
     display: none;
 }
+/*
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(n+3),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(n+3) {
+    display: none;
+}
+
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(6),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(6),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(11),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(11) {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(13),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(13) {
     display: table-cell;
 }
+*/
 .sheet-readonly-show:not(:checked) ~ .sheet-main  .sheet-section-defenses .sheet-defense-notes .sheet-notes {
 	height:5em;
 }
@@ -4509,9 +4550,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-config-show:not(:checked) ~ .sheet-section-config,
 /* config page toggles override all others: */
 .sheet-spellpoints-show:not(:checked) ~ .sheet-section-spellclass .sheet-spellpoints-sect,
-.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-manual-column-show:not(:checked) ~ div .sheet-spell-userdef-column,
-.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-advanced-spell-option,
-.sheet-advanced-spell-macro-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-advanced-spell-macro,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-manual-column-show:not(:checked) ~ div .sheet-spell-userdef-column,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-advanced-spell-option,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spells .sheet-advanced-spell-option,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-npc-spells .sheet-advanced-spell-option,
 .sheet-spell-multiclassed-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-spell-multiclassed,
 .sheet-spell-multiclassed-show:not(:checked) ~  .sheet-repeating-sect  .sheet-spell-multiclassed,
 .sheet-all-macro-text-show:not(:checked) ~ div .sheet-macro-text,
@@ -4519,8 +4561,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-all-macro-text-show:not(:checked) ~ div .sheet-showsect.sheet-all-saves-macro-showlabel,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head .sheet-table-header:nth-last-child(2),
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group .sheet-table-row .sheet-table-cell:nth-last-child(2),
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group .sheet-table-row .sheet-table-cell:last-child,
+
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 

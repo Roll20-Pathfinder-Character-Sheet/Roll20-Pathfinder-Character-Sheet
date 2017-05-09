@@ -28,21 +28,16 @@
 			<h2 data-i18n="new-features">New Features and Updates</h2>
 			<p>In this version (1.51):</p>
 			<ol>
-				<li>More macro fields exposed for customization</li>
-				<li>Red text for new areas gone in this release</li>
 				<li>Drag and drop items fixed, all compendium drag and drop working again</li>
-				<li><strong>If you experience locking</strong> 
-					<ol><li>refresh the browser.</li>
-					<li>Make sure only one user has a sheet open at a time.</li>
-					<li>If you still have a problem please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong> </li>
-					</ol>
-				</li>
-			</ol>
-			<p>Last version new features (1.50):</p>
-			<ol>
-				<li>Don't forget <strong>MERGE</stong> buttons on <em>Settings</em> page to eliminate old abilites, feats, traits lists. </li>
-				<li><strong>New Setting: SETUP DUAL WIELD</strong> enable on <em>Settings</em> page to display new fields just above Attacks list.</li>
-				<li><strong>New Setting: Horror Adventures</strong> enable on <em>Settings</em> page to display <em>Sanity</em> on <em>Defenses</em> page below saves.</li>
+				<li>More macro fields exposed for customization</li>
+				<li><strong>Show more fields</strong> checkboxes added locally. You may need to check these checkboxes since they control local display/hide of 'extra' fields, not the global 'show user defined nad misc fields' checkbox. This was done to make it more obvious how to display these fields for new users</li>
+				<li>Red text should be gone</li>
+				<li>If you experience locking please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong></li>
+				<li>Recently added features:<ol>
+					<li><strong>MERGE</strong> buttons on <em>Settings</em> page to eliminate old lists of class abilites, feats, traits, etc. </li>
+					<li><strong>TWO WEAPON FIGHTING</strong> dual wield on <em>Settings</em> page to display new fields just above Attacks list.</li>
+					<li><strong>Horror Adventures</strong> on <em>Settings</em> page to display <em>Sanity</em> on <em>Defenses</em> page below saves.</li>
+				</ol></li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv151-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -461,8 +456,8 @@
 			<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n-title="skills" data-i18n-aria-label="skills" data-i18n="skills">Skills</label>
 			<input type="radio" name="attr_tab" value="7" class="sheet-tabinput sheet-tab7 sheet-spelltab" data-i18n-title="spells" aria-label="Spells" data-i18n-aria-label="spells" />
 			<label role="menuitem" class="sheet-tab sheet-tab7 sheet-spelltab" data-i18n-title="spells" data-i18n-aria-label="spells" title="Spells" data-i18n="spells">Spells</label>
-			<input type="radio" name="attr_tab" value="6" class="sheet-tabinput sheet-tab6 sheet-wider-tab" data-i18n-title="inventory" aria-label="Inventory" data-i18n-aria-label="inventory" />
-			<label role="menuitem" class="sheet-tab sheet-tab6 sheet-wider-tab" data-i18n-title="inventory" data-i18n-aria-label="inventory" title="Inventory" data-i18n="inventory">Inventory</label>
+			<input type="radio" name="attr_tab" value="6" class="sheet-tabinput sheet-tab6" data-i18n-title="inventory" aria-label="Inventory" data-i18n-aria-label="inventory" />
+			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="inventory" data-i18n-aria-label="inventory" title="Inventory" data-i18n="equipment-abbrv">Equip</label>
 			<input type="radio" name="attr_tab" value="8" class="sheet-tabinput sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" aria-label="NPC" data-i18n-aria-label="npc" />
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
 			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
@@ -1136,9 +1131,6 @@
 			<div class="sheet-section2 sheet-section sheet-section-defenses" role="region" aria-label="Defenses" data-i18n-aria-label="defenses">
 				<h1 class="sheet-selected-tabtitle" data-i18n="defenses">Defenses</h1>
 				<div style="display:none;">
-				<input type="hidden" name="attr_fort-macro-text" value="[[ 1d20 + [[ @{Fort} ]] ]]" />
-				<input type="hidden" name="attr_ref-macro-text" value="[[ 1d20 + [[ @{Ref} ]] ]]" />
-				<input type="hidden" name="attr_will-macro-text" value="[[ 1d20 + [[ @{Will} ]] ]]" />
 				<button type="roll" name="roll_All-Saves" class="sheet-command-button" value="@{PC-whisper} @{all_saves-macro}" title="%{selected|All-Saves}" data-i18n="all-saves">All Saves</button>
 					<button type="roll" name="roll_NPC-All-Saves" class="sheet-command-button" value="@{NPC-whisper} @{all_saves-macro}" title="%{selected|NPC-All-Saves}" data-i18n="all-saves">All Saves</button>
 					<button type="roll" name="roll_defense-stats" class="sheet-command-button" value="@{STATS-whisper} @{defense-stats-macro-text}" title="%{selected|defense-stats-macro-text}" data-i18n="defense-statistics-abbrv">Defense Stats</button>
@@ -1148,6 +1140,8 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_saves-show" data-i18n-aria-label="saving-throws" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="saving-throws">Saving Throws</label></h2>
 				<div class="sheet-h2-section sheet-saves">
+					<input type="checkbox" value="1" name="attr_extra_fields_saves_show" title="@{extra_fields_saves_show}" class="sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
+					<div class="sheet-cheat"></div>
 					<div class="sheet-table sheet-saves-table">
 						<span class="sheet-table-name" data-i18n="saving-throws">Saving Throws</span>
 						<div class="sheet-table-group-head">
@@ -1170,7 +1164,8 @@
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="buff">Buff</span>
-							<span class="sheet-table-header sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
+							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
+							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-b" data-i18n="roll">Roll</span>
 						</div>
 						<div class="sheet-table-group">
 							<div class="sheet-table-row sheet-save">
@@ -1203,6 +1198,7 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Fort-total}" type="number" name="attr_buff_Fort-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{fort-save-macro-text}" name="attr_fort-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes}</textarea></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{fort-macro-text}" name="attr_fort-macro-text">[[ 1d20 + [[ @{Fort} ]] ]]</textarea></span>
 							</div>
 							<div class="sheet-table-row sheet-save">
 								<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|Ref-Save}" type="roll" name="roll_Ref-Save" value="@{PC-whisper} @{ref-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="reflex-abbrv">Ref</span></button></span>
@@ -1234,6 +1230,7 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Ref-total}" type="number" name="attr_buff_Ref-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{ref-save-macro-text}" name="attr_ref-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{reflex}}} {{^{save}=@{ref-macro-text}}} @{toggle_save_notes}</textarea></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{ref-macro-text}" name="attr_ref-macro-text">[[ 1d20 + [[ @{Ref} ]] ]]</textarea></span>
 							</div>
 							<div class="sheet-table-row sheet-save">
 								<span class="sheet-table-cell"><button class="sheet-text-button" title="%{selected|Will-Save}" type="roll" name="roll_Will-Save" value="@{PC-whisper} @{will-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="willpower-abbrv">Will</span></button></span>
@@ -1265,6 +1262,7 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{buff_Will-total}" type="number" name="attr_buff_Will-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{will-save-macro-text}" name="attr_will-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower}}} {{^{save}=@{will-macro-text}}} @{toggle_save_notes}</textarea></span>
+								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{will-macro-text}" name="attr_will-macro-text">[[ 1d20 + [[ @{Will} ]] ]]</textarea></span>
 							</div>
 						</div>
 					</div>
@@ -1665,14 +1663,14 @@
 				<h2 class="sheet-clickheader sheet-showsect sheet-horror-sect"><label class="sheet-horror-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="sanity-beta">Sanity (BETA)</label></h2>
 				<span class="sheet-nontable-name sheet-horror-sect" data-i18n="sanity">Sanity</span>
 				<div class="sheet-h2-section sheet-nontable sheet-sanity-sect sheet-medium-numbers sheet-horror-sect" role="section" data-i18n-aria-label="sanity" >
-					<input type="checkbox" value="1" name="attr_extra_fields_san_show" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
+					<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
 					<div class="sheet-cheat"></div>
 					<div class="sheet-table">
 						<div class="sheet-table-row">
 							<div class="sheet-table-cell sheet-small-label">
 								<button class="sheet-text-button sheet-pc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{PC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-abbrv">SAN</span></button>
 								<button class="sheet-text-button sheet-npc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{NPC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-npc-abbrv">NPC SAN</span></button>
-								<input type="hidden" name="attr_san-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-san-macro-text}}} {{^{sanity-score}=@{sanity_score_max}}} {{^{sanity-edge}=@{sanity_edge}}} {{^{sanity-threshold}=@{sanity_threshold}}} @{toggle_save_notes}" />
+								<input type="hidden" name="attr_san-save-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower-abbrv}}} {{^{save}=@{will-san-macro-text}}} {{^{sanity-damage}=@{sanity_score}}} {{^{sanity-score}=@{sanity_score|max}}} {{^{sanity-edge}=@{sanity_edge}}} {{^{sanity-threshold}=@{sanity_threshold}}} @{toggle_save_notes}" />
 								<input type="hidden" name="attr_will-san-macro-text" value="[[ 1d20 + [[ @{Will} ]] + [[ @{san-save-misc-macro-text} ]] ]]" />
 							</div>
 							<div class="sheet-table-cell sheet-small-label sheet-hide-readonly sheet-extra-sect">
@@ -2224,11 +2222,18 @@
 						<input type="checkbox" name="attr_update_twoweapon_attack" value="1" class="sheet-cssbutton sheet-refreshbutton" data-i18n-aria-label="recalculate-cmd" title="@{update_twoweapon_attack}" /><span></span>
 						<span data-i18n-title="update-weapons" data-i18n="update" >Update</span></div>
 					<div class="sheet-divider-db-lg"></div>
-					<div class="sheet-small-label2" ><input type="text" name="attr_mainhand_id" value="" class="sheet-entry-long" /><span data-i18n="mainhand-id" ></span></div>
-					<div class="sheet-small-label2" ><input type="number" name="attr_mainhand_penalty" value="-6" /><span data-i18n="mainhand-penalty" ></span></div>
-					<div class="sheet-small-label2" ><input type="text" name="attr_offhand_id" value="" class="sheet-entry-long" /><span data-i18n="offhand-id" ></span></div>
-					<div class="sheet-small-label2" ><input type="number" name="attr_offhand_penalty" value="-10" /><span data-i18n="offhand-penalty" ></span></div>
-					<div class="sheet-small-label2" ><input type="checkbox" name="attr_offhand_improved" value="1" /><span data-i18n-title="improved-title" data-i18n="improved" ></span></div>
+					<div class="sheet-small-label2" ><input type="text" name="attr_mainhand_id" value="" title="@{mainhand_id}" class="sheet-entry-long" /><span title="row-id-desc" data-i18n="mainhand-id" ></span></div>
+					<div class="sheet-small-label2" ><input type="number" name="attr_mainhand_penalty" value="-6" title="@{mainhand_penalty}" /><span title="offhand-penalty" data-i18n="mainhand-penalty-abbrv" ></span></div>
+					<div class="sheet-small-label2" ><input type="text" name="attr_offhand_id" value="" title="@{offhand_id}" class="sheet-entry-long" /><span title="row-id-desc" data-i18n="offhand-id" ></span></div>
+					<div class="sheet-small-label2" ><input type="number" name="attr_offhand_penalty" title="@{offhand_penalty}" value="-10" /><span title="offhand-penalty" data-i18n="offhand-penalty-abbrv" ></span></div>
+					<div class="sheet-small-label2" ><input type="number" name="attr_offhand_improved" title="@{offhand_improved}" value="1" /><span data-i18n-title="number-extra-attacks-title" data-i18n="number-extra-attacks" ></span></div>
+					<div class="sheet-small-label2">
+						<select name="attr_offhand_str_mult" title="@{offhand_str_mult}" >
+							<option value=".5" selected>.5</option>
+							<option value="1">1</option>
+						</select>
+						<span data-18n-title="offhand-damage-multiplier" data-i18n="offhand-damage-multiplier-abbrv">OH dmg mult</span>
+					</div>
 				</div>
 				<div class="sheet-cheat sheet-show-readonly"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attacks-show" data-i18n-aria-label="attacks" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -2266,6 +2271,7 @@
 										<option value="@{attk-ranged2}" data-i18n="ranged2">Ranged2</option>
 										<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
 										<option value="@{CMB2}" data-i18n="combat-maneuver-bonus-abbrv2">CMB2</option>
+										<option value="dual" data-i18n="dual-wield">Dual Wield</option>
 									</select>
 									<span data-i18n="attack-type">Attack Type</span>
 								</label>
@@ -6866,8 +6872,6 @@
 			<div class="sheet-section7 sheet-section sheet-section-spells" role="region" aria-label="Spells" data-i18n-aria-label="spells">
 				<h1 class="sheet-selected-tabtitle" data-i18n="spells">Spells</h1>
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
-				<input type="checkbox" class="sheet-advanced-spell-option-show sheet-noshow" name="attr_use_advanced_options" value="1" role="presentation" />
-				<input type="checkbox" class="sheet-advanced-spell-macro-show sheet-noshow" name="attr_adv_macro_show" value="1" role="presentation" />
 				<input type="checkbox" class="sheet-spell-multiclassed-show sheet-firsttab-inverse-show" name="attr_spellclasses_multiclassed" title="True if more than one spellcasting class" value="1" role="presentation" /><span data-i18n="multiple-spellclasses"> Has multiple spellcasting classes</span>
 				<!-- Spell Classes 0,1,2 -->
 				<div class="sheet-cheat sheet-show-readonly"></div>
@@ -6886,6 +6890,8 @@
 					<input type="checkbox" class="sheet-noshow sheet-spellpoints-show" name="attr_use_spell_points" value="1" />
 					<!-- Spell Class 0 -->
 					<h2 class="sheet-section0 sheet-nontable-name"><span name="attr_spellclass-0-name"></span></h2>
+					<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_caster_show" title="@{extra_fields_caster_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>					
+					<div class="sheet-cheat"></div>
 					<div class="sheet-section0 sheet-section-spellclass sheet-spellclass-0">
 						<div class="sheet-col sheet-col1">
 							<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_spellclass-0-show" data-i18n-aria-label="spellclass-level-base" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -8313,6 +8319,8 @@
 					<input type="radio" class="sheet-tabinput sheet-tab99" name="attr_spells_tab" value="99" data-i18n-aria-label="all" data-i18n-title="all" title="All" checked />
 					<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 					<span class="sheet-nontable-name">&nbsp;</span>
+					<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_spells_show" title="@{extra_fields_spells_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>					
+					<div class="sheet-cheat"></div>
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 					<input type="checkbox" value="1" class="sheet-subsect2-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="spontaneous spellcasting" />
 					<input type="checkbox" value="2" class="sheet-subsect3-show sheet-noshow" name="attr_spellclass-0-casting_type" role="presentation" aria-label="prepared spellcasting" />
@@ -8348,7 +8356,7 @@
 								<label class="sheet-small-label2 sheet-sect sheet-spell-multiclassed" style="width:3em;">
 									<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
 										<option value="">Select One</option>
-										<option value="0" data-i18n="1-ordinal-spellclass" >1st Spellcasting Class</option>
+										<option value="0" data-i18n="1-ordinal-spellclass" selected >1st Spellcasting Class</option>
 										<option value="1" data-i18n="2-ordinal-spellclass" >2nd Spellcasting Class</option>
 										<option value="2" data-i18n="3-ordinal-spellclass" >3rd Spellcasting Class</option>
 									</select>
@@ -8427,16 +8435,16 @@
 										<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_spells_$X_metamagic}" type="checkbox" value="1" name="attr_metamagic" /><span data-i18n-title="metamagic-title" data-i18n-aria-label="metamagic-title" title="Click to show spell slot field to differentiate slot from spell level." data-i18n="metamagic">Meta Magic</span></label>
 										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_isDomain}" type="checkbox" value="1" name="attr_isDomain" /><span data-i18n="spell-domain-chk">Domain</span></label>
 										<label class="sheet-small-label2 sheet-number sheet-section-mythic"><input title="@{repeating_spells_$X_isMythic}" type="checkbox" value="1" name="attr_isMythic" /><span data-i18n="spell-mythic-chk">Mythic</span></label>
+										<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+										<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_CL_misc}" type="number" value="0" name="attr_CL_misc" placeholder="CL Mod" data-i18n-placeholder="caster-level-modifier-abbrv" /><span data-i18n="caster-level-modifier-abbrv">CL Mod</span></label>
+										<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_casterlevel}" type="number" value="0" name="attr_casterlevel" class="sheet-calc" readonly /><span data-i18n="caster-level-abbrv">CL</span></label>
+										<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+										<label class="sheet-small-label2 sheet-entry-vshort sheet-advanced-spell-option"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
+										<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+										<label class="sheet-small-label2 sheet-advanced-spell-option" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" placeholder="Spell Pen" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
+										<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
 										<span class="sheet-divider-db-lg">|</span>
-										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_CL_misc}" type="number" value="0" name="attr_CL_misc" placeholder="CL Mod" data-i18n-placeholder="caster-level-modifier-abbrv" /><span data-i18n="caster-level-modifier-abbrv">CL Mod</span></label>
-										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_casterlevel}" type="number" value="0" name="attr_casterlevel" class="sheet-calc" readonly /><span data-i18n="caster-level-abbrv">CL</span></label>
-										<span class="sheet-divider-db-lg">|</span>
-										<label class="sheet-small-label2 sheet-entry-vshort"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
-										<span class="sheet-divider-db-lg">|</span>
-										<label class="sheet-small-label2" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" placeholder="Spell Pen" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
-										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
-										<span class="sheet-divider-db-lg">|</span>
-										<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
+										<label class="sheet-small-label2 sheet-entry-small sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
 										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
 									</div>
 									<div class="sheet-weapon-attributes sheet-non-table">
@@ -9311,6 +9319,7 @@
 											<option value="@{attk-ranged2}" data-i18n="ranged2">Ranged2</option>
 											<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
 											<option value="@{CMB2}" data-i18n="combat-maneuver-bonus-abbrv2">CMB2</option>
+											<option value="dual" data-i18n="dual-wield">Dual Wield</option>
 										</select>
 										<span data-i18n="attack-type">Attack Type</span>
 									</label>
@@ -9892,163 +9901,166 @@
 								<span class="sheet-vertical-middle" data-i18n-title="compendium-drag-n-drop-desc" data-i18n-aria-label="compendium-drag-n-drop-desc" data-i18n="compendium-drag-drop-compatible"> Compendium drag-n-drop compatible </span>
 								<span class="sheet-drag-icon">&#9111;</span>
 							</span>					
+							<div class="sheet-cheat"></div>
+							<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_spells_show" title="@{extra_fields_spells_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>					
+							<div class="sheet-cheat"></div>
 							<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 							<div class="sheet-npc-spells sheet-repeating-fields sheet-hiderepborder">
-							<fieldset class="repeating_spells">
-								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-delete-row">Error! You must delete this row before editing any items in this section.</span></span>
-								<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="2" class="sheet-tabcopy custnavsection-2" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="3" class="sheet-tabcopy custnavsection-3" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="4" class="sheet-tabcopy custnavsection-4" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="5" class="sheet-tabcopy custnavsection-5" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="6" class="sheet-tabcopy custnavsection-6" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="7" class="sheet-tabcopy custnavsection-7" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="8" class="sheet-tabcopy custnavsection-8" role="presentation" />
-								<input type="radio" name="attr_spell_level_r" value="9" class="sheet-tabcopy custnavsection-9" role="presentation" />
-								<input type="radio" name="attr_spell_class_r" value="-1" class="sheet-tabcopy sheet-section-spellclass-1" checked role="presentation" />
-								<input type="radio" name="attr_spell_class_r" value="0" class="sheet-tabcopy sheet-section-spellclass0" role="presentation" />
-								<input type="radio" name="attr_spell_class_r" value="1" class="sheet-tabcopy sheet-section-spellclass1" role="presentation" />
-								<input type="radio" name="attr_spell_class_r" value="2" class="sheet-tabcopy sheet-section-spellclass2" role="presentation" />
-								<input type="checkbox" name="attr_prepared_state" value="1" class="sheet-section-state" role="presentation" />
-								<div class="sheet-custrepeating-border sheet-nontable-repeating sheet-background-color1 compendium-drop-target Spells">
-									<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_spells_$X_roll}" value="@{macro-text}"></button></span>
-									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_spells_$X_npc-roll}" value="@{npc-macro-text}"></button></span>
-									<label class="sheet-small-label2 sheet-narrow-numbers">
-										<input title="@{repeating_spells_$X_used}" type="number" name="attr_used" value="0">
-										<span class="sheet-sect3" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared"># Prepared</span>
-										<span class="sheet-sect2" style="margin-left:-.5em;" title="number-used-title" data-i18n="number-used"># Used</span>
-									</label>
-									<label class="sheet-small-label2 sheet-entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" placeholder="Spell Name" data-i18n-placeholder="spell-name" accept="Name"><span data-i18n="name">Name</span></label>
-									<label class="sheet-small-label2 sheet-sect" style="width:3em;">
-										<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
-											<option value="">Select One</option>
-											<option value="0" data-i18n="1-ordinal-spellclass" >1st Spellcasting Class</option>
-											<option value="1" data-i18n="2-ordinal-spellclass" >2nd Spellcasting Class</option>
-											<option value="2" data-i18n="3-ordinal-spellclass" >3rd Spellcasting Class</option>
-										</select>
-										<span data-i18n="class">Class</span>
-									</label>
-									<label class="sheet-small-label2 sheet-entry-8p"><input title="@{repeating_spells_$X_spellclass}" type="text" value="" name="attr_spellclass" /><span data-i18n="class">Class</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_spell_level}" type="number" value="" name="attr_spell_level" /><span data-i18n="level">Level</span></label>
-									<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
-									<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
-									<label class="sheet-small-label2 sheet-entry-small">
-										<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
-											<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
-											<option value="Yes" data-i18n="yes">Yes</option>
-											<option value="No" data-i18n="no">No</option>
-											<option value="Yes (Harmless)" data-i18n="save-yes-harmless">Yes (Harmless)</option>
-											<option value="No (Harmless)" data-i18n="save-no-harmless">No (Harmless)</option>
-											<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-										</select>
-										<span data-i18n="spell-resistance-abbrv">SR</span>
-									</label>
-									<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
-									<label class="sheet-small-label2 sheet-entry-short">
-										<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
-											<option value="blank" data-i18n="blank" selected>Blank</option>
-											<option value="close" data-i18n="close">Close</option>
-											<option value="medium" data-i18n="medium">Medium</option>
-											<option value="long" data-i18n="long">Long</option>
-											<option value="touch" data-i18n="touch">Touch</option>
-											<option value="personal" data-i18n="personal">Personal</option>
-											<option value="see_text" data-i18n="see_text">See text</option>
-											<option value="number" data-i18n="number">Number</option>
-											<option value="perlevel" data-i18n="perlevel">Per Level</option>
-											<option value="unknownrange" data-i18n="unknownrange">Unknown Range</option>
-										</select>
-										<span data-i18n="range">Range</span>
-									</label>
-									<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
-									<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
-									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-either-or-sect">
-										<input type="text" value="" name="attr_range" title="@{repeating_spells_$X_range}" placeholder="Flat # or # /level" data-i18n-placeholder="range-custom-place" />
-										<span class="sheet-nowrap" data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span>
-									</label>
-									<label class="sheet-small-label2 sheet-sect sheet-number">
-										<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
-										<span data-i18n="range-in-feet">Range</span>
-									</label>
-									<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
-									<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-									<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
-									<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
-									<div style="display:none;">
-										<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
-										<input type="text" value="" name="attr_spell_lvlstr" accept="Level" />
-										<input type="text" value="" name="attr_target_from_compendium" accept="Target" />
-										<input type="text" value="" name="attr_area_from_compendium" accept="Area" />
-										<input type="text" value="" name="attr_effect_from_compendium" accept="Effect" />
-										<input type="text" value="" name="attr_compendium_category" accept="Category" />
+								<fieldset class="repeating_spells">
+									<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-delete-row">Error! You must delete this row before editing any items in this section.</span></span>
+									<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="2" class="sheet-tabcopy custnavsection-2" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="3" class="sheet-tabcopy custnavsection-3" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="4" class="sheet-tabcopy custnavsection-4" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="5" class="sheet-tabcopy custnavsection-5" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="6" class="sheet-tabcopy custnavsection-6" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="7" class="sheet-tabcopy custnavsection-7" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="8" class="sheet-tabcopy custnavsection-8" role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="9" class="sheet-tabcopy custnavsection-9" role="presentation" />
+									<input type="radio" name="attr_spell_class_r" value="-1" class="sheet-tabcopy sheet-section-spellclass-1" checked role="presentation" />
+									<input type="radio" name="attr_spell_class_r" value="0" class="sheet-tabcopy sheet-section-spellclass0" role="presentation" />
+									<input type="radio" name="attr_spell_class_r" value="1" class="sheet-tabcopy sheet-section-spellclass1" role="presentation" />
+									<input type="radio" name="attr_spell_class_r" value="2" class="sheet-tabcopy sheet-section-spellclass2" role="presentation" />
+									<input type="checkbox" name="attr_prepared_state" value="1" class="sheet-section-state" role="presentation" />
+									<div class="sheet-custrepeating-border sheet-nontable-repeating sheet-background-color1 compendium-drop-target Spells">
+										<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
+										<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_spells_$X_roll}" value="@{macro-text}"></button></span>
+										<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_spells_$X_npc-roll}" value="@{npc-macro-text}"></button></span>
+										<label class="sheet-small-label2 sheet-narrow-numbers">
+											<input title="@{repeating_spells_$X_used}" type="number" name="attr_used" value="0">
+											<span class="sheet-sect3" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared"># Prepared</span>
+											<span class="sheet-sect2" style="margin-left:-.5em;" title="number-used-title" data-i18n="number-used"># Used</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" placeholder="Spell Name" data-i18n-placeholder="spell-name" accept="Name"><span data-i18n="name">Name</span></label>
+										<label class="sheet-small-label2 sheet-sect" style="width:3em;">
+											<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
+												<option value="">Select One</option>
+												<option value="0" data-i18n="1-ordinal-spellclass" selected >1st Spellcasting Class</option>
+												<option value="1" data-i18n="2-ordinal-spellclass" >2nd Spellcasting Class</option>
+												<option value="2" data-i18n="3-ordinal-spellclass" >3rd Spellcasting Class</option>
+											</select>
+											<span data-i18n="class">Class</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-8p"><input title="@{repeating_spells_$X_spellclass}" type="text" value="" name="attr_spellclass" /><span data-i18n="class">Class</span></label>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_spell_level}" type="number" value="" name="attr_spell_level" /><span data-i18n="level">Level</span></label>
+										<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
+										<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
+										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
+										<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
+										<label class="sheet-small-label2 sheet-entry-small">
+											<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
+												<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
+												<option value="Yes" data-i18n="yes">Yes</option>
+												<option value="No" data-i18n="no">No</option>
+												<option value="Yes (Harmless)" data-i18n="save-yes-harmless">Yes (Harmless)</option>
+												<option value="No (Harmless)" data-i18n="save-no-harmless">No (Harmless)</option>
+												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
+											</select>
+											<span data-i18n="spell-resistance-abbrv">SR</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
+										<label class="sheet-small-label2 sheet-entry-short">
+											<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
+												<option value="blank" data-i18n="blank" selected>Blank</option>
+												<option value="close" data-i18n="close">Close</option>
+												<option value="medium" data-i18n="medium">Medium</option>
+												<option value="long" data-i18n="long">Long</option>
+												<option value="touch" data-i18n="touch">Touch</option>
+												<option value="personal" data-i18n="personal">Personal</option>
+												<option value="see_text" data-i18n="see_text">See text</option>
+												<option value="number" data-i18n="number">Number</option>
+												<option value="perlevel" data-i18n="perlevel">Per Level</option>
+												<option value="unknownrange" data-i18n="unknownrange">Unknown Range</option>
+											</select>
+											<span data-i18n="range">Range</span>
+										</label>
+										<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
+										<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
+										<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-either-or-sect">
+											<input type="text" value="" name="attr_range" title="@{repeating_spells_$X_range}" placeholder="Flat # or # /level" data-i18n-placeholder="range-custom-place" />
+											<span class="sheet-nowrap" data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span>
+										</label>
+										<label class="sheet-small-label2 sheet-sect sheet-number">
+											<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
+											<span data-i18n="range-in-feet">Range</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
+										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
+										<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
+										<div style="display:none;">
+											<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
+											<input type="text" value="" name="attr_spell_lvlstr" accept="Level" />
+											<input type="text" value="" name="attr_target_from_compendium" accept="Target" />
+											<input type="text" value="" name="attr_area_from_compendium" accept="Area" />
+											<input type="text" value="" name="attr_effect_from_compendium" accept="Effect" />
+											<input type="text" value="" name="attr_compendium_category" accept="Category" />
+										</div>
+										<input type="hidden" name="attr_spell_options" value="" />
+										<div class="sheet-sect sheet-expand">
+											<input type="checkbox" class="sheet-showarrow sheet-misc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
+											<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>
+											<input type="checkbox" class="sheet-showarrow sheet-desc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
+											<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
+											<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
+											<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
+											<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
+											<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
+											<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
+											<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
+											<hr class="sheet-subnav-hr">
+											<div class="sheet-cheat"></div>
+											<div class="sheet-nontable sheet-misc">
+												<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_spells_$X_metamagic}" type="checkbox" value="1" name="attr_metamagic" /><span data-i18n-title="metamagic-title" data-i18n-aria-label="metamagic-title" title="Click to show spell slot field to differentiate slot from spell level." data-i18n="metamagic">Meta Magic</span></label>
+												<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_isDomain}" type="checkbox" value="1" name="attr_isDomain" /><span data-i18n="spell-domain-chk">Domain</span></label>
+												<label class="sheet-small-label2 sheet-number sheet-section-mythic"><input title="@{repeating_spells_$X_isMythic}" type="checkbox" value="1" name="attr_isMythic" /><span data-i18n="spell-mythic-chk">Mythic</span></label>
+												<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+												<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_CL_misc}" type="number" value="0" name="attr_CL_misc" placeholder="CL Mod" data-i18n-placeholder="caster-level-modifier-abbrv" /><span data-i18n="caster-level-modifier-abbrv">CL Mod</span></label>
+												<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_casterlevel}" type="number" value="0" name="attr_casterlevel" class="sheet-calc" readonly /><span data-i18n="caster-level-abbrv">CL</span></label>
+												<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+												<label class="sheet-small-label2 sheet-entry-vshort sheet-advanced-spell-option"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
+												<span class="sheet-divider-db-lg sheet-advanced-spell-option">|</span>
+												<label class="sheet-small-label2 sheet-advanced-spell-option" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" placeholder="Spell Pen" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
+												<label class="sheet-small-label2 sheet-number sheet-advanced-spell-option"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
+												<span class="sheet-divider-db-lg">|</span>
+												<label class="sheet-small-label2 sheet-entry-small sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
+												<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
+											</div>
+											<div class="sheet-weapon-attributes sheet-non-table">
+												<label class="sheet-small-label2" style="width:5em;">
+													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" title="Create a new attack based on this weapon." data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry"><span></span>
+													<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
+												</label>
+												<label class="sheet-small-label2 sheet-entry-short">
+													<select class="sheet-select-small" title="@{repeating_spells_$X_spell-attack-type}" name="attr_spell-attack-type">
+														<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+														<option value="@{attk-melee}" data-i18n="touch">Touch</option>
+														<option value="@{attk-melee2}" data-i18n="touch-melee2">Touch (melee 2)</option>
+														<option value="@{attk-ranged}" data-i18n="ranged-touch-ray">Ranged touch/Ray</option>
+														<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
+													</select>
+													<span data-i18n="attack-type">Attack Type</span>
+												</label>
+												<label class="sheet-small-label2 sheet-entry-30p-shrink" style="height:auto;">
+													<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
+													<span class="sheet-super sheet-note-b" data-i18n="damage">Damage</span>
+												</label>
+												<label class="sheet-small-label2 sheet-entry-15p-shrink">
+													<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
+													<span data-i18n="damage-type">Damage Type</span>
+												</label>											
+											</div>
+											<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
+											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
+											<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper}  &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+											<div class="sheet-repeating-id">
+												<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
+											</div>
+										</div>
 									</div>
-									<input type="hidden" name="attr_spell_options" value="" />
-									<div class="sheet-sect sheet-expand">
-										<input type="checkbox" class="sheet-showarrow sheet-misc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
-										<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>
-										<input type="checkbox" class="sheet-showarrow sheet-desc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
-										<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
-										<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
-										<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
-										<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
-										<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
-										<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
-										<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
-										<hr class="sheet-subnav-hr">
-										<div class="sheet-cheat"></div>
-										<div class="sheet-nontable sheet-misc">
-											<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_spells_$X_metamagic}" type="checkbox" value="1" name="attr_metamagic" /><span data-i18n-title="metamagic-title" data-i18n-aria-label="metamagic-title" title="Click to show spell slot field to differentiate slot from spell level." data-i18n="metamagic">Meta Magic</span></label>
-											<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_isDomain}" type="checkbox" value="1" name="attr_isDomain" /><span data-i18n="spell-domain-chk">Domain</span></label>
-											<label class="sheet-small-label2 sheet-number sheet-section-mythic"><input title="@{repeating_spells_$X_isMythic}" type="checkbox" value="1" name="attr_isMythic" /><span data-i18n="spell-mythic-chk">Mythic</span></label>
-											<span class="sheet-divider-db-lg">|</span>
-											<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_CL_misc}" type="number" value="0" name="attr_CL_misc" placeholder="CL Mod" data-i18n-placeholder="caster-level-modifier-abbrv" /><span data-i18n="caster-level-modifier-abbrv">CL Mod</span></label>
-											<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_casterlevel}" type="number" value="0" name="attr_casterlevel" class="sheet-calc" readonly /><span data-i18n="caster-level-abbrv">CL</span></label>
-											<span class="sheet-divider-db-lg">|</span>
-											<label class="sheet-small-label2 sheet-entry-vshort"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" placeholder="DC Mod" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
-											<span class="sheet-divider-db-lg">|</span>
-											<label class="sheet-small-label2" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" placeholder="Spell Pen" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
-											<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="sheet-calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
-											<span class="sheet-divider-db-lg">|</span>
-											<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
-											<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
-										</div>
-										<div class="sheet-weapon-attributes sheet-non-table">
-											<label class="sheet-small-label2" style="width:5em;">
-												<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" title="Create a new attack based on this weapon." data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry"><span></span>
-												<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
-											</label>
-											<label class="sheet-small-label2 sheet-entry-short">
-												<select class="sheet-select-small" title="@{repeating_spells_$X_spell-attack-type}" name="attr_spell-attack-type">
-													<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-													<option value="@{attk-melee}" data-i18n="touch">Touch</option>
-													<option value="@{attk-melee2}" data-i18n="touch-melee2">Touch (melee 2)</option>
-													<option value="@{attk-ranged}" data-i18n="ranged-touch-ray">Ranged touch/Ray</option>
-													<option value="@{CMB}" data-i18n="combat-maneuver-bonus-abbrv">CMB</option>
-												</select>
-												<span data-i18n="attack-type">Attack Type</span>
-											</label>
-											<label class="sheet-small-label2 sheet-entry-30p-shrink" style="height:auto;">
-												<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
-												<span class="sheet-super sheet-note-b" data-i18n="damage">Damage</span>
-											</label>
-											<label class="sheet-small-label2 sheet-entry-15p-shrink">
-												<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
-												<span data-i18n="damage-type">Damage Type</span>
-											</label>											
-										</div>
-										<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-										<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
-										<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper}  &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
-										<div class="sheet-repeating-id">
-											<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
-										</div>
-									</div>
-								</div>
-							</fieldset>
+								</fieldset>
 							</div>
 						</div>
 					</div>
