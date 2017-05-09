@@ -1558,7 +1558,10 @@ input.sheet-refreshbutton {
 	background-color:white !important;
 	background: url("http://i.imgur.com/C8lPQRS.png");
 	background-position: -1px -1px;
-	content:'1'; /* for size to match sheet-refresh must not be space */
+	/*  for size to match sheet-refresh must not be space
+    content:'1'; 
+    */
+    content:' '; /* couldn't see how the above line made any change and the content would show on hover */
     color:transparent;
 	background-repeat:no-repeat !important;
     vertical-align: top;	
