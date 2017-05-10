@@ -1596,7 +1596,7 @@ function parseSpells (spellstr) {
 				matches = line.match(/([\w\s]*)spells\sknown/i);
 				if (matches && matches[1]) {
 					spells.classname = matches[1].replace(/^\s|\s$/g, '');
-					spells.classname = spells.classname[0].toUpperCase() + spells.classname[1];
+					spells.classname = spells.classname[0].toUpperCase() + spells.classname.slice(1).toLowerCase();
 				}
 			} else {
 				//look for endash, emdash, or dash
