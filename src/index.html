@@ -168,8 +168,8 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_CMB_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-cmd-title"><input title="@{buff_CMB-total_penalty}" name="attr_buff_CMB-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span data-i18n="combat-maneuver-bonus-abbrv">CMB</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-title"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /><span data-i18n="damage">Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-title"><input title="@{buff_DMG-total_penalty}" name="attr_buff_DMG-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span data-i18n="damage">Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_Ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_Ranged-total}" name="attr_buff_DMG_Ranged-total" type="number" value="0" class="sheet-calc" readonly /><span data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_Ranged_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_Ranged-total_penalty}" name="attr_buff_DMG_Ranged-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_ranged_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_ranged-total_penalty}" name="attr_buff_DMG_ranged-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_Melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_DMG_Melee-total}" name="attr_buff_DMG_Melee-total" type="number" value="0" class="sheet-calc" readonly /><span data-i18n="damage-melee-abbrv">Melee dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_Melee_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_DMG_Melee-total_penalty}" name="attr_buff_DMG_Melee-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span data-i18n="damage-melee-abbrv">Melee dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Check_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-checks-title"><input title="@{buff_Check-total}" name="attr_buff_Check-total" type="number" value="0" class="sheet-calc" readonly /><span data-i18n="check">Check</span></label>
@@ -406,11 +406,11 @@
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-DMG_macro-text" title="@{repeating_buff_$X_buff-DMG_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="damage-calculation-abbrv">DMG Calc</span></label>
 								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-DMG" title="@{repeating_buff_$X_buff-DMG}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">DMG</span></label>
 							</div>
-							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-DMG_Ranged-show}" name="attr_buff-DMG_Ranged-show" value="1" />
+							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
-								<input type="checkbox" name="attr_buff-DMG_Ranged_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-DMG_Ranged_macro-text" title="@{repeating_buff_$X_buff-DMG_Ranged_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="damage-ranged-calculation-abbrv">DMG_Ranged Calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-DMG_Ranged" title="@{repeating_buff_$X_buff-DMG_Ranged}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-ranged-abbrv">DMG_Ranged</span></label>
+								<input type="checkbox" name="attr_buff-DMG_ranged_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-DMG_ranged_macro-text" title="@{repeating_buff_$X_buff-DMG_ranged_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="damage-ranged-calculation-abbrv">DMG_ranged Calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-DMG_ranged" title="@{repeating_buff_$X_buff-DMG_ranged}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-ranged-abbrv">DMG_ranged</span></label>
 							</div>
 							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-size-show}" name="attr_buff-size-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
@@ -2248,6 +2248,25 @@
 							<span class="sheet-table-cell"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">-</span>
 							<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
+							<span class="sheet-table-cell sheet-left-border"></span>
+							<span class="sheet-table-cell"></span>
+						</div>
+						<div class="sheet-table-row">
+							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;" data-i18n="damage-ranged-abbrv">Ranged dmg</span></span>
+							<span class="sheet-table-cell"><input type="number" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-divider">=</span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-divider"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-table-cell"></span>
+							<span class="sheet-divider"></span>
+							<span class="sheet-table-cell"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-divider"></span>
+							<span class="sheet-table-cell"></span>
 							<span class="sheet-table-cell sheet-left-border"></span>
 							<span class="sheet-table-cell"></span>
 						</div>

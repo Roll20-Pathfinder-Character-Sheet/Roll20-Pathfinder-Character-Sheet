@@ -15,7 +15,7 @@ import * as PFInitiative from './PFInitiative';
 import * as PFEncumbrance from './PFEncumbrance';
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 var buffColumns = ["Ranged", "Melee","CMB", 
-"DMG", "DMG_Ranged",
+"DMG", "DMG_ranged",
  "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
  "speed", "initiative",
  "size",
@@ -44,6 +44,7 @@ events = {
 		"Melee": [PFAttackGrid.updateMelee],
 		"Ranged": [PFAttackGrid.updateRanged],
 		"DMG": [PFAttackGrid.updateDamage],
+		"DMG_ranged": [PFAttackGrid.updateDamageRanged],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
@@ -193,8 +194,8 @@ function updateBuffTotals (col, callback) {
 		if (typeof callback === "function") {
 			callback();
 		}
-	})
-	,	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
+	}),	
+	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
 		TAS.debug("at updateBuffTotals for "+ col+", isability:"+ isAbility);
 		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
