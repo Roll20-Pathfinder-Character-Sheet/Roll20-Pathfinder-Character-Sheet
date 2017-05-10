@@ -107,6 +107,7 @@ export function findAbilityInString  (stringToSearch) {
     if (/class.5.level/i.test(stringToSearch)) {
         return "class-5-level";
     }
+    return "";
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
  *@param {int} casterlevel level of caster
