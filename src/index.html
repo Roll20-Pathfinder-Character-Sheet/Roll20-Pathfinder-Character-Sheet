@@ -2718,6 +2718,8 @@
 				<div class="sheet-h2-section sheet-skill-options">
 					<div class="sheet-table sheet-config-table sheet-options sheet-named">
 						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
+						<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+						<div class="sheet-cheat"></div>
 						<div class="sheet-table">
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
@@ -2777,7 +2779,7 @@
 									<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
 								</span>
 								<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
 									<br>
 									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
@@ -2786,7 +2788,7 @@
 									</select>
 								</span>
 								<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
 									<br>
 									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">0</textarea>
@@ -10223,6 +10225,8 @@
 					<h3 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-options">Skill Options</label></h3>
 					<div class="sheet-h3-section sheet-table sheet-options sheet-named sheet-wide-readonly">
 						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
+						<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+						<div class="sheet-cheat"></div>
 						<div class="sheet-table sheet-config-table">
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
@@ -10256,7 +10260,7 @@
 									<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
 								</span>
 								<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
 									<br>
 									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
@@ -10265,7 +10269,7 @@
 									</select>
 								</span>
 								<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
 									<br>
 									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">0</textarea>
@@ -12858,7 +12862,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/10/2017 4:40pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/10/2017 9:45pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
