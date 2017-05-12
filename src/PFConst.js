@@ -51,7 +51,7 @@ export default {
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],
 	silentParams : {silent:true},
-	minusreg : /\-|\u2013|\u2014|\u2212|\u02d7/,
+	minusreg : /\-|&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/,
 	dashtominusreg : /&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/g,
 	critreg : /\/(\d+)[\-|\u2013|\u2014|\u2212|\u02d7]20(?:[x\u00d7](\d+)){0,1}/,
 	critmultreg : /[x\u00d7](\d+)/,

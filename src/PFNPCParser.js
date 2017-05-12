@@ -63,7 +63,7 @@ function getAbilityAndMod (numberAsString) {
 			"mod": mod
 		};
 	}
-	if ( (/dash|\-|8212|—/i).test(numberAsString) || PFConst.dashtominusreg.test(numberAsString) ) {
+	if (  PFConst.minusreg.test(numberAsString) ) {
 		return {
 			"base": "-",
 			"mod": 0
@@ -86,114 +86,60 @@ function parseFeats (featstring) {
 }
 
 /** parseNPChp - parses statblock hp string such as 203 (14d10+126)
- * @param {string} hpstring - string format: "15 (3d8 + 2d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
+ * @param {string} hpstring - string format: "15 (3d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
  * @param {int} abilityMod: number representing ability score mod (normally CON-mod)
- * @returns {object} {hp:0,hdie1:0,hdice1:0,hdie2:0,hdice2:0,misc:0,heal:""}
- *  where hdie1 d hdice1 is racial, and 2 is class, can go up to n classes
+ * @returns {{hp:number,hdie1:number,hdice1:number,hdie2:number,hdice2:number,misc:number,heal:string}
  */
 function parseNPChp (hpstring, abilityMod) {
-	var newHP = 0,
-	plus = 0,
-	matches,
-	hparray = {
+	var hparray = {
 		hp: 0,
 		hdie1: 0,
 		hdice1: 0,
 		basehp: 0,
 		misc: 0,
 		heal: ""
-	},
-	totalAbility = 0,
-	matchessub,
-	i = 0,
-	tempstr = "",
-	tempHD = 0,
-	tempHdn = 0,
-	tempmisc = 0,
-	calcHP = 0;
-	abilityMod = abilityMod || 0;
-	if ((/^hp\s/i).test(hpstring)){
-		hpstring = hpstring.slice(3);
-	}
-	//TAS.debug"parseNPChp", hpstring, abilityMod);
-	newHP = parseInt(hpstring, 10);
-	if (!isNaN(newHP)) {
-		hparray.hp = newHP;
-		if (hpstring.indexOf("(") > 0) {
-			hpstring = hpstring.slice(hpstring.indexOf("(") + 1);
+	}, 	totalAbility = 0,	tempInt=0,	dice,	calcHP = 0;
+	try {
+		abilityMod = abilityMod || 0;
+		if ((/^hp/i).test(hpstring)){
+			hpstring = hpstring.slice(2);
 		}
-		matches = hpstring.match(/\d+d\d+/ig);
-		if (matches) {
-			for (i = 0; i < matches.length; i++) {
-				tempstr = matches[i];
-				matchessub = tempstr.match(/(\d+)d(\d+)/i);
-				if (matchessub && matchessub[1] && matchessub[2]) {
-					tempHdn = parseInt(matchessub[1], 10) || 0;
-					tempHD = parseInt(matchessub[2], 10) || 0;
-					if (i > 0 && tempHD === 8 && hparray.hdie1 !== 8) {
-						hparray["hdice" + (i + 1)] = hparray.hdice1;
-						hparray["hdie" + (i + 1)] = hparray.hdie1;
-						hparray.hdice1 = tempHdn;
-						hparray.hdie1 = tempHD;
-					} else {
-						hparray["hdice" + (i + 1)] = tempHdn;
-						hparray["hdie" + (i + 1)] = tempHD;
-					}
-				}
+		//this line should fix flying squirrel:
+		hpstring = PFUtils.replaceMissingNegatives_BadDice(hpstring);
+		hpstring = PFUtils.convertDashToMinus(hpstring);
+		hpstring = hpstring.replace('plus','+');
+		TAS.debug("now the hp string is "+hpstring);
+		//TAS.debug"parseNPChp", hpstring, abilityMod);
+		hparray.hp = parseInt(hpstring, 10)||0;
+		hpstring = hpstring.slice(hpstring.indexOf("(") + 1);
+		dice = PFUtils.getDiceDieFromString(hpstring,true);
+		if (dice.dice!==0){
+			hparray.hdice1 = dice.dice;
+			hparray.hdie1 = dice.die;
+			totalAbility = abilityMod * hparray.hdice1;
+			hparray.misc = dice.plus - totalAbility;
+			//set the base hp (for class/race) to only the hd average, so will be less than what is in statblock
+			hparray.basehp = PFUtils.getAvgHP(hparray.hdice1, hparray.hdie1);
+			//check total, if does not match, change 'misc' attr
+			calcHP = hparray.basehp + dice.plus;
+			if (hparray.hp<=0){
+				TAS.warn("parseNPChp, hp is null! why!? str is:"+hpstring);
+				hparray=calcHP;
+			} else if (calcHP !== hparray.hp) {
+				TAS.warn("parseNPChp, hp not adding right, should be:" + hparray.hp + " but getNPCHP returns " + calcHP,hparray);
+				hparray.misc += (hparray.hp - calcHP);
 			}
+			hpstring=hpstring.slice(dice.spaces+1);
 		}
-		//skip to next
-		if (i > 0) {
-			i--;
-			hpstring = hpstring.slice(hpstring.indexOf(matches[i]) + matches[i].length);
+		if(hpstring){
+			hpstring = SWUtils.trimBoth(hpstring.replace(/[\);]/g,''));
+			hparray.heal = hpstring||'';
 		}
-		// some entries have "plus" instead of "+"
-		matches = hpstring.match(/\s*?([+\-]\s*\d+)\s*?|\s*?plus\s(\d+)\s*?/);
-		if (matches) {
-			hpstring = hpstring.slice(matches.index + matches[0].length);
-			if (matches[1]) {
-				plus = parseInt(matches[1].replace(/\s/g, ''), 10) || 0;
-			} else if (matches[2]) {
-				plus = parseInt(matches[2], 10) || 0;
-			}
-		} 
-		//bug in compendium: no minus sign, so adds mod to end of die:
-		//  instead of 1d8-1 it's 1d81, 1 dee 81 !
-		// see Flying Squirrel
-		if (!matches && hparray.hdie1 > 10 && (abilityMod < 0 || (hparray.hdie1 !== 12 && hparray.hdie1 !== 20))) {
-			plus = hparray.hdie1 % 10;
-			plus = -1 * plus;
-			hparray.hdie1 = Math.floor(hparray.hdie1 / 10);
-			TAS.warn("negative in compendium: plus is -1 * hit die mod 10");
-		}
-		totalAbility = abilityMod * hparray.hdice1;
-		tempmisc = plus - totalAbility;
-		//TAS.debug"plus "+plus +" minus con:"+totalAbility+" = "+ tempmisc);
-		//misc is any bonus to the dice that is not due to CON modifier
-		hparray.misc = tempmisc;
-		if (hpstring.indexOf(")") >= 0) {
-			hpstring = hpstring.slice(hpstring.indexOf(")") + 1);
-		}
-		if (hpstring.indexOf(";") === 0) {
-			hpstring = hpstring.slice(1);
-		}
-		if (hpstring.length > 0) {
-			hparray.heal = hpstring;
-		}
+	} catch (err){
+		TAS.error("parseNPChp",err);
+	} finally {
+		return hparray;
 	}
-	//set the base hp to only the hd average, so will be less than what is in statblock
-	hparray.basehp = PFUtils.getAvgHP(hparray.hdice1, hparray.hdie1);
-	//check total, if does not match, add more
-	calcHP = PFUtils.getAvgHP(hparray.hdice1, hparray.hdie1) + tempmisc+ (abilityMod *hparray.hdice1);
-	if (calcHP && calcHP !== newHP) {
-		//wtf?
-		TAS.warn("parseNPChp, hp not adding right, should be:" + newHP + " but getNPCHP returns " + calcHP,hparray);
-		hparray.misc += (newHP - calcHP);
-	}
-
-	//check:
-	//basehp=newHP-abilityMod
-	return hparray;
 }
 /** parseNPCAC - parses AC string from statblock
  * @param {string} acstring - format: "24, Touch 24, Flat-footed 16 (+6 Deflection, +7 Dex, +1 Dodge, +1 Armor, +1 Shield, +1 Size, +6 Natural) some note can go here"
@@ -393,9 +339,8 @@ function getAtkNameFromStr (abilitystr) {
 		'abilityName': abilityName
 	};
 }
-/*parseReach - parses reach string from compendium or statblock
+/*parseReach - parses reach string from compendium or statblock: giant frog: Reach 5 ft. (15 ft. with tongue)
  * returns the default reach, rest of the string (if any), and an array of exceptions and reaches if any.
- *  (for instance, diplodacus
  * @returns = {reach:number (5,10,15 etc), reachNotes:"rest of string", reachExceptions:[['Bite':10],['Claw':5]]}
  */
 function parseReach (reachStr) {
@@ -415,67 +360,66 @@ function parseReach (reachStr) {
 		reachExceptions: []
 	};
 	if (!reachStr) {
-		return null;
+		return retobj;
 	}
-	reachStr = reachStr.replace(/^\s+|\s+$/g, '');
-	if (reachStr.slice(0, 5) === "2-1/2" || reachStr.slice(0, 4) === "21/2") {
-		retobj.reach = 2.5;
-		exceptionstr = reachStr.slice(5);
-	} else {
-		matches = reachStr.match(/^\s*(\d*\.?\d*)?\s*(.*)\s*$/);
-		if (matches) {
-			tempFloat = parseFloat(matches[1]);
-			restOf = matches[2];
-			if (!/\(|;/.test(reachStr) && /with/i.test(reachStr)) {
-				retobj.reach = 5;
-				exceptionstr = reachStr;
-			} else {
-				retobj.reach = tempFloat;
-			}
-			if (restOf && restOf.length > 0) {
-				exceptionstr = restOf;
-			}
+	try {
+		//to handle PRD, SRD:
+		matches = reachStr.match(/reach/i);
+		if(matches){
+			reachStr = reachStr.slice(matches.index+matches[0].length);
+		}
+		reachStr = SWUtils.trimBoth(reachStr);
+		reachStr = PFUtils.convertDashToMinus(reachStr);
+		reachStr = reachStr.replace('21/2','2-1/2');
+		reachStr = reachStr.replace('2.5','2-1/2');
+
+		TAS.debug("parseReach1 now reachStr is "+reachStr);
+		if (reachStr.slice(0, 5) === "2-1/2") {
+			retobj.reach = 2.5;
+			exceptionstr = reachStr.slice(5);
 		} else {
-			exceptionstr = reachStr;
+			retobj.reach = parseInt(reachStr,10)||0;
+			exceptionstr = PFUtils.getNoteAfterNumber(reachStr);
 		}
-	}
-	if (exceptionstr) {
-		exceptionstr = exceptionstr.replace('(', '').replace(')', '').replace(';', '').replace(/ft\./ig, '').replace(/ft/ig, '').replace(/^\s+|\s+$/g, '');
-	}
-	if (exceptionstr) {
-		retobj.reachNotes = exceptionstr;
-		tempstr = exceptionstr.toLowerCase().replace(/with\s/ig, '');
-		tempArray = tempstr.split(/,\s*/);
-		reachExceptions = _.reduce(tempArray, function (memo, exceptioninstance) {
-			var reachExceptions = [],
-			matches;
-			if (!exceptioninstance) {
-				return memo;
-			}
-			//not necessary since changed split(',') to split(/,\s*/)
-			//exceptioninstance = exceptioninstance.replace(/^\s+|\s+$/g, '');
-			if (exceptioninstance.slice(0, 5) === "2-1/2" || exceptioninstance.slice(0, 4) === "21/2") {
-				tempstr = exceptioninstance.slice(5);
-				if (tempstr) {
-					reachExceptions.push(tempstr.replace(/^\s+|\s+$/g, ''));
-					reachExceptions.push(2.5);
-					memo.push(reachExceptions);
+		TAS.debug("parseReach2 now reach is "+retobj.reach+", exceptionstr is "+exceptionstr);
+		if (exceptionstr && exceptionstr.indexOf('(')>=0) {
+			retobj.reachNotes = exceptionstr;
+			exceptionstr = SWUtils.trimBoth(exceptionstr.replace('(', '').replace(')', '').replace(/with\s/ig, '').replace(';', '').replace(/ft[\.\s]*/ig, '').replace(/,\s*/g,','));
+			TAS.debug("parseReach3 now  exceptionstr is "+exceptionstr);
+			if (exceptionstr) {
+				tempArray = exceptionstr.split(',');
+				reachExceptions = _.reduce(tempArray, function (memo, exceptioninstance) {
+					var reachExceptions = [],matches;
+					try {
+						if (exceptioninstance.slice(0, 5) === "2-1/2" ) {
+							reachExceptions.push(SWUtils.trimBoth(exceptioninstance.slice(5)));
+							if(reachExceptions[0]){
+								reachExceptions.push(2.5);
+								memo.push(reachExceptions);
+							}
+						} else {
+							reachExceptions.push(PFUtils.getNoteAfterNumber(reachStr)||'');
+							if(reachExceptions[0]){
+								reachExceptions.push(parseInt(reachStr,10)||0);
+								memo.push(reachExceptions);
+							}
+						}
+					} catch (erri) {
+						TAS.error("parseReach inner error erri:",erri);
+					} finally {
+						return memo;
+					}
+				}, []);
+				if (reachExceptions && reachExceptions.length > 0) {
+					retobj.reachExceptions = reachExceptions;
 				}
-			} else {
-				matches = exceptioninstance.match(/(\d+)\s*(.*)/);
-				if (matches) {
-					reachExceptions.push(matches[2].replace(/^\s+|\s+$/g, ''));
-					reachExceptions.push(matches[1]);
-					memo.push(reachExceptions);
-				}
 			}
-			return memo;
-		}, []);
-		if (reachExceptions && reachExceptions.length > 0) {
-			retobj.reachExceptions = reachExceptions;
 		}
+	} catch(err) {
+		TAS.error("parseReach error:",err);
+	} finally {
+		return retobj;
 	}
-	return retobj;
 }
 function getCreatureClassSkills (creatureType) {
 	var typeToCheck = creatureType.toLowerCase().replace(/\s/g, ''),
@@ -1679,6 +1623,13 @@ function parseSpace (spaceStr) {
 		return retstr;
 	}
 }
+/** Gets info on caster from the spells known/prepared section.
+ * @param {Map<string,any>} spellObj output from parseSpells
+ * @param {Map<string,number>} abilityScores ability score base and modifiers
+ * @param {Map<string,any>} healthObj output from parseNPChp
+ * @param {boolean} isSLA if spell-like-ability then 1 else 0
+ * @returns {{'classname':string,'ability':string,'abilityMod':number,'CL':number,'concentrationBonus':number,'oppositionschools':[string],'spellnotes':string}}
+ */
 function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 	var caster = {};
 	if (!spellObj || !abilityScores || !healthObj) { return null; }
@@ -1687,32 +1638,25 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 		caster.abilityMod = 0;
 		caster.CL = 0;
 		caster.concentrationBonus = 0;
-		if (isSLA) {
-			caster.classname = "Spell-like abilities";
+		if (isSLA || !spellObj.classname) {
+			caster.classname = isSLA?"Spell-like abilities":"Sorcerer";
 			caster.ability = 'CHA';
 			caster.abilityMod = abilityScores.cha.mod;
 		} else {
-			if (spellObj.classname) {
-				caster.classname = spellObj.classname;
-				if (PFDB.casterDefaultAbility[spellObj.classname] && abilityScores[PFDB.casterDefaultAbility[spellObj.classname]]) {
-					caster.ability = PFDB.casterDefaultAbility[spellObj.classname].toUpperCase();
-					caster.abilityMod = abilityScores[PFDB.casterDefaultAbility[spellObj.classname]].mod;
-				}
-			} else {
-				//assume sorcerer
-				caster.classname = 'Sorcerer';
-				caster.ability = 'CHA';
-				caster.abilityMod = abilityScores.cha.mod;
+			caster.classname = spellObj.classname;
+			if (PFDB.casterDefaultAbility[spellObj.classname] && abilityScores[PFDB.casterDefaultAbility[spellObj.classname]]) {
+				caster.ability = PFDB.casterDefaultAbility[spellObj.classname].toUpperCase();
+				caster.abilityMod = abilityScores[PFDB.casterDefaultAbility[spellObj.classname]].mod;
 			}
 		}
-		if (spellObj.CL) {
-			caster.CL = spellObj.CL;
+		if (spellObj.classLevel) {
+			caster.CL = spellObj.classLevel;
 		} else {
 			//assume HD
 			caster.CL = healthObj.hdice1;
 		}
 		if (spellObj.concentration) {
-			caster.concentrationBonus = parseInt(spellObj.concentration, 10) - parseInt(caster.abilityMod, 10) - parseInt(caster.CL, 10);
+			caster.concentrationBonus = spellObj.concentration - caster.abilityMod - caster.CL;
 		}
 		if (spellObj.oppositionschools){
 			caster.oppositionschools = spellObj.oppositionschools;
@@ -1993,17 +1937,24 @@ function createSLAEntries (setter, slaObj, casterObj, section) {
 	});
 	return setter;
 }
-/*createAttacks - creates rows in repeating_weapon
- * @attacklist = array of {enh:0,name:"",type:"",countFullBAB:1,plus:"",note:"",iter:[],dmgdice:0,dmgdie:0,crit:20,critmult:2,dmgbonus:0};
- * @setter = the map to pass to setAttrs
- * @returns setterf
+/**createAttacks - creates rows in repeating_weapon
+ * @param {[{enh:number,name:string,type:string,countFullBAB:number,plus:string,note:string,iter:[number],dmgdice:number,dmgdie:number,crit:number,critmult:number,dmgbonus:number}]} attacklist
+ * @param {Map<string,any>} setter the map to pass to setAttrs
+ * @param {Map<string,number>} attackGrid populated as out param by parseAndCreateAttacks
+ * @param {Map<string,number>} abilityScores output of parseAbilityScores
+ * @param {[string]} importantFeats list of attack-affecting feats this char has
+ * @param {number} defaultReach the default reach for melee attacks
+ * @param {[[string,number]]} exceptionReaches list of attack names and reach numbers
+ * @param {Map<string,number>} sizeMap output from PFSize.getSizeFromText
+ * @returns {Map<string,any>} setter
  */
 function createAttacks (attacklist, setter, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches, sizeMap) {
 	setter = setter || {};
 	if (!attacklist || _.size(attacklist)===0) {
 		return setter;
 	}
-	TAS.debug("##################","create attacks:", attacklist, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches);
+	
+	//TAS.debug("##################","create attacks:", attacklist, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches);
 	setter = _.reduce(attacklist, function (memo, attack) {
 		var newRowId = generateRowID(),
 		prefix = "repeating_weapon_" + newRowId + "_", dmgAbilityStr=false, specCMB=false,
@@ -2064,9 +2015,9 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 					}
 				}
 			}
-			if(specCMB){
-				TAS.debug("############ SPEC CMB ###############","dmgAbilityStr:"+dmgAbilityStr+" attackbonus:"+basebonus +", mult:"+ dmgMult);
-			}
+			//if(specCMB){
+			//	TAS.debug("############ SPEC CMB ###############","dmgAbilityStr:"+dmgAbilityStr+" attackbonus:"+basebonus +", mult:"+ dmgMult);
+			//}
 			if (dmgAbilityStr || specCMB){
 				if(specCMB && attack.dmgbonus===0){
 					memo[prefix + "damage-ability"] = "0";
@@ -2176,6 +2127,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			} else if ((/tongue/i).test(attack.name)) {
 				reach = defaultReach * 3;
 				memo[prefix + "range"] = reach;
+				memo[prefix + "vs"]="touch";
 			} else if (attack.atktype === "melee") {
 				if (exceptionReaches && exceptionReaches.length > 0) {
 					//TAS.log("looking for match",exceptionReaches);
@@ -2196,6 +2148,9 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				} else if (defaultReach) {
 					memo[prefix + "range"] = defaultReach;
 				}
+			}
+			if (attack.vs && !(/tongue/i).test(attack.name)){
+				memo[prefix+"vs"]=attack.vs;
 			}
 			if (attack.group) {
 				memo[prefix + "group"] = attack.group;
@@ -2382,25 +2337,28 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 		setter = _.reduce(skills, function (memo, tot, skill) {
 			var ability = "", tempint = 0, abilitymod = 0, ranks = 0;
 			try {
-				tot = parseInt(tot, 10);
+				tot = parseInt(tot, 10)||0;
 				if (tempAbilities[skill]) {
 					ability = tempAbilities[skill];
 					abilitymod = abilityScores[ability] ? abilityScores[ability].mod : 0;
-					abilitymod = parseInt(abilitymod, 10);
 					//TAS.debug("now setting " + skill + ", total:" + tot +", size:",sizeMap);
 					memo[skill] = tot;
 					ranks = tot;
 					ranks -= abilitymod;
 					if (skill==='Stealth'){
-						ranks -= (2*sizeMap.skillSize);
+						if (sizeMap.skillSize!==0){
+							ranks -= (2*sizeMap.skillSize);
+						}
 					} else if (skill === 'Fly'){
-						ranks -= sizeMap.skillSize;
+						if (sizeMap.skillSize!==0){
+							ranks -= sizeMap.skillSize;
+						}
 					}
 					if (racial && racial.skillmods && racial.skillmods[skill]) {
-						ranks -= parseInt(racial.skillmods[skill], 10);
+						ranks -= (parseInt(racial.skillmods[skill], 10)||0);
 					}
 					if (parseInt(memo[skill + "-feat"], 10) > 0) {
-						ranks -= parseInt(memo[skill + "-feat"], 10);
+						ranks -= (parseInt(memo[skill + "-feat"], 10)||0);
 					}
 					if (parseInt(memo[skill + "-cs"], 10) > 0) {
 						ranks -= 3;
@@ -2423,9 +2381,17 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 		return setter;
 	}
 }
+/**createInitEntries adds init,init-misc,init-misc-mod,init-ability-mod values to setter
+ * @param {Map<string,any>} setter the map to pass to setAttrs
+ * @param {number} baseInit the total initiative bonus
+ * @param {Map<string,{Map<string,number>>} abilityScores output of parseAbilityScores
+ * @param {[string]} importantFeats list of attack-affecting feats this char has, IGNORED
+ * @returns {Map<string,any>} setter 
+ */
 function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 	var initMisc = 0;
 	try {
+		setter= setter||{};
 		initMisc = baseInit - abilityScores.dex.mod;
 		setter["init"] = baseInit;
 		setter["init-misc"] = initMisc;
@@ -2437,6 +2403,7 @@ function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 		return setter;
 	}
 }
+
 function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 	try {
 		if (isUndead || abilityScores.con.base === "-") {
@@ -2715,8 +2682,9 @@ function createFeatEntries (setter, featlist) {
 		return memo;
 	}, setter);
 }
-/*createFeatureEntries
- *@returns setter */
+/**createFeatureEntries
+  *@returns {Map<string,any>} setter
+  */
 function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
 	var attrs = {}, creatureRace = "", tempint=0,dc=0,abilityMod=0,charlevel=0,calcDC=0;
 	try {
@@ -3021,6 +2989,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			setter = createAbilityScoreEntries(setter, abilityScores, isUndead);
 			// Size **********************************************************************
 			sizeMap = PFSize.getSizeFromText(v.size_compendium);
+			TAS.debug("the size is",sizeMap);
 			if (sizeMap && sizeMap.size !== 0) {
 				setter.size = sizeMap.size;
 				setter['default_char_size']=sizeMap.size;
@@ -3029,10 +2998,15 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				setter["CMD-size"] = (sizeMap.size * -1);
 				setter.size_skill_double = (sizeMap.skillSize * 2);
 			} else {
-				sizeMap = {'size':0,'size_skill':0,'CMD-size':0,'size_skill_double':0};
 				setter['size']=0;
 				setter['default_char_size']=0;
 				setter['old_size']=0;
+				setter.size_skill = 0;
+				setter["CMD-size"] = 0;
+				setter.size_skill_double =0;
+				if (!sizeMap){
+					sizeMap = {'size':0,'skillSize':0};
+				}
 			}
 			// Feats *********************************************************************
 			if (v["npc-feats-text"]) {
@@ -3078,7 +3052,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			acMap = parseNPCAC(v["ac_compendium"], v.cmd_compendium, abilityScores.dex.mod, sizeMap.size);
 			createACEntries(setter, acMap, abilityScores, importantFeats, hpMap, bab);
 			// Reach *******************************************
-			//TAS.debug("about to find reach: " + v.reach_compendium);
+			TAS.debug("about to find reach: " + v.reach_compendium);
 			reachObj = parseReach(v.reach_compendium);
 			if (reachObj) {
 				setter.reach = reachObj.reach;
@@ -3211,6 +3185,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
 				TAS.info("##############################################","END OF importFromCompendium");
+				TAS.debug("setting",setter);
 				setAttrs(setter, PFConst.silentParams, done);
 			} else {
 				setter["npc_import_now"]=0;
