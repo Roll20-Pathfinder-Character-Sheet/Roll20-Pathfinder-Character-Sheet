@@ -30,20 +30,24 @@ var npcCompendiumAttributesPlayer = [ "npc-spellike-ability-text","npc-spells-kn
  *@returns {int} the initiative modifier
  */
 function getNPCInit (initstring) {
-	var numberInit;
-	if ((/[\-\+]{0,1}\d+$/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+$/), 10);
-	} else if ((/^(Init\s){0,1}[\-\+]{0,1}\d+/i).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+$/), 10);
-	} else if ((/^[\-\+]{0,1}\d+$/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/^[\-\+]{0,1}\d+$/), 10);
-	} else if ((/[\-\+]{0,1}\d+/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+/), 10);
+	var numberInit,matches;
+	//Init +0;
+	initstring = PFUtils.convertDashToMinus(initstring);
+	initstring = SWUtils.trimBoth(initstring);
+	if ((/^Init/i).test(initstring) || (/^[\+\-]{0,1}\d+/).test(initstring) ) {
+		//number at front
+		numberInit = PFUtils.getIntFromString(initstring,true);
+	} else if ((matches = initstring.match(/[\+\-]{0,1}\d+$/) )!==null) {
+		//number at end
+		initstring = initstring.slice(match.index);
+		if (initstring[0]!=='+'){
+			initstring = '-'+initstring;
+		}
+		numberInit = parseInt(initstring.match(/[\-\+]\d+$/), 10)||0;
+	} else {
+		numberInit = PFUtils.getIntFromString(initstring,true);
 	}
-	if (!isNaN(numberInit)) {
-		return numberInit;
-	}
-	return 0;
+	return numberInit;
 }
 /**getAbilityAndMod- returns the number and mod for an ability
  * @param {string} numberAsString the ability score -a number in string form
@@ -663,24 +667,28 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 		retobj.name += names.name;
 		retobj.basename = names.basename;
 		atkstr = SWUtils.trimBoth(atkstr);
-		//if stars with #, it means number of attacks
+		atkstr = PFUtils.replaceMissingNegatives_BadDice(atkstr);
+		atkstr = PFUtils.replaceMissingNegatives_CritRange(atkstr);
+		atkstr = PFUtils.convertDashToMinus(atkstr);
+		//if starts with number, it means number of attacks
 		matches = atkstr.match(/^(\d+)\s*/);
 		if (matches && matches[1]) {
 			retobj.countFullBAB = parseInt(matches[1], 10) || 1;
+			//move up
 			atkstr = atkstr.slice(matches[0].length);
-			//retobj.name += (matches[1] + " ");
 		}
-		//starts with +number(enh) or mwk
-		matches = atkstr.match(/^([+\-]\d+)\s*|^(mwk)\s*/i);
+		//starts with '+/-' number or 'mwk': enh or mwk
+		matches = atkstr.match(/^([+\-]\d+|mwk)\s*/i);
 		if (matches) {
 			//starts with +n, is weapon
 			//retobj.name += matches[0];
-			if (matches[1]) {
-				retobj.enh = parseInt(matches[1], 10) || 0;
-			} else if (matches[2] && (/mwk/i).test(matches[2])) {
+			if (matches[1].toLowerCase()==='mwk') {
 				retobj.mwk = 1;
+			} else {
+				retobj.enh = parseInt(matches[1], 10) || 0;
 			}
-			retobj.type = "weapon";
+			retobj.type = "weapon"; //for sure is a weapon
+			//move up
 			atkstr = atkstr.slice(matches[0].length);
 		}
 		if (PFDB.cmbPlusStrsrch.test(retobj.basename)) {
@@ -701,7 +709,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			retobj.vs = 'touch';
 			retobj.range = 10;
 		} else if ((/touch/i).test(retobj.basename)) {
-			if ((/ranged/i).test(retobj.basename)) {
+			if ((/range/i).test(retobj.basename)) {
 				retobj.atktype = 'ranged';
 			} else {
 				retobj.atktype = 'melee';
@@ -734,9 +742,8 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			}
 		}
 		//skip past name
-		//if the attack value is -n, then it may skip past the- and go to n
-		// for compendium treated as -n, for statblock results in +n
-		matches = atkstr.match(/\s*([^0-9+\/\+\(]+)/);
+		//CB how the hell does this work? i wrote it and i cant' even tell
+		matches = atkstr.match(/\s*([^0-9\/\+\-\(]+)/);
 		if (matches && matches[0]) {
 			if (matches.index) {
 				tempidx = matches.index;
@@ -788,40 +795,15 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 				//TAS.debug"now left with :"+tempstr);
 				// find damage
 				//damage dice and die
-				matches = tempstr.match(/^(\d+)d(\d+)\s*/i);
-				if (matches) {
-					if(matches[1]){
-						retobj.dmgdice = parseInt(matches[1], 10) || 0;
-					}
-					if(matches[2]){
-						tempInt = parseInt(matches[2], 10) || 0;
-					}
-					//compendium bug no minus:
-					if ( (tempInt!==3 && tempInt % 2) || tempInt > 12) {
-						retobj.dmgdie = Math.floor(tempInt / 10);
-						retobj.dmgbonus = -1 * (tempInt % 10);
-					} else {
-						retobj.dmgdie = tempInt;
-					}
-					tempstr = tempstr.slice(matches[0].length);
+				var dice = PFUtils.getDiceDieFromString(tempstr,true,true);
+				if(dice.dice!==0){
+					retobj.dmgdice=dice.dice;
+					retobj.dmgdie=dice.die;
+					retobj.dmgbonus=dice.plus;
+					tempstr = tempstr.slice(dice.spaces);
 				}
-				if(!retobj.dmgbonus) {
-					//flat damage
-					matches = tempstr.match(/^([+\-]??\d+)\s*/);
-					if(specCMB){ 
-						TAS.debug("#####Parse attack damage dice looking for bonus: ",bonus, matches )
-					}
-					if (matches) {
-						//flat number
-						retobj.dmgbonus = parseInt(matches[1], 10) || 0;
-						bonus = tempstr.slice(matches[0].length);
-						//bonus = beforeBetweenAfterParens[1].slice(matches[1].length);
-					} else {
-						bonus = tempstr;
-					}
-				} else {
-					bonus = tempstr;
-				}
+				bonus = SWUtils.trimBoth(tempstr);
+
 				//any text after damage is 'plus' or damage type
 				if (bonus) {
 					//if engulf or swallowwhole, there will be inner AC and hp to put in notes
@@ -856,6 +838,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 						if (matches) {
 							countspaces = matches.length - 1;
 						}
+						//--does not find dash in crit check for different types of minus
 						matches = bonus.match(/(x\d+)|(\/\d+\-??20)|([+\-]??\d+)/ig);
 						_.each(matches, function (match, index) {
 							bonus = bonus.slice(match.length);
@@ -954,7 +937,9 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 		return memoout.concat(attacks);
 	}, []);
 	return attacksouter;
-}function parseSkillRacialBonuses (racialstr) {
+}
+
+function parseSkillRacialBonuses (racialstr) {
 	//abilitymods = modify default ability score for a skill
 	var abilitieslower = _.map(PFAbilityScores.abilities, function (ab) {
 		return ab.toLowerCase();

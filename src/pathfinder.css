@@ -4370,18 +4370,18 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     display: none;
 }
 
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(8),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(9),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(10),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(11),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(14),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-group-head :nth-child(15),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(8),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(9),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(10),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(11),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(14),
-.sheet-extra-saves-show:not(:checked) ~ sheet-saves-table .sheet-table-row :nth-child(15) {
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(8),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(9),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(10),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(11),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(14),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(15),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(8),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(9),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(10),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(11),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(14),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(15) {
     display:none;
 }
 
@@ -4411,23 +4411,9 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-divider-lg {
     display: none;
 }
-/*
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(n+3),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(n+3) {
-    display: none;
-}
-
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(6),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(6),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-header:nth-child(13),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-cell:nth-child(13) {
-    display: table-cell;
-}
-*/
 .sheet-readonly-show:not(:checked) ~ .sheet-main  .sheet-section-defenses .sheet-defense-notes .sheet-notes {
 	height:5em;
 }
-
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-attack-grid .sheet-table-row .sheet-divider,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-attack-grid .sheet-table-group-head .sheet-table-header:nth-child(n+3),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-attack-grid .sheet-table-row .sheet-table-cell:nth-child(n+3) {
