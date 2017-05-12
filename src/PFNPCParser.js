@@ -667,9 +667,6 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 		retobj.name += names.name;
 		retobj.basename = names.basename;
 		atkstr = SWUtils.trimBoth(atkstr);
-		atkstr = PFUtils.replaceMissingNegatives_BadDice(atkstr);
-		atkstr = PFUtils.replaceMissingNegatives_CritRange(atkstr);
-		atkstr = PFUtils.convertDashToMinus(atkstr);
 		//if starts with number, it means number of attacks
 		matches = atkstr.match(/^(\d+)\s*/);
 		if (matches && matches[1]) {
@@ -913,7 +910,24 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 	var atkarrayout,
 	atkarraysub,
 	attacksouter,
+	matches,
 	addgroups = false;
+	if (!atkstr){
+		return null;
+	}
+	if (!atktypestr){
+		atktypestr='melee';
+	}
+	if ( atkstr.slice(0,atktypestr.length).toLowerCase()===atktypestr){
+		atkstr = atkstr.slice(atktypestr.length);
+	}
+	if( atkstr[0]==='*' || atkstr[0]===':'){
+		atkstr = atkstr.slice(1);
+	}
+	atkstr = SWUtils.trimBoth(atkstr);
+	atkstr = PFUtils.replaceMissingNegatives_BadDice(atkstr);
+	atkstr = PFUtils.replaceMissingNegatives_CritRange(atkstr);
+	atkstr = PFUtils.convertDashToMinus(atkstr);
 	atkarrayout = atkstr.split(/\sor\s/i);
 	if (atkarrayout.length > 1) {
 		addgroups = true;
