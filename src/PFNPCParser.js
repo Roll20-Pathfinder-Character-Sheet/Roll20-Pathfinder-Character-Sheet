@@ -79,6 +79,9 @@ function getAbilityAndMod (numberAsString) {
  * @returns {[string]} feats
  */
 function parseFeats (featstring) {
+	if (featstring.slice(0,5).toLowerCase()==='feats'){
+		featstring = featstring.slice(5);
+	}
 	return SWUtils.splitByCommaIgnoreParens(featstring);
 }
 
