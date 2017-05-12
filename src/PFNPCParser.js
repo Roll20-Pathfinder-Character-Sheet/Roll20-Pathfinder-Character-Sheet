@@ -30,20 +30,24 @@ var npcCompendiumAttributesPlayer = [ "npc-spellike-ability-text","npc-spells-kn
  *@returns {int} the initiative modifier
  */
 function getNPCInit (initstring) {
-	var numberInit;
-	if ((/[\-\+]{0,1}\d+$/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+$/), 10);
-	} else if ((/^(Init\s){0,1}[\-\+]{0,1}\d+/i).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+$/), 10);
-	} else if ((/^[\-\+]{0,1}\d+$/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/^[\-\+]{0,1}\d+$/), 10);
-	} else if ((/[\-\+]{0,1}\d+/).test(initstring)) {
-		numberInit = parseInt(initstring.match(/[\-\+]{0,1}\d+/), 10);
+	var numberInit,matches;
+	//Init +0;
+	initstring = PFUtils.convertDashToMinus(initstring);
+	initstring = SWUtils.trimBoth(initstring);
+	if ((/^Init/i).test(initstring) || (/^[\+\-]{0,1}\d+/).test(initstring) ) {
+		//number at front
+		numberInit = PFUtils.getIntFromString(initstring,true);
+	} else if ((matches = initstring.match(/[\+\-]{0,1}\d+$/) )!==null) {
+		//number at end
+		initstring = initstring.slice(match.index);
+		if (initstring[0]!=='+'){
+			initstring = '-'+initstring;
+		}
+		numberInit = parseInt(initstring.match(/[\-\+]\d+$/), 10)||0;
+	} else {
+		numberInit = PFUtils.getIntFromString(initstring,true);
 	}
-	if (!isNaN(numberInit)) {
-		return numberInit;
-	}
-	return 0;
+	return numberInit;
 }
 /**getAbilityAndMod- returns the number and mod for an ability
  * @param {string} numberAsString the ability score -a number in string form

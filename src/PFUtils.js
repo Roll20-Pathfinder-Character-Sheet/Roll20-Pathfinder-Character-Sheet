@@ -489,10 +489,18 @@ export function getCostInGP  (str){
     }
     return temp;
 }
-export function getIntFromString(str){
+export function getIntFromString(str,cleanedup,atStart){
     var temp=0, matches;
+    if (!cleanedup){
+        str = replaceMissingNegatives_CritRange(str);
+        str = convertDashToMinus(str);
+    }
     str.replace(PFConst.dashtominusreg,'-');
-    matches = str.match(/[\+\-]{0,1}\d+/);
+    if (!atStart){
+        matches = str.match(/[\+\-]{0,1}\d+/);
+    } else {
+        matches = str.match(/^[\+\-]{0,1}\d+/);
+    }
     if (matches) { 
         temp = parseInt(matches[0],10)||0;
     }
