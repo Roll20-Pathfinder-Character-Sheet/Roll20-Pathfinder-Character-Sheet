@@ -52,7 +52,7 @@ export default {
 	spellClassIndexes: ["0", "1", "2"],
 	silentParams : {silent:true},
 	minusreg : /\-|\u2013|\u2014|\u2212|\u02d7/,
-	dashtominusreg : /\u2013|\u2014|\u2212|\u02d7/g,
+	dashtominusreg : /&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/g,
 	critreg : /\/(\d+)[\-|\u2013|\u2014|\u2212|\u02d7]20(?:[x\u00d7](\d+)){0,1}/,
 	critmultreg : /[x\u00d7](\d+)/,
 	diceDiereg : /(\d+)d(\d+)\s*(?:([\+|\-|\u2013|\u2014|\u2212|\u02d7])(\d+)){0,1}/,
