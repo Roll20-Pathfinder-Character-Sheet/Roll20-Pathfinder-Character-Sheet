@@ -39,7 +39,7 @@ function getNPCInit (initstring) {
 		numberInit = PFUtils.getIntFromString(initstring,true);
 	} else if ((matches = initstring.match(/[\+\-]{0,1}\d+$/) )!==null) {
 		//number at end
-		initstring = initstring.slice(match.index);
+		initstring = initstring.slice(matches.index);
 		if (initstring[0]!=='+'){
 			initstring = '-'+initstring;
 		}
@@ -63,7 +63,7 @@ function getAbilityAndMod (numberAsString) {
 			"mod": mod
 		};
 	}
-	if (/dash|\-|8212|—/i.test(numberAsString)) {
+	if ( (/dash|\-|8212|—/i).test(numberAsString) || PFConst.dashtominusreg.test(numberAsString) ) {
 		return {
 			"base": "-",
 			"mod": 0
@@ -931,7 +931,7 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 	atkstr = PFUtils.replaceMissingNegatives_BadDice(atkstr);
 	atkstr = PFUtils.replaceMissingNegatives_CritRange(atkstr);
 	atkstr = PFUtils.convertDashToMinus(atkstr);
-	atkarrayout = atkstr.split(/\sor\s/i);
+	atkarrayout = atkstr.split(/\bor\b/i);
 	if (atkarrayout.length > 1) {
 		addgroups = true;
 	}
