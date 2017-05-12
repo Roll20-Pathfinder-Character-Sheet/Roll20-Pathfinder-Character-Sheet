@@ -2718,9 +2718,11 @@
 				<div class="sheet-h2-section sheet-skill-options">
 					<div class="sheet-table sheet-config-table sheet-options sheet-named">
 						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
+						<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+						<div class="sheet-cheat"></div>
 						<div class="sheet-table">
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell sheet-left sheet-small-label">
+								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
 									<label class="sheet-nowrap">
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" /><b title="Only affects skillbook buttons" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
 									</label>
@@ -2735,9 +2737,9 @@
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_include_skill_totals" value="1" checked><b title="Only affects skillbook buttons" data-i18n="include-skill-totals">Include Skill Totals?</b>
 									</label>
 								</span>
-								<span class="sheet-table-cell sheet-left sheet-small-label">
+								<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
 									<span data-i18n="number-fill-in-skills-show">Number of craft, perform, profession to show:</span>
-									<br/>
+									<br>
 									<select name="attr_custom_skill_num_show" title="@{custom_skill_num_show}">
 									  <option name="attr_custom_skill_num_show" value="1" selected>•1</option>
 									  <option name="attr_custom_skill_num_show" value="2">&nbsp;2</option>
@@ -2746,9 +2748,9 @@
 									  <option name="attr_custom_skill_num_show" value="10">10</option>
 									</select>
 								</span>
-								<span class="sheet-table-cell sheet-left sheet-small-label">
+								<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
 									<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>									
-									<br/>
+									<br>
 									<select name="attr_misc_skill_num_show" title="@{misc_skill_num_show}">
 									  <option name="attr_misc_skill_num_show" value="1" selected >&nbsp;1</option>
 									  <option name="attr_misc_skill_num_show" value="2">&nbsp;2</option>
@@ -2761,10 +2763,10 @@
 						</div>
 						<div class="sheet-table sheet-hide-readonly">
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell sheet-left sheet-small-label">
+								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em; width: 30%;">
 									<span data-i18n="enable-take-10-or-20-options" data-i18n-title="enable-skill-check-query-title" data-i18n-aria-label="enable-skill-check-query-title" title="Skill Checks will include an option to Roll, Take 10, or Take 20.">Enable Take 10 or 20 options?</span>
-									<br/>
-									<select name="attr_skill-query" title="@{skill-query}" style="width:4.5em;">
+									<br>
+									<select name="attr_skill-query" title="@{skill-query}" style="width: 7.25em;margin-top: 1px;height: 2.125em;">
 										<option value="1d20+@{skill-invest-query}" data-i18n="no" selected>No</option>
 										<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}" data-i18n="yes">Yes</option>
 										<option value="@{skill-invest-query}+@{custom_dice}" data-i18n="custom-roll">Custom Roll</option>
@@ -2773,25 +2775,24 @@
 								<input type="checkbox" class="sheet-nextitem-show" name="attr_skill-query" value="@{skill-invest-query}+@{custom_dice}" role="presentation" />
 								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
 									<span class="sheet-super sheet-note-c" data-i18n="custom-roll"  >Custom Roll</span>
-									<br/>
+									<br>
 									<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
 								</span>
 								<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
-									<br/>
-									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em;">
+									<br>
+									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
 										<option value="0" data-i18n="no-default" selected>No</option>
 										<option value="@{investigator_dice}" data-i18n="yes">Yes</option>
 									</select>
 								</span>
 								<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
-									<br/>
+									<br>
 									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">0</textarea>
 								</span>
-
 								<span class="sheet-table-rightcell"></span>
 							</div>
 						</div>
@@ -10224,48 +10225,57 @@
 					<h3 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-options">Skill Options</label></h3>
 					<div class="sheet-h3-section sheet-table sheet-options sheet-named sheet-wide-readonly">
 						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
+						<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+						<div class="sheet-cheat"></div>
 						<div class="sheet-table sheet-config-table">
-							<span class="sheet-table-cell sheet-left">
-								<label>
-									<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" />
-									<b title="Hide untrained skills in menu (if they require trainig, and can't be used untrained at all)" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
-								</label>
-								<br>
-								<label>
-									<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-									<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
-									<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}"  >
-									<b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
-								</label>
-								<br>
-								<label>
-									<input type="checkbox" class="sheet-boldlabel-check" name="attr_include_skill_totals" value="1" checked><b title="Only affects skillbook buttons" data-i18n="include-skill-totals">Include Skill Totals?</b>
-								</label>
-							</span>
-							<span class="sheet-table-cell sheet-left">
-								<label>
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
+									<label class="sheet-nowrap">
+										<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" /><b title="Only affects skillbook buttons" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
+									</label>
+									<br>
+									<label>
+										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
+										<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
+										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
+									</label>
+									<br>
+									<label>
+										<input type="checkbox" class="sheet-boldlabel-check" name="attr_include_skill_totals" value="1" checked><b title="Only affects skillbook buttons" data-i18n="include-skill-totals">Include Skill Totals?</b>
+									</label>
+								</span>
+                                <span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em; width: 22%;">
 									<span data-i18n="enable-take-10-or-20-options" data-i18n-title="enable-skill-check-query-title" data-i18n-aria-label="enable-skill-check-query-title" title="Skill Checks will include an option to Roll, Take 10, or Take 20.">Enable Take 10 or 20 options?</span>
-									<select name="attr_skill-query" title="@{skill-query}">
+									<br>
+									<select name="attr_skill-query" title="@{skill-query}" style="width: 7.25em;margin-top: 1px;height: 2.125em;">
 										<option value="1d20+@{skill-invest-query}" data-i18n="no" selected>No</option>
-										<option value="?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}" data-i18n="yes">Yes</option>
+										<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}" data-i18n="yes">Yes</option>
+										<option value="@{skill-invest-query}+@{custom_dice}" data-i18n="custom-roll">Custom Roll</option>
 									</select>
-								</label>
-							</span>
-							<span class="sheet-table-cell sheet-left">
-								<label>
+								</span>
+								<input type="checkbox" class="sheet-nextitem-show" name="attr_skill-query" value="@{skill-invest-query}+@{custom_dice}" role="presentation" />
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+									<span class="sheet-super sheet-note-c" data-i18n="custom-roll"  >Custom Roll</span>
+									<br>
+									<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
+								</span>
+								<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
-									<select name="attr_skill-invest-query" title="@{skill-invest-query}">
-										<option value="0" data-i18n="no" selected>No</option>
+									<br>
+									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
+										<option value="0" data-i18n="no-default" selected>No</option>
 										<option value="@{investigator_dice}" data-i18n="yes">Yes</option>
 									</select>
-								</label>
-							</span>
-							<span class="sheet-table-cell sheet-left">
-								<label>
-									<span data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro (eg [[1d6]][investigator])">Skill Bonus Macro</span>
-									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="additional-modifier-or-macro">[[ 1d6 ]][skill bonus]</textarea>
-								</label>
-							</span>
+								</span>
+								<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
+								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
+									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
+									<br>
+									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">0</textarea>
+								</span>
+								<span class="sheet-table-rightcell"></span>
+							</div>
 						</div>
 					</div>
 					<div class="sheet-cheat"></div>
@@ -12852,7 +12862,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/09/2017 5:15pm ET &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/10/2017 9:45pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
