@@ -1595,10 +1595,14 @@ function parseSpells (spellstr) {
 				if (matches && matches[1]) {
 					spells.concentration = parseInt(matches[1], 10) || 0;
 				}
-				matches = line.match(/([\w\s]*)spells\sknown/i);
+				matches = line.match(/([\w\s]*)spells\s(?:known|prepared)/i);
 				if (matches && matches[1]) {
 					spells.classname = matches[1].replace(/^\s|\s$/g, '');
 					spells.classname = spells.classname[0].toUpperCase() + spells.classname.slice(1).toLowerCase();
+				} else if ((/spells\sprepared/i).test(line)){
+					spells.classname ='Cleric'; //if prep caster then not a sorcerer
+				} else {
+					spells.classname = 'Sorcerer'; //default
 				}
 			} else {
 				//look for endash, emdash, or dash
