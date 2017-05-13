@@ -930,11 +930,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-tab.sheet-tab99 {
-    width: 4.75% !important;
+    width: 6% !important;
 }
 .sheet-tabinput.sheet-tab99 {
-    width: 4.75% !important;
-    margin-right: -4.75% !important;
+    width: 6% !important;
+    margin-right: -6% !important;
 }
 .sheet-mainnav ~ .sheet-tab,
 .sheet-mainnav ~ .sheet-tabinput {
