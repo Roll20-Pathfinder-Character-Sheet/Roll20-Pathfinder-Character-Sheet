@@ -2255,15 +2255,16 @@
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
 								<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
-								<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
+								<input type="checkbox" value="1" name="attr_dualwield" class="sheet-dualwield-hide sheet-noshow" role="presentation" />
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-nondual-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
 								<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name"  value="" title="@{repeating_weapon_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
-								<div class="sheet-linked-fields sheet-sect">
+								<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
 									<input type="checkbox" name="attr_attack-mod_error" class="sheet-error-mshow" value="1" />
 									<label class="sheet-small-label2 sheet-entry-med sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
-								<span class="sheet-divider-db sheet-sect">+</span>
+								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
 								<label class="sheet-small-label2 sheet-entry-short">
 									<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
 										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
@@ -2277,9 +2278,9 @@
 									</select>
 									<span data-i18n="attack-type">Attack Type</span>
 								</label>
-								<span class="sheet-divider-db sheet-sect">=</span>
+								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">=</span>
 								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly /><span data-i18n="attack">Attack</span></label>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 									<select class="sheet-select-small" name="attr_vs">
 										<option value="ac" data-i18n="armor-class-abbrv-default" selected>&#8226;AC</option>
 										<option value="touch" data-i18n="touch">Touch</option>
@@ -2291,45 +2292,45 @@
 									</select>
 									<span data-i18n="versus-abbrv">Vs.</span>
 								</label>
-								<div class="sheet-linked-fields">
+								<div class="sheet-linked-fields sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-target" title="@{repeating_weapon_$X_crit-target}" value="20" min="0" max="20" /><span data-i18n="critical-abbrv">Crit</span></label>
 									<span class="sheet-divider-db-lg" style="width:1em; padding-bottom:10px;">/x</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
 								</div>
-								<div class="sheet-linked-fields">
+								<div class="sheet-linked-fields sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 								</div>
 								<input name="attr_size_affects"  type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
 								<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-sect3-show sheet-size-affects-show sheet-noshow" />
-								<div class="sheet-linked-fields sheet-dont-use-size">
+								<div class="sheet-linked-fields sheet-dont-use-size sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
 									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 								</div>
-								<div class="sheet-linked-fields sheet-sect3 sheet-use-size">
+								<div class="sheet-linked-fields sheet-sect3 sheet-use-size sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
 									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
 								</div>
-								<div class="sheet-linked-fields sheet-use-size">
+								<div class="sheet-linked-fields sheet-use-size sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
 									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 								</div>
-								<span class="sheet-divider-db sheet-sect">+</span>
-								<div class="sheet-linked-fields sheet-sect">
+								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
+								<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
 									<input type="checkbox" name="attr_damage-mod_error" class="sheet-error-mshow" value="1" />
 									<label class="sheet-small-label2 sheet-entry-short sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
-								<span class="sheet-divider-db">+</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
-								<span class="sheet-divider-db-lg sheet-sect">*</span>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+								<span class="sheet-divider-db sheet-nondual-sect">+</span>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+								<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
+								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 									<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
 										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
 										<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
@@ -2342,34 +2343,34 @@
 									<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
 								</label>
 								<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-								<span class="sheet-divider-db sheet-sect sheet-sect2">(</span>
-								<label class="sheet-small-label2 sheet-sect sheet-sect2" style="width:1.75em;">
+								<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">(</span>
+								<label class="sheet-small-label2 sheet-sect sheet-sect2 sheet-nondual-sect" style="width:1.75em;">
 									<input style="min-width:.5em;" type="text" name="attr_damage-ability-max" title="@{repeating_weapon_$X_damage-ability-max}" value="" placeholder="NA" data-i18n-placeholder="not-applicable" />
 									<span data-i18n-title="maximum-damage-ability-title" data-i18n-aria-label="maximum-damage-ability-title" title="Maximum damage ability applied (for strength score, etc.)" data-i18n="maximum-abbrv">Max</span>
 								</label>
-								<span class="sheet-divider-db sheet-sect sheet-sect2">)</span>
-								<span class="sheet-divider-db sheet-sect">=</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
-								<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
-								<label class="sheet-small-label2 sheet-narrow-numbers">
+								<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">)</span>
+								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">=</span>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse sheet-nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
+								<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-nondual-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-nondual-sect">
 									<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 									<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
 									<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
 								</label>
 								<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo sheet-nondual-sect"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" placeholder="Group by name for attackbook buttons" data-i18n-placeholder="group-name" /><span data-i18n="group">Group name</span></label>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 									<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
 										<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
 										<option value="-4" data-i18n="no">No</option>
 									</select>
 									<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
 								</label>
-								<label class="sheet-small-label2 sheet-sect sheet-use-size-only" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-use-size-only sheet-nondual-sect" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
 								<input type="checkbox" name="attr_size_affects" value="1" class="sheet-nextitem-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only">
+								<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only sheet-nondual-sect">
 									<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
 										<option value="-8" data-i18n="size-colossal">Colossal</option>
 										<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
@@ -2399,8 +2400,8 @@
 									<label class="sheet-showsect sheet-extra-damage-showlabel" data-i18n="precision-abbrv">Extra Dmg</label>
 									<input type="checkbox" class="sheet-showarrow sheet-iterations-show" title="iterative-attacks-title" data-i18n-title="iterative-attacks-title" data-i18n-aria-label="iterative-attacks-title" aria-label="Show Iterative Attacks" name="attr_iterative-attacks-show" value="1" />
 									<label class="sheet-showsect sheet-iterations-showlabel" data-i18n="iterative-attacks-abbrv">Iterative Atks</label>
-									<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
-									<label class="sheet-showsect sheet-advmacro-text-showlabel" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
+									<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show sheet-nondual-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
+									<label class="sheet-showsect sheet-advmacro-text-showlabel sheet-nondual-sect" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
 									<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 									<label class="sheet-showsect sheet-macro-text-showlabel" data-i18n="macro-text">Macro Text</label>
 									<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
@@ -2413,14 +2414,15 @@
 											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 										</label>
 										<label class="sheet-small-label2" style="width:23.85%;">
-											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
-											<input style="height:2.15em;" type="text" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
+											<span class="sheet-nondual-sect" data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+											<span class="sheet-dual-sect" data-i18n-title="extra-damage-condition" data-i18n-aria-label="extra-damage-condition" title="Extra Damage type" data-i18n="rake-rend-etc">Condition</span>
+											<input style="height:2.15em;" type="text" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" value="" placeholder="Dmg type / Description"  />
 										</label>
-										<label class="sheet-small-label2" style="width:23.85%;">
+										<label class="sheet-small-label2 sheet-nondual-sect" style="width:23.85%;">
 											<span class="sheet-super sheet-note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
 											<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 										</label>
-										<label class="sheet-small-label2" style="width:23.85%;">
+										<label class="sheet-small-label2 sheet-nondual-sect" style="width:23.85%;">
 											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 											<input style="height:2.15em;" type="text" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
 										</label>
@@ -2560,7 +2562,7 @@
 											</span>
 										</div>
 									</div>
-									<div class="sheet-advanced-macros" style="width:100%;height:auto;clear:both;">
+									<div class="sheet-advanced-macros sheet-nondual-sect" style="width:100%;height:auto;clear:both;">
 										<div class="sheet-center sheet-repeating-hidesect">
 											<div class="sheet-insertmacrocell" style="width:48.5%">
 												<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
@@ -9304,17 +9306,18 @@
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
 								<div class="sheet-nontable-repeating">
 									<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
-									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
-									<label class="sheet-small-label2 sheet-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
+									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
+									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
+									<input type="checkbox" value="1" name="attr_dualwield" class="sheet-dualwield-hide sheet-noshow" role="presentation" />
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
+									<label class="sheet-small-label2 sheet-sect sheet-nondual-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
 									<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name"  value="" title="@{repeating_weapon_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
-									<div class="sheet-linked-fields sheet-sect">
+									<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
 										<input type="checkbox" name="attr_attack-mod_error" class="sheet-error-mshow" value="1" />
 										<label class="sheet-small-label2 sheet-entry-med sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
-									<span class="sheet-divider-db sheet-sect">+</span>
+									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
 									<label class="sheet-small-label2 sheet-entry-short">
 										<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
 											<option value="0" data-i18n="none-default" selected>&#8226;None</option>
@@ -9328,9 +9331,9 @@
 										</select>
 										<span data-i18n="attack-type">Attack Type</span>
 									</label>
-									<span class="sheet-divider-db sheet-sect">=</span>
+									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">=</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-attack" title="@{repeating_weapon_$X_total-attack}" value="0" class="sheet-calc" readonly /><span data-i18n="attack">Attack</span></label>
-									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 										<select class="sheet-select-small" name="attr_vs">
 											<option value="ac" data-i18n="armor-class-abbrv-default" selected>&#8226;AC</option>
 											<option value="touch" data-i18n="touch">Touch</option>
@@ -9342,45 +9345,45 @@
 										</select>
 										<span data-i18n="versus-abbrv">Vs.</span>
 									</label>
-									<div class="sheet-linked-fields">
+									<div class="sheet-linked-fields sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-target" title="@{repeating_weapon_$X_crit-target}" value="20" min="0" max="20" /><span data-i18n="critical-abbrv">Crit</span></label>
 										<span class="sheet-divider-db-lg" style="width:1em; padding-bottom:10px;">/x</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
 									</div>
-									<div class="sheet-linked-fields">
+									<div class="sheet-linked-fields sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="sheet-calc" readonly /><span data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
 									</div>
 									<input name="attr_size_affects"  type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
-									<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-sect3-show sheet-noshow" />
-									<div class="sheet-linked-fields sheet-dont-use-size">
+									<input name="attr_not_default_size" type="checkbox" value="1" class="sheet-sect3-show sheet-size-affects-show sheet-noshow" />
+									<div class="sheet-linked-fields sheet-dont-use-size sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
 										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 									</div>
-									<div class="sheet-linked-fields sheet-sect3 sheet-use-size">
+									<div class="sheet-linked-fields sheet-sect3 sheet-use-size sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
 										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
 									</div>
-									<div class="sheet-linked-fields sheet-use-size">
+									<div class="sheet-linked-fields sheet-use-size sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
 										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 									</div>
-									<span class="sheet-divider-db sheet-sect">+</span>
-									<div class="sheet-linked-fields sheet-sect">
+									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
+									<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
 										<input type="checkbox" name="attr_damage-mod_error" class="sheet-error-mshow" value="1" />
 										<label class="sheet-small-label2 sheet-entry-short sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
-									<span class="sheet-divider-db">+</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
-									<span class="sheet-divider-db-lg sheet-sect">*</span>
-									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+									<span class="sheet-divider-db sheet-nondual-sect">+</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+									<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 										<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
 											<option value="0" data-i18n="none-default" selected>&#8226;None</option>
 											<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
@@ -9393,34 +9396,34 @@
 										<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
 									</label>
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-									<span class="sheet-divider-db sheet-sect sheet-sect2">(</span>
-									<label class="sheet-small-label2 sheet-sect sheet-sect2" style="width:1.75em;">
+									<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">(</span>
+									<label class="sheet-small-label2 sheet-sect sheet-sect2 sheet-nondual-sect" style="width:1.75em;">
 										<input style="min-width:.5em;" type="text" name="attr_damage-ability-max" title="@{repeating_weapon_$X_damage-ability-max}" value="" placeholder="NA" data-i18n-placeholder="not-applicable" />
 										<span data-i18n-title="maximum-damage-ability-title" data-i18n-aria-label="maximum-damage-ability-title" title="Maximum damage ability applied (for strength score, etc.)" data-i18n="maximum-abbrv">Max</span>
 									</label>
-									<span class="sheet-divider-db sheet-sect sheet-sect2">)</span>
-									<span class="sheet-divider-db sheet-sect">=</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
-									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
-									<label class="sheet-small-label2 sheet-narrow-numbers">
+									<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">)</span>
+									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">=</span>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse sheet-nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
+									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-nondual-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" placeholder="P B S" /><span data-i18n="type">Type</span></label>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-nondual-sect">
 										<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
 										<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 										<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
 										<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
 									</label>
 									<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-ammo sheet-nondual-sect"><input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" style="width:2.8em;" /><span data-i18n="ammo">Ammo</span></label>
 									<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" placeholder="Group by name for attackbook buttons" data-i18n-placeholder="group-name" /><span data-i18n="group">Group name</span></label>
-									<label class="sheet-small-label2 sheet-entry-small sheet-sect">
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 										<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
 											<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
 											<option value="-4" data-i18n="no">No</option>
 										</select>
 										<span data-i18n-title="proficiency-title" data-i18n-aria-label="proficiency-title" data-i18n="proficiency">Prof</span>
 									</label>
-									<label class="sheet-small-label2 sheet-sect sheet-use-size-only" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
-									<input type="checkbox" name="attr_size_affects" value="1" checked class="sheet-nextitem-show sheet-noshow" />
-									<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only">
+									<label class="sheet-small-label2 sheet-sect sheet-use-size-only sheet-nondual-sect" style="width:4.5em;"><input type="checkbox" name="attr_size_affects" title="@{repeating_weapon_$X_size_affects}" value="1" checked /><span data-i18n-title="damage-dice-affected-by-size" data-i18n="use-size-abbrv">Use sze</span></label>
+									<input type="checkbox" name="attr_size_affects" value="1" class="sheet-nextitem-show sheet-noshow" />
+									<label class="sheet-small-label2 sheet-entry-med sheet-sect sheet-nextitem sheet-use-size-only sheet-nondual-sect">
 										<select title="@{repeating_weapon_$X_default_size}" name="attr_default_size" >
 											<option value="-8" data-i18n="size-colossal">Colossal</option>
 											<option value="-4" data-i18n="size-gargantuan">Gargantuan</option>
@@ -9432,7 +9435,7 @@
 											<option value="4" data-i18n="size-diminutive">Diminutive</option>
 											<option value="8" data-i18n="size-fine">Fine</option>
 										</select>
-										<span data-i18n="default-size">Default Size</span>
+										<span data-i18n="normal-size">Normal Size</span>
 									</label>
 									<div class="sheet-small-label2 sheet-sect" style="width:60%;height:auto;clear:both;margin-bottom:0;">
 										<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
@@ -9450,8 +9453,8 @@
 										<label class="sheet-showsect sheet-extra-damage-showlabel" data-i18n="precision-abbrv">Extra Dmg</label>
 										<input type="checkbox" class="sheet-showarrow sheet-iterations-show" title="iterative-attacks-title" data-i18n-title="iterative-attacks-title" data-i18n-aria-label="iterative-attacks-title" aria-label="Show Iterative Attacks" name="attr_iterative-attacks-show" value="1" />
 										<label class="sheet-showsect sheet-iterations-showlabel" data-i18n="iterative-attacks-abbrv">Iterative Atks</label>
-										<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
-										<label class="sheet-showsect sheet-advmacro-text-showlabel" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
+										<input type="checkbox" class="sheet-showarrow sheet-advmacro-text-show sheet-nondual-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_advmacro-text-show" value="1" />
+										<label class="sheet-showsect sheet-advmacro-text-showlabel sheet-nondual-sect" data-i18n="macro-text-advanced">Adv Rolltime Macros</label>
 										<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 										<label class="sheet-showsect sheet-macro-text-showlabel" data-i18n="macro-text">Macro Text</label>
 										<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
@@ -9464,14 +9467,15 @@
 												<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 											</label>
 											<label class="sheet-small-label2" style="width:23.85%;">
-												<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+												<span class="sheet-nondual-sect" data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+												<span class="sheet-dual-sect" data-i18n-title="extra-damage-condition" data-i18n-aria-label="extra-damage-condition" title="Extra Damage type" data-i18n="rake-rend-etc">Condition</span>
 												<input style="height:2.15em;" type="text" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
 											</label>
-											<label class="sheet-small-label2" style="width:23.85%;">
+											<label class="sheet-small-label2 sheet-nondual-sect" style="width:23.85%;">
 												<span class="sheet-super sheet-note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
 												<textarea class="sheet-inline-textarea sheet-both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place"></textarea>
 											</label>
-											<label class="sheet-small-label2" style="width:23.85%;">
+											<label class="sheet-small-label2 sheet-nondual-sect" style="width:23.85%;">
 												<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 												<input style="height:2.15em;" type="text" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" value="" placeholder="Dmg type / Description" data-i18n-placeholder="damage-type-or-description" />
 											</label>
@@ -9611,7 +9615,7 @@
 												</span>
 											</div>
 										</div>
-										<div class="sheet-advanced-macros" style="width:100%;height:auto;clear:both;">
+										<div class="sheet-advanced-macros sheet-nondual-sect" style="width:100%;height:auto;clear:both;">
 											<div class="sheet-center sheet-repeating-hidesect">
 												<div class="sheet-insertmacrocell" style="width:48.5%">
 													<input class="sheet-textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
@@ -9634,13 +9638,13 @@
 										<div class="sheet-macro-text" style="width:100%;height:auto;clear:both;">
 											<label class="sheet-small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:2px;padding-right:2px;">
 												<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
-												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
-												<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
 											</label>
 										</div>
 										<div class="sheet-repeating-id">
 											<label class="sheet-small-label2 sheet-left" style="width:32%;"><span data-i18n="row-identification-for-macros">Row ID for macros</span>:&nbsp;<span class="sheet-selectable" name="attr_row_id"></span></label>
-											<input type="checkbox" name="attr_link_type" class="sheet-noshow" value="0" role="presentation" checked />
+											<input type="checkbox" name="attr_link_type" class="sheet-noshow" value="0" role="presentation" checked />										
 											<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="1" role="presentation" />
 											<label class="sheet-small-label2 sheet-nextitem" title="ID of the Item from the Equipment list that, when changed, updates this attack entry" data-i18n-title="source-item-title" data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" placeholder="Linked Item ID" data-i18n-placeholder="source-item-placeholder" /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
 											<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="2" role="presentation" />
@@ -13297,13 +13301,16 @@
 						{{#critical_dmg82}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg82}}</div></div>{{/critical_dmg82}}
 						{{/rollWasCrit() attack8}}
 					</div>{{/no_attack_roll}}
+					{{#dual_precision_dmg}}<div class="sheet-roll-iter-space"></div><div class="sheet-roll-groupi">
+					<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-atk" data-i18n-title="dual_precision-abbrv" data-i18n-aria-label="dual_precision-abbrv">{{#dual_precision_dmg_type}}**{{dual_precision_dmg_type}}**{{/dual_precision_dmg_type}}{{^dual_precision_dmg_type}}**<span data-i18n="dual_precision-abbrv">Extra Dmg</span>**{{/dual_precision_dmg_type}}</div><div class="sheet-roll-cell">{{dual_precision_dmg}}</div></div>
+					</div>{{/dual_precision_dmg}}
 				</div>
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#type}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="type">Type</span>**:</div><div class="sheet-roll-cell">{{type}}</div></div>{{/type}}
-						{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage}}
+						{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage}}
+						{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13404,9 +13411,9 @@
 				{{#critical_dmg81}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg81}}</span></label>{{/critical_dmg81}}
 				{{#critical_dmg82}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg82}}</span></label>{{/critical_dmg82}}
 				{{/rollWasCrit() attack8}}{{/no_attack_roll}}
-				{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage}}
+				{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
 				<label><span>{{key}}</span>:<span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage}}
+				{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
 				{{#type}}<label><span data-i18n="type">Type</span>:<span class="sheet-right">{{type}}</span></label>{{/type}}
 				{{#melee_notes}}<label><span data-i18n="melee-notes">Melee Notes</span>:<span>{{melee_notes}}</span></label>{{/melee_notes}}
 				{{#ranged_notes}}<label><span data-i18n="ranged-notes">Ranged Notes</span>:<span>{{ranged_notes}}</span></label>{{/ranged_notes}}
@@ -13415,6 +13422,7 @@
 				{{#weapon_notes}}<label><span data-i18n="weapon-notes">Weapon Notes</span>:<span>{{weapon_notes}}</span></label>{{/weapon_notes}}
 				{{#description}}<span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
+				{{#dual_precision_dmg}}<label class="sheet-atksbkg sheet-atk">{{#dual_precision_dmg_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{dual_precision_dmg_type}}</span>{{/dual_precision_dmg_type}}{{^dual_precision_dmg_type}}<span data-i18n="extra-damage">dual_precision Dmg</span>{{/dual_precision_dmg_type}}:<span class="sheet-right">{{dual_precision_dmg}}</span></label>{{/dual_precision_dmg}}
 			</div>
 			{{/accessible}}
 		</rolltemplate>

@@ -1,4 +1,6 @@
 {
+  "extra-damage-condition": "Extra damage condition when dual wielding: Rake, Rend, etc",
+  "rake-rend-etc": "Condition - Rake, Rend, etc",
   "number-extra-attacks": "# OH Atks",
   "number-extra-attacks-title": "Number of offhand attacks: 1 for Two Weapon Fighting, 2 = Improved, 3 = Greater",
   "all-saves-macro": "All Saves Macro",

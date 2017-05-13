@@ -1200,11 +1200,14 @@ function parseSpecialAbilities (str) {
 	var saObj = {}, initiallines, lines, extralines, contentstr,tempstr, lastLineIndex=0;
 	saObj.description = [];
 	saObj.specialAbilities = [];
-	//We break 3 spacesbecause sometimes special abilities do not have newlines between them. 
 	//need to remove newlines that are right after an (Su) this is necessary for PRD
 	str = str.replace(/\((Ex|Sp|Su)\)\s*(?:\r\n|[\n\v\f\r\x85\u2028\u2029])/ig,'($1) ');
-	//initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\)|\(Ex\)|\(Sp\)))/i);
-	lines = str.split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]|special abilities/i);
+	//break on newlines
+	//We break 3 spaces, or on last period before a (Ex|Sp|Su) 
+	//because sometimes special abilities do not have newlines between them. 
+	lines = str.split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]|special abilities|\.(?=[^\.]+\((?:Ex|Sp|Su)\))/i);
+	//here is the one that grabs period before (su)
+	//	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\):??|\(Ex\):??|\(Sp\):??))/i);
 	lines = SWUtils.trimBoth(lines).filter(function(line){
 		return (line && !(/^special abilities$/i).test(line));
 	});
@@ -1224,7 +1227,7 @@ function parseSpecialAbilities (str) {
 				memo.specialAbilities.push(spObj);
 			} else {
 				tempstr=line.slice(0,matches.index);
-				spObj.name = SWUtils.trimBoth(tempstr);
+				spObj.name = tempstr.replace(/^[^\w]+|[^\w]$/,'');
 				spObj.basename = spObj.name.replace(/\s/g,'').toLowerCase();
 				spObj.rule_category='special-abilities';
 				spObj.ability_type=matches[1][0].toUpperCase()+matches[1][1].toLowerCase();
