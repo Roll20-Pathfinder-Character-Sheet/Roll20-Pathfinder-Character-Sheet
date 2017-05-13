@@ -4,7 +4,11 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 
-/* updateInitiative * updates the init*/
+/** Updates @{init} 
+ * @param {function} callback when done
+ * @param {boolean} silently if call setAttrs with silent:true
+ * @param {boolean} force pass to SWUtils.updateRowTotal
+ */
 export function updateInitiative (callback, silently,force) {
 	getAttrs(['nodex-toggle'],function(v){
 		if (parseInt(v['nodex-toggle'],10)) {

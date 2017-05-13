@@ -2,7 +2,7 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import SWUtils from './SWUtils';
+import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 
 /****************************SYNCHRONOUS UTILITIES ***********************************
@@ -495,7 +495,6 @@ export function getIntFromString(str,cleanedup,atStart){
         str = replaceMissingNegatives_CritRange(str);
         str = convertDashToMinus(str);
     }
-    str.replace(PFConst.dashtominusreg,'-');
     if (!atStart){
         matches = str.match(/[\+\-]{0,1}\d+/);
     } else {
@@ -539,6 +538,7 @@ export function getCritFromString (str,cleanedup,atStart){
  */
 export function getDiceDieFromString (str,cleanedup,atStart){
     var matches,ret={'dice':0,'die':0,'plus':0,'spaces':0},sign=1;
+    if (!str){return ret;}
     if (!cleanedup){
         str = replaceMissingNegatives_BadDice(str);
         str = convertDashToMinus(str);
@@ -687,7 +687,13 @@ export function replaceDCString  (str, ability, levelAttr, isUndead, levelFlatNu
  *@returns {string} rest of string after finding a number.
  */
 export function getNoteAfterNumber  (str) {
-    str = str.slice(str.indexOf(/\d+/));
+    var match;
+    if(str){
+        match = str.match(/\d+/);
+        if(match){
+            str = SWUtils.trimBoth(str.slice( match.index+match.length ));
+        }
+    }
     return str;
 }
 /**gets value of '<field>_compendium' from v,passes it to synchronous methodToCall mapping function, then adds 'field' to setter with val:
@@ -712,7 +718,7 @@ export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,se
     return setter;
 }
 /**gets int value 'field_compendium' from v, then sets in 'field':
-*   setter[<prefix>(<setField>|<field>)] = getIntFromString(v[<prefix><field>_compendium])
+ *   setter[<prefix>(<setField>|<field>)] = getIntFromString(v[<prefix><field>_compendium])
  *@param {string} prefix the repeating_section_id_  string
  *@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
  *@param {Map<string,any>} v the values returned from getAttrs
