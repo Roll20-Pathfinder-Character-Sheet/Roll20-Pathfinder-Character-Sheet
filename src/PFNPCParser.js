@@ -108,7 +108,6 @@ function parseNPChp (hpstring, abilityMod) {
 		hpstring = PFUtils.replaceMissingNegatives_BadDice(hpstring);
 		hpstring = PFUtils.convertDashToMinus(hpstring);
 		hpstring = hpstring.replace('plus','+');
-		TAS.debug("now the hp string is "+hpstring);
 		//TAS.debug"parseNPChp", hpstring, abilityMod);
 		hparray.hp = parseInt(hpstring, 10)||0;
 		hpstring = hpstring.slice(hpstring.indexOf("(") + 1);
@@ -372,8 +371,6 @@ function parseReach (reachStr) {
 		reachStr = PFUtils.convertDashToMinus(reachStr);
 		reachStr = reachStr.replace('21/2','2-1/2');
 		reachStr = reachStr.replace('2.5','2-1/2');
-
-		TAS.debug("parseReach1 now reachStr is "+reachStr);
 		if (reachStr.slice(0, 5) === "2-1/2") {
 			retobj.reach = 2.5;
 			exceptionstr = reachStr.slice(5);
@@ -381,11 +378,9 @@ function parseReach (reachStr) {
 			retobj.reach = parseInt(reachStr,10)||0;
 			exceptionstr = PFUtils.getNoteAfterNumber(reachStr);
 		}
-		TAS.debug("parseReach2 now reach is "+retobj.reach+", exceptionstr is "+exceptionstr);
 		if (exceptionstr && exceptionstr.indexOf('(')>=0) {
 			retobj.reachNotes = exceptionstr;
 			exceptionstr = SWUtils.trimBoth(exceptionstr.replace('(', '').replace(')', '').replace(/with\s/ig, '').replace(';', '').replace(/ft[\.\s]*/ig, '').replace(/,\s*/g,','));
-			TAS.debug("parseReach3 now  exceptionstr is "+exceptionstr);
 			if (exceptionstr) {
 				tempArray = exceptionstr.split(',');
 				reachExceptions = _.reduce(tempArray, function (memo, exceptioninstance) {
@@ -502,8 +497,7 @@ function buildImportantFeatObj (featlist) {
 		return PFDB.importantFeatRegExp.test(feat);
 	})
 	.map(function(feat){
-		
-		TAS.debug("checking <" + feat + "> for ending letter");
+		//TAS.debug("checking <" + feat + "> for ending letter");
 		//if there is an "endnote" letter indicator at the end then remove it
 		feat = SWUtils.trimBoth(feat);
 		if ((/\b[A-Z]$/i).test(feat)) {
@@ -1014,7 +1008,7 @@ function parseSkillRacialBonuses (racialstr) {
 				});
 				modded = temparray.join('-');
 				exceptionstr = exceptionstr.slice(tempskill.length - tempskill.indexOf(' ') + 1);
-				TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
+				//TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
 			}
 			if (exceptionstr) {
 				//entire thing is a "when" exception
@@ -1206,110 +1200,94 @@ function parseSpecialAbilities (str) {
 	var saObj = {}, initiallines, lines, extralines, contentstr,tempstr, lastLineIndex=0;
 	saObj.description = [];
 	saObj.specialAbilities = [];
-	//We break on last period, 3 spaces, or newline that is before an (Su), (Ex), or (Sp) this because sometimes special abilities 
-	// do not have newlines between them. (also go back to beginning of string if it's the first one)
-	//also looks for  "words:" as first word after newline or period since some abilities are like that (dragons). (and sometimes spells does not have colon at end as in faerie dragon.)
-	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\):??|\(Ex\):??|\(Sp\):??))/i);
-	//split the last one by newlines:
-	if (_.size(initiallines>1)) {
-		lastLineIndex = _.size(lines)-1 ;
-		extralines = initiallines[lastLineIndex].split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]/);
-		if (_.size(extralines)>1){
-			lines = initiallines.slice(0,lastLineIndex).concat(extralines);
-		} 
-	}
-	if (!lines) {
-		lines = initiallines;
-	}
-	lines = _.filter(lines,function(line){
-		if(!line) {return false;}
-		return true;
+	//need to remove newlines that are right after an (Su) this is necessary for PRD
+	str = str.replace(/\((Ex|Sp|Su)\)\s*(?:\r\n|[\n\v\f\r\x85\u2028\u2029])/ig,'($1) ');
+	//break on newlines
+	//We break 3 spaces, or on last period before a (Ex|Sp|Su) 
+	//because sometimes special abilities do not have newlines between them. 
+	lines = str.split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]|special abilities|\.(?=[^\.]+\((?:Ex|Sp|Su)\))/i);
+	//here is the one that grabs period before (su)
+	//	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\):??|\(Ex\):??|\(Sp\):??))/i);
+	lines = SWUtils.trimBoth(lines).filter(function(line){
+		return (line && !(/^special abilities$/i).test(line));
 	});
+	TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",lines);
 	saObj = _.reduce(lines, function (memo, line) {
-		var spObj = {}, trimmedline = '', splitter = '',tempstr='', startIdx, endIdx = -1, matches, abilitytype='',foundSpecialNoType=false;
+		var spObj = {}, splitter = '',tempstr='', startIdx, endIdx = -1, matches, abilitytype='';
 		try {
-			trimmedline = line.replace(/^[^\w]+|[^\w]+$/g, '');
-			if (trimmedline) {
-				matches = trimmedline.match(/\(Su\):??|\(Ex\):??|\(Sp\):??/i);
-				if (!matches || matches === null){
-					matches = trimmedline.match(/^Spells[:\s]|^[\w\s]+:/i);//first one only
-					if (matches && matches[0].length<20 && PFDB.monsterRules.test(matches[0]) ) {
-						foundSpecialNoType=true;
-						spObj.name = SWUtils.trimBoth(matches[0].replace(':',''));
-						startIdx =  matches[0].length+1;
-						spObj.description = SWUtils.trimBoth(trimmedline.slice(startIdx));
-						memo.specialAbilities.push(spObj);
+			//TAS.debug("PFNPCParser.parseSpecialAbilities on line:"+line);
+			//why am i removing non word characters from the ends? what would be there?
+			matches = line.match(/\((Su|Ex|Sp)\)|^(\w+):/i);
+			if (!matches ){
+				//this is just part of the description
+				memo.description.push(line+'\r\n');
+			} else if (matches[2])  {
+				spObj.name =matches[2];
+				spObj.description = SWUtils.trimBoth(line.slice(matches[0].length+1));
+				memo.specialAbilities.push(spObj);
+			} else {
+				tempstr=line.slice(0,matches.index);
+				spObj.name = tempstr.replace(/^[^\w]+|[^\w]$/,'');
+				spObj.basename = spObj.name.replace(/\s/g,'').toLowerCase();
+				spObj.rule_category='special-abilities';
+				spObj.ability_type=matches[1][0].toUpperCase()+matches[1][1].toLowerCase();
+				spObj.description = SWUtils.trimBoth(line.slice(matches.index + matches[0].length + 1));
+				matches=spObj.description.match(/(\d+d\d+) (?:points of){0,1}(.*?) damage/i);
+				if(matches){
+					if(matches[1]){
+						spObj.extraDamage = '[['+matches[1]+']]';
 					}
-					if (!foundSpecialNoType && trimmedline.toLowerCase() !== 'special abilities') {
-						//this is just part of the description
-						memo.description.push(trimmedline);
+					if (matches[2]){
+						spObj.extraDamageType = matches[2];
 					}
-										
-				} else if (matches && matches.index>0 ) {
-					tempstr=trimmedline.slice(0,matches.index);
-					spObj.name = SWUtils.trimBoth(tempstr);
-					spObj.basename = spObj.name.replace(/\s/g,'').toLowerCase();
-					spObj.rule_category='special-abilities';
-					spObj.ability_type=matches[0][1].toUpperCase()+matches[0][2].toLowerCase();
-					startIdx = matches.index + matches[0].length + 1;
-					spObj.description = SWUtils.trimBoth(trimmedline.slice(startIdx));
-					matches=spObj.description.match(/(\d+d\d+) (?:points of){0,1}(.*?) damage/i);
+				} else {
+					matches=spObj.description.match(/([a-z]) for (\d+d\d+) (rounds|minutes|hours|days)/i);
 					if(matches){
+						if(matches[2]){
+							spObj.extraDamage = '[['+matches[2]+']] '+matches[3]||'';
+						}
 						if(matches[1]){
-							spObj.extraDamage = '[['+matches[1]+']]';
-						}
-						if (matches[2]){
-							spObj.extraDamageType = matches[2];
-						}
-					} else {
-						matches=spObj.description.match(/([a-z]) for (\d+d\d+) (rounds|minutes|hours|days)/i);
-						if(matches){
-							if(matches[2]){
-								spObj.extraDamage = '[['+matches[2]+']] '+matches[3]||'';
-							}
-							if(matches[1]){
-								spObj.extraDamageType = matches[1];
-							}
+							spObj.extraDamageType = matches[1];
 						}
 					}
-					//before dc is usually 'the save'
-					matches = spObj.description.match(/dc is (cha|con|wis|int|str|dex)[a-zA-Z]*.based/i);
-					//TAS.debug"parseSpecialAbilities looking for DC ability it is: ",matches);
-					if(matches && matches[1]){
-						tempstr=matches[1].toUpperCase();
-						spObj.DCability = tempstr;
-						//TAS.debug"parseSpecialAbilities setting DC ability to "+tempstr);
-					} else if(PFDB.specialAttackDCAbilityBase[spObj.basename]){
-						spObj.DCability= PFDB.specialAttackDCAbilityBase[spObj.basename];
-						//TAS.debug"parseSpecialAbilities setting DC ability to "+spObj.DCability+" based on "+ spObj.basename);
+				}
+				//before dc is usually 'the save'
+				matches = spObj.description.match(/dc is (cha|con|wis|int|str|dex)[a-zA-Z]*.based/i);
+				//TAS.debug"parseSpecialAbilities looking for DC ability it is: ",matches);
+				if(matches && matches[1]){
+					tempstr=matches[1].toUpperCase();
+					spObj.DCability = tempstr;
+					//TAS.debug"parseSpecialAbilities setting DC ability to "+tempstr);
+				} else if(PFDB.specialAttackDCAbilityBase[spObj.basename]){
+					spObj.DCability= PFDB.specialAttackDCAbilityBase[spObj.basename];
+					//TAS.debug"parseSpecialAbilities setting DC ability to "+spObj.DCability+" based on "+ spObj.basename);
+				}
+				//bfore dc could be 'must make a', 'fails a'
+				matches = spObj.description.match(/DC (\d+) (Will|Fort|Ref)[a-zA-Z]* save/i);
+				if (matches){
+					if(matches[1]){
+						spObj.DC= matches[1];
 					}
-					//bfore dc could be 'must make a', 'fails a'
-					matches = spObj.description.match(/DC (\d+) (Will|Fort|Ref)[a-zA-Z]* save/i);
+					if(matches[2]){
+						tempstr=matches[2][0].toUpperCase()+ matches[2].slice(1).toLowerCase();
+						spObj.save=tempstr;
+					}
+				} else {
+					matches = spObj.description.match(/(Will|Fort|Ref)[a-zA-Z]* DC (\d+) ([^),.])/i);
 					if (matches){
 						if(matches[1]){
-							spObj.DC= matches[1];
+							tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
+							spObj.save=tempstr;
+							if (matches[3]){
+								spObj.save += ' '+matches[3];
+							}
 						}
 						if(matches[2]){
-							tempstr=matches[2][0].toUpperCase()+ matches[2].slice(1).toLowerCase();
-							spObj.save=tempstr;
-						}
-					} else {
-						matches = spObj.description.match(/(Will|Fort|Ref)[a-zA-Z]* DC (\d+) ([^),.])/i);
-						if (matches){
-							if(matches[1]){
-								tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
-								spObj.save=tempstr;
-								if (matches[3]){
-									spObj.save += ' '+matches[3];
-								}
-							}
-							if(matches[2]){
-								spObj.DC=matches[2];
-							}
+							spObj.DC=matches[2];
 						}
 					}
-					memo.specialAbilities.push(spObj);
 				}
+				memo.specialAbilities.push(spObj);
 			}
 		} catch (err) {
 			TAS.error('parseSpecialAbilities error parsing: ' + line + ' error is' + err);
@@ -2989,7 +2967,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			setter = createAbilityScoreEntries(setter, abilityScores, isUndead);
 			// Size **********************************************************************
 			sizeMap = PFSize.getSizeFromText(v.size_compendium);
-			TAS.debug("the size is",sizeMap);
 			if (sizeMap && sizeMap.size !== 0) {
 				setter.size = sizeMap.size;
 				setter['default_char_size']=sizeMap.size;
@@ -3052,7 +3029,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			acMap = parseNPCAC(v["ac_compendium"], v.cmd_compendium, abilityScores.dex.mod, sizeMap.size);
 			createACEntries(setter, acMap, abilityScores, importantFeats, hpMap, bab);
 			// Reach *******************************************
-			TAS.debug("about to find reach: " + v.reach_compendium);
 			reachObj = parseReach(v.reach_compendium);
 			if (reachObj) {
 				setter.reach = reachObj.reach;

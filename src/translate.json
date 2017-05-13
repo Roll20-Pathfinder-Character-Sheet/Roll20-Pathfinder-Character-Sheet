@@ -1,4 +1,6 @@
 {
+  "extra-damage-condition": "Extra damage condition when dual wielding: Rake, Rend, etc",
+  "rake-rend-etc": "Condition - Rake, Rend, etc",
   "number-extra-attacks": "# OH Atks",
   "number-extra-attacks-title": "Number of offhand attacks: 1 for Two Weapon Fighting, 2 = Improved, 3 = Greater",
   "all-saves-macro": "All Saves Macro",
@@ -1112,7 +1114,8 @@
   "not-applicable-abbrv-default": "•N/A",
   "not-carried": "Not Carried",
   "notes": "Notes",
-  "notes-and-custom-attributes": "Notes and custom attributes",
+  "notes-and-custom-attributes": "Custom attributes",
+  "custom-attributes": "Custom attributes",
   "npc": "NPC",
   "npc-abilities": "NPC Abilities",
   "npc-ability-checks": "NPC Ability Checks",

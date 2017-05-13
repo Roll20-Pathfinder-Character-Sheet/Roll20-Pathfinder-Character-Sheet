@@ -878,11 +878,16 @@ export function setDualWieldVals (params,setter,id,updMode){
 		try{
 			tempStr=getTranslationByKey('dual-wield');
 		} catch (er2){
-			tempStr = "Dual Wield";
+			TAS.error("PFAttacks.setDualWieldVals er2:",er2);
 		}
+		if (!tempStr){tempStr = "Dual Wield";}
+		setter[prefix+'dualwield']=1;
 		setter[prefix+'source-main']=params.mainhand_id;
 		setter[prefix+'source-off']=params.offhand_id;
+		//for update of existing just for this version:
+		setter[prefix+'group']=tempStr;
 		if(!updMode){
+			setter[prefix+'group']=tempStr;
 			setter[prefix+'source-main-name']=params.mainhand_name||'';
 			setter[prefix+'source-off-name']=params.offhand_name||'';
 			setter[prefix+'name']= tempStr+' '+(params.mainhand_name||'') + '/'+(params.offhand_name||'');
@@ -909,6 +914,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 			'{{weapon_notes=@{repeating_weapon_' + params.mainhand_id + '_notes}@{repeating_weapon_' + params.offhand_id + '_notes}}} ' +
 			'{{vs=@{repeating_weapon_' + params.mainhand_id + '_vs}}} {{vs@{repeating_weapon_' + params.mainhand_id + '_vs}=@{repeating_weapon_' + params.mainhand_id + '_vs}}} ' +
 			'{{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} ' +
+			'{{dual_precision_dmg=@{precision_dmg_macro}}} {{dual_precision_dmg_type=@{precision_dmg_type}}} ' +
 			'@{iterative_attacks} @{macro_options} {{attack1name=@{iterative_attack1_name}}}'   ;
 		setter[prefix+'macro-text']=macroText;
 		setter[prefix+'NPC-macro-text']=macroText;
