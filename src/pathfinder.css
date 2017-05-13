@@ -1517,7 +1517,7 @@ h2.sheet-clickheader {
     content: '⚔';
     margin-top: 5px;
     vertical-align:top;	
-    padding: 4px 0 0 0 !important;
+    padding: 3px 0 0 0 !important;
 }
 .sheet-addarmorbutton+ span::before {
     font-family: "Pictos Three" !important;
