@@ -1739,8 +1739,8 @@ hr.sheet-skinny {
 /* used to highlight background of sub-nav row on repeating sections */
 .sheet-subnav-hr {
 	width: 100%;
-	border: .65rem solid #DAE4F2;
-	margin-top: -1.35rem;
+	border: .75rem solid #DAE4F2;
+	margin-top: -1.45rem;
 }
 .sheet-npchead-bottom {
     margin-bottom: 5px;
