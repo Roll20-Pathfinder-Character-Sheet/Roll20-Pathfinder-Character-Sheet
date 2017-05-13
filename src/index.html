@@ -462,8 +462,12 @@
 			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="inventory" data-i18n-aria-label="inventory" title="Inventory" data-i18n="equipment-abbrv">Equip</label>
 			<input type="radio" name="attr_tab" value="8" class="sheet-tabinput sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" aria-label="NPC" data-i18n-aria-label="npc" />
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
-			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
-			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
+			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
+			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
+
+			<input type="radio" name="attr_tab" value="10" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
+			<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
+
 			<input type="radio" name="attr_tab" value="99" class="sheet-tabinput sheet-tab99" data-i18n-title="all" aria-label="All" data-i18n-aria-label="all" />
 			<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 			<div class="sheet-cheat"></div>
@@ -11007,8 +11011,8 @@
 					</label>
 				</div>
 			</div>
-			<div class="sheet-section9 sheet-section sheet-section-notes" role="region" aria-label="Notes and custom attributes" data-i18n-aria-label="notes-and-custom-attributes">
-				<h1 class="sheet-selected-tabtitle" data-i18n="notes-and-custom-attributes">Notes and custom attributes</h1>
+			<div class="sheet-section9 sheet-section sheet-section-notes" role="region" aria-label="custom attributes" data-i18n-aria-label="custom-attributes">
+				<h1 class="sheet-selected-tabtitle" data-i18n="custom-attributes">Custom attributes</h1>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_custom-attr-sect-a-show" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-super sheet-note-a" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="edit-time-custom-num-attributes">Evaluate at edit time custom number attributes</h2>
@@ -11251,49 +11255,53 @@
 						</div>
 				</div>
 				<div class="sheet-cheat"></div>
+			</div>
+			<div class="sheet-section10 sheet-section sheet-section-notes" role="region" aria-label="Notes" data-i18n-aria-label="notes">
+				<h1 class="sheet-selected-tabtitle" data-i18n="notes">Notes</h1>
+				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_custom-attr-sect-n-show" data-i18n-aria-label="quick-stats" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="notes">Notes</h2>
 				<div class="sheet-h2-section sheet-notes" role="section" >
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn1-name" title="@{customn1-name}" /></span>
-							<textarea name="attr_customn1" title="@{customn1}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn2-name" title="@{customn2-name}" /></span>
-							<textarea name="attr_customn2" title="@{customn2}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn3-name" title="@{customn3-name}" /></span>
-							<textarea name="attr_customn3" title="@{customn3}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn4-name" title="@{customn4-name}" /></span>
-							<textarea name="attr_customn4" title="@{customn4}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn5-name" title="@{customn5-name}" /></span>
-							<textarea name="attr_customn5" title="@{customn5}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn6-name" title="@{customn6-name}" /></span>
-							<textarea name="attr_customn6" title="@{customn6}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn7-name" title="@{customn7-name}" /></span>
-							<textarea name="attr_customn7" title="@{customn7}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn8-name" title="@{customn8-name}" /></span>
-							<textarea name="attr_customn8" title="@{customn8}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn9-name" title="@{customn9-name}" /></span>
-							<textarea name="attr_customn9" title="@{customn9}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
-						<div class="sheet-linked-custom-notes">
-							<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn10-name" title="@{customn10-name}" /></span>
-							<textarea name="attr_customn10" title="@{customn10}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
-						</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn1-name" title="@{customn1-name}" /></span>
+						<textarea name="attr_customn1" title="@{customn1}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn2-name" title="@{customn2-name}" /></span>
+						<textarea name="attr_customn2" title="@{customn2}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn3-name" title="@{customn3-name}" /></span>
+						<textarea name="attr_customn3" title="@{customn3}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn4-name" title="@{customn4-name}" /></span>
+						<textarea name="attr_customn4" title="@{customn4}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn5-name" title="@{customn5-name}" /></span>
+						<textarea name="attr_customn5" title="@{customn5}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn6-name" title="@{customn6-name}" /></span>
+						<textarea name="attr_customn6" title="@{customn6}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn7-name" title="@{customn7-name}" /></span>
+						<textarea name="attr_customn7" title="@{customn7}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn8-name" title="@{customn8-name}" /></span>
+						<textarea name="attr_customn8" title="@{customn8}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn9-name" title="@{customn9-name}" /></span>
+						<textarea name="attr_customn9" title="@{customn9}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
+					<div class="sheet-linked-custom-notes">
+						<span><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_customn10-name" title="@{customn10-name}" /></span>
+						<textarea name="attr_customn10" title="@{customn10}" value="" placeholder="Notes" data-i18n-placeholder="notes" class="sheet-inline-textarea sheet-half"></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
