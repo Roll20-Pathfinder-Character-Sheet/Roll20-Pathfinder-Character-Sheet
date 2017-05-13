@@ -108,7 +108,6 @@ function parseNPChp (hpstring, abilityMod) {
 		hpstring = PFUtils.replaceMissingNegatives_BadDice(hpstring);
 		hpstring = PFUtils.convertDashToMinus(hpstring);
 		hpstring = hpstring.replace('plus','+');
-		TAS.debug("now the hp string is "+hpstring);
 		//TAS.debug"parseNPChp", hpstring, abilityMod);
 		hparray.hp = parseInt(hpstring, 10)||0;
 		hpstring = hpstring.slice(hpstring.indexOf("(") + 1);
@@ -372,8 +371,6 @@ function parseReach (reachStr) {
 		reachStr = PFUtils.convertDashToMinus(reachStr);
 		reachStr = reachStr.replace('21/2','2-1/2');
 		reachStr = reachStr.replace('2.5','2-1/2');
-
-		TAS.debug("parseReach1 now reachStr is "+reachStr);
 		if (reachStr.slice(0, 5) === "2-1/2") {
 			retobj.reach = 2.5;
 			exceptionstr = reachStr.slice(5);
@@ -381,11 +378,9 @@ function parseReach (reachStr) {
 			retobj.reach = parseInt(reachStr,10)||0;
 			exceptionstr = PFUtils.getNoteAfterNumber(reachStr);
 		}
-		TAS.debug("parseReach2 now reach is "+retobj.reach+", exceptionstr is "+exceptionstr);
 		if (exceptionstr && exceptionstr.indexOf('(')>=0) {
 			retobj.reachNotes = exceptionstr;
 			exceptionstr = SWUtils.trimBoth(exceptionstr.replace('(', '').replace(')', '').replace(/with\s/ig, '').replace(';', '').replace(/ft[\.\s]*/ig, '').replace(/,\s*/g,','));
-			TAS.debug("parseReach3 now  exceptionstr is "+exceptionstr);
 			if (exceptionstr) {
 				tempArray = exceptionstr.split(',');
 				reachExceptions = _.reduce(tempArray, function (memo, exceptioninstance) {
@@ -502,8 +497,7 @@ function buildImportantFeatObj (featlist) {
 		return PFDB.importantFeatRegExp.test(feat);
 	})
 	.map(function(feat){
-		
-		TAS.debug("checking <" + feat + "> for ending letter");
+		//TAS.debug("checking <" + feat + "> for ending letter");
 		//if there is an "endnote" letter indicator at the end then remove it
 		feat = SWUtils.trimBoth(feat);
 		if ((/\b[A-Z]$/i).test(feat)) {
@@ -1014,7 +1008,7 @@ function parseSkillRacialBonuses (racialstr) {
 				});
 				modded = temparray.join('-');
 				exceptionstr = exceptionstr.slice(tempskill.length - tempskill.indexOf(' ') + 1);
-				TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
+				//TAS.debug("found skill with space converted to modded:"+modded+", exceptionstr:"+exceptionstr);
 			}
 			if (exceptionstr) {
 				//entire thing is a "when" exception
@@ -1209,12 +1203,17 @@ function parseSpecialAbilities (str) {
 	//We break on last period, 3 spaces, or newline that is before an (Su), (Ex), or (Sp) this because sometimes special abilities 
 	// do not have newlines between them. (also go back to beginning of string if it's the first one)
 	//also looks for  "words:" as first word after newline or period since some abilities are like that (dragons). (and sometimes spells does not have colon at end as in faerie dragon.)
-	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\):??|\(Ex\):??|\(Sp\):??))/i);
-	//split the last one by newlines:
+	//need to remove newlines that are right after an (Su) :
+	//this is necessary for PRD
+	str = str.replace(/\((Ex|Sp|Su)\)\s*\r\n/ig,'($1) ');
+	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\)|\(Ex\)|\(Sp\)))/i);
+	TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",initiallines);
+	//split the last one by newlines: why am i doing this?
 	if (_.size(initiallines>1)) {
 		lastLineIndex = _.size(lines)-1 ;
 		extralines = initiallines[lastLineIndex].split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]/);
 		if (_.size(extralines)>1){
+			TAS.debug("PFNPCParser.parseSpecialAbilities extralines is ",extralines);
 			lines = initiallines.slice(0,lastLineIndex).concat(extralines);
 		} 
 	}
@@ -1225,13 +1224,16 @@ function parseSpecialAbilities (str) {
 		if(!line) {return false;}
 		return true;
 	});
+	TAS.debug("PFNPCParser.parseSpecialAbilities get lines:",lines);
 	saObj = _.reduce(lines, function (memo, line) {
 		var spObj = {}, trimmedline = '', splitter = '',tempstr='', startIdx, endIdx = -1, matches, abilitytype='',foundSpecialNoType=false;
 		try {
+			TAS.debug("PFNPCParser.parseSpecialAbilities on line:"+line);
 			trimmedline = line.replace(/^[^\w]+|[^\w]+$/g, '');
 			if (trimmedline) {
 				matches = trimmedline.match(/\(Su\):??|\(Ex\):??|\(Sp\):??/i);
 				if (!matches || matches === null){
+					TAS.debug("PFNPCParser.parseSpecialAbilities there is no Su,Ex,Sp on this line:"+trimmedline);
 					matches = trimmedline.match(/^Spells[:\s]|^[\w\s]+:/i);//first one only
 					if (matches && matches[0].length<20 && PFDB.monsterRules.test(matches[0]) ) {
 						foundSpecialNoType=true;
@@ -1242,6 +1244,7 @@ function parseSpecialAbilities (str) {
 					}
 					if (!foundSpecialNoType && trimmedline.toLowerCase() !== 'special abilities') {
 						//this is just part of the description
+						TAS.debug("PFNPCParser.parseSpecialAbilities 1 adding to description:",description);
 						memo.description.push(trimmedline);
 					}
 										
@@ -2989,7 +2992,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			setter = createAbilityScoreEntries(setter, abilityScores, isUndead);
 			// Size **********************************************************************
 			sizeMap = PFSize.getSizeFromText(v.size_compendium);
-			TAS.debug("the size is",sizeMap);
 			if (sizeMap && sizeMap.size !== 0) {
 				setter.size = sizeMap.size;
 				setter['default_char_size']=sizeMap.size;
@@ -3052,7 +3054,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			acMap = parseNPCAC(v["ac_compendium"], v.cmd_compendium, abilityScores.dex.mod, sizeMap.size);
 			createACEntries(setter, acMap, abilityScores, importantFeats, hpMap, bab);
 			// Reach *******************************************
-			TAS.debug("about to find reach: " + v.reach_compendium);
 			reachObj = parseReach(v.reach_compendium);
 			if (reachObj) {
 				setter.reach = reachObj.reach;
