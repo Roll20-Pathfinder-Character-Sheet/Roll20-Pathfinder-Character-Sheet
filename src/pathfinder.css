@@ -2097,6 +2097,12 @@ button.sheet-text-button,
 .sheet-small-label2.sheet-autoexpand span:not(.sheet-autoexpand) {
 		white-space:nowrap;
 }
+.sheet-repeating-id .sheet-small-label2 span.sheet-selectable,
+span[name="attr_row_id"].sheet-selectable,
+input[name="attr_mainhand_id"].sheet-entry-long, 
+input[name="attr_offhand_id"].sheet-entry-long {
+    background-color: lightgrey;
+}
 .sheet-repeating-id {
     display: block;
     clear: left;
