@@ -1552,7 +1552,7 @@ input.sheet-refreshbutton {
     content: '⛭';
     margin-top: .5em;
     vertical-align: top;	
-    padding: 3px 0 0 0 !important;
+    padding: 2px 0 0 0 !important;
 }
 .sheet-readonly-show + span::before {
 	background-color:white !important;
