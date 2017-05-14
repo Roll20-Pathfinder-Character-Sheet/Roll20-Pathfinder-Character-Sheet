@@ -14,11 +14,10 @@ import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFInitiative from './PFInitiative';
 import * as PFEncumbrance from './PFEncumbrance';
-
-TAS.debugMode();
+import * as PFSize from './PFSize';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
-// addede: 
+// added:init, speed,
 var buffColumns = ["Ranged", "Melee","CMB", 
 "DMG", "DMG_ranged",
  "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
@@ -56,7 +55,8 @@ events = {
 		"HP-temp": [PFHealth.updateTempMaxHP],
 		"Check": [PFChecks.applyConditions],
 		"initative": [PFInitiative.updateInitiative],
-		"speed": [PFEncumbrance.updateModifiedSpeed]
+		"speed": [PFEncumbrance.updateModifiedSpeed],
+		"size": [PFSize.updateSizeAsync]
 	}
 };
 //why did i make this? it just repeats the ability scores
@@ -363,8 +363,15 @@ function registerEventHandlers () {
 				id = SWUtils.getRowId(eventInfo.sourceAttribute)||'';
 				updateBuffTotals(col);
 			}
-		}));		
+		}));
 	});
+	//size is special users modify it via dropdown
+	on("change:repeating_buff:buff-size", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
+		if (eventInfo.sourceType === "player" ) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			updateBuffTotals('size');
+		}
+	}));	
 	on("change:repeating_buff:buff-enable_toggle remove:repeating_buff", TAS.callback(function PFBuffs_updateBuffTotalsToggle(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {

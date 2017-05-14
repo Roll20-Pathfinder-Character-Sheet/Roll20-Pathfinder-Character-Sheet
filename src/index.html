@@ -393,6 +393,7 @@
 									<option value="-3" data-i18n="3-sizes-smaller">3 sizes smaller</option>
 									<option value="-2" data-i18n="2-sizes-smaller">2 sizes smaller</option>
 									<option value="-1" data-i18n="1-size-smaller">1 size smaller</option>
+									<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
 									<option value="1" data-i18n="1-size-larger">1 size larger</option>
 									<option value="2" data-i18n="2-sizes-larger">2 sizes larger</option>
 									<option value="3" data-i18n="3-sizes-larger">3 sizes larger</option>
@@ -9480,8 +9481,8 @@
 								<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
 								<div class="sheet-nontable-repeating">
 									<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
-									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
+									<span style="display:none;" class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-roll" title="%{selected|repeating_weapon_$X_attack-roll}" value="@{macro-text}"></button></span>
+									<span class="sheet-repeating-rollbutton"><button type="roll" name="attr_attack-npc-roll" title="%{selected|repeating_weapon_$X_attack-npc-roll}" value="@{NPC-macro-text}"></button></span>
 									<input type="checkbox" value="1" name="attr_dualwield" class="sheet-dualwield-hide sheet-noshow" role="presentation" />
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" name="attr_enhance" title="@{repeating_weapon_$X_enhance}" value="0" /><span data-i18n="enhancement-abbrv">Enh</span></label>
 									<label class="sheet-small-label2 sheet-sect sheet-nondual-sect" style="width:2.5em;"><input type="checkbox" name="attr_masterwork" title="@{repeating_weapon_$X_masterwork}" value="1" style="margin-bottom: .55em;"/><span data-i18n="masterwork-abbrv">Mwk</span></label>
