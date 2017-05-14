@@ -1440,7 +1440,7 @@ h2.sheet-clickheader {
 .sheet-cssbutton:hover,
 .sheet-cssbutton:hover + span::before {
     color: Red;
-    border-color: Red;
+    box-shadow: 1px 1px 2px #333;
 }
 
 .sheet-minimize-show:checked ~ .sheet-lock-show + span::before,
