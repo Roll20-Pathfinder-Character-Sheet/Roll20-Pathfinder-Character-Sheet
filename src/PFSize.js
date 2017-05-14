@@ -190,16 +190,17 @@ export function updateSize (v,eventInfo,setter) {
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+buffLevels;
 			buffSize = reverseSizeMap[String(newlevel)];
-			setter['size']=buffSize;
 			if (buffSize!==size){
+				setter['size']=buffSize;
 				size = buffSize;
 				changes=true;
 			}
 		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
 			TAS.debug("reset size to default");
 			size = parseInt(v.size, 10) || 0;
-			setter['size']=defaultSize;
 			if (size!==defaultSize){
+				setter['size']=defaultSize;
+				size = defaultSize;
 				changes=true;
 			}
 		} else {
