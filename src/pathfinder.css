@@ -1554,20 +1554,21 @@ input.sheet-refreshbutton {
     vertical-align: top;	
     padding: 2px 0 0 0 !important;
 }
+.sheet-configbutton:checked:hover + span::before {
+    background-color: white !important;
+    color: red;
+}
 .sheet-readonly-show + span::before {
 	background-color:white !important;
 	background: url("http://i.imgur.com/C8lPQRS.png");
 	background-position: -1px -1px;
-	/*  for size to match sheet-refresh must not be space
-    content:'1'; 
-    */
-    content:' '; /* couldn't see how the above line made any change and the content would show on hover */
+    content:' ';
     color:transparent;
 	background-repeat:no-repeat !important;
     vertical-align: top;	
     margin-top: .5em;
 }
-.sheet-readonly-show + span:hover::before {
+.sheet-readonly-show:hover + span::before {
 	background-color:white !important;
 	background: url("http://i.imgur.com/MEXe7NT.png");
 	background-position: -1px -1px;
@@ -1579,11 +1580,11 @@ input.sheet-refreshbutton {
 	background-position: -1px -1px;
     color:transparent;
 }
-.sheet-readonly-show:checked + span:hover::before {
-	background-color:#4a6486 !important;
-	background: url("http://i.imgur.com/HcLvjwY.png");	
-	background-position: -1px -1px;
-    color:transparent;
+.sheet-readonly-show:checked:hover + span::before {
+    background-color: white !important;
+    background: url("http://i.imgur.com/EXbHcIE.png");
+    background-position: -1px -1px;
+    color: transparent;
 }
 .sheet-allrows-note span {
     vertical-align: middle;
