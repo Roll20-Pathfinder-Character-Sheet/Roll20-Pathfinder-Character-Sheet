@@ -190,17 +190,16 @@ export function updateSize (v,eventInfo,setter) {
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+buffLevels;
 			buffSize = reverseSizeMap[String(newlevel)];
-			setter.size=defaultSize;
+			setter['size']=buffSize;
 			if (buffSize!==size){
-				setter.size=size;
 				size = buffSize;
 				changes=true;
 			}
 		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
+			TAS.debug("reset size to default");
 			size = parseInt(v.size, 10) || 0;
-			setter.size=defaultSize;
+			setter['size']=defaultSize;
 			if (size!==defaultSize){
-				size = buffSize;
 				changes=true;
 			}
 		} else {
@@ -216,8 +215,9 @@ export function updateSize (v,eventInfo,setter) {
 			setter.size_skill_double = (2*skillSize);
 		}
 	} catch (err) {
-		TAS.error("PFSize.updateSizeAsync", err);
+		TAS.error("PFSize.updateSize", err);
 	} finally {
+		TAS.notice("updateSize returning with  ",setter);
 		return setter;
 	}
 }
