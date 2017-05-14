@@ -32,6 +32,7 @@ export function getSizeFromText (sizeDisplay) {
 	};
 	try {
 		if (sizeDisplay) {
+			sizeDisplay = SWUtils.trimBoth(sizeDisplay);
 			sizeDisplay = sizeDisplay.toLowerCase();
 			switch (sizeDisplay) {
 				case "medium":

@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.5,
+	version: 1.52,
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
 	repeatingSections: ["weapon", "ability", "class-ability", "feat", "racial-trait", "trait", "item", "npc-spell-like-abilities", "mythic-ability", "mythic-feat", "buff", "spells"],
@@ -51,7 +51,12 @@ export default {
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],
 	silentParams : {silent:true},
-	minusreg : /\-|\u2013|\u2014|\u2212|\u02d7/,
-	critreg : /(\d+)[\-|\u2013|\u2014|\u2212|\u02d7]20\/[x\u00d7](\d+)/,
-	diceDiereg : /(\d+)d(\d+)\s*([\+|\-|\u2013|\u2014|\u2212|\u02d7]{0,1})\s*(\d*)/
+	minusreg : /\-|&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/,
+	dashtominusreg : /&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/g,
+	critreg : /\/(\d+)[\-|\u2013|\u2014|\u2212|\u02d7]20(?:[x\u00d7](\d+)){0,1}/,
+	critmultreg : /[x\u00d7](\d+)/,
+	diceDiereg : /(\d+)d(\d+)\s*(?:([\+|\-|\u2013|\u2014|\u2212|\u02d7])(\d+)){0,1}/,
+	diceDieregOneGroup : /(\d+d\d+\s*(?:[\+|\-|\u2013|\u2014|\u2212|\u02d7]\d+){0,1})/g,
+	findBadNegDice : /(\d+)d([123468])([13456789])/g,   // invalid: 2nd digit not 0 or 2 actually what if it's d10-1? d101?d1012?
+	findBadCritRange : /\/(\d+)20/g
 };

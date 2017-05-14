@@ -2,8 +2,8 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import SWUtils from './SWUtils';
-import * as PFConst from './PFConst';
+import * as SWUtils from './SWUtils';
+import PFConst from './PFConst';
 
 /****************************SYNCHRONOUS UTILITIES ***********************************
 NO asynchronous FUNCTIONS SHOULD GO HERE
@@ -107,6 +107,7 @@ export function findAbilityInString  (stringToSearch) {
     if (/class.5.level/i.test(stringToSearch)) {
         return "class-5-level";
     }
+    return "";
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
  *@param {int} casterlevel level of caster
@@ -451,6 +452,17 @@ export function parseSpellRangeText  (range, area) {
         "rangetext": newRangeText
     };
 }
+
+export function replaceMissingNegatives_BadDice (str){
+    return str.replace(PFConst.findBadNegDice, '$1d$2-$3');
+}
+export function replaceMissingNegatives_CritRange (str){
+    return str.replace(PFConst.findBadCritRange, '/$1-20')
+}
+export function convertDashToMinus(str){
+    return str.replace(PFConst.dashtominusreg,'-');
+}
+
 /** parseCost gets cost in gp 
  * @param {string} str the string containing the cost: 35gp, 20sp, etc 
  * @returns {int} cost in gp.
@@ -477,49 +489,100 @@ export function getCostInGP  (str){
     }
     return temp;
 }
-export function getIntFromString(str){
-    var temp=0, sign=1, matches;
-    matches = PFConst.minusreg.exec(str);
-    if(matches){
-        sign=-1;
-        str = str.replace(matches[0],'');
+export function getIntFromString(str,cleanedup,atStart){
+    var temp=0, matches;
+    if (!cleanedup){
+        str = replaceMissingNegatives_CritRange(str);
+        str = convertDashToMinus(str);
     }
-    matches = str.match(/(\d+)/);
+    if (!atStart){
+        matches = str.match(/[\+\-]{0,1}\d+/);
+    } else {
+        matches = str.match(/^[\+\-]{0,1}\d+/);
+    }
     if (matches) { 
-        temp = sign * (parseInt(matches[1],10)||0);
+        temp = parseInt(matches[0],10)||0;
     }
-    return temp;		
+    return temp;
 }
-export function getCritFromString (str){
-    var ret={'crit':20,'critmult':2},matches;
-    matches = PFConst.critreg.exec(str);
-    //TAS.debug("at getCritFromString:"+str+", matches:",matches);
-    if (matches){
-        ret.crit = matches[1];
-        ret.critmult=matches[2];
+/**Returns object of a crit string as mapped ints as: crit:minimum threat range (def 20), critmult: how much by which to multiply dice (def 2)
+ * spaces: number of spaces string took 
+ * @param {string} str the string that should have /19-20x2 or x2 in it.
+ * @param {boolean} cleanedup if replaceMissingNegatives_CritRange already called on string
+ * @param {boolean} atStart if true only look for dice at start of str
+ * @returns {{'crit':number,'critmult':number,'spaces':number}}
+ */
+export function getCritFromString (str,cleanedup,atStart){
+    var ret={'crit':20,'critmult':2,'spaces':0},matches;
+    if (!cleanedup){
+        str = replaceMissingNegatives_CritRange(str);
+        str = convertDashToMinus(str);
+    }
+    if ((matches = PFConst.critreg.exec(str))!==null){
+        ret.crit = parseInt(matches[1],10);
+        if (matches[2]){
+            ret.critmult=parseInt(matches[2],10);
+        }
+        ret.spaces =matches.length;
+    } else if ( ( matches = PFConst.critmultreg.exec(str)) !== null){
+        ret.critmult= parseInt(matches[2],10);
+        ret.spaces =matches.length;
     }
     return ret;
 }
-export function getDiceDieFromString (str){
-    var matches,ret={'dice':0,'die':0,'plus':0},sign=1;
+/**Returns object of a dice string as mapped ints: dice:# of dice, die:# of sides, plus: plus or minus to roll, spaces:length of string found
+ * @param {string} str the string that should have xdy+z in it.
+ * @param {boolean} cleanedup if replaceMissingNegatives_BadDice already called on string
+ * @param {boolean} atStart if true only look for dice at start of str
+ * @returns {{'dice':number,'die':number,'plus':number,'spaces':number}}
+ */
+export function getDiceDieFromString (str,cleanedup,atStart){
+    var matches,ret={'dice':0,'die':0,'plus':0,'spaces':0},sign=1;
+    if (!str){return ret;}
+    if (!cleanedup){
+        str = replaceMissingNegatives_BadDice(str);
+        str = convertDashToMinus(str);
+    }
     matches = PFConst.diceDiereg.exec(str);
     if (matches){
-        ret.dice=parseInt(matches[1],10)||0;
-        ret.die=parseInt(matches[2],10)||0;
-        try {
-            if (matches[3] && PFConst.minusreg.test(matches[3])){
+        if (!atStart || matches.index===0){
+            ret.spaces = matches.length;
+            ret.dice=parseInt(matches[1],10)||0;
+            ret.die=parseInt(matches[2],10)||0;
+            if (matches[3] === '-'){
                 sign=-1;
             }
             if (matches[4]){
                 ret.plus = sign * (parseInt(matches[4],10)||0);
             }
-        } catch (err){
-            TAS.error("getDiceDieFromString error finding plus ",err);
         }
     }
     //TAS.debug("at getDiceDieFromString parsing "+str,matches);
     return ret;
 }
+/**replaceDiceDieString puts inline roll brackets [[ ]] around 'xdy +z' dice strings (z exists or not)
+ *@param {string} str a string which includes a diceroll substring xdy or xdy +/-z
+ *@returns {string} same string with brackets around dice roll
+ */
+export function replaceDiceDieString  (str) {
+    var tempstr = "",tempstrs;
+    str = replaceMissingNegatives_BadDice(str);
+    return str.replace(PFConst.diceDieregOneGroup,'[[ $1 ]]');
+}
+/* like replaceDiceDieString but instead of replacing returns the first dice match with [[ ]] around it.
+ *@param {string} str a string which includes a diceroll substring xdy or xdy +/-z
+ *@returns {string} brackets around dice roll or ""
+ */
+export function getDiceDieString (str){
+    var  matches;
+    str = replaceMissingNegatives_BadDice(str);
+    matches= PFConst.diceDieregOneGroup.exec(str);
+    if(matches){
+        return "[[ "+ matches[0] + " ]]";
+    }
+    return "";
+}
+
 export function getSpecialAbilityTypeFromString (str){
     var ret='',matches;
     if(!str){return '';}
@@ -530,12 +593,12 @@ export function getSpecialAbilityTypeFromString (str){
     return '';
 }
 /** returns string after first comma ( that is after an opening parenthesis )
-* or after first comma if there is no opening parenthesis
-* @param {string} str the string to split
-* @param {boolean} putOutside if true then return whateever is before first comma and after opening paren.
-*      if false, then return everything up to first paren then between 1st and 2nd comma. why? who the hell knows?
-* @returns {?} ?
-*/
+ * or after first comma if there is no opening parenthesis
+ * @param {string} str the string to split
+ * @param {boolean} putOutside if true then return whateever is before first comma and after opening paren.
+ *      if false, then return everything up to first paren then between 1st and 2nd comma. why? who the hell knows?
+ * @returns {?} ?
+ */
 export function removeUptoFirstComma  (str, putOutside) {
     var parensplit,
     commasplit,
@@ -559,40 +622,15 @@ export function removeUptoFirstComma  (str, putOutside) {
     }
     return retstr;
 }
-/**replaceDiceDieString puts inline roll brackets [[ ]] around 'xdy +z' dice strings (z exists or not)
-*@param {string} str a string which includes a diceroll substring xdy or xdy +/-z
-*@returns {string} same string with brackets around dice roll
-*/
-export function replaceDiceDieString  (str) {
-    var tempstr = "",
-    tempstrs = str.split(/(\d+d\d+\s*[+\-]??\d*)/i);
-    tempstr = _.reduce(tempstrs, function (memo, splitted) {
-        //TAS.debug('at ' + splitted);
-        if ((/(\d+d\d+\s*[+\-]??\d*)/i).test(splitted)) {
-            return memo + "(" + splitted + "): [[" + splitted + "]] ";
-        }
-        return memo + splitted;
-    }, "");
-    return tempstr;
-}
-export function getDiceDieString (str){
-    var reg=/(\d+d\d+\s*[+\-]??\d*)/i,
-    matches;
-    matches=reg.exec(str);
-    if(matches){
-        return "[["+ matches[0] + "]]";
-    }
-    return "";
-}
 /**getDCString - gets macro formula for special ability calculating DC using ability score, what the level attribute is, and 
-* whether to divide that level by 2 or not.
-* @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
-* @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd-num" etc
-* @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
-* @param {int} miscBonus a flat number to add in
-* @param {boolean} doNotDivideByTwo if true then do not divide level attr value by 2 
-* @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]";
-*/
+ * whether to divide that level by 2 or not.
+ * @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
+ * @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd-num" etc
+ * @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
+ * @param {int} miscBonus a flat number to add in
+ * @param {boolean} doNotDivideByTwo if true then do not divide level attr value by 2 
+ * @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]";
+ */
 export function getDCString  (ability, levelAttr, isUndead, miscBonus, doNotDivideByTwo) {
     var tempstr = '', pre = 'floor(', post = '/2)';
 
@@ -618,14 +656,14 @@ export function getDCString  (ability, levelAttr, isUndead, miscBonus, doNotDivi
     return tempstr;
 }
 /**replaceDCString looks for DC n, and replaces "n" with the [[ calculated DC  ]] by calling getDCString
-* @param {string} str the string to search and replace
-* @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
-* @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd" etc
-* @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
-* @param {int} levelFlatNum optional the level, if levelAttr is blank, this must be filled in, or vice versa
-* @param {boolean} doNotDivideByTwo if true then do not divide level by 2 to calculate DC
-* @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]"
-*/
+ * @param {string} str the string to search and replace
+ * @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
+ * @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd" etc
+ * @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
+ * @param {int} levelFlatNum optional the level, if levelAttr is blank, this must be filled in, or vice versa
+ * @param {boolean} doNotDivideByTwo if true then do not divide level by 2 to calculate DC
+ * @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]"
+ */
 export function replaceDCString  (str, ability, levelAttr, isUndead, levelFlatNum, doNotDivideByTwo) {
     var tempstr = '', matches,pre='',post='', retstr=str,rawDC=10;
     try {
@@ -645,20 +683,27 @@ export function replaceDCString  (str, ability, levelAttr, isUndead, levelFlatNu
     }
 }
 /** returns rest of string after number 
-*@param {string} str the string
-*@returns {string} rest of string after finding a number.
-*/
+ *@param {string} str the string
+ *@returns {string} rest of string after finding a number.
+ */
 export function getNoteAfterNumber  (str) {
-    str = str.slice(str.indexOf(/\d+/));
+    var match;
+    if(str){
+        match = str.match(/\d+/);
+        if(match){
+            str = SWUtils.trimBoth(str.slice( match.index+match.length ));
+        }
+    }
     return str;
 }
-/**gets value 'field_compendium' from v,passes it to synchronous methodToCall mapping function, then sets in 'field' 
-*@param {string} prefix the repeating_section_id_  string
-*@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
-*@param {function} methodToCall synchronous function that maps value of field_compendium to another val to set
-*@param {jsmap} v the values returned from getAttrs
-*@param {jsmap} setter to pass to setAttrs
-*@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
+/**gets value of '<field>_compendium' from v,passes it to synchronous methodToCall mapping function, then adds 'field' to setter with val:
+ *   setter[<prefix>(<setField>|<field>)] = methodToCall(v[<prefix><field>_compendium])
+ *@param {string} prefix the repeating_section_id_  string
+ *@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
+ *@param {function} methodToCall synchronous function that maps value of field_compendium to another val to set
+ *@param {Map<string,any>} v the values returned from getAttrs
+ *@param {Map<string,any>} setter to pass to setAttrs
+ *@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
 */
 export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,setField){
     var temp=0,
@@ -667,18 +712,19 @@ export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,se
         temp= methodToCall(attr);
         if (temp) { 
             setField=setField||field;
-            setter[prefix+field]= temp;
+            setter[prefix+setField]= temp;
         }
     }
     return setter;
 }
-/**gets int value 'field_compendium' from v, then sets in 'field' 
-*@param {string} prefix the repeating_section_id_  string
-*@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
-*@param {jsmap} v the values returned from getAttrs
-*@param {jsmap} setter to pass to setAttrs
-*@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
-*/
+/**gets int value 'field_compendium' from v, then sets in 'field':
+ *   setter[<prefix>(<setField>|<field>)] = getIntFromString(v[<prefix><field>_compendium])
+ *@param {string} prefix the repeating_section_id_  string
+ *@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
+ *@param {Map<string,any>} v the values returned from getAttrs
+ *@param {Map<string,any>} setter to pass to setAttrs
+ *@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
+ */
 export function getCompendiumIntSet  (prefix,field,v,setter,setField){
     var tempInt=0,attr;
     try {
