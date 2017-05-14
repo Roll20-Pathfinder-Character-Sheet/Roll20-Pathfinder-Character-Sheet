@@ -2115,7 +2115,10 @@ span[name="attr_row_id"].sheet-selectable,
 input[name="attr_mainhand_id"].sheet-entry-long, 
 input[name="attr_offhand_id"].sheet-entry-long,
 input[type="text"][name="attr_source-main"],
-input[type="text"][name="attr_source-off"]
+input[type="text"][name="attr_source-off"],
+input[type="text"][name="attr_source-item"],
+input[type="text"][name="attr_source-spell"],
+input[type="text"][name="attr_source-ability"]
  {
     background-color: #ECECEC;
     padding: .25em 2px .25em 2px;
