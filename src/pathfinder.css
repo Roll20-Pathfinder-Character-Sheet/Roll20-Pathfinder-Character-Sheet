@@ -1434,7 +1434,10 @@ h2.sheet-clickheader {
 .sheet-showarrow:hover + .sheet-showsect:not(.sheet-showsect-nocolor),
 .sheet-showarrow:hover + .sheet-showsect::before,
 .sheet-counted:hover + span,
-.sheet-counted:hover + span::before,
+.sheet-counted:hover + span::before {
+    color: Red;
+}
+
 .sheet-csstextbutton:hover,
 .sheet-csstextbutton:hover + span,
 .sheet-cssbutton:hover,
