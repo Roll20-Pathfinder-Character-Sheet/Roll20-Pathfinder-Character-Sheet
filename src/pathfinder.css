@@ -1454,6 +1454,10 @@ h2.sheet-clickheader {
 	padding-top: 2px;
 	vertical-align: top;
 }
+.sheet-minimize-show:checked:hover + span::before {
+    background-color: white !important;
+    color: red;
+}
 .sheet-minimize-show + span::before {
 	content: '▂';
 	padding-top: 0px;
@@ -1484,6 +1488,10 @@ h2.sheet-clickheader {
 	padding-left:2px;
 	padding-top: 1px;
 	vertical-align: top;
+}
+.sheet-split-column-show:checked:hover + span::before {
+	background-color: white !important;
+    color: red;
 }
 
 .sheet-deletebutton + span::before {
