@@ -17,12 +17,11 @@ import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
-// added:init, speed,
+// added:init, speed, dmg_ranged, cmb
 var buffColumns = ["Ranged", "Melee","CMB", 
 "DMG", "DMG_ranged",
  "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
- "speed", "initiative",
- "size",
+ "speed", "initiative","size",
  "HP-temp", "Fort", "Will", "Ref", "Check","check_ability","check_skills", "CasterLevel",
  'STR','DEX','CON','INT','WIS','CHA',
 'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills'
@@ -47,6 +46,7 @@ events = {
 	buffTotalEventsNoParam: {
 		"Melee": [PFAttackGrid.updateMelee],
 		"Ranged": [PFAttackGrid.updateRanged],
+		"CMB": [PFAttackGrid.updateCMB],
 		"DMG": [PFAttackGrid.updateDamage],
 		"DMG_ranged": [PFAttacks.updateRepeatingWeaponDamages],
 		"AC": [PFDefense.updateDefenses],

@@ -52,7 +52,7 @@ export var attackGridFields = {
     "CMB": {
         "size": "CMD-size",
         "atk": "CMB",
-        "buff": "buff_Melee-total",
+        "buff": "buff_CMB-total",
         "abilityMod": "CMB-ability-mod",
         "misc": "attk-CMB-misc",
         "crit": "attk_cmb_crit_conf",
@@ -62,7 +62,7 @@ export var attackGridFields = {
     "CMB2": {
         "size": "CMD-size",
         "atk": "CMB2",
-        "buff": "buff_Melee-total",
+        "buff": "buff_CMB-total",
         "abilityMod": "CMB2-ability-mod",
         "misc": "attk-CMB2-misc",
         "crit": "attk_cmb2_crit_conf",
@@ -110,16 +110,23 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         if (typeof callback === "function") {
             callback();
         }
-    });
+    }),
+    fields;
     if (attackGridFields[attype]) {
-        SWUtils.updateRowTotal([attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
+        fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
             attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff
-            ], 0, [], false, done, silently);
+            ];
+        if (attype==='CMB'){
+            fields.push('buff_Melee-total');
+        }
+        SWUtils.updateRowTotal(fields, 0, [], false, done, silently);
     } else {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
         done();
     }
 }
+
+
 
 function getTopMacros(setter,v){
     var header="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll)",
@@ -193,6 +200,11 @@ export function updateRanged(eventInfo){
     updateAttack('ranged', eventInfo);
     updateAttack('ranged2', eventInfo);    
 }
+export function updateCMB(eventInfo){
+    updateAttack('CMB', eventInfo);
+    updateAttack('CMB2', eventInfo);
+}
+
 export function migrate (callback, oldversion){
     var done = function () {
         TAS.debug("leaving PFAttackGrid.migrate");
@@ -241,13 +253,23 @@ function registerEventHandlers () {
                 updateAttack(attack);
             }
         }));
-        on("change:attk-penalty change:" + attackFields.abilityMod + " change:" + attackFields.buff, TAS.callback(function eventAttackPenalty(eventInfo) {
+        on("change:attk-penalty change:" + attackFields.abilityMod , TAS.callback(function eventAttackPenalty(eventInfo) {
             if (eventInfo.sourceType === "sheetworker") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
             }
         }));
     });
+    //special
+    + " change:" + attackFields.buff
+    on("change:buff_CMB-total " , TAS.callback(function eventCMBBuff(eventInfo) {
+        if (eventInfo.sourceType === "sheetworker") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateAttack('CMB');
+            updateAttack('CMB2');
+        }
+    }));
+
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         applyConditions();
