@@ -1152,10 +1152,10 @@ input.sheet-tabinput {
 	padding-right:.5em;	
 }
 /* add space */
-.sheet-section-inventory .sheet-col.sheet-col1 .sheet-table {
+.sheet-section-equipment .sheet-col.sheet-col1 .sheet-table {
 	margin-right:.125em;
 }
-.sheet-section-inventory .sheet-col.sheet-col1 .sheet-table:last-child {
+.sheet-section-equipment .sheet-col.sheet-col1 .sheet-table:last-child {
 	margin-right: 0;
 }
 
@@ -2937,10 +2937,10 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 	display:inline !important;
 }
 /* inventory subsections */
-.sheet-inventory-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
+.sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
 	display:none;
 }
-.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-inventory-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
+.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
 	display:none;
 }
 
@@ -4126,22 +4126,22 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     border: none;
 }
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-col.sheet-col1 .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-col.sheet-col1 .sheet-table {
 	margin-right:0;
 }
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads  {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads  {
 	flex-flow: row nowrap;
 	justify-content: space-between;
 }
 
 /* block not table because of wrap */
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-table,
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift .sheet-table,
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-currency .sheet-table {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-table,
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift .sheet-table,
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-currency .sheet-table {
 	display:inline-block;
 }
 
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-load .sheet-table-cell {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-load .sheet-table-cell {
 	line-height:3em;
 }
 
@@ -4158,35 +4158,35 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-lift-modifiers, .sheet-lift {
 	width:33%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-other-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-other-items {
 	width:100%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-other-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-other-items {
 	width:100%;
 }
 
 /* inventory page switch from rows to columns */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-current-loads,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-current-loads,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift {
 	display:flex;
 	flex-flow:column;
 }
 /* inventory page only */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads {
     width: calc(50% - 4px);
 	float:left;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-loads-and-lift {
     width: calc(50% - 4px);
     float: right;
 }
 
 /* inventory all page  */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-loads-and-lift {
 	width:100%;
 }
 /* col 2 worn items */
@@ -4196,7 +4196,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     justify-content: space-between;
     max-width: 100%;	
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory  .sheet-worn-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment  .sheet-worn-items {
 	flex-flow:column;
 	align-items:stretch;
 }
@@ -4206,19 +4206,19 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	flex-basis:50%;
 }
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col2 {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col2 {
     width: 100%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1{
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1{
 	margin: 2px 2px 2px -2px;
 	width: 40%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col2 {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col2 {
 	margin: 2px 0 2px 0;
 	width: calc(60% - 4px);
 	float:right;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col2 .sheet-worn-items .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col2 .sheet-worn-items .sheet-table {
 	width: 100%;
 	display:table;
 	flex-basis:100%;
@@ -4231,14 +4231,14 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	float:right;
 }
 /* read only any page */ 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-table,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift .sheet-table,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-currency .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-table,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift .sheet-table,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-currency .sheet-table {
     width: 100%;
 }
 /* display xp at bottom of page in all pages mode */
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-experience {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-experience {
    display: none;
 }
 /******** spells ********/
@@ -4485,8 +4485,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skill-totals .sheet-divider-lg {
     display: none;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-carried-totals .sheet-divider,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-carried-totals .sheet-divider-lg {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-carried-totals .sheet-divider,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-carried-totals .sheet-divider-lg {
     display: none;
 }
 
