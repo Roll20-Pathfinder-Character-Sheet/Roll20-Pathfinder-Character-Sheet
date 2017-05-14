@@ -1549,6 +1549,7 @@ h2.sheet-clickheader {
     font-size: .666rem;
     font-style: italic;
     vertical-align: bottom;
+    cursor: help;
 }
 input.sheet-configbutton,
 input.sheet-readonly-show,
