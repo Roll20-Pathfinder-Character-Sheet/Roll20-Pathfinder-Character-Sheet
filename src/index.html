@@ -54,7 +54,7 @@
 	<div class="sheet-small-label2" style="display:inline;" role="presentation">
 		<img src="http://i.imgur.com/h1t4ERY.png?1" style="max-height: 70px;width: 140px;margin-bottom: -.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
 	</div>
-	<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-cssbutton sheet-readonly-show" style="width:3em;" data-i18n-aria-label="edit-mode-title" checked /><span></span><span class="sheet-cssbutton-label" style="margin-left:-27px;" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
+	<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-cssbutton sheet-readonly-show" data-i18n-aria-label="edit-mode-title" checked /><span></span><span class="sheet-cssbutton-label" style="margin-left:-27px;" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
 	<input type="checkbox" name="attr_migrate1" value="1" class="sheet-noshow" aria-label="for the API to ensure sheets up to date" />
 	<input type="checkbox" name="attr_recalc1" value="1" class="sheet-cssbutton sheet-refreshbutton sheet-progress-show" data-i18n-aria-label="recalculate-cmd" /><span></span>
 	<span class="sheet-cssbutton-label" style="margin-left:-35px;" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
@@ -610,8 +610,8 @@
 			<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n-title="skills" data-i18n-aria-label="skills" data-i18n="skills">Skills</label>
 			<input type="radio" name="attr_tab" value="7" class="sheet-tabinput sheet-tab7 sheet-spelltab" data-i18n-title="spells" aria-label="Spells" data-i18n-aria-label="spells" />
 			<label role="menuitem" class="sheet-tab sheet-tab7 sheet-spelltab" data-i18n-title="spells" data-i18n-aria-label="spells" title="Spells" data-i18n="spells">Spells</label>
-			<input type="radio" name="attr_tab" value="6" class="sheet-tabinput sheet-tab6" data-i18n-title="inventory" aria-label="Inventory" data-i18n-aria-label="inventory" />
-			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="inventory" data-i18n-aria-label="inventory" title="Inventory" data-i18n="equipment-abbrv">Equip</label>
+			<input type="radio" name="attr_tab" value="6" class="sheet-tabinput sheet-tab6" data-i18n-title="equipment" aria-label="Equipment" data-i18n-aria-label="equipment" />
+			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="equipment" data-i18n-aria-label="equipment" title="Equipment" data-i18n="equipment-abbrv">Equip</label>
 			<input type="radio" name="attr_tab" value="8" class="sheet-tabinput sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" aria-label="NPC" data-i18n-aria-label="npc" />
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
 			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
@@ -1752,7 +1752,7 @@
 						<div class="sheet-table-group">
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell"><input title="@{armor3-equipped}" type="checkbox" class="sheet-boldlabel-check" name="attr_armor3-equipped" value="1" checked /></span>
-								<span class="sheet-table-cell"><input title="@{armor3}" type="text" name="attr_armor3" value="" placeholder="Set on Inventory" data-i18n-placeholder="set-on-inventory" class="sheet-detail-medium sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><input title="@{armor3}" type="text" name="attr_armor3" value="" placeholder="Set on Equipment" data-i18n-placeholder="set-on-equipment" class="sheet-detail-medium sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{armor3-acbonus}" type="number" name="attr_armor3-acbonus" value="0" min="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{armor3-enhance}" type="number" name="attr_armor3-enhance" value="0" min="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{armor3-max-dex}" type="text" name="attr_armor3-max-dex" value="-" class="sheet-number sheet-calc" readonly /></span>
@@ -1771,7 +1771,7 @@
 							</div>
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell"><input title="@{shield3-equipped}" type="checkbox" class="sheet-boldlabel-check" name="attr_shield3-equipped" value="1" checked /></span>
-								<span class="sheet-table-cell"><input title="@{shield3}" type="text" name="attr_shield3" value="" placeholder="Set on Inventory" data-i18n-placeholder="set-on-inventory" class="sheet-detail-medium sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><input title="@{shield3}" type="text" name="attr_shield3" value="" placeholder="Set on Equipment" data-i18n-placeholder="set-on-equipment" class="sheet-detail-medium sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{shield3-acbonus}" type="number" name="attr_shield3-acbonus" value="0" min="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{shield3-enhance}" type="number" name="attr_shield3-enhance" value="0" min="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{shield3-max-dex}" type="text" name="attr_shield3-max-dex" value="-" class="sheet-calc sheet-number" readonly /></span>
@@ -8665,9 +8665,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="sheet-section6 sheet-section sheet-section-inventory" role="region" aria-label="Inventory" data-i18n-aria-label="inventory">
+			<div class="sheet-section6 sheet-section sheet-section-equipment" role="region" aria-label="Euipment" data-i18n-aria-label="equipment">
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
-				<h1 class="sheet-selected-tabtitle" data-i18n="inventory">Inventory</h1>
+				<h1 class="sheet-selected-tabtitle" data-i18n="equipment">Equipment</h1>
 				<div class="sheet-col sheet-col1">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_currency-show" data-i18n-aria-label="currency" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -8947,7 +8947,7 @@
 					<span class="sheet-nontable-name" >&nbsp;</span>
 					<!-- hide/show some fields -->
 					<label style="position: absolute;margin-top: -1.75em;"></label>
-					<input type="checkbox" class="sheet-selectedlabel-check sheet-inventory-onetime-show" name="attr_inventory_onetime_show" title="@{inventory_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item equipment type, hardness, item-hp, item-hp|max, and value." data-i18n="show-more-fields">Show more fields</b>
+					<input type="checkbox" class="sheet-selectedlabel-check sheet-equipment-onetime-show" name="attr_equipment_onetime_show" title="@{equipment_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item equipment type, hardness, item-hp, item-hp|max, and value." data-i18n="show-more-fields">Show more fields</b>
 					<div class="sheet-table" style="display:sheet-inline-table;width:60%;float:right;" >
 						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
 						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals:</b></span>
@@ -12052,7 +12052,7 @@
 					<span class="sheet-table-cell" style="vertical-align:top;">
 						<button type="roll" value="@{pf_block_example}" name="roll_pf_block_example" title="Display pf_block example"></button>
 						<span data-i18n="config-roll-template-pf_block">
-							<b data-i18n="block-roll-template">Block Text Roll Template </b>(pf_block)<br>Used for Inventory. Key/Property names are not shown in this template. Best for long blocks of text.
+							<b data-i18n="block-roll-template">Block Text Roll Template </b>(pf_block)<br>Used for equipment. Key/Property names are not shown in this template. Best for long blocks of text.
 						</span>
 					</span><br>
 					<span class="sheet-table-cell" style="width:50%;">
@@ -13045,7 +13045,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/14/2017 3:35pm ET &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/14/2017 2:05am PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
@@ -13192,9 +13192,10 @@
 						{{#crit_damage4}}{{#rollWasCrit() attack4}}<div class="sheet-roll-row"><div class="sheet-roll-cell" style="text-indent:0.5em">**<span data-i18n="critical-damage">Crit Damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage4}}</div></div>{{/rollWasCrit() attack4}}{{/crit_damage4}}
 						{{/attack4}}
 						{{^attack4}}{{#damage4}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="damage">Damage</span>**</div><div class="sheet-roll-cell">+{{damage4}}</div></div>{{/damage4}}{{/attack4}}
-						{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note}}
+						{{#spelltracking}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-spelltracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**</div><div class="sheet-roll-cell sheet-spelltracking">{{spelltracking}}</div></div>{{/spelltracking}}
+						{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note}}
+						{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13324,9 +13325,10 @@
 				{{^attack4}}
 				{{#damage4}}<label>**<span data-i18n="damage">Damage</span>**<span class="sheet-right">+{{damage4}}</span></label>{{/damage4}}
 				{{/attack4}}
-				{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note}}
+				{{#spelltracking}}<label>**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking}}</span></label>{{/spelltracking}}				
+				{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
 				<label>**{{key}}**:<span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note}}
+				{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
 				{{#description}}<span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
 				{{#spells_notes}}<h4 data-i18n="description">Spells Notes</h4><span class="sheet-roll-description">{{spells_notes}}</span>{{/spells_notes}}
