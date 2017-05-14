@@ -260,15 +260,6 @@ function registerEventHandlers () {
             }
         }));
     });
-    //special
-    + " change:" + attackFields.buff
-    on("change:buff_CMB-total " , TAS.callback(function eventCMBBuff(eventInfo) {
-        if (eventInfo.sourceType === "sheetworker") {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            updateAttack('CMB');
-            updateAttack('CMB2');
-        }
-    }));
 
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

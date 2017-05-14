@@ -347,7 +347,7 @@
 							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-flat-footed-show}" name="attr_buff-flat-footed-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<input type="checkbox" name="attr_buff-flat-footed_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-flat-footed_macro-text" title="@{repeating_buff_$X_buff-flat-footed_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="flat-footed-calculation-abbrv">Flat-Footed Calc</span></label>
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-flat-footed_macro-text" title="@{repeating_buff_$X_buff-flat-footed_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="flat-footed-only-calculation-abbrv">Flat-Footed Calc</span></label>
 								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-flat-footed" title="@{repeating_buff_$X_buff-flat-footed}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="flat-footed-abbrv">Flat-Footed</span></label>
 							</div>
 							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-CMD-show}" name="attr_buff-CMD-show" value="1" />
@@ -1502,7 +1502,7 @@
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0"></span>
-								<span class="sheet-table-cell"><input title="@{buff_AC-total}" type="number" name="attr_buff_AC-total" value="0" class="sheet-calc" readonly></span>
+								<span class="sheet-table-cell"><input title="@{buffsumac}" type="number" name="attr_buffsumac" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
 							<div class="sheet-table-row">
@@ -1530,7 +1530,7 @@
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0"></span>
-								<span class="sheet-table-cell"><input title="@{buff_Touch-total}" type="number" name="attr_buff_Touch-total" value="0" class="sheet-calc" readonly></span>
+								<span class="sheet-table-cell"><input title="@{buffsumtouch}" type="number" name="attr_buffsumtouch" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
 							<div class="sheet-table-row">
@@ -1578,7 +1578,7 @@
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" /></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" /></span>
 								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0" /></span>
-								<span class="sheet-table-cell"><input title="@{buff_AC-total}" type="number" name="attr_buff_AC-total" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><input title="@{buffsumff}" type="number" name="attr_buffsumff" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly /></span>
 							</div>
 						</div>
@@ -1722,7 +1722,7 @@
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{CMD-misc}" type="number" name="attr_CMD-misc" value="0"></span>
-								<span class="sheet-table-cell"><input title="@{buff_CMD-total}" type="number" name="attr_buff_CMD-total" value="0" class="sheet-calc" readonly></span>
+								<span class="sheet-table-cell"><input title="@{buffsumffcmd}" type="number" name="attr_buffsumffcmd" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"><input title="@{CMD-penalty}" type="number" name="attr_CMD-penalty" class="sheet-calc" readonly value="0"></span>
 							</div>
 						</div>

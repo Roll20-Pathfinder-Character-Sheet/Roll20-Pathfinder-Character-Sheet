@@ -55,6 +55,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
     "condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained", 
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
+    "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
     "current-load", "max-dex-source"], function (v) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
@@ -105,12 +106,30 @@ export function updateDefenses ( callback, silently, eventInfo) {
         cmdAbility1 = parseInt(v["CMD-STR"], 10) || 0,
         cmdAbility2 = lockDefAbility?ability:(parseInt(v["CMD-DEX"], 10) || 0),
         cmdFFAbility2 = lockDefAbility?ffAbility:(parseInt(v["FF-CMD-DEX"], 10) || 0),
-        setter = {},
-        params = {},
         loseDex = 0,
         immobilized = 0,
-        setAny = 0;
+        armorbuff = parseInt(v['buff_armor-total'],10)||0,
+        shieldbuff = parseInt(v['buff_shield-total'],10)||0,
+        naturalbuff = parseInt(v['buff_natural-total'],10)||0,
+        flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
+        buffac = 0,
+        bufftouch = 0,
+        buffff = 0,
+        buffffcmd = 0,
+        setAny = 0,
+        setter = {},
+        params = {};
         try {
+TAS.notice("PFDefense.updateDefenses:",v);
+            buffac=buffs+armorbuff+shieldbuff+naturalbuff;
+            bufftouch=buffsTouch;
+            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
+            buffffcmd = buffsCMD+flatfootedbuff;
+         //   buffcmd = buffs
+            setter.buffsumac=buffac;
+            setter.buffsumtouch=bufftouch;
+            setter.buffsumff=buffff;
+            setter.buffsumffcmd = buffffcmd;
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if ((maxDex) < ability) {
@@ -201,11 +220,11 @@ export function updateDefenses ( callback, silently, eventInfo) {
             if (parseInt(v.hd_not_bab,10)){
                 bab = parseInt(v.level,10)||0;
             }
-            ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs;
+            ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
             touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouch;
-            ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0);
+            ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
-            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0);
+            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
                 setAny += 1;
