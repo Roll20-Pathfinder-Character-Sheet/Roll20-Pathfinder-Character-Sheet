@@ -76,32 +76,6 @@ attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
 groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
         '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
-/** updates DMG-mod
- * @param {function} callback optional call when done
- * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
- */
-export function updateDamageRanged (callback, silently) {
-    var done = function () {
-        if (typeof callback === "function") {
-            callback();
-        }
-    };
-    getAttrs(["DMG_ranged-mod", "buff_DMG_ranged-total", "buff_DMG_ranged-total_penalty"],function(v){
-        var currdmg=parseInt(v["DMG_ranged-mod"],10)||0,
-        currBuff=parseInt(v["buff_DMG_ranged-total"],10)||0,
-        currPen=parseInt(v["buff_DMG_ranged-total_penalty"],10)||0,
-        newdmg=0,params={};
-        newdmg=currBuff+currPen;
-        if(newdmg!==currdmg){
-            if (silently){
-                params = PFConst.silentParams;
-            }
-            setAttrs({'DMG_ranged-mod':newdmg},params,done);
-        } else {
-            done();
-        }
-    });
-}
 
 
 /** updates DMG-mod
@@ -109,7 +83,7 @@ export function updateDamageRanged (callback, silently) {
  * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  */
 export function updateDamage (callback, silently) {
-    SWUtils.updateRowTotal(["DMG-mod", "buff_DMG-total", "buff_DMG-total_penalty"], 0, ["condition-Sickened"], false, callback, silently);
+    SWUtils.updateRowTotal(["DMG-mod", "buff_DMG-total"], 0, ["condition-Sickened"], false, callback, silently);
 }
 /** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
  *@param {function} callback optional call when done

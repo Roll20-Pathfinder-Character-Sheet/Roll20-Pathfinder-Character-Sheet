@@ -8,12 +8,17 @@ import * as PFUtils  from './PFUtils';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFSaves from './PFSaves';
 import * as PFAttackGrid from './PFAttackGrid';
+import * as PFAttacks from './PFAttacks';
 import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFInitiative from './PFInitiative';
 import * as PFEncumbrance from './PFEncumbrance';
+
+TAS.debugMode();
+
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
+// addede: 
 var buffColumns = ["Ranged", "Melee","CMB", 
 "DMG", "DMG_ranged",
  "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
@@ -44,7 +49,7 @@ events = {
 		"Melee": [PFAttackGrid.updateMelee],
 		"Ranged": [PFAttackGrid.updateRanged],
 		"DMG": [PFAttackGrid.updateDamage],
-		"DMG_ranged": [PFAttackGrid.updateDamageRanged],
+		"DMG_ranged": [PFAttacks.updateRepeatingWeaponDamages],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
@@ -110,6 +115,7 @@ export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newR
 function resetStatuspanel (callback) {
 	var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
 	 fields;
+
 	try {
 		fields = SWUtils.cartesianAppend(["buff_"], buffColumns, ["-total", "_exists"]).concat(
 			SWUtils.cartesianAppend(["buff_"], PFAbilityScores.abilities, [ "-total_penalty",  "_penalty_exists"])
@@ -117,30 +123,35 @@ function resetStatuspanel (callback) {
 			SWUtils.cartesianAppend(["buff_"], PFAbilityScores.abilities, [ "_skills-total_penalty",  "_skills_penalty_exists"])
 		);
 		getAttrs(fields, function (v) {
-			var setter = {};
+			var setter = {},
+			getExists= function(pre,post){
+				var val,exists;
+				post=post||'';
+				val = parseInt(v[pre + "-total"+post], 10) || 0; 
+				exists = parseInt(v[pre + "_exists"+post], 10) || 0;
+				if (val !== 0 && !exists) {
+					return 1;
+				} else if (val === 0 && exists) {
+					return "";
+				}
+			};
 			try {
 				setter = _.reduce(buffColumns, function (memo, col) {
-					var val, field, exists;
+					var pre;
 					try {
-						val = parseInt(v["buff_" + col + "-total"], 10) || 0; field = "buff_" + col + "_exists"; exists = parseInt(v[field], 10) || 0;
-						if (val !== 0 && !exists) {
-							memo[field] = "1";
-						} else if (val === 0 && exists) {
-							memo[field] = "";
-						}
+						pre="buff_" + col;
+						memo[pre+'_exists']=getExists(pre,'');
 					} catch (erri1) { } finally {
 						return memo;
 					}
 				}, setter);
 				setter = _.reduce(PFAbilityScores.abilities, function (memo, col) {
-					var val, field, exists;
+					var pre;
 					try {
-						val = parseInt(v["buff_" + col + "-total_penalty"], 10) || 0; field = "buff_" + col + "_penalty_exists"; exists = parseInt(v[field], 10) || 0;
-						if (val !== 0 && !exists) {
-							memo[field] = "1";
-						} else if (val === 0 && exists) {
-							memo[field] = "";
-						}
+						pre="buff_" + col;
+						memo[pre+'_exists']=getExists(pre,'_penalty');
+						pre+= '_skills';
+						memo[pre+'_exists']=getExists(pre,'_penalty');						
 					} catch (erri1) { } finally {
 						return memo;
 					}
@@ -204,7 +215,7 @@ function updateBuffTotals (col, callback) {
 				tempM=tempM||0;
 				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod);
 				if(tempM!==0){
-					if (!(isAbility && tempM < 0)) {
+					if (tempM < 0) {
 						m.mod += tempM;
 					} else {
 						m.pen += tempM;
@@ -221,17 +232,21 @@ function updateBuffTotals (col, callback) {
 		}, function (m, r, a) {
 			try {
 				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
-				a.I['buff_' + col + '-total'] = m.mod||0;
+				if(!isAbility){
+					m.mod+=m.pen;
+					m.pen=0;
+				}
+				if(col==='HP-temp' && m.mod < 0){
+					m.mod=0;
+				}
+				a.I['buff_' + col + '-total'] = m.mod;
 				if (m.mod){
 					a.I['buff_' + col + '_exists'] = 1;
 				} else {
 					a.I['buff_'+ col + '_exists'] = 0;
 				}
-				//toggleBuffStatusPanel(col, m.mod);
 				if (isAbility) {
-					a.I['buff_' + col + '-total_penalty'] = m.pen||0;
-					//TAS.debug("now also check ability penalty status");
-					//toggleBuffStatusPanel(col + "_penalty", m.pen);
+					a.I['buff_' + col + '-total_penalty'] = m.pen;
 					if (m.pen){
 						a.I['buff_' + col + '_penalty_exists'] = 1;
 					} else {
