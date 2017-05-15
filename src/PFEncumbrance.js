@@ -438,8 +438,7 @@ export function updateModifiedSpeed  (callback) {
     }),
     attribList = ["current-load", "speed-base", "speed-modified", 
     "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult",
-    ,"buff_speed-total"
-    ];
+    ,"buff_speed-total"  ];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -463,6 +462,7 @@ export function updateModifiedSpeed  (callback) {
         armorLoad = 0,
         setter = {};
         try {
+            base = base + buff;
             newSpeed = newSpeed + buff ;
             //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
             // #0: Armor, Shield & Load
