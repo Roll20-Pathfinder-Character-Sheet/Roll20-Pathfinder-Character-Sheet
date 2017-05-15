@@ -235,7 +235,34 @@ function updateBuffTotals (col, callback) {
 		done();
 	}
 }
-
+export function clearBuffTotals(callback){
+	var fields;
+	fields = SWUtils.cartesianAppend(['buff_'],buffColumns,['-total','_exists']);
+	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
+	TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
+	getAttrs(fields,function(v){
+		var setter={};
+		TAS.notice("PFBuffs.clearBuffTotals we got back the following: ",v);
+		setter = _.reduce(v,function(memo,val,attr){
+			if ((/exists/).test(attr)){
+				if (parseInt(val,10)){
+					memo[attr]=0;
+				}
+			} else if (parseInt(val,10) || typeof val === "undefined"){
+				memo[attr]=0;
+			}
+			return memo;
+		},{});
+		if (_.size(setter)){
+			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			setAttrs(setter,{},callback);
+		} else {
+			if (typeof callback ==="function"){
+				callback();
+			}
+		}
+	});
+}
 function setBuff (id, col, callback, silently) {
 	var done = function () {
 		if (typeof callback === "function") {
