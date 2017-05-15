@@ -212,8 +212,6 @@ function updateBuffTotals (col, callback) {
 	}),	
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
-		TAS.debug("at updateBuffTotals for "+ col+", isability:"+ isAbility);
-		TAS.repeating('buff').attrs('buff_' + col + '-total',  'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;

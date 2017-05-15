@@ -451,7 +451,7 @@ export function updateModifiedSpeed  (callback) {
         base = parseInt(v["speed-base"], 10) || 0,
         speedDropdown = parseInt(v["max-dex-source"], 10) || 0,
         origRunMult = isNaN(parseInt(v["run-mult"], 10)) ? 4 : parseInt(v["run-mult"], 10),
-        buff = parseInt(v["buff-speed-total"],10)||0,
+        buff = parseInt(v["buff_speed-total"],10)||0,
         newSpeed = base,
         runMult = origRunMult,
         newRun = base * runMult,
