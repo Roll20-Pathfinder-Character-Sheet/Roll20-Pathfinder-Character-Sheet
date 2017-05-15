@@ -430,7 +430,7 @@ export function updateLoadsAndLift (callback, silently) {
 }
 /* updateModifiedSpeed
  * updates the modified speed and run values  */
-function updateModifiedSpeed  (callback) {
+export function updateModifiedSpeed  (callback) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -438,7 +438,7 @@ function updateModifiedSpeed  (callback) {
     }),
     attribList = ["current-load", "speed-base", "speed-modified", 
     "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult",
-    ,"buff-speed-total"
+    ,"buff_speed-total"
     ];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
