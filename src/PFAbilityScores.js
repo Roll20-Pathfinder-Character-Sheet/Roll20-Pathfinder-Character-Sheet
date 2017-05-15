@@ -217,6 +217,7 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
+                TAS.notice("#######################","PFAbilities apply conditions setting",setter);
                 setAttrs(setter, params, done);
             } else {
                 done();

@@ -1039,14 +1039,7 @@ export function migrateUsesSpellFlag (callback){
         }
     });
 }
-export function migrateSize (callback){
-    getAttrs(['size','old_size','default_char_size'],function(v){
-        var size = parseInt(v.size,10)||0;
-        if (v.old_size==='x'){
-            setAttrs({'old_size':size, 'default_char_size':size});
-        }
-    });
-}
+
 /** migrates repeating_item name, short-description, type, and weight to have item- prefix to avoid duplicate attributes
  * @param {function} callback call after finishing */
 export function migrateRepeatingItemAttributes (callback) {
@@ -1234,7 +1227,6 @@ export function migrateConfigFlags (callback,oldversion){
     migrateNPC(function(){migrateHPMisc(done);});
     migrateRollTemplateImages();
     migrateAltAttackGridrowFlags();
-    migrateSize();
     migrateUsesSpellFlag();
     migrateAbilityListFlags();
     migrateExperience();

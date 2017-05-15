@@ -18,6 +18,7 @@ function setSanityThreshold (callback){
             if (parseInt(v.use_horror_adventures,10)){
                 currThreshold=parseInt(v.sanity_threshold,10)||0;
                 newThreshold=(parseInt(v['sanity-ability-mod'],10)||0)+(parseInt(v['sanity_threshold_misc-mod'],10)||0);
+                newThreshold = Math.min(1,newThreshold);
                 if (currThreshold!==newThreshold){
                     setter.sanity_threshold=newThreshold;
                 } 

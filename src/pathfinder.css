@@ -930,11 +930,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-tab.sheet-tab99 {
-    width: 4.75% !important;
+    width: 6% !important;
 }
 .sheet-tabinput.sheet-tab99 {
-    width: 4.75% !important;
-    margin-right: -4.75% !important;
+    width: 6% !important;
+    margin-right: -6% !important;
 }
 .sheet-mainnav ~ .sheet-tab,
 .sheet-mainnav ~ .sheet-tabinput {
@@ -1152,10 +1152,10 @@ input.sheet-tabinput {
 	padding-right:.5em;	
 }
 /* add space */
-.sheet-section-inventory .sheet-col.sheet-col1 .sheet-table {
+.sheet-section-equipment .sheet-col.sheet-col1 .sheet-table {
 	margin-right:.125em;
 }
-.sheet-section-inventory .sheet-col.sheet-col1 .sheet-table:last-child {
+.sheet-section-equipment .sheet-col.sheet-col1 .sheet-table:last-child {
 	margin-right: 0;
 }
 
@@ -1434,13 +1434,16 @@ h2.sheet-clickheader {
 .sheet-showarrow:hover + .sheet-showsect:not(.sheet-showsect-nocolor),
 .sheet-showarrow:hover + .sheet-showsect::before,
 .sheet-counted:hover + span,
-.sheet-counted:hover + span::before,
+.sheet-counted:hover + span::before {
+    color: Red;
+}
+
 .sheet-csstextbutton:hover,
 .sheet-csstextbutton:hover + span,
 .sheet-cssbutton:hover,
 .sheet-cssbutton:hover + span::before {
     color: Red;
-    border-color: Red;
+    box-shadow: 1px 1px 2px #333;
 }
 
 .sheet-minimize-show:checked ~ .sheet-lock-show + span::before,
@@ -1453,6 +1456,10 @@ h2.sheet-clickheader {
 	content: '▢';
 	padding-top: 2px;
 	vertical-align: top;
+}
+.sheet-minimize-show:checked:hover + span::before {
+    background-color: white !important;
+    color: red;
 }
 .sheet-minimize-show + span::before {
 	content: '▂';
@@ -1484,6 +1491,10 @@ h2.sheet-clickheader {
 	padding-left:2px;
 	padding-top: 1px;
 	vertical-align: top;
+}
+.sheet-split-column-show:checked:hover + span::before {
+	background-color: white !important;
+    color: red;
 }
 
 .sheet-deletebutton + span::before {
@@ -1517,7 +1528,7 @@ h2.sheet-clickheader {
     content: '⚔';
     margin-top: 5px;
     vertical-align:top;	
-    padding: 4px 0 0 0 !important;
+    padding: 3px 0 0 0 !important;
 }
 .sheet-addarmorbutton+ span::before {
     font-family: "Pictos Three" !important;
@@ -1538,6 +1549,7 @@ h2.sheet-clickheader {
     font-size: .666rem;
     font-style: italic;
     vertical-align: bottom;
+    cursor: help;
 }
 input.sheet-configbutton,
 input.sheet-readonly-show,
@@ -1552,22 +1564,23 @@ input.sheet-refreshbutton {
     content: '⛭';
     margin-top: .5em;
     vertical-align: top;	
-    padding: 3px 0 0 0 !important;
+    padding: 2px 0 0 0 !important;
+}
+.sheet-configbutton:checked:hover + span::before {
+    background-color: white !important;
+    color: red;
 }
 .sheet-readonly-show + span::before {
 	background-color:white !important;
 	background: url("http://i.imgur.com/C8lPQRS.png");
 	background-position: -1px -1px;
-	/*  for size to match sheet-refresh must not be space
-    content:'1'; 
-    */
-    content:' '; /* couldn't see how the above line made any change and the content would show on hover */
+    content:' ';
     color:transparent;
 	background-repeat:no-repeat !important;
     vertical-align: top;	
     margin-top: .5em;
 }
-.sheet-readonly-show + span:hover::before {
+.sheet-readonly-show:hover + span::before {
 	background-color:white !important;
 	background: url("http://i.imgur.com/MEXe7NT.png");
 	background-position: -1px -1px;
@@ -1579,11 +1592,11 @@ input.sheet-refreshbutton {
 	background-position: -1px -1px;
     color:transparent;
 }
-.sheet-readonly-show:checked + span:hover::before {
-	background-color:#4a6486 !important;
-	background: url("http://i.imgur.com/HcLvjwY.png");	
-	background-position: -1px -1px;
-    color:transparent;
+.sheet-readonly-show:checked:hover + span::before {
+    background-color: white !important;
+    background: url("http://i.imgur.com/EXbHcIE.png");
+    background-position: -1px -1px;
+    color: transparent;
 }
 .sheet-allrows-note span {
     vertical-align: middle;
@@ -1739,8 +1752,8 @@ hr.sheet-skinny {
 /* used to highlight background of sub-nav row on repeating sections */
 .sheet-subnav-hr {
 	width: 100%;
-	border: .65rem solid #DAE4F2;
-	margin-top: -1.35rem;
+	border: .75rem solid #DAE4F2;
+	margin-top: -1.45rem;
 }
 .sheet-npchead-bottom {
     margin-bottom: 5px;
@@ -2096,6 +2109,20 @@ button.sheet-text-button,
 
 .sheet-small-label2.sheet-autoexpand span:not(.sheet-autoexpand) {
 		white-space:nowrap;
+}
+.sheet-repeating-id .sheet-small-label2 span.sheet-selectable,
+span[name="attr_row_id"].sheet-selectable,
+input[name="attr_mainhand_id"].sheet-entry-long, 
+input[name="attr_offhand_id"].sheet-entry-long,
+input[type="text"][name="attr_source-main"],
+input[type="text"][name="attr_source-off"],
+input[type="text"][name="attr_source-item"],
+input[type="text"][name="attr_source-spell"],
+input[type="text"][name="attr_source-ability"]
+ {
+    background-color: #ECECEC;
+    padding: .25em 2px .25em 2px;
+    height: 1.825em;
 }
 .sheet-repeating-id {
     display: block;
@@ -2790,24 +2817,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:checked ~ .sheet-dont-use-size,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
-input[name$="STR-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-str,
-input[name$="DEX-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-dex,
-input[name$="CON-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-con,
-input[name$="INT-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-int,
-input[name$="WIS-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-wis,
-input[name$="CHA-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-cha,
-input[name$="Fort-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-fort,
-input[name$="Ref-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-ref,
-input[name$="Will-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-will,
-input[name$="AC-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-ac,
-input[name$="Touch-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-touch,
-input[name$="CMD-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-cmd,
-input[name$="Melee-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-melee,
-input[name$="Ranged-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-ranged,
-input[name$="DMG-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-dmg,
-input[name$="Check-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-check,
-input[name$="CasterLevel-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-casterlevel,
-input[name$="HP-temp-show"].sheet-nextitem-show:not(:checked) ~ .sheet-b-hp-temp,
 
 input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
 
@@ -2919,10 +2928,10 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 	display:inline !important;
 }
 /* inventory subsections */
-.sheet-inventory-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
+.sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
 	display:none;
 }
-.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-inventory-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
+.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
 	display:none;
 }
 
@@ -3115,6 +3124,17 @@ input[type="text"].sheet-skill-conds {
     font-size: .8125rem;
     vertical-align: top;
     overflow: hidden;
+}
+.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking {
+    vertical-align: middle;
+}
+.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking:last-child {
+    white-space: nowrap;
+    font-size: .8125rem;
+    line-height: 1em;
+}
+.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking:last-child a {
+    background-color: var(--sheet-pf-bg);
 }
 .sheet-rolltemplate-pf_generic .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_ability .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
@@ -4108,22 +4128,22 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     border: none;
 }
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-col.sheet-col1 .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-col.sheet-col1 .sheet-table {
 	margin-right:0;
 }
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads  {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads  {
 	flex-flow: row nowrap;
 	justify-content: space-between;
 }
 
 /* block not table because of wrap */
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-table,
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift .sheet-table,
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-currency .sheet-table {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-table,
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift .sheet-table,
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-currency .sheet-table {
 	display:inline-block;
 }
 
-.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-load .sheet-table-cell {
+.sheet-readonly-show:checked  ~ .sheet-main  .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-load .sheet-table-cell {
 	line-height:3em;
 }
 
@@ -4140,35 +4160,35 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-lift-modifiers, .sheet-lift {
 	width:33%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-other-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-other-items {
 	width:100%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-other-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-other-items {
 	width:100%;
 }
 
 /* inventory page switch from rows to columns */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-current-loads,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-current-loads,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift {
 	display:flex;
 	flex-flow:column;
 }
 /* inventory page only */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads {
     width: calc(50% - 4px);
 	float:left;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-loads-and-lift {
     width: calc(50% - 4px);
     float: right;
 }
 
 /* inventory all page  */
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1 .sheet-h2-section.sheet-loads-and-lift {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-loads-and-lift {
 	width:100%;
 }
 /* col 2 worn items */
@@ -4178,7 +4198,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     justify-content: space-between;
     max-width: 100%;	
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory  .sheet-worn-items {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment  .sheet-worn-items {
 	flex-flow:column;
 	align-items:stretch;
 }
@@ -4188,19 +4208,19 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	flex-basis:50%;
 }
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-inventory .sheet-col.sheet-col2 {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-col.sheet-col2 {
     width: 100%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col1{
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col1{
 	margin: 2px 2px 2px -2px;
 	width: 40%;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col2 {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col2 {
 	margin: 2px 0 2px 0;
 	width: calc(60% - 4px);
 	float:right;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-col.sheet-col2 .sheet-worn-items .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-col.sheet-col2 .sheet-worn-items .sheet-table {
 	width: 100%;
 	display:table;
 	flex-basis:100%;
@@ -4213,14 +4233,14 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	float:right;
 }
 /* read only any page */ 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-current-loads .sheet-table,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-loads-and-lift .sheet-table,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-h2-section.sheet-currency .sheet-table {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-current-loads .sheet-table,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-loads-and-lift .sheet-table,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-h2-section.sheet-currency .sheet-table {
     width: 100%;
 }
 /* display xp at bottom of page in all pages mode */
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-inventory .sheet-experience {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-equipment .sheet-experience {
    display: none;
 }
 /******** spells ********/
@@ -4467,8 +4487,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skill-totals .sheet-divider-lg {
     display: none;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-carried-totals .sheet-divider,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-inventory .sheet-carried-totals .sheet-divider-lg {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-carried-totals .sheet-divider,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-equipment .sheet-carried-totals .sheet-divider-lg {
     display: none;
 }
 
