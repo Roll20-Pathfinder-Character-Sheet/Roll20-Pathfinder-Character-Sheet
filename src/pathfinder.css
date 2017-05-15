@@ -3125,16 +3125,18 @@ input[type="text"].sheet-skill-conds {
     vertical-align: top;
     overflow: hidden;
 }
-.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking {
-    vertical-align: middle;
+.sheet-rolltemplate-pf_spell .sheet-pfctracking,
+.sheet-rolltemplate-pf_ability .sheet-pfctracking,
+.sheet-rolltemplate-pf_attack .sheet-pfctracking,
+.sheet-rolltemplate-pf_block .sheet-pfctracking {
+    text-align: right;
 }
-.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking:last-child {
-    white-space: nowrap;
-    font-size: .8125rem;
-    line-height: 1em;
-}
-.sheet-rolltemplate-pf_spell .sheet-roll-cell.sheet-spelltracking:last-child a {
+.sheet-rolltemplate-pf_spell .sheet-pfctracking a,
+.sheet-rolltemplate-pf_ability .sheet-pfctracking a,
+.sheet-rolltemplate-pf_attack .sheet-pfctracking a,
+.sheet-rolltemplate-pf_block .sheet-pfctracking a {
     background-color: var(--sheet-pf-bg);
+    font-family: pictos !important;
 }
 .sheet-rolltemplate-pf_generic .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_ability .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,

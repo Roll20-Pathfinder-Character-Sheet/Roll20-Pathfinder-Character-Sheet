@@ -13060,7 +13060,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/14/2017 2:05am PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/15/2017 1:35am PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/PF-Thread"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
@@ -13207,10 +13207,9 @@
 						{{#crit_damage4}}{{#rollWasCrit() attack4}}<div class="sheet-roll-row"><div class="sheet-roll-cell" style="text-indent:0.5em">**<span data-i18n="critical-damage">Crit Damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage4}}</div></div>{{/rollWasCrit() attack4}}{{/crit_damage4}}
 						{{/attack4}}
 						{{^attack4}}{{#damage4}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="damage">Damage</span>**</div><div class="sheet-roll-cell">+{{damage4}}</div></div>{{/damage4}}{{/attack4}}
-						{{#spelltracking}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-spelltracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**</div><div class="sheet-roll-cell sheet-spelltracking">{{spelltracking}}</div></div>{{/spelltracking}}
-						{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
+						{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking1 spelltracking2 spelltracking3 spelltracking4 spelltracking5 spelltracking6 spelldescription1 spelldescription2 spelldescription3 spelldescription4 spelldescription5 spelldescription6}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
+						{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking1 spelltracking2 spelltracking3 spelltracking4 spelltracking5 spelltracking6 spelldescription1 spelldescription2 spelldescription3 spelldescription4 spelldescription5 spelldescription6}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13218,6 +13217,25 @@
 					{{#spells_notes}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="spells-notes">Spells Notes</span>:**{{spells_notes}}</div></div>{{/spells_notes}}
 					{{#generic_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{generic_note}}</div></div>{{/generic_note}}
 					{{#deafened_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="deafened">Deafened</span>:**<span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></div></div>{{/deafened_note}}				
+					
+					{{#spelltracking1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking1}}</div></div>
+					{{#spelldescription1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription1}}</div></div>{{/spelldescription1}}
+					{{/spelltracking1}}
+					{{#spelltracking2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking2}}</div></div>
+					{{#spelldescription2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription2}}</div></div>{{/spelldescription2}}
+					{{/spelltracking2}}
+					{{#spelltracking3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking3}}</div></div>
+					{{#spelldescription3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription3}}</div></div>{{/spelldescription3}}
+					{{/spelltracking3}}
+					{{#spelltracking4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking4}}</div></div>
+					{{#spelldescription4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription4}}</div></div>{{/spelldescription4}}
+					{{/spelltracking4}}
+					{{#spelltracking5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking5}}</div></div>
+					{{#spelldescription5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription5}}</div></div>{{/spelldescription5}}
+					{{/spelltracking5}}
+					{{#spelltracking6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**{{spelltracking6}}</div></div>
+					{{#spelldescription6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{spelldescription6}}</div></div>{{/spelldescription6}}
+					{{/spelltracking6}}
 				</div>
 			</div>
 			{{/accessible}}
@@ -13339,17 +13357,35 @@
 				{{/attack4}}
 				{{^attack4}}
 				{{#damage4}}<label>**<span data-i18n="damage">Damage</span>**<span class="sheet-right">+{{damage4}}</span></label>{{/damage4}}
-				{{/attack4}}
-				{{#spelltracking}}<label>**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking}}</span></label>{{/spelltracking}}				
-				{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
+				{{/attack4}}				
+				{{#allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking1 spelltracking2 spelltracking3 spelltracking4 spelltracking5 spelltracking6 spelldescription1 spelldescription2 spelldescription3 spelldescription4 spelldescription5 spelldescription6}}
 				<label>**{{key}}**:<span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking}}
+				{{/allprops() color accessible rounded spelldamage spelldamagetype spellclass class cast_defDC header_image character_name character_id name_link subtitle deafened_note school level casterlevel rangetext norangetext casting_time components range targets duration saving_throw dc sr Concentration spellPen cast_def Concentration_chk spellPen_chk casterlevel_chk description close medium long see_text personal touch number perlevel blank unknownrange spell_fail_check spell_fail attack damage crit_confirm crit_damage attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 spells_notes generic_note spelltracking1 spelltracking2 spelltracking3 spelltracking4 spelltracking5 spelltracking6 spelldescription1 spelldescription2 spelldescription3 spelldescription4 spelldescription5 spelldescription6}}
 				{{#description}}<span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
 				{{#spells_notes}}<h4 data-i18n="description">Spells Notes</h4><span class="sheet-roll-description">{{spells_notes}}</span>{{/spells_notes}}
 				{{#deafened_note}}<h4 data-i18n="deafened">Deafened</h4>
 				<label><span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></label>
-				{{/deafened_note}}				
+				{{/deafened_note}}
+
+				{{#spelltracking1}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking1}}</span></label>
+				{{#spelldescription1}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription1}}</span></label>{{/spelldescription1}}
+				{{/spelltracking1}}
+				{{#spelltracking2}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking2}}</span></label>
+				{{#spelldescription2}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription2}}</span></label>{{/spelldescription2}}
+				{{/spelltracking2}}
+				{{#spelltracking3}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking3}}</span></label>
+				{{#spelldescription3}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription3}}</span></label>{{/spelldescription3}}
+				{{/spelltracking3}}
+				{{#spelltracking4}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking4}}</span></label>
+				{{#spelldescription4}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription4}}</span></label>{{/spelldescription4}}
+				{{/spelltracking4}}
+				{{#spelltracking5}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking5}}</span></label>
+				{{#spelldescription5}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription5}}</span></label>{{/spelldescription5}}
+				{{/spelltracking5}}
+				{{#spelltracking6}}<label class="sheet-pfctracking">**<span data-i18n="spell-tracking">Spell Tracking</span>:**<span>{{spelltracking6}}</span></label>
+				{{#spelldescription6}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{spelldescription6}}</span></label>{{/spelldescription6}}
+				{{/spelltracking6}}
 			</div>
 			{{/accessible}}
 		</rolltemplate>
@@ -13504,9 +13540,9 @@
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
 						{{#type}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="type">Type</span>**:</div><div class="sheet-roll-cell">{{type}}</div></div>{{/type}}
-						{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
+						{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
+						{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13517,6 +13553,25 @@
 					{{#weapon_notes}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="weapon-notes">Weapon Notes</span>:** {{weapon_notes}}</div></div>{{/weapon_notes}}
 					{{#description}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{description}}</div></div>{{/description}}
 					{{#generic_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{generic_note}}</div></div>{{/generic_note}}
+
+					{{#itemtracking1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking1}}</div></div>
+					{{#itemdescription1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription1}}</div></div>{{/itemdescription1}}
+					{{/itemtracking1}}
+					{{#itemtracking2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking2}}</div></div>
+					{{#itemdescription2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription2}}</div></div>{{/itemdescription2}}
+					{{/itemtracking2}}
+					{{#itemtracking3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking3}}</div></div>
+					{{#itemdescription3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription3}}</div></div>{{/itemdescription3}}
+					{{/itemtracking3}}
+					{{#itemtracking4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking4}}</div></div>
+					{{#itemdescription4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription4}}</div></div>{{/itemdescription4}}
+					{{/itemtracking4}}
+					{{#itemtracking5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking5}}</div></div>
+					{{#itemdescription5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription5}}</div></div>{{/itemdescription5}}
+					{{/itemtracking5}}
+					{{#itemtracking6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking6}}</div></div>
+					{{#itemdescription6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription6}}</div></div>{{/itemdescription6}}
+					{{/itemtracking6}}
 				</div>
 			</div>
 			{{/accessible}}
@@ -13607,9 +13662,9 @@
 				{{#critical_dmg81}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg81}}</span></label>{{/critical_dmg81}}
 				{{#critical_dmg82}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg82}}</span></label>{{/critical_dmg82}}
 				{{/rollWasCrit() attack8}}{{/no_attack_roll}}
-				{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
+				{{#allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6}}
 				<label><span>{{key}}</span>:<span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type}}
+				{{/allprops() color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 damage8 crit_confirm8 crit_damage8 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6}}
 				{{#type}}<label><span data-i18n="type">Type</span>:<span class="sheet-right">{{type}}</span></label>{{/type}}
 				{{#melee_notes}}<label><span data-i18n="melee-notes">Melee Notes</span>:<span>{{melee_notes}}</span></label>{{/melee_notes}}
 				{{#ranged_notes}}<label><span data-i18n="ranged-notes">Ranged Notes</span>:<span>{{ranged_notes}}</span></label>{{/ranged_notes}}
@@ -13619,6 +13674,25 @@
 				{{#description}}<span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
 				{{#dual_precision_dmg}}<label class="sheet-atksbkg sheet-atk">{{#dual_precision_dmg_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{dual_precision_dmg_type}}</span>{{/dual_precision_dmg_type}}{{^dual_precision_dmg_type}}<span data-i18n="extra-damage">dual_precision Dmg</span>{{/dual_precision_dmg_type}}:<span class="sheet-right">{{dual_precision_dmg}}</span></label>{{/dual_precision_dmg}}
+				
+				{{#itemtracking1}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking1}}</span></label>
+				{{#itemdescription1}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription1}}</span></label>{{/itemdescription1}}
+				{{/itemtracking1}}
+				{{#itemtracking2}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking2}}</span></label>
+				{{#itemdescription2}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription2}}</span></label>{{/itemdescription2}}
+				{{/itemtracking2}}
+				{{#itemtracking3}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking3}}</span></label>
+				{{#itemdescription3}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription3}}</span></label>{{/itemdescription3}}
+				{{/itemtracking3}}
+				{{#itemtracking4}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking4}}</span></label>
+				{{#itemdescription4}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription4}}</span></label>{{/itemdescription4}}
+				{{/itemtracking4}}
+				{{#itemtracking5}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking5}}</span></label>
+				{{#itemdescription5}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription5}}</span></label>{{/itemdescription5}}
+				{{/itemtracking5}}
+				{{#itemtracking6}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking6}}</span></label>
+				{{#itemdescription6}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription6}}</span></label>{{/itemdescription6}}
+				{{/itemtracking6}}
 			</div>
 			{{/accessible}}
 		</rolltemplate>
@@ -13781,9 +13855,9 @@
 						{{#damage}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="damage">Damage</span>**</div><div class="sheet-roll-cell">{{damage}}{{#damagetype}} {{damagetype}}{{/damagetype}}</div></div>{{/damage}}
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check">Check</span>**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
 						{{#duration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="duration">Duration</span>**</div><div class="sheet-roll-cell">{{duration}}</div></div>{{/duration}}														
-						{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
+						{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level abilitytracking1 abilitytracking2 abilitytracking3 abilitytracking4 abilitytracking5 abilitytracking6 abilitydescription1 abilitydescription2 abilitydescription3 abilitydescription4 abilitydescription5 abilitydescription6}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
+						{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle casterlevel check shortdesc description class generic_note source rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level abilitytracking1 abilitytracking2 abilitytracking3 abilitytracking4 abilitytracking5 abilitytracking6 abilitydescription1 abilitydescription2 abilitydescription3 abilitydescription4 abilitydescription5 abilitydescription6}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -13791,6 +13865,25 @@
 					{{#description}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="description">Description</span>:**{{description}}</div></div>{{/description}}
 					{{#generic_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{generic_note}}</div></div>{{/generic_note}}
 					{{#is_sp}}{{#deafened_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="deafened">Deafened</span>:**<span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></div></div>{{/deafened_note}}{{/is_sp}}
+					
+					{{#abilitytracking1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking1}}</div></div>
+					{{#abilitydescription1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription1}}</div></div>{{/abilitydescription1}}
+					{{/abilitytracking1}}
+					{{#abilitytracking2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking2}}</div></div>
+					{{#abilitydescription2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription2}}</div></div>{{/abilitydescription2}}
+					{{/abilitytracking2}}
+					{{#abilitytracking3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking3}}</div></div>
+					{{#abilitydescription3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription3}}</div></div>{{/abilitydescription3}}
+					{{/abilitytracking3}}
+					{{#abilitytracking4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking4}}</div></div>
+					{{#abilitydescription4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription4}}</div></div>{{/abilitydescription4}}
+					{{/abilitytracking4}}
+					{{#abilitytracking5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking5}}</div></div>
+					{{#abilitydescription5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription5}}</div></div>{{/abilitydescription5}}
+					{{/abilitytracking5}}
+					{{#abilitytracking6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**{{abilitytracking6}}</div></div>
+					{{#abilitydescription6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{abilitydescription6}}</div></div>{{/abilitydescription6}}
+					{{/abilitytracking6}}
 				</div>
 			</div>
 			{{/accessible}}
@@ -13822,13 +13915,32 @@
 				{{#damage}}<label>**<span data-i18n="damage">Damage</span>**<span class="sheet-right">{{damage}}{{#damagetype}} {{damagetype}}{{/damagetype}}</span></label>{{/damage}}
 				{{#check}}<label>**<span data-i18n="check">Check</span>**<span class="sheet-right">{{check}}</span></label>{{/check}}
 				{{#duration}}<label>**<span data-i18n="duration">Duration</span>**<span class="sheet-right">{{duration}}</span></label>{{/duration}}
-				{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check shortdesc description untrained class generic_note source cust_cataegory rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
+				{{#allprops() color accessible rounded header_image character_name name character_id name_link subtitle check shortdesc description untrained class generic_note source cust_cataegory rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level abilitytracking1 abilitytracking2 abilitytracking3 abilitytracking4 abilitytracking5 abilitytracking6 abilitydescription1 abilitydescription2 abilitydescription3 abilitydescription4 abilitydescription5 abilitydescription6}}
 				<label><span>**{{key}}**</span><span class="sheet-right">{{value}}</span></label>
-				{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check shortdesc description untrained class generic_note source cust_cataegory rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level }}
+				{{/allprops() color accessible rounded header_image character_name name character_id name_link subtitle check shortdesc description untrained class generic_note source cust_cataegory rule_category cust_category hasfrequency frequency hasuses uses uses_max next_cast save savedc hasspellrange spell_range custrange hasposrange range is_sp hassr sr concentration hasattack attacktype targetarea damage damagetype deafened_note duration casterlevel spell_level abilitytracking1 abilitytracking2 abilitytracking3 abilitytracking4 abilitytracking5 abilitytracking6 abilitydescription1 abilitydescription2 abilitydescription3 abilitydescription4 abilitydescription5 abilitydescription6}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
 				{{#shortdesc}}<span class="sheet-roll-description">{{shortdesc}}</span>{{/shortdesc}}
 				{{#description}}<h4 data-i18n="description">Description</h4><span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#is_sp}}{{#deafened_note}}<h4 data-i18n="deafened">Deafened</h4><label><span data-i18n="condition-deafened-spellonly">Has a 20% chance of spell failure when casting spells with verbal components.</span></label>{{/deafened_note}}{{/is_sp}}
+				
+				{{#abilitytracking1}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking1}}</span></label>
+				{{#abilitydescription1}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription1}}</span></label>{{/abilitydescription1}}
+				{{/abilitytracking1}}
+				{{#abilitytracking2}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking2}}</span></label>
+				{{#abilitydescription2}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription2}}</span></label>{{/abilitydescription2}}
+				{{/abilitytracking2}}
+				{{#abilitytracking3}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking3}}</span></label>
+				{{#abilitydescription3}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription3}}</span></label>{{/abilitydescription3}}
+				{{/abilitytracking3}}
+				{{#abilitytracking4}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking4}}</span></label>
+				{{#abilitydescription4}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription4}}</span></label>{{/abilitydescription4}}
+				{{/abilitytracking4}}
+				{{#abilitytracking5}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking5}}</span></label>
+				{{#abilitydescription5}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription5}}</span></label>{{/abilitydescription5}}
+				{{/abilitytracking5}}
+				{{#abilitytracking6}}<label class="sheet-pfctracking">**<span data-i18n="ability-tracking">Ability Tracking</span>:**<span>{{abilitytracking6}}</span></label>
+				{{#abilitydescription6}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{abilitydescription6}}</span></label>{{/abilitydescription6}}
+				{{/abilitytracking6}}
 			</div>
 			{{/accessible}}
 		</rolltemplate>
@@ -13964,14 +14076,52 @@
 				<div class="sheet-roll-group">
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
 					{{#hasuses}}<div class="sheet-roll-row"><div class="sheet-roll-cell"><span data-i18n="quantity-abbrv">Qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</div></div>{{/hasuses}}
-					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+					{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6 misctracking1 misctracking2 misctracking3 misctracking4 misctracking5 misctracking6 miscdescription1 miscdescription2 miscdescription3 miscdescription4 miscdescription5 miscdescription6}}
 					<div class="sheet-roll-row"><div class="sheet-roll-cell">{{value}}</div></div>
-					{{/allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+					{{/allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6 misctracking1 misctracking2 misctracking3 misctracking4 misctracking5 misctracking6 miscdescription1 miscdescription2 miscdescription3 miscdescription4 miscdescription5 miscdescription6}}
 				</div>
 				<div class="sheet-roll-group">
 					{{#shortdesc}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{shortdesc}}</div></div>{{/shortdesc}}
 					{{#description}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{description}}</div></div>{{/description}}
 					{{#generic_note}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{generic_note}}</div></div>{{/generic_note}}
+
+					{{#itemtracking1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking1}}</div></div>
+					{{#itemdescription1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription1}}</div></div>{{/itemdescription1}}
+					{{/itemtracking1}}
+					{{#itemtracking2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking2}}</div></div>
+					{{#itemdescription2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription2}}</div></div>{{/itemdescription2}}
+					{{/itemtracking2}}
+					{{#itemtracking3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking3}}</div></div>
+					{{#itemdescription3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription3}}</div></div>{{/itemdescription3}}
+					{{/itemtracking3}}
+					{{#itemtracking4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking4}}</div></div>
+					{{#itemdescription4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription4}}</div></div>{{/itemdescription4}}
+					{{/itemtracking4}}
+					{{#itemtracking5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking5}}</div></div>
+					{{#itemdescription5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription5}}</div></div>{{/itemdescription5}}
+					{{/itemtracking5}}
+					{{#itemtracking6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**{{itemtracking6}}</div></div>
+					{{#itemdescription6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{itemdescription6}}</div></div>{{/itemdescription6}}
+					{{/itemtracking6}}
+
+					{{#misctracking1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking1}}</div></div>
+					{{#miscdescription1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription1}}</div></div>{{/miscdescription1}}
+					{{/misctracking1}}
+					{{#misctracking2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking2}}</div></div>
+					{{#miscdescription2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription2}}</div></div>{{/miscdescription2}}
+					{{/misctracking2}}
+					{{#misctracking3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking3}}</div></div>
+					{{#miscdescription3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription3}}</div></div>{{/miscdescription3}}
+					{{/misctracking3}}
+					{{#misctracking4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking4}}</div></div>
+					{{#miscdescription4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription4}}</div></div>{{/miscdescription4}}
+					{{/misctracking4}}
+					{{#misctracking5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking5}}</div></div>
+					{{#miscdescription5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription5}}</div></div>{{/miscdescription5}}
+					{{/misctracking5}}
+					{{#misctracking6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**{{misctracking6}}</div></div>
+					{{#miscdescription6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**{{miscdescription6}}</div></div>{{/miscdescription6}}
+					{{/misctracking6}}
 				</div>
 			</div>
 			{{/accessible}}
@@ -13984,12 +14134,50 @@
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}
 				{{#hasuses}}<label><span><span data-i18n="quantity-abbrv">qty</span>: {{#qty}}{{qty}}{{/qty}}/{{#qty_max}}{{qty_max}}{{/qty_max}}</span></label>{{/hasuses}}
-				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+				{{#allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6 misctracking1 misctracking2 misctracking3 misctracking4 misctracking5 misctracking6 miscdescription1 miscdescription2 miscdescription3 miscdescription4 miscdescription5 miscdescription6}}
 				<label><span>{{value}}</span></label>
-				{{/allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note}}
+				{{/allprops() whisper switch hasuses qty qty_max shortdesc color accessible rounded name header_image character_name character_id name_link subtitle description class generic_note itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6 misctracking1 misctracking2 misctracking3 misctracking4 misctracking5 misctracking6 miscdescription1 miscdescription2 miscdescription3 miscdescription4 miscdescription5 miscdescription6}}
 				{{#shortdesc}}<span class="sheet-roll-description">{{shortdesc}}</span>{{/shortdesc}}
 				{{#description}}<h4 data-i18n="description">Description</h4><span class="sheet-roll-description">{{description}}</span>{{/description}}
 				{{#generic_note}}<span class="sheet-roll-description">{{generic_note}}</span>{{/generic_note}}
+
+				{{#itemtracking1}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking1}}</span></label>
+				{{#itemdescription1}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription1}}</span></label>{{/itemdescription1}}
+				{{/itemtracking1}}
+				{{#itemtracking2}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking2}}</span></label>
+				{{#itemdescription2}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription2}}</span></label>{{/itemdescription2}}
+				{{/itemtracking2}}
+				{{#itemtracking3}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking3}}</span></label>
+				{{#itemdescription3}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription3}}</span></label>{{/itemdescription3}}
+				{{/itemtracking3}}
+				{{#itemtracking4}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking4}}</span></label>
+				{{#itemdescription4}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription4}}</span></label>{{/itemdescription4}}
+				{{/itemtracking4}}
+				{{#itemtracking5}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking5}}</span></label>
+				{{#itemdescription5}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription5}}</span></label>{{/itemdescription5}}
+				{{/itemtracking5}}
+				{{#itemtracking6}}<label class="sheet-pfctracking">**<span data-i18n="item-tracking">Item Tracking</span>:**<span>{{itemtracking6}}</span></label>
+				{{#itemdescription6}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{itemdescription6}}</span></label>{{/itemdescription6}}
+				{{/itemtracking6}}
+
+				{{#misctracking1}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking1}}</span></label>
+				{{#miscdescription1}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription1}}</span></label>{{/miscdescription1}}
+				{{/misctracking1}}
+				{{#misctracking2}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking2}}</span></label>
+				{{#miscdescription2}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription2}}</span></label>{{/miscdescription2}}
+				{{/misctracking2}}
+				{{#misctracking3}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking3}}</span></label>
+				{{#miscdescription3}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription3}}</span></label>{{/miscdescription3}}
+				{{/misctracking3}}
+				{{#misctracking4}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking4}}</span></label>
+				{{#miscdescription4}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription4}}</span></label>{{/miscdescription4}}
+				{{/misctracking4}}
+				{{#misctracking5}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking5}}</span></label>
+				{{#miscdescription5}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription5}}</span></label>{{/miscdescription5}}
+				{{/misctracking5}}
+				{{#misctracking6}}<label class="sheet-pfctracking">**<span data-i18n="misc-tracking">Misc Tracking</span>:**<span>{{misctracking6}}</span></label>
+				{{#miscdescription6}}<label class="sheet-pfctracking">**<span data-i18n="tracking-details">Tracking Details</span>:**<span>{{miscdescription6}}</span></label>{{/miscdescription6}}
+				{{/misctracking6}}
 			</div>
 			{{/accessible}}
 		</rolltemplate>

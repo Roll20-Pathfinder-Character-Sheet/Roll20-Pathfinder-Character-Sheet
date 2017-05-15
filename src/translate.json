@@ -1,6 +1,10 @@
 {
   "all-checks": "All Checks",
   "all-checks-calc":"All checks calc",
+"tracking-details": "Tracking Details",
+"ability-tracking": "Ability Tracking",
+"item-tracking": "Item Tracking",
+"misc-tracking": "Misc Tracking",
 "3-sizes-smaller":"3 sz smaller",
 "2-sizes-smaller":"2 sz smaller",
 "1-size-smaller":"1 sz smaller",
