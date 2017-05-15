@@ -189,7 +189,7 @@ function updateBuffTotals (col, callback) {
 	}),
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
-		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
+		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
@@ -210,21 +210,11 @@ function updateBuffTotals (col, callback) {
 			try {
 				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
 				a.S['buff_' + col + '-total'] = m.mod||0;
-				if (m.mod){
-					a.S['buff_' + col + '_exists'] = 1;
-				} else if (a.I['buff_' + col + '_exists']) {
-					a.S['buff_'+ col + '_exists'] = 0;
-				}
-				//toggleBuffStatusPanel(col, m.mod);
+				toggleBuffStatusPanel(col, m.mod);
 				if (isAbility) {
 					a.S['buff_' + col + '-total_penalty'] = m.pen||0;
 					//TAS.debug("now also check ability penalty status");
-					//toggleBuffStatusPanel(col + "_penalty", m.pen);
-					if (m.pen){
-						a.S['buff_' + col + '_penalty_exists'] = 1;
-					} else {
-						a.S['buff_'+ col + '_penalty_exists'] = 0;
-					}
+					toggleBuffStatusPanel(col + "_penalty", m.pen);
 				}
 			} catch (errfinalset){
 				TAS.error("error setting buff_" + col + "-total");
