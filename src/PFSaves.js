@@ -91,7 +91,7 @@ function registerEventHandlers () {
 	_.each(saveTypes, function (save) {
 		var eventToWatch = events.saveEventsAuto.replace(/REPLACE/g, save);
 		on(eventToWatch, TAS.callback(function eventUpdateSaveAuto(eventInfo) {
-			if (eventInfo.sourceType === "sheetworker") {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + save + ": " + eventInfo.sourceType);
 				updateSave(save, eventInfo);
 			}
