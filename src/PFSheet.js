@@ -419,6 +419,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInventory.updateRepeatingItems();
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
+			if (oldversion < 1.53){
+				PFBuffs.recalculate(null,false,oldversion);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
