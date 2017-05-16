@@ -437,8 +437,7 @@ export function updateModifiedSpeed  (callback) {
         }
     }),
     attribList = ["current-load", "speed-base", "speed-modified", 
-    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult",
-    ,"buff_speed-total"  ];
+    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult","buff_speed-total"  ];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -564,7 +563,7 @@ function registerEventHandlers  () {
     }));
     on('change:load-light change:carried-total', TAS.callback(function eventUpdateCurrentLoad(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker"){
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateCurrentLoad();
         }
     }));

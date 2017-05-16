@@ -85,7 +85,7 @@ function registerEventHandlers () {
  	on("change:sanity_score_misc-mod change:WIS change:INT change:CHA change:buff_WIS-total_penalty change:buff_INT-total_penalty change:buff_CHA-total_penalty",
         TAS.callback(function eventAllMentalStatsAutoUpdate(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if(eventInfo.sourceType === "sheetworker" ) {
+		if(eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
             setSanityScore();
 		}
 	}));   
@@ -98,7 +98,7 @@ function registerEventHandlers () {
 	}));   
  	on("change:sanity-ability-mod change:sanity_threshold_misc-mod",TAS.callback(function eventThresholdUpdate(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if(eventInfo.sourceType === "sheetworker" ) {
+		if(eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
             setSanityThreshold();
 		}
 	}));
