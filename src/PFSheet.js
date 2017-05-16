@@ -419,6 +419,9 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInventory.updateRepeatingItems();
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
+			if (oldversion < 1.53){
+				PFBuffs.recalculate(null,false,oldversion);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
@@ -715,7 +718,10 @@ function registerEventHandlers () {
 							setter={};
 							setter[eventInfo.sourceAttribute]=0;
 							setter[eventInfo.sourceAttribute+'_btn']=0;
-							setAttrs(setter,{silent:true});							
+							setAttrs(setter,{silent:true});
+							if ((/buff/i).test(eventInfo.sourceAttribute)){
+								PFBuffs.clearBuffTotals();
+							}		
 						},section);
 				}
 			});

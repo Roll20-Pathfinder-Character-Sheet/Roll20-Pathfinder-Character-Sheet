@@ -132,7 +132,7 @@ defaultSkillAttrName='REPLACE-macro',
 keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 events = {
-	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp",
+	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
 	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
@@ -330,7 +330,9 @@ export function updateSkill (skill, callback, silently) {
 	miscNm = skill + "-misc-mod",
 	utNm = skill + "-ut",
 	rtNm = skill + "-ReqTrain";
-	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, "enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", "Perception-cond"], function (v) {
+	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, 
+		"enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", 
+		"Perception-cond", "buff_check_skills-total"], function (v) {
 		var skillSize = 0,
 		adj,
 		skillTot = 0,
@@ -343,7 +345,7 @@ export function updateSkill (skill, callback, silently) {
 		currSkill = parseInt(v[skill], 10), //no default
 		ranks = parseInt(v[ranksNm], 10) || 0,
 		rt = parseInt(v[rtNm], 10) || 0,
-		allCond = parseInt(v["checks-cond"], 10) || 0,
+		allCond = (parseInt(v["checks-cond"], 10) || 0)+(parseInt(v["buff_check_skills-total"],10)||0),
 		abilityName = '',
 		physCond = 0,
 		perCond = 0,
