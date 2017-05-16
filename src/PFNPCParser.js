@@ -2970,14 +2970,12 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (sizeMap && sizeMap.size !== 0) {
 				setter.size = sizeMap.size;
 				setter['default_char_size']=sizeMap.size;
-				setter['old_size']=sizeMap.size;
 				setter.size_skill = sizeMap.skillSize;
 				setter["CMD-size"] = (sizeMap.size * -1);
 				setter.size_skill_double = (sizeMap.skillSize * 2);
 			} else {
 				setter['size']=0;
 				setter['default_char_size']=0;
-				setter['old_size']=0;
 				setter.size_skill = 0;
 				setter["CMD-size"] = 0;
 				setter.size_skill_double =0;
