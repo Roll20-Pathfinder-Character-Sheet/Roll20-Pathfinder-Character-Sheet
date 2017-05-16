@@ -1,4 +1,10 @@
 {
+  "all-checks": "All Checks",
+  "all-checks-calc":"All checks calc",
+"tracking-details": "Tracking Details",
+"ability-tracking": "Ability Tracking",
+"item-tracking": "Item Tracking",
+"misc-tracking": "Misc Tracking",
 "3-sizes-smaller":"3 sz smaller",
 "2-sizes-smaller":"2 sz smaller",
 "1-size-smaller":"1 sz smaller",
@@ -32,11 +38,10 @@
 "buff-combat-maneuver-bonus-title":"Bonus to combat maneuver bonus",
 "buff-skill-checks-title":"Bonus to skill checks",
 "buff-ability-checks-title":"Bonus to ability checks",
-
-
 "armor-calculation-abbrv":"Armor calc",
 "shield-calculation-abbrv":"Shield calc",
-"natural-calculation-abbrv":"Natural calc",
+"natural-armor-abbrv": "Nat Armor",
+"natural-calculation-abbrv":"Natural Armor calc",
 "flat-footed-only-calculation-abbrv":"Flat-foot only calc",
 "initiative-calculation-abbrv":"Init calc",
 "size-calculation-abbrv":"Size calc",
@@ -48,7 +53,7 @@
 "ability-checks-calculation-abbrv":"Ability check calc",
 
 
-
+"new-buffs": "New Buffs (BETA):",
 "strength-skills-abbrv":"STR skills",
 "dexterity-skills-abbrv":"DEX skills",
 "constitution-skills-abbrv":"CON skills",
@@ -58,7 +63,7 @@
 "natural-abbrv":"Nat AC",
 "flat-footed-abbrv":"FF AC",
 "initiative-abbrv":"Init",
-
+"skill-checks": "Skill Checks",
 "damage-ranged-abbrv":"Rng dmg",
 "damage-melee-abbrv":"Melee dmg",
 "skill-checks-abbrv":"Skll chk",

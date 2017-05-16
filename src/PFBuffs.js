@@ -212,12 +212,11 @@ function updateBuffTotals (col, callback) {
 	}),	
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
 	try {
-		TAS.debug("at updateBuffTotals for "+ col+", isability:"+ isAbility);
-		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty', 'buff_'+col+'_exists', 'buff_'+col+'_penalty_exists').fields('buff-' + col, 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
+		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
-				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod);
+				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod+" for buff "+ col);
 				if(tempM!==0){
 					if (tempM < 0) {
 						m.mod += tempM;
@@ -244,20 +243,12 @@ function updateBuffTotals (col, callback) {
 					m.mod=0;
 				}
 				a.I['buff_' + col + '-total'] = m.mod;
-				if (m.mod){
-					a.I['buff_' + col + '_exists'] = 1;
-				} else {
-					a.I['buff_'+ col + '_exists'] = 0;
-				}
+				toggleBuffStatusPanel(col,m.mod);
 				if (isAbility) {
 					a.I['buff_' + col + '-total_penalty'] = m.pen;
-					if (m.pen){
-						a.I['buff_' + col + '_penalty_exists'] = 1;
-					} else {
-						a.I['buff_'+ col + '_penalty_exists'] = 0;
-					}
+					toggleBuffStatusPanel(col,m.pen);
 				}
-				TAS.debug("updateBuffTotals setting ",a);
+				TAS.debug("updateBuffTotals setting ",m,r,a);
 			} catch (errfinalset){
 				TAS.error("error setting buff_" + col + "-total",errfinalset);
 			}
@@ -267,7 +258,34 @@ function updateBuffTotals (col, callback) {
 		done();
 	}
 }
-
+export function clearBuffTotals(callback){
+	var fields;
+	fields = SWUtils.cartesianAppend(['buff_'],buffColumns,['-total','_exists']);
+	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
+	TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
+	getAttrs(fields,function(v){
+		var setter={};
+		TAS.notice("PFBuffs.clearBuffTotals we got back the following: ",v);
+		setter = _.reduce(v,function(memo,val,attr){
+			if ((/exists/).test(attr)){
+				if (parseInt(val,10)){
+					memo[attr]=0;
+				}
+			} else if (parseInt(val,10) || typeof val === "undefined"){
+				memo[attr]=0;
+			}
+			return memo;
+		},{});
+		if (_.size(setter)){
+			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			setAttrs(setter,{},callback);
+		} else {
+			if (typeof callback ==="function"){
+				callback();
+			}
+		}
+	});
+}
 function setBuff (id, col, callback, silently) {
 	var done = function () {
 		if (typeof callback === "function") {
@@ -276,7 +294,14 @@ function setBuff (id, col, callback, silently) {
 	},
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_buff_" + idStr + "buff-" + col;
-	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,done,false);
+	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,
+		function(a,b,c){
+			if (c){
+				updateBuffTotals(col,done);
+			} else {
+				done();
+			}
+		},true,done);
 }
 export function recalculate (callback, silently, oldversion) {
 	var done = _.once(function () {
@@ -356,7 +381,7 @@ function registerEventHandlers () {
 		//Update total for a buff upon Mod change
 		on(prefix, TAS.callback(function PFBuffs_updateBuffRowVal(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker" ) {
+			if (eventInfo.sourceType === "sheetworker" || (/size/i).test(eventInfo.sourceAttribute) ) {
 				updateBuffTotals(col);
 			}
 		}));
@@ -371,7 +396,7 @@ function registerEventHandlers () {
 	});
 	//size is special users modify it via dropdown
 	on("change:repeating_buff:buff-size", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
-		if (eventInfo.sourceType === "player" ) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateBuffTotals('size');
 		}
