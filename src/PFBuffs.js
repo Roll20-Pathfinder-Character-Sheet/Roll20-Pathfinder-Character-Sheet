@@ -19,16 +19,18 @@ import * as PFSize from './PFSize';
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
 var bonusTypes =['untyped','alchemical','circumstance','competance','enhancement','inherent',
-	'insight','luck','morale','profane','racial','sacred','size','trait','equivalent'],
+	'insight','luck','morale','profane','racial','sacred','size','trait','feat','equivalent','ability','equivalent',
+	'deflection','dodge','force','customa','customb','customc'
+	],
 //attack and ac/armor do not have 'size' since it's built in
 attackBonusTypes =['untyped','alchemical','circumstance','competance','enhancement',
-	'insight','luck','morale','profane','racial','sacred','trait'],
+	'insight','luck','morale','profane','racial','sacred','trait','feat'],
 acBonusTypes = ['untyped','circumstance','deflection','dodge','enhancement','force','insight','luck','morale',
   	'profane','sacred'],
 armorBonusTypes = ['untyped','circumstance','enhancement','force','insight','luck','morale','profane','sacred'],
 acToCMDTypes =[ 'untyped','circumstance','deflection','dodge','force','insight','luck','morale',
 	'profane','sacred'],
-buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
+buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged','DMG_melee',
 	'AC', 'Touch', 'CMD', 'armor','shield','natural','flat-footed',
 	'speed', 'initiative','size',
 	'HP-temp', 'Fort', 'Will', 'Ref', 'Check','check_ability','check_skills', 'CasterLevel',
