@@ -321,7 +321,7 @@ export function recalculate (callback, silently, oldversion) {
 				updateBuffTotals(col, columnDone);
 			}),
 			rowDone;
-		if (rowtotal <=0){
+		if (col==='size'){
 			totalItUp();
 			return;
 		}
@@ -358,9 +358,7 @@ export function recalculate (callback, silently, oldversion) {
 					recalculateBuffColumn(ids, col);
 				});
 			} else {
-				_.each(buffColumns, function (col) {
-					updateBuffTotals(col, columnDone);
-				});
+				clearBuffTotals(done);
 			}
 		} catch (err) {
 			TAS.error("PFBuffs.recalculate_recalcbuffs", err);
