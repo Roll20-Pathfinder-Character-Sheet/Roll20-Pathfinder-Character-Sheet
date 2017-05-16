@@ -2658,6 +2658,10 @@ input[type="number"].sheet-entry-wide {
 .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-space-right-collapse {
     margin-right: .125em;
 }
+.sheet-buffs .sheet-nontable-repeating .sheet-linked-fields {
+    width:22em;
+}
+
 /******* end of generic repeating items ********/
 
 .sheet-extra-damage,
