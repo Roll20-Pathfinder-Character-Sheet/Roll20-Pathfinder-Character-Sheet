@@ -218,7 +218,7 @@ function updateBuffTotals (col, callback) {
 				tempM=tempM||0;
 				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod+" for buff "+ col);
 				if(tempM!==0){
-					if (tempM < 0) {
+					if (tempM >= 0) {
 						m.mod += tempM;
 					} else {
 						m.pen += tempM;
@@ -246,7 +246,7 @@ function updateBuffTotals (col, callback) {
 				toggleBuffStatusPanel(col,m.mod);
 				if (isAbility) {
 					a.I['buff_' + col + '-total_penalty'] = m.pen;
-					toggleBuffStatusPanel(col,m.pen);
+					toggleBuffStatusPanel(col+'_penalty',m.pen);
 				}
 				TAS.debug("updateBuffTotals setting ",m,r,a);
 			} catch (errfinalset){
