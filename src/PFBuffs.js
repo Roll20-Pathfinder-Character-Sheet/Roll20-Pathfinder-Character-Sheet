@@ -18,14 +18,25 @@ import * as PFSize from './PFSize';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
-var buffColumns = ["Ranged", "Melee","CMB", 
-"DMG", "DMG_ranged",
- "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
- "speed", "initiative","size",
- "HP-temp", "Fort", "Will", "Ref", "Check","check_ability","check_skills", "CasterLevel",
- 'STR','DEX','CON','INT','WIS','CHA',
-'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills'
- ],
+var bonusTypes =['untyped','alchemical','circumstance','competance','enhancement','inherent',
+	'insight','luck','morale','profane','racial','sacred','size','trait','feat','equivalent','ability','equivalent',
+	'deflection','dodge','force','customa','customb','customc'
+	],
+//attack and ac/armor do not have 'size' since it's built in
+attackBonusTypes =['untyped','alchemical','circumstance','competance','enhancement',
+	'insight','luck','morale','profane','racial','sacred','trait','feat'],
+acBonusTypes = ['untyped','circumstance','deflection','dodge','enhancement','force','insight','luck','morale',
+  	'profane','sacred'],
+armorBonusTypes = ['untyped','circumstance','enhancement','force','insight','luck','morale','profane','sacred'],
+acToCMDTypes =[ 'untyped','circumstance','deflection','dodge','force','insight','luck','morale',
+	'profane','sacred'],
+buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged','DMG_melee',
+	'AC', 'Touch', 'CMD', 'armor','shield','natural','flat-footed',
+	'speed', 'initiative','size',
+	'HP-temp', 'Fort', 'Will', 'Ref', 'Check','check_ability','check_skills', 'CasterLevel',
+	'STR','DEX','CON','INT','WIS','CHA',
+	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
+
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -321,7 +332,7 @@ export function recalculate (callback, silently, oldversion) {
 				updateBuffTotals(col, columnDone);
 			}),
 			rowDone;
-		if (rowtotal <=0){
+		if (col==='size'){
 			totalItUp();
 			return;
 		}
@@ -358,9 +369,7 @@ export function recalculate (callback, silently, oldversion) {
 					recalculateBuffColumn(ids, col);
 				});
 			} else {
-				_.each(buffColumns, function (col) {
-					updateBuffTotals(col, columnDone);
-				});
+				clearBuffTotals(done);
 			}
 		} catch (err) {
 			TAS.error("PFBuffs.recalculate_recalcbuffs", err);
