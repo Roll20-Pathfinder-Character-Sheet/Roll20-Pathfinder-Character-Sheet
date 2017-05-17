@@ -73,7 +73,7 @@ events = {
 
 
 
-function updateBuffTotalsByType (col, callback) {
+function updateBuffTotals (col, callback) {
 	var tempstr='',
 	done = _.once(function () {
 		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
@@ -107,7 +107,7 @@ function updateBuffTotalsByType (col, callback) {
 						} else{
 							m[bonusType] = Math.max(m[bonusType],tempM);
 						}
-						TAS.debug("adding "+ tempM+ " " + bonusType + " to "  +" to: "+ m[bonusType] + " for buff "+ col);
+						TAS.debug("after "+ tempM+ " " + bonusType + " newval is  "+ m[bonusType] + " for buff "+ col);
 					}
 				}
 			} catch (err) {
@@ -128,7 +128,8 @@ function updateBuffTotalsByType (col, callback) {
 					sum = m.notype;
 				} else {
 					sum = bonusTypes.reduce(function(s,t){
-						s+=t;
+						TAS.notice('inside loop s:'+s+', t:'+t);
+						s+=m[t];
 						return s;
 					},0);
 				}
@@ -293,7 +294,7 @@ function toggleBuffStatusPanel (col, val) {
 		}
 	});
 }
-function updateBuffTotals (col, callback) {
+function updateBuffTotalsOld (col, callback) {
 	var tempstr='',
 	done = _.once(function () {
 		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
