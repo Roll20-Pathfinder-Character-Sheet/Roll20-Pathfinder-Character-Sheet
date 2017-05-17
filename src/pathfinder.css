@@ -890,10 +890,11 @@ button[type=roll].sheet-command-button::before {
 .sheet-macro-text-inline {
     width: 9em;
 }
+/*
 .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
 .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
     width: 3.1rem;
-}
+}*/
 /********************************************* TABS ****************************************************/
 /* can delete these soon just make margin above and clear both */
 
@@ -2660,6 +2661,10 @@ input[type="number"].sheet-entry-wide {
 }
 .sheet-buffs .sheet-nontable-repeating .sheet-linked-fields {
     width:22em;
+}
+.sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
+.sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
+    width: 10.5rem;
 }
 
 /******* end of generic repeating items ********/
