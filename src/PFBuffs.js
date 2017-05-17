@@ -127,18 +127,17 @@ var done = _.once(function () {
 				params={}, setter={},
 				rows=[];
 				try {
-					TAS.debug("at PFBuffs values are ",v);
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						var prefix = 'repeating_buff_'+id+'_buff-';
 						return  (parseInt(v[prefix+'enable_toggle'],10)||0);
 					});
-					TAS.debug("PFBuffs ids are now ",ids);
+					//TAS.debug("PFBuffs ids are now ",ids);
 					ids = ids.filter(function(id){
 							var prefix = 'repeating_buff_'+id+'_buff-';
 							return  (parseInt(v[prefix + col + '-show'],10)||0) && (parseInt(v[prefix+col],10)||0);
 						});
-					TAS.debug("PFBuffs ids are now ",ids);
+					//TAS.debug("PFBuffs ids are now ",ids);
 					rows = ids.map(function(id){
 							var vals={'bonusType':'',val:0},prefix='';
 							prefix='repeating_buff_'+id+'_buff-'+col;
@@ -150,7 +149,7 @@ var done = _.once(function () {
 							vals.val = parseInt(v[prefix],10);
 							return vals;
 						});
-					TAS.debug("PFBUFFS ROWS NOW:",rows);
+					//TAS.debug("PFBUFFS ROWS NOW:",rows);
 						
 					if(col==='HP-temp'){
 						sum.sum = rows.filter(function(row){
@@ -160,7 +159,7 @@ var done = _.once(function () {
 							return m;
 						},0);
 					} else if (col==='size' ){
-						TAS.debug("SISSEEEEEEESEEEE");
+						//TAS.debug("SISSEEEEEEESEEEE");
 						sums = rows.reduce(function(m,row){
 							if(row.val>0){
 								m.sum = Math.max(m.sum,row.val);
@@ -180,7 +179,7 @@ var done = _.once(function () {
 							}
 							return m;
 						},bonuses);
-						TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+						//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
 						if (isAbility){
 							try {
 								sums.pen = bonuses.penalty||0;
@@ -188,7 +187,7 @@ var done = _.once(function () {
 							bonuses.penalty=0;
 						}
 						sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-							TAS.debug("PFBUFFS REDUCE AT ",bonus,"##############################");
+							//TAS.debug("PFBUFFS REDUCE AT ",bonus,"##############################");
 							if(bonus){m+=parseInt(bonus,10)||0;}
 							return m;
 						},0);
@@ -215,7 +214,7 @@ var done = _.once(function () {
 					TAS.error("PFBuffs.updateBuffTotals errrou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
-						TAS.notice("######################","PFBuffs setting ",setter);
+						//TAS.notice("######################","PFBuffs setting ",setter);
 						if (silently){
 							params = PFConst.silentParams;
 						}
@@ -447,7 +446,7 @@ function updateBuffTotalsNoStackRules (col, callback) {
 			try {
 				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
 				tempM=tempM||0;
-				TAS.debug("adding "+ tempM+" to m.mod:"+m.mod+" for buff "+ col);
+				//TAS.debug("adding "+ tempM+" to m.mod:"+m.mod+" for buff "+ col);
 				if(tempM!==0){
 					if (tempM >= 0) {
 						m.mod += tempM;
@@ -663,7 +662,7 @@ function registerEventHandlers () {
 		_.each(functions, function (methodToCall) {
 			TAS.notice("setting buff for "+eventToWatch);
 			on(eventToWatch, TAS.callback(function eventBuffTotalNoParam(eventInfo) {
-				TAS.notice("############################");
+				//TAS.notice("############################");
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					methodToCall(null,false, eventInfo);
