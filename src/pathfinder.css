@@ -3140,7 +3140,6 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_attack .sheet-pfctracking a,
 .sheet-rolltemplate-pf_block .sheet-pfctracking a {
     background-color: var(--sheet-pf-bg);
-    font-family: pictos !important;
 }
 .sheet-rolltemplate-pf_generic .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_ability .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
