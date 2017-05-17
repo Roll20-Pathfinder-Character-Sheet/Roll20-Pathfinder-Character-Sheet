@@ -15,6 +15,7 @@ import * as PFChecks from './PFChecks';
 import * as PFInitiative from './PFInitiative';
 import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
+import * as PFSkills from './PFSkills';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
@@ -64,13 +65,12 @@ events = {
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
 		"Check": [PFChecks.applyConditions],
+		"check_skills": [PFSkills.recalculate],
 		"initative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
 		"size": [PFSize.updateSizeAsync]
 	}
 };
-
-
 
 
 function updateBuffTotals (col, callback) {
@@ -81,12 +81,25 @@ function updateBuffTotals (col, callback) {
 			callback();
 		}
 	}),	
-	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
+	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0),
+	bonuses = {
+			'ability':0,'alchemical':0,'circumstance':0,'competance':0,'customa':0,'customb':0,'customc':0,
+			'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'feat':0,'force':0,'inherent':0,
+			'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
+			'size':0,'trait':0,'untyped':0,'notype':0
+		};
 	try {
 		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-'+col+'_type', 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
 			try {
 				var tempM = 0,bonusType='';
-					bonusType = r.S['buff-'+col+'_type']||'untyped';
+				try {
+					if(col!=='size'&&col!=='HP-temp'){
+						bonusType = r.S['buff-'+col+'_type']||'untyped';
+					}
+				} catch (err2){
+					bonusType='untyped';
+					TAS.error("updateBuffTotals Error trying to retreive type: "+'buff-'+col+'_type',err2);
+				}
 				if( (r.I['buff-enable_toggle']||0) && (r.I['buff-' + col + '-show']||0)) {
 					tempM=r.I['buff-' + col]||0;
 					if(tempM!==0){
@@ -138,13 +151,13 @@ function updateBuffTotals (col, callback) {
 					sum+=m.penalty;
 					m.penalty=0;
 				}	
-				a.I['buff_' + col + '-total'] = sum;
+				a.S['buff_' + col + '-total'] = sum;
 				toggleBuffStatusPanel(col,sum);
 				if (isAbility) {
-					a.I['buff_' + col + '-total_penalty'] = m.penalty;
+					a.S['buff_' + col + '-total_penalty'] = m.penalty;
 					toggleBuffStatusPanel(col+'_penalty',m.penalty);
 				}
-				TAS.debug("updateBuffTotals setting ",m,r,a);
+				TAS.debug("updateBuffTotals setting ",a);
 			} catch (errfinalset){
 				TAS.error("error setting buff_" + col + "-total",errfinalset);
 			}
