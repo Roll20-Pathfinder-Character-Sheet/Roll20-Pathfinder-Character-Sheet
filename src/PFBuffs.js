@@ -609,7 +609,7 @@ function registerEventHandlers () {
 		//Update total for a buff upon Mod change
 	/*	on(prefix, TAS.callback(function PFBuffs_updateBuffRowVal(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" || (/size/i).test(eventInfo.sourceAttribute) ) {
+			if (eventInfo.sourceType === "sheetworker" || (/size/i).test(eventInfo.sourceAttribute) ) {
 				updateBuffTotals(col);
 			}
 		}));*/
@@ -641,7 +641,7 @@ function registerEventHandlers () {
 		_.each(functions, function (methodToCall) {
 			on(eventToWatch, TAS.callback(function event_updateBuffNonAbilityEvents(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				if (eventInfo.sourceType === "sheetworker") {
 					methodToCall(col, eventInfo);
 				}
 			}));
@@ -652,7 +652,7 @@ function registerEventHandlers () {
 		_.each(functions, function (methodToCall) {
 			on(eventToWatch, TAS.callback(function event_updateBuffAbilityEvents(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				if (eventInfo.sourceType === "sheetworker") {
 					methodToCall(col, eventInfo);
 				}
 			}));

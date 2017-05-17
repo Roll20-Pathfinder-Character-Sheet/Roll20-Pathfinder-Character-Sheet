@@ -170,7 +170,7 @@ function registerEventHandlers () {
     _.each(events.attackOptionEventsAuto, function (fieldToWatch) {
         var eventToWatch = "change:repeating_weapon:" + fieldToWatch;
         on(eventToWatch, TAS.callback(function eventUpdateAttackTypeOptionSheet(eventInfo) {
-            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+            if (eventInfo.sourceType === "sheetworker") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 resetOption(null, eventInfo);
             }

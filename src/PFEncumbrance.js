@@ -563,7 +563,7 @@ function registerEventHandlers  () {
     }));
     on('change:load-light change:carried-total', TAS.callback(function eventUpdateCurrentLoad(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
+        if (eventInfo.sourceType === "sheetworker"){
             updateCurrentLoad();
         }
     }));

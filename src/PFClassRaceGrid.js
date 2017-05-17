@@ -290,7 +290,7 @@ function registerEventHandlers  () {
     _.each(raceColumns, function (col) {
         on("change:npc-" + col, TAS.callback(function eventUpdateRacialRow(eventInfo) {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && eventInfo.sourceAttribute.slice(-2)==='hp')) {
+            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && eventInfo.sourceAttribute.slice(-2)==='hp')) {
                 if (col === 'hd-num') {
                     updateClassInformation('level', null, null, eventInfo);
                     updateClassInformation("skill", null, null, eventInfo);

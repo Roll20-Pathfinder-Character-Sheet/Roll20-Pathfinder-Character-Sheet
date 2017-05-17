@@ -346,7 +346,7 @@ function registerEventHandlers () {
 	//hp************************************************************************
 	on("change:hp-ability-mod change:level change:total-hp change:total-mythic-hp change:hp-formula-mod change:HP-misc", TAS.callback(function eventUpdateHPPlayerMisc(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && eventInfo.sourceAttribute !== "hp-misc")) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && eventInfo.sourceAttribute !== "hp-misc")) {
 			updateMaxHPLookup();
 		}
 	}));
