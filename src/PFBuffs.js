@@ -93,14 +93,23 @@ function updateBuffTotalsByType (col, callback) {
 						if(tempM<0){
 							bonusType='penalty';
 						}
-						if(stackingTypes.includes(bonusType)){
+						if (col==='size') {
+							if(bonusType!=='penalty'){
+								m.notype = Math.max(m.notype,tempM);
+							} else {
+								//shrinking is not really 'penalty' 
+								m.penalty = Math.min(m.penalty,tempM);
+							}
+						} else if (col==='HP-temp'){
+							m.notype = Math.max(m.notype,tempM);
+						} else if(stackingTypes.includes(bonusType) ) {
 							m[bonusType] += tempM;
 						} else{
-							m[bonusType] = Math.max(m[bonusType],bonusType);
+							m[bonusType] = Math.max(m[bonusType],tempM);
 						}
+						TAS.debug("adding "+ tempM+ " " + bonusType + " to "  +" to: "+ m[bonusType] + " for buff "+ col);
 					}
 				}
-				TAS.debug("adding "+ tempM+ " " + bonusType + " to "  +" to: "+ m[bonusType] + " for buff "+ col);
 			} catch (err) {
 				TAS.error("PFBuffs.updateBuffTotals error:" + col, err);
 			} finally {
@@ -110,20 +119,26 @@ function updateBuffTotalsByType (col, callback) {
 			'ability':0,'alchemical':0,'circumstance':0,'competance':0,'customa':0,'customb':0,'customc':0,
 			'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'feat':0,'force':0,'inherent':0,
 			'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
-			'size':0,'trait':0,'untyped':0
-		}, function (m, r, a) {
-			var sum=0;
+			'size':0,'trait':0,'untyped':0,'notype':0
+		}, 
+		function (m, r, a) {
+			var sum=0,pen=0;
 			try {
+				if (col==='size'||col==='HP-temp'){
+					sum = m.notype;
+				} else {
+					sum = bonusTypes.reduce(function(s,t){
+						s+=t;
+						return s;
+					},0);
+				}
 				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
 				if(!isAbility){
-					m.mod+=m.penalty;
+					sum+=m.penalty;
 					m.penalty=0;
-				}
-				if(col==='HP-temp' && m.mod < 0){
-					m.mod=0;
-				}
-				a.I['buff_' + col + '-total'] = m.mod;
-				toggleBuffStatusPanel(col,m.mod);
+				}	
+				a.I['buff_' + col + '-total'] = sum;
+				toggleBuffStatusPanel(col,sum);
 				if (isAbility) {
 					a.I['buff_' + col + '-total_penalty'] = m.penalty;
 					toggleBuffStatusPanel(col+'_penalty',m.penalty);
@@ -253,7 +268,7 @@ function resetStatuspanel (callback) {
 }
 /* Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotals. */
 
-/** NO LONGER USED but keep since we're redoing buffs soon
+/**  but keep since we're redoing buffs soon
  * Updates buff_<col>_exists checkbox if the val paramter has a nonzero value
  * also switches it off
  * @param {string} col column name of buff to check
