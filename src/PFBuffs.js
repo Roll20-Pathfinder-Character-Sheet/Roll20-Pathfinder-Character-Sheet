@@ -20,23 +20,18 @@ import * as PFSize from './PFSize';
 // added:init, speed, dmg_ranged, cmb
 var bonusTypes =['untyped','alchemical','circumstance','competance','enhancement','inherent',
 	'insight','luck','morale','profane','racial','sacred','size','trait','feat','equivalent','ability','equivalent',
-	'deflection','dodge','force','customa','customb','customc'
-	],
-//attack and ac/armor do not have 'size' since it's built in
-attackBonusTypes =['untyped','alchemical','circumstance','competance','enhancement',
-	'insight','luck','morale','profane','racial','sacred','trait','feat'],
-acBonusTypes = ['untyped','circumstance','deflection','dodge','enhancement','force','insight','luck','morale',
-  	'profane','sacred'],
-armorBonusTypes = ['untyped','circumstance','enhancement','force','insight','luck','morale','profane','sacred'],
-acToCMDTypes =[ 'untyped','circumstance','deflection','dodge','force','insight','luck','morale',
-	'profane','sacred'],
+	'deflection','dodge','force','customa','customb','customc'],
+stackingTypes =['untyped','circumstance','dodge','penalty'],
+acToCMDTypes =[ 'untyped','circumstance','deflection','dodge','insight','luck','morale','profane','sacred'],
+acToTouchTypes = ['dodge','deflection'],
+armorToTouchTypes = ['force'],
+
 buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged','DMG_melee',
 	'AC', 'Touch', 'CMD', 'armor','shield','natural','flat-footed',
 	'speed', 'initiative','size',
 	'HP-temp', 'Fort', 'Will', 'Ref', 'Check','check_ability','check_skills', 'CasterLevel',
 	'STR','DEX','CON','INT','WIS','CHA',
 	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
-
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -74,6 +69,76 @@ events = {
 		"size": [PFSize.updateSizeAsync]
 	}
 };
+
+
+
+
+function updateBuffTotalsByType (col, callback) {
+	var tempstr='',
+	done = _.once(function () {
+		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
+		if (typeof callback === "function") {
+			callback();
+		}
+	}),	
+	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
+	try {
+		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-'+col+'_type', 'buff-' + col + '-show', 'buff-enable_toggle').reduce(function (m, r) {
+			try {
+				var tempM = 0,bonusType='';
+					bonusType = r.S['buff-'+col+'_type']||'untyped';
+				if( (r.I['buff-enable_toggle']||0) && (r.I['buff-' + col + '-show']||0)) {
+					tempM=r.I['buff-' + col]||0;
+					if(tempM!==0){
+						if(tempM<0){
+							bonusType='penalty';
+						}
+						if(stackingTypes.includes(bonusType)){
+							m[bonusType] += tempM;
+						} else{
+							m[bonusType] = Math.max(m[bonusType],bonusType);
+						}
+					}
+				}
+				TAS.debug("adding "+ tempM+ " " + bonusType + " to "  +" to: "+ m[bonusType] + " for buff "+ col);
+			} catch (err) {
+				TAS.error("PFBuffs.updateBuffTotals error:" + col, err);
+			} finally {
+				return m;
+			}
+		}, {
+			'ability':0,'alchemical':0,'circumstance':0,'competance':0,'customa':0,'customb':0,'customc':0,
+			'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'feat':0,'force':0,'inherent':0,
+			'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
+			'size':0,'trait':0,'untyped':0
+		}, function (m, r, a) {
+			var sum=0;
+			try {
+				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
+				if(!isAbility){
+					m.mod+=m.penalty;
+					m.penalty=0;
+				}
+				if(col==='HP-temp' && m.mod < 0){
+					m.mod=0;
+				}
+				a.I['buff_' + col + '-total'] = m.mod;
+				toggleBuffStatusPanel(col,m.mod);
+				if (isAbility) {
+					a.I['buff_' + col + '-total_penalty'] = m.penalty;
+					toggleBuffStatusPanel(col+'_penalty',m.penalty);
+				}
+				TAS.debug("updateBuffTotals setting ",m,r,a);
+			} catch (errfinalset){
+				TAS.error("error setting buff_" + col + "-total",errfinalset);
+			}
+		}).execute(done);
+	} catch (err2) {
+		TAS.error("PFBuffs.updateBuffTotals error:" + col, err2);
+		done();
+	}
+}
+
 //why did i make this? it just repeats the ability scores
 //buffColumns.concat(PFAbilityScores.abilities),
 /* this is so old no one will be using it*/
