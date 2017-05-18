@@ -22,10 +22,9 @@ var buffColumns = ["Ranged", "Melee","CMB",
 "DMG", "DMG_ranged",
  "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
  "speed", "initiative","size",
- "HP-temp", "Fort", "Will", "Ref", "Check","check_ability","check_skills", "CasterLevel",
- 'STR','DEX','CON','INT','WIS','CHA',
-'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills'
- ],
+ "HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
+ 'STR','DEX','CON','INT','WIS','CHA'],
+//'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],"check_ability","check_skills",
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -58,7 +57,7 @@ events = {
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
 		"Check": [PFChecks.applyConditions],
-		"initative": [PFInitiative.updateInitiative],
+		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
 		"size": [PFSize.updateSizeAsync]
 	}

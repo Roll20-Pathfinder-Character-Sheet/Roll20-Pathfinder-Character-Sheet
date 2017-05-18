@@ -2911,7 +2911,7 @@
 				<div class="sheet-h2-section sheet-skill-options">
 					<div class="sheet-table sheet-config-table sheet-options sheet-named">
 						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
-						<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+						<input type="checkbox" value="1" name="attr_extra_fields_skills_show" title="@{extra_fields_skills_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
 						<div class="sheet-cheat"></div>
 						<div class="sheet-table">
 							<div class="sheet-table-row">
@@ -2984,7 +2984,7 @@
 								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
 									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
 									<br>
-									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">0</textarea>
+									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">1d6 [custom bonus]</textarea>
 								</span>
 								<span class="sheet-table-rightcell"></span>
 							</div>
@@ -12144,6 +12144,13 @@
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_defaults" title="@{migrated_itemlist_defaults}" value="1"/><span data-i18n="item-list-default-values" >Items default values</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_featurelists_defaults" title="@{migrated_featurelists_defaults}" value="1"/><span data-i18n="feature-list-default-values" >Features default values</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attacklist_defaults111" title="@{migrated_attacklist_defaults111}" value="1" /><span data-i18n="attack-list-default-values">Attacks default values</span></label></span>
+					</div>
+					<div class="sheet-table-row" >
+						<span class="sheet-table-config-row-name" data-i18n="v1">Post V 1.0</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_take10_dropdown" title="@{migrated_take10_dropdown}" value="1"><span data-i18n="skill-take10-dropdown" >Skill take 10 dropdown</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 				</div>
 			</div>
