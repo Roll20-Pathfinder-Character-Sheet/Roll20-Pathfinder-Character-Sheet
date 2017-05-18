@@ -13,19 +13,18 @@ export function applyConditions (callback, silently) {
 			callback();
 		}
 	};
-	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened", "condition-Wounds", "has_endurance_feat", "wounds_gritty_mode", "checks-cond", "Phys-skills-cond", "Perception-cond", "buff_Check-total", "wound_threshold-show", "CasterLevel-Penalty"], function (v) {
+	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened", "condition-Wounds", "has_endurance_feat", "wounds_gritty_mode", "checks-cond", "Phys-skills-cond", "Perception-cond", "wound_threshold-show", "CasterLevel-Penalty"], function (v) {
 		//there is no Fascinated, if we add it then:
 		//,"condition-Fascinated" -4 to perception
 		var setter = {},
-		params = {}, buffCheck = 0, drained = 0, fear = 0, sick = 0, woundPenalty = 0, wounds = 0, allSkillsMod = 0, casterlevel = 0, blindedMod = 0, currAllSkills = 0, currPhysSkills = 0, currPerSkills = 0, currCaster = 0;
+		params = {}, drained = 0, fear = 0, sick = 0, woundPenalty = 0, wounds = 0, allSkillsMod = 0, casterlevel = 0, blindedMod = 0, currAllSkills = 0, currPhysSkills = 0, currPerSkills = 0, currCaster = 0;
 		try {
-			buffCheck = parseInt(v["buff_Check-total"], 10) || 0;
 			drained = parseInt(v["condition-Drained"], 10) || 0;
 			fear = -1 * (parseInt(v["condition-Fear"], 10) || 0);
 			sick = -1 * (parseInt(v["condition-Sickened"], 10) || 0);
 			woundPenalty = PFUtils.getWoundPenalty((parseInt(v["condition-Wounds"], 10) || 0), (parseInt(v.has_endurance_feat, 10) || 0), (parseInt(v.wounds_gritty_mode, 10) || 0));
 			wounds = (parseInt(v["wound_threshold-show"], 10) || 0) * woundPenalty;
-			allSkillsMod = buffCheck + drained + fear + sick + wounds;
+			allSkillsMod =  drained + fear + sick + wounds;
 			casterlevel = drained + wounds;
 			blindedMod = -2 * (parseInt(v["condition-Blinded"], 10) || 0);
 			currAllSkills = parseInt(v["checks-cond"], 10) || 0;

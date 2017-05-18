@@ -18,13 +18,12 @@ import * as PFSize from './PFSize';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
-var buffColumns = ["Ranged", "Melee","CMB", 
-"DMG", "DMG_ranged",
- "AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
- "speed", "initiative","size",
- "HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
- 'STR','DEX','CON','INT','WIS','CHA'],
-//'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],"check_ability","check_skills",
+var buffColumns = ["Ranged", "Melee","CMB", "DMG", "DMG_ranged",
+	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
+	"speed", "initiative","size","check_skills",
+	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
+	'STR','DEX','CON','INT','WIS','CHA',
+	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -71,7 +70,80 @@ export function migrate (outerCallback) {
 		if (typeof outerCallback === "function") {
 			outerCallback();
 		}
-	});
+	}),
+	migrateMeleeAndAbilityChecks = function(callback){
+		//DOES NOTHING YET
+		var done= _.once(function(){
+			if (typeof callback==="function"){
+				callback();
+			}
+		}),
+		migrated = function(){
+			setAttrs({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
+		};
+		getAttrs(['migrated_buffs_rangeddmg_abiilty'],function(vout){
+			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_abiilty,10)||0;
+			if (!wasmigrated){
+				getSectionIDs('repeating_buff',function(ids){
+					var fields;
+					if (_.size(ids)){
+						fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,
+							['_buff-DMG_macro-text','_buff-DMG','_buff-DMG-show','_buff-DMG_ranged_macro-text','_buff-DMG_ranged',
+							'_buff-Check_macro-text','_buff-Check','_buff-Check-show','_buff-check_skills_macro-text','_buff-check_skills']);
+						fields = fields.concat(['buff_Check-total','buff_DMG-total']);
+						getAttrs(fields,function(v){
+							var setter={},resetconditions=false,tempInt=0;
+							try {
+								ids.foreach(function(id){
+									var prefix = 'repeating_buff_'+id+'_buff-';
+									if(v[prefix+'DMG_macro-text']&&!v[prefix+'DMG_ranged_macro-text']){
+										setter[prefix+'DMG_ranged_macro-text']=v[prefix+'DMG_macro-text'];
+										setter[prefix+'DMG_ranged']=parseInt(v[prefix+'DMG'],10)||0;
+										if (parseInt(v[prefix+'_buff-DMG-show'],10)){
+											setter[prefix+'_buff-DMG_ranged-show']=1;
+										}									
+									}
+									if(v[prefix+'Check_macro-text']&&!v[prefix+'check_skills_macro-text']){
+										setter[prefix+'check_skills_macro-text']=v[prefix+'Check_macro-text'];
+										setter[prefix+'check_skills']=parseInt(v[prefix+'Check'],10)||0;
+										resetconditions=true;
+										if (parseInt(v[prefix+'_buff-Check-show'],10)){
+											setter[prefix+'_buff-check_skills-show']=1;
+										}
+									}
+								});
+								tempInt = parseInt(v['buff_DMG-total'],10)||0;
+								if(tempInt){
+									setter['buff_DMG_ranged-total']=tempInt;
+								}
+								tempInt = parseInt(v['buff_Check-total'],10)||0;
+								if (tempInt){
+									setter['buff_check_skills-total']=tempInt;
+								}
+							}catch (err){
+								TAS.error("PFBuffs.migrateDmgAbility",err);
+							}finally {
+								if (_.size(setter)){
+									TAS.debug("PFBuffs migrate setting ",setter);
+									setAttrs(setter,PFConst.silentParams,migrated);
+									if(resetconditions){
+										PFChecks.applyConditions();
+									}
+								} else {
+									migrated();
+								}
+							}
+						});
+					} else{
+						migrated();
+					}
+				});
+			} else {
+				done();
+				return;
+			}
+		});
+	};
 	getAttrs(["migrated_buffs", "migrated_effects"], function (v) {
 		var setter = {};
 		try {
@@ -176,7 +248,7 @@ function resetStatuspanel (callback) {
 }
 /* Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotals. */
 
-/** NO LONGER USED but keep since we're redoing buffs soon
+/** but keep since we're redoing buffs soon
  * Updates buff_<col>_exists checkbox if the val paramter has a nonzero value
  * also switches it off
  * @param {string} col column name of buff to check
@@ -209,7 +281,7 @@ function updateBuffTotals (col, callback) {
 			callback();
 		}
 	}),	
-	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0);
+	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0 && col.indexOf('skill')===-1);
 	try {
 		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
 			try {
