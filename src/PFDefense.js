@@ -120,7 +120,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         setter = {},
         params = {};
         try {
-TAS.notice("PFDefense.updateDefenses:",v);
+            //TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff;
             bufftouch=buffsTouch;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
