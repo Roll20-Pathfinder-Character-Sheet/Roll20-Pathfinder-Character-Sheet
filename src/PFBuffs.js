@@ -339,7 +339,7 @@ export function clearBuffTotals(callback){
 	TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
 	getAttrs(fields,function(v){
 		var setter={};
-		TAS.notice("PFBuffs.clearBuffTotals we got back the following: ",v);
+		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
 		setter = _.reduce(v,function(memo,val,attr){
 			if ((/exists/).test(attr)){
 				if (parseInt(val,10)){
