@@ -128,6 +128,7 @@ export function migrate (outerCallback) {
 									setAttrs(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
+										PFInitiative.updateInitiative();
 									}
 								} else {
 									migrated();
