@@ -15,6 +15,7 @@ import * as PFChecks from './PFChecks';
 import * as PFInitiative from './PFInitiative';
 import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
+import * as PFSkills from './PFSkills';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
@@ -55,7 +56,8 @@ events = {
 		"flat-footed": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
-		"Check": [PFChecks.applyConditions],
+		"Check": [PFInitiative.updateInitiative],
+		"check_skills": [PFSkills.recalculate],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
 		"size": [PFSize.updateSizeAsync]
@@ -430,9 +432,7 @@ export function recalculate (callback, silently, oldversion) {
 					recalculateBuffColumn(ids, col);
 				});
 			} else {
-				_.each(buffColumns, function (col) {
-					updateBuffTotals(col, columnDone);
-				});
+				clearBuffTotals(done);
 			}
 		} catch (err) {
 			TAS.error("PFBuffs.recalculate_recalcbuffs", err);
@@ -451,17 +451,15 @@ function registerEventHandlers () {
 			setBuff(null, col);
 		}));
 		//Update total for a buff upon Mod change
-		on(prefix, TAS.callback(function PFBuffs_updateBuffRowVal(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker" || (/size/i).test(eventInfo.sourceAttribute) ) {
-				updateBuffTotals(col);
-			}
-		}));
+		//on(prefix, TAS.callback(function PFBuffs_updateBuffRowVal(eventInfo) {
+		//	TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		//	if (eventInfo.sourceType === "sheetworker" || (/size/i).test(eventInfo.sourceAttribute) ) {
+		//		updateBuffTotals(col);
+		//	}
+		//}));
 		on(prefix + "-show", TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
-			var id;
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-				id = SWUtils.getRowId(eventInfo.sourceAttribute)||'';
 				updateBuffTotals(col);
 			}
 		}));

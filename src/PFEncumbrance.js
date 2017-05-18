@@ -437,8 +437,7 @@ export function updateModifiedSpeed  (callback) {
         }
     }),
     attribList = ["current-load", "speed-base", "speed-modified", 
-    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult",
-    ,"buff_speed-total"  ];
+    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total"  ];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
