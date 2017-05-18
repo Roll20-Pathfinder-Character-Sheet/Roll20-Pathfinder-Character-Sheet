@@ -826,11 +826,11 @@ export function migrate (callback, oldversion) {
 			callback();
 		}
 	}),
-	doneOne = _.after(3,done),
+	doneOne = _.after(4,done),
 	/** migrateOldClassSkillValue - converts class skill checkboxes from old autocalc string to number "" or 3.
-	* @param {function} callback ?
-	* @param {number} oldversion ?
-	*/
+	 * @param {function} callback when done
+	 * @param {number} oldversion currversionnumber
+	 */
 	migrateOldClassSkillValue = function (callback, oldversion) {
 		var done = _.once(function () {
 			if (typeof callback === "function") {
@@ -868,9 +868,9 @@ export function migrate (callback, oldversion) {
 		});
 	},
 	/** setAdvancedMacroCheckbox - part of migrate .66 to 1.00 sets checkbox to unhide advanced
-	* skillmacro (investigator) if character sheet already using it.)
-	* @param {function} callback ?
-	*/
+	 * skillmacro (investigator) if character sheet already using it.)
+	 * @param {function} callback  whendone
+	 */
 	setAdvancedMacroCheckbox = function (callback) {
 		var done = _.once(function () {
 			if (typeof callback === "function") {
@@ -883,7 +883,32 @@ export function migrate (callback, oldversion) {
 				setAttrs({adv_macro_show: 1}, PFConst.silentParams, done);
 			}
 		});
+	},
+	migrateTake10Dropdown = function(callback,oldversion){
+		var done = function(){
+			if (typeof callback === "function"){
+				callback();
+			}
+		};
+		getAttrs(['migrated_take10_dropdown','skill-query','investigator_dice'],function(v){
+			var newval='',setter={};
+			if((parseInt(v.migrated_take10_dropdown,10)||0)===0){
+				if(v['skill-query']==='?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}'){
+					newval='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
+				} else if (v['skill-query']==='@{skill-invest-query}'){
+					newval='@{skill-invest-query}+@{custom_dice}';
+				} 
+				if (newval){
+					setter['skill-query']=newval;
+				}
+				setter.migrated_take10_dropdown=1;
+				setAttrs(setter,PFConst.silentParams,done);
+			} else {
+				done();
+			}
+		});
 	};
+	migrateTake10Dropdown(doneOne);
 	//TAS.debug("at PFSkills.migrate");
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros(doneOne);
@@ -909,13 +934,13 @@ function registerEventHandlers () {
 	//SKILLS************************************************************************
 	on("change:total-skill change:total-fcskill change:int-mod change:level change:max-skill-ranks-mod change:unchained_skills-show change:BG-Skill-Use", TAS.callback(function eventUpdateMaxSkills(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+		if (eventInfo.sourceType === "sheetworker") {
 			updateMaxSkills(eventInfo);
 		}
 	}));
 	on(events.skillGlobalEventAuto, TAS.callback(function eventGlobalConditionAffectingSkill(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+		if (eventInfo.sourceType === "sheetworker") {
 			applyConditions(null,null,eventInfo);
 		}
 	}));		
@@ -924,7 +949,7 @@ function registerEventHandlers () {
 	_.each(allTheSkills, function (skill) {
 		on((events.skillEventsAuto.replace(/REPLACE/g, skill)), TAS.callback(function eventSkillsAuto(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + skill + ", " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+			if (eventInfo.sourceType === "sheetworker") {
 				verifyHasSkill(skill, function (hasSkill) {
 					if (hasSkill) {
 						updateSkill(skill, eventInfo);
@@ -979,7 +1004,7 @@ function registerEventHandlers () {
 	_.each(sizeSkills, function (mult, skill) {
 		if (mult === 1) {
 			on("change:size_skill", TAS.callback(function eventUpdateSizeSkill(eventInfo) {
-				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				if (eventInfo.sourceType === "sheetworker") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 					updateSkill(skill, eventInfo);
 				}
@@ -987,7 +1012,7 @@ function registerEventHandlers () {
 		} else if (mult === 2) {
 			on("change:size_skill_double", TAS.callback(function eventUpdateSizeSkillDouble(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				if (eventInfo.sourceType === "sheetworker") {
 					updateSkill(skill, eventInfo);
 				}
 			}));

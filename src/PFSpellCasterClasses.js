@@ -601,7 +601,7 @@ function registerEventHandlers () {
             var eventToWatch = event.replace(/REPLACE/g, numberIdx);
             _.each(functions, function (methodToCall) {
                 on(eventToWatch, TAS.callback(function eventSpellcasterClassSpecificUpdateAuto(eventInfo) {
-                    if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                    if (eventInfo.sourceType === "sheetworker") {
                         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                         ifSpellClassExists(numberIdx, function () {
                             methodToCall(numberIdx, eventInfo);

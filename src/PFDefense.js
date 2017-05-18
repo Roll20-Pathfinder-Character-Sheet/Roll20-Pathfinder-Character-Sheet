@@ -120,7 +120,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         setter = {},
         params = {};
         try {
-TAS.notice("PFDefense.updateDefenses:",v);
+            //TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff;
             bufftouch=buffsTouch;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
@@ -625,7 +625,7 @@ function registerEventHandlers () {
     }));		
     on(events.defenseEventsAuto, TAS.callback(function eventUpdateDefensesAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+        if (eventInfo.sourceType === "sheetworker") {
             updateDefenses(null,null,eventInfo);
         }
     }));
