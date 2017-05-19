@@ -52,7 +52,6 @@
   "intelligence-calculation-skills-abbrv":"Int skills calc",
   "wisdom-calculation-skills-abbrv":"Wis skills calc",
   "charisma-calculation-skills-abbrv":"Cha skills calc",
-
   "buff-armor-title":"Bonus to armor",
   "buff-shield-title":"Bonus to shield",
   "buff-natural-title":"Bonus to natural",
@@ -78,8 +77,6 @@
   "combat-maneuver-bonus-calculation-abbrv":"CMB calc",
   "skill-checks-calculation-abbrv":"Skill check calc",
   "ability-checks-calculation-abbrv":"Ability check calc",
-
-
   "new-buffs": "New Buffs (BETA):",
   "strength-skills-abbrv":"STR skills",
   "dexterity-skills-abbrv":"DEX skills",
@@ -99,7 +96,7 @@
   "spell-tracking": "Spell Tracking",
   "extra-damage-condition": "Extra damage condition when dual wielding: Rake, Rend, etc",
   "rake-rend-etc": "Condition - Rake, Rend, etc",
-  "number-extra-attacks": "# OH Atks",
+  "number-extra-attacks": "# O.H. Atks",
   "number-extra-attacks-title": "Number of offhand attacks: 1 for Two Weapon Fighting, 2 = Improved, 3 = Greater",
   "all-saves-macro": "All Saves Macro",
   "all-saves-macro-title": "@{all_saves-macro} | Only affects the All Saves roll from the Defenses Menu button.",

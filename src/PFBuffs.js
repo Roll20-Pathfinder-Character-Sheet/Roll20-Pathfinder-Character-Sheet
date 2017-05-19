@@ -329,7 +329,6 @@ export function migrate (outerCallback) {
 		}
 	}),
 	migrateMeleeAndAbilityChecks = function(callback){
-		//DOES NOTHING YET
 		var done= _.once(function(){
 			if (typeof callback==="function"){
 				callback();
@@ -351,7 +350,7 @@ export function migrate (outerCallback) {
 						getAttrs(fields,function(v){
 							var setter={},resetconditions=false,tempInt=0;
 							try {
-								ids.foreach(function(id){
+								ids.forEach(function(id){
 									var prefix = 'repeating_buff_'+id+'_buff-';
 									if(v[prefix+'DMG_macro-text']&&!v[prefix+'DMG_ranged_macro-text']){
 										setter[prefix+'DMG_ranged_macro-text']=v[prefix+'DMG_macro-text'];
@@ -402,6 +401,7 @@ export function migrate (outerCallback) {
 			}
 		});
 	};
+	migrateMeleeAndAbilityChecks(done);
 	getAttrs(["migrated_buffs", "migrated_effects"], function (v) {
 		var setter = {};
 		try {
@@ -415,9 +415,7 @@ export function migrate (outerCallback) {
 			TAS.error("PFBuffs.migrate", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, {
-					silent: true
-				}, done);
+				setAttrs(setter, PFConst.silentParams);
 			} else {
 				done();
 			}
@@ -616,11 +614,9 @@ export function recalculate (callback, silently, oldversion) {
 	}),
 	numColumns = _.size(buffColumns),
 	columnDone = _.after(numColumns, done),
-	colsDoneCount = 0,
 	recalculateBuffColumn = function (ids, col) {
 		var rowtotal = _.size(ids),
 			totalItUp = _.once(function () {
-				colsDoneCount++;
 				updateBuffTotals(col, columnDone);
 			}),
 			rowDone;
@@ -652,23 +648,26 @@ export function recalculate (callback, silently, oldversion) {
 			TAS.error("PFBuffs.recalculate_recalculateBuffColumn OUTER error:" + col, err2);
 			totalItUp();
 		}
-	};
-	getSectionIDs("repeating_buff", function (ids) {
-		//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
-		try {
-			if (_.size(ids) > 0) {
-				_.each(buffColumns, function (col) {
-					recalculateBuffColumn(ids, col);
-				});
-			} else {
-				clearBuffTotals(done);
+	},
+	recalculateRows = function(){
+		getSectionIDs("repeating_buff", function (ids) {
+			//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
+			try {
+				if (_.size(ids) > 0) {
+					_.each(buffColumns, function (col) {
+						recalculateBuffColumn(ids, col);
+					});
+				} else {
+					clearBuffTotals(done);
+				}
+			} catch (err) {
+				TAS.error("PFBuffs.recalculate.recalculateRows", err);
+				//what to do? just quit
+				done();
 			}
-		} catch (err) {
-			TAS.error("PFBuffs.recalculate_recalcbuffs", err);
-			//what to do? just quit
-			done();
-		}
-	});
+		});
+	};
+	migrate(recalculateRows);
 }
 function registerEventHandlers () {
 	//BUFFS
