@@ -529,7 +529,7 @@ function migrateWornEquipment (callback) {
         try {
             //TAS.debug("PFInventory.migrateWornEquipment flag is ",v," and there are "+_.size(wornEquipBaseRowsOld)+" rows of worn equip");
             if (parseInt(v["migrated_worn_equipment"],10) === 1) {
-                TAS.debug("##########","ALREADY MIGRATED WORN EQUIPMENT");
+                //TAS.debug("##########","ALREADY MIGRATED WORN EQUIPMENT");
                 done();
                 return;
             }
