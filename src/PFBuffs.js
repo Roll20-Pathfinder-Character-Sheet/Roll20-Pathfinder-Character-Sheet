@@ -96,41 +96,43 @@ export function migrate (outerCallback) {
 						fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,
 							['_buff-DMG_macro-text','_buff-DMG','_buff-DMG-show','_buff-DMG_ranged_macro-text','_buff-DMG_ranged',
 							'_buff-Check_macro-text','_buff-Check','_buff-Check-show','_buff-check_skills_macro-text','_buff-check_skills']);
-						fields = fields.concat(['buff_Check-total','buff_DMG-total']);
+						fields = fields.concat(['buff_Check-total','buff_check_skills-total','buff_DMG-total','buff_DMG_ranged-total']);
 						getAttrs(fields,function(v){
 							var setter={},resetconditions=false,tempInt=0;
 							try {
+								TAS.debug("###########","PFBuffs.migrate found ",v);
 								ids.forEach(function(id){
 									var prefix = 'repeating_buff_'+id+'_buff-';
+									TAS.debug("at id "+id);
 									if(v[prefix+'DMG_macro-text']&&!v[prefix+'DMG_ranged_macro-text']){
 										setter[prefix+'DMG_ranged_macro-text']=v[prefix+'DMG_macro-text'];
 										setter[prefix+'DMG_ranged']=parseInt(v[prefix+'DMG'],10)||0;
-										if (parseInt(v[prefix+'_buff-DMG-show'],10)){
-											setter[prefix+'_buff-DMG_ranged-show']=1;
+										if (parseInt(v[prefix+'DMG-show'],10)){
+											setter[prefix+'DMG_ranged-show']=1;
 										}									
 									}
 									if(v[prefix+'Check_macro-text']&&!v[prefix+'check_skills_macro-text']){
 										setter[prefix+'check_skills_macro-text']=v[prefix+'Check_macro-text'];
 										setter[prefix+'check_skills']=parseInt(v[prefix+'Check'],10)||0;
 										resetconditions=true;
-										if (parseInt(v[prefix+'_buff-Check-show'],10)){
-											setter[prefix+'_buff-check_skills-show']=1;
+										if (parseInt(v[prefix+'Check-show'],10)){
+											setter[prefix+'check_skills-show']=1;
 										}
 									}
 								});
 								tempInt = parseInt(v['buff_DMG-total'],10)||0;
 								if(tempInt){
-									setter['buff_DMG_ranged-total']=tempInt;
+									setter['buff_DMG_ranged-total']=tempInt + parseInt(v['buff_DMG_ranged-total'],10)||0;
 								}
 								tempInt = parseInt(v['buff_Check-total'],10)||0;
 								if (tempInt){
-									setter['buff_check_skills-total']=tempInt;
+									setter['buff_check_skills-total']=tempInt+ parseInt(v['buff_check_skills-total'],10)||0;
 								}
 							}catch (err){
 								TAS.error("PFBuffs.migrateDmgAbility",err);
 							}finally {
 								if (_.size(setter)){
-									TAS.debug("PFBuffs migrate setting ",setter);
+									TAS.debug("###########","PFBuffs migrate setting ",setter);
 									setAttrs(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();

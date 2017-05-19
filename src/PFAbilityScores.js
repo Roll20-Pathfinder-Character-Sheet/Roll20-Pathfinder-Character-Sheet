@@ -181,14 +181,14 @@ export function updateAbilityScores (callback, silently) {
  *@param {boolean} silently if true update with PFConst.silentParams
  */
 export function applyConditions (callback, silently) {
-    //TAS.debug("at PFAbilityScores.applyConditions");
+    var done = function () {
+        TAS.debug("leaving PFAbilityScores.applyConditions");
+        if (typeof callback === "function") {
+            callback();
+        }
+    };
     getAttrs(["STR-cond", "DEX-cond", "condition-Fatigued", "condition-Entangled", "condition-Grappled", "condition-Helpless"], function (v) {
-        var done = function () {
-            if (typeof callback === "function") {
-                callback();
-            }
-        },
-        setter = {},
+        var setter = {},
         params = {},
         helpless = parseInt(v["condition-Helpless"], 10) || 0,
         strMod = parseInt(v["condition-Fatigued"], 10) || 0,
