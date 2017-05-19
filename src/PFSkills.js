@@ -890,18 +890,32 @@ export function migrate (callback, oldversion) {
 				callback();
 			}
 		};
-		getAttrs(['migrated_take10_dropdown','skill-query','investigator_dice'],function(v){
-			var newval='',setter={};
+		getAttrs(['migrated_take10_dropdown','skill-query','investigator_dice','skill-invest-query'],function(v){
+			var setter={};
+			TAS.notice("########################","PFSkills.migrate",v,"################3");
+			TAS.debug("V 13 just to make sure the damn thing is working");
 			if((parseInt(v.migrated_take10_dropdown,10)||0)===0){
 				if(v['skill-query']==='?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}'){
-					newval='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
+					setter['skill-query']='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
 				} else if (v['skill-query']==='@{skill-invest-query}'){
-					newval='@{skill-invest-query}+@{custom_dice}';
-				} 
-				if (newval){
-					setter['skill-query']=newval;
+					setter['skill-query']='@{skill-invest-query}+@{custom_dice}';
+				} else if (!v['skill-query'] || v['skill-query']=="0"){
+					setter['skill-query']='1d20+@{skill-invest-query}';
+				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}' && 
+					v['skill-query']!=='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}'	&&
+					v['skill-query']!=='1d20+@{skill-invest-query}'){
+					setter['skill-query']='1d20+@{skill-invest-query}';
+				}
+				if (v.investigator_dice=="0"||!v.investigator_dice){
+					setter.investigator_dice="[[ 1d6 ]] [custom bonus]";
+				}
+				if (!v['skill-invest-query']){
+					setter['skill-invest-query']="0";
+				} else if ( v['skill-invest-query'] !== '@{investigator_dice}' && v['skill-invest-query'] !== "0" ){
+					setter['skill-invest-query']="0";
 				}
 				setter.migrated_take10_dropdown=1;
+				TAS.notice("#####################","PFBuffs.migrate setting",setter);
 				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();

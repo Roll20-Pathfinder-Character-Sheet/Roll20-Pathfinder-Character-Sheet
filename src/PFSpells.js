@@ -912,7 +912,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         TAS.warn("spell level is NaN for " + prefix);
                                         if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
                                             setter[prefix + "spell_level_r"] = "-1";
-                                           // setter[prefix + "savedc"] = 0;
+                                            //setter[prefix + "savedc"] = 0;
                                         }
                                     } else {
                                         if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
@@ -926,7 +926,11 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                 optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
                                                 setOption = 1;
                                             }
+<<<<<<< HEAD
                                          }
+=======
+                                        }
+>>>>>>> support
                                         casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
                                         if (!isNaN(casterlevel)) {
                                             newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
