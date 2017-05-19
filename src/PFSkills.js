@@ -132,7 +132,8 @@ defaultSkillAttrName='REPLACE-macro',
 keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 events = {
-	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
+	//skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
+	skillGlobalEventAuto: "change:phys-skills-cond change:acp",
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
 	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
@@ -896,17 +897,17 @@ export function migrate (callback, oldversion) {
 			TAS.debug("V 13 just to make sure the damn thing is working");
 			if((parseInt(v.migrated_take10_dropdown,10)||0)===0){
 				if(v['skill-query']==='?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}'){
-					setter['skill-query']='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
+					setter['skill-query']='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}';
 				} else if (v['skill-query']==='@{skill-invest-query}'){
-					setter['skill-query']='@{skill-invest-query}+@{custom_dice}';
+					setter['skill-query']='@{skill-invest-query}+@{custom_dice}+@{buff_check_skills-total}+@{checks-cond}';
 				} else if (!v['skill-query'] || v['skill-query']=="0"){
-					setter['skill-query']='1d20+@{skill-invest-query}';
-				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}' && 
-					v['skill-query']!=='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}'	&&
-					v['skill-query']!=='1d20+@{skill-invest-query}'){
-					setter['skill-query']='1d20+@{skill-invest-query}';
+					setter['skill-query']='1d20+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}';
+				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}+@{buff_check_skills-total}+@{checks-cond}' && 
+					v['skill-query']!=='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}'	&&
+					v['skill-query']!=='1d20+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}'){
+					setter['skill-query']='1d20+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}';
 				}
-				if (v.investigator_dice=="0"||!v.investigator_dice){
+				if (v.investigator_dice==="0" || !v.investigator_dice){
 					setter.investigator_dice="[[ 1d6 ]] [custom bonus]";
 				}
 				if (!v['skill-invest-query']){
