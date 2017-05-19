@@ -415,23 +415,17 @@
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-speed_macro-text" title="@{repeating_buff_$X_buff-speed_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="speed-calculation-abbrv">Speed calc</span></label>
 								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-speed" title="@{repeating_buff_$X_buff-speed}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="speed">Speed</span></label>
 							</div>
-							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-Check-show}" name="attr_buff-Check-show" value="1" />
+							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-check_ability-show}" name="attr_buff-check_ability-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
-								<input type="checkbox" name="attr_buff-Check_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-Check_macro-text" title="@{repeating_buff_$X_buff-Check_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span data-i18n-title="buff-checks-title" class="sheet-super sheet-note-a" data-i18n="all-checks-calc">Check Calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-Check" title="@{repeating_buff_$X_buff-Check} Skill and ability check" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-checks-title" data-i18n="all-checks">Check</span></label>
+								<input type="checkbox" name="attr_buff-check_ability_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-check_macro-text" title="@{repeating_buff_$X_buff-Check_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="ability-checks-calculation-abbrv">check_ability Calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-Check" title="@{repeating_buff_$X_buff-Check}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-ability-checks-title" data-i18n="ability-checks-abbrv">check_ability</span></label>
 							</div>
 							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-check_skills-show}" name="attr_buff-check_skills-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<input type="checkbox" name="attr_buff-check_skills_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-check_skills_macro-text" title="@{repeating_buff_$X_buff-check_skills_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="skill-checks-calculation-abbrv">check_skills Calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-check_skills" title="@{repeating_buff_$X_buff-check_skills} Skill and ability check" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-skill-checks-title" data-i18n="skill-checks-abbrv">check_skills</span></label>
-							</div>
-							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-check_ability-show}" name="attr_buff-check_ability-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
-								<input type="checkbox" name="attr_buff-check_ability_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-check_ability_macro-text" title="@{repeating_buff_$X_buff-check_ability_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="ability-checks-calculation-abbrv">check_ability Calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-check_ability" title="@{repeating_buff_$X_buff-check_ability} Skill and ability check" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-ability-checks-title" data-i18n="ability-checks-abbrv">check_ability</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-check_skills" title="@{repeating_buff_$X_buff-check_skills} Skill" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-skill-checks-title" data-i18n="skill-checks-abbrv">check_skills</span></label>
 							</div>
 							<input class="sheet-nextitem-show" type="checkbox" title="@{repeating_buff_$X_buff-CasterLevel-show}" name="attr_buff-CasterLevel-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
@@ -488,14 +482,14 @@
 										<span title="Bonus to combat maneuver bonus." data-i18n-title="buff-combat-maneuver-bonus-title" data-i18n-aria-label="buff-combat-maneuver-bonus-title"><span data-i18n="combat-maneuver-bonus-only-abbrv">CMB only</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMB-show}" name="attr_buff-CMB-show" value="1" /></span>
 										<span title="Bonus to all attack damage-ranged." data-i18n-title="buff-damage-ranged-title" data-i18n-aria-label="buff-damage-ranged-title"><span data-i18n="damage-ranged-abbrv">DMG_ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" /></span>
 										<span title="Bonus to skill checks." data-i18n-title="buff-skill-checks-title" data-i18n-aria-label="buff-skill-checks-title"><span data-i18n="skill-checks">Check</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-check_skills-show}" name="attr_buff-check_skills-show" value="1" /></span>
-<!--
+
 										<span title="Bonus to strength based skills." data-i18n-title="buff-strength-based-skills-title" data-i18n-aria-label="buff-strength-based-skills-title"><span data-i18n="strength-skills-abbrv">STR</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-STR_skills-show}" name="attr_buff-STR_skills-show" value="1" /></span>
 										<span title="Bonus to dexterity based skills." data-i18n-title="buff-dexterity-based-skills-title" data-i18n-aria-label="buff-dexterity-based-skills-title"><span data-i18n="dexterity-skills-abbrv">DEX</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DEX_skills-show}" name="attr_buff-DEX_skills-show" value="1" /></span>
 										<span title="Bonus to constitution based skills." data-i18n-title="buff-constitution-based-skills-title" data-i18n-aria-label="buff-constitution-based-skills-title"><span data-i18n="constitution-skills-abbrv">CON</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CON_skills-show}" name="attr_buff-CON_skills-show" value="1" /></span>
 										<span title="Bonus to intelligence based skills." data-i18n-title="buff-intelligence-based-skills-title" data-i18n-aria-label="buff-intelligence-based-skills-title"><span data-i18n="intelligence-skills-abbrv">INT</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-INT_skills-show}" name="attr_buff-INT_skills-show" value="1" /></span>
 										<span title="Bonus to wisdom based skills." data-i18n-title="buff-wisdom-based-skills-title" data-i18n-aria-label="buff-wisdom-based-skills-title"><span data-i18n="wisdom-skills-abbrv">WIS</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-WIS_skills-show}" name="attr_buff-WIS_skills-show" value="1" /></span>
 										<span title="Bonus to charisma based skills." data-i18n-title="buff-charisma-based-skills-title" data-i18n-aria-label="buff-charisma-based-skills-title"><span data-i18n="charisma-skills-abbrv">CHA</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CHA_skills-show}" name="attr_buff-CHA_skills-show" value="1" /></span>
--->								
+							
 									</div>
 								</div>
 								<textarea class="sheet-desc sheet-half" name="attr_buff-notes" title="@{repeating_buff_$X_buff-notes}" placeholder="Buff Notes" data-i18n-placeholder="buff-notes"></textarea>
@@ -10437,9 +10431,9 @@
 									<span data-i18n="enable-take-10-or-20-options" data-i18n-title="enable-skill-check-query-title" data-i18n-aria-label="enable-skill-check-query-title" title="Skill Checks will include an option to Roll, Take 10, or Take 20.">Enable Take 10 or 20 options?</span>
 									<br>
 									<select name="attr_skill-query" title="@{skill-query}" style="width: 7.25em;margin-top: 1px;height: 2.125em;">
-										<option value="1d20+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}" data-i18n="no" selected>No</option><!--+@{buff_check_skills-total}-->
-										<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}+@{buff_check_skills-total}+@{checks-cond}" data-i18n="yes">Yes</option>
-										<option value="@{skill-invest-query}+@{custom_dice}+@{buff_check_skills-total}+@{checks-cond}" data-i18n="custom-roll">Custom Roll</option>
+										<option value="1d20+@{skill-invest-query}" data-i18n="no" selected>No</option>
+										<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}" data-i18n="yes">Yes</option>
+										<option value="@{skill-invest-query}+@{custom_dice}" data-i18n="custom-roll">Custom Roll</option>
 									</select>
 								</span>
 								<input type="checkbox" class="sheet-nextitem-show" name="attr_skill-query" value="@{skill-invest-query}+@{custom_dice}" role="presentation" />
