@@ -926,11 +926,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                 optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
                                                 setOption = 1;
                                             }
-<<<<<<< HEAD
                                          }
-=======
-                                        }
->>>>>>> support
                                         casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
                                         if (!isNaN(casterlevel)) {
                                             newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
