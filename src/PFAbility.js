@@ -1040,9 +1040,7 @@ function registerEventHandlers () {
 	},"");
 	on(eventToWatch,	TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && !((/attack\-type/i).test(eventInfo.sourceAttribute) ))) {
-			updateAssociatedAttack(null,null,null,eventInfo);
-		}
+		updateAssociatedAttack(null,null,null,eventInfo);
 	}));
 	on("change:repeating_ability:rule_category change:repeating_ability:ability_type", TAS.callback(function eventUpdateSLARuleCat(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
