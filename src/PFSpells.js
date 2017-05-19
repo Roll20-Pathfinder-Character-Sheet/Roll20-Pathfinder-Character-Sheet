@@ -1466,6 +1466,17 @@ export function importFromCompendium (id, eventInfo) {
             } catch (err) {
                 classMatch = "";
             }
+            if (!foundMatch){
+                //get mode 
+                // IF FOODS IS AN ARRAY then : so how to do it with 
+                var levels = _.map(classes,function(oneclass){
+                    return oneclass[1];
+                });
+                level=_.chain(levels).countBy().pairs().max(_.last).head().value();
+                idx=0;
+                classMatch = originalClasses[0];
+                setSilent['repeating_spells_description']= 'Original spell level:'+v['repeating_spells_spell_lvlstr'] + ' \r\n'+ v['repeating_spells_description'];
+            }
             if (counter > 1 || !foundMatch) {
                 TAS.warn("importFromCompendium: did not find class match");
                 //leave at current choice if there is one
