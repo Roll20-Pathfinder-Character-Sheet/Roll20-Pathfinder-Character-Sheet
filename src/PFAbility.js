@@ -868,7 +868,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
 				//TAS.debug("PFAbility.recalcAbilities calling updateCharLevel for "+id);
 				updateCharLevel(id,function(){
-					TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
+					//TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
 					updateAbilityRange(id,function(){
 					//	TAS.debug("PFAbility.recalcAbilities calling updateAssociatedAttack for "+id);
 					//	updateAssociatedAttack(id,null,false,null);
