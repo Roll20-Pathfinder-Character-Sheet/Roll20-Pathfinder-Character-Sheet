@@ -912,7 +912,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         TAS.warn("spell level is NaN for " + prefix);
                                         if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
                                             setter[prefix + "spell_level_r"] = "-1";
-                                            setter[prefix + "savedc"] = "";
+                                            //setter[prefix + "savedc"] = 0;
                                         }
                                     } else {
                                         if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
@@ -920,17 +920,12 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         }
                                         newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
                                         currDC = parseInt(v[prefix + "savedc"], 10) || 0;
-                                        TAS.debug("PFSpells.updateSpellsCasterAbilityRelated comparing "+newDC +" and "+ currDC);
                                         if (newDC !== currDC) {
-                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated SETTING savedc to "+newDC );
                                             setter[prefix + "savedc"] = newDC;
-                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated savedc to "+setter[prefix + "savedc"] );
                                             if (optionText) {
                                                 optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
                                                 setOption = 1;
                                             }
-                                        } else {
-                                            TAS.debug("PFSpells.updateSpellsCasterAbilityRelated  DCs are equal! "+newDC+" and "+ currDC);
                                         }
                                         casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
                                         if (!isNaN(casterlevel)) {
