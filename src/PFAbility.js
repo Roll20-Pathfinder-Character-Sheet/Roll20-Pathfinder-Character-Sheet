@@ -972,7 +972,7 @@ function registerEventHandlers () {
 		var attr;
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && attr==='used_max')) {
+		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && attr==='used_max')) {
 			PFFeatures.resetTopCommandMacro(null,eventInfo);
 			resetCommandMacro();
 		}
@@ -1001,14 +1001,14 @@ function registerEventHandlers () {
 	}));
 	on("change:buff_CasterLevel-total change:CasterLevel-Penalty",
 		TAS.callback(function eventAbilityLevelChange(eventInfo){
-		if (eventInfo.sourceType === "sheetworker"  ) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"  ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			recalcAbilities(null,null,eventInfo,true);
 		}
 	}));
 	on("change:repeating_ability:CL-basis-mod change:repeating_ability:CL-misc-mod",
 		TAS.callback(function eventAbilityLevelChange(eventInfo){
-		if (eventInfo.sourceType === "sheetworker"  ) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"  ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateCharLevel(null,null,eventInfo);
 		}
@@ -1030,7 +1030,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		//cl-misc-mod, cl-basis-mod  is sheetworker, range_pick and range must be player
 		if ( ((/range/i).test(eventInfo.sourceAttribute) && (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" )) || 
-			((/CL/i).test(eventInfo.sourceAttribute) && eventInfo.sourceType === "sheetworker") ) {
+			((/CL/i).test(eventInfo.sourceAttribute) && eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") ) {
 				updateAbilityRange(null,null,false,eventInfo);
 			}
 	}));
@@ -1040,7 +1040,7 @@ function registerEventHandlers () {
 	},"");
 	on(eventToWatch,	TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && !((/attack\-type/i).test(eventInfo.sourceAttribute) ))) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && !((/attack\-type/i).test(eventInfo.sourceAttribute) ))) {
 			updateAssociatedAttack(null,null,null,eventInfo);
 		}
 	}));

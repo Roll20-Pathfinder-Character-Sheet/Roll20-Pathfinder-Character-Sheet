@@ -934,13 +934,13 @@ function registerEventHandlers () {
 	//SKILLS************************************************************************
 	on("change:total-skill change:total-fcskill change:int-mod change:level change:max-skill-ranks-mod change:unchained_skills-show change:BG-Skill-Use", TAS.callback(function eventUpdateMaxSkills(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			updateMaxSkills(eventInfo);
 		}
 	}));
 	on(events.skillGlobalEventAuto, TAS.callback(function eventGlobalConditionAffectingSkill(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			applyConditions(null,null,eventInfo);
 		}
 	}));		
@@ -949,7 +949,7 @@ function registerEventHandlers () {
 	_.each(allTheSkills, function (skill) {
 		on((events.skillEventsAuto.replace(/REPLACE/g, skill)), TAS.callback(function eventSkillsAuto(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + skill + ", " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "sheetworker") {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				verifyHasSkill(skill, function (hasSkill) {
 					if (hasSkill) {
 						updateSkill(skill, eventInfo);
@@ -1004,7 +1004,7 @@ function registerEventHandlers () {
 	_.each(sizeSkills, function (mult, skill) {
 		if (mult === 1) {
 			on("change:size_skill", TAS.callback(function eventUpdateSizeSkill(eventInfo) {
-				if (eventInfo.sourceType === "sheetworker") {
+				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 					updateSkill(skill, eventInfo);
 				}
@@ -1012,7 +1012,7 @@ function registerEventHandlers () {
 		} else if (mult === 2) {
 			on("change:size_skill_double", TAS.callback(function eventUpdateSizeSkillDouble(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker") {
+				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					updateSkill(skill, eventInfo);
 				}
 			}));

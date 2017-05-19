@@ -52,7 +52,7 @@ function registerEventHandlers () {
 		}
 	}));
 	on("change:init-ability-mod change:init-misc-mod change:checks-cond change:nodex-toggle", TAS.callback(function eventUpdateInitSheet(eventInfo) {
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateInitiative();
 		}
