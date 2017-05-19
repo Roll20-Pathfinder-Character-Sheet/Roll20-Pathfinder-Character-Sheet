@@ -293,7 +293,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
  */
 export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.setDefenseDropdownMod");
+        TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
             callback();
         }

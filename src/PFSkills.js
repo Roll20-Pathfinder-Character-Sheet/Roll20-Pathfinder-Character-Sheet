@@ -905,8 +905,8 @@ export function migrate (callback, oldversion) {
 		};
 		getAttrs(['migrated_take10_dropdown','skill-query','investigator_dice','skill-invest-query'],function(v){
 			var setter={};
-			TAS.notice("########################","PFSkills.migrate",v,"################3");
-			TAS.debug("V 13 just to make sure the damn thing is working");
+			//TAS.notice("########################","PFSkills.migrate",v,"################3");
+			//TAS.debug("V 13 just to make sure the damn thing is working");
 			if((parseInt(v.migrated_take10_dropdown,10)||0)===0){
 				if(v['skill-query']==='?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}'){
 					setter['skill-query']='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
@@ -928,7 +928,7 @@ export function migrate (callback, oldversion) {
 					setter['skill-invest-query']="0";
 				}
 				setter.migrated_take10_dropdown=1;
-				TAS.notice("#####################","PFBuffs.migrate setting",setter);
+				//TAS.debug("#####################","PFBuffs.migrate setting",setter);
 				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();

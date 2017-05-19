@@ -138,7 +138,7 @@ function getTopMacros(setter,v){
         npcranged2BaseAttacks = " [^{ranged2}](~@{character_id}|npc-Ranged2-Attack-Roll)",
         npccmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|npc-CMB2-Check)";
     try {
-        TAS.debug("at PFAttackGrid.getTopMacros",v);
+        //TAS.debug("at PFAttackGrid.getTopMacros",v);
         setter = setter||{};
         if (parseInt(v.ranged_2_show, 10)) {
             extraattacks+=ranged2BaseAttacks;

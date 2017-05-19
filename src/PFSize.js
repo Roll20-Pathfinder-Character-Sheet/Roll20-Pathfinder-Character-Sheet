@@ -218,7 +218,7 @@ export function updateSize (v,eventInfo,setter) {
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
-		TAS.notice("updateSize returning with  ",setter);
+		//TAS.debug("updateSize returning with  ",setter);
 		return setter;
 	}
 }
