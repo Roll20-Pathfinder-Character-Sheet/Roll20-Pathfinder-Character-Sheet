@@ -185,7 +185,7 @@ export function updateSize (v,eventInfo,setter) {
 		TAS.debug("PFSize.updateSize",v,eventInfo);
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
-		buffLevels=parseInt(v['buff_size-total'],10)||0;
+		buffLevels=parseInt(v['buff_buffsize-total'],10)||0;
 		if (buffLevels!==0 ){
 			TAS.debug("buff size is set");
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
@@ -196,7 +196,7 @@ export function updateSize (v,eventInfo,setter) {
 				size = buffSize;
 				changes=true;
 			}
-		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
+		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_buffsize-total'){
 			TAS.debug("reset size to default");
 			size = parseInt(v.size, 10) || 0;
 			if (size!==defaultSize){
@@ -230,7 +230,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 			callback();
 		}
 	});
-	getAttrs(["size", "default_char_size", "CMD-size", "buff_size-total"], function (v) {
+	getAttrs(["size", "default_char_size", "CMD-size", "buff_buffsize-total"], function (v) {
 		var params = {},
 		setter = {};
 		try {

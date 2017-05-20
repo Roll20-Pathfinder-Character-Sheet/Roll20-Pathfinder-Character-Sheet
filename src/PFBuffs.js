@@ -21,7 +21,7 @@ import * as PFSkills from './PFSkills';
 // added:init, speed, dmg_ranged, cmb
 var buffColumns = ["Ranged", "Melee","CMB", "DMG", "DMG_ranged",
 	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
-	"speed", "initiative","size","check_skills",
+	"speed", "initiative","buffsize","check_skills",
 	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
 	'STR','DEX','CON','INT','WIS','CHA',
 	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
@@ -65,7 +65,7 @@ events = {
 		"check_skills": [PFSkills.recalculate],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"size": [PFSize.updateSizeAsync]
+		"buffsize": [PFSize.updateSizeAsync]
 	}
 };
 //why did i make this? it just repeats the ability scores
@@ -490,7 +490,7 @@ function registerEventHandlers () {
 		}));
 	});
 	//size is special users modify it via dropdown
-	on("change:repeating_buff:buff-size", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
+	on("change:repeating_buff:buff-buffsize", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateBuffTotals('size');
