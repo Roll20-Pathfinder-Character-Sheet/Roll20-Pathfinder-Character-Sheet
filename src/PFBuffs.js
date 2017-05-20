@@ -472,7 +472,7 @@ function registerEventHandlers () {
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
 		var prefix = "change:repeating_buff:buff-" + col ;
-		if (col!=='size'){
+		if (col!=='buffsize'){
 			on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + col + ", event: " + eventInfo.sourceType);
 				setBuff(null, col);
@@ -493,7 +493,7 @@ function registerEventHandlers () {
 	on("change:repeating_buff:buff-buffsize", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateBuffTotals('size');
+			updateBuffTotals('buffsize');
 		}
 	}));
 	on("remove:repeating_buff", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
