@@ -878,7 +878,6 @@ button[type=roll].sheet-command-button::before {
     width: auto;
 }
 .sheet-sect-buff .sheet-linked-fields {
-    width: 13.5em;
     margin-top: 0;
 }
 .sheet-linked-fields .sheet-small-label2:first-child {
@@ -890,11 +889,7 @@ button[type=roll].sheet-command-button::before {
 .sheet-macro-text-inline {
     width: 9em;
 }
-/*
-.sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
-.sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
-    width: 3.1rem;
-}*/
+
 /********************************************* TABS ****************************************************/
 /* can delete these soon just make margin above and clear both */
 
@@ -2659,11 +2654,22 @@ input[type="number"].sheet-entry-wide {
 .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-space-right-collapse {
     margin-right: .125em;
 }
-.sheet-buffs .sheet-nontable-repeating .sheet-linked-fields {
-    width:22em;
+
+.sheet-sect-buff .sheet-linked-fields {
+    width: 13.5em;
 }
 .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
 .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
+    width: 3.1rem;
+}
+.sheet-bonustype-show:not(:checked) ~ .sheet-sect-buff .sheet-linked-fields .sheet-small-label2.sheet-entry-med {
+    display:none;
+}
+.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields {
+    width:22em;
+}
+.sheet-bonustype-show:checked ~ .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
+.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
     width: 10.5rem;
 }
 

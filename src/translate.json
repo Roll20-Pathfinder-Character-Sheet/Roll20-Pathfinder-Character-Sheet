@@ -1,4 +1,5 @@
 {
+  "use-buff-bonus-stacking": "Use buff bonus types and stacking",
   "bonus-type": "Bonus Type",
   "untyped": "Untyped",
   "untyped-default":"&#8226;Untyped" ,
