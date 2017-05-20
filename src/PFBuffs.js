@@ -36,7 +36,10 @@ events = {
 		"CON_skills":[PFSkills.recalculateAbilityBasedSkills],
 		"INT_skills":[PFSkills.recalculateAbilityBasedSkills],
 		"WIS_skills":[PFSkills.recalculateAbilityBasedSkills],
-		"CHA_skills":[PFSkills.recalculateAbilityBasedSkills]
+		"CHA_skills":[PFSkills.recalculateAbilityBasedSkills],
+		"Melee": [PFAttackGrid.updateAttackGrid],
+		"Ranged": [PFAttackGrid.updateAttackGrid],
+		"CMB": [PFAttackGrid.updateAttackGrid]
 	},
 	buffTotalAbilityEvents: {
 		"STR": [PFAbilityScores.updateAbilityScore],
@@ -48,10 +51,7 @@ events = {
 	},
 	// events do NOT pass in column updated
 	buffTotalEventsNoParam: {
-		"Melee": [PFAttackGrid.updateMelee],
-		"Ranged": [PFAttackGrid.updateRanged],
-		"CMB": [PFAttackGrid.updateCMB],
-		"DMG": [PFAttackGrid.updateDamage],
+		"DMG": [PFAttackGrid.updateRepeatingWeaponDamages],
 		"DMG_ranged": [PFAttacks.updateRepeatingWeaponDamages],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
@@ -95,8 +95,9 @@ export function migrate (outerCallback) {
 					if (_.size(ids)){
 						fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,
 							['_buff-DMG_macro-text','_buff-DMG','_buff-DMG-show','_buff-DMG_ranged_macro-text','_buff-DMG_ranged',
+							'_buff-Melee_macro-text','_buff-Melee','_buff-Melee-show','_buff-CMB_macro-text','_buff-CMB_ranged',
 							'_buff-Check_macro-text','_buff-Check','_buff-Check-show','_buff-check_skills_macro-text','_buff-check_skills']);
-						fields = fields.concat(['buff_Check-total','buff_check_skills-total','buff_DMG-total','buff_DMG_ranged-total']);
+						fields = fields.concat(['buff_Check-total','buff_check_skills-total','buff_Melee-total','buff_DMG-total','buff_DMG_ranged-total','buff-CMB-total']);
 						getAttrs(fields,function(v){
 							var setter={},resetconditions=false,tempInt=0;
 							try {
@@ -119,6 +120,14 @@ export function migrate (outerCallback) {
 											setter[prefix+'check_skills-show']=1;
 										}
 									}
+									if(v[prefix+'Melee_macro-text']&&!v[prefix+'CMB_macro-text']){
+										setter[prefix+'CMB_macro-text']=v[prefix+'Melee_macro-text'];
+										setter[prefix+'CMB']=parseInt(v[prefix+'Melee'],10)||0;
+										resetconditions=true;
+										if (parseInt(v[prefix+'Melee-show'],10)){
+											setter[prefix+'CMB-show']=1;
+										}
+									}
 								});
 								tempInt = parseInt(v['buff_DMG-total'],10)||0;
 								if(tempInt){
@@ -127,6 +136,10 @@ export function migrate (outerCallback) {
 								tempInt = parseInt(v['buff_Check-total'],10)||0;
 								if (tempInt){
 									setter['buff_check_skills-total']=tempInt+ parseInt(v['buff_check_skills-total'],10)||0;
+								}
+								tempInt = parseInt(v['buff_Melee-total'],10)||0;
+								if (tempInt){
+									setter['buff_CMB-total']=tempInt+ parseInt(v['buff_CMB-total'],10)||0;
 								}
 							}catch (err){
 								TAS.error("PFBuffs.migrateDmgAbility",err);

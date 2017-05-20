@@ -90,7 +90,7 @@ export function getSizeLevelChange (currSize,defaultSize) {
 	var newSize,oldSize,levelChange;
 	newSize=sizeModToEasySizeMap[String(currSize)];
 	oldSize=sizeModToEasySizeMap[String(defaultSize)];
-	levelChange = oldSize-newSize;
+	levelChange = newSize-oldSize;
 	return levelChange;
 }
 /**updateDamageDice returns new dice for weapon/attack damage change due to size
@@ -126,6 +126,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return memo;
 	  },{});
 	try {
+		TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
 		currDice=parseInt(currDice,10);
 		currDie=parseInt(currDie,10);
 		if(!(isNaN(currDice)||isNaN(currDie))){
@@ -250,9 +251,10 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 	});
 }
 function setNewSize(eventInfo){
-	updateSizeAsync(null,false,eventInfo);
-	PFEncumbrance.updateLoadsAndLift();
-	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+	updateSizeAsync(function(){
+		PFEncumbrance.updateLoadsAndLift();
+		PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+	},false,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
 	TAS.debug("PFSize.applyNewSizeToSheet");
@@ -276,7 +278,7 @@ export function recalculate (callback, silently, oldversion) {
 }
 function registerEventHandlers () {
 	//size
-	on("change:size", TAS.callback(function eventUpdateSize(eventInfo) {
+	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
 			setNewSize(eventInfo);
