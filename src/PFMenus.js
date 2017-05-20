@@ -130,7 +130,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         getAttrs(fields,function(v){
             var restOfMacro="", totalMacro="",orderedList,repList,customSorted=0, rowCounter=20;
             try {
-                TAS.debug('PFMenus.getRepeatingCommandMacro returned with',v);
+                //TAS.debug('PFMenus.getRepeatingCommandMacro returned with',v);
                 if (v['_reporder_repeating_'+baseAttribs.section]) {
                     repList = v['_reporder_repeating_'+baseAttribs.section].split(",");
                     repList = _.map(repList, function (ID) {

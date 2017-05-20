@@ -868,7 +868,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
 				//TAS.debug("PFAbility.recalcAbilities calling updateCharLevel for "+id);
 				updateCharLevel(id,function(){
-					TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
+					//TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
 					updateAbilityRange(id,function(){
 					//	TAS.debug("PFAbility.recalcAbilities calling updateAssociatedAttack for "+id);
 					//	updateAssociatedAttack(id,null,false,null);
@@ -1040,9 +1040,7 @@ function registerEventHandlers () {
 	},"");
 	on(eventToWatch,	TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && !((/attack\-type/i).test(eventInfo.sourceAttribute) ))) {
-			updateAssociatedAttack(null,null,null,eventInfo);
-		}
+		updateAssociatedAttack(null,null,null,eventInfo);
 	}));
 	on("change:repeating_ability:rule_category change:repeating_ability:ability_type", TAS.callback(function eventUpdateSLARuleCat(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);

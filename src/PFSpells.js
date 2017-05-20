@@ -912,7 +912,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         TAS.warn("spell level is NaN for " + prefix);
                                         if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
                                             setter[prefix + "spell_level_r"] = "-1";
-                                           // setter[prefix + "savedc"] = 0;
+                                            //setter[prefix + "savedc"] = 0;
                                         }
                                     } else {
                                         if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
@@ -926,7 +926,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                 optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
                                                 setOption = 1;
                                             }
-                                         }
+                                        }
                                         casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
                                         if (!isNaN(casterlevel)) {
                                             newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
@@ -1465,6 +1465,17 @@ export function importFromCompendium (id, eventInfo) {
                 }
             } catch (err) {
                 classMatch = "";
+            }
+            if (!foundMatch){
+                //get mode 
+                // IF FOODS IS AN ARRAY then : so how to do it with 
+                var levels = _.map(classes,function(oneclass){
+                    return oneclass[1];
+                });
+                level=_.chain(levels).countBy().pairs().max(_.last).head().value();
+                idx=0;
+                classMatch = originalClasses[0];
+                setSilent['repeating_spells_description']= 'Original spell level:'+v['repeating_spells_spell_lvlstr'] + ' \r\n'+ v['repeating_spells_description'];
             }
             if (counter > 1 || !foundMatch) {
                 TAS.warn("importFromCompendium: did not find class match");
