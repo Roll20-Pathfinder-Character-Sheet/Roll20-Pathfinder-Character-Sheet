@@ -29,6 +29,16 @@ bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','i
 	'insight','luck','morale','profane','racial','sacred','size','trait','feat','equivalent','ability','equivalent',
 	'deflection','dodge','force','customa','customb','customc'],
 stackingTypes =['untyped','circumstance','dodge','penalty'],
+otherCharBonuses ={
+'STR':['STR-inherent','STR-enhance'],
+'DEX':['DEX-inherent','DEX-enhance'],
+'CON':['CON-inherent','CON-enhance'],
+'INT':['INT-inherent','INT-enhance'],
+'WIS':['WIS-inherent','WIS-enhance'],
+'CHA':['CHA-inherent','CHA-enhance']
+
+
+},
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
