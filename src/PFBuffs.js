@@ -26,18 +26,26 @@ var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	'STR','DEX','CON','INT','WIS','CHA',
 	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
-	'insight','luck','morale','profane','racial','sacred','size','trait','feat','equivalent','ability','equivalent',
+	'insight','luck','morale','profane','racial','resistance','sacred','size','trait','feat','equivalent','ability','equivalent',
 	'deflection','dodge','force','customa','customb','customc'],
 stackingTypes =['untyped','circumstance','dodge','penalty'],
 otherCharBonuses ={
-'STR':['STR-inherent','STR-enhance'],
-'DEX':['DEX-inherent','DEX-enhance'],
-'CON':['CON-inherent','CON-enhance'],
-'INT':['INT-inherent','INT-enhance'],
-'WIS':['WIS-inherent','WIS-enhance'],
-'CHA':['CHA-inherent','CHA-enhance']
-
-
+	'STR':{'inherent':'STR-inherent','enhance':'STR-enhance'},
+	'DEX':{'inherent':'DEX-inherent','enhance':'DEX-enhance'},
+	'CON':{'inherent':'CON-inherent','enhance':'CON-enhance'},
+	'INT':{'inherent':'INT-inherent','enhance':'INT-enhance'},
+	'WIS':{'inherent':'WIS-inherent','enhance':'WIS-enhance'},
+	'CHA':{'inherent':'CHA-inherent','enhance':'CHA-enhance'},
+	'initiative':{'trait':'init-trait'},
+	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait','enhance':'Fort-enhance'},
+	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait','enhance':'Ref-enhance'},
+	'Will':{'resistance':'Will-resist','trait':'Will-trait','enhance':'Will-enhance'},
+	'armor':{'enhance':'armor3-enhance','armor':'armor3-acbonus'},
+	'shield':{'enhance':'shield3-enhance','shield':'shield3-acbonus'},
+	'dodge':{'dodge':'AC-dodge'},
+	'natural':{'natural':'AC-natural'},
+	'deflection':{'deflection':'AC-deflect'},
+	'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
 },
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
