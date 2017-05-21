@@ -11,37 +11,37 @@ import * as PFAttacks from './PFAttacks';
 
 
 export var sizeModToEasySizeMap={
-	'-8':8,
-	'-4':7,
-	'-2':6,
-	'-1':5,
 	 '0':4,
 	 '1':3,
 	 '2':2,
+	'-8':8,
 	 '4':1,
+	'-4':7,
+	'-2':6,
+	'-1':5,
 	 '8':0
 },
 reverseSizeMap={
-	'8':-8,
-	'7':-4,
-	'6':-2,
-	'5':-1,
-	 '4':0,
-	 '3':1,
-	 '2':2,
+	 '0':8,
 	 '1':4,
-	 '0':8
+	 '2':2,
+	 '3':1,
+	 '4':0,
+	'5':-1,
+	'6':-2,
+	'7':-4,
+	'8':-8
 },
 skillSizeMap = {
-	'-8':-8,
-	'-4':-6,
-	'-2':-4,
-	'-1':-2,
 	'0':0,
 	'1':2,
 	'2':4,
+	'8':8,
 	'4':6,
-	'8':8
+	'-8':-8,
+	'-4':-6,
+	'-2':-4,
+	'-1':-2
 },
 sizeNameMap = {
 	'colossal':-8,
@@ -182,12 +182,11 @@ export function updateSize (v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
 		buffLevels=0, skillSize = 0, changes=false;
 	try {
-		TAS.debug("PFSize.updateSize",v,eventInfo);
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
+		size = parseInt(v['size'], 10) || 0;
 		buffLevels=parseInt(v['buff_size-total'],10)||0;
 		if (buffLevels!==0 ){
-			TAS.debug("buff size is set");
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+buffLevels;
 			buffSize = reverseSizeMap[String(newlevel)];
@@ -197,29 +196,23 @@ export function updateSize (v,eventInfo,setter) {
 				changes=true;
 			}
 		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
-			TAS.debug("reset size to default");
-			size = parseInt(v.size, 10) || 0;
 			if (size!==defaultSize){
 				setter['size']=defaultSize;
 				size = defaultSize;
 				changes=true;
 			}
-		} else {
-			size = parseInt(v.size, 10) || 0;
-			if (size!==defaultSize){
-				changes=true;
-			}
+		} else if (size!==defaultSize){
+			changes=true;
 		}
-		if (changes){
-			skillSize = skillSizeMap[String(size)];
-			setter.size_skill = skillSize;
-			setter["CMD-size"] = (size * -1);
-			setter.size_skill_double = (2*skillSize);
-		}
+		
+		skillSize = skillSizeMap[String(size)];
+		setter.size_skill = skillSize;
+		setter["CMD-size"] = (size * -1);
+		setter.size_skill_double = (2*skillSize);
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
-		//TAS.debug("updateSize returning with  ",setter);
+		TAS.debug("PFSize.updateSize returning with  ",setter);
 		return setter;
 	}
 }
@@ -230,7 +223,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 			callback();
 		}
 	});
-	getAttrs(["size", "default_char_size", "CMD-size", "buff_size-total"], function (v) {
+	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total"], function (v) {
 		var params = {},
 		setter = {};
 		try {
