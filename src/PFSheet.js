@@ -421,7 +421,9 @@ export function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.53){
 				PFSkills.migrate(null,oldversion);
-				PFBuffs.recalculate();
+				PFSize.recalculate(function(){
+					PFBuffs.recalculate();
+				});
 			}
 		}
 	} catch (err) {
