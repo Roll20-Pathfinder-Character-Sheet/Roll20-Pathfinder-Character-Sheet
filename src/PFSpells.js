@@ -926,7 +926,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                 optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.dc, PFSpellOptions.optionTemplates.dc.replace("REPLACE", newDC));
                                                 setOption = 1;
                                             }
-                                        }
+                                         }
                                         casterlevel = parseInt(v[prefix + "casterlevel"], 10) || 0;
                                         if (!isNaN(casterlevel)) {
                                             newConcentration = casterlevel + abilityMod + classConcentrationMisc + spellConcentrationMisc;
@@ -938,16 +938,16 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                     setOption = 1;
                                                 }
                                             }
+                                            if (setOption && optionText) {
+                                                //TAS.debug("setting option for id "+ id +" to "+optionText);
+                                                setter[prefix + "spell_options"] = optionText;
+                                            }
                                         } else {
                                             TAS.warn("spell casterlevel is NaN for " + prefix);
-                                            if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
-                                                setter[prefix + "Concentration-mod"] = "";
-                                            }
+                                            //if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
+                                            //    setter[prefix + "Concentration-mod"] = "";
+                                            //}
                                         }
-                                    }
-                                    if (setOption) {
-                                        //TAS.debug("setting option for id "+ id +" to "+optionText);
-                                        setter[prefix + "spell_options"] = optionText;
                                     }
                                 }
                             } catch (innererror){

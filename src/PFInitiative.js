@@ -10,6 +10,7 @@ import * as SWUtils from './SWUtils';
  * @param {boolean} force pass to SWUtils.updateRowTotal
  */
 export function updateInitiative (callback, silently,force) {
+	TAS.debug("at PFInitiative.updateInitiative");
 	getAttrs(['nodex-toggle'],function(v){
 		if (parseInt(v['nodex-toggle'],10)) {
 			//if lose dex then lose ability mod no matter what ability it is, since init is a dex check:
@@ -51,7 +52,7 @@ function registerEventHandlers () {
 		}
 	}));
 	on("change:init-ability-mod change:init-misc-mod change:checks-cond change:nodex-toggle", TAS.callback(function eventUpdateInitSheet(eventInfo) {
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateInitiative();
 		}

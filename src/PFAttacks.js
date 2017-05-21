@@ -1358,7 +1358,7 @@ function registerEventHandlers () {
 	
 
 	on("change:repeating_weapon:attack-type-mod change:repeating_weapon:attack-mod", TAS.callback(function eventUpdateRepeatingWeaponAttackSheet(eventInfo) {
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateRepeatingWeaponAttack(null, eventInfo);
 		}
@@ -1370,7 +1370,7 @@ function registerEventHandlers () {
 		}
 	}));
 	on("change:repeating_weapon:damage-ability-mod change:repeating_weapon:damage-mod", TAS.callback(function eventUpdateRepeatingWeaponDamageSheet(eventInfo) {
-		if (eventInfo.sourceType === "sheetworker") {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateRepeatingWeaponDamage(null, eventInfo);
 		}
@@ -1434,7 +1434,6 @@ function registerEventHandlers () {
 			PFAttackGrid.resetCommandMacro();
 		}
 	}));	
-
 	on("change:create_twoweapon_attack", TAS.callback(function eventCreateTwoWeaponAttack(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

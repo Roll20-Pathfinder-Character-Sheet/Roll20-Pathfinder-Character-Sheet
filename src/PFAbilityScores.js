@@ -258,7 +258,7 @@ function registerEventHandlers () {
     _.each(abilities, function (ability) {
         on((events.abilityEventsAuto.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbility(eventInfo) {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            if (eventInfo.sourceType === "sheetworker") {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 updateAbilityScore(ability, eventInfo);
             }
         }));

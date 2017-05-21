@@ -625,7 +625,7 @@ function registerEventHandlers () {
     }));		
     on(events.defenseEventsAuto, TAS.callback(function eventUpdateDefensesAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker") {
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
             updateDefenses(null,null,eventInfo);
         }
     }));

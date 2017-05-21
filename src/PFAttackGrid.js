@@ -256,7 +256,7 @@ function registerEventHandlers () {
             }
         }));
         on("change:attk-penalty change:" + attackFields.abilityMod , TAS.callback(function eventAttackPenalty(eventInfo) {
-            if (eventInfo.sourceType === "sheetworker") {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
             }
