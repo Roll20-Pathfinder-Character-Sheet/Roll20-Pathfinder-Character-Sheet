@@ -21,7 +21,7 @@ import * as PFSkills from './PFSkills';
 // added:init, speed, dmg_ranged, cmb
 var buffColumns = ["Ranged", "Melee","CMB", "DMG", "DMG_ranged",
 	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
-	"speed", "initiative","buffsize","check_skills",
+	"speed", "initiative","size","check_skills",
 	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
 	'STR','DEX','CON','INT','WIS','CHA',
 	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
@@ -65,7 +65,7 @@ events = {
 		"check_skills": [PFSkills.recalculate],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"buffsize": [PFSize.updateSizeAsync]
+		"size": [PFSize.updateSizeAsync]
 	}
 };
 //why did i make this? it just repeats the ability scores
@@ -392,6 +392,10 @@ function setBuff (id, col, callback, silently) {
 	},
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_buff_" + idStr + "buff-" + col;
+	if(col==='size'){
+		done();
+		return;
+	}
 	SWUtils.evaluateAndSetNumber(prefix + "_macro-text", prefix,0,
 		function(a,b,c){
 			if (c){
@@ -425,6 +429,10 @@ export function recalculate (callback, silently, oldversion) {
 			totalItUp();
 		});
 		try {
+			if(col==='size'){
+				totalItUp();
+				return;
+			}
 			_.each(ids, function (id) {
 				try {
 					getAttrs(['repeating_buff_'+id+'_buff-enable_toggle',
@@ -472,7 +480,7 @@ function registerEventHandlers () {
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
 		var prefix = "change:repeating_buff:buff-" + col ;
-		if (col!=='buffsize'){
+		if (col!=='size'){
 			on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + col + ", event: " + eventInfo.sourceType);
 				setBuff(null, col);
@@ -490,10 +498,10 @@ function registerEventHandlers () {
 		}));
 	});
 	//size is special users modify it via dropdown
-	on("change:repeating_buff:buff-buffsize", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
+	on("change:repeating_buff:buff-size", TAS.callback(function PFBuffs_updateBuffSize(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateBuffTotals('buffsize');
+			updateBuffTotals('size');
 		}
 	}));
 	on("remove:repeating_buff", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
