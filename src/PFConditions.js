@@ -12,31 +12,7 @@ import * as PFAttackGrid from './PFAttackGrid';
 import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
-
-var events = {
-	conditionEventsEither: {
-		"change:condition-grappled": [updateGrapple, PFAttackGrid.applyConditions],
-		"change:condition-pinned": [updatePin, PFDefense.applyConditions],
-		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
-	},
-	conditionEventsPlayer: {
-		"change:condition-Sickened": [PFAttackGrid.updateDamage, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
-		"change:condition-stunned": [PFDefense.updateDefenses, PFDefense.applyConditions],
-		"change:condition-Flat-Footed": [PFDefense.updateDefenses],
-		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions],
-		"change:condition-fatigued": [PFAbilityScores.applyConditions],
-		"change:condition-entangled": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions],
-		"change:condition-drained": [updateDrainCheckbox, PFHealth.updateMaxHPLookup, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions],
-		"change:condition-fear": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
-		"change:condition-blinded": [PFChecks.applyConditions, PFDefense.applyConditions],
-		"change:condition-cowering": [PFDefense.applyConditions],
-		"change:condition-invisible": [PFDefense.updateDefenses, PFDefense.applyConditions, PFAttackGrid.applyConditions],
-		"change:condition-dazzled": [PFAttackGrid.applyConditions],
-		"change:condition-prone": [PFAttackGrid.applyConditions],
-		"change:condition-Helpless": [PFAbilityScores.applyConditions]
-	}
-};
-
+import * as PFAttacks from './PFAttacks';
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
 function updateGrapple () {
@@ -66,17 +42,26 @@ function updatePin () {
 }
 /* updates drain for condition status panel */
 function updateDrainCheckbox (callback,silently,eventInfo) {
+	var done = _.once(function () {
+		TAS.debug("Leaving PFConditions.updateDrainCheckbox");
+		if (typeof callback === "function") {
+			callback();
+		}
+	});
 	getAttrs(["condition-Drained", "condition_is_drained"], function (v) {
 		var levels = parseInt(v["condition-Drained"], 10) || 0,
 		drained = parseInt(v["condition_is_drained"], 10) || 0;
+		TAS.debug("################","PFConditions.updateDrainCheckbox we found ",v," and levels="+levels+", drained="+drained,"##############");
 		if (levels !== 0 && drained === 0) {
 			setAttrs({
 				"condition_is_drained": "1"
-			}, PFConst.silentParams);
+			}, PFConst.silentParams, done);
 		} else if (levels === 0 && drained !== 0) {
 			setAttrs({
 				"condition_is_drained": "0"
-			}, PFConst.silentParams);
+			}, PFConst.silentParams,done);
+		} else {
+			done();
 		}
 	});
 }
@@ -87,9 +72,34 @@ export function recalculate (callback, silently, oldversion) {
 			callback();
 		}
 	});
-	updateDrainCheckbox();
-	PFAbilityScores.applyConditions(done);
+	updateDrainCheckbox(done);
+	//PFAbilityScores.applyConditions(done);
 }
+
+var events = {
+	conditionEventsEither: {
+		"change:condition-grappled": [updateGrapple, PFAttackGrid.applyConditions],
+		"change:condition-pinned": [updatePin, PFDefense.applyConditions],
+		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
+	},
+	conditionEventsPlayer: {
+		"change:condition-Sickened": [PFAttacks.updateRepeatingWeaponDamages, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-stunned": [PFDefense.updateDefenses, PFDefense.applyConditions],
+		"change:condition-Flat-Footed": [PFDefense.updateDefenses],
+		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions],
+		"change:condition-fatigued": [PFAbilityScores.applyConditions],
+		"change:condition-entangled": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-drained": [updateDrainCheckbox, PFHealth.updateMaxHPLookup, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions],
+		"change:condition-fear": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-blinded": [PFChecks.applyConditions, PFDefense.applyConditions],
+		"change:condition-cowering": [PFDefense.applyConditions],
+		"change:condition-invisible": [PFDefense.updateDefenses, PFDefense.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-dazzled": [PFAttackGrid.applyConditions],
+		"change:condition-prone": [PFAttackGrid.applyConditions],
+		"change:condition-Helpless": [PFAbilityScores.applyConditions]
+	}
+};
+
 function registerEventHandlers () {
 	_.each(events.conditionEventsPlayer, function (functions, eventToWatch) {
 		_.each(functions, function (methodToCall) {

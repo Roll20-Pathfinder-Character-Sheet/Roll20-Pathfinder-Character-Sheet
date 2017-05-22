@@ -78,13 +78,6 @@ groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
 
 
-/** updates DMG-mod
- * @param {function} callback optional call when done
- * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
- */
-export function updateDamage (callback, silently) {
-    SWUtils.updateRowTotal(["DMG-mod", "buff_DMG-total"], 0, ["condition-Sickened"], false, callback, silently);
-}
 /** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
  *@param {function} callback optional call when done
  *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
@@ -138,7 +131,7 @@ function getTopMacros(setter,v){
         npcranged2BaseAttacks = " [^{ranged2}](~@{character_id}|npc-Ranged2-Attack-Roll)",
         npccmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|npc-CMB2-Check)";
     try {
-        TAS.debug("at PFAttackGrid.getTopMacros",v);
+        //TAS.debug("at PFAttackGrid.getTopMacros",v);
         setter = setter||{};
         if (parseInt(v.ranged_2_show, 10)) {
             extraattacks+=ranged2BaseAttacks;
@@ -190,20 +183,30 @@ export function resetCommandMacro (callback){
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
-export function updateMelee(eventInfo){
-    updateAttack('melee', eventInfo);
-    updateAttack('melee2', eventInfo);
-    updateAttack('CMB', eventInfo);
-    updateAttack('CMB2', eventInfo);
+/**
+ * 
+ * @param {string} buffType buff column without 'buff_' or '-total'
+ * @param {*} eventInfo 
+ */
+export function updateAttackGrid(buffType,eventInfo){
+    switch(buffType.toLowerCase()){
+        case 'melee':
+            updateAttack('melee', eventInfo);
+            updateAttack('melee2', eventInfo);
+            updateAttack('CMB', eventInfo);
+            updateAttack('CMB2', eventInfo);
+            break;
+        case 'ranged':
+            updateAttack('ranged', eventInfo);
+            updateAttack('ranged2', eventInfo);
+            break;
+        case 'cmb':
+            updateAttack('CMB', eventInfo);
+            updateAttack('CMB2', eventInfo);
+            break;
+    }
 }
-export function updateRanged(eventInfo){
-    updateAttack('ranged', eventInfo);
-    updateAttack('ranged2', eventInfo);    
-}
-export function updateCMB(eventInfo){
-    updateAttack('CMB', eventInfo);
-    updateAttack('CMB2', eventInfo);
-}
+
 
 export function migrate (callback, oldversion){
     var done = function () {
@@ -227,12 +230,11 @@ export function recalculate  (callback, silently, oldversion) {
             callback();
         }
     },
-    doneAttack=_.after(7,done),
+    doneAttack=_.after(6,done),
     callUpdateAttacksAndDamage = _.once(function(){
         _.each(attackGridFields, function (attrMap, attack) {
             updateAttack(attack,null,doneAttack,silently);
         });
-        updateDamage(doneAttack,silently);
     }),
     callApplyConditions = _.once(function(){
         applyConditions(callUpdateAttacksAndDamage,silently);

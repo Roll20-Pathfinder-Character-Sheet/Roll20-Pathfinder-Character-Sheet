@@ -57,7 +57,12 @@ var webpackConfig = {
         var oldSource = compilation.assets['index.html'].source;
 
         compilation.assets['index.html'].source = function() {
-          return oldSource().replace('text/javascript', 'text/worker');
+          var str= oldSource().replace('text/javascript', 'text/worker');
+              var d = new Date();
+              var n = d.toString();
+              n = n.slice(0,n.indexOf('GMT')+3);
+              str=str.replace('$$CURRENTRELEASEDATE$$',n);
+              return str;
         }
 
         callback();

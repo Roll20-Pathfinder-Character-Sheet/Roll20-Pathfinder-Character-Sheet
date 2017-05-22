@@ -120,7 +120,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         setter = {},
         params = {};
         try {
-TAS.notice("PFDefense.updateDefenses:",v);
+            //TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff;
             bufftouch=buffsTouch;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
@@ -293,7 +293,7 @@ TAS.notice("PFDefense.updateDefenses:",v);
  */
 export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.setDefenseDropdownMod");
+        TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
             callback();
         }

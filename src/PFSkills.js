@@ -133,6 +133,7 @@ keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 events = {
 	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
+	//skillGlobalEventAuto: "change:phys-skills-cond change:acp",
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
 	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
@@ -331,8 +332,10 @@ export function updateSkill (skill, callback, silently) {
 	utNm = skill + "-ut",
 	rtNm = skill + "-ReqTrain";
 	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, 
-		"enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", 
-		"Perception-cond", "buff_check_skills-total"], function (v) {
+	"enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", 
+	"Perception-cond", "buff_check_skills-total",
+	"buff_STR_skills-total","buff_DEX_skills-total","buff_CON_skills-total","buff_INT_skills-total","buff_WIS_skills-total","buff_CHA_skills-total"	], 
+	function (v) {
 		var skillSize = 0,
 		adj,
 		skillTot = 0,
@@ -345,13 +348,15 @@ export function updateSkill (skill, callback, silently) {
 		currSkill = parseInt(v[skill], 10), //no default
 		ranks = parseInt(v[ranksNm], 10) || 0,
 		rt = parseInt(v[rtNm], 10) || 0,
-		allCond = (parseInt(v["checks-cond"], 10) || 0)+(parseInt(v["buff_check_skills-total"],10)||0),
-		abilityName = '',
+		allCond = parseInt(v["checks-cond"], 10) || 0,
+		buffs= parseInt(v["buff_check_skills-total"],10)||0,
+		abilityModName = '',
+		abilityName='',
 		physCond = 0,
 		perCond = 0,
 		watchrt = parseInt(v["enforce_requires_training"], 10) || 0;
 		try {
-			abilityName = PFUtils.findAbilityInString(v[abNm]);
+			abilityModName = PFUtils.findAbilityInString(v[abNm]);
 			if (rt && ranks === 0) {
 				if (v[utNm] !== "{{untrained=1}}") {
 					setter[utNm] = "{{untrained=1}}";
@@ -365,13 +370,19 @@ export function updateSkill (skill, callback, silently) {
 			} else {
 				mods = "0/";
 			}
-			if (abilityName === "DEX-mod" || abilityName === "STR-mod") {
+			if (abilityModName === "DEX-mod" || abilityModName === "STR-mod") {
 				adj = parseInt(v["acp"], 10) || 0;
 				skillTot += adj;
 				mods += adj + "/";
+				physCond = parseInt(v["Phys-skills-cond"], 10) || 0;
 			} else {
 				mods += "0/";
 			}
+			if (abilityModName){
+				abilityName = abilityModName.slice(0,3);
+				buffs += parseInt(v['buff_'+abilityName+'_skills-total'],10)||0;
+			}
+
 			skillSize = sizeSkills[skill];
 			if (skillSize) {
 				if (skillSize === 1) {
@@ -386,13 +397,11 @@ export function updateSkill (skill, callback, silently) {
 			} else {
 				mods += "0/";
 			}
-			if (abilityName === "DEX-mod" || abilityName === "STR-mod") {
-				physCond = parseInt(v["Phys-skills-cond"], 10) || 0;
-			}
+
 			if (skill === "Perception" || skill === "CS-Perception") {
 				perCond = parseInt(v["Perception-cond"], 10) || 0;
 			}
-			cond = allCond + physCond + perCond;
+			cond = allCond + physCond + perCond + buffs;
 			mods += cond;
 			skillTot += ranks + cond + (parseInt(v[modNm], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
 			if (currSkill !== skillTot) {
@@ -524,7 +533,8 @@ function recalculateSkillArray (skills, callback, silently) {
 	//TAS.debug("at PFSkills.recalculateSkillArray for ",skills);
 	recalculateSkillDropdowns(skills, doneDrop, done);
 }
-function recalculateSkills (callback, silently) {
+
+export function recalculateSkills (callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -551,6 +561,9 @@ function recalculateSkills (callback, silently) {
 			done();
 		}
 	});
+}
+export function recalculateAbilityBasedSkills (abilityBuff,callback,silently){
+	recalculateSkills();
 }
 /** updates the macros for only the 7 subskill rolltemplates 
  * @param {boolean} background -if background skills turned on
@@ -826,11 +839,11 @@ export function migrate (callback, oldversion) {
 			callback();
 		}
 	}),
-	doneOne = _.after(3,done),
+	doneOne = _.after(4,done),
 	/** migrateOldClassSkillValue - converts class skill checkboxes from old autocalc string to number "" or 3.
-	* @param {function} callback ?
-	* @param {number} oldversion ?
-	*/
+	 * @param {function} callback when done
+	 * @param {number} oldversion currversionnumber
+	 */
 	migrateOldClassSkillValue = function (callback, oldversion) {
 		var done = _.once(function () {
 			if (typeof callback === "function") {
@@ -868,9 +881,9 @@ export function migrate (callback, oldversion) {
 		});
 	},
 	/** setAdvancedMacroCheckbox - part of migrate .66 to 1.00 sets checkbox to unhide advanced
-	* skillmacro (investigator) if character sheet already using it.)
-	* @param {function} callback ?
-	*/
+	 * skillmacro (investigator) if character sheet already using it.)
+	 * @param {function} callback  whendone
+	 */
 	setAdvancedMacroCheckbox = function (callback) {
 		var done = _.once(function () {
 			if (typeof callback === "function") {
@@ -883,7 +896,46 @@ export function migrate (callback, oldversion) {
 				setAttrs({adv_macro_show: 1}, PFConst.silentParams, done);
 			}
 		});
+	},
+	migrateTake10Dropdown = function(callback,oldversion){
+		var done = function(){
+			if (typeof callback === "function"){
+				callback();
+			}
+		};
+		getAttrs(['migrated_take10_dropdown','skill-query','investigator_dice','skill-invest-query'],function(v){
+			var setter={};
+			//TAS.notice("########################","PFSkills.migrate",v,"################3");
+			//TAS.debug("V 13 just to make sure the damn thing is working");
+			if((parseInt(v.migrated_take10_dropdown,10)||0)===0){
+				if(v['skill-query']==='?{Roll or Take 10/20?|1d20,1d20+@{skill-invest-query&#125;|10,10+@{skill-invest-query&#125;|20,20+@{skill-invest-query&#125;}'){
+					setter['skill-query']='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}';
+				} else if (v['skill-query']==='@{skill-invest-query}'){
+					setter['skill-query']='@{skill-invest-query}+@{custom_dice}';
+				} else if (!v['skill-query'] || v['skill-query']=="0"){
+					setter['skill-query']='1d20+@{skill-invest-query}';
+				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}' && 
+					v['skill-query']!=='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}'	&&
+					v['skill-query']!=='1d20+@{skill-invest-query}'){
+					setter['skill-query']='1d20+@{skill-invest-query}';
+				}
+				if (v.investigator_dice==="0" || !v.investigator_dice){
+					setter.investigator_dice="[[ 1d6 ]] [custom bonus]";
+				}
+				if (!v['skill-invest-query']){
+					setter['skill-invest-query']="0";
+				} else if ( v['skill-invest-query'] !== '@{investigator_dice}' && v['skill-invest-query'] !== "0" ){
+					setter['skill-invest-query']="0";
+				}
+				setter.migrated_take10_dropdown=1;
+				//TAS.debug("#####################","PFBuffs.migrate setting",setter);
+				setAttrs(setter,PFConst.silentParams,done);
+			} else {
+				done();
+			}
+		});
 	};
+	migrateTake10Dropdown(doneOne);
 	//TAS.debug("at PFSkills.migrate");
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros(doneOne);
