@@ -53,6 +53,17 @@ sizeNameMap = {
 	 'tiny':2,
 	 'diminutive':4,
 	 'fine':8
+},
+reverseSizeNameMap = {
+'0':'medium',
+'1':'small',
+'2':'tiny',
+'-8':'colossal',
+'4':'diminutive',
+'-4':'gargantuan',
+'-2':'huge',
+'-1':'large',
+'8':'fine'
 };
 
 /** getSizeFromText - returns size mod based on size display name
@@ -180,7 +191,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 
 export function updateSize (v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
-		buffLevels=0, skillSize = 0, changes=false;
+		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
@@ -193,18 +204,24 @@ export function updateSize (v,eventInfo,setter) {
 			if (buffSize!==size){
 				setter['size']=buffSize;
 				size = buffSize;
-				changes=true;
 			}
 		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
 			if (size!==defaultSize){
 				setter['size']=defaultSize;
 				size = defaultSize;
-				changes=true;
 			}
-		} else if (size!==defaultSize){
-			changes=true;
 		}
-		
+		try {
+			tempstr=reverseSizeMap[String(size)];
+			if (tempstr){
+				sizeDisplay = getTranslationByKey(sizeDisplay);
+			}
+		} catch (err3){
+			sizeDisplay = tempstr;
+		}
+		if (sizeDisplay && sizeDisplay!== v.size_display){
+			setter.size_display=sizeDisplay;
+		}
 		skillSize = skillSizeMap[String(size)];
 		setter.size_skill = skillSize;
 		setter["CMD-size"] = (size * -1);
@@ -223,7 +240,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 			callback();
 		}
 	});
-	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total"], function (v) {
+	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
 		setter = {};
 		try {
