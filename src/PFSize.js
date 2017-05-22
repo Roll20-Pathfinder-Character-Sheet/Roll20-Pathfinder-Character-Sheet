@@ -219,7 +219,7 @@ export function updateSize (v,eventInfo,setter) {
 		} catch (err3){
 			sizeDisplay = tempstr;
 		}
-		if (sizeDisplay && sizeDisplay!== v.size_display){
+		if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
 			setter.size_display=sizeDisplay;
 		}
 		skillSize = skillSizeMap[String(size)];

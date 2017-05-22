@@ -529,9 +529,21 @@ export function updateModifiedSpeed  (callback) {
     });
 }
 export function migrate (callback){
-    if (typeof callback === "function"){
-        callback();
+    var done = function(){
+        if (typeof callback === "function"){
+            callback();
+        }
     }
+    getAttrs(['max-dex-source'],function(v){
+        var val = parseInt(v['max-dex-source'],10);
+        if (isNaN(val)){
+            setAttrs({'max-dex-source':0},PFConst.silentParams,done);
+        } else {
+            done();
+        }
+    });
+
+
 }
 export function recalculate (callback, silently, oldversion) {
     var done = _.once(function () {
@@ -550,7 +562,7 @@ export function recalculate (callback, silently, oldversion) {
         updateLoadsAndLift(setEncumbrance, silently);
     });
     try {
-        setLoadCapability();
+        migrate(setLoadCapability)
     } catch (err) {
         TAS.error("PFEncumbrance.recalculate", err);
         done();
