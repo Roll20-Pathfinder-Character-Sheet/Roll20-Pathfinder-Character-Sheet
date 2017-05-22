@@ -419,9 +419,13 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFInventory.updateRepeatingItems();
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
-			if (oldversion < 1.6){
+			if (oldversion < 1.53){
 				PFBuffs.recalculate(null,false,oldversion);
 				PFSkills.migrate(null,oldversion);
+				PFSize.recalculate(function(){
+					PFBuffs.recalculate();
+					PFEncumbrance.migrate();
+				});
 			}
 		}
 	} catch (err) {

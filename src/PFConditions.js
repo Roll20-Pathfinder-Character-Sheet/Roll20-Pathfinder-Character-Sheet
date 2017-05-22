@@ -12,7 +12,7 @@ import * as PFAttackGrid from './PFAttackGrid';
 import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
-
+import * as PFAttacks from './PFAttacks';
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
 function updateGrapple () {
@@ -83,7 +83,7 @@ var events = {
 		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
 	},
 	conditionEventsPlayer: {
-		"change:condition-Sickened": [PFAttackGrid.updateDamage, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-Sickened": [PFAttacks.updateRepeatingWeaponDamages, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
 		"change:condition-stunned": [PFDefense.updateDefenses, PFDefense.applyConditions],
 		"change:condition-Flat-Footed": [PFDefense.updateDefenses],
 		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions],

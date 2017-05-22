@@ -19,7 +19,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv151-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv153-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
@@ -30,21 +30,16 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li><span style="font-size:1rem;font-weight:bold;">API Companion</span> beta availalable! Try beta version: https://github.com/Roll20-Pathfinder-Character-Sheet/Companion-Script</li>
-				<li><span style="font-size:1rem;font-weight:bold;">NEW BUFFS:</span> Speed, Initiative, Size, CMB, Ranged Damage, Armor, Shield, Natural Armor, Flat Footed AC, separate Ability Checks and Skill Checks. (bonus *types* and stacking coming soon)</li>
-				<li><span style="font-size:1rem;font-weight:bold;">TWO WEAPON FIGHTING</span> dual wield on ⛭ <em>(Settings)</em> page to display new fields just above Attacks list.</li>
-				<li>Offhand damage multiplier and number of attacks fixed</li>
-				<li>Create attack from equipment fixed - does not create empty attack</li>
-				<li>Drag and drop equipment fixed</li>
-				<li>More macro fields exposed for customization</li>
-				<li>Dual wield attacks improved: hide invalid fields, add extra damage field for rake/rend,etc</li>
-				<li>Fix when 'all buff rows' deleted then buff totals deleted too</li>
-				<li><em>Show more fields</em> checkboxes added locally not only one global field</li>
-				<li><span style="border-radius:5px;border: 1px solid #808080;font-weight:bold;padding:2px;" >MERGE</span> buttons on ⛭ <em>(Settings)</em> page to eliminate old lists of class abilites, feats, traits, etc. </li>
-				<li><strong>Horror Adventures</strong> on ⛭ <em>(Settings)</em> page to display <em>Sanity</em> on <em>Defenses</em> page below saves.</li>
+				<li><strong style="font-size:1rem;font-weight:bold;">Fix to skills</strong> not rolling. </li>
+				<li>Fix to initiative and size buffs</li>
+				<li>Fix to skill size adjustment not resetting when set to default. Added @{size_display} back and translated</li>
+				<li>Fix to default encumbrance and font (in default campaign settings)</li>
+				<li>Fix Melee attack and damage properly. +melee copied to +cmb, +dmg copied to +ranged_dmg for existing buffs between 1.2 and 1.3</li>
+				<li>Armor, Shield, Natural Armor buffs <strong>hidden</strong> due to continued development in beta changing how they work.</li>
+				<li><strong>Attack row size</strong> dropdown corrected: now can implement <em>Strong Jaw</em> or <em>Improved Natural Attack</em> or change the size of any attack without changing the size of the character.</li>
 				<li><strong>If you experience locking</strong> please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong></li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv151-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv153-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
@@ -337,7 +332,7 @@
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_buff-Fort-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med"><select class="sheet-select-small" name="attr_buff-Fort_type" title="repeating_buff_$X_buff-Fort_type">
-									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
+									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="resistance" data-i18n="resistance">Resistance</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
 								</select><span data-i18n="bonus-type">Bonus Type</span></label>
 								<input type="checkbox" name="attr_buff-Fort_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-Fort_macro-text" title="@{repeating_buff_$X_buff-Fort_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="fortitude-calculation-abbrv">Fort Calc</span></label>
@@ -346,7 +341,7 @@
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_buff-Ref-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med"><select class="sheet-select-small" name="attr_buff-Ref_type" title="repeating_buff_$X_buff-Ref_type">
-									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
+									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="resistance" data-i18n="resistance">Resistance</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
 								</select><span data-i18n="bonus-type">Bonus Type</span></label>
 								<input type="checkbox" name="attr_buff-Ref_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-Ref_macro-text" title="@{repeating_buff_$X_buff-Ref_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="reflex-calculation-abbrv">Ref Calc</span></label>
@@ -355,7 +350,7 @@
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_buff-Will-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med"><select class="sheet-select-small" name="attr_buff-Will_type" title="repeating_buff_$X_buff-Will_type">
-									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
+									<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option><option value="ability" data-i18n="ability">Ability</option><option value="alchemical" data-i18n="alchemical">Alchemical</option><option value="circumstance" data-i18n="circumstance">Circumstance</option><option value="competence" data-i18n="competence">competence</option><option value="equivalent" data-i18n="equivalent-to">Equivalent To (Ability)</option><option value="enhancement" data-i18n="enhancement">Enhancement</option><option value="insight" data-i18n="insight">Insight</option><option value="luck" data-i18n="luck">Luck</option><option value="morale" data-i18n="morale">Morale</option><option value="profane" data-i18n="profane">Profane</option><option value="racial-bonus" data-i18n="racial-bonus">Racial</option><option value="sacred" data-i18n="sacred">Sacred</option><option value="resistance" data-i18n="resistance">Resistance</option><option value="size" data-i18n="size">Size</option><option value="trait" data-i18n="trait">Trait</option>
 								</select><span data-i18n="bonus-type">Bonus Type</span></label>
 								<input type="checkbox" name="attr_buff-Will_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-Will_macro-text" title="@{repeating_buff_$X_buff-Will_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="willpower-calculation-abbrv">Will Calc</span></label>
@@ -470,7 +465,7 @@
 								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-DMG_ranged" title="@{repeating_buff_$X_buff-DMG_ranged}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-ranged-abbrv">DMG_ranged</span></label>
 							</div>
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_buff-size-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
+							<div class="sheet-linked-fields sheet-nextitem" style="width:8em !important;">
 								<label class="sheet-small-label2 sheet-entry-long">
 									<select name="attr_buff-size" title="@{buff-size}" >
 										<option value="-3" data-i18n="3-sizes-smaller">3 sizes smaller</option>
@@ -559,7 +554,7 @@
 										<span title="Bonus to armor class." data-i18n-title="buff-armor-class-title" data-i18n-aria-label="buff-armor-class-title"><span data-i18n="armor-class-abbrv">AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-AC-show}" name="attr_buff-AC-show" value="1" /></span>
 										<span title="Bonus to touch attack armor class." data-i18n-title="buff-touch-title" data-i18n-aria-label="buff-touch-title"><span data-i18n="touch-armor-class-abbrv">Touch AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Touch-show}" name="attr_buff-Touch-show" value="1" /></span>
 										<span title="Bonus to combat maneuver defense." data-i18n-title="buff-cmd-title" data-i18n-aria-label="buff-cmd-title"><span data-i18n="combat-maneuver-defense-abbrv">CMD</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMD-show}" name="attr_buff-CMD-show" value="1" /></span>
-										<span title="Bonus to all melee attack rolls." data-i18n-title="buff-melee-title" data-i18n-aria-label="buff-melee-title"><span data-i18n="melee-cmb">Melee/CMB</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Melee-show}" name="attr_buff-Melee-show" value="1" /></span>
+										<span title="Bonus to all melee attack rolls." data-i18n-title="buff-melee-title" data-i18n-aria-label="buff-melee-title"><span data-i18n="melee">Melee</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Melee-show}" name="attr_buff-Melee-show" value="1" /></span>
 										<span title="Bonus to all ranged attack rolls." data-i18n-title="buff-ranged-title" data-i18n-aria-label="buff-ranged-title"><span data-i18n="ranged">Ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Ranged-show}" name="attr_buff-Ranged-show" value="1" /></span>
 										<span title="Bonus to all melee damage." data-i18n-title="buff-damage-melee-title" data-i18n-aria-label="buff-damage-melee-title"><span data-i18n="damage-melee-abbrv">Dmg</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG-show}" name="attr_buff-DMG-show" value="1" /></span>
 										<span title="Bonus to ability checks." data-i18n-title="buff-ability-checks-title" data-i18n-aria-label="buff-ability-checks-title"><span data-i18n="ability-checks">Check</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Check-show}" name="attr_buff-Check-show" value="1" /></span>
@@ -572,8 +567,6 @@
 										<span title="Bonus to initiative." data-i18n-title="buff-initiative-title" data-i18n-aria-label="buff-initiative-title"><span data-i18n="initiative-abbrv">Init</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-initiative-show}" name="attr_buff-initiative-show" value="1" /></span>
 										<span title="Bonus to size." data-i18n-title="buff-size-title" data-i18n-aria-label="buff-size-title"><span data-i18n="size">Size</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-size-show}" name="attr_buff-size-show" value="1" /></span>
 										<span title="Bonus to speed." data-i18n-title="buff-speed-title" data-i18n-aria-label="buff-speed-title"><span data-i18n="speed">AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-speed-show}" name="attr_buff-speed-show" value="1" /></span>
-										<span title="Bonus to combat maneuver bonus." data-i18n-title="buff-combat-maneuver-bonus-title" data-i18n-aria-label="buff-combat-maneuver-bonus-title"><span data-i18n="combat-maneuver-bonus-only-abbrv">CMB only</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMB-show}" name="attr_buff-CMB-show" value="1" /></span>
-										<span title="Bonus to all attack damage-ranged." data-i18n-title="buff-damage-ranged-title" data-i18n-aria-label="buff-damage-ranged-title"><span data-i18n="damage-ranged-abbrv">DMG_ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" /></span>
 										<span title="Bonus to skill checks." data-i18n-title="buff-skill-checks-title" data-i18n-aria-label="buff-skill-checks-title"><span data-i18n="skill-checks">Check</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-check_skills-show}" name="attr_buff-check_skills-show" value="1" /></span>
 										<span title="Bonus to strength based skills." data-i18n-title="buff-strength-based-skills-title" data-i18n-aria-label="buff-strength-based-skills-title"><span data-i18n="strength-skills-abbrv">STR</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-STR_skills-show}" name="attr_buff-STR_skills-show" value="1" /></span>
 										<span title="Bonus to dexterity based skills." data-i18n-title="buff-dexterity-based-skills-title" data-i18n-aria-label="buff-dexterity-based-skills-title"><span data-i18n="dexterity-skills-abbrv">DEX</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DEX_skills-show}" name="attr_buff-DEX_skills-show" value="1" /></span>
@@ -581,6 +574,8 @@
 										<span title="Bonus to intelligence based skills." data-i18n-title="buff-intelligence-based-skills-title" data-i18n-aria-label="buff-intelligence-based-skills-title"><span data-i18n="intelligence-skills-abbrv">INT</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-INT_skills-show}" name="attr_buff-INT_skills-show" value="1" /></span>
 										<span title="Bonus to wisdom based skills." data-i18n-title="buff-wisdom-based-skills-title" data-i18n-aria-label="buff-wisdom-based-skills-title"><span data-i18n="wisdom-skills-abbrv">WIS</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-WIS_skills-show}" name="attr_buff-WIS_skills-show" value="1" /></span>
 										<span title="Bonus to charisma based skills." data-i18n-title="buff-charisma-based-skills-title" data-i18n-aria-label="buff-charisma-based-skills-title"><span data-i18n="charisma-skills-abbrv">CHA</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CHA_skills-show}" name="attr_buff-CHA_skills-show" value="1" /></span>
+										<span title="Bonus to attack damage-ranged." data-i18n-title="buff-damage-ranged-title" data-i18n-aria-label="buff-damage-ranged-title"><span data-i18n="damage-ranged-abbrv">DMG_ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" /></span>
+										<span title="Bonus to combat maneuver bonus." data-i18n-title="buff-combat-maneuver-bonus-title" data-i18n-aria-label="buff-combat-maneuver-bonus-title"><span data-i18n="combat-maneuver-bonus-only-abbrv">CMB only</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMB-show}" name="attr_buff-CMB-show" value="1" /></span>
 <!--
 										<span title="Bonus to armor." data-i18n-title="buff-armor-title" data-i18n-aria-label="buff-armor-title"><span data-i18n="armor">AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-armor-show}" name="attr_buff-armor-show" value="1" /></span>
 										<span title="Bonus to shield." data-i18n-title="buff-shield-title" data-i18n-aria-label="buff-shield-title"><span data-i18n="shield">AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-shield-show}" name="attr_buff-shield-show" value="1" /></span>
@@ -710,8 +705,8 @@
 			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="equipment" data-i18n-aria-label="equipment" title="Equipment" data-i18n="equipment-abbrv">Equip</label>
 			<input type="radio" name="attr_tab" value="8" class="sheet-tabinput sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" aria-label="NPC" data-i18n-aria-label="npc" />
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
-			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
-			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
+			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-wider-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
+			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-wider-tab" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
 
 			<input type="radio" name="attr_tab" value="10" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
 			<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
@@ -759,7 +754,8 @@
 							<span data-i18n="size">Size</span>
 						</label>
 						<label class="sheet-small-label2 sheet-narrow-numbers">
-							<input title="@{size}" type="hidden" name="attr_old_size" value="x" >
+							<input type="hidden" name="attr_old_size" value="x" />
+							<input type="hidden" name="attr_size_display" value="medium" />
 							<input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly>
 							<span data-i18n="modifier-abbrv">Mod</span>
 						</label>
@@ -1265,10 +1261,12 @@
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header sheet-super sheet-note-a" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
 										<span class="sheet-table-header"></span>
-										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header"></span>                                        
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
+                                        <span class="sheet-table-header"></span>
+                                        <span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-table-header" data-i18n="notes">Notes</span>
 										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>									
@@ -1310,6 +1308,11 @@
 										<span class="sheet-table-cell"><input type="number" title="@{checks-cond}" name="attr_checks-cond" value="0" class="sheet-calc" readonly>
 										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
 										</span>
+                                        <span class="sheet-divider sheet-hide-readonly">+</span>
+                                        <span class="sheet-table-cell"><input type="number" title="@{buff_initiative-total}" name="attr_buff_initiative-total" value="0" class="sheet-calc" readonly>
+										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="buff">Buff</span></span>
+										</span>
+
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
 										</span>
@@ -1413,7 +1416,7 @@
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="enhancement-abbrv">Enhan</span>
 							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header" data-i18n="resistance">Resistance</span>
+							<span class="sheet-table-header" data-i18n="resistance-abbrv">Resistance</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
 							<span class="sheet-table-header sheet-divider"></span>
@@ -2309,7 +2312,7 @@
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;" data-i18n="damage">Damage</span></span>
-							<span class="sheet-table-cell"><input type="number" title="@{DMG-mod}" name="attr_DMG-mod" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="@{buff_DMG-total}+@{condition-Sickened}" class="sheet-calc sheet-number" disabled /></span>
 							<span class="sheet-divider">=</span>
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-divider"></span>
@@ -2328,7 +2331,7 @@
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;" data-i18n="damage-ranged-abbrv">Ranged dmg</span></span>
-							<span class="sheet-table-cell"><input type="number" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="@{buff_DMG_ranged-total}+@{condition-Sickened}" class="sheet-calc sheet-number" disabled /></span>
 							<span class="sheet-divider">=</span>
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-divider"></span>
@@ -2340,8 +2343,8 @@
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-divider"></span>
 							<span class="sheet-table-cell"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider"></span>
-							<span class="sheet-table-cell"></span>
+							<span class="sheet-divider">-</span>
+							<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
 							<span class="sheet-table-cell sheet-left-border"></span>
 							<span class="sheet-table-cell"></span>
 						</div>
@@ -13161,7 +13164,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>05/20/2017 1:30pm PT &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="https://tinyurl.com/PF-roll20"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
