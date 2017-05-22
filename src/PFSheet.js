@@ -423,6 +423,7 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFSkills.migrate(null,oldversion);
 				PFSize.recalculate(function(){
 					PFBuffs.recalculate();
+					PFEncumbrance.migrate();
 				});
 			}
 		}
