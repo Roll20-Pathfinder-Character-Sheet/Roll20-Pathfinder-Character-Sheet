@@ -184,7 +184,7 @@ export function updateBuffTotals (col, callback,silently){
 						'ability':0,'alchemical':0,'circumstance':0,'competence':0,
 						'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'inherent':0,
 						'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
-						'size':0,'trait':0,'untyped':0};
+						'size':0,'trait':0,'untyped':0,'natural':0,'armor':0,'shield':0,'dodge':0,'deflect':0};
 					}
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
@@ -220,7 +220,7 @@ export function updateBuffTotals (col, callback,silently){
 									vals.bonusType=col;
 								} else if (selfTypeOrEnhance.indexOf(col)>=0){
 									vals.bonusType = v[prefix+'_type']||col;
-									TAS.debug("buff "+ col+" has type of enhancement or "+col+", this is :"+vals.bonusType+" and val is: "+vals.val);
+									TAS.debug("buff "+ col+" has type of enhancement of "+col+", this is :"+vals.bonusType+" and val is: "+vals.val);
 								} else {
 									vals.bonusType = v[prefix+'_type']||'untyped';
 									TAS.debug("bonus type for "+col+" is "+ vals.bonusType+" and val is: "+vals.val);							
@@ -232,7 +232,7 @@ export function updateBuffTotals (col, callback,silently){
 							}
 						});
 					}
-					//TAS.debug("PFBUFFS ROWS NOW:",rows);
+					TAS.debug("PFBUFFS ROWS NOW:",rows);
 					if(col==='HP-temp'){
 						sums.sum = rows.filter(function(row){
 							return row.val>0;
