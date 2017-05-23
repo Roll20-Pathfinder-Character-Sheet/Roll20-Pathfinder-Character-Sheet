@@ -19,7 +19,7 @@ import * as PFSkills from './PFSkills';
 
 //new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
 // added:init, speed, dmg_ranged, cmb
-var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
+export var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
 	"speed", "initiative","size","check_skills",
 	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
@@ -28,26 +28,36 @@ var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait','feat','equivalent','ability','equivalent',
 	'deflection','dodge','force','customa','customb','customc'],
-stackingTypes =['untyped','circumstance','dodge','penalty'],
 otherCharBonuses ={
-	'STR':{'inherent':'STR-inherent','enhance':'STR-enhance'},
-	'DEX':{'inherent':'DEX-inherent','enhance':'DEX-enhance'},
-	'CON':{'inherent':'CON-inherent','enhance':'CON-enhance'},
-	'INT':{'inherent':'INT-inherent','enhance':'INT-enhance'},
-	'WIS':{'inherent':'WIS-inherent','enhance':'WIS-enhance'},
-	'CHA':{'inherent':'CHA-inherent','enhance':'CHA-enhance'},
+	'STR':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
+	'DEX':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
+	'CON':{'inherent':'CON-inherent','enhancement':'CON-enhance'},
+	'INT':{'inherent':'INT-inherent','enhancement':'INT-enhance'},
+	'WIS':{'inherent':'WIS-inherent','enhancement':'WIS-enhance'},
+	'CHA':{'inherent':'CHA-inherent','enhancement':'CHA-enhance'},
 	'initiative':{'trait':'init-trait'},
-	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait','enhance':'Fort-enhance'},
-	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait','enhance':'Ref-enhance'},
-	'Will':{'resistance':'Will-resist','trait':'Will-trait','enhance':'Will-enhance'},
-	'armor':{'enhance':'armor3-enhance','armor':'armor3-acbonus'},
-	'shield':{'enhance':'shield3-enhance','shield':'shield3-acbonus'},
+	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait','enhancement':'Fort-enhance'},
+	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait','enhancement':'Ref-enhance'},
+	'Will':{'resistance':'Will-resist','trait':'Will-trait','enhancement':'Will-enhance'},
+	'armor':{'enhancement':'armor3-enhance','armor':'armor3-acbonus'},
+	'shield':{'enhancement':'shield3-enhance','shield':'shield3-acbonus'},
 	'dodge':{'dodge':'AC-dodge'},
 	'natural':{'natural':'AC-natural'},
 	'deflection':{'deflection':'AC-deflect'},
 	'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
-},
-events = {
+};
+//bonus types found in otherCharBonuses. should be created dynamically but whatever
+var stackingTypes =['untyped','circumstance','dodge','penalty'],
+ bonusTypesRepeated=['armor',
+	'deflection',
+	'dodge',
+	'enhance',
+	'inherent',
+	'natural',
+	'resistance',
+	'shield',
+	'trait'],
+ events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
 		"Fort": [PFSaves.updateSave],
@@ -127,7 +137,7 @@ export function updateBuffTotals (col, callback,silently){
 	}),	
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 	getSectionIDs('repeating_buff',function(ids){
-		var fields,totfields;
+		var fields,totfields,otherfields;
 		if(ids){
 			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle']);
 			if (useBonuses){
@@ -141,12 +151,25 @@ export function updateBuffTotals (col, callback,silently){
 			}
 			fields = fields.concat(totfields);
 			fields.push('use_buff_bonuses');
+			if (otherCharBonuses[col]){
+				otherfields= _.reduce(otherCharBonuses[col],function(m,field,bonusType){
+					TAS.debug("looking for fieldsin: ",field,bonusType);
+					m.push(field);
+					return m;
+				},[]);
+				TAS.notice("##### looking up ",otherfields);
+				if(_.size(otherfields)){
+					fields = fields.concat(otherfields);
+				}
+			}
+
 			getAttrs(fields,function(v){
 				//same as all bonuses but includes 'notype' and 'penalty'
 				var useBonuses=false,
 				bonuses = {},
 				sums={'sum':0,'pen':0},
 				params={}, setter={},
+				tempInt=0,
 				rows=[];
 				try {
 					useBonuses=parseInt(v.use_buff_bonuses,10)||0;
@@ -220,7 +243,39 @@ export function updateBuffTotals (col, callback,silently){
 							}
 							return m;
 						},bonuses);
-						//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+
+						bonuses = _.omit(bonuses,function(val,bonusType){
+							if (val===0 && bonusType !== 'penalty'){
+								return 1;
+							}
+							return 0;
+						});
+						TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+						//look at bonuses on rest of sheet to see if they overlap and don't stack:
+						if (otherCharBonuses[col]){
+							TAS.debug("looking at other sheet values for bonus to "+col);
+							bonuses = _.mapObject(bonuses,function(val,bonusType){
+								var retval=val;
+								try{
+									TAS.debug("comparing "+bonusType+" of +" +val);
+									if(bonusTypesRepeated.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
+										tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
+										TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
+										if(tempInt>0){
+											if (val<= tempInt){
+												retval=0;
+											}else {
+												retval-=tempInt;
+											}
+										}		
+									}
+								} catch (erri2){
+									TAS.error("error finding other related value on sheet for "+ bonusType+" buff to "+col);
+								} finally {
+									return retval;
+								}
+							});
+						}
 						if (isAbility){
 							try {
 								sums.pen = bonuses.penalty||0;
@@ -228,9 +283,7 @@ export function updateBuffTotals (col, callback,silently){
 							bonuses.penalty=0;
 						}
 						sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-							TAS.debug("PFBUFFS REDUCE AT ",bonus,"##############################");
 							m+=bonus;
-							//if(bonus){m+=parseInt(bonus,10)||0;}
 							return m;
 						},0);
 					} else if (isAbility) {
