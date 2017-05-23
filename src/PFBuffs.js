@@ -212,17 +212,18 @@ export function updateBuffTotals (col, callback,silently){
 						rows = ids.map(function(id){
 							var vals={'bonusType':'untyped',val:0},prefix='';
 							prefix='repeating_buff_'+id+'_buff-'+col;
-							vals.val = parseInt(v[prefix],10)||0;
+
 							try {
+								vals.val = parseInt(v[prefix],10)||0;
 								if (selfTypeOnly.indexOf(col)>=0){
-									TAS.debug("buff "+col+" only has type of "+ col+" and val is: "+val);
+									TAS.debug("buff "+col+" only has type of "+ col+" and val is: "+vals.val);
 									vals.bonusType=col;
 								} else if (selfTypeOrEnhance.indexOf(col)>=0){
 									vals.bonusType = v[prefix+'_type']||col;
-									TAS.debug("buff "+ col+" has type of enhancement or "+col+", this is :"+vals.bonusType+" and val is: "+val);
+									TAS.debug("buff "+ col+" has type of enhancement or "+col+", this is :"+vals.bonusType+" and val is: "+vals.val);
 								} else {
 									vals.bonusType = v[prefix+'_type']||'untyped';
-									TAS.debug("bonus type for "+col+" is "+ vals.bonusType+" and val is: "+val);							
+									TAS.debug("bonus type for "+col+" is "+ vals.bonusType+" and val is: "+vals.val);							
 								}
 							} catch (erri3){
 								TAS.error("PFBuffs.updateTtotals erri3:",erri3);
