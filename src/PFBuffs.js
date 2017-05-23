@@ -24,10 +24,13 @@ export var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	"speed", "initiative","size","check_skills",
 	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
 	'STR','DEX','CON','INT','WIS','CHA',
-	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills' ],
+	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills',
+	'deflection','dodge'],
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
-	'insight','luck','morale','profane','racial','resistance','sacred','size','trait','feat','equivalent','ability','equivalent',
-	'deflection','dodge','force','customa','customb','customc'],
+	'insight','luck','morale','profane','racial','resistance','sacred','size','trait'],
+//are these types or columsn?:
+//  //all 3 have their own type or "enhancement"
+//     // no types
 otherCharBonuses ={
 	'STR':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
 	'DEX':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
@@ -43,12 +46,17 @@ otherCharBonuses ={
 	'shield':{'enhancement':'shield3-enhance','shield':'shield3-acbonus'},
 	'dodge':{'dodge':'AC-dodge'},
 	'natural':{'natural':'AC-natural'},
-	'deflection':{'deflection':'AC-deflect'},
-	'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
+	'deflection':{'deflection':'AC-deflect'}
+	//'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
 };
 //bonus types found in otherCharBonuses. should be created dynamically but whatever
+	//these aways stack don't need to use max
 var stackingTypes =['untyped','circumstance','dodge','penalty'],
- bonusTypesRepeated=['armor',
+//these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
+selfTypeOnly=['dodge','deflection','size'],
+//these have only their own type (like selfTypeOnly) or 'enhancement'
+selfTypeOrEnhance=['armor','shield','natural'],
+bonusTypesRepeated=['armor',
 	'deflection',
 	'dodge',
 	'enhance',
@@ -89,6 +97,8 @@ var stackingTypes =['untyped','circumstance','dodge','penalty'],
 		"Touch": [PFDefense.updateDefenses],
 		"armor": [PFDefense.updateDefenses],
 		"shield": [PFDefense.updateDefenses],
+		"dodge": [PFDefense.updateDefenses],
+		"deflection": [PFDefense.updateDefenses],
 		"natural": [PFDefense.updateDefenses],
 		"flat-footed": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
@@ -127,7 +137,7 @@ function toggleBuffStatusPanel (col, val) {
 		}
 	});
 }
-var useBonuses = true;
+
 export function updateBuffTotals (col, callback,silently){
 	var done = _.once(function () {
 		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
@@ -136,15 +146,11 @@ export function updateBuffTotals (col, callback,silently){
 		}
 	}),	
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
+
 	getSectionIDs('repeating_buff',function(ids){
 		var fields,totfields,otherfields;
 		if(ids){
-			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle']);
-			if (useBonuses){
-				fields = fields.concat(
-					SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col+'_type'])
-				);
-			}
+			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle','_buff-'+col+'_type']);
 			totfields = ['buff_'+col+'-total', 'buff_'+col+'_exists'];
 			if (isAbility){
 				totfields = totfields.concat(['buff_'+col+'-total_penalty', 'buff_'+col+'_penalty_exists']);
@@ -164,7 +170,6 @@ export function updateBuffTotals (col, callback,silently){
 			}
 
 			getAttrs(fields,function(v){
-				//same as all bonuses but includes 'notype' and 'penalty'
 				var useBonuses=false,
 				bonuses = {},
 				sums={'sum':0,'pen':0},
@@ -172,12 +177,13 @@ export function updateBuffTotals (col, callback,silently){
 				tempInt=0,
 				rows=[];
 				try {
+					TAS.debug("PFBuffs.totals for "+ col+" v is",v);
 					useBonuses=parseInt(v.use_buff_bonuses,10)||0;
 					if(useBonuses){
 					 	bonuses = {
-						'ability':0,'alchemical':0,'circumstance':0,'competence':0,'customa':0,'customb':0,'customc':0,
-						'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'feat':0,'force':0,'inherent':0,
-						'insight':0,'luck':0,'morale':0,'notype':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
+						'ability':0,'alchemical':0,'circumstance':0,'competence':0,
+						'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'inherent':0,
+						'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
 						'size':0,'trait':0,'untyped':0};
 					}
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
@@ -204,15 +210,25 @@ export function updateBuffTotals (col, callback,silently){
 						});
 					} else {
 						rows = ids.map(function(id){
-							var vals={'bonusType':'',val:0},prefix='';
+							var vals={'bonusType':'untyped',val:0},prefix='';
 							prefix='repeating_buff_'+id+'_buff-'+col;
+							vals.val = parseInt(v[prefix],10)||0;
 							try {
-								vals.bonusType = v[prefix+'_type']||'untyped';
-							} catch (er){
-								vals.bonusType='untyped';
-							}
-							vals.val = parseInt(v[prefix],10);
+								if (selfTypeOnly.indexOf(col)>=0){
+									TAS.debug("buff "+col+" only has type of "+ col+" and val is: "+val);
+									vals.bonusType=col;
+								} else if (selfTypeOrEnhance.indexOf(col)>=0){
+									vals.bonusType = v[prefix+'_type']||col;
+									TAS.debug("buff "+ col+" has type of enhancement or "+col+", this is :"+vals.bonusType+" and val is: "+val);
+								} else {
+									vals.bonusType = v[prefix+'_type']||'untyped';
+									TAS.debug("bonus type for "+col+" is "+ vals.bonusType+" and val is: "+val);							
+								}
+							} catch (erri3){
+								TAS.error("PFBuffs.updateTtotals erri3:",erri3);
+							}finally {
 							return vals;
+							}
 						});
 					}
 					//TAS.debug("PFBUFFS ROWS NOW:",rows);
@@ -245,7 +261,7 @@ export function updateBuffTotals (col, callback,silently){
 						},bonuses);
 
 						bonuses = _.omit(bonuses,function(val,bonusType){
-							if (val===0 && bonusType !== 'penalty'){
+							if (!val && bonusType !== 'penalty'){
 								return 1;
 							}
 							return 0;
@@ -535,63 +551,7 @@ function resetStatuspanel (callback) {
 		}
 	});
 }
-function updateBuffTotalsNoStackRules (col, callback,silently) {
 
-	var tempstr='',
-	done = _.once(function () {
-		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),	
-	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0 && col.indexOf('skill')===-1);
-	try {
-		TAS.repeating('buff').attrs('buff_' + col + '-total', 'buff_' + col + '-total_penalty').fields('buff-' + col, 'buff-enable_toggle', 'buff-' + col + '-show').reduce(function (m, r) {
-			try {
-				var tempM = (r.I['buff-' + col] * ((r.I['buff-enable_toggle']||0) & (r.I['buff-' + col + '-show']||0)));
-				tempM=tempM||0;
-				//TAS.debug("adding "+ tempM+" to m.mod:"+m.mod+" for buff "+ col);
-				if(tempM!==0){
-					if (tempM >= 0) {
-						m.mod += tempM;
-					} else {
-						m.pen += tempM;
-					}
-				}
-			} catch (err) {
-				TAS.error("PFBuffs.updateBuffTotals error:" + col, err);
-			} finally {
-				return m;
-			}
-		}, {
-			mod: 0,
-			pen: 0
-		}, function (m, r, a) {
-			try {
-				//TAS.debug('setting buff_' + col + '-total to '+ (m.mod||0));
-				if(!isAbility){
-					m.mod+=m.pen;
-					m.pen=0;
-				}
-				if(col==='HP-temp' && m.mod < 0){
-					m.mod=0;
-				}
-				a.I['buff_' + col + '-total'] = m.mod;
-				toggleBuffStatusPanel(col,m.mod);
-				if (isAbility) {
-					a.I['buff_' + col + '-total_penalty'] = m.pen;
-					toggleBuffStatusPanel(col+'_penalty',m.pen);
-				}
-				TAS.debug("updateBuffTotals setting ",m,r,a);
-			} catch (errfinalset){
-				TAS.error("error setting buff_" + col + "-total",errfinalset);
-			}
-		}).execute(done);
-	} catch (err2) {
-		TAS.error("PFBuffs.updateBuffTotals error:" + col, err2);
-		done();
-	}
-}
 export function clearBuffTotals(callback,silently){
 	var done=function(){
 		if(typeof callback === "function"){
@@ -731,8 +691,8 @@ function registerEventHandlers () {
 		on(prefix + "-show", TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-				getAttrs(['repeating_buff_buff-'+col],function(v){
-					if (parseInt(v['repeating_buff_buff-'+col],10)){
+				getAttrs(['repeating_buff_buff-'+col,'repeating_buff_buff-enable_toggle'],function(v){
+					if ( parseInt(v['repeating_buff_buff-enable_toggle'],10) && parseInt(v['repeating_buff_buff-'+col],10)){
 						updateBuffTotals(col);
 					}
 				});

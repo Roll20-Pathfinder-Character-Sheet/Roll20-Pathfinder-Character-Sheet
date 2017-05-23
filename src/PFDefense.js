@@ -56,6 +56,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
     "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
+    "buff-dodge-total","buff-deflection-total",
     "current-load", "max-dex-source"], function (v) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
@@ -112,24 +113,31 @@ export function updateDefenses ( callback, silently, eventInfo) {
         shieldbuff = parseInt(v['buff_shield-total'],10)||0,
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
         flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
+        dodgebuff=parseInt(v['buff-dodge-total'],10)||0,
+        deflectbuff=parseInt(v['buff-deflection-ttoal'],10)||0,
         buffac = 0,
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
+        buffcmd = 0,
         setAny = 0,
         setter = {},
         params = {};
         try {
             //TAS.debug("PFDefense.updateDefenses:",v);
-            buffac=buffs+armorbuff+shieldbuff+naturalbuff;
-            bufftouch=buffsTouch;
-            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
-            buffffcmd = buffsCMD+flatfootedbuff;
-         //   buffcmd = buffs
-            setter.buffsumac=buffac;
-            setter.buffsumtouch=bufftouch;
-            setter.buffsumff=buffff;
-            setter.buffsumffcmd = buffffcmd;
+            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
+            bufftouch=buffsTouch+dodgebuff+deflectbuff;
+            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
+            buffcmd = buffsCMD+dodgebuff+deflectbuff;
+            buffffcmd = buffsCMD+flatfootedbuff+dodgebuff+deflectbuff;
+
+
+            dodge += dodgebuff;
+            deflect += deflectbuff;
+            armor += armorbuff;
+            shield += shieldbuff;
+            natural += naturalbuff;
+
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if ((maxDex) < ability) {
@@ -212,6 +220,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     //dexModShowLimit=1;
                     dodge = 0;
                     noDexShowLimit = 1;
+                } else {
+                    buffff += dodgebuff;
+                    buffffcmd += dodgebuff;
                 }
                 //set to same as flat footed (probably 0) or less than if ability already under 10.
                 ability = Math.min(ability,ffAbility);
@@ -225,22 +236,26 @@ export function updateDefenses ( callback, silently, eventInfo) {
             ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+
+         //   buffcmd = buffs
+            setter.buffsumac=buffac;
+            setter.buffsumtouch=bufftouch;
+            setter.buffsumff=buffff;
+            setter.buffsumcmd=buffcmd;
+            setter.buffsumffcmd = buffffcmd;
+
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
-                setAny += 1;
             }
             if (touch !== currTouch || isNaN(currTouch)) {
                 setter["Touch"] = touch;
-                setAny += 1;
             }
             if (ff !== currFF || isNaN(currFF)) {
                 setter["Flat-Footed"] = ff;
-                setAny += 1;
             }
             //TAS.debug("PFDefense.updateDefenses currcmd is :"+ currCMD +", new cmd is:"+ cmd);
             if (cmd !== currCMD || isNaN(currCMD)) {
                 setter["CMD"] = cmd;
-                setAny += 1;
             }
             if (cmdFF !== currCMDFF || isNaN(currCMDFF)) {
                 setter["FF-CMD"] = cmdFF;
