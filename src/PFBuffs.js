@@ -159,11 +159,9 @@ export function updateBuffTotals (col, callback,silently){
 			fields.push('use_buff_bonuses');
 			if (otherCharBonuses[col]){
 				otherfields= _.reduce(otherCharBonuses[col],function(m,field,bonusType){
-					TAS.debug("looking for fieldsin: ",field,bonusType);
 					m.push(field);
 					return m;
 				},[]);
-				TAS.notice("##### looking up ",otherfields);
 				if(_.size(otherfields)){
 					fields = fields.concat(otherfields);
 				}
@@ -177,15 +175,8 @@ export function updateBuffTotals (col, callback,silently){
 				tempInt=0,
 				rows=[];
 				try {
-					TAS.debug("PFBuffs.totals for "+ col+" v is",v);
+					//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
 					useBonuses=parseInt(v.use_buff_bonuses,10)||0;
-					if(useBonuses){
-					 	bonuses = {
-						'ability':0,'alchemical':0,'circumstance':0,'competence':0,
-						'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'inherent':0,
-						'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
-						'size':0,'trait':0,'untyped':0,'natural':0,'armor':0,'shield':0,'dodge':0,'deflect':0};
-					}
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						var prefix = 'repeating_buff_'+id+'_buff-';
@@ -212,27 +203,23 @@ export function updateBuffTotals (col, callback,silently){
 						rows = ids.map(function(id){
 							var vals={'bonusType':'untyped',val:0},prefix='';
 							prefix='repeating_buff_'+id+'_buff-'+col;
-
 							try {
 								vals.val = parseInt(v[prefix],10)||0;
 								if (selfTypeOnly.indexOf(col)>=0){
-									TAS.debug("buff "+col+" only has type of "+ col+" and val is: "+vals.val);
 									vals.bonusType=col;
 								} else if (selfTypeOrEnhance.indexOf(col)>=0){
 									vals.bonusType = v[prefix+'_type']||col;
-									TAS.debug("buff "+ col+" has type of enhancement of "+col+", this is :"+vals.bonusType+" and val is: "+vals.val);
 								} else {
 									vals.bonusType = v[prefix+'_type']||'untyped';
-									TAS.debug("bonus type for "+col+" is "+ vals.bonusType+" and val is: "+vals.val);							
 								}
 							} catch (erri3){
 								TAS.error("PFBuffs.updateTtotals erri3:",erri3);
 							}finally {
-							return vals;
+								return vals;
 							}
 						});
 					}
-					TAS.debug("PFBUFFS ROWS NOW:",rows);
+					//TAS.debug("PFBUFFS ROWS NOW:",rows);
 					if(col==='HP-temp'){
 						sums.sum = rows.filter(function(row){
 							return row.val>0;
@@ -250,6 +237,13 @@ export function updateBuffTotals (col, callback,silently){
 							return m;
 						},sums);
 					} else if (useBonuses) {
+					 	bonuses = {
+							'ability':0,'alchemical':0,'circumstance':0,'competence':0,
+							'deflection':0,'dodge':0,'enhancement':0,'equivalent':0,'inherent':0,
+							'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
+							'size':0,'trait':0,'untyped':0,'natural':0,'armor':0,'shield':0,'dodge':0,'deflect':0};
+						//bonuses = {};
+						
 						bonuses = rows.reduce(function(m,row){
 							if (row.val<0){
 								m.penalty += row.val;
@@ -262,22 +256,20 @@ export function updateBuffTotals (col, callback,silently){
 						},bonuses);
 
 						bonuses = _.omit(bonuses,function(val,bonusType){
-							if (!val && bonusType !== 'penalty'){
+							if ((!val || val === 0) && bonusType !== 'penalty'){
 								return 1;
 							}
 							return 0;
 						});
-						TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+						//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
 						//look at bonuses on rest of sheet to see if they overlap and don't stack:
 						if (otherCharBonuses[col]){
-							TAS.debug("looking at other sheet values for bonus to "+col);
 							bonuses = _.mapObject(bonuses,function(val,bonusType){
 								var retval=val;
 								try{
-									TAS.debug("comparing "+bonusType+" of +" +val);
 									if(bonusTypesRepeated.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
 										tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
-										TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
+										//TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
 										if(tempInt>0){
 											if (val<= tempInt){
 												retval=0;
@@ -287,7 +279,7 @@ export function updateBuffTotals (col, callback,silently){
 										}		
 									}
 								} catch (erri2){
-									TAS.error("error finding other related value on sheet for "+ bonusType+" buff to "+col);
+									TAS.error("error finding other related value on sheet for "+ bonusType+" buff to "+col,erri2);
 								} finally {
 									return retval;
 								}
@@ -321,9 +313,10 @@ export function updateBuffTotals (col, callback,silently){
 					if ( (parseInt(v['buff_'+col+'-total'],10)||0)!==sums.sum){
 						setter['buff_'+col+'-total']=sums.sum;
 					}
-					if (sums.sum){
+
+					if (sums.sum > 0){
 						setter['buff_'+col+'_exists']=1;
-					} else if (parseInt(setter['buff_'+col+'_exists'],10)){
+					} else if (parseInt(v['buff_'+col+'_exists'],10)){
 						setter['buff_'+col+'_exists']=0;
 					}
 					if (isAbility){
@@ -332,7 +325,7 @@ export function updateBuffTotals (col, callback,silently){
 						}
 						if (sums.pen){
 							setter['buff_'+col+'_penalty_exists']=1;
-						} else if (parseInt(setter['buff_'+col+'_penalty_exists'],10)){
+						} else if (parseInt(v['buff_'+col+'_penalty_exists'],10)){
 							setter['buff_'+col+'_penalty_exists']=0;
 						}
 					}
