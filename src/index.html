@@ -736,8 +736,8 @@ abilities:
 			<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="equipment" data-i18n-aria-label="equipment" title="Equipment" data-i18n="equipment-abbrv">Equip</label>
 			<input type="radio" name="attr_tab" value="8" class="sheet-tabinput sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" aria-label="NPC" data-i18n-aria-label="npc" />
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
-			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
-			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
+			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
+			<label role="menuitem" class="sheet-tab sheet-tab9" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
 
 			<input type="radio" name="attr_tab" value="10" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
 			<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
@@ -1292,10 +1292,12 @@ abilities:
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header sheet-super sheet-note-a" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
 										<span class="sheet-table-header"></span>
-										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header"></span>                                        
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
+                                        <span class="sheet-table-header"></span>
+                                        <span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-table-header" data-i18n="notes">Notes</span>
 										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>									
@@ -1337,6 +1339,11 @@ abilities:
 										<span class="sheet-table-cell"><input type="number" title="@{checks-cond}" name="attr_checks-cond" value="0" class="sheet-calc" readonly>
 										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
 										</span>
+                                        <span class="sheet-divider sheet-hide-readonly">+</span>
+                                        <span class="sheet-table-cell"><input type="number" title="@{buff_initiative-total}" name="attr_buff_initiative-total" value="0" class="sheet-calc" readonly>
+										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="buff">Buff</span></span>
+										</span>
+
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
 										</span>
