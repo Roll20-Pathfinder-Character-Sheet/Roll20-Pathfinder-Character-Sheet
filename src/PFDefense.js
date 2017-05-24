@@ -114,7 +114,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
         flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
         dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
-        deflectbuff=parseInt(v['buff_deflection-ttoal'],10)||0,
+        deflectbuff=parseInt(v['buff_deflection-total'],10)||0,
         buffac = 0,
         bufftouch = 0,
         buffff = 0,
