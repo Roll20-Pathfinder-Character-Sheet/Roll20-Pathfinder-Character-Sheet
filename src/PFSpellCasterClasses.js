@@ -62,7 +62,7 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
             setter.spellclasses_multiclassed= 0;
         } 
         if(_.size(setter)>0){
-            setAttrs(setter,PFConst.silentParams,done);
+            SWUtils.setWrapper(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -108,7 +108,7 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -160,7 +160,7 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -212,7 +212,7 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
             TAS.error("PFSpellCasterClasses.updateBonusSpells", err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -240,7 +240,7 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
         }
         if (newCount !== curr){
             setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-            setAttrs(setter,{},done);
+            SWUtils.setWrapper(setter,{},done);
         } else {
             done();
         }
@@ -279,7 +279,7 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -357,7 +357,7 @@ function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, sile
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, function(){
+                SWUtils.setWrapper(setter, params, function(){
                     if (recalcAfter){
                         recalcOneClass(spellclassidx,done,silently);
                     } else {
@@ -433,7 +433,7 @@ export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, 
                     TAS.error("PFSpellCasterClasses.setCasterClassFromDropdown", err);
                 } finally {
                     if (_.size(setter) > 0) {
-                        setAttrs(setter, {
+                        SWUtils.setWrapper(setter, {
                             silent: true
                         }, done);
                         if (updateLevel) {
@@ -497,7 +497,7 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
             if (newCasterLevel !== currCasterLevel || isNaN(currCasterLevel) || force) {
                 setter[spellclasslevelField] = newCasterLevel;
                 setter[prefix + "-name"] = v[classNameField];
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 });
                 updateCasterLevel(classidx, eventInfo, newCasterLevel);

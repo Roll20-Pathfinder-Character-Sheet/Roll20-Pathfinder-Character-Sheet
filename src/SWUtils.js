@@ -4,6 +4,49 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
+var  setWrapperCall = TAS.callback(function callSetAttrs(a,b,c){
+	TAS.debug("setting "+_.size(a)+" values");
+	_.each(a,function(v,k){
+		if (isNaN(v)){
+			TAS.error("Setting NaN! at "+k,a);
+			TAS.callstack();
+		}
+	});
+	setAttrs(a,b,c);
+});
+
+export function setWrapper(a,b,c){setWrapperCall(a,b,c);}
+/*	var x = TAS.callback(function callSetAttrs(a,b,c){
+		TAS.debug("setting "+_.size(a)+" values");
+				setAttrs(a,b,c);
+		var good=true;
+		try {
+			TAS.debug("setting "+_.size(a)+" values");
+			if (_.size(a)){
+				_.each(a,function(v,k){
+					if (isNaN(v)){
+						TAS.error("Setting NaN! at "+k,a);
+						TAS.callstack();
+						good=false;
+					}
+				});
+				setAttrs(a,b,c);
+//			if (good){
+//				setAttrs(a,b,c);
+			} else if (typeof c === "function"){
+				TAS.callstack();
+				c();
+			}
+		} catch (er){
+			TAS.error("SWUtils.setWrapper error:",er);
+			if (typeof c === "function"){
+				c();
+			}
+		}
+	});
+	x();
+}*/
+
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
@@ -188,7 +231,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 		var donesetter={};
 		if (currError){
 			donesetter[writeField+'_error']=0;
-			setAttrs(donesetter,{silent:true});
+			setWrapper(donesetter,{silent:true});
 		}
 		if (typeof callback === "function") {
 			callback(a, b, c);
@@ -199,7 +242,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
-			setAttrs(donesetter,{silent:true});				
+			setWrapper(donesetter,{silent:true});				
 		}
 		if (typeof errcallback === "function") {
 			errcallback(a, b, c);
@@ -228,7 +271,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 				value = trueDefault;
 				if (currVal !== value || isNaN(currVal)) {
 					setter[writeField] = value;
-					setAttrs(setter, params, function () {
+					setWrapper(setter, params, function () {
 						done(value, currVal, true,currError);
 					});
 				} else {
@@ -238,7 +281,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 				//check for number
 				if (currVal !== value) {
 					setter[writeField] = value;
-					setAttrs(setter, params, function () {
+					setWrapper(setter, params, function () {
 						done(value, currVal, true,currError);
 					});
 				} else {
@@ -263,7 +306,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 						TAS.error("SWUtils.evaluateAndSetNumber error after call to evaluateExpression ", err2);
 						isError=1;
 					} finally {
-						setAttrs(setter, params, function () {
+						setWrapper(setter, params, function () {
 							if (!isError){
 								done(value2, currVal, isChanged,currError);
 							} else {
@@ -278,7 +321,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
 			errordone(0,0,0,0);
 			//setter[writeField+'_error']=1;
-			//setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
+			//setWrapper(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 }
@@ -320,7 +363,7 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
  * @param {function} synchrousFindAttributeFunc takes value of @readField and says what the lookup field is.
  * @param {function(int)} callback (optional) if we need to update the field, call this function
  *         with the value we set as the only parameter.
- * @param {boolean} silently if true call setAttrs with {silent:true}
+ * @param {boolean} silently if true call setWrapper with {silent:true}
  */
 export function setDropdownValue (readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
 	var done = function (newval, currval, changed) {
@@ -341,7 +384,7 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
 				//TAS.debug("setDropdownValue, readField:" + readField + ", currValue:" + currValue + ", newValue:" + valueOf);
 				if (currValue !== valueOf || isNaN(currValue)) {
 					setter[writeFields] = valueOf;
-					setAttrs(setter, params, function () {
+					setWrapper(setter, params, function () {
 						done(valueOf, currValue, true);
 					});
 				} else {
@@ -358,7 +401,7 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
 					}
 				}
 				if (_.size(setter) > 0) {
-					setAttrs(setter, params, function () {
+					setWrapper(setter, params, function () {
 						done(valueOf, 0, true);
 					});
 				} else {
@@ -432,7 +475,7 @@ export function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, 
  * @param {Array} penalties array of fieldnames whose values are to be subtracted from the total
  * @param {boolean} totalIsFloat true if we should not round the total to int.
  * @param {function(number,number)} callback optional call this with two values: the new total, old total
- * @param {boolean} silently if true call setAttrs with {silent:true}
+ * @param {boolean} silently if true call setWrapper with {silent:true}
  */
 export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback, silently, force) {
 	var done = function () {
@@ -450,7 +493,7 @@ export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback
 			if (silently) {
 				params.silent=true;
 			}
-			setAttrs(setter, params, done);
+			setWrapper(setter, params, done);
 		} else {
 			done();
 		}
