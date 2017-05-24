@@ -553,16 +553,17 @@ function recalculateCore (callback, silently, oldversion) {
 */
 export function recalculate (oldversion, callback, silently) {
 	var done = function () {
+		TAS.callstack();
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	},
 	callParallel = TAS.callback(function callRecalculateParallelModules() {
-		recalculateParallelModules(TAS.callback(done), silently, oldversion);
+		recalculateParallelModules(done, silently, oldversion);
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
-		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
+		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
 	});
 	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);

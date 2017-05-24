@@ -76,13 +76,14 @@ defaultIterativeDeletedMacroAttrs=null,
 defaultIterativeAttrName='var_iterative_attackREPLACE_macro',
 defaultIterativeReplaceArray=['2','3','4','5','6','7','8'];
 
-function getRepeatingAddInMacroPortion (macro, toggle, portion) {
+var getRepeatingAddInMacroPortion = TAS.callback(function callgetRepeatingAddInMacroPortion(macro, toggle, portion) {
 	if (!(macro === "" || macro === "0" || macro === undefined || macro === null || toggle === "" || toggle === "0" || toggle === undefined || toggle === null)) {
 		return " " + portion;
 	}
 	return "";
-}
-function updateRepeatingAddInMacro (id, eventInfo) {
+});
+
+var updateRepeatingAddInMacro = TAS.callback(function callupdateRepeatingAddInMacro(id, eventInfo) {
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
 	attackType = prefix + "attack-type",
@@ -120,8 +121,8 @@ function updateRepeatingAddInMacro (id, eventInfo) {
 			SWUtils.setWrapper(setter);
 		}
 	});
-}
-function setAdvancedMacroCheckbox () {
+});
+var setAdvancedMacroCheckbox = TAS.callback(function callsetAdvancedMacroCheckbox() {
 	getAttrs(["adv_macro_show", "global_melee_macro_insert", "global_ranged_macro_insert", "global_cmb_macro_insert", "global_attack_macro_insert", "global_melee_damage_macro_insert", "global_ranged_damage_macro_insert", "global_cmb_damage_macro_insert", "global_damage_macro_insert"], function (v) {
 		var showAdv = parseInt(v.adv_macro_show, 10) || 0,
 		hasAnyMacros = _.reduce(v, function (tot, value, fieldname) {
@@ -137,9 +138,10 @@ function setAdvancedMacroCheckbox () {
 			}, PFConst.silentParams);
 		}
 	});
-}
+});
+
 /********* REPEATING WEAPON FIELDSET *********/
-function setRepeatingWeaponInsertMacro (id, eventInfo) {
+var setRepeatingWeaponInsertMacro = TAS.callback(function callsetRepeatingWeaponInsertMacro(id, eventInfo) {
 	var done = function () { }, //updateRepeatingAddInMacro(id,eventInfo);},
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
@@ -159,14 +161,14 @@ function setRepeatingWeaponInsertMacro (id, eventInfo) {
 			silent: true
 		}, done);
 	});
-}
+});
 /** updateRepeatingWeaponAttack - calculates total-attack
  * also updates attk-effect-total-copy
  * @param {string} id optional = id of row, if blank we are within the context of the row
  * @param {string} overrideAttr optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
  * @param {number} overrideValue optional = if overrideAttr then this should be a number usually int but it won't check
  */
-function updateRepeatingWeaponAttack (id, eventInfo) {
+var updateRepeatingWeaponAttack = TAS.callback(function callupdateRepeatingWeaponAttack(id, eventInfo) {
 	//is it faster to not do the idstr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
@@ -193,9 +195,9 @@ function updateRepeatingWeaponAttack (id, eventInfo) {
 			SWUtils.setWrapper(setter, PFConst.silentParams, resetOptionsWhenDone);
 		}
 	});
-}
+});
 /* updateRepeatingWeaponDamage - updates total-damage*/
-function updateRepeatingWeaponDamage (id, eventInfo) {
+var updateRepeatingWeaponDamage = TAS.callback(function callupdateRepeatingWeaponDamage(id, eventInfo) {
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
 	},
@@ -246,8 +248,8 @@ function updateRepeatingWeaponDamage (id, eventInfo) {
 			}
 		}
 	});
-}
-function updateRepeatingWeaponCrit (id, eventInfo) {
+});
+var updateRepeatingWeaponCrit = TAS.callback(function callupdateRepeatingWeaponCrit(id, eventInfo) {
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
 	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
@@ -273,8 +275,8 @@ function updateRepeatingWeaponCrit (id, eventInfo) {
 			TAS.error("updateRepeatingWeaponCrit:cannot find " + v[attkTypeField] + " in grid");
 		}
 	});
-}
-function updateRepeatingWeaponsFromCrit (attacktype, eventInfo) {
+});
+var updateRepeatingWeaponsFromCrit = TAS.callback(function callupdateRepeatingWeaponsFromCrit(attacktype, eventInfo) {
 	var globalCritBonusField = PFAttackGrid.attackGridFields[attacktype].crit;
 	getSectionIDs("repeating_weapon", function (ids) {
 		var attrs = [globalCritBonusField];
@@ -314,8 +316,11 @@ function updateRepeatingWeaponsFromCrit (attacktype, eventInfo) {
 			}
 		});
 	});
-}
-function setRepeatingWeaponRangedFlag (id){
+});
+/** sets 'isranged' checkbox to 1 if attack-type is ranged or ranged2
+ * @param {string} id the row id or null for current row
+ */
+var setRepeatingWeaponRangedFlag = TAS.callback(function callsetRepeatingWeaponRangedFlag(id){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
 	attypeAttr=prefix+"attack-type",
@@ -334,8 +339,9 @@ function setRepeatingWeaponRangedFlag (id){
 		}
 	});
 
-}
-function getRecalculatedDamageOnly (id,v){
+});
+
+var getRecalculatedDamageOnly = TAS.callback(function callgetRecalculatedDamageOnly(id,v){
 	var prefix = 'repeating_weapon_' + SWUtils.getRepeatingIDStr(id),
 		isRanged= (parseInt(v[prefix+'isranged'],10)||0),
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
@@ -368,9 +374,9 @@ function getRecalculatedDamageOnly (id,v){
 	} finally {
 		return localsetter;
 	}
-}
+});
 /* updateRepeatingWeaponDamages - updates all attacks when buff to damage changes */
-export function updateRepeatingWeaponDamages (callback,silently,eventInfo) {
+export var updateRepeatingWeaponDamages = TAS.callback(function callupdateRepeatingWeaponDamages(callback,silently,eventInfo) {
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -400,10 +406,10 @@ export function updateRepeatingWeaponDamages (callback,silently,eventInfo) {
 			}
 		});
 	});
-}		
+});		
 
 /* this is faster than looping through the 3 parent lists */
-export function updateAssociatedAttacksFromParents (callback){
+export var updateAssociatedAttacksFromParents = TAS.callback(function callupdateAssociatedAttacksFromParents(callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -432,9 +438,9 @@ export function updateAssociatedAttacksFromParents (callback){
 			});
 		});
 	});
-}
+});
 
-export function getRecalculatedAttack (id,v,setter){
+export var getRecalculatedAttack = TAS.callback(function callgetRecalculatedAttack(id,v,setter){
 	var prefix = 'repeating_weapon_'+id+'_',
 		isRanged=parseInt(v[prefix+"isranged"],10)||0,
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
@@ -519,14 +525,14 @@ export function getRecalculatedAttack (id,v,setter){
 	} finally {
 		return localsetter;
 	}
-}
+});
 /**ONLY CALL IF modify_dmg_by_size = 0
  * 
  * @param {*} id 
  * @param {*} v 
  * @param {*} setter 
  */
-function syncDefaultDamageDice(id,v,setter,useSizeMod,prefix){
+var syncDefaultDamageDice = TAS.callback(function callsyncDefaultDamageDice(id,v,setter,useSizeMod,prefix){
 	if(!prefix) {
 		prefix='repeating_weapon_'+SWUtils.getRepeatingIDStr(id);
 	}
@@ -535,12 +541,12 @@ function syncDefaultDamageDice(id,v,setter,useSizeMod,prefix){
 		setter[prefix+'default_damage-die']=v[prefix+'damage-die'];
 	}
 	return setter;
-}
+});
 /**   Called when updating damage dice  on a row
  * 
  * @param {string} id 
  */
-function syncDefaultDamageDiceAsync(id,eventInfo){
+var syncDefaultDamageDiceAsync = TAS.callback(function callsyncDefaultDamageDiceAsync(id,eventInfo){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 		prefix='repeating_weapon_'+idStr;
 	getAttrs(['modify_dmg_by_size',prefix+'size_affects',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
@@ -551,8 +557,8 @@ function syncDefaultDamageDiceAsync(id,eventInfo){
 			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 	});
-}
-export function syncAllDefaultDamageDiceAsync(){
+});
+export var syncAllDefaultDamageDiceAsync = TAS.callback(function callsyncAllDefaultDamageDiceAsync(){
 	getAttrs(['modify_dmg_by_size'],function(vout){
 		var modifyDMG = parseInt(vout.modify_dmg_by_size,10)||0;
 		getSectionIDs('repeating_weapons',function(ids){
@@ -570,7 +576,7 @@ export function syncAllDefaultDamageDiceAsync(){
 			}
 		});
 	});
-}
+});
 /** ONLY CALL IF modify_dmg_by_size = 1.
  * 
  * @param {*} id 
@@ -579,7 +585,7 @@ export function syncAllDefaultDamageDiceAsync(){
  * @param {*} setter 
  * @param {*} eventInfo 
  */
-function adjustDamageDice(id,currCharSize,v,setter,prefix){
+var adjustDamageDice = TAS.callback(function calladjustDamageDice(id,currCharSize,v,setter,prefix){
 	var currDice=0,defDice=0,weaponSizeDiff=0,
 		currDie=0,defDie=0,defWeaponSize=0,
 	 	defSize=0, sizeDiff=0, newDice={};
@@ -660,13 +666,13 @@ function adjustDamageDice(id,currCharSize,v,setter,prefix){
 		TAS.debug("PFAttacks.adjustDamageDice returning with ",setter);
 		return setter;
 	}
-}
+});
 /** Only called when updating the size dropdown, default damage dice, or size affects checkbox on a row.
  * 
  * @param {string} id 
  * @param {function} callback 
  */
-function adjustDamageDiceAsync(id,callback){
+var adjustDamageDiceAsync = TAS.callback(function calladjustDamageDiceAsync(id,callback){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_weapon_'+idStr;
 	getAttrs(['modify_dmg_by_size','size','default_char_size',prefix+'default_size',prefix+'size_affects',prefix+'default_damage-dice-num',prefix+'default_damage-die',prefix+'not_default_size',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
@@ -683,9 +689,9 @@ function adjustDamageDiceAsync(id,callback){
 			}
 		}
 	});
-}
+});
 
-export function adjustAllDamageDiceAsync(callback, eventInfo){
+export var adjustAllDamageDiceAsync = TAS.callback(function calladjustAllDamageDiceAsync(callback, eventInfo){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -717,8 +723,8 @@ export function adjustAllDamageDiceAsync(callback, eventInfo){
 			});
 		}
 	});
-}
-function resetWeaponSizeAndDamage(id,currCharSize,v,setter,useSizeMod){
+});
+var resetWeaponSizeAndDamage = TAS.callback(function callresetWeaponSizeAndDamage(id,currCharSize,v,setter,useSizeMod){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 		prefix='repeating_weapon_'+idStr;
 	if(useSizeMod){
@@ -727,12 +733,12 @@ function resetWeaponSizeAndDamage(id,currCharSize,v,setter,useSizeMod){
 		syncDefaultDamageDice(id,v,setter,useSizeMod,prefix);
 	}
 	return setter;
-}
+});
 /**
  * @param {[string]} ids 
  * @param {function} callback 
  */
-function recalcOtherFields (ids,callback){
+var recalcOtherFields = TAS.callback(function callrecalcOtherFields(ids,callback){
 	var done = function(){
 		if(typeof callback ==="function"){
 			callback();
@@ -776,8 +782,8 @@ function recalcOtherFields (ids,callback){
 			done();
 		}
 	});
-}
-function recalcEquationFields (ids,callback){
+});
+var recalcEquationFields = TAS.callback(function callrecalcEquationFields(ids,callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -815,8 +821,8 @@ function recalcEquationFields (ids,callback){
 			done();
 		}
 	});
-}
-export function recalculateRepeatingWeapons (callback){
+});
+export var recalculateRepeatingWeapons = TAS.callback(function callrecalculateRepeatingWeapons(callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.recalculateRepeatingWeapons");
 		if (typeof callback === "function"){
@@ -828,13 +834,13 @@ export function recalculateRepeatingWeapons (callback){
 			recalcOtherFields(ids,done);
 		});
 	});
-}
+});
 /** removes the given id link from any attacks.
  * @param {function} callback to call when done
  * @param {int} linkType value from PFAttacks.linkedAttackType
  * @param {string} linkid string of source id attack links to
  */
-export function removeLinkedAttack(callback,linkType,linkid){
+export var removeLinkedAttack = TAS.callback(function callremoveLinkedAttack(callback,linkType,linkid){
 	var done = _.once(function(){
 		if(typeof callback === 'function'){
 			callback();
@@ -894,7 +900,7 @@ export function removeLinkedAttack(callback,linkType,linkid){
 			}
 		});
 	});	
-}
+});
 /**
  * call when bab changes, or when name changes but how to know? must keep them in linked fields.
  * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int, 'offhand_mult':number }  } params 
@@ -904,7 +910,7 @@ export function removeLinkedAttack(callback,linkType,linkid){
  * @returns {Map<string,any>} setter
  */
 
-export function setDualWieldVals (params,setter,id,updMode){
+export var setDualWieldVals = TAS.callback(function callsetDualWieldVals(params,setter,id,updMode){
 	var fields,numAttacks=1,currAttack=1,totAttacks=2,
 	macroText='',
 	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro}  ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
@@ -1014,10 +1020,10 @@ export function setDualWieldVals (params,setter,id,updMode){
 		TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
 		return setter;
 	}
-}
+});
 
 
-function updateDualWield (callback,eventInfo){
+var updateDualWield = TAS.callback(function callupdateDualWield(callback,eventInfo){
 	var done = _.once(function(){
 		if(typeof callback === 'function'){
 			callback();
@@ -1076,10 +1082,9 @@ function updateDualWield (callback,eventInfo){
 			});
 		});
 	});
-	
-}
+});
 
-export function createDualWield (callback){
+export var createDualWield = TAS.callback(function callcreateDualWield(callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -1130,8 +1135,8 @@ export function createDualWield (callback){
 			});
 		}
 	});
-}
-export function getNewDefaults (ids,v,setter){
+});
+export var getNewDefaults = TAS.callback(function callgetNewDefaults(ids,v,setter){
 	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
@@ -1164,8 +1169,8 @@ export function getNewDefaults (ids,v,setter){
 	} finally {
 		return setter;
 	}
-}
-export function setNewDefaults (callback){
+});
+export var setNewDefaults = TAS.callback(function callsetNewDefaults(callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.setNewDefaults");
 		if(typeof callback === "function"){
@@ -1205,8 +1210,8 @@ export function setNewDefaults (callback){
 			});
 		});
 	});
-}
-export function migrateRepeatingMacro (callback){
+});
+export var migrateRepeatingMacro = TAS.callback(function callmigrateRepeatingMacro(callback){
 	var done = _.once(function(){
 		if(typeof callback === "function"){
 			callback();
@@ -1220,8 +1225,8 @@ export function migrateRepeatingMacro (callback){
 	});
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
-}
-export function migrateLinkedAttacks (callback, oldversion){
+});
+export var migrateLinkedAttacks = TAS.callback(function callmigrateLinkedAttacks(callback, oldversion){
 	var done=_.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -1267,9 +1272,9 @@ export function migrateLinkedAttacks (callback, oldversion){
 			}
 		});
 	});
-}
+});
 
-export function migrate (callback, oldversion){
+export var migrate = TAS.callback(function callmigrate(callback, oldversion){
 	var done=_.once(function(){
 		TAS.debug("leaving PFAttacks.migrate");
 		if (typeof callback === "function") {
@@ -1309,8 +1314,8 @@ export function migrate (callback, oldversion){
 			}
 		});
 	});
-}
-export function recalculate (callback, silently, oldversion) {
+});
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = function () {
 		TAS.info("leaving PFAttacks.recalculate");
 		if (typeof callback === "function") {
@@ -1328,8 +1333,8 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		},oldversion);
 	}  ,silently,oldversion);
-}
-function registerEventHandlers () {
+});
+var registerEventHandlers = TAS.callback(function callregisterEventHandlers() {
 	_.each(PFAttackGrid.attackGridFields, function (attackFields, attack) {
 		on("change:" + attackFields.crit, TAS.callback(function eventAttackCrit(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -1440,7 +1445,7 @@ function registerEventHandlers () {
 			createDualWield();
 		}
 	}));
-}
+});
 registerEventHandlers();
 PFConsole.log('   PFAttacks module loaded        ');
 PFLog.modulecount++;

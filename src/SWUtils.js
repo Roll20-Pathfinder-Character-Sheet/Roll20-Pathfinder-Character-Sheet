@@ -4,48 +4,27 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
-var  setWrapperCall = TAS.callback(function callSetAttrs(a,b,c){
-	TAS.debug("setting "+_.size(a)+" values");
+export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
+	var bad=false;
+	TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
 		if (!v && isNaN(v)){
-			TAS.error("Setting NaN! at "+k,a);
-			TAS.callstack();
+			TAS.error("Setting NaN! at "+k);
+			bad=true;
 		}
 	});
+	if (bad){
+		TAS.callstack();
+	}
 	setAttrs(a,b,c);
 });
 
-export function setWrapper(a,b,c){setWrapperCall(a,b,c);}
-/*	var x = TAS.callback(function callSetAttrs(a,b,c){
-		TAS.debug("setting "+_.size(a)+" values");
-				setAttrs(a,b,c);
-		var good=true;
-		try {
-			TAS.debug("setting "+_.size(a)+" values");
-			if (_.size(a)){
-				_.each(a,function(v,k){
-					if (isNaN(v)){
-						TAS.error("Setting NaN! at "+k,a);
-						TAS.callstack();
-						good=false;
-					}
-				});
-				setAttrs(a,b,c);
-//			if (good){
-//				setAttrs(a,b,c);
-			} else if (typeof c === "function"){
-				TAS.callstack();
-				c();
-			}
-		} catch (er){
-			TAS.error("SWUtils.setWrapper error:",er);
-			if (typeof c === "function"){
-				c();
-			}
-		}
+export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
+	getAttrs(a,function(vals){
+		TAS.debug("getAttrs returned with: ",vals);
+		cb(vals);
 	});
-	x();
-}*/
+});
 
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number

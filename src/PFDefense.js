@@ -41,9 +41,9 @@ events = {
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-export function updateDefenses ( callback, silently, eventInfo) {
+export var updateDefenses = TAS.callback(function callupdateDefenses( callback, silently, eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.updateDefenses");
+        //TAS.debug("leaving PFDefense.updateDefenses");
         if (typeof callback === "function") {
             callback();
         }
@@ -114,7 +114,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
         flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
         dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
-        deflectbuff=parseInt(v['buff_deflection-ttoal'],10)||0,
+        deflectbuff=parseInt(v['buff_deflection-total'],10)||0,
         buffac = 0,
         bufftouch = 0,
         buffff = 0,
@@ -124,7 +124,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         setter = {},
         params = {};
         try {
-            //TAS.debug("PFDefense.updateDefenses:",v);
+            TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
             bufftouch=buffsTouch+dodgebuff+deflectbuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
@@ -292,7 +292,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
             }
         }
     });
-}
+});
 /** setDefenseDropdownMod
  * All dropdowns in the defense grid: AC, flat footed AC, touch, CMD, flat footed CMD.
  * calls handledropdown then calls updateDefenses.
@@ -306,7 +306,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
  *@param {object} the eventInfo object USED, this is checked for uncanny_dodge flag 
  *@param {boolean} doNotCallUpdateDefenseAfter if not set call updateDefenses after updating dropdown mod.
  */
-export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
+export var setDefenseDropdownMod = TAS.callback(function callsetDefenseDropdownMod(dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
@@ -384,7 +384,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
         TAS.error("PFDefense.setDefenseDropdownMod error for: "+dropdownField, err);
         done();
     }
-}
+});
 /** updates total AC and penalty and max dex
  * if not proficient sets attack penalty
  * for backward compatibility, proficiency is string and 0 is proficient, anything else non proficient
@@ -392,7 +392,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-export function updateArmor (callback, silently, eventInfo) {
+export var updateArmor = TAS.callback(function callupdateArmor(callback, silently, eventInfo) {
     var done = function () { if (typeof callback === "function") { callback(); } },
     params = {};
     getAttrs(defenseArmorFields, function (v) {
@@ -492,14 +492,14 @@ export function updateArmor (callback, silently, eventInfo) {
             }
         }
     });
-}
+});
 /** applyConditions Updates the AC-penalty and CMD-penalty field based on conditions
  *only difference is CMD penalty affected by energy drain for some reason
  *@param {function} callback optional call when done
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-export function applyConditions (callback, silently,eventInfo) {
+export var applyConditions = TAS.callback(function callapplyConditions(callback, silently,eventInfo) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.applyConditions");
         if (typeof callback === "function") {
@@ -548,13 +548,13 @@ export function applyConditions (callback, silently,eventInfo) {
             }
         }
     });
-}
+});
 
 /** migrate from old versions
  * @param {function} callback guaranteed call when done
  * @param {number} oldversion 
  */
-export function migrate (callback,oldversion){
+export var migrate = TAS.callback(function callmigrate(callback,oldversion){
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.migrate");
         if (typeof callback === "function") {
@@ -589,14 +589,14 @@ export function migrate (callback,oldversion){
     } else {
         done();
     }
-}
+});
 
 /** recalculate defense grid
  * @param {function} callback guaranteed call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion 
  */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
@@ -617,9 +617,9 @@ export function recalculate (callback, silently, oldversion) {
             }, silently);
         }, silently);
     },silently);
-}
+});
 
-function registerEventHandlers () {
+var registerEventHandlers = TAS.callback(function callregisterEventHandlers() {
     _.each(defenseDropdowns, function (write, read) {
         on("change:" + read, TAS.callback(function eventsetDefenseDropdownMod(eventInfo) {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -667,7 +667,7 @@ function registerEventHandlers () {
             }));
         });
     });
-}
+});
 registerEventHandlers();
 PFConsole.log( '   PFDefense module loaded        ' );
 PFLog.modulecount++;
