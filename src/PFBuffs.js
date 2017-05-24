@@ -118,8 +118,41 @@ events = {
 	}
 };
 
-
-var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter,useBonuses){
+export function clearBuffTotals(callback,silently){
+	var done=function(){
+		if(typeof callback === "function"){
+			callback();
+		}
+	},
+	fields;
+	fields = SWUtils.cartesianAppend(['buff_'],buffColumns,['-total','_exists']);
+	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
+	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
+	getAttrs(fields,function(v){
+		var setter={},params={};
+		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
+		setter = _.reduce(v,function(memo,val,attr){
+			if ((/exists/).test(attr)){
+				if (parseInt(val,10)){
+					memo[attr]=0;
+				}
+			} else if (parseInt(val,10) || typeof val === "undefined"){
+				memo[attr]=0;
+			}
+			return memo;
+		},{});
+		if (_.size(setter)){
+			if(silently){
+				params =PFConst.silentParams;
+			}
+			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			SWUtils.setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	});
+}
+function updateBuffTotal (col,ids,v,setter,useBonuses){
 	var isAbility=0,
 	bonuses = {},
 	sums={'sum':0,'pen':0},
@@ -136,7 +169,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 				var prefix = 'repeating_buff_'+id+'_buff-';
 				return  (parseInt(v[prefix + col + '-show'],10)||0) && (parseInt(v[prefix+col],10)||0);
 			});
-		TAS.debug("PFBuffs ids are now ",ids);
+		TAS.debug("PFBuffs there are "+ _.size(ids)+" ids which are ",ids);
 		if(_.size(ids)===0){
 			return setter;
 		}
@@ -171,7 +204,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 				}
 			});
 		}
-		//TAS.debug("PFBUFFS ROWS NOW:",rows);
+		TAS.debug("PFBUFFS ROWS NOW:",rows);
 		if(col==='HP-temp'){
 			sums.sum = rows.filter(function(row){
 				return row.val>0;
@@ -213,7 +246,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 				}
 				return 0;
 			});
-			//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+			TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
 			//look at bonuses on rest of sheet to see if they overlap and don't stack:
 			if (otherCharBonuses[col]){
 				bonuses = _.mapObject(bonuses,function(val,bonusType){
@@ -221,7 +254,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 					try{
 						if(bonusTypesRepeated.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
 							tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
-							//TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
+							TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
 							if(tempInt>0){
 								if (val<= tempInt){
 									retval=0;
@@ -237,6 +270,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 					}
 				});
 			}
+			TAS.debug("PFBUFFS FINAL BONUSES:",bonuses);
 			if (isAbility){
 				try {
 					sums.pen = bonuses.penalty||0;
@@ -262,10 +296,10 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 				return m;
 			},0);
 		}
+		TAS.debug("PFBUFFS NOW totals are: ",sums);
 		if ( (parseInt(v['buff_'+col+'-total'],10)||0)!==sums.sum){
 			setter['buff_'+col+'-total']=sums.sum;
 		}
-
 		if (sums.sum > 0){
 			setter['buff_'+col+'_exists']=1;
 		} else if ((parseInt(v['buff_'+col+'_exists'],10)||0)===1){
@@ -286,7 +320,7 @@ var updateBuffTotal = TAS.callback(function callupdateBuffTotal(col,ids,v,setter
 	} finally {
 		return setter;
 	}
-});
+}
 
 export function updateBuffTotalAsync (col, callback,silently){
 	var done = _.once(function () {
@@ -360,47 +394,48 @@ export function updateBuffTotalsAsync (callback,silently){
 
 	getSectionIDs('repeating_buff',function(ids){
 		var fields,buffRepFields;
-		if(ids){
-			buffRepFields = buffColumns.map(function(buff){return '_buff-'+buff;});
-			buffRepFields = buffRepFields.concat(SWUtils.cartesianAppend(['_buff-'],buffColumns,['-show','_type']));
-			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,buffRepFields);
-			fields = fields.concat(buffTotFields);
-			fields = fields.concat(charBonusFields);
-			fields.push('use_buff_bonuses');
-			TAS.debug("############ BUFF FIELDS ARE:", fields);
-			
-			getAttrs(fields,function(v){
-				var useBonuses=false,
-				bonuses = {},
-				params={}, setter={};
-				try {
-					TAS.debug("PFBuffs.updateBuffTotalsAsync found:",v);
-					useBonuses=parseInt(v.use_buff_bonuses,10)||0;
-					ids = ids.filter(function(id){
-						var prefix = 'repeating_buff_'+id+'_buff-';
-						return  (parseInt(v[prefix+'enable_toggle'],10)||0);
-					});
-					_.each(buffColumns,function(col){
-						updateBuffTotal(col,ids,v,setter,useBonuses);
-					});
-					
-				} catch (errou){
-					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col ",errou);
-				} finally {
-					if (_.size(setter)){
-						TAS.debug("######################","PFBuffs setting ",setter);
-						if (silently){
-							params = PFConst.silentParams;
-						}
-						SWUtils.setWrapper(setter,params,done);
-					} else {
-						done();
-					}
-				}
-			});
-		} else {
-			done();
+		if(!ids || _.size(ids)===0){
+			clearBuffTotals(done);
+			return;
 		}
+		buffRepFields = buffColumns.map(function(buff){return '_buff-'+buff;});
+		buffRepFields = buffRepFields.concat(SWUtils.cartesianAppend(['_buff-'],buffColumns,['-show','_type']));
+		fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,buffRepFields);
+		fields = fields.concat(buffTotFields);
+		fields = fields.concat(charBonusFields);
+		fields.push('use_buff_bonuses');
+		TAS.debug("############ BUFF FIELDS ARE:", fields);
+		
+		getAttrs(fields,function(v){
+			var useBonuses=false,
+			bonuses = {},
+			params={}, setter={};
+			try {
+				TAS.debug("PFBuffs.updateBuffTotalsAsync found:",v);
+				useBonuses=parseInt(v.use_buff_bonuses,10)||0;
+				ids = ids.filter(function(id){
+					var prefix = 'repeating_buff_'+id+'_buff-';
+					return  (parseInt(v[prefix+'enable_toggle'],10)||0);
+				});
+				_.each(buffColumns,function(col){
+					updateBuffTotal(col,ids,v,setter,useBonuses);
+				});
+				
+			} catch (errou){
+				TAS.error("PFBuffs.updateBuffTotalAsync errrou on col ",errou);
+			} finally {
+				if (_.size(setter)){
+					TAS.debug("######################","PFBuffs setting ",setter);
+					if (silently){
+						params = PFConst.silentParams;
+					}
+					SWUtils.setWrapper(setter,params,done);
+				} else {
+					done();
+				}
+			}
+		});
+
 	});		
 }
 
@@ -607,40 +642,7 @@ function resetStatuspanel (callback) {
 	});
 }
 
-export function clearBuffTotals(callback,silently){
-	var done=function(){
-		if(typeof callback === "function"){
-			callback();
-		}
-	},
-	fields;
-	fields = SWUtils.cartesianAppend(['buff_'],buffColumns,['-total','_exists']);
-	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
-	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
-	getAttrs(fields,function(v){
-		var setter={},params={};
-		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
-		setter = _.reduce(v,function(memo,val,attr){
-			if ((/exists/).test(attr)){
-				if (parseInt(val,10)){
-					memo[attr]=0;
-				}
-			} else if (parseInt(val,10) || typeof val === "undefined"){
-				memo[attr]=0;
-			}
-			return memo;
-		},{});
-		if (_.size(setter)){
-			if(silently){
-				params =PFConst.silentParams;
-			}
-			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
-			SWUtils.setWrapper(setter,params,done);
-		} else {
-			done();
-		}
-	});
-}
+
 function setBuff (id, col, callback, silently) {
 	var done = function () {
 		if (typeof callback === "function") {
@@ -729,8 +731,11 @@ export function recalculate (callback, silently, oldversion) {
 				done();
 			}
 		});
+	},
+	recalculateItAll=function(){
+		updateBuffTotalsAsync(done);
 	};
-	migrate(recalculateAll);
+	migrate(recalculateItAll);
 }
 function registerEventHandlers () {
 			TAS.notice("############ BUFF TOTAL FIELDS ARE:", buffTotFields);

@@ -76,12 +76,12 @@ defaultIterativeDeletedMacroAttrs=null,
 defaultIterativeAttrName='var_iterative_attackREPLACE_macro',
 defaultIterativeReplaceArray=['2','3','4','5','6','7','8'];
 
-var getRepeatingAddInMacroPortion = TAS.callback(function callgetRepeatingAddInMacroPortion(macro, toggle, portion) {
+function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 	if (!(macro === "" || macro === "0" || macro === undefined || macro === null || toggle === "" || toggle === "0" || toggle === undefined || toggle === null)) {
 		return " " + portion;
 	}
 	return "";
-});
+}
 
 var updateRepeatingAddInMacro = TAS.callback(function callupdateRepeatingAddInMacro(id, eventInfo) {
 	var idStr = SWUtils.getRepeatingIDStr(id),
@@ -157,9 +157,7 @@ var setRepeatingWeaponInsertMacro = TAS.callback(function callsetRepeatingWeapon
 			setter[prefix + "attack-type_macro_insert"] = "0";
 		}
 		//TAS.debug("setRepeatingWeaponInsertMacro",setter);
-		SWUtils.setWrapper(setter, {
-			silent: true
-		}, done);
+		SWUtils.setWrapper(setter, PFConst.silentParams, done);
 	});
 });
 /** updateRepeatingWeaponAttack - calculates total-attack
@@ -341,7 +339,7 @@ var setRepeatingWeaponRangedFlag = TAS.callback(function callsetRepeatingWeaponR
 
 });
 
-var getRecalculatedDamageOnly = TAS.callback(function callgetRecalculatedDamageOnly(id,v){
+function getRecalculatedDamageOnly (id,v){
 	var prefix = 'repeating_weapon_' + SWUtils.getRepeatingIDStr(id),
 		isRanged= (parseInt(v[prefix+'isranged'],10)||0),
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
@@ -374,7 +372,7 @@ var getRecalculatedDamageOnly = TAS.callback(function callgetRecalculatedDamageO
 	} finally {
 		return localsetter;
 	}
-});
+}
 /* updateRepeatingWeaponDamages - updates all attacks when buff to damage changes */
 export var updateRepeatingWeaponDamages = TAS.callback(function callupdateRepeatingWeaponDamages(callback,silently,eventInfo) {
 	var done = _.once(function(){
@@ -440,7 +438,7 @@ export var updateAssociatedAttacksFromParents = TAS.callback(function callupdate
 	});
 });
 
-export var getRecalculatedAttack = TAS.callback(function callgetRecalculatedAttack(id,v,setter){
+function  getRecalculatedAttack (id,v,setter){
 	var prefix = 'repeating_weapon_'+id+'_',
 		isRanged=parseInt(v[prefix+"isranged"],10)||0,
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
@@ -525,14 +523,14 @@ export var getRecalculatedAttack = TAS.callback(function callgetRecalculatedAtta
 	} finally {
 		return localsetter;
 	}
-});
+}
 /**ONLY CALL IF modify_dmg_by_size = 0
  * 
  * @param {*} id 
  * @param {*} v 
  * @param {*} setter 
  */
-var syncDefaultDamageDice = TAS.callback(function callsyncDefaultDamageDice(id,v,setter,useSizeMod,prefix){
+function syncDefaultDamageDice (id,v,setter,useSizeMod,prefix){
 	if(!prefix) {
 		prefix='repeating_weapon_'+SWUtils.getRepeatingIDStr(id);
 	}
@@ -541,7 +539,7 @@ var syncDefaultDamageDice = TAS.callback(function callsyncDefaultDamageDice(id,v
 		setter[prefix+'default_damage-die']=v[prefix+'damage-die'];
 	}
 	return setter;
-});
+}
 /**   Called when updating damage dice  on a row
  * 
  * @param {string} id 
@@ -585,7 +583,7 @@ export var syncAllDefaultDamageDiceAsync = TAS.callback(function callsyncAllDefa
  * @param {*} setter 
  * @param {*} eventInfo 
  */
-var adjustDamageDice = TAS.callback(function calladjustDamageDice(id,currCharSize,v,setter,prefix){
+function adjustDamageDice (id,currCharSize,v,setter,prefix){
 	var currDice=0,defDice=0,weaponSizeDiff=0,
 		currDie=0,defDie=0,defWeaponSize=0,
 	 	defSize=0, sizeDiff=0, newDice={};
@@ -666,7 +664,7 @@ var adjustDamageDice = TAS.callback(function calladjustDamageDice(id,currCharSiz
 		TAS.debug("PFAttacks.adjustDamageDice returning with ",setter);
 		return setter;
 	}
-});
+}
 /** Only called when updating the size dropdown, default damage dice, or size affects checkbox on a row.
  * 
  * @param {string} id 
@@ -724,7 +722,7 @@ export var adjustAllDamageDiceAsync = TAS.callback(function calladjustAllDamageD
 		}
 	});
 });
-var resetWeaponSizeAndDamage = TAS.callback(function callresetWeaponSizeAndDamage(id,currCharSize,v,setter,useSizeMod){
+function resetWeaponSizeAndDamage (id,currCharSize,v,setter,useSizeMod){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 		prefix='repeating_weapon_'+idStr;
 	if(useSizeMod){
@@ -733,7 +731,7 @@ var resetWeaponSizeAndDamage = TAS.callback(function callresetWeaponSizeAndDamag
 		syncDefaultDamageDice(id,v,setter,useSizeMod,prefix);
 	}
 	return setter;
-});
+}
 /**
  * @param {[string]} ids 
  * @param {function} callback 
@@ -901,8 +899,7 @@ export var removeLinkedAttack = TAS.callback(function callremoveLinkedAttack(cal
 		});
 	});	
 });
-/**
- * call when bab changes, or when name changes but how to know? must keep them in linked fields.
+/** call when bab changes, or when name changes but how to know? must keep them in linked fields.
  * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int, 'offhand_mult':number }  } params 
  * @param {Map<string,any>} setter already built setter if applicable.
  * @param {String} id the id of the row
@@ -1136,7 +1133,7 @@ export var createDualWield = TAS.callback(function callcreateDualWield(callback)
 		}
 	});
 });
-export var getNewDefaults = TAS.callback(function callgetNewDefaults(ids,v,setter){
+function getNewDefaults (ids,v,setter){
 	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
@@ -1169,7 +1166,7 @@ export var getNewDefaults = TAS.callback(function callgetNewDefaults(ids,v,sette
 	} finally {
 		return setter;
 	}
-});
+}
 export var setNewDefaults = TAS.callback(function callsetNewDefaults(callback){
 	var done = _.once(function(){
 		TAS.debug("leaving PFAttacks.setNewDefaults");
@@ -1334,7 +1331,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 		},oldversion);
 	}  ,silently,oldversion);
 });
-var registerEventHandlers = TAS.callback(function callregisterEventHandlers() {
+function registerEventHandlers () {
 	_.each(PFAttackGrid.attackGridFields, function (attackFields, attack) {
 		on("change:" + attackFields.crit, TAS.callback(function eventAttackCrit(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -1445,7 +1442,7 @@ var registerEventHandlers = TAS.callback(function callregisterEventHandlers() {
 			createDualWield();
 		}
 	}));
-});
+}
 registerEventHandlers();
 PFConsole.log('   PFAttacks module loaded        ');
 PFLog.modulecount++;
