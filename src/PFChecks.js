@@ -3,6 +3,8 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as PFUtils  from './PFUtils';
+import * as SWUtils from './SWUtils';
+
 /* PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
  * Reads in condition that affect Ability and Skill checks and updates condition fields.
  * checks-cond, Phys-skills-cond, Perception-cond.
@@ -47,7 +49,7 @@ export function applyConditions (callback, silently) {
 			TAS.error("PFChecks.applyConditions", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, {}, done);
+				SWUtils.setWrapper(setter, {}, done);
 			} else {
 				done();
 			}

@@ -1,4 +1,16 @@
 'use strict';
+
+import TAS from 'exports-loader?TAS!TheAaronSheet';
+
+TAS.debugMode();
+
+TAS.config({
+ logging: {
+   info: true,
+   debug: true
+ }
+});
+
 export const PFLog = {
  // PFLog just a little helper to write to console using fancy type
  l: '%cס§₪₪₪₪§|(Ξ≥≤≥≤≥≤ΞΞΞΞΞΞΞΞΞΞ>    ',
