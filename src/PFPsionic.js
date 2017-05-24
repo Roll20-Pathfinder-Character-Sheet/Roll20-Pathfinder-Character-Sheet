@@ -30,7 +30,7 @@ function updatePsionicBonusPower (callback, silently) {
 						params = PFConst.silentParams;
 					}
 					finished = true;
-					setAttrs({
+					SWUtils.setWrapper({
 						"ability-psionic-power": newTotal
 					}, params, done);
 				}

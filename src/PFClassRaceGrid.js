@@ -29,17 +29,17 @@ export function setMulticlassed (){
         //TAS.debug("PFClassRaceGrid.setMulticlassed, "+ totalWLevels +" rows have levels");
         if (totalWLevels > 1){
             if (!isMulti){
-                setAttrs({multiclassed:1});
+                SWUtils.setWrapper({multiclassed:1});
             }
         } else if (isMulti){
-            setAttrs({multiclassed:0});
+            SWUtils.setWrapper({multiclassed:0});
         }
     });
 }
 /** PFClassRaceGrid.updateClassInformation Updates totals at bottom of Class Information grid
  *@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns 
  *@param {function} callback optional call when finished updating
- *@param {bool} silently if true then call setAttrs with PFConst.silentParams
+ *@param {bool} silently if true then call SWUtils.setWrapper with PFConst.silentParams
  */
 function updateClassInformation  (col, callback, silently, eventInfo) {
     var done = function () {
@@ -116,7 +116,7 @@ function updateClassInformation  (col, callback, silently, eventInfo) {
                     if (silently) {
                         params = PFConst.silentParams;
                     }
-                    setAttrs(setter, params, done);
+                    SWUtils.setWrapper(setter, params, done);
                 } else {
                     done();
                 }
@@ -234,10 +234,10 @@ export function setHitPoints (callback,silently,eventInfo){
             TAS.error("PFClassRaceGrid.setHitPoints",err);
         } finally {
             if (_.size(loudSetter)>0){
-                setAttrs(loudSetter);
+                SWUtils.setWrapper(loudSetter);
             }
             if (_.size(setter)>0){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
