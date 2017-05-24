@@ -2658,20 +2658,25 @@ input[type="number"].sheet-entry-wide {
 .sheet-sect-buff .sheet-linked-fields {
     width: 13.5em;
 }
-.sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
-.sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
-    width: 3.1rem;
-}
+
 .sheet-bonustype-show:not(:checked) ~ .sheet-sect-buff .sheet-linked-fields .sheet-small-label2.sheet-entry-med {
     display:none;
 }
 .sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields {
     width:22em;
 }
+.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields.sheet-buff-notype {
+    width: 13.5em;
+}
+.sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
+.sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
+    width: 3.1rem;
+}
 .sheet-bonustype-show:checked ~ .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
 .sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
     width: 10.5rem;
 }
+
 
 /******* end of generic repeating items ********/
 
