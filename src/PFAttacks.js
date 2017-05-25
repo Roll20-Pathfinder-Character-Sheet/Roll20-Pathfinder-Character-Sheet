@@ -811,6 +811,7 @@ var recalcEquationFields = TAS.callback(function callrecalcEquationFields(ids,ca
 				if((!v[prefix + "damage"] || v[prefix + "damage"]==="0"|| v[prefix + "damage"]==="+0") && parseInt(v[prefix+"damage-mod"],10)===0){
 					doneWithField();
 				} else {
+					TAS.log("about to get damage-mod");
 					SWUtils.evaluateAndSetNumber(prefix + "damage", prefix + "damage-mod",0,doneWithField,true);
 				}
 				if((!v[prefix + "attack"] || v[prefix + "attack"]==="0" || v[prefix + "attack"]==="+0") && parseInt(v[prefix+"attack-mod"],10)===0){

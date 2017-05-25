@@ -5,15 +5,22 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
-	var bad=false;
+	var bad=false,dmg=false;
 	TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
 		if (!v && isNaN(v)){
 			TAS.error("Setting NaN! at "+k);
 			bad=true;
 		}
+		if(k.indexOf('damage-mod')>0 || k.indexOf('ability-damage-mod')>0){
+			dmg=true;
+		}
 	});
 	if (bad){
+		TAS.callstack();
+	}
+	if(dmg){
+		TAS.notice("WE are setting damage even though it is equal",a);
 		TAS.callstack();
 	}
 	setAttrs(a,b,c);
@@ -21,7 +28,6 @@ export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 
 export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 	getAttrs(a,function(vals){
-		TAS.debug("getAttrs returned with: ",vals);
 		cb(vals);
 	});
 });
@@ -166,6 +172,7 @@ export var evaluateExpression = TAS.callback(function callevaluateExpression(exp
 			}
 			if (!isNaN(Number(replacedStr)) && isFinite(replacedStr)) {
 				evaluated = parseFloat(replacedStr);
+				//evaluated = parseInt(replacedStr,10);
 				if (!isNaN(evaluated)) {
 					callback(evaluated);
 					return;
@@ -229,7 +236,7 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 			callback(a, b, c);
 		}
 	};
-	getWrapper([readField, writeField, writeField+"_error"], function (values) {
+	getAttrs([readField, writeField, writeField+"_error"], function (values) {
 		var setter = {},
 		params = {},
 		trueDefault=0, 
@@ -275,7 +282,8 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 							value2=trueDefault;
 							//TAS.debug("setting "+ writeField+" to " +value2);
 						}
-						if (isNaN(currVal) || currVal !== value2) {
+						//changedto only 2 equals and flip
+						if (isNaN(currVal) || value2 != currVal) {
 							setter[writeField] = value2;
 						} 
 						if (_.size(setter)>0){
@@ -285,13 +293,21 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 						TAS.error("SWUtils.evaluateAndSetNumber error after call to evaluateExpression ", err2);
 						isError=1;
 					} finally {
-						setWrapper(setter, params, function () {
-							if (!isError){
-								done(value2, currVal, isChanged,currError);
-							} else {
-								errordone(value2,currVal,isChanged,currError);
-							}
-						});
+						if(isChanged){
+							if(writeField.indexOf('damage-mod')>0){
+								TAS.notice("writing to "+writeField+" values:",setter);
+								TAS.callstack();
+							}							
+							setWrapper(setter, params, function () {
+								if (!isError){
+									done(value2, currVal, isChanged,currError);
+								} else {
+									errordone(value2,currVal,isChanged,currError);
+								}
+							});
+						} else {
+							done(value2,currVal,false,currError);
+						}
 
 					}
 				});

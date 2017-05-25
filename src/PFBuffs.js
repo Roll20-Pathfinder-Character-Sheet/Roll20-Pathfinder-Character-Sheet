@@ -343,7 +343,7 @@ export function updateBuffTotalAsync (col, callback,silently){
 				}
 			}
 
-			SWUtils.getWrapper(fields,function(v){
+			getAttrs(fields,function(v){
 				var useBonuses=false,
 				bonuses = {},
 				params={}, setter={};
