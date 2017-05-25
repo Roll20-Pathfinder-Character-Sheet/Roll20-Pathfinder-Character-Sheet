@@ -39,12 +39,11 @@ otherCharBonuses ={
 	'WIS':{'inherent':'WIS-inherent','enhancement':'WIS-enhance'},
 	'CHA':{'inherent':'CHA-inherent','enhancement':'CHA-enhance'},
 	'initiative':{'trait':'init-trait'},
-	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait','enhancement':'Fort-enhance'},
-	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait','enhancement':'Ref-enhance'},
-	'Will':{'resistance':'Will-resist','trait':'Will-trait','enhancement':'Will-enhance'},
+	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait'},
+	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait'},
+	'Will':{'resistance':'Will-resist','trait':'Will-trait'},
 	'armor':{'enhancement':'armor3-enhance','armor':'armor3-acbonus'},
 	'shield':{'enhancement':'shield3-enhance','shield':'shield3-acbonus'},
-	'dodge':{'dodge':'AC-dodge'},
 	'natural':{'natural':'AC-natural'},
 	'deflection':{'deflection':'AC-deflect'}
 	//'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
