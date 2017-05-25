@@ -17,8 +17,6 @@ import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
 import * as PFSkills from './PFSkills';
 
-//new  cmb, dmg_ranged, armor, shield, natural, flat-footed, speed, initiative, size
-// added:init, speed, dmg_ranged, cmb
 export var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
 	"speed", "initiative","size","check_skills",
@@ -53,15 +51,7 @@ var stackingTypes =['untyped','circumstance','dodge','penalty'],
 selfTypeOnly=['dodge','deflection','size'],
 //these have only their own type (like selfTypeOnly) or 'enhancement'
 selfTypeOrEnhance=['armor','shield','natural'],
-bonusTypesRepeated=['armor',
-	'deflection',
-	'dodge',
-	'enhance',
-	'inherent',
-	'natural',
-	'resistance',
-	'shield',
-	'trait'],
+//all total fields
 buffTotFields = _.chain(buffColumns).map(function(buff){
 		var isAbility = (PFAbilityScores.abilities.indexOf(buff) >= 0) && buff.indexOf('skill')<1;
 		if (!isAbility){
@@ -70,6 +60,9 @@ buffTotFields = _.chain(buffColumns).map(function(buff){
 			return ['buff_'+buff+'-total','buff_'+buff+'_exists','buff_'+buff+'-total_penalty', 'buff_'+buff+'_penalty_exists'];
 		}
 	}).flatten().value(),
+//bonus types that are repated elsewhere on the sheet
+charBonusTypes = _.chain(otherCharBonuses).values().map(function(v){return _.keys(v);}).flatten().union().value(),
+//character bonus/buff fields elsewhere on the sheet that stack with buffs
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value(),
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
@@ -251,7 +244,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				bonuses = _.mapObject(bonuses,function(val,bonusType){
 					var retval=val;
 					try{
-						if(bonusTypesRepeated.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
+						if(charBonusTypes.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
 							tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
 							TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
 							if(tempInt>0){
@@ -403,14 +396,14 @@ export function updateBuffTotalsAsync (callback,silently){
 		fields = fields.concat(buffTotFields);
 		fields = fields.concat(charBonusFields);
 		fields.push('use_buff_bonuses');
-		TAS.debug("############ BUFF FIELDS ARE:", fields);
+		//TAS.debug("############ BUFF FIELDS ARE:", fields);
 		
 		getAttrs(fields,function(v){
 			var useBonuses=false,
 			bonuses = {},
 			params={}, setter={};
 			try {
-				TAS.debug("PFBuffs.updateBuffTotalsAsync found:",v);
+				//TAS.debug("PFBuffs.updateBuffTotalsAsync found:",v);
 				useBonuses=parseInt(v.use_buff_bonuses,10)||0;
 				ids = ids.filter(function(id){
 					var prefix = 'repeating_buff_'+id+'_buff-';
@@ -424,7 +417,7 @@ export function updateBuffTotalsAsync (callback,silently){
 				TAS.error("PFBuffs.updateBuffTotalAsync errrou on col ",errou);
 			} finally {
 				if (_.size(setter)){
-					TAS.debug("######################","PFBuffs setting ",setter);
+					//TAS.debug("######################","PFBuffs setting ",setter);
 					if (silently){
 						params = PFConst.silentParams;
 					}

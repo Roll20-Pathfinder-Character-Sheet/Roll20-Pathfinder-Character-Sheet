@@ -73,7 +73,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
 }
 /* resets one row of repeating_weapons
  * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
-export function resetOption (id, eventInfo, callback) {
+export var resetOption = TAS.callback(function callresetOption(id, eventInfo, callback) {
     var done = _.once(function(){
         TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
         if (typeof callback === "function"){
@@ -104,8 +104,8 @@ export function resetOption (id, eventInfo, callback) {
             done();
         }
     });
-}
-export function resetSomeOptions (ids,eventInfo,callback){
+});
+export var resetSomeOptions = TAS.callback(function callresetSomeOptions(ids,eventInfo,callback){
     var done=_.once(function(){
         if (typeof callback === 'function'){
             callback();
@@ -142,21 +142,21 @@ export function resetSomeOptions (ids,eventInfo,callback){
             }
         });
     });
-}
+});
 /*resetOptions - updates repeating_weapon_ attack _options for all attacks.*/
-export function resetOptions (callback,eventInfo) {
+export var resetOptions = TAS.callback(function callresetOptions(callback,eventInfo) {
     getSectionIDs("repeating_weapon", function (ids) {
         resetSomeOptions(ids,eventInfo,callback);
     });
-}
-export function migrate (callback){
+});
+export var migrate = TAS.callback(function callmigrate(callback){
     if (typeof callback === "function"){
         callback();
     }
-}
-export function recalculate  (callback) {
+});
+export var recalculate = TAS.callback(function callrecalculate(callback) {
     resetOptions(callback);
-}
+});
 function registerEventHandlers () {
     _.each(optionToggles, function (toggleField) {
         on("change:" + toggleField, TAS.callback(function toggleAttackNoteOption(eventInfo) {

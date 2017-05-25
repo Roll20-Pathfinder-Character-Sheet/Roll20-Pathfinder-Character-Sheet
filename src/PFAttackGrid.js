@@ -83,14 +83,14 @@ groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
-export function applyConditions  (callback, silently, eventInfo) {
+export var applyConditions = TAS.callback(function callapplyConditions(callback, silently, eventInfo) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
         }
     });
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
-}
+});
 /** updateAttack - updates one row of attack grid (left most column in grid)
  * Updates the attack type totals at top of attack page for one row of grid
  * @param {string} attype = key for attackGridFields to indicate which row from attack grid
@@ -98,7 +98,7 @@ export function applyConditions  (callback, silently, eventInfo) {
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  */
-export function updateAttack  (attype, eventInfo, callback, silently) {
+export var updateAttack = TAS.callback(function callupdateAttack(attype, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -117,7 +117,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
         done();
     }
-}
+});
 
 
 
@@ -154,7 +154,7 @@ function getTopMacros(setter,v){
         return setter;
     }
 }
-export function setTopMacros (callback){
+export var setTopMacros = TAS.callback(function callsetTopMacros(callback){
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
@@ -171,9 +171,9 @@ export function setTopMacros (callback){
             done();
         }
     });
-}
+});
 
-export function resetCommandMacro (callback){
+export var resetCommandMacro = TAS.callback(function callresetCommandMacro(callback){
     var done = _.after(2,function(){
         if (typeof callback === "function"){
             callback();
@@ -182,7 +182,7 @@ export function resetCommandMacro (callback){
     TAS.debug("at PFAttackGrid.resetCommandMacro");
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
-}
+});
 /**
  * 
  * @param {string} buffType buff column without 'buff_' or '-total'
@@ -208,7 +208,7 @@ export function updateAttackGrid(buffType,eventInfo){
 }
 
 
-export function migrate (callback, oldversion){
+export var migrate = TAS.callback(function callmigrate(callback, oldversion){
     var done = function () {
         TAS.debug("leaving PFAttackGrid.migrate");
         if (typeof callback === "function") {
@@ -217,13 +217,13 @@ export function migrate (callback, oldversion){
     };
     PFMigrate.migrateAltAttackGridrowFlags();
     done();
-}
+});
 /** recalculates all write-to fields in module 
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion the version upgrading from 
  */
-export function recalculate  (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = function () {
         TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
@@ -242,7 +242,7 @@ export function recalculate  (callback, silently, oldversion) {
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
     setTopMacros();
-}
+});
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {
