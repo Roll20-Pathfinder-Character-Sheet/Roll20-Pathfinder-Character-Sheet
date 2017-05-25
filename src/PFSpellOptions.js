@@ -152,13 +152,13 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
     });
 }
 /** getOptionText - resets entire @{spell_options} text for a spell row
-* if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
-*@param {string} id of row or null
-*@param {jsobj} eventInfo NOT USED
-*@param {object} toggleValues values from getAttrs of spell toggle option fields
-*@param {object} rowValues values from getAttrs of row attributes
-*@returns {string}
-*/
+ * if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
+ *@param {string} id of row or null
+ *@param {jsobj} eventInfo NOT USED
+ *@param {object} toggleValues values from getAttrs of spell toggle option fields
+ *@param {object} rowValues values from getAttrs of row attributes
+ *@returns {string}
+ */
 export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     customConcentration = parseInt(rowValues[prefix + "Concentration_misc"], 10) || 0,
@@ -281,15 +281,21 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     return optionText;
  }
 /** resetOption updates repeating_spells_$X_spell_options
-*@param {string} id id of row or null
-*@param {jsobj} eventInfo NOT USED
-*/
-export function resetOption (id, eventInfo) {
-    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
+ *@param {string} id id of row or null
+ *@param {jsobj} eventInfo NOT USED
+ */
+export function resetOption (id, eventInfo,callback) {
+    var done=function(){
+        if(typeof callback === "function"){
+            callback();
+        }
+    },
+    prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     allFields;
     allFields = _.map(repeatingOptionAttrsToGet, function (field) {
         return prefix + field;
     }).concat(optionTogglesPlusOptionAttrs);
+    allFields.push(prefix + "spell_options");
     getAttrs(allFields, function (v) {
         var toggleValues = _.chain(optionToggles).reduce(function (memo, attr) {
             memo['show' + attr.toLowerCase().slice(13).replace('_notes', '')] = (parseInt(v[attr], 10) || 0);
@@ -303,16 +309,18 @@ export function resetOption (id, eventInfo) {
         setter = {};
         optionText = getOptionText(id, eventInfo, toggleValues, v)||"";
         //TAS.debug("resetOption","About to set",setter);
-        setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
-        SWUtils.setWrapper(setter, {
-            silent: true
-        });
+        if(v[prefix+'spell_options']!==optionText){
+            setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
+            SWUtils.setWrapper(setter, PFConst.silentParams,done);
+        } else {
+            done();
+        }
     });
  }
 /**resetOptions - updates repeating_spells_spell_options for all spells.
-*@param {function} callback call when done
-*@param {object} eventInfo NOT USED
-*/
+ *@param {function} callback call when done
+ *@param {object} eventInfo NOT USED
+ */
 export function resetOptions (callback, eventInfo) {
     var done = _.once(function(){
         if (typeof callback === "function"){

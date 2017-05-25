@@ -10,14 +10,13 @@ import * as PFMigrate from './PFMigrate';
 import * as PFSpells from './PFSpells';
 
 
-//the 3 spell classes at top of spells page
 
 /**  returns whether a base spell level is filled in or not
-*@param {int} spellclassidx 0,1,2 sellcasting class
-*@param {function} callback - to call if exists
-*@param {function} noExistCallback - to call if not exists
-*/
-export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
+ *@param {int} spellclassidx 0,1,2 sellcasting class
+ *@param {function} callback - to call if exists
+ *@param {function} noExistCallback - to call if not exists
+ */
+export var ifSpellClassExists = TAS.callback(function callifSpellClassExists(spellclassidx, callback, noExistCallback) {
     getAttrs(["use_spells","spellclass-" + spellclassidx + "-exists"], function (v) {
         try {
             if (! parseInt(v.use_spells,10)){
@@ -40,12 +39,12 @@ export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
             }
         }
     });
-}
+});
 /**  sets {spellclasses_multiclassed} to 1 if more than one spellclass-X-exists is 1
-*@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
-*@param {eventinfo} eventInfo  unused eventinfo from 'on' method
-*/
-export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
+ *@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
+ *@param {eventinfo} eventInfo  unused eventinfo from 'on' method
+ */
+export var updateMultiClassedCasterFlag = TAS.callback(function callupdateMultiClassedCasterFlag(dummy, eventInfo, callback) {
     var done=_.once(function(){
         TAS.debug("leaving updateMultiClassedCasterFlag");
         if (typeof callback === "function"){
@@ -67,15 +66,15 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
             done();
         }
     });
-}
+});
 /** updates the ranges at the top for this spellcasting class
-*@param {int} spellclassidx 0,1,2 the spell casting tab
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {bool} force if true update no matter if new ranges are same or not.
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently) {
+ *@param {int} spellclassidx 0,1,2 the spell casting tab
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {bool} force if true update no matter if new ranges are same or not.
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+var updateCasterRanges =TAS.callback(function callupdateCasterRanges(spellclassidx, eventInfo, force, callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
             callback();
@@ -114,25 +113,26 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
             }
         }
     });
-}
+});
+
 /** updateConcentration - updates concentration for spellclass
-*@param {int} classidx 0,1,2 the spellclass
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-function updateConcentration (classidx, eventInfo, callback, silently) {
+ *@param {int} classidx 0,1,2 the spellclass
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+var updateConcentration = TAS.callback(function callupdateConcentration(classidx, eventInfo, callback, silently) {
     //TAS.debug("at PFSpellCasterClasses.updateConcentration");
     SWUtils.updateRowTotal(["Concentration-" + classidx, "spellclass-" + classidx + "-level-total", "Concentration-" + classidx + "-mod", "Concentration-" + classidx + "-misc"], 0, null, false, callback, silently);
-}
+});
 /*********************************** SPELLS PER DAY section *************************************/
 /** updateSaveDCs - update save DCs on left  column of Spells Per Day grid
-*@param {int} classidx 0,1,2 the spellclass
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-function updateSaveDCs (classidx, eventInfo, callback, silently) {
+ *@param {int} classidx 0,1,2 the spellclass
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+var updateSaveDCs = TAS.callback(function callupdateSaveDCs(classidx, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -166,15 +166,15 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
             }
         }
     });
-}
+});
 /** updateBonusSpells - updates Bonus Spells for the class
-* Uses attribute, not the attribute-mod. So it does not change with ability damage or penalties.
-*@param {number} classidx 0,1,2 the spellclass
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-function updateBonusSpells (classidx, eventInfo, callback, silently) {
+ * Uses attribute, not the attribute-mod. So it does not change with ability damage or penalties.
+ *@param {number} classidx 0,1,2 the spellclass
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+var updateBonusSpells = TAS.callback(function callupdateBonusSpells(classidx, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -218,9 +218,9 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
             }
         }
     });
-}
+});
 /* updateMaxSpellsPerDay */
-function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
+var updateMaxSpellsPerDay = TAS.callback(function callupdateMaxSpellsPerDay(classidx, spelllvl, callback, silently) {
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
@@ -246,13 +246,13 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
         }
     });
     //SWUtils.updateRowTotal(["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max", "spellclass-" + classidx + "-level-" + spelllvl + "-class", "spellclass-" + classidx + "-level-" + spelllvl + "-bonus", "spellclass-" + classidx + "-level-" + spelllvl + "-misc"], 0, [], false, callback, silently);
-}
+});
 /**  applyConditions - for condition deafened update {SpellFailureNote} on DEFENSE PAGE
 * note drain should have already been applied
 *@param {function} callback - to call when done.
 *@param {bool} silently if true update with PFConst.silentParams
 */
-export function applyConditions (callback, silently) {
+export var applyConditions = TAS.callback(function callapplyConditions(callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -285,8 +285,8 @@ export function applyConditions (callback, silently) {
             }
         }
     });
-}
-function recalcOneClass (spellClassIdx, callback, silently) {
+});
+var recalcOneClass = TAS.callback(function callrecalcOneClass(spellClassIdx, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
         if (typeof callback === "function") {
@@ -303,7 +303,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
     updateSaveDCs(spellClassIdx, null, doneOne, silently);
     updateCasterRanges(spellClassIdx, null, true, doneOne, silently);
     updateBonusSpells(spellClassIdx, null, doneOne, silently);
-}
+});
 /** updates {spellclass-X-level-total}, sets minimum of 1 if {spellclass-X-level} is > 0
 *@param {int} spellclassidx 0,1,2 the spell casting tab
 *@param {eventInfo} eventInfo unused eventinfo from 'on' method
@@ -311,7 +311,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
 *@param {function} callback - to call when done.
 *@param {bool} silently if true update with PFConst.silentParams
 */
-function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, silently) {
+var updateCasterLevel = TAS.callback(function callupdateCasterLevel(spellclassidx, eventInfo, classlevel, callback, silently) {
     var done = _.once(function () {
         TAS.debug("leaving updateCasterLevel " + spellclassidx);
         if (typeof callback === "function") {
@@ -369,26 +369,31 @@ function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, sile
             }
         }
     });
-}
+});
 /** updates all 3 caster class levels, usually due to change in buffs or debuffs 
-*@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-function updateCasterLevels (dummy, eventInfo, callback, silently) {
-    updateCasterLevel(0, eventInfo, 0, callback, silently);
-    updateCasterLevel(1, eventInfo, 0, callback, silently);
-    updateCasterLevel(2, eventInfo, 0, callback, silently);
-}
+ *@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+var updateCasterLevels = TAS.callback(function callupdateCasterLevels(dummy, eventInfo, callback, silently) {
+	var done=_.after(3,function(){
+		if (typeof callback==="function"){
+			callback();
+		}
+	});
+    updateCasterLevel(0, eventInfo, 0, done, silently);
+    updateCasterLevel(1, eventInfo, 0, done, silently);
+    updateCasterLevel(2, eventInfo, 0, done, silently);
+});
 /** sets {spellclass-X-name} and {spellclass-X-level} from the class dropdown {spellclass-X}
-* called when the class dropdown is changed.
-*@param {int} spellclassidx 0,1,2 the spell casting tab
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, silently) {
+ * called when the class dropdown is changed.
+ *@param {int} spellclassidx 0,1,2 the spell casting tab
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+export var setCasterClassFromDropdown = TAS.callback(function callsetCasterClassFromDropdown(spellclassidx, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -449,15 +454,15 @@ export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, 
             done();
         }
     });
-}
+});
 /** update level on SPELL page when updated on CLASS page, but not vice versa
-*@param {int} classidx 0..6 the row on the CLASS GRID starting with 0 to grab level from, or 6 if {npc-hd-num}
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {bool} force if true update no matter if new ranges are same or not.
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-export function updateCasterFromClassLevel (classidx, eventInfo, force, callback, silently) {
+ *@param {int} classidx 0..6 the row on the CLASS GRID starting with 0 to grab level from, or 6 if {npc-hd-num}
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {bool} force if true update no matter if new ranges are same or not.
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+export var updateCasterFromClassLevel = TAS.callback(function callupdateCasterFromClassLevel(classidx, eventInfo, force, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -504,12 +509,12 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
             }
         });
     });
-}
-export function migrate (callback, oldversion){
+});
+export var migrate = TAS.callback(function callmigrate(callback, oldversion){
     //TAS.debug("At PFSpellCasterClasses.migrate");
     PFMigrate.migrateUsesSpellFlag(callback);
-}
-export function recalculate (callback, silently, oldversion) {
+});
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.info("leaving PFSpellCasterClasses.recalculate");
         if (typeof callback === "function") {
@@ -554,7 +559,7 @@ export function recalculate (callback, silently, oldversion) {
     migrate(function(){
         callApplyConditions();
     },oldversion);
-}
+});
 var events = {
     // events for updates to top of class page, each one calls isSpellClassExists
     spellcastingClassEventsAuto: {

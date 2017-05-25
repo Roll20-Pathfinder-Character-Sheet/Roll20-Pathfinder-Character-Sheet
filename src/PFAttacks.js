@@ -591,18 +591,17 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 		if (!prefix){
 			prefix='repeating_weapon_'+SWUtils.getRepeatingIDStr(id);
 		}
-		TAS.debug("#########","PFAttacks.adjustDamageDice for "+prefix,v);
+		//TAS.debug("#########","PFAttacks.adjustDamageDice for "+prefix,v);
 		if (parseInt(v[prefix+'size_affects'],10)){
 			currDice=parseInt(v[prefix+'damage-dice-num'],10)||0;
 			currDie=parseInt(v[prefix+'damage-die'],10)||0;
-			TAS.debug("PFAttacks.adjustDamageDice curr size:"+ currCharSize+" and current dmg: "+currDice+"d"+currDie);
+			//TAS.debug("PFAttacks.adjustDamageDice curr size:"+ currCharSize+" and current dmg: "+currDice+"d"+currDie);
 			if (!(currDice ===0 || currDie === 0)){
 				defSize=parseInt(v['default_char_size'],10);
 				defWeaponSize=parseInt(v[prefix+'default_size'],10);
 				defDice=parseInt(v[prefix+'default_damage-dice-num'],10)||0;
 				defDie=parseInt(v[prefix+'default_damage-die'],10)||0;
-				TAS.debug("PFAttacks.adjustDamageDice default is:"+defDice+"d"+defDie+", for size:"+defWeaponSize+", "+
-				"def char size:"+defSize+", and curr char size:"+ currCharSize);
+				//TAS.debug("PFAttacks.adjustDamageDice default is:"+defDice+"d"+defDie+", for size:"+defWeaponSize+", "+"def char size:"+defSize+", and curr char size:"+ currCharSize);
 				
 				//check for errors 
 				if (isNaN(defWeaponSize)){
@@ -622,18 +621,18 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 				if (currCharSize !== defSize ){
 					setter[prefix+'not_default_size']=1;
 					sizeDiff=PFSize.getSizeLevelChange(currCharSize,defSize);
-					TAS.debug("PFAttacks update dice, char size change is "+sizeDiff);
+					//TAS.debug("PFAttacks update dice, char size change is "+sizeDiff);
 				}
 				if (defWeaponSize !== defSize ){
 					setter[prefix+'not_default_size']=1;
 					weaponSizeDiff=PFSize.getSizeLevelChange(defWeaponSize,defSize);
-					TAS.debug("PFAttacks update dice, weapon size change is "+weaponSizeDiff);
+					//TAS.debug("PFAttacks update dice, weapon size change is "+weaponSizeDiff);
 				}
 				sizeDiff+=weaponSizeDiff;
-				TAS.debug("PFAttacks update dice, total size change is  "+sizeDiff);
+				//TAS.debug("PFAttacks update dice, total size change is  "+sizeDiff);
 				if (sizeDiff){
 					newDice= PFSize.updateDamageDice (sizeDiff,defSize,defDice,defDie);
-					TAS.debug("###########","PFAttacks.adjustDamageDice NEW DAMAGE is:"+newDice.dice+"d"+newDice.die+", for sizeDiff:"+sizeDiff);
+					//TAS.debug("###########","PFAttacks.adjustDamageDice NEW DAMAGE is:"+newDice.dice+"d"+newDice.die+", for sizeDiff:"+sizeDiff);
 					if(currDice!==newDice.dice || currDie!==newDice.die  ){
 						setter[prefix+'damage-dice-num']=newDice.dice;
 						setter[prefix+'damage-die']=newDice.die;
@@ -652,7 +651,7 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 				setter[prefix+'size_affects']=0;
 			}
 		} else {
-			TAS.debug("PFAttacks.adjustDamageDice: size_affects is blank so reset regular to default")
+			//TAS.debug("PFAttacks.adjustDamageDice: size_affects is blank so reset regular to default")
 			if (!(currDice ===0 || currDie === 0)){
 				setter[prefix+'damage-dice-num']=v[prefix+'default_damage-dice-num'];
 				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
@@ -661,7 +660,7 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 	} catch (err){
 		TAS.error("PFAttacks.adjustDamageDice",err);
 	} finally {
-		TAS.debug("PFAttacks.adjustDamageDice returning with ",setter);
+		//TAS.debug("PFAttacks.adjustDamageDice returning with ",setter);
 		return setter;
 	}
 }
