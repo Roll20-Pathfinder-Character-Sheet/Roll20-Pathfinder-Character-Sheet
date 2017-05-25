@@ -62,7 +62,7 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
             setter.spellclasses_multiclassed= 0;
         } 
         if(_.size(setter)>0){
-            SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            setAttrs(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -108,7 +108,7 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -160,7 +160,7 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -181,7 +181,13 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
         }
     }),
     conAbility = "Concentration-" + classidx + "-ability";
-    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON"], function (v) {
+    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON", 
+    "spellclass-" + classidx + "-level-0-bonus",
+    "spellclass-" + classidx + "-level-1-bonus","spellclass-" + classidx + "-level-2-bonus",
+    "spellclass-" + classidx + "-level-3-bonus","spellclass-" + classidx + "-level-4-bonus",
+    "spellclass-" + classidx + "-level-5-bonus","spellclass-" + classidx + "-level-6-bonus",
+    "spellclass-" + classidx + "-level-7-bonus","spellclass-" + classidx + "-level-8-bonus",
+    "spellclass-" + classidx + "-level-9-bonus" ], function (v) {
         //eliminate the modifier, we just want @{INT} not @{INT-mod}
         var abilityName = PFUtils.findAbilityInString(v[conAbility]).replace("-mod", ""),
         abilityVal = parseInt(v[abilityName], 10),
@@ -199,12 +205,16 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
                     for (i = 1; i < 10; i++) {
                         bonusSpells = Math.floor(Math.max(Math.floor((abilityVal - 10) / 2) + 4 - i, 0) / 4);
                         bonusName = prefix + i + "-bonus";
-                        setter[bonusName] = bonusSpells;
+                        if ((parseInt(v[bonusName],10))!==bonusSpells){
+                            setter[bonusName] = bonusSpells;
+                        }
                     }
                 } else {
                     for (i = 1; i < 10; i++) {
                         bonusName = prefix + i + "-bonus";
-                        setter[bonusName] = 0;
+                        if((parseInt(v[bonusName],10))!==0){
+                            setter[bonusName] = 0;
+                        }
                     }
                 }
             }
@@ -212,7 +222,7 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
             TAS.error("PFSpellCasterClasses.updateBonusSpells", err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -240,7 +250,7 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
         }
         if (newCount !== curr){
             setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-            SWUtils.setWrapper(setter,{},done);
+            setAttrs(setter,{},done);
         } else {
             done();
         }
@@ -279,7 +289,7 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -301,7 +311,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
     
     updateConcentration(spellClassIdx, null, doneOne, silently);
     updateSaveDCs(spellClassIdx, null, doneOne, silently);
-    updateCasterRanges(spellClassIdx, null, true, doneOne, silently);
+    updateCasterRanges(spellClassIdx, null, false, doneOne, silently);
     updateBonusSpells(spellClassIdx, null, doneOne, silently);
 }
 /** updates {spellclass-X-level-total}, sets minimum of 1 if {spellclass-X-level} is > 0
@@ -357,7 +367,7 @@ function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, sile
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, function(){
+                setAttrs(setter, params, function(){
                     if (recalcAfter){
                         recalcOneClass(spellclassidx,done,silently);
                     } else {
@@ -433,7 +443,7 @@ export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, 
                     TAS.error("PFSpellCasterClasses.setCasterClassFromDropdown", err);
                 } finally {
                     if (_.size(setter) > 0) {
-                        SWUtils.setWrapper(setter, {
+                        setAttrs(setter, {
                             silent: true
                         }, done);
                         if (updateLevel) {
@@ -497,7 +507,7 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
             if (newCasterLevel !== currCasterLevel || isNaN(currCasterLevel) || force) {
                 setter[spellclasslevelField] = newCasterLevel;
                 setter[prefix + "-name"] = v[classNameField];
-                SWUtils.setWrapper(setter, {
+                setAttrs(setter, {
                     silent: true
                 });
                 updateCasterLevel(classidx, eventInfo, newCasterLevel);

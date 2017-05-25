@@ -702,7 +702,7 @@ export function getNoteAfterNumber  (str) {
  *@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
  *@param {function} methodToCall synchronous function that maps value of field_compendium to another val to set
  *@param {Map<string,any>} v the values returned from getAttrs
- *@param {Map<string,any>} setter to pass to SWUtils.setWrapper
+ *@param {Map<string,any>} setter to pass to setAttrs
  *@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
 */
 export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,setField){
@@ -722,7 +722,7 @@ export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,se
  *@param {string} prefix the repeating_section_id_  string
  *@param {string} field the name of compendium field , must have _compendium at end. Without '_compendium' this is the write field
  *@param {Map<string,any>} v the values returned from getAttrs
- *@param {Map<string,any>} setter to pass to SWUtils.setWrapper
+ *@param {Map<string,any>} setter to pass to setAttrs
  *@param {string} setField optional if the attr to write to is not 'field' it will be prefix+setField
  */
 export function getCompendiumIntSet  (prefix,field,v,setter,setField){

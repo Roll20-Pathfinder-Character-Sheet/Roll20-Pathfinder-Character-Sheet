@@ -38,7 +38,7 @@ events = {
  * http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#combat-maneuver-defense
  * Any penalties to a creature's AC also apply to its CMD
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateDefenses ( callback, silently, eventInfo) {
@@ -286,7 +286,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -370,7 +370,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
                             setter["CMD-ability"]=v['AC-ability'];
                             setter[defenseDropdowns["CMD-ability"]]=currACmod;
                         }
-                        SWUtils.setWrapper(setter,PFConst.silentParams,updateAndDone);
+                        setAttrs(setter,PFConst.silentParams,updateAndDone);
                     } else {
                         updateAndDone();
                     }
@@ -389,7 +389,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  * if not proficient sets attack penalty
  * for backward compatibility, proficiency is string and 0 is proficient, anything else non proficient
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateArmor (callback, silently, eventInfo) {
@@ -486,7 +486,7 @@ export function updateArmor (callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -496,7 +496,7 @@ export function updateArmor (callback, silently, eventInfo) {
 /** applyConditions Updates the AC-penalty and CMD-penalty field based on conditions
  *only difference is CMD penalty affected by energy drain for some reason
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function applyConditions (callback, silently,eventInfo) {
@@ -542,7 +542,7 @@ export function applyConditions (callback, silently,eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -580,7 +580,7 @@ export function migrate (callback,oldversion){
                 TAS.error("PFDefense.migrate",err);
             } finally {
                 if (_.size(setter)>0){
-                    SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                    setAttrs(setter,PFConst.silentParams,done);
                 } else {
                     done();
                 }
@@ -593,7 +593,7 @@ export function migrate (callback,oldversion){
 
 /** recalculate defense grid
  * @param {function} callback guaranteed call when done
- * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  * @param {number} oldversion 
  */
 export function recalculate (callback, silently, oldversion) {

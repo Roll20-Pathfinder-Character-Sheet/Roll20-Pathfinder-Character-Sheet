@@ -146,7 +146,7 @@ function migrateMacros (callback){
 		}
 	}),
 	doneOne = _.after(3,function(){
-		SWUtils.setWrapper({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
+		setAttrs({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
 	});
 	try {
 		TAS.debug("at PFSkills.migrateMacros");
@@ -244,7 +244,7 @@ function updateMaxSkills (eventInfo, callback) {
 			TAS.error("PFSkills.updateMaxSkills", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, {
+				setAttrs(setter, {
 					silent: true
 				}, done);
 			} else {
@@ -414,7 +414,7 @@ export function updateSkill (skill, callback, silently) {
 			TAS.error(err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, {
+				setAttrs(setter, {
 					silently: true
 				}, function () {
 					done(skillTot, currSkill);
@@ -489,8 +489,8 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
 				//TAS.debug("PFSkills.recalculateSkillDropdowns about to set ");
 				//TAS.debug("PFSkills.recalculateSkillDropdowns setting",setter);
 				if (_.size(setter) > 0) {
-					SWUtils.setWrapper(setter, PFConst.silentParams, function(){
-						//TAS.debug("PFSkills.recalculateSkillDropdowns resturned from SWUtils.setWrapper!");
+					setAttrs(setter, PFConst.silentParams, function(){
+						//TAS.debug("PFSkills.recalculateSkillDropdowns resturned from setAttrs!");
 						doneDrop();
 					});
 				} else {
@@ -507,7 +507,7 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
  * calls updateSkill for each. Does all dropdowns at once since they are easy to merge into one.
  * @param {Array} skills array of skills to update.
  * @param {function} callback when done
- * @param {boolean} silently whether to call SWUtils.setWrapper of skill total with silent or not.
+ * @param {boolean} silently whether to call setAttrs of skill total with silent or not.
  */
 function recalculateSkillArray (skills, callback, silently) {
 	var done = _.once(function () {
@@ -662,7 +662,7 @@ function updateSubSkillMacroBook (background, rt, eventInfo, currMacros, isNPC, 
 			}
 		}
 		if (_.size(setter) > 0) {
-			SWUtils.setWrapper(setter, PFConst.silentParams);
+			setAttrs(setter, PFConst.silentParams);
 		}
 	});
 }
@@ -755,7 +755,7 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 					TAS.error("PFSkills.resetOneCommandMacro errRT",errRT);
 				} finally {
 					if (_.size(setter) > 0) {
-						SWUtils.setWrapper(setter, PFConst.silentParams, done);
+						setAttrs(setter, PFConst.silentParams, done);
 					} else {
 						done();
 					}
@@ -768,7 +768,7 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 				canshowarray = assembleSkillButtonArray(consolidatedSkills, rt, sv);
 				tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
 				setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
-				SWUtils.setWrapper(setter,PFConst.silentParams, done);
+				setAttrs(setter,PFConst.silentParams, done);
 			});
 
 		}
@@ -858,7 +858,7 @@ export function migrate (callback, oldversion) {
 					if (! (!v[csNm] || v[csNm] == "0") ) {
 						//TAS.debug({"function":"migrateClassSkill","raw":v[csNm],"cs":cs});
 						setter[csNm] = 3;
-						SWUtils.setWrapper(setter, PFConst.silentParams);
+						setAttrs(setter, PFConst.silentParams);
 					}
 				}
 			});
@@ -871,7 +871,7 @@ export function migrate (callback, oldversion) {
 		determineArray = function () {
 			migrateClassSkillArray(allTheSkills);
 			//not bothering to code correctly to wait since this is almost a year old.
-			SWUtils.setWrapper({classSkillsMigrated: 1}, PFConst.silentParams,done);
+			setAttrs({classSkillsMigrated: 1}, PFConst.silentParams,done);
 		};
 		getAttrs(["classSkillsMigrated"], function (vm) {
 			if (!(parseInt(vm.classSkillsMigrated, 10) || 0)) {
@@ -893,7 +893,7 @@ export function migrate (callback, oldversion) {
 		getAttrs(["adv_macro_show", "skill-invest-query"], function (v) {
 			var showAdv = parseInt(v.adv_macro_show, 10) || 0;
 			if (v["skill-invest-query"] && !showAdv) {
-				SWUtils.setWrapper({adv_macro_show: 1}, PFConst.silentParams, done);
+				setAttrs({adv_macro_show: 1}, PFConst.silentParams, done);
 			}
 		});
 	},
@@ -929,7 +929,7 @@ export function migrate (callback, oldversion) {
 				}
 				setter.migrated_take10_dropdown=1;
 				//TAS.debug("#####################","PFBuffs.migrate setting",setter);
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}

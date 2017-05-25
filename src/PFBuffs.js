@@ -39,12 +39,11 @@ otherCharBonuses ={
 	'WIS':{'inherent':'WIS-inherent','enhancement':'WIS-enhance'},
 	'CHA':{'inherent':'CHA-inherent','enhancement':'CHA-enhance'},
 	'initiative':{'trait':'init-trait'},
-	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait','enhancement':'Fort-enhance'},
-	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait','enhancement':'Ref-enhance'},
-	'Will':{'resistance':'Will-resist','trait':'Will-trait','enhancement':'Will-enhance'},
+	'Fort':{'resistance':'Fort-resist','trait':'Fort-trait'},
+	'Ref':{'resistance':'Ref-resist','trait':'Ref-trait'},
+	'Will':{'resistance':'Will-resist','trait':'Will-trait'},
 	'armor':{'enhancement':'armor3-enhance','armor':'armor3-acbonus'},
 	'shield':{'enhancement':'shield3-enhance','shield':'shield3-acbonus'},
-	'dodge':{'dodge':'AC-dodge'},
 	'natural':{'natural':'AC-natural'},
 	'deflection':{'deflection':'AC-deflect'}
 	//'AC':{'dodge':'AC-dodge','natural':'AC-natural','deflection':'AC-deflect'}
@@ -132,7 +131,7 @@ function toggleBuffStatusPanel (col, val) {
 			TAS.error("PFBuffs.toggleBuffStatusPanel", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, { silent: true });
+				setAttrs(setter, { silent: true });
 			}
 		}
 	});
@@ -140,7 +139,7 @@ function toggleBuffStatusPanel (col, val) {
 
 export function updateBuffTotals (col, callback,silently){
 	var done = _.once(function () {
-		//TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
+		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -337,7 +336,7 @@ export function updateBuffTotals (col, callback,silently){
 						if (silently){
 							params = PFConst.silentParams;
 						}
-						SWUtils.setWrapper(setter,params,done);
+						setAttrs(setter,params,done);
 					} else {
 						done();
 					}
@@ -365,7 +364,7 @@ export function migrate (outerCallback) {
 			}
 		}),
 		migrated = function(){
-			SWUtils.setWrapper({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
+			setAttrs({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
 		};
 		getAttrs(['migrated_buffs_rangeddmg_abiilty'],function(vout){
 			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_abiilty,10)||0;
@@ -426,7 +425,7 @@ export function migrate (outerCallback) {
 							}finally {
 								if (_.size(setter)){
 									TAS.debug("###########","PFBuffs migrate setting ",setter);
-									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
+									setAttrs(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
 										PFInitiative.updateInitiative();
@@ -460,7 +459,7 @@ export function migrate (outerCallback) {
 			TAS.error("PFBuffs.migrate", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, PFConst.silentParams);
+				setAttrs(setter, PFConst.silentParams);
 			}
 		}
 	});
@@ -472,7 +471,7 @@ export function migrate (outerCallback) {
  * @param {string} bufftype  -string from buffColumns
  * @param {string} buffmacro ?
  * @param {number} modamount - value for the buff
- * @param {map} newRowAttrs - object of {name:value} to pass to SWUtils.setWrapper
+ * @param {map} newRowAttrs - object of {name:value} to pass to setAttrs
  * @returns {map} return newRowAttrs after adding maps to it.
  */
 export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
@@ -538,7 +537,7 @@ function resetStatuspanel (callback) {
 			TAS.error("PFBuffs.resetStatuspanel error inside calculate exists", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, { silent: true }, done);
+				setAttrs(setter, { silent: true }, done);
 			} else {
 				done();
 			}
@@ -574,7 +573,7 @@ export function clearBuffTotals(callback,silently){
 				params =PFConst.silentParams;
 			}
 			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
-			SWUtils.setWrapper(setter,params,done);
+			setAttrs(setter,params,done);
 		} else {
 			done();
 		}

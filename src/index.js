@@ -1,9 +1,17 @@
 'use strict';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 
+TAS.config({
+ logging: {
+   info: process.env.NODE_ENV !== 'production',
+   debug: process.env.NODE_ENV !== 'production'
+ }
+});
+if (process.env.NODE_ENV !== 'production') {
+  TAS.debugMode();
+}
 
 import {PFLog, PFConsole} from './PFLog';
-
 import PFConst from './PFConst';
 //importing PFSheet imports everything else
 import * as PFSheet from './PFSheet';

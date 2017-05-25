@@ -3,7 +3,6 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
-import * as SWUtils from './SWUtils';
 
 
 function setSanityThreshold (callback){
@@ -28,7 +27,7 @@ function setSanityThreshold (callback){
             TAS.error("PFHorror.setSanityThreshold error",err);
         } finally {
             if (_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                setAttrs(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -66,7 +65,7 @@ function setSanityScore (callback){
             TAS.error("PFHorror.setSanityScore error",err);
         } finally {
             if (_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                setAttrs(setter,PFConst.silentParams,done);
             } else {
                 done();
             }

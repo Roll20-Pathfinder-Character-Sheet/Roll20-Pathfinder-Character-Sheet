@@ -43,7 +43,7 @@ function expandAll  () {
 			//set tabs to "all"
 			//set conditions and buffs to "show"
 			//set all others to default (which is "show")
-			SWUtils.setWrapper({
+			setAttrs({
 				"expandall": "0",
 				pagetab: "99",
 				abilities_tab: "99",
@@ -252,7 +252,7 @@ function expandAll  () {
 						}
 						return memo;
 					}, {});
-					SWUtils.setWrapper(setter, {
+					setAttrs(setter, {
 						silent: true
 					});
 				});
@@ -266,7 +266,7 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -571,11 +571,11 @@ export function recalculate (oldversion, callback, silently) {
 *  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
 function checkForUpdate () {
 	var done = function () {
-		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
+		setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
 	errorDone = _.once(function (){
 		TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
-		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
+		setAttrs({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
 	'race', 'class-0-name', 'npc-type', 'level'], function (v) {
@@ -586,7 +586,7 @@ function checkForUpdate () {
 		recalc = false,
 		currVer = parseFloat(v.PFSheet_Version, 10) || 0,
 		setUpgradeFinished = function() {
-			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
+			setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
 			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
@@ -701,7 +701,7 @@ function registerEventHandlers () {
 					PFNPCParser.importFromCompendium(eventInfo, function(){
 						//instead of just calling recalculate set recalc button and call checkforupdate
 						//so users sees something is happening.
-						SWUtils.setWrapper({recalc1:1},PFConst.silentParams,function(){
+						setAttrs({recalc1:1},PFConst.silentParams,function(){
 							checkForUpdate();
 						});
 					});
@@ -723,7 +723,7 @@ function registerEventHandlers () {
 							setter={};
 							setter[eventInfo.sourceAttribute]=0;
 							setter[eventInfo.sourceAttribute+'_btn']=0;
-							SWUtils.setWrapper(setter,{silent:true});
+							setAttrs(setter,{silent:true});
 							if ((/buff/i).test(eventInfo.sourceAttribute)){
 								PFBuffs.clearBuffTotals();
 							}		

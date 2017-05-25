@@ -2,7 +2,6 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFInitiative from './PFInitiative';
 import * as PFSpellCasterClasses from './PFSpellCasterClasses';
@@ -19,7 +18,7 @@ import * as PFAttacks from './PFAttacks';
 function updateGrapple () {
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (values["condition-Pinned"] !== "0" && values["condition-Grappled"] !== "0") {
-			SWUtils.setWrapper({
+			setAttrs({
 				"condition-Pinned": "0"
 			});
 		} else {
@@ -32,7 +31,7 @@ function updateGrapple () {
 function updatePin () {
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (values["condition-Pinned"] !== "0" && values["condition-Grappled"] !== "0") {
-			SWUtils.setWrapper({
+			setAttrs({
 				"condition-Grappled": "0"
 			});
 		} else {
@@ -54,11 +53,11 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 		drained = parseInt(v["condition_is_drained"], 10) || 0;
 		TAS.debug("################","PFConditions.updateDrainCheckbox we found ",v," and levels="+levels+", drained="+drained,"##############");
 		if (levels !== 0 && drained === 0) {
-			SWUtils.setWrapper({
+			setAttrs({
 				"condition_is_drained": "1"
 			}, PFConst.silentParams, done);
 		} else if (levels === 0 && drained !== 0) {
-			SWUtils.setWrapper({
+			setAttrs({
 				"condition_is_drained": "0"
 			}, PFConst.silentParams,done);
 		} else {
