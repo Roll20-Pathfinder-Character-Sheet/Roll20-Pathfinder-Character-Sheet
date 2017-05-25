@@ -137,7 +137,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return memo;
 	  },{});
 	try {
-		TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
+		//TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
 		currDice=parseInt(currDice,10);
 		currDie=parseInt(currDie,10);
 		if(!(isNaN(currDice)||isNaN(currDie))){
@@ -179,7 +179,6 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 					sizediff++;
 					if (currow===1) {break;}
 				}
-				TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
 			}
 		}
 	} catch(err){
