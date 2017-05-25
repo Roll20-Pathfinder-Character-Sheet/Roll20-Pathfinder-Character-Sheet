@@ -882,11 +882,8 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                 done();
                 return;
             }
-            //var updateAbilityScore = eventInfo?(/concentration\-[012]\-mod/i.test(eventInfo.sourceAttribute)):true;
             getSectionIDs("repeating_spells", function (ids) {
                 var fields=[];
-                //TAS.debug("updateSpellsCasterAbilityRelated",classIdx,eventInfo);
-                //TAS.debug(ids);
                 _.each(ids, function (id) {
                     var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id);
                     fields = fields.concat([prefix + "spellclass_number", prefix + "spell_level", prefix + "spell_level_r", prefix + "spellclass_number",
@@ -897,7 +894,6 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                     casterlevel = 0,
                     setter = {};
                     try {
-                        TAS.debug("updateSpellsCasterAbilityRelated,class:"+classIdx+", spells:", v);
                         _.each(ids, function (id) {
                             var spellLevel = 0, spellLevelRadio = 0, newDC = 0, setOption = 0, currDC = 0,
                             prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
@@ -911,7 +907,6 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         TAS.warn("spell level is NaN for " + prefix);
                                         if (spellLevelRadio !== -1 || isNaN(spellLevelRadio)) {
                                             setter[prefix + "spell_level_r"] = "-1";
-                                            //setter[prefix + "savedc"] = 0;
                                         }
                                     } else {
                                         if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
@@ -938,14 +933,10 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                                 }
                                             }
                                             if (setOption && optionText) {
-                                                //TAS.debug("setting option for id "+ id +" to "+optionText);
                                                 setter[prefix + "spell_options"] = optionText;
                                             }
                                         } else {
                                             TAS.warn("spell casterlevel is NaN for " + prefix);
-                                            //if ((parseInt(v[prefix + "Concentration-mod"], 10) || 0) !== 0) {
-                                            //    setter[prefix + "Concentration-mod"] = "";
-                                            //}
                                         }
                                     }
                                 }
@@ -955,7 +946,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                         });
                     } catch(miderr){
                         TAS.error("updateSpellsCasterAbilityRelated miderr :",miderr);
-                    }finally {
+                    } finally {
                         if (_.size(setter) > 0) {
                             TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
                             SWUtils.setWrapper(setter, PFConst.silentParams, done());

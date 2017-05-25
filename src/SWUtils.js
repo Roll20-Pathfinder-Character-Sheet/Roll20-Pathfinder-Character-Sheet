@@ -127,7 +127,7 @@ function convertKL1KH1toMinMax  (str) {
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
  *@param {function(Number)} callback a function taking one parameter - could be int or float
  */
-export function evaluateExpression (exprStr, callback) {
+export var evaluateExpression = TAS.callback(function callevaluateExpression(exprStr, callback) {
 	var bmatches1 = 0, bmatches2 = 0, pmatches1 = 0, pmatches2 = 0, smatches1 = 0, smatches2 = 0;
 	if (typeof callback !== "function") {
 		return;
@@ -188,7 +188,7 @@ export function evaluateExpression (exprStr, callback) {
 			callback(null);
 		}
 	});
-}
+});
 /** evaluateAndSetNumber
  * Examines the string in readField, and tests to see if it is a number
  * if it's a number immediately write it to writeField.
@@ -205,7 +205,7 @@ export function evaluateExpression (exprStr, callback) {
  * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
-export function evaluateAndSetNumber (readField, writeField, defaultVal, callback, silently, errcallback) {
+export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
 	var done = function (a, b, c,currError) {
 		var donesetter={};
 		if (currError){
@@ -229,7 +229,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			callback(a, b, c);
 		}
 	};
-	getAttrs([readField, writeField, writeField+"_error"], function (values) {
+	getWrapper([readField, writeField, writeField+"_error"], function (values) {
 		var setter = {},
 		params = {},
 		trueDefault=0, 
@@ -303,7 +303,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			//setWrapper(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
-}
+});
 /** Reads dropdown value
  * determines attribute referenced, gets that attribute value, passes it to callback.
  * similar to evaluateAndSetNumber but uses a synchronus function to perform search and replace, and assumes the string is only one value not an expression.

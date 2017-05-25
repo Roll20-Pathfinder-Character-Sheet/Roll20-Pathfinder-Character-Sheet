@@ -577,21 +577,23 @@ export var syncAllDefaultDamageDiceAsync = TAS.callback(function callsyncAllDefa
 });
 /** ONLY CALL IF modify_dmg_by_size = 1.
  * 
- * @param {*} id 
- * @param {*} currCharSize 
- * @param {*} v 
- * @param {*} setter 
- * @param {*} eventInfo 
+ * @param {string} id 
+ * @param {number} currCharSize 
+ * @param {Map<string,string>} v 
+ * @param {Map<string,string>} setter 
+ * @param {object} eventInfo 
+ * @returns {Map<string,string>} setter
  */
 function adjustDamageDice (id,currCharSize,v,setter,prefix){
 	var currDice=0,defDice=0,weaponSizeDiff=0,
-		currDie=0,defDie=0,defWeaponSize=0,
+		currDie=0,defDie=0,defWeaponSize=0,currNotDefault=0,
 	 	defSize=0, sizeDiff=0, newDice={};
 	try {
 		if (!prefix){
 			prefix='repeating_weapon_'+SWUtils.getRepeatingIDStr(id);
 		}
 		//TAS.debug("#########","PFAttacks.adjustDamageDice for "+prefix,v);
+		currNotDefault=parseInt(v[prefix+'not_default_size'],10)||0;
 		if (parseInt(v[prefix+'size_affects'],10)){
 			currDice=parseInt(v[prefix+'damage-dice-num'],10)||0;
 			currDie=parseInt(v[prefix+'damage-die'],10)||0;
@@ -619,12 +621,16 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 				}
 				//check for change
 				if (currCharSize !== defSize ){
-					setter[prefix+'not_default_size']=1;
+					if(!currNotDefault){
+						setter[prefix+'not_default_size']=1;
+					}
 					sizeDiff=PFSize.getSizeLevelChange(currCharSize,defSize);
 					//TAS.debug("PFAttacks update dice, char size change is "+sizeDiff);
 				}
 				if (defWeaponSize !== defSize ){
-					setter[prefix+'not_default_size']=1;
+					if(!currNotDefault){
+						setter[prefix+'not_default_size']=1;
+					}
 					weaponSizeDiff=PFSize.getSizeLevelChange(defWeaponSize,defSize);
 					//TAS.debug("PFAttacks update dice, weapon size change is "+weaponSizeDiff);
 				}
@@ -638,7 +644,7 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 						setter[prefix+'damage-die']=newDice.die;
 					}
 				} else {
-					if (parseInt(v[prefix+'not_default_size'],10)){
+					if (currNotDefault){
 						setter[prefix+'not_default_size']=0;
 					}
 					if(currDice !== defDice || currDie !== defDie){
@@ -655,12 +661,14 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 			if (!(currDice ===0 || currDie === 0)){
 				setter[prefix+'damage-dice-num']=v[prefix+'default_damage-dice-num'];
 				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
+				if(currNotDefault){
+					setter[prefix+'not_default_size']=0;
+				}				
 			}
 		}
 	} catch (err){
 		TAS.error("PFAttacks.adjustDamageDice",err);
 	} finally {
-		//TAS.debug("PFAttacks.adjustDamageDice returning with ",setter);
 		return setter;
 	}
 }
@@ -813,7 +821,7 @@ var recalcEquationFields = TAS.callback(function callrecalcEquationFields(ids,ca
 				SWUtils.setDropdownValue(prefix + "attack-type",prefix +"attack-type-mod",PFUtils.findAbilityInString,doneWithField,true);
 				SWUtils.setDropdownValue(prefix + "damage-ability",prefix +"damage-ability-mod",PFUtils.findAbilityInString,doneWithField,true);
 			});
-		}catch(err){
+		} catch(err) {
 			TAS.error("recalcEquationFields",err);
 			done();
 		}

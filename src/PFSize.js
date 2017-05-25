@@ -228,7 +228,7 @@ export function updateSize (v,eventInfo,setter) {
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
-		TAS.debug("PFSize.updateSize returning with  ",setter);
+		//TAS.debug("PFSize.updateSize returning with  ",setter);
 		return setter;
 	}
 }
@@ -248,7 +248,6 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				TAS.debug("PFSize.updateSizeAsync, setting:",setter);
 				if (silently) {
 					params = PFConst.silentParams;
 				}
@@ -266,7 +265,6 @@ function setNewSize(eventInfo){
 	},false,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
-	TAS.debug("PFSize.applyNewSizeToSheet");
 	PFEncumbrance.updateLoadsAndLift();
 	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 }
