@@ -133,7 +133,7 @@ function setRuleTab (id,callback, eventInfo){
 		}
 
 		//TAS.debug("PFAbility.setRuleTab, setting",setter);
-		setAttrs(setter,PFConst.silentParams);
+		SWUtils.setWrapper(setter,PFConst.silentParams);
 	});
 }
 function setRuleTabs (){
@@ -266,7 +266,7 @@ export function copyToAbilities(callback,abilities) {
 		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
 	}
 	if(_.size(setter)){
-		 setAttrs(setter,PFConst.silentParams,done);
+		 SWUtils.setWrapper(setter,PFConst.silentParams,done);
 	} else {
 		 done();
 	}
@@ -440,11 +440,11 @@ export function importFromCompendium (callback,eventInfo){
 			TAS.error("PFAbility.importFromCompendium",err);
 		} finally {
 			if(_.size(silentSetter)>0){
-				setAttrs(silentSetter,PFConst.silentParams);
+				SWUtils.setWrapper(silentSetter,PFConst.silentParams);
 			}
 			//TAS.debug"PFAbility.importFromCompendium, setting",setter);
 			if (_.size(setter)>0){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
@@ -484,7 +484,7 @@ function setClassName (id,callback,eventInfo){
 			TAS.error("PFAbility.setClassName",err);
 		} finally {
 			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -610,7 +610,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 					params = PFConst.silentParams;
 				}
 				//TAS.debug("PFAbility.createAttackEntryFromRow setting:",setter);
-				setAttrs(setter, {}, function(){
+				SWUtils.setWrapper(setter, {}, function(){
 					//can do these in parallel
 					//TAS.debug("PFAbility.createAttackEntryFromRow came back from setter ");
 					PFAttackOptions.resetOption(newRowId);
@@ -619,7 +619,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				});
 			} else {
 				setter[slaPrefix + "create-attack-entry"] = 0;
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			}
 		}
 	});
@@ -669,7 +669,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 						if (silently) {
 							params = PFConst.silentParams;
 						}
-						setAttrs(setter, params, function(){
+						SWUtils.setWrapper(setter, params, function(){
 							PFAttackOptions.resetSomeOptions(idlist);
 						});
 					} else {
@@ -707,7 +707,7 @@ function updateCharLevel (id,callback,eventInfo){
 			TAS.error("PFAbility.updateCharLevel",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
@@ -748,7 +748,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 			TAS.error("updateAbilityRange",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
@@ -756,7 +756,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 	});
 }
 /** to use in calls to _.invoke or otherwise, sets switch variables to setter for given row
- * @param {jsobj} setter to pass in first var of setAttrs
+ * @param {jsobj} setter to pass in first var of SWUtils.setWrapper
  * @param {string} id the id of this row, or null if we are within the row context already
  * @param {jsobj} v the values needed returned by getAttrs
  */
@@ -839,7 +839,7 @@ function resetOptionAsync (id, callback , eventInfo){
 			TAS.error("PFAbility.recalcAbilities",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,PFConst.silentParams,done,eventInfo);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done,eventInfo);
 			} else {
 				done();
 			}
@@ -893,7 +893,7 @@ export function migrateRepeatingMacros (callback){
 		}
 	}),
 	migrated = _.once(function(){
-		setAttrs({'migrated_ability_macrosv112':1},PFConst.silentParams);
+		SWUtils.setWrapper({'migrated_ability_macrosv112':1},PFConst.silentParams);
 		done();
 	}),
 	defaultName = '',defaultMacro='',

@@ -131,7 +131,7 @@ function toggleBuffStatusPanel (col, val) {
 			TAS.error("PFBuffs.toggleBuffStatusPanel", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, { silent: true });
+				SWUtils.setWrapper(setter, { silent: true });
 			}
 		}
 	});
@@ -139,7 +139,7 @@ function toggleBuffStatusPanel (col, val) {
 
 export function updateBuffTotals (col, callback,silently){
 	var done = _.once(function () {
-		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
+		//TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -336,7 +336,7 @@ export function updateBuffTotals (col, callback,silently){
 						if (silently){
 							params = PFConst.silentParams;
 						}
-						setAttrs(setter,params,done);
+						SWUtils.setWrapper(setter,params,done);
 					} else {
 						done();
 					}
@@ -364,7 +364,7 @@ export function migrate (outerCallback) {
 			}
 		}),
 		migrated = function(){
-			setAttrs({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
+			SWUtils.setWrapper({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
 		};
 		getAttrs(['migrated_buffs_rangeddmg_abiilty'],function(vout){
 			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_abiilty,10)||0;
@@ -425,7 +425,7 @@ export function migrate (outerCallback) {
 							}finally {
 								if (_.size(setter)){
 									TAS.debug("###########","PFBuffs migrate setting ",setter);
-									setAttrs(setter,PFConst.silentParams,migrated);
+									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
 										PFInitiative.updateInitiative();
@@ -459,7 +459,7 @@ export function migrate (outerCallback) {
 			TAS.error("PFBuffs.migrate", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, PFConst.silentParams);
+				SWUtils.setWrapper(setter, PFConst.silentParams);
 			}
 		}
 	});
@@ -471,7 +471,7 @@ export function migrate (outerCallback) {
  * @param {string} bufftype  -string from buffColumns
  * @param {string} buffmacro ?
  * @param {number} modamount - value for the buff
- * @param {map} newRowAttrs - object of {name:value} to pass to setAttrs
+ * @param {map} newRowAttrs - object of {name:value} to pass to SWUtils.setWrapper
  * @returns {map} return newRowAttrs after adding maps to it.
  */
 export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
@@ -537,7 +537,7 @@ function resetStatuspanel (callback) {
 			TAS.error("PFBuffs.resetStatuspanel error inside calculate exists", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, { silent: true }, done);
+				SWUtils.setWrapper(setter, { silent: true }, done);
 			} else {
 				done();
 			}
@@ -573,7 +573,7 @@ export function clearBuffTotals(callback,silently){
 				params =PFConst.silentParams;
 			}
 			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
-			setAttrs(setter,params,done);
+			SWUtils.setWrapper(setter,params,done);
 		} else {
 			done();
 		}

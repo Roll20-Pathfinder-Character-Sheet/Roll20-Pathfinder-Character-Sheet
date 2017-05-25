@@ -218,7 +218,7 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
     }
 }
 /** migrateRepeatingMacros updates all macros in the section 
- * @param {function} callback after calling setAttrs with the new macros
+ * @param {function} callback after calling SWUtils.setWrapper with the new macros
  * @param {string} section  name after "repeating_"
  * @param {string} fieldname  the attribute name containing the macro after "id_"
  * @param {string} defaultMacro the current Macro in the page
@@ -279,7 +279,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
                 }
             },{});
             if (_.size(setter)>0){
-                setAttrs(setter,{},done);
+                SWUtils.setWrapper(setter,{},done);
             } else {
                 done();
             }
@@ -290,7 +290,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
  * each parameter below potentially has the word 'REPLACE' in it, for each element in replaceArray,
  * replace the word REPLACE with that element.
  * This is not the most efficient, but it was alot easier than rewriting migrateRepeatingMacros 
- *@param {function} callback after calling setAttrs with the new macros
+ *@param {function} callback after calling SWUtils.setWrapper with the new macros
  *@param {string} section  name after "repeating_"
  *@param {string} fieldname  the attribute name containing the macro after "id_"
  *@param {string} defaultMacro the current Macro in the page
@@ -443,7 +443,7 @@ export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMa
             TAS.error("migrateRepeatingMacros error migrating "+fieldname+", "+currMacro,innererr);
         } finally {
             if (_.size(setter)>0){
-                setAttrs(setter,{},done);
+                SWUtils.setWrapper(setter,{},done);
             } else {
                 done();
             }
@@ -509,7 +509,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
         },{});
         //TAS.debug("migrateStaticMacros setting ", setter);
         if (_.size(setter)>0){
-            setAttrs(setter,{},done);
+            SWUtils.setWrapper(setter,{},done);
         } else {
             done();
         }
@@ -524,7 +524,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
  * 
  * if any of the "REMOVENUMBER" values are used, then caller should set useNoNumber to true
  * 
- * @param {function} callback after calling setAttrs with the new macros
+ * @param {function} callback after calling SWUtils.setWrapper with the new macros
  * @param {string} fieldname string pattern of attr we are saving to. Should have one of 'REPLACE','REPLACELOWER','REPLACEREMOVENUMBER','REPLACELOWERREMOVENUMBER' in it, which will be replaced by values in replaceArray
  * @param {string} defaultMacro default macro with REPLACE strings
  * @param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
