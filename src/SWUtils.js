@@ -143,7 +143,7 @@ export function evaluateExpression (exprStr, callback) {
 				replacedStr = newexprStr;
 			}
 			if (!isNaN(Number(replacedStr)) && isFinite(replacedStr)) {
-				evaluated = parseFloat(replacedStr);
+				evaluated = parseInt(replacedStr,10);
 				if (!isNaN(evaluated)) {
 					callback(evaluated);
 					return;
@@ -251,9 +251,9 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 						if (value2 === null || value2===undefined || isNaN(value2)) {
 							isError=1;
 							value2=trueDefault;
-							//TAS.debug("setting "+ writeField+" to " +value2);
 						}
-						if (isNaN(currVal) || currVal !== value2) {
+						//changed to 2 equals and flip so value2 on left. 
+						if (isNaN(currVal) || value2 != currVal) {
 							setter[writeField] = value2;
 						} 
 						if (_.size(setter)>0){
@@ -277,8 +277,6 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 		} catch (err) {
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
 			errordone(0,0,0,0);
-			//setter[writeField+'_error']=1;
-			//setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 }
