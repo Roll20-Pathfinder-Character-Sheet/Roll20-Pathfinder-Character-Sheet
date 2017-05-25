@@ -219,7 +219,7 @@ var updateRepeatingWeaponDamage = TAS.callback(function callupdateRepeatingWeapo
 		rangedAttack =  parseInt(v[rangedField],10)||0;
 		if ( !rangedUpdate || rangedAttack ){
 			ability = parseInt(v[modname], 10) || 0;
-			abilityMult = parseFloat(v[abilityMultField], 10) || 1;
+			abilityMult =  1;
 			dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0; 
 			currTotalDmg = parseInt(v[totalDamageField], 10);
 			miscDmg = parseInt(v[miscDmgField], 10) || 0;
@@ -230,10 +230,15 @@ var updateRepeatingWeaponDamage = TAS.callback(function callupdateRepeatingWeapo
 			} else {
 				damageBuffs = parseInt(v["buff_DMG-total"], 10) || 0;
 			}
+
+			if(v[abilityMultField]=="1.5"||v[abilityMultField]=="1,5"){
+				abilityMult=1.5;
+			}
+			
 			damageBuffs +=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
-			if(isNaN(maxA)) {
-				maxA=99;
+			if(!isRanged || isNaN(maxA)) {
+				maxA=990;
 			}
 			abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
 			totalDamage = abilityTot + damageBuffs + miscDmg + enhance;
@@ -344,7 +349,7 @@ function getRecalculatedDamageOnly (id,v){
 		isRanged= (parseInt(v[prefix+'isranged'],10)||0),
 		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
 		abilitydmg = parseInt(v[prefix+ "damage-ability-mod"], 10) || 0,
-		abilityMult = parseFloat(v[prefix+ "damage_ability_mult"], 10) || 1,
+		abilityMult =  1,
 		currTotalDmg = parseInt(v[prefix+ "total-damage"], 10),
 		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
 		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
@@ -357,10 +362,13 @@ function getRecalculatedDamageOnly (id,v){
 	try {
 		if(isRanged){
 			damageBuffs+=rangedBuff;
-		} 
+		} else if( isNaN(maxAbility)) {
+			maxAbility=999;
+		}
+
 		damageBuffs += dmgConditions;
-		if(isNaN(maxAbility)) {
-			maxAbility=99;
+		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
+			abilityMult=1.5;
 		}
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
@@ -448,7 +456,7 @@ function  getRecalculatedAttack (id,v,setter){
 		attkMacroMod = (parseInt(v[prefix+ "attack-mod"], 10) || 0),
 		currTotalAttack = parseInt(v[prefix+ "total-attack"], 10),
 		abilitydmg = parseInt(v[prefix+ "damage-ability-mod"], 10) || 0,
-		abilityMult = parseFloat(v[prefix+ "damage_ability_mult"], 10) || 1,
+		abilityMult =  1,
 		currTotalDmg = parseInt(v[prefix+ "total-damage"], 10),
 		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
 		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
@@ -465,24 +473,28 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
-		if (isRanged){
-			damageBuffs = v['buff_DMG_ranged-total'];
-		} else {
-			damageBuffs= v['buff_DMG-total'];
+		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
+			abilityMult=1.5;
 		}
-		damageBuffs += v['condition-Sickened'];
+
+		if (isRanged){
+			damageBuffs =  parseInt(v['buff_DMG_ranged-total'],10)||0;
+		} else {
+			damageBuffs=  parseInt(v['buff_DMG-total'],10)||0;
+		}
+		damageBuffs += parseInt(v['condition-Sickened'],10)||0;
 		localsetter = setter || {};
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
 			localsetter[prefix+ "total-attack"] = newTotalAttack;
 		}
-		if(isNaN(maxAbility)) {
-			maxAbility=99;
+		if(!isRanged || isNaN(maxAbility)) {
+			maxAbility=999;
 		}
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
+		TAS.debug("newTotalDamage:o "+newTotalDamage);
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
-			//TAS.debug("setting damage to "+newTotalDamage);
 			localsetter[prefix+ "total-damage"] = newTotalDamage;
 		}
 		if(attkType){

@@ -202,8 +202,6 @@ export var evaluateExpression = TAS.callback(function callevaluateExpression(exp
  * if not, then replace any @{field} references with numbers, and then evaluate it
  * as a mathematical expression till we find a number.
  *
- * note this is NOT recursive, you can't point one field of
- *
  * @param {string} readField= field to read containing string to parse
  * @param {string} writeField= field to write to
  * @param {number} defaultVal= optional, default to set if we cannot evaluate the field. If not supplied assume 0
@@ -265,7 +263,7 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 				}
 			} else if (!isNaN(value)) {
 				//check for number
-				if (currVal !== value) {
+				if (!(currVal === value || currVal === Number(values[writeField]))) {
 					setter[writeField] = value;
 					setWrapper(setter, params, function () {
 						done(value, currVal, true,currError);
@@ -543,7 +541,7 @@ export function escapeForRollTemplate  (str) {
 /** escapes string so it can be used in the name section of another link button
  *if it finds [name](link) in a string it will remove the [ and ] and the (link)
  * replaces [ and ] with escaped versions everywhere else.
- *@param {string] str the string we want to use inside a link button
+ *@param {string} str the string we want to use inside a link button
  *@returns {string} safe to use new name for button
  */
 export function escapeForChatLinkButton (str){
