@@ -1609,8 +1609,8 @@ function registerEventHandlers  () {
     _.each(events.repeatingSpellEventsPlayer, function (functions, eventToWatch) {
         _.each(functions, function (methodToCall) {
             on(eventToWatch, TAS.callback(function eventRepeatingSpellsPlayer(eventInfo) {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-                    TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                     methodToCall(null, eventInfo);
                 }
             }));
@@ -1643,8 +1643,8 @@ function registerEventHandlers  () {
         }
     }));
     on("remove:repeating_spells change:repeating_spells:spellclass_number change:repeating_spells:spell_level", TAS.callback(function eventRepeatingSpellsTotals(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             resetSpellsTotals();
         }
     }));
