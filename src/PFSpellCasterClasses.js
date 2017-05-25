@@ -181,7 +181,13 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
         }
     }),
     conAbility = "Concentration-" + classidx + "-ability";
-    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON"], function (v) {
+    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON", 
+    "spellclass-" + classidx + "-level-0-bonus",
+    "spellclass-" + classidx + "-level-1-bonus","spellclass-" + classidx + "-level-2-bonus",
+    "spellclass-" + classidx + "-level-3-bonus","spellclass-" + classidx + "-level-4-bonus",
+    "spellclass-" + classidx + "-level-5-bonus","spellclass-" + classidx + "-level-6-bonus",
+    "spellclass-" + classidx + "-level-7-bonus","spellclass-" + classidx + "-level-8-bonus",
+    "spellclass-" + classidx + "-level-9-bonus" ], function (v) {
         //eliminate the modifier, we just want @{INT} not @{INT-mod}
         var abilityName = PFUtils.findAbilityInString(v[conAbility]).replace("-mod", ""),
         abilityVal = parseInt(v[abilityName], 10),
@@ -199,12 +205,16 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
                     for (i = 1; i < 10; i++) {
                         bonusSpells = Math.floor(Math.max(Math.floor((abilityVal - 10) / 2) + 4 - i, 0) / 4);
                         bonusName = prefix + i + "-bonus";
-                        setter[bonusName] = bonusSpells;
+                        if ((parseInt(v[bonusName],10))!==bonusSpells){
+                            setter[bonusName] = bonusSpells;
+                        }
                     }
                 } else {
                     for (i = 1; i < 10; i++) {
                         bonusName = prefix + i + "-bonus";
-                        setter[bonusName] = 0;
+                        if((parseInt(v[bonusName],10))!==0){
+                            setter[bonusName] = 0;
+                        }
                     }
                 }
             }
@@ -301,7 +311,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
     
     updateConcentration(spellClassIdx, null, doneOne, silently);
     updateSaveDCs(spellClassIdx, null, doneOne, silently);
-    updateCasterRanges(spellClassIdx, null, true, doneOne, silently);
+    updateCasterRanges(spellClassIdx, null, false, doneOne, silently);
     updateBonusSpells(spellClassIdx, null, doneOne, silently);
 }
 /** updates {spellclass-X-level-total}, sets minimum of 1 if {spellclass-X-level} is > 0
