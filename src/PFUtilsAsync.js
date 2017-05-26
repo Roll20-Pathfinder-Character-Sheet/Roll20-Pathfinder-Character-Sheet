@@ -43,7 +43,7 @@ export function setRowIds (section) {
         _.each(ids, function (id) {
             setter["repeating_" + section + "_" + id + "_row_id"] = id;
         });
-        setAttrs(setter);
+        SWUtils.setWrapper(setter);
     });
 }
 export function registerEventHandlers() {
@@ -56,7 +56,7 @@ export function registerEventHandlers() {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
                 id = SWUtils.getRowId(eventInfo.sourceAttribute);
                 setter["repeating_" + section + "_"+id+"_row_id"]=id;
-                setAttrs(setter,PFConst.silentParams);
+                SWUtils.setWrapper(setter,PFConst.silentParams);
             }
         }));
     });

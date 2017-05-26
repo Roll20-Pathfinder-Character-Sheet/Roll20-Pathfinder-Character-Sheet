@@ -80,7 +80,7 @@ groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
 
 /** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function applyConditions  (callback, silently, eventInfo) {
@@ -96,7 +96,7 @@ export function applyConditions  (callback, silently, eventInfo) {
  * @param {string} attype = key for attackGridFields to indicate which row from attack grid
  * @param {eventInfo } eventInfo unused
  * @param {function} callback optional call when done
- * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  */
 export function updateAttack  (attype, eventInfo, callback, silently) {
     var done = _.once(function () {
@@ -166,7 +166,7 @@ export function setTopMacros (callback){
         getTopMacros(setter,v);
         if (_.size(setter) && (v.attacks_header_macro !== setter.attacks_header_macro || 
                 v["NPC-attacks_header_macro"] !== setter["NPC-attacks_header_macro"] ) ) {
-            setAttrs(setter,PFConst.silentParams,done);
+            SWUtils.setWrapper(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -179,7 +179,7 @@ export function resetCommandMacro (callback){
             callback();
         }
     });
-    TAS.debug("at PFAttackGrid.resetCommandMacro");
+    //TAS.debug("at PFAttackGrid.resetCommandMacro");
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
@@ -210,7 +210,7 @@ export function updateAttackGrid(buffType,eventInfo){
 
 export function migrate (callback, oldversion){
     var done = function () {
-        TAS.debug("leaving PFAttackGrid.migrate");
+        //TAS.debug("leaving PFAttackGrid.migrate");
         if (typeof callback === "function") {
             callback();
         }
@@ -220,12 +220,12 @@ export function migrate (callback, oldversion){
 }
 /** recalculates all write-to fields in module 
  * @param {function} callback optional call when done
- * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion the version upgrading from 
  */
-export function recalculate  (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate (callback, silently, oldversion) {
     var done = function () {
-        TAS.debug("leaving PFAttackGrid.recalculate");
+        //TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -242,7 +242,7 @@ export function recalculate  (callback, silently, oldversion) {
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
     setTopMacros();
-}
+});
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {

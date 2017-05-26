@@ -1211,7 +1211,7 @@ function parseSpecialAbilities (str) {
 	lines = SWUtils.trimBoth(lines).filter(function(line){
 		return (line && !(/^special abilities$/i).test(line));
 	});
-	TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",lines);
+	//TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",lines);
 	saObj = _.reduce(lines, function (memo, line) {
 		var spObj = {}, splitter = '',tempstr='', startIdx, endIdx = -1, matches, abilitytype='';
 		try {
@@ -1706,7 +1706,7 @@ function setCasterFields (setter, casterObj, classidx) {
 	}
 }
 /** createSpellEntries
- *@param {jsobject} setter - map to pass to setAttrs
+ *@param {jsobject} setter - map to pass to SWUtils.setWrapper
  *@param {jsobject} spellObj obj like: {classname:"name",CL:#,concentration:#,
  *	spells:{
  *		0:[{name:spellname,DC:#}],
@@ -1917,7 +1917,7 @@ function createSLAEntries (setter, slaObj, casterObj, section) {
 }
 /**createAttacks - creates rows in repeating_weapon
  * @param {[{enh:number,name:string,type:string,countFullBAB:number,plus:string,note:string,iter:[number],dmgdice:number,dmgdie:number,crit:number,critmult:number,dmgbonus:number}]} attacklist
- * @param {Map<string,any>} setter the map to pass to setAttrs
+ * @param {Map<string,any>} setter the map to pass to SWUtils.setWrapper
  * @param {Map<string,number>} attackGrid populated as out param by parseAndCreateAttacks
  * @param {Map<string,number>} abilityScores output of parseAbilityScores
  * @param {[string]} importantFeats list of attack-affecting feats this char has
@@ -2360,7 +2360,7 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 	}
 }
 /**createInitEntries adds init,init-misc,init-misc-mod,init-ability-mod values to setter
- * @param {Map<string,any>} setter the map to pass to setAttrs
+ * @param {Map<string,any>} setter the map to pass to SWUtils.setWrapper
  * @param {number} baseInit the total initiative bonus
  * @param {Map<string,{Map<string,number>>} abilityScores output of parseAbilityScores
  * @param {[string]} importantFeats list of attack-affecting feats this char has, IGNORED
@@ -3158,13 +3158,13 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (_.size(setter) > 0) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
-				TAS.info("##############################################","END OF importFromCompendium");
-				TAS.debug("setting",setter);
-				setAttrs(setter, PFConst.silentParams, done);
+				//TAS.info("##############################################","END OF importFromCompendium");
+				//TAS.debug("setting",setter);
+				SWUtils.setWrapper(setter, PFConst.silentParams, done);
 			} else {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
-				setAttrs(setter, PFConst.silentParams, errorDone);
+				SWUtils.setWrapper(setter, PFConst.silentParams, errorDone);
 			}
 		}
 	});
