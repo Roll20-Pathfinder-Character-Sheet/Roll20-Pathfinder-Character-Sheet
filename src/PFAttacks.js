@@ -1304,6 +1304,11 @@ export function migrate (callback, oldversion){
 		var migrateDamage = 0, migrateMacrosv1=0,migrateIteratives=0;
 		migrateDamage = parseInt(v["migrated_damage-multiplier"], 10) || 0;
 		migrateMacrosv1 = parseInt(v["migrated_attack_macrosv1"], 10) || 0;
+		migrateIteratives = parseInt(v["migrated_attacklist_defaults111"]);
+		if(migrateDamage && migrateMacrosv1 && migrateIteratives){
+			done();
+			return;
+		}
 		getSectionIDs('repeating_weapon',function(ids){
 			var callmigrateMacrostov1,callmigrateMacrostov64,callmigrateRepeatingDamage,callSetDefaults;
 			try{
