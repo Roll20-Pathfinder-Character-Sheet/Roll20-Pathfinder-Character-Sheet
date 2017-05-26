@@ -122,11 +122,11 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 		if (nonLethalDmg >= (hp + temphp + (usesWounds ? (1 + hpAbilityMod) : 0))) {
 			SWUtils.setWrapper({
 				"condition-Staggered": "1"
-			});
+			},PFConst.silentParams);
 		} else if (staggered ) {
 			SWUtils.setWrapper({
 				"condition-Staggered": "0"
-			});
+			},PFConst.silentParams);
 		}
 	}
 	if (usesWounds) {
@@ -149,7 +149,7 @@ export function updateCurrHPLookup () {
  * @param {boolean} forceReset recalculates max HP and sets HP to it.
  * @param {object} eventInfo unused
  */
-export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
+export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 	var done = _.once(function () {
 		//TAS.debug("leaving updateMaxHPLookup");
 		if (typeof callback === "function") {
@@ -370,7 +370,7 @@ function registerEventHandlers () {
 	on("change:HP_reset", TAS.callback(function eventResetHP(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			updateMaxHPLookup(null,null,true);
+			updateMaxHPLookup(null,null,eventInfo,true);
 			updateTempMaxHP(null,null,true);
 			SWUtils.setWrapper({
 				"HP_reset": "0"
