@@ -141,7 +141,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             break;
                     }
                     setter["repeating_spells_spell_options"] = optionText;
-                    setAttrs(setter, {
+                    SWUtils.setWrapper(setter, {
                         silent: true
                     });
                 }
@@ -310,7 +310,7 @@ export function resetOption (id, eventInfo,callback) {
         optionText = getOptionText(id, eventInfo, toggleValues, v)||"";
         if(v[prefix+'spell_options']!==optionText){
             setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
-            SWUtils.setWrapper(setter, PFConst.silentParams,done);
+            getAttrs(setter, PFConst.silentParams,done);
         } else {
             done();
         }
@@ -362,7 +362,7 @@ export function resetOptions (callback, eventInfo) {
                         }
                     });
                     if(_.size(setter)>0){
-                        setAttrs(setter,PFConst.silentParams,done);
+                        SWUtils.setWrapper(setter,PFConst.silentParams,done);
                     } else {
                         done();
                     }

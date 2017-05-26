@@ -4,6 +4,7 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
+import * as SWUtils from './SWUtils';
 
 // Returns the carrying capacity for a given strength score and load type
 // Will recursively calculate for strength scores over 29
@@ -245,7 +246,7 @@ function updateCurrentLoad (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -421,7 +422,7 @@ export function updateLoadsAndLift (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -520,7 +521,7 @@ export function updateModifiedSpeed  (callback) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, {}, done);
+                SWUtils.setWrapper(setter, {}, done);
             } else {
                 done();
             }
@@ -536,7 +537,7 @@ export function migrate (callback){
     getAttrs(['max-dex-source'],function(v){
         var val = parseInt(v['max-dex-source'],10);
         if (isNaN(val)){
-            setAttrs({'max-dex-source':0},PFConst.silentParams,done);
+            SWUtils.setWrapper({'max-dex-source':0},PFConst.silentParams,done);
         } else {
             done();
         }

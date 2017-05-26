@@ -349,7 +349,7 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
             //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
             if (!oldMacro || newMacro !== oldMacro){
                 setter[macroName + params.macroSuffix]=newMacro||"";
-                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                getAttrs(setter,PFConst.silentParams,done);
             } else {
                 done();
             }

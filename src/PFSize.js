@@ -251,7 +251,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}

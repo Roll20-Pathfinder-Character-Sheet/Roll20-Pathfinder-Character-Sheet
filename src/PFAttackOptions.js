@@ -100,7 +100,7 @@ export function resetOption (id, eventInfo, callback) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
-            setAttrs(setter, PFConst.silentParams, done);
+            SWUtils.setWrapper(setter, PFConst.silentParams, done);
         } else {
             done();
         }
@@ -137,7 +137,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
                 }
             },{});
             if(_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }

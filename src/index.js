@@ -16,6 +16,7 @@ import PFConst from './PFConst';
 //importing PFSheet imports everything else
 import * as PFSheet from './PFSheet';
 import * as HLImport from './HLImport';
+import * as SWUtils from './SWUtils';
 
 
 PFConsole.log('       ,## /##                    ');

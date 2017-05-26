@@ -45,7 +45,7 @@ export function applyConditions (callback, silently) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}

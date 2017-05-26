@@ -39,7 +39,7 @@ export function getAllAttributes (){
 /** Looks at current values and calculates new ability , ability-mod and ability-modded values
  * @param {string} ability string matching a value in abilities
  * @param {Map} values map of return values from getAttrs
- * @param {Map} setter map of values to pass to setAttrs. or null
+ * @param {Map} setter map of values to pass to SWUtils.setWrapper. or null
  * @returns {Map}  same setter passed in, with added values if necessary
  */
 export function getAbilityScore (ability, values, setter) {
@@ -141,7 +141,7 @@ export function updateAbilityScore (ability,eventInfo,callback,silently){
             if (silently) {
                 params = PFConst.silentParams;
             }
-            setAttrs(setter, params, done);
+            SWUtils.setWrapper(setter, params, done);
         } else {
             done();
         }
@@ -168,7 +168,7 @@ export function updateAbilityScores (callback, silently) {
             if (silently) {
                 params = PFConst.silentParams;
             }
-            setAttrs(setter, params, done);
+            SWUtils.setWrapper(setter, params, done);
         } else {
             done();
         }
@@ -218,7 +218,7 @@ export function applyConditions (callback, silently) {
                     params = PFConst.silentParams;
                 }
                 TAS.notice("#######################","PFAbilities apply conditions setting",setter);
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
