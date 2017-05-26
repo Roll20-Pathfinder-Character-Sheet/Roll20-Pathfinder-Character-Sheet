@@ -148,7 +148,7 @@ export function updateCurrHPLookup () {
  * @param {boolean} forceReset recalculates max HP and sets HP to it.
  * @param {object} eventInfo unused
  */
-export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
+export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 	var done = _.once(function () {
 		TAS.debug("leaving updateMaxHPLookup");
 		if (typeof callback === "function") {
@@ -369,7 +369,7 @@ function registerEventHandlers () {
 	on("change:HP_reset", TAS.callback(function eventResetHP(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			updateMaxHPLookup(null,null,true);
+			updateMaxHPLookup(null,null,eventInfo,true);
 			updateTempMaxHP(null,null,true);
 			setAttrs({
 				"HP_reset": "0"
