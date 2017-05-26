@@ -4,6 +4,28 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
+export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
+	var bad=false;
+	TAS.debug("setting "+_.size(a)+" values:",a);
+	TAS.callstack();
+	_.each(a,function(v,k){
+		if (!v && (isNaN(v) || typeof v === 'undefined')){
+			TAS.error("Setting NaN! at "+k);
+			bad=true;
+		}
+	});
+	if (bad){
+		TAS.callstack();
+	}
+	setAttrs(a,b,c);
+});
+
+export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
+	getAttrs(a,function(vals){
+		cb(vals);
+	});
+});
+
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
