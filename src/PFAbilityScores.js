@@ -239,7 +239,7 @@ export function migrate (callback,oldversion){
  *@param {boolean} silently if true update with PFConst.silentParams
  *@param {float} oldversion the current @{PFVersion} in the attributes
  */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFAbilityScores.recalculate");
         if (typeof callback === "function") {
@@ -250,7 +250,7 @@ export function recalculate (callback, silently, oldversion) {
         updateAbilityScores(done, silently);
     });
     applyConditions(updateScoresOnce, silently);
-}
+});
 
 /** Calls 'on' function for everything related to this module */
 function registerEventHandlers () {

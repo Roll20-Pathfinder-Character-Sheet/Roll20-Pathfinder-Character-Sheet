@@ -179,7 +179,7 @@ export function resetCommandMacro (callback){
             callback();
         }
     });
-    TAS.debug("at PFAttackGrid.resetCommandMacro");
+    //TAS.debug("at PFAttackGrid.resetCommandMacro");
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
@@ -223,7 +223,7 @@ export function migrate (callback, oldversion){
  * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  * @param {number} oldversion the version upgrading from 
  */
-export function recalculate  (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate (callback, silently, oldversion) {
     var done = function () {
         TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
@@ -242,7 +242,7 @@ export function recalculate  (callback, silently, oldversion) {
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
     setTopMacros();
-}
+});
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {

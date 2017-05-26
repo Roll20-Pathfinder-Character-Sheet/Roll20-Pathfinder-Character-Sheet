@@ -942,7 +942,7 @@ export function migrate (callback, oldversion) {
 	PFMigrate.migrateMaxSkills(doneOne);
 }
 /* recalculate - updates ALL skills  - calls PFUtilsAsync.setDropdownValue for ability then updateSkill */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFSkills.recalculate");
 		resetCommandMacro();
@@ -956,7 +956,7 @@ export function recalculate (callback, silently, oldversion) {
 		updateMaxSkills();
 		recalculateSkills(done, silently);
 	}, oldversion);
-}
+});
 function registerEventHandlers () {
 	//SKILLS************************************************************************
 	on("change:total-skill change:total-fcskill change:int-mod change:level change:max-skill-ranks-mod change:unchained_skills-show change:BG-Skill-Use", TAS.callback(function eventUpdateMaxSkills(eventInfo) {

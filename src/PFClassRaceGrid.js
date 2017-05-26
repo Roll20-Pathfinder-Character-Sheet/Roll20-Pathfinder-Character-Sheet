@@ -249,7 +249,7 @@ export function migrate (callback,oldversion){
         callback();
     }
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFClassRaceGrid.recalculate");
         if (typeof callback === "function") {
@@ -264,7 +264,7 @@ export function recalculate (callback, silently, oldversion) {
         updateClassInformation(col, columnDone, silently);
     });
     setMulticlassed();
-}
+});
 function registerEventHandlers  () {
     var tempString="";
     _.each(classColumns, function (col) {

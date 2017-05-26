@@ -519,7 +519,7 @@ export function migrate (callback, oldversion){
     //TAS.debug("At PFSpellCasterClasses.migrate");
     PFMigrate.migrateUsesSpellFlag(callback);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.info("leaving PFSpellCasterClasses.recalculate");
         if (typeof callback === "function") {
@@ -564,7 +564,7 @@ export function recalculate (callback, silently, oldversion) {
     migrate(function(){
         callApplyConditions();
     },oldversion);
-}
+});
 var events = {
     // events for updates to top of class page, each one calls isSpellClassExists
     spellcastingClassEventsAuto: {

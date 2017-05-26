@@ -312,7 +312,7 @@ export function migrate (callback, oldversion){
 		ensureNPCHPZero();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFHealth.recalculate");
 		if (typeof callback === "function") {
@@ -331,7 +331,7 @@ export function recalculate (callback, silently, oldversion) {
 	});
 	TAS.debug("at PFHealth.recalculate");
 	migrate(callUpdateTempHP,oldversion);
-}
+});
 function registerEventHandlers () {
 	on("change:set_pfs",TAS.callback(function eventsetPFSFlag(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

@@ -653,8 +653,8 @@ export function migrateRollTemplateImages () {
         } catch (erro){
             TAS.error("migrateRollTemplateImages outer error",erro);
         } finally {
-            setter['migrated_rolltemplateimages']=1;
             if (_.size(setter) > 0) {
+                setter['migrated_rolltemplateimages']=1;
                 setAttrs(setter, PFConst.silentParams);
             }
         }
@@ -1013,8 +1013,13 @@ export function migrateUsesSpellFlag (callback){
         });
     };
     getAttrs(['spellclass-0-level','spellclass-1-level','spellclass-2-level','use_spells','migrated_spellflag'],function(v){
-        var lvl1=0,lvl2=0,lvl3=0,usesSpells=0,setter={};
+        var lvl1=0,lvl2=0,lvl3=0,usesSpells=0,migrated=0,setter={};
         try {
+            migrated=parseInt(v.migrated_spellflag,10)||0;
+            if(migrated){
+                done();
+                return;
+            }
             usesSpells = parseInt(v.use_spells,10)||0;
             if ((parseInt(v.migrated_spellflag,10)||0)!==1 && !usesSpells){
                 lvl1=parseInt(v['spellclass-0-level'],10)||0;
@@ -1180,7 +1185,7 @@ export function migrateSpellPointFlag (callback,oldversion){
             var usesPoints=parseInt('spellclass-0-spell-points-class',10) || parseInt('spellclass-0-spell-points-bonus',10) || parseInt('spellclass-0-spell-points-misc',10) ||
                 parseInt('spellclass-1-spell-points-class',10) || parseInt('spellclass-1-spell-points-bonus',10) || parseInt('spellclass-1-spell-points-misc',10) ||
                 parseInt('spellclass-2-spell-points-class',10) || parseInt('spellclass-2-spell-points-bonus',10) || parseInt('spellclass-2-spell-points-misc',10);
-                TAS.debug("PFMigrate.migrateSpellPointFlag found ",v);
+                //TAS.debug("PFMigrate.migrateSpellPointFlag found ",v);
             if (usesPoints && (! parseInt(v.use_spell_points,10))) {
                 setAttrs({'uses_spell_points':1},PFConst.silentParams,done);
             } else{

@@ -79,7 +79,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("Leaving PFMythic.recalculate");
 		if (typeof callback === "function") {
@@ -99,7 +99,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		}
 	});
-}
+});
 function registerEventHandlers () {
 	//mythic path and power
 	on("change:mythic-tier change:mythic-hp", TAS.callback(function eventupdateMythicPathHP(eventInfo) {

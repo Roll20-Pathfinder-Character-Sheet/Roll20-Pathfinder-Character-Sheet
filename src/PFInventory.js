@@ -58,7 +58,7 @@ export function migrateRepeatingMacros(callback){
         setAttrs({'migrated_item_macrosv1':1},PFConst.silentParams, done);
     };
     getAttrs(['migrated_item_macrosv1'],function(v){
-        if(!parseInt(v.migrated_item_macros,10)){
+        if((parseInt(v.migrated_item_macros,10)||0)!==1){
             PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);		
         } else {
             done();
@@ -217,10 +217,11 @@ function updateCarriedTotal (callback, silently) {
         carried,
         params = {};
         try {
-            curr = parseFloat(v["carried-total"], 10) || 0;
-            carried = ((parseFloat(v["carried-currency"], 10) || 0) * 100 + (parseFloat(v["item_total_weight"], 10) || 0) * 100 + (parseFloat(v["carried-misc"], 10) || 0) * 100) / 100; // Fix bad javascript math
+            curr = Math.floor(100 * parseFloat(v["carried-total"], 10) || 0);
+            carried = Math.floor((parseFloat(v["carried-currency"], 10) || 0) * 100 + (parseFloat(v["item_total_weight"], 10) || 0) * 100 + (parseFloat(v["carried-misc"], 10) || 0) * 100) ; // Fix bad javascript math
             //TAS.debug("curr=" + curr + ", carried=" + carried);
             if (curr !== carried) {
+                carried = carried / 100;
                 setAttrs({
                     "carried-total": carried
                 }, params, done);
@@ -1538,7 +1539,7 @@ export function migrate  (callback, oldversion) {
         }));
     }));
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFInventory.recalculate");
         if (typeof callback === "function") {
@@ -1562,7 +1563,7 @@ export function recalculate (callback, silently, oldversion) {
         TAS.error("PFInventory.recalculate", err);
         done();
     }
-}
+});
 function registerEventHandlers  () {
     var tempstr="";
     on('change:repeating_item:item-category_compendium', TAS.callback(function EventItemCompendium(eventInfo){

@@ -551,7 +551,7 @@ function recalculateCore (callback, silently, oldversion) {
 *@param {function} callback when done if no errors
 *@param {function} errorCallback  call this if we get an error
 */
-export function recalculate (oldversion, callback, silently) {
+export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
@@ -566,7 +566,7 @@ export function recalculate (oldversion, callback, silently) {
 	});
 	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);
-}
+});
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
 *  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
 function checkForUpdate () {

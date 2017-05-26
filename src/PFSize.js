@@ -273,7 +273,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("Leaving PFSize.recalculate");
 		if (typeof callback === "function") {
@@ -282,7 +282,7 @@ export function recalculate (callback, silently, oldversion) {
 	});
 	TAS.debug("At PFSize.recalculate");
 	updateSizeAsync(done, silently,null);
-}
+});
 function registerEventHandlers () {
 	//size
 	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {

@@ -28,13 +28,13 @@ export function setToNPC (callback,eventInfo){
 export function migrate (callback){
 	PFMigrate.migrateNPC(callback);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("leaving PFNPC.recalculate");
 		if (typeof callback === "function") { callback(); }
 	});
 	migrate(done);
-}
+});
 function registerEventHandlers () {
 	on("change:is_npc", TAS.callback(function eventSetIsNPCFlag(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

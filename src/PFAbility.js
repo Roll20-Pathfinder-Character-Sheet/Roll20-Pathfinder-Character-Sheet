@@ -929,7 +929,7 @@ export function migrate (callback){
 	};
 	migrateRepeatingMacros(done);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {
@@ -953,7 +953,7 @@ export function recalculate (callback, silently, oldversion) {
 		TAS.error("PFAbility.recalculate, ", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",

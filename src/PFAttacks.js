@@ -778,7 +778,7 @@ function recalcOtherFields (ids,callback){
 			return [attr, parseInt(v[attr],10)||0];
 		}));
 		_.extend(v,charAttMap);
-		TAS.debug("PFAttacks.recalcOtherFields has values ",v);
+		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={}
 			try {
@@ -1259,10 +1259,13 @@ export function migrateLinkedAttacks (callback, oldversion){
 			return;
 		}
 		fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-item','_source-spell','_source-ability','_source-main','_source-off','_source-spell-name','_source-ability-name']);
-		//TAS.debug("PFAttacks.migrateLinkedAttacks FIELDS are ",fields);
+		fields.push('migrated_linked_attacks');
 		getAttrs(fields,function(v){
 			var setter={};
-			TAS.debug("PFAttacks.migrateLinkedAttacks values are ",v);
+			if(parseInt(v.migrated_linked_attacks,10)){
+				done();
+				return;
+			}
 			ids.forEach(function(id){
 				var toSet=0;
 				if (v['repeating_weapon_'+id+'_source-item']){
@@ -1280,8 +1283,8 @@ export function migrateLinkedAttacks (callback, oldversion){
 				}
 				setter['repeating_weapon_'+id+'_link_type']=toSet;
 			});
+			setter.migrated_linked_attacks=1;
 			if (_.size(setter)){
-				TAS.debug("PFAttacks.migrateLinkedAttacks setting",setter);
 				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
@@ -1331,7 +1334,7 @@ export function migrate (callback, oldversion){
 		});
 	});
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = function () {
 		TAS.info("leaving PFAttacks.recalculate");
 		if (typeof callback === "function") {
@@ -1349,7 +1352,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		},oldversion);
 	}  ,silently,oldversion);
-}
+});
 function registerEventHandlers () {
 	_.each(PFAttackGrid.attackGridFields, function (attackFields, attack) {
 		on("change:" + attackFields.crit, TAS.callback(function eventAttackCrit(eventInfo) {

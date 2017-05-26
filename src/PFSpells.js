@@ -1555,7 +1555,7 @@ export function migrate (callback) {
     });
 }
 
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFSpells.recalculate");
         if (typeof callback === "function") {
@@ -1580,7 +1580,7 @@ export function recalculate (callback, silently, oldversion) {
         });
     });
     migrate(callUpdateSpells);
-}
+});
 var events = {
     //events for spell repeating rows
     repeatingSpellEventsPlayer: {

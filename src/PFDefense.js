@@ -596,7 +596,7 @@ export function migrate (callback,oldversion){
  * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  * @param {number} oldversion 
  */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
@@ -617,7 +617,7 @@ export function recalculate (callback, silently, oldversion) {
             }, silently);
         }, silently);
     },silently);
-}
+});
 
 function registerEventHandlers () {
     _.each(defenseDropdowns, function (write, read) {

@@ -544,7 +544,7 @@ export function migrate (callback){
 
 
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.debug("leaving PFEncumbrance.recalculate");
         if (typeof callback === "function") {
@@ -566,7 +566,7 @@ export function recalculate (callback, silently, oldversion) {
         TAS.error("PFEncumbrance.recalculate", err);
         done();
     }
-}
+});
 function registerEventHandlers  () {
     on("change:current-load change:speed-base change:race change:armor3-equipped change:armor3-type change:max-dex-source change:run-mult", TAS.callback(function eventUpdateModifiedSpeed(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

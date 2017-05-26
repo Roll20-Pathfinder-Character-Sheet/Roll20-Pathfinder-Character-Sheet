@@ -65,7 +65,7 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 		}
 	});
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.debug("Leaving PFConditions.recalculate");
 		if (typeof callback === "function") {
@@ -74,7 +74,7 @@ export function recalculate (callback, silently, oldversion) {
 	});
 	updateDrainCheckbox(done);
 	//PFAbilityScores.applyConditions(done);
-}
+});
 
 var events = {
 	conditionEventsEither: {

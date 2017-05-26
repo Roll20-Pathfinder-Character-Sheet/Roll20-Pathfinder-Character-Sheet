@@ -600,7 +600,7 @@ function setBuff (id, col, callback, silently) {
 			}
 		},true,done);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		resetStatuspanel();
 		TAS.debug("Leaving PFBuffs.recalculate");
@@ -669,7 +669,7 @@ export function recalculate (callback, silently, oldversion) {
 		});
 	};
 	migrate(recalculateAll);
-}
+});
 function registerEventHandlers () {
 	//BUFFS
 	_.each(buffColumns, function (col) {

@@ -33,7 +33,7 @@ export function migrate(callback,oldversion){
 		done();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFInitiative.recalculate");
 		if (typeof callback === "function") {
@@ -43,7 +43,7 @@ export function recalculate (callback, silently, oldversion) {
 	migrate ( function(){
 		updateInitiative(done, silently);
 	},oldversion);
-}
+});
 function registerEventHandlers () {
 	on("change:init-trait change:condition-Deafened ", TAS.callback(function eventUpdateInitPlayer(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

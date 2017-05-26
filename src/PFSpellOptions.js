@@ -367,9 +367,9 @@ export function resetOptions (callback, eventInfo) {
         }
     });
  }
-export function recalculate (callback) {
+export var recalculate = TAS.callback(function callrecalculate(callback) {
     resetOptions(callback);
-}
+});
 
 function registerEventHandlers () {
     //spell options for one row

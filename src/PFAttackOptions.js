@@ -86,6 +86,7 @@ export function resetOption (id, eventInfo, callback) {
     }),
     allFields = optionToggles;
     allFields = allFields.concat(rowfields);
+    allFields.push(prefix + "macro_options");
     //TAS.log("resetOption, fields to get",allFields);
     getAttrs(allFields, function (v) {
         var toggleValues = _.reduce(optionToggles, function (memo, attr) {
@@ -95,7 +96,7 @@ export function resetOption (id, eventInfo, callback) {
         optionText = "",
         setter = {};
         optionText = getOptionText(prefix, toggleValues, v)||"";
-        if (typeof optionText !== "undefined" && optionText !== null) {
+        if (typeof optionText !== "undefined" && optionText !== null && optionText !== v[prefix + "macro_options"]) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
@@ -154,9 +155,9 @@ export function migrate (callback){
         callback();
     }
 }
-export function recalculate  (callback) {
+export var recalculate = TAS.callback(function callrecalculate (callback) {
     resetOptions(callback);
-}
+});
 function registerEventHandlers () {
     _.each(optionToggles, function (toggleField) {
         on("change:" + toggleField, TAS.callback(function toggleAttackNoteOption(eventInfo) {

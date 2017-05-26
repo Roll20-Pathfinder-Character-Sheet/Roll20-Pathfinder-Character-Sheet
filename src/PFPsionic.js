@@ -49,7 +49,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFPsionic.recalculate");
 		if (typeof callback === "function") {
@@ -68,7 +68,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		}
 	});
-}
+});
 function registerEventHandlers () {
 	on("change:psionic-level change:psionic-level-misc", TAS.callback(function eventUpdatePsionicLevel(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
