@@ -237,7 +237,7 @@ var updateRepeatingWeaponDamage = TAS.callback(function callupdateRepeatingWeapo
 			
 			damageBuffs +=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
-			if(!isRanged || isNaN(maxA)) {
+			if(!rangedAttack || isNaN(maxA)) {
 				maxA=990;
 			}
 			abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
