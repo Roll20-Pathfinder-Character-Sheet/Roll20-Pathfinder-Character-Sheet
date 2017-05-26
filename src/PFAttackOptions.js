@@ -123,6 +123,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
             return memo;
         }, {});
         fields = SWUtils.cartesianAppend(["repeating_weapon_"],ids,repeatingOptionGetAttrsLU);
+        fields = fields.concat(SWUtils.cartesianAppend(["repeating_weapon_"],ids,["_macro_options"]));
         getAttrs(fields,function(v){
             var setter = _.reduce(ids,function(memo,id){
                 var prefix='repeating_weapon_'+id+'_',tempstr='';
