@@ -559,10 +559,10 @@ export var recalculate = TAS.callback(function callrecalculate(oldversion, callb
 		}
 	},
 	callParallel = TAS.callback(function callRecalculateParallelModules() {
-		recalculateParallelModules(TAS.callback(done), silently, oldversion);
+		recalculateParallelModules(done, silently, oldversion);
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
-		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
+		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
 	});
 	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);

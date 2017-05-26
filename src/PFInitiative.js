@@ -20,7 +20,7 @@ export function updateInitiative (callback, silently,force) {
 		}
 	});
 }
-export function migrate(callback,oldversion){
+export function migrate (callback,oldversion){
 	var done = function(){
 		if (typeof callback === "function"){
 			callback();
