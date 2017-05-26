@@ -56,7 +56,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
     "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
-    "buff_dodge-total","buff_deflection-total",
+    "buff_dodge-total","buff_deflection-total", "buffsumac", "buffsumtouch", "buffsumff", "buffsumcmd", "buffsumffcmd ",
     "current-load", "max-dex-source"], function (v) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
@@ -130,7 +130,6 @@ export function updateDefenses ( callback, silently, eventInfo) {
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
             buffcmd = buffsCMD+dodgebuff+deflectbuff;
             buffffcmd = buffsCMD+flatfootedbuff+dodgebuff+deflectbuff;
-
 
             dodge += dodgebuff;
             deflect += deflectbuff;
@@ -237,13 +236,21 @@ export function updateDefenses ( callback, silently, eventInfo) {
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
 
-         //   buffcmd = buffs
-            setter.buffsumac=buffac;
-            setter.buffsumtouch=bufftouch;
-            setter.buffsumff=buffff;
-            setter.buffsumcmd=buffcmd;
-            setter.buffsumffcmd = buffffcmd;
-
+            if(parseInt(v.buffsumac,10)!==buffac){
+                setter.buffsumac=buffac;
+            }
+            if(parseInt(v.buffsumtouch,10)!==bufftouch){
+                setter.buffsumtouch=bufftouch;
+            }
+            if(parseInt(v.buffsumff,10)!==buffff){
+                setter.buffsumff=buffff;
+            }
+            if(parseInt(v.buffsumcmd,10)!==buffcmd){
+                setter.buffsumcmd=buffcmd;
+            }
+            if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
+                setter.buffsumffcmd = buffffcmd;
+            }
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }

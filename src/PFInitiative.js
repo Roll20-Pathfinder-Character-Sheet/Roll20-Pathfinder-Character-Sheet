@@ -14,9 +14,9 @@ export function updateInitiative (callback, silently,force) {
 		if (parseInt(v['nodex-toggle'],10)) {
 			//if lose dex then lose ability mod no matter what ability it is, since init is a dex check:
 			//http://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9tga
-			SWUtils.updateRowTotal(["init", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total"], 0, ["condition-Deafened"], false, callback, silently, force);
+			SWUtils.updateRowTotal(["init", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total"], 0, ["condition-Deafened"], false, callback, silently);
 		} else {
-			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total"], 0, ["condition-Deafened"], false, callback, silently, force);
+			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total"], 0, ["condition-Deafened"], false, callback, silently);
 		}
 	});
 }

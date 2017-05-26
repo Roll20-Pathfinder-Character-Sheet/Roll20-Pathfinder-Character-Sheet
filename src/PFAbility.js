@@ -122,16 +122,23 @@ function setRuleTab (id,callback, eventInfo){
 		},{});
 		if (v[abilityTypeField] ){
 			abilityType= tabTypeSorted[v[abilityTypeField]];
-			setter[prefix+'tabcat'+abilityType]=1;
+			if(v[prefix+'tabcat'+abilityType]!="1"){
+				setter[prefix+'tabcat'+abilityType]=1;
+			}
 		}
 		if (v[ruleCategoryField]) {
 			ruleType=tabRuleSorted[v[ruleCategoryField]];
-			setter[prefix+'tabcat'+ruleType]=1;
-			setter[prefix+'tabcat-1']=0;
+			if(v[prefix+'tabcat'+ruleType]!="1"){
+				setter[prefix+'tabcat'+ruleType]=1;
+			}
+			if(v[prefix+'tabcat-1']!="0"){
+				setter[prefix+'tabcat-1']=0;
+			}
 		} else {
-			setter[prefix+'tabcat-1']=1;
+			if(v[prefix+'tabcat-1']!="1"){
+				setter[prefix+'tabcat-1']=1;
+			}
 		}
-
 		//TAS.debug("PFAbility.setRuleTab, setting",setter);
 		setAttrs(setter,PFConst.silentParams);
 	});
@@ -912,7 +919,7 @@ export function migrateRepeatingMacros (callback){
 				//TAS.debug("PFAbility.migrateRepeatingMacros about to call PFMacros",defaultMacro);
 				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
 			} else {
-				migrated();
+				done();
 			} 
 		} catch (err){
 			TAS.error("PFAbility.migrateRepeatingMacros error setting up "+section,err);

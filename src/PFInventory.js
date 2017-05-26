@@ -1505,11 +1505,11 @@ export function setNewDefaults (callback, oldversion){
                                 return m;
                             }
                         },{});
-                        setter['migrated_itemlist_defaults']=1;
                     } catch (err){
                         TAS.error("PFInventory.setNewDefaults error setting defaults ",err);
                     } finally {
                         if (_.size(setter)>0){
+                            setter['migrated_itemlist_defaults']=1;
                             TAS.debug("PFInventory.setNewDefaults setting",setter);
                             setAttrs(setter,PFConst.silentParams,done);
                         } else {
