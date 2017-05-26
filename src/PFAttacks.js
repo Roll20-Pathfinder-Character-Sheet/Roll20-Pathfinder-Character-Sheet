@@ -1243,7 +1243,7 @@ export var migrateRepeatingMacro = TAS.callback(function callmigrateRepeatingMac
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
 	PFMacros.migrateRepeatingMacros(migrated,'weapon','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
 });
-export var migrateLinkedAttacks = TAS.callback(function callmigrateLinkedAttacks(callback, oldversion){
+export function migrateLinkedAttacks (callback, oldversion){
 	var done=_.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -1260,10 +1260,13 @@ export var migrateLinkedAttacks = TAS.callback(function callmigrateLinkedAttacks
 			return;
 		}
 		fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-item','_source-spell','_source-ability','_source-main','_source-off','_source-spell-name','_source-ability-name']);
-		//TAS.debug("PFAttacks.migrateLinkedAttacks FIELDS are ",fields);
+		fields.push('migrated_linked_attacks');
 		getAttrs(fields,function(v){
 			var setter={};
-			TAS.debug("PFAttacks.migrateLinkedAttacks values are ",v);
+			if(parseInt(v.migrated_linked_attacks,10)){
+				done();
+				return;
+			}
 			ids.forEach(function(id){
 				var toSet=0;
 				if (v['repeating_weapon_'+id+'_source-item']){
@@ -1281,17 +1284,17 @@ export var migrateLinkedAttacks = TAS.callback(function callmigrateLinkedAttacks
 				}
 				setter['repeating_weapon_'+id+'_link_type']=toSet;
 			});
+			setter.migrated_linked_attacks=1;
 			if (_.size(setter)){
-				TAS.debug("PFAttacks.migrateLinkedAttacks setting",setter);
 				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
 		});
 	});
-});
+}
 
-export var migrate = TAS.callback(function callmigrate(callback, oldversion){
+export function migrate (callback, oldversion){
 	var done=_.once(function(){
 		TAS.debug("leaving PFAttacks.migrate");
 		if (typeof callback === "function") {
@@ -1302,6 +1305,11 @@ export var migrate = TAS.callback(function callmigrate(callback, oldversion){
 		var migrateDamage = 0, migrateMacrosv1=0,migrateIteratives=0;
 		migrateDamage = parseInt(v["migrated_damage-multiplier"], 10) || 0;
 		migrateMacrosv1 = parseInt(v["migrated_attack_macrosv1"], 10) || 0;
+		migrateIteratives = parseInt(v["migrated_attacklist_defaults111"]);
+		if(migrateDamage && migrateMacrosv1 && migrateIteratives){
+			done();
+			return;
+		}
 		getSectionIDs('repeating_weapon',function(ids){
 			var callmigrateMacrostov1,callmigrateMacrostov64,callmigrateRepeatingDamage,callSetDefaults;
 			try{
@@ -1331,7 +1339,8 @@ export var migrate = TAS.callback(function callmigrate(callback, oldversion){
 			}
 		});
 	});
-});
+}
+
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = function () {
 		TAS.info("leaving PFAttacks.recalculate");
