@@ -21,7 +21,7 @@ export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 });
 
 export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
-	setWrapper(a,function(vals){
+	getAttrs(a,function(vals){
 		cb(vals);
 	});
 });
@@ -74,7 +74,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 		fieldnames = _.map(fieldnames,function(field){
 			return field.slice(2,-1);
 		});
-		setWrapper(fieldnames, function (values) {
+		getAttrs(fieldnames, function (values) {
 			var evalstr = stringToSearch, innermatches=null,initialsplit;
 			try {
 				_.each(fieldnames,function(field){
@@ -209,7 +209,7 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 		var donesetter={};
 		if (currError){
 			donesetter[writeField+'_error']=0;
-			setWrapper(donesetter,{silent:true});
+			setAttrs(donesetter,{silent:true});
 		}
 		if (typeof callback === "function") {
 			callback(a, b, c);
@@ -228,7 +228,7 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 			callback(a, b, c);
 		}
 	};
-	setWrapper([readField, writeField, writeField+"_error"], function (values) {
+	getAttrs([readField, writeField, writeField+"_error"], function (values) {
 		var setter = {},
 		params = {},
 		trueDefault=0, 
@@ -317,7 +317,7 @@ export var getDropdownValue = TAS.callback(function callgetDropdownValue (readFi
 	if (!readField || (callback && typeof callback !== "function") || typeof synchrousFindAttributeFunc !== "function") {
 		return;
 	}
-	setWrapper([readField], function (values) {
+	getAttrs([readField], function (values) {
 		var fieldToFind = values[readField],
 		foundField = "";
 		if (typeof fieldToFind === "undefined" || fieldToFind === null) {
@@ -327,7 +327,7 @@ export var getDropdownValue = TAS.callback(function callgetDropdownValue (readFi
 			callback(0);
 		} else {
 			foundField = synchrousFindAttributeFunc(fieldToFind);
-			setWrapper([foundField], function (v) {
+			getAttrs([foundField], function (v) {
 				var valueOf = parseInt(v[foundField], 10) || 0;
 				callback(valueOf, foundField);
 			});
@@ -356,7 +356,7 @@ export var setDropdownValue = TAS.callback(function callsetDropdownValue(readFie
 			writeFields = writeFields[0];
 		}
 		if (typeof writeFields === "string") {
-			setWrapper([writeFields], function (v) {
+			getAttrs([writeFields], function (v) {
 				var currValue = parseInt(v[writeFields], 10),
 				setter = {};
 				//TAS.debug("setDropdownValue, readField:" + readField + ", currValue:" + currValue + ", newValue:" + valueOf);
@@ -370,7 +370,7 @@ export var setDropdownValue = TAS.callback(function callsetDropdownValue(readFie
 				}
 			});
 		} else if (Array.isArray(writeFields)) {
-			setWrapper(writeFields, function (v) {
+			getAttrs(writeFields, function (v) {
 				var i = 0,
 				setter = {};
 				for (i = 0; i < writeFields.length; i++) {
@@ -417,7 +417,7 @@ export function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, 
 		errorCallback();
 		return;
 	}
-	setWrapper(readFields, function (v) {
+	getAttrs(readFields, function (v) {
 		var currValue = totalIsFloat ? parseFloat(v[fields[0]]) : parseInt(v[fields[0]], 10),
 		newValue = 0,
 		penalty = 0,
