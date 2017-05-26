@@ -122,7 +122,7 @@ export function clearBuffTotals(callback,silently){
 	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
 	getAttrs(fields,function(v){
 		var setter={},params={};
-		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
+		//TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
 		setter = _.reduce(v,function(memo,val,attr){
 			if ((/exists/).test(attr)){
 				if (parseInt(val,10)){
@@ -137,7 +137,7 @@ export function clearBuffTotals(callback,silently){
 			if(silently){
 				params =PFConst.silentParams;
 			}
-			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
 			getAttrs(setter,params,done);
 		} else {
 			done();
@@ -196,7 +196,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				}
 			});
 		}
-		TAS.debug("PFBUFFS ROWS NOW:",rows);
+		//TAS.debug("PFBUFFS ROWS NOW:",rows);
 		if(col==='HP-temp'){
 			sums.sum = rows.filter(function(row){
 				return row.val>0;
@@ -238,7 +238,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				}
 				return 0;
 			});
-			TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
+			//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
 			//look at bonuses on rest of sheet to see if they overlap and don't stack:
 			if (otherCharBonuses[col]){
 				bonuses = _.mapObject(bonuses,function(val,bonusType){
@@ -246,7 +246,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 					try{
 						if(charBonusTypes.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
 							tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
-							TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
+							//TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
 							if(tempInt>0){
 								if (val<= tempInt){
 									retval=0;
@@ -262,7 +262,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 					}
 				});
 			}
-			TAS.debug("PFBUFFS FINAL BONUSES:",bonuses);
+			//TAS.debug("PFBUFFS FINAL BONUSES:",bonuses);
 			if (isAbility){
 				try {
 					sums.pen = bonuses.penalty||0;
@@ -288,7 +288,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				return m;
 			},0);
 		}
-		TAS.debug("PFBUFFS NOW totals are: ",sums);
+		//TAS.debug("PFBUFFS NOW totals are: ",sums);
 		if ( (parseInt(v['buff_'+col+'-total'],10)||0)!==sums.sum){
 			setter['buff_'+col+'-total']=sums.sum;
 		}
@@ -308,7 +308,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 			}
 		}
 	} catch(err){
-		TAS.debug("PFBuffs.updateBuffTotal",err);
+		TAS.error("PFBuffs.updateBuffTotal",err);
 	} finally {
 		return setter;
 	}
@@ -360,7 +360,7 @@ export function updateBuffTotalAsync (col, callback,silently){
 					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
-						TAS.notice("######################","PFBuffs setting ",setter);
+						//TAS.debug("######################","PFBuffs setting ",setter);
 						if (silently){
 							params = PFConst.silentParams;
 						}
@@ -507,7 +507,7 @@ export function migrate (outerCallback) {
 								TAS.error("PFBuffs.migrateDmgAbility",err);
 							}finally {
 								if (_.size(setter)){
-									TAS.debug("###########","PFBuffs migrate setting ",setter);
+									//TAS.debug("###########","PFBuffs migrate setting ",setter);
 									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();

@@ -940,11 +940,11 @@ export function setDualWieldVals (params,setter,id,updMode){
 	tempStr2='';
 
 	try {
-		TAS.debug("PFAttacks.setDualWieldVals",params);
+		//TAS.debug("PFAttacks.setDualWieldVals",params);
 		setter=setter||{};
 		if (!id){
 			id = generateRowID();
-			TAS.debug("the new id is "+id);
+			//TAS.debug("the new id is "+id);
 		}
 		offhandCountdown=params.offhand_improved;
 		prefix='repeating_weapon_'+id+'_';
@@ -1032,7 +1032,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 	} catch (err){
 		TAS.error("PFAttacks.setDualWieldVals outererr",err);
 	} finally {
-		TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
+		//TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
 		return setter;
 	}
 }
@@ -1081,14 +1081,14 @@ function updateDualWield (callback,eventInfo){
 							params.mainhand_name = v[prefix+'source-main-name'];
 							params.offhand_name = v[prefix+'source-off-name'];
 							params.offhand_mult = mult ;
-							TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setDualWieldVals(params,setter,id,true);
 						}
 					});
 				}
 				if(_.size(setter)){
 					setter['update_twoweapon_attack']=0;
-					TAS.debug("after updating now set with ",setter);
+					//TAS.debug("after updating now set with ",setter);
 					SWUtils.setWrapper(setter,PFConst.silentParams,done);
 				}else{
 					finished();
@@ -1110,7 +1110,7 @@ export function createDualWield (callback){
 			getSectionIDs('repeating_weapon',function(ids){
 				//TAS.debug("at PFAttacks.createDualWield values are ",v,ids);
 				if(_.contains(ids,v.mainhand_id) && _.contains(ids,v.offhand_id)){
-					TAS.debug("they are there!");
+					//TAS.debug("they are there!");
 					getAttrs(['repeating_weapon_'+v.mainhand_id+'_name','repeating_weapon_'+v.offhand_id+'_name'],function(w){
 						try {
 							params.mainhand_id = v.mainhand_id;
@@ -1122,7 +1122,7 @@ export function createDualWield (callback){
 							params.mainhand_name = w['repeating_weapon_'+v.mainhand_id+'_name'];
 							params.offhand_name = w['repeating_weapon_'+v.offhand_id+'_name'];
 							params.offhand_mult =parseFloat(v.offhand_str_mult)||0.5;
-							TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setter=setDualWieldVals(params,setter);
 						} catch (outererr){
 							TAS.error("PFAttacks.createDualWield outererr",outererr);
@@ -1142,7 +1142,7 @@ export function createDualWield (callback){
 						}
 					});
 				} else {
-					TAS.debug("they are not there1");
+					//TAS.debug("they are not there1");
 					setter.create_twoweapon_attack = 0;
 					SWUtils.setWrapper(setter,PFConst.silentParams,done);
 				}
@@ -1344,7 +1344,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 			callback();
 		}
 	};
-	TAS.debug("at PFAttacks.recalculate");
+	//TAS.debug("at PFAttacks.recalculate");
 	PFAttackGrid.recalculate( function(){
 		migrate(function(){
 			setAdvancedMacroCheckbox();

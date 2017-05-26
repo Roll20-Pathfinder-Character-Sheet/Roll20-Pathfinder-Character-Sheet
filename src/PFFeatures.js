@@ -205,7 +205,7 @@ export function resetTopCommandMacro (callback){
 			TAS.error("PFFeatures.resetTopCommandMacro",err);
 		}finally {
 			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -294,7 +294,7 @@ export function resetCommandMacro (callback){
  * Loops through all rows in the given repeating section.
  * @param {string} section= the name of the section after the word "repeating_"
  * @param {function} callback when done
- * @param {boolean} silently if T then call setAttrs with {silent:true}
+ * @param {boolean} silently if T then call SWUtils.setWrapper with {silent:true}
  */
 function recalculateRepeatingMaxUsed (section, callback, silently) {
 	var done = _.once(function () {
@@ -382,7 +382,7 @@ export function getAbilities (callback,errorcallback,section){
 									if (obj['CL-basis']==="@{level}"){
 										obj["class-name"]=v['race'];
 									} else if (v[prefix+'class-number']){
-										TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
+										//TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
 										obj["class-name"]=v[v[prefix+'class-number']];
 									} else {
 										obj["class-name"]="";
@@ -450,7 +450,7 @@ export function copyToAbilities(callback,section,eventInfo){
 		if(eventInfo && (/merge/i).test(eventInfo.sourceAttribute)){
 			setter={};
 			setter[eventInfo.sourceAttribute]=0;
-			setAttrs(setter,PFConst.silentParams);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 		if (typeof callback === "function"){
 			callback(param);
@@ -465,9 +465,9 @@ export function copyToAbilities(callback,section,eventInfo){
 	});
 	//TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
-		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
+		//TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
 		if(list && _.size(list)>0){
-			TAS.debug("now calling PFAbilitycopytoAbilities");
+			//TAS.debug("now calling PFAbilitycopytoAbilities");
 			PFAbility.copyToAbilities(merged,list);
 		} else {
 			done();
@@ -517,7 +517,7 @@ export function setNewDefaults (callback,section){
 			TAS.error("PFFeatures.setNewDefaults error setting defaults for "+section,err);
 		} finally {
 			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -532,7 +532,7 @@ export function migrateRepeatingMacros (callback){
 		}
 	}),
 	doneOne = _.after(_.size(featureLists),function(){
-		setAttrs({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
+		SWUtils.setWrapper({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
 	});
 	_.each(featureLists,function(section){
 		var defaultName = '',defaultMacro='';

@@ -211,7 +211,7 @@ export function updateSize (v,eventInfo,setter) {
 			}
 		}
 		try {
-			tempstr=reverseSizeMap[String(size)];
+			tempstr=reverseSizeNameMap[String(size)];
 			if (tempstr){
 				sizeDisplay = getTranslationByKey(sizeDisplay);
 			}
@@ -251,7 +251,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}

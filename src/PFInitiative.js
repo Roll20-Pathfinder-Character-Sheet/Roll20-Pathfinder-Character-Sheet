@@ -6,7 +6,7 @@ import * as SWUtils from './SWUtils';
 
 /** Updates @{init} 
  * @param {function} callback when done
- * @param {boolean} silently if call setAttrs with silent:true
+ * @param {boolean} silently if call SWUtils.setWrapper with silent:true
  * @param {boolean} force pass to SWUtils.updateRowTotal
  */
 export function updateInitiative (callback, silently,force) {

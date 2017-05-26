@@ -7,10 +7,9 @@ import * as ExExp from './ExExp';
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 	var bad=false;
 	TAS.debug("setting "+_.size(a)+" values:",a);
-	TAS.callstack();
 	_.each(a,function(v,k){
 		if (!v && (isNaN(v) || typeof v === 'undefined')){
-			TAS.error("Setting NaN! at "+k);
+			TAS.error("Setting NaN or undefined at "+k);
 			bad=true;
 		}
 	});
@@ -649,12 +648,12 @@ export function deleteRepeating(callback,section){
 		done();
 		return;
 	}
-	TAS.debug("SWUtils.deleteFeatures",section);
+	//TAS.debug("SWUtils.deleteFeatures",section);
 	getSectionIDs(section,function(ids){
 		var prefix="repeating_"+section+"_";
 		if(ids && _.size(ids)){
 			ids.forEach(function(id) {
-				TAS.debug("deleting "+prefix+id);
+				//TAS.debug("deleting "+prefix+id);
 				removeRepeatingRow(prefix+id);
 			});
 			done();
