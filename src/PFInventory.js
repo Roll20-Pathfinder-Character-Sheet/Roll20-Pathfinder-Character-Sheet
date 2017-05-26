@@ -49,7 +49,7 @@ defaultDeletedMacroAttrs=[];
 
 export function migrateRepeatingMacros(callback){
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.resetCommandMacro: ");
+        //TAS.debug("leaving PFInventory.resetCommandMacro: ");
         if (typeof callback === "function") {
             callback();
         }
@@ -72,7 +72,7 @@ export function migrateRepeatingMacros(callback){
  */
 export function resetCommandMacro(callback){
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.resetCommandMacro: ");
+        //TAS.debug("leaving PFInventory.resetCommandMacro: ");
         if (typeof callback === "function") {
             callback();
         }
@@ -241,7 +241,7 @@ function updateCarriedTotal (callback, silently) {
  */
 function migrateWornEquipment (callback) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.migrateWornEquipment");
+        //TAS.debug("leaving PFInventory.migrateWornEquipment");
         if (typeof callback === "function") {
             callback();
         }
@@ -251,7 +251,7 @@ function migrateWornEquipment (callback) {
     }),
     copyWornEquipmentToNewItem = function ( row, callback) {
         var done = _.once(function () {
-            TAS.debug("leaving PFInventory.copyWornEquipmentToNewItem for "+row);
+            //TAS.debug("leaving PFInventory.copyWornEquipmentToNewItem for "+row);
             if (typeof callback === "function") {
                 callback();
             }
@@ -345,7 +345,7 @@ function migrateWornEquipment (callback) {
     //item: value from PFDefense.defenseArmorShieldRowsOld
     copyWornDefenseToNewItem = function (item, wornAlreadySet, callback) {
         var done = _.once(function (wasSetToWorn) {
-            TAS.debug("leaving PFInventory.copyWornDefenseToNewItem did we set worn for "+item+"?: "+wasSetToWorn);
+            //TAS.debug("leaving PFInventory.copyWornDefenseToNewItem did we set worn for "+item+"?: "+wasSetToWorn);
             if (typeof callback === "function") {
                 callback(wasSetToWorn);
             }
@@ -552,7 +552,7 @@ function migrateWornEquipment (callback) {
  */
 function updateEquipmentLocation (id, callback, silently, eventInfo) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.updateEquipmentLocation for id "+id);
+        ////TAS.debug("leaving PFInventory.updateEquipmentLocation for id "+id);
         if (typeof callback === "function") {
             callback();
         }
@@ -691,7 +691,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
  */
 function updateWornArmorAndShield  (location, sourceAttribute, callback) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.updateWornArmorAndShield");
+        //TAS.debug("leaving PFInventory.updateWornArmorAndShield");
         if (typeof callback === "function") {
             callback();
         }
@@ -826,7 +826,7 @@ can be refactored to be faster to do all at once
  */
 function updateLocations (callback){
     var done = _.once(function(){
-        TAS.debug("Leaving PFInventory.updateLocations");
+        //TAS.debug("leaving PFInventory.updateLocations");
         if (typeof callback === "function"){
             callback();
         }
@@ -856,7 +856,7 @@ function updateLocations (callback){
  */
 export function createAttackEntryFromRow (source, callback, silently, weaponId) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.createAttackEntryFromRow");
+        ////TAS.debug("leaving PFInventory.createAttackEntryFromRow");
         if (typeof callback === "function") {
             callback();
         }
@@ -953,7 +953,7 @@ TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);
 }
 export function updateAssociatedAttack (source, callback) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.updateAssociatedAttack");
+        //TAS.debug("leaving PFInventory.updateAssociatedAttack");
         if (typeof callback === "function") {
             callback();
         }
@@ -1307,7 +1307,7 @@ export function importFromCompendium (eventInfo){
 }
 function updateUses (callback){
     var done = _.once(function(){
-        TAS.debug("leaving PFInventory.updateUses");
+        //TAS.debug("leaving PFInventory.updateUses");
         if(typeof callback === "function"){
             callback();
         }
@@ -1360,7 +1360,7 @@ function updateUses (callback){
  */
 function deleteOrphanWornRows (callback){
     var done = _.once(function(){
-        TAS.debug("leaving PFInventory.deleteOrphanWornRows");
+        //TAS.debug("leaving PFInventory.deleteOrphanWornRows");
         if (typeof callback === "function"){
             callback();
         }
@@ -1422,12 +1422,12 @@ function deleteWornRow (source){
 }
 export function setNewDefaults (callback, oldversion){
     var done = _.once(function(){
-        TAS.debug("leaving PFInventory.setNewDefaults");
+        //TAS.debug("leaving PFInventory.setNewDefaults");
         if(typeof callback === "function"){
             callback();
         }
     });
-    TAS.debug("at PFInventory.setNewDefaults");
+    //TAS.debug("at PFInventory.setNewDefaults");
     getAttrs(['migrated_itemlist_defaults'],function(vout){
         try {
             //TAS.debug("PFInventory.setNewDefaults ",v);
@@ -1526,12 +1526,12 @@ export function setNewDefaults (callback, oldversion){
 }
 export function migrate  (callback, oldversion) {
     var done = _.once(function(){
-        TAS.debug("leaving PFInventory.migrate");
+        //TAS.debug("leaving PFInventory.migrate");
         if (typeof callback === "function"){
             callback();
         }
     });
-    TAS.debug("At PFInventory.migrate");
+    //TAS.debug("At PFInventory.migrate");
     PFMigrate.migrateRepeatingItemAttributes(TAS.callback(function callPFInventorySetNewDefaults(){
         setNewDefaults(TAS.callback( function callPFInventoryMigrateWornEquipment(){
             migrateWornEquipment(done);
@@ -1541,7 +1541,7 @@ export function migrate  (callback, oldversion) {
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.recalculate");
+        //TAS.debug("leaving PFInventory.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -1554,7 +1554,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
         updateCarriedTotal(done);
     });
     try {
-        TAS.debug("at PFInventory.recalculate");
+        //TAS.debug("at PFInventory.recalculate");
         migrate(function(){
             updateCarriedCurrency(setTotals, silently);
             updateRepeatingItems(setTotals, silently);

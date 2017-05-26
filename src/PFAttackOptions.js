@@ -75,7 +75,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
  * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
 export function resetOption (id, eventInfo, callback) {
     var done = _.once(function(){
-        TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
+        //TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
         if (typeof callback === "function"){
             callback();
         }

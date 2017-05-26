@@ -139,7 +139,7 @@ function toggleBuffStatusPanel (col, val) {
 
 export function updateBuffTotals (col, callback,silently){
 	var done = _.once(function () {
-		TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
+		//TAS.debug("leaving PFBuffs.updateBuffTotals for "+col);
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -350,7 +350,7 @@ export function updateBuffTotals (col, callback,silently){
 
 export function migrate (outerCallback) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFBuffs.migrate");
+		//TAS.debug("leaving PFBuffs.migrate");
 		if (typeof outerCallback === "function") {
 			outerCallback();
 		}
@@ -383,7 +383,7 @@ export function migrate (outerCallback) {
 								TAS.debug("###########","PFBuffs.migrate found ",v);
 								ids.forEach(function(id){
 									var prefix = 'repeating_buff_'+id+'_buff-';
-									TAS.debug("at id "+id);
+									//TAS.debug("at id "+id);
 									if(v[prefix+'DMG_macro-text']&&!v[prefix+'DMG_ranged_macro-text']){
 										setter[prefix+'DMG_ranged_macro-text']=v[prefix+'DMG_macro-text'];
 										setter[prefix+'DMG_ranged']=parseInt(v[prefix+'DMG'],10)||0;
@@ -603,7 +603,7 @@ function setBuff (id, col, callback, silently) {
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		resetStatuspanel();
-		TAS.debug("Leaving PFBuffs.recalculate");
+		//TAS.debug("leaving PFBuffs.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}

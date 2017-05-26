@@ -138,7 +138,7 @@ function updateClassInformation  (col, callback, silently, eventInfo) {
 
 export function setHitPoints (callback,silently,eventInfo){
     var done = _.once(function(){ if (typeof callback === "function") { 
-        TAS.debug("Leaving updateClassHpGrid");
+        //TAS.debug("leaving updateClassHpGrid");
         callback();}
     }),
     fields=["auto_calc_hp", "autohp_percent","maxhp_lvl1","is_npc","set_pfs",
@@ -251,7 +251,7 @@ export function migrate (callback,oldversion){
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFClassRaceGrid.recalculate");
+        //TAS.debug("leaving PFClassRaceGrid.recalculate");
         if (typeof callback === "function") {
             callback();
         }

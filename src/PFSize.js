@@ -275,12 +275,12 @@ export function migrate (callback){
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFSize.recalculate");
+		//TAS.debug("leaving PFSize.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	});
-	TAS.debug("At PFSize.recalculate");
+	//TAS.debug("At PFSize.recalculate");
 	updateSizeAsync(done, silently,null);
 });
 function registerEventHandlers () {

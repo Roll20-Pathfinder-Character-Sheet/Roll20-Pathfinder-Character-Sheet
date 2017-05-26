@@ -47,7 +47,7 @@ export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
 */
 export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
     var done=_.once(function(){
-        TAS.debug("leaving updateMultiClassedCasterFlag");
+        //TAS.debug("leaving updateMultiClassedCasterFlag");
         if (typeof callback === "function"){
             callback();
         }
@@ -298,7 +298,7 @@ export function applyConditions (callback, silently) {
 }
 function recalcOneClass (spellClassIdx, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
+        //TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
         if (typeof callback === "function") {
             callback();
         }
@@ -323,7 +323,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
 */
 function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving updateCasterLevel " + spellclassidx);
+        //TAS.debug("leaving updateCasterLevel " + spellclassidx);
         if (typeof callback === "function") {
             callback();
         }
@@ -528,7 +528,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
     }),
     recalcTopSection = function (callback, silently) {
         var done = _.once(function () {
-            TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
+            //TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
             if (typeof callback === "function") {
                 callback();
             }

@@ -257,13 +257,13 @@ function getNewAbilityAttrs (ability){
 }
 export function copyToAbilities(callback,abilities) {
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.copyToAbilities");
+		//TAS.debug("leaving PFAbility.copyToAbilities");
 		if (typeof callback === "function")  {
 			callback();
 		}
 	}), 
 	setter={};
-	TAS.debug("At PFAbility.copyToAbilities");
+	//TAS.debug("At PFAbility.copyToAbilities");
 	if (_.size(abilities)){
 		_.each(abilities,function(ability){
 			var xtra= getNewAbilityAttrs(ability);
@@ -285,7 +285,7 @@ export function copyToAbilities(callback,abilities) {
  */
 function getTopOfMenu (callback,isNPC){
 	var done = function (str) {
-		TAS.debug("leaving PFAbility.getTopOfMenu");
+		//TAS.debug("leaving PFAbility.getTopOfMenu");
 		if (typeof callback === "function") {
 			callback(str);
 		}
@@ -348,7 +348,7 @@ export function resetCommandMacro (callback){
 export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){
 		resetCommandMacro();
-		TAS.debug("leaving PFAbility.importFromCompendium");
+		//TAS.debug("leaving PFAbility.importFromCompendium");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -565,7 +565,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
  */
 export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.createAttackEntryFromRow");
+		//TAS.debug("leaving PFAbility.createAttackEntryFromRow");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -633,7 +633,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 }
 export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.updateAssociatedAttack");
+		//TAS.debug("leaving PFAbility.updateAssociatedAttack");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -689,7 +689,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 }
 function updateCharLevel (id,callback,eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateCharLevel");
+		//TAS.debug("leaving updateCharLevel");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -723,7 +723,7 @@ function updateCharLevel (id,callback,eventInfo){
 }
 function updateAbilityRange (id, callback, silently, eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateAbilityRange");
+		//TAS.debug("leaving updateAbilityRange");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -827,7 +827,7 @@ function resetOption (setter, id, v, eventInfo){
 }
 function resetOptionAsync (id, callback , eventInfo){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.resetOption");
+		//TAS.debug("leaving PFAbility.resetOption");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -856,7 +856,7 @@ function resetOptionAsync (id, callback , eventInfo){
 
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.recalcAbilities");
+		//TAS.debug("leaving PFAbility.recalcAbilities");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -894,7 +894,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.migrateRepeatingMacros");
+		//TAS.debug("leaving PFAbility.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -929,7 +929,7 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback){
 	var done = function(){
-		TAS.debug("leaving PFAbility.migrate");
+		//TAS.debug("leaving PFAbility.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}

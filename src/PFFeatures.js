@@ -143,7 +143,7 @@ events = {
  */
 export function resetTopCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetTopCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetTopCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -217,7 +217,7 @@ export function resetTopCommandMacro (callback){
  */
 export function resetCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -345,7 +345,7 @@ export function getAbilities (callback,errorcallback,section){
 			done();
 		}
 	});
-	TAS.debug("at PFFeatures.getAbilities "+section);
+	//TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
 		var fields,isSLA=0;
@@ -463,7 +463,7 @@ export function copyToAbilities(callback,section,eventInfo){
 			PFMenus.resetOneCommandMacro(section,true);
 		},true,0);
 	});
-	TAS.debug("at PFFeatures.copyToAbilities:"+section);
+	//TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
 		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
 		if(list && _.size(list)>0){
@@ -479,7 +479,7 @@ export function copyToAbilities(callback,section,eventInfo){
 }
 export function setNewDefaults (callback,section){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.setNewDefaults");
+		//TAS.debug("leaving PFFeatures.setNewDefaults");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -526,7 +526,7 @@ export function setNewDefaults (callback,section){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
+		//TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -556,7 +556,7 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback, oldversion){
 	var done = function(){
-		TAS.debug("leaving PFFeatures.migrate");
+		//TAS.debug("leaving PFFeatures.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}

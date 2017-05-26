@@ -182,7 +182,7 @@ export function updateAbilityScores (callback, silently) {
  */
 export function applyConditions (callback, silently) {
     var done = function () {
-        TAS.debug("leaving PFAbilityScores.applyConditions");
+        //TAS.debug("leaving PFAbilityScores.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
@@ -241,7 +241,7 @@ export function migrate (callback,oldversion){
  */
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFAbilityScores.recalculate");
+        //TAS.debug("leaving PFAbilityScores.recalculate");
         if (typeof callback === "function") {
             callback();
         }

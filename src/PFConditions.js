@@ -43,7 +43,7 @@ function updatePin () {
 /* updates drain for condition status panel */
 function updateDrainCheckbox (callback,silently,eventInfo) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFConditions.updateDrainCheckbox");
+		//TAS.debug("leaving PFConditions.updateDrainCheckbox");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -66,7 +66,7 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFConditions.recalculate");
+		//TAS.debug("leaving PFConditions.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}

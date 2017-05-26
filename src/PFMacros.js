@@ -233,7 +233,7 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
  */
 export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray, whisper){
    var done = _.once(function(){
-        TAS.debug("leaving migrateRepeatingMacros for "+ section + ", "+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacros for "+ section + ", "+fieldname);
         if (typeof callback === "function") {
             callback();
         }
@@ -306,7 +306,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
  */
 export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray,replaceArray, whisper){
    var done=_.once(function(){
-        TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);
         if (typeof callback === "function"){
             callback();
         }
@@ -406,7 +406,7 @@ export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultM
  */
 export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMap, deleteArray, sameAsKeys, whisper){
     var done = _.once(function(){
-        TAS.debug("leaving migrateRepeatingMacros for "+ fieldname);
+        //TAS.debug("leaving migrateRepeatingMacros for "+ fieldname);
         if (typeof callback === "function") {
             callback();
         }
@@ -462,7 +462,7 @@ export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMa
  */
 export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultMaps,deleteArrays, sameAsKeys, whisper){
     var done = _.once(function(){
-        TAS.debug("leaving migrateStaticMacros ");
+        //TAS.debug("leaving migrateStaticMacros ");
         if (typeof callback === "function") {
             callback();
         }
@@ -541,7 +541,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
 export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defaultMap, deleteArray, replaceArray, 
     keysToReplaceShortcut, valsToReplaceShortcut, useNoNumber, whisper){
     var done=_.once(function(){
-        TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
         if (typeof callback === "function"){
             callback();
         }

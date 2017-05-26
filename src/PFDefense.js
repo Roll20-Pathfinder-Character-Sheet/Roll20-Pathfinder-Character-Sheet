@@ -43,7 +43,7 @@ events = {
  */
 export function updateDefenses ( callback, silently, eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.updateDefenses");
+        //TAS.debug("leaving PFDefense.updateDefenses");
         if (typeof callback === "function") {
             callback();
         }
@@ -315,7 +315,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
  */
 export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
+        //TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
             callback();
         }
@@ -508,7 +508,7 @@ export function updateArmor (callback, silently, eventInfo) {
  */
 export function applyConditions (callback, silently,eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.applyConditions");
+        //TAS.debug("leaving PFDefense.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
@@ -563,7 +563,7 @@ export function applyConditions (callback, silently,eventInfo) {
  */
 export function migrate (callback,oldversion){
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.migrate");
+        //TAS.debug("leaving PFDefense.migrate");
         if (typeof callback === "function") {
             callback();
         }
@@ -605,7 +605,7 @@ export function migrate (callback,oldversion){
  */
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.recalculate");
+        //TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
             callback();
         }

@@ -16,7 +16,7 @@ import * as PFClassRaceGrid from './PFClassRaceGrid';
  */
 function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	var setWounds = 0;
-	TAS.debug("at PFHealth.setWoundLevel, hp is " + hp);
+	//TAS.debug("at PFHealth.setWoundLevel, hp is " + hp);
 	if (hp <= grazed) {
 		if (hp > wounded) {
 			setWounds = 1;
@@ -39,7 +39,7 @@ function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
  */
 function setWoundLevelLookup (hp) {
 	//TAS.debug"PFHealth.setWoundLevelLookup, hp passed in is:" + hp);
-	TAS.debug("at PFHealth.setWoundLevelLookup, hp is " + hp);
+	//TAS.debug("at PFHealth.setWoundLevelLookup, hp is " + hp);
 	getAttrs(["HP", "HP_grazed", "HP_wounded", "HP_critical", "condition-Wounds", "wound_threshold-show"], function (v) {
 		if(parseInt(v["wound_threshold-show"],10)){
 			if (isNaN(parseInt(hp, 10))) {
@@ -60,7 +60,7 @@ function setWoundLevelLookup (hp) {
 function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
 	var setter={}, grazed=0,wounded=0,critical=0,disabled=0;
 	try {
-		TAS.debug("at PFHealth.setWoundThreshholds, hp is"+hp);
+		//TAS.debug("at PFHealth.setWoundThreshholds, hp is"+hp);
 		grazed = Math.floor(maxHP * 0.75);
 		wounded = Math.floor(maxHP * 0.5);
 		critical = Math.floor(maxHP * 0.25);
@@ -95,7 +95,7 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
  * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
  */
 export function setWoundThreshholdsLookup () {
-	TAS.debug("at PFHealth.setWoundThreshholdsLookup");
+	//TAS.debug("at PFHealth.setWoundThreshholdsLookup");
 	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod","HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
 			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0, v);
@@ -150,7 +150,7 @@ export function updateCurrHPLookup () {
  */
 export function updateMaxHPLookup (callback, silently,forceReset,eventInfo) {
 	var done = _.once(function () {
-		TAS.debug("leaving updateMaxHPLookup");
+		//TAS.debug("leaving updateMaxHPLookup");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -302,7 +302,7 @@ export function ensureNPCHPZero(callback){
 }
 export function migrate (callback, oldversion){
 	var done = _.once(function(){
-		TAS.debug("leaving PFHealth.migrate 2");
+		//TAS.debug("leaving PFHealth.migrate 2");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -314,7 +314,7 @@ export function migrate (callback, oldversion){
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFHealth.recalculate");
+		//TAS.debug("leaving PFHealth.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -329,7 +329,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 	callUpdateTempHP = _.once(function () {
 		updateTempMaxHP(callUpdateMaxHPLookup);
 	});
-	TAS.debug("at PFHealth.recalculate");
+	//TAS.debug("at PFHealth.recalculate");
 	migrate(callUpdateTempHP,oldversion);
 });
 function registerEventHandlers () {

@@ -290,7 +290,7 @@ function setupNewSheet (callback){
 function recalcExpressions (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.equationMacros),
 	done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalcExpressions");
+		//TAS.debug("leaving PFSheet.recalcExpressions");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -336,7 +336,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 }
 export function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.migrate");
+		//TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -352,7 +352,7 @@ export function migrate (oldversion, callback, errorCallback) {
 	doneOne;
 	try {
 		//don't need to check if oldversion > 0 since this is only called if it is.
-		TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
+		//TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
 		if (oldversion < 1.0) {
 			doneOne=_.after(7,function(){
 				TAS.info("we finished calling all the migrates");
@@ -437,7 +437,7 @@ export function migrate (oldversion, callback, errorCallback) {
 }
 function recalculateParallelModules (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateParallelModules");
+		//TAS.debug("leaving PFSheet.recalculateParallelModules");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -464,7 +464,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		doneOneModuleInner();
 	};
 
-	TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
+	//TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
 	try {
 		_.each(parallelRecalcFuncs, function (methodToCall) {
 			try {
@@ -483,7 +483,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 }
 function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
+		//TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -502,7 +502,7 @@ function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 }
 function recalculateCore (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateCore");
+		//TAS.debug("leaving PFSheet.recalculateCore");
 		if (typeof callback === "function") {
 			callback();
 		}

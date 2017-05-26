@@ -140,7 +140,7 @@ events = {
 
 function migrateMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFSkills.migrateMacros");
+		//TAS.debug("leaving PFSkills.migrateMacros");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -432,7 +432,7 @@ export function updateSkill (skill, callback, silently) {
  */
 function recalculateSkillDropdowns (skills, callback, errorCallback) {
 	var doneDrop = _.once(function () {
-		TAS.debug("Leaving PFSkills.recalculateSkillDropdowns");
+		//TAS.debug("leaving PFSkills.recalculateSkillDropdowns");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -834,7 +834,7 @@ export function applyConditions (callback,silently,eventInfo){
  */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSkills.migrate");
+		//TAS.debug("leaving PFSkills.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}

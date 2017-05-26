@@ -210,7 +210,7 @@ export function updateAttackGrid(buffType,eventInfo){
 
 export function migrate (callback, oldversion){
     var done = function () {
-        TAS.debug("leaving PFAttackGrid.migrate");
+        //TAS.debug("leaving PFAttackGrid.migrate");
         if (typeof callback === "function") {
             callback();
         }
@@ -225,7 +225,7 @@ export function migrate (callback, oldversion){
  */
 export var recalculate = TAS.callback(function callrecalculate (callback, silently, oldversion) {
     var done = function () {
-        TAS.debug("leaving PFAttackGrid.recalculate");
+        //TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
             callback();
         }

@@ -294,7 +294,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 function updateSpellsPerDay(dummy,eventInfo,callback,silently){
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.updateSpellsPerDay");
+        //TAS.debug("leaving PFSpells.updateSpellsPerDay");
         if (typeof callback === "function") {
             callback();
         }
@@ -420,7 +420,7 @@ function getSpellTotals  (ids, v, setter) {
 
 export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.resetSpellsTotals");
+        //TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
             callback();
         }
@@ -521,7 +521,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 /*Triggered from a button in repeating spells */
 export function createAttackEntryFromRow  (id, callback, silently, eventInfo, weaponId) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.createAttackEntryFromRow");
+        //TAS.debug("leaving PFSpells.createAttackEntryFromRow");
         if (typeof callback === "function") {
             callback();
         }
@@ -587,7 +587,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
 }
 export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFSpells.updateAssociatedAttack");
+        ////TAS.debug("leaving PFSpells.updateAssociatedAttack");
         if (typeof callback === "function") {
             callback();
         }
@@ -1029,7 +1029,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     var spellLevelUndefined = false,
     classNumWasUndefined=false,
     done = _.once(function () {
-        //TAS.debug("leaving PFSpells.updateSpell: id:" + id + " spelllevelundefined=" + spellLevelUndefined);
+        ////TAS.debug("leaving PFSpells.updateSpell: id:" + id + " spelllevelundefined=" + spellLevelUndefined);
         //these asynchronous functions can be called at same time as callback.
         if (!spellLevelUndefined) {
             PFSpellOptions.resetOption(id, eventInfo);
@@ -1268,7 +1268,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
  */
 export function updateSpells (callback, silently, eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.updateSpells");
+        //TAS.debug("leaving PFSpells.updateSpells");
         if (typeof callback === "function") {
             callback();
         }
@@ -1296,7 +1296,7 @@ export function updateSpells (callback, silently, eventInfo) {
 function updateSpellsOld  (callback, silently, eventInfo) {
     getSectionIDs("repeating_spells", function (ids) {
         var done = _.after(_.size(ids), function () {
-                TAS.debug("leaving PFSpells.updateSpells after " + _.size(ids)+" rows");
+                //TAS.debug("leaving PFSpells.updateSpells after " + _.size(ids)+" rows");
                     if (typeof callback === "function") {
                         callback();
                     }
@@ -1524,7 +1524,7 @@ export function importFromCompendium (id, eventInfo) {
 }
 export function migrateRepeatingMacros (callback){
     var done = _.once(function(){
-        TAS.debug("leaving PFSpells.migrateRepeatingMacros");
+        //TAS.debug("leaving PFSpells.migrateRepeatingMacros");
         if(typeof callback === "function"){
             callback();
         }
@@ -1557,7 +1557,7 @@ export function migrate (callback) {
 
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.recalculate");
+        //TAS.debug("leaving PFSpells.recalculate");
         if (typeof callback === "function") {
             callback();
         }

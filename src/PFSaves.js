@@ -70,7 +70,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 		//TAS.debug"finished 3 saves");
 		done();
 	});
-	TAS.debug("at PFSaves.recalculate");
+	//TAS.debug("at PFSaves.recalculate");
 	try {
 		applyConditions(function () {
 			try {
