@@ -121,11 +121,11 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 		if (nonLethalDmg >= (hp + temphp + (usesWounds ? (1 + hpAbilityMod) : 0))) {
 			setAttrs({
 				"condition-Staggered": "1"
-			});
+			},PFConst.silentParams);
 		} else if (staggered ) {
 			setAttrs({
 				"condition-Staggered": "0"
-			});
+			},PFConst.silentParams);
 		}
 	}
 	if (usesWounds) {
