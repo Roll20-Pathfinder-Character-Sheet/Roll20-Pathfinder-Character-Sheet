@@ -3,6 +3,7 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
+import * as SWUtils from './SWUtils';
 
 
 function setSanityThreshold (callback){
@@ -14,7 +15,6 @@ function setSanityThreshold (callback){
     getAttrs(['use_horror_adventures','sanity_threshold','sanity-ability-mod','sanity_threshold_misc-mod'],function(v){
         var currThreshold=0,newThreshold=0,setter={};
         try {
-            TAS.debug("At PFHorror.setSanityThreshold:",v);
             if (parseInt(v.use_horror_adventures,10)){
                 currThreshold=parseInt(v.sanity_threshold,10)||0;
                 newThreshold=(parseInt(v['sanity-ability-mod'],10)||0)+(parseInt(v['sanity_threshold_misc-mod'],10)||0);
@@ -27,7 +27,7 @@ function setSanityThreshold (callback){
             TAS.error("PFHorror.setSanityThreshold error",err);
         } finally {
             if (_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -47,7 +47,6 @@ function setSanityScore (callback){
     'buff_WIS-total_penalty','buff_INT-total_penalty','buff_CHA-total_penalty'],function(v){
         var currSanity=0,newSanity=0,newEdge=0,setter={};
         try {
-            TAS.debug("At PFHorror.setSanityScore:",v);
             if (parseInt(v.use_horror_adventures,10)){
                 currSanity = parseInt(v.sanity_score_max,10)||0;
                 newSanity = (parseInt(v['sanity_score_misc-mod'],10)||0) + 
@@ -65,7 +64,7 @@ function setSanityScore (callback){
             TAS.error("PFHorror.setSanityScore error",err);
         } finally {
             if (_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -73,13 +72,13 @@ function setSanityScore (callback){
     });
 }
 
-export function recalculate(callback){
+export var recalculate = TAS.callback(function callrecalculate(callback){
     setSanityScore();
     setSanityThreshold();
     if (typeof callback === "function"){
         callback();
     }
-}
+});
 
 function registerEventHandlers () {
  	on("change:sanity_score_misc-mod change:WIS change:INT change:CHA change:buff_WIS-total_penalty change:buff_INT-total_penalty change:buff_CHA-total_penalty",

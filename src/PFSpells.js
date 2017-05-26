@@ -65,7 +65,7 @@ export function resetCommandMacro (eventInfo, callback) {
             }
         }
         if (_.size(attrs) > 0) {
-            setAttrs(attrs, {
+            SWUtils.setWrapper(attrs, {
                 silent: true
             }, done);
         } else {
@@ -270,7 +270,7 @@ export function resetCommandMacro (eventInfo, callback) {
                             }	
                         }
                         if (_.size(attrs) > 0) {
-                            setAttrs(attrs, {
+                            SWUtils.setWrapper(attrs, {
                                 silent: true
                             }, done);
                         } else {
@@ -294,7 +294,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 function updateSpellsPerDay(dummy,eventInfo,callback,silently){
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.updateSpellsPerDay");
+        //TAS.debug("leaving PFSpells.updateSpellsPerDay");
         if (typeof callback === "function") {
             callback();
         }
@@ -302,10 +302,10 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
     fields = ['total_spells_manually','repeating_spells_used','repeating_spells_spellclass_number', 'repeating_spells_spell_level', 'repeating_spells_slot', 'repeating_spells_metamagic'];
     getAttrs(fields,function(v){
         var classNum=0, spellLevel,slot=0,metamagic=0,fieldname='',fieldname2='',initialtot={};
-        TAS.debug("PFSpells.updateSpellsPerDay: ",v);
+        //TAS.debug("PFSpells.updateSpellsPerDay: ",v);
         if(!parseInt(v.total_spells_manually,10)){
             spellLevel= parseInt(v.repeating_spells_spell_level, 10);
-            TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
+            //TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
             if (!isNaN(spellLevel)){
                 classNum = parseInt(v.repeating_spells_spellclass_number,10)||0;
                 metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
@@ -320,13 +320,13 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
                 fieldname2 =  "spellclass-" + classNum + "-level-" + spellLevel + "-spells-prepared";
                 initialtot[fieldname]=0;
                 initialtot[fieldname2]=0;
-                TAS.debug("about to set "+fieldname+", and "+ fieldname2);
+                //TAS.debug("about to set "+fieldname+", and "+ fieldname2);
                 TAS.repeating('spells').attrs(fieldname,fieldname2).fields('row_id','used', 'spell_level', 'metamagic', 'slot').reduce(function (m, r) {
                     try {
                         if (r.I.spell_level===spellLevel || (r.I.metamagic && r.I.slot===spellLevel)){
                             m+=r.I.used;
-                           // m[fieldname2]+=r.I.used;
-                            TAS.debug("adding "+r.I.used);
+                            //m[fieldname2]+=r.I.used;
+                            //TAS.debug("adding "+r.I.used);
                         }
                         TAS.debug(fieldname+" now at "+m);//, m);
                     } catch (innererr){
@@ -420,7 +420,7 @@ function getSpellTotals  (ids, v, setter) {
 
 export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.resetSpellsTotals");
+        //TAS.debug("leaving PFSpells.resetSpellsTotals");
         if (typeof callback === "function") {
             callback();
         }
@@ -448,7 +448,7 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
                 try {
                     setter = getSpellTotals(ids, v, setter);
                     if (_.size(setter)) {
-                        setAttrs(setter, PFConst.silentParams, done);
+                        SWUtils.setWrapper(setter, PFConst.silentParams, done);
                     } else {
                         done();
                     }
@@ -521,7 +521,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 /*Triggered from a button in repeating spells */
 export function createAttackEntryFromRow  (id, callback, silently, eventInfo, weaponId) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.createAttackEntryFromRow");
+        //TAS.debug("leaving PFSpells.createAttackEntryFromRow");
         if (typeof callback === "function") {
             callback();
         }
@@ -572,7 +572,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, {}, function(){
+                SWUtils.setWrapper(setter, {}, function(){
                     //can do these in parallel
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
@@ -580,14 +580,14 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                 });
             } else {
                 setter[item_entry + "create-attack-entry"] = 0;
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             }
         }
     });
 }
 export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFSpells.updateAssociatedAttack");
+        ////TAS.debug("leaving PFSpells.updateAssociatedAttack");
         if (typeof callback === "function") {
             callback();
         }
@@ -628,7 +628,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
                     TAS.error("PFSpells.updateAssociatedAttack",err);
                 } finally {
                     if (_.size(setter)>0){
-                        setAttrs(setter, params, function(){
+                        SWUtils.setWrapper(setter, params, function(){
                             PFAttackOptions.resetSomeOptions(idlist);
                         });
                     } else {
@@ -655,9 +655,9 @@ function updatePreparedSpellState (id, eventInfo) {
         }
         if (_.size(setter)) {
             if (hideUnprepared) {
-                setAttrs(setter, PFConst.silentParams, resetCommandMacro());
+                SWUtils.setWrapper(setter, PFConst.silentParams, resetCommandMacro());
             } else {
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 });
             }
@@ -690,7 +690,7 @@ function resetSpellsPrepared () {
                 }
             });
             if (_.size(setter)) {
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 });
             }
@@ -844,10 +844,10 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                     if (_.size(setter) > 0 || _.size(classNumSetter) > 0) {
                         //TAS.debug"updateSpellsCasterLevelRelated, setting:",classNumSetter,setter);
                         if (_.size(classNumSetter) > 0) {
-                            setAttrs(classNumSetter,{},done);
+                            SWUtils.setWrapper(classNumSetter,{},done);
                         }
                         if (_.size(setter) > 0) {
-                            setAttrs(setter, PFConst.silentParams, done);
+                            SWUtils.setWrapper(setter, PFConst.silentParams, done);
                         }
                     } else {
                         done();
@@ -949,8 +949,8 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                         TAS.error("updateSpellsCasterAbilityRelated miderr :",miderr);
                     } finally {
                         if (_.size(setter) > 0) {
-                            TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
-                            setAttrs(setter, PFConst.silentParams, done());
+                            //TAS.debug("updateSpellsCasterAbilityRelated setting:",setter);
+                            SWUtils.setWrapper(setter, PFConst.silentParams, done());
                         } else {
                             done();
                         }
@@ -995,7 +995,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                 if (isNaN(slot)) {
                     slot = level;
                     setter[spellSlotField] = level;
-                    setAttrs(setter, {
+                    SWUtils.setWrapper(setter, {
                         silent: true
                     }, done);
                     return;
@@ -1006,7 +1006,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                     if (spellLevelRadio===-1){
                         setter["spells_tab"] = slot;
                     }
-                    setAttrs(setter, {
+                    SWUtils.setWrapper(setter, {
                         silent: true
                     }, done);
                     return;
@@ -1029,7 +1029,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     var spellLevelUndefined = false,
     classNumWasUndefined=false,
     done = _.once(function () {
-        //TAS.debug("leaving PFSpells.updateSpell: id:" + id + " spelllevelundefined=" + spellLevelUndefined);
+        ////TAS.debug("leaving PFSpells.updateSpell: id:" + id + " spelllevelundefined=" + spellLevelUndefined);
         //these asynchronous functions can be called at same time as callback.
         if (!spellLevelUndefined) {
             PFSpellOptions.resetOption(id, eventInfo);
@@ -1114,7 +1114,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             if (isNaN(baseClassNum)) {
                 //force to zero?
                 classNumWasUndefined=true;
-                TAS.debug("#########################","Forcing spell "+id+" to class 0");
+                //TAS.debug("#########################","Forcing spell "+id+" to class 0");
                 setter[classNumberField] = String(classNum);
                 updateClass = true;
                 hadToSetClass = true;
@@ -1206,7 +1206,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             if (updateClass) {
                 currClassName = v[classNameField];
                 if (currClassName !== className) {
-                    TAS.debug("setting class name field, should be doing this if classnum was undefined");
+                    //TAS.debug("setting class name field, should be doing this if classnum was undefined");
                     setter[classNameField] = className;
                 }
             }
@@ -1252,7 +1252,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             TAS.error("PFSpells.updateSpell:" + id, err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 }, done);
             } else {
@@ -1263,12 +1263,12 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
 }
 /** - updates all spells
  *@param {function} callback when done
- *@param {silently} if should call setAttrs with {silent:true}
+ *@param {silently} if should call SWUtils.setWrapper with {silent:true}
  *@param {object} eventInfo not used
  */
 export function updateSpells (callback, silently, eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.updateSpells");
+        //TAS.debug("leaving PFSpells.updateSpells");
         if (typeof callback === "function") {
             callback();
         }
@@ -1296,7 +1296,7 @@ export function updateSpells (callback, silently, eventInfo) {
 function updateSpellsOld  (callback, silently, eventInfo) {
     getSectionIDs("repeating_spells", function (ids) {
         var done = _.after(_.size(ids), function () {
-                TAS.debug("leaving PFSpells.updateSpells after " + _.size(ids)+" rows");
+                //TAS.debug("leaving PFSpells.updateSpells after " + _.size(ids)+" rows");
                     if (typeof callback === "function") {
                         callback();
                     }
@@ -1514,7 +1514,7 @@ export function importFromCompendium (id, eventInfo) {
         setSilent["repeating_spells_area_from_compendium"] = "";
         setSilent["repeating_spells_effect_from_compendium"] = "";
         if (_.size(setSilent) > 0) {
-            setAttrs(setSilent, PFConst.silentParams, function () {
+            SWUtils.setWrapper(setSilent, PFConst.silentParams, function () {
                 if (callUpdateSpell) {
                     updateSpell(null, eventInfo);
                 }
@@ -1524,14 +1524,14 @@ export function importFromCompendium (id, eventInfo) {
 }
 export function migrateRepeatingMacros (callback){
     var done = _.once(function(){
-        TAS.debug("leaving PFSpells.migrateRepeatingMacros");
+        //TAS.debug("leaving PFSpells.migrateRepeatingMacros");
         if(typeof callback === "function"){
             callback();
         }
     }),
     migrated = _.after(2,function(){
         resetCommandMacro();
-        setAttrs({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
+        SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
     });
     //TAS.debug("at PFSpells.migrateRepeatingMacros");
     getAttrs(['migrated_spells_macrosv1'],function(v){
@@ -1555,9 +1555,9 @@ export function migrate (callback) {
     });
 }
 
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.recalculate");
+        //TAS.debug("leaving PFSpells.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -1580,7 +1580,7 @@ export function recalculate (callback, silently, oldversion) {
         });
     });
     migrate(callUpdateSpells);
-}
+});
 var events = {
     //events for spell repeating rows
     repeatingSpellEventsPlayer: {

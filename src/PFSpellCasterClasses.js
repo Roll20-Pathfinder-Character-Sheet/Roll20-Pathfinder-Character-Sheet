@@ -47,7 +47,7 @@ export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
 */
 export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
     var done=_.once(function(){
-        TAS.debug("leaving updateMultiClassedCasterFlag");
+        //TAS.debug("leaving updateMultiClassedCasterFlag");
         if (typeof callback === "function"){
             callback();
         }
@@ -62,7 +62,7 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
             setter.spellclasses_multiclassed= 0;
         } 
         if(_.size(setter)>0){
-            setAttrs(setter,PFConst.silentParams,done);
+            SWUtils.setWrapper(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -108,7 +108,7 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -160,7 +160,7 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -222,7 +222,7 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
             TAS.error("PFSpellCasterClasses.updateBonusSpells", err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -250,7 +250,7 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
         }
         if (newCount !== curr){
             setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-            setAttrs(setter,{},done);
+            SWUtils.setWrapper(setter,{},done);
         } else {
             done();
         }
@@ -289,7 +289,7 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -298,7 +298,7 @@ export function applyConditions (callback, silently) {
 }
 function recalcOneClass (spellClassIdx, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
+        //TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
         if (typeof callback === "function") {
             callback();
         }
@@ -323,7 +323,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
 */
 function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving updateCasterLevel " + spellclassidx);
+        //TAS.debug("leaving updateCasterLevel " + spellclassidx);
         if (typeof callback === "function") {
             callback();
         }
@@ -367,7 +367,7 @@ function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, sile
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, function(){
+                SWUtils.setWrapper(setter, params, function(){
                     if (recalcAfter){
                         recalcOneClass(spellclassidx,done,silently);
                     } else {
@@ -443,7 +443,7 @@ export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, 
                     TAS.error("PFSpellCasterClasses.setCasterClassFromDropdown", err);
                 } finally {
                     if (_.size(setter) > 0) {
-                        setAttrs(setter, {
+                        SWUtils.setWrapper(setter, {
                             silent: true
                         }, done);
                         if (updateLevel) {
@@ -507,7 +507,7 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
             if (newCasterLevel !== currCasterLevel || isNaN(currCasterLevel) || force) {
                 setter[spellclasslevelField] = newCasterLevel;
                 setter[prefix + "-name"] = v[classNameField];
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 });
                 updateCasterLevel(classidx, eventInfo, newCasterLevel);
@@ -519,7 +519,7 @@ export function migrate (callback, oldversion){
     //TAS.debug("At PFSpellCasterClasses.migrate");
     PFMigrate.migrateUsesSpellFlag(callback);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.info("leaving PFSpellCasterClasses.recalculate");
         if (typeof callback === "function") {
@@ -528,7 +528,7 @@ export function recalculate (callback, silently, oldversion) {
     }),
     recalcTopSection = function (callback, silently) {
         var done = _.once(function () {
-            TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
+            //TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
             if (typeof callback === "function") {
                 callback();
             }
@@ -564,7 +564,7 @@ export function recalculate (callback, silently, oldversion) {
     migrate(function(){
         callApplyConditions();
     },oldversion);
-}
+});
 var events = {
     // events for updates to top of class page, each one calls isSpellClassExists
     spellcastingClassEventsAuto: {

@@ -45,7 +45,7 @@ export function applyConditions (callback, silently) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}
@@ -59,7 +59,7 @@ export function updateSave (save, callback, silently) {
 	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc", "saves-cond", "buff_" + save + "-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {
@@ -70,7 +70,7 @@ export function recalculate (callback, silently, oldversion) {
 		//TAS.debug"finished 3 saves");
 		done();
 	});
-	TAS.debug("at PFSaves.recalculate");
+	//TAS.debug("at PFSaves.recalculate");
 	try {
 		applyConditions(function () {
 			try {
@@ -86,7 +86,7 @@ export function recalculate (callback, silently, oldversion) {
 		TAS.error("PFSaves.recalculate OUTER", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	_.each(saveTypes, function (save) {
 		var eventToWatch = events.saveEventsAuto.replace(/REPLACE/g, save);
