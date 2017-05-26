@@ -730,9 +730,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 	migrate(recalculateItAll);
 });
 function registerEventHandlers () {
-			TAS.notice("############ BUFF TOTAL FIELDS ARE:", buffTotFields);
-			TAS.notice("############ BUFF BONUS FIELDS ARE:", charBonusFields);
-	
+
 	//BUFFS
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change

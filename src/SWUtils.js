@@ -8,7 +8,7 @@ export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 	var bad=false;
 	TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
-		if (!v && (isNaN(v) || typeof v === 'undefined')){
+		if (!v && (isNaN(v) || v === undefined)){
 			TAS.error("Setting NaN or undefined at "+k);
 			bad=true;
 		}

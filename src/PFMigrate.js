@@ -1021,7 +1021,7 @@ export function migrateUsesSpellFlag (callback){
                 return;
             }
             usesSpells = parseInt(v.use_spells,10)||0;
-            if ((parseInt(v.migrated_spellflag,10)||0)!==1 && !usesSpells){
+            if (migrated!==1 && !usesSpells){
                 lvl1=parseInt(v['spellclass-0-level'],10)||0;
                 lvl2=parseInt(v['spellclass-1-level'],10)||0;
                 lvl3=parseInt(v['spellclass-3-level'],10)||0;
