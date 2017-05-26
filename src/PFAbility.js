@@ -122,18 +122,25 @@ function setRuleTab (id,callback, eventInfo){
 		},{});
 		if (v[abilityTypeField] ){
 			abilityType= tabTypeSorted[v[abilityTypeField]];
-			setter[prefix+'tabcat'+abilityType]=1;
+			if(v[prefix+'tabcat'+abilityType]!="1"){
+				setter[prefix+'tabcat'+abilityType]=1;
+			}
 		}
 		if (v[ruleCategoryField]) {
 			ruleType=tabRuleSorted[v[ruleCategoryField]];
-			setter[prefix+'tabcat'+ruleType]=1;
-			setter[prefix+'tabcat-1']=0;
+			if(v[prefix+'tabcat'+ruleType]!="1"){
+				setter[prefix+'tabcat'+ruleType]=1;
+			}
+			if(v[prefix+'tabcat-1']!="0"){
+				setter[prefix+'tabcat-1']=0;
+			}
 		} else {
-			setter[prefix+'tabcat-1']=1;
+			if(v[prefix+'tabcat-1']!="1"){
+				setter[prefix+'tabcat-1']=1;
+			}
 		}
-
 		//TAS.debug("PFAbility.setRuleTab, setting",setter);
-		SWUtils.setWrapper(setter,PFConst.silentParams);
+		setAttrs(setter,PFConst.silentParams);
 	});
 }
 function setRuleTabs (){
@@ -250,13 +257,13 @@ function getNewAbilityAttrs (ability){
 }
 export function copyToAbilities(callback,abilities) {
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.copyToAbilities");
+		//TAS.debug("leaving PFAbility.copyToAbilities");
 		if (typeof callback === "function")  {
 			callback();
 		}
 	}), 
 	setter={};
-	TAS.debug("At PFAbility.copyToAbilities");
+	//TAS.debug("At PFAbility.copyToAbilities");
 	if (_.size(abilities)){
 		_.each(abilities,function(ability){
 			var xtra= getNewAbilityAttrs(ability);
@@ -266,7 +273,7 @@ export function copyToAbilities(callback,abilities) {
 		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
 	}
 	if(_.size(setter)){
-		 SWUtils.setWrapper(setter,PFConst.silentParams,done);
+		 setAttrs(setter,PFConst.silentParams,done);
 	} else {
 		 done();
 	}
@@ -278,7 +285,7 @@ export function copyToAbilities(callback,abilities) {
  */
 function getTopOfMenu (callback,isNPC){
 	var done = function (str) {
-		TAS.debug("leaving PFAbility.getTopOfMenu");
+		//TAS.debug("leaving PFAbility.getTopOfMenu");
 		if (typeof callback === "function") {
 			callback(str);
 		}
@@ -341,7 +348,7 @@ export function resetCommandMacro (callback){
 export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){
 		resetCommandMacro();
-		TAS.debug("leaving PFAbility.importFromCompendium");
+		//TAS.debug("leaving PFAbility.importFromCompendium");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -440,11 +447,11 @@ export function importFromCompendium (callback,eventInfo){
 			TAS.error("PFAbility.importFromCompendium",err);
 		} finally {
 			if(_.size(silentSetter)>0){
-				SWUtils.setWrapper(silentSetter,PFConst.silentParams);
+				setAttrs(silentSetter,PFConst.silentParams);
 			}
 			//TAS.debug"PFAbility.importFromCompendium, setting",setter);
 			if (_.size(setter)>0){
-				SWUtils.setWrapper(setter,{},done);
+				setAttrs(setter,{},done);
 			} else {
 				done();
 			}
@@ -484,7 +491,7 @@ function setClassName (id,callback,eventInfo){
 			TAS.error("PFAbility.setClassName",err);
 		} finally {
 			if (_.size(setter)>0){
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -558,7 +565,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
  */
 export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.createAttackEntryFromRow");
+		//TAS.debug("leaving PFAbility.createAttackEntryFromRow");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -610,7 +617,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 					params = PFConst.silentParams;
 				}
 				//TAS.debug("PFAbility.createAttackEntryFromRow setting:",setter);
-				SWUtils.setWrapper(setter, {}, function(){
+				setAttrs(setter, {}, function(){
 					//can do these in parallel
 					//TAS.debug("PFAbility.createAttackEntryFromRow came back from setter ");
 					PFAttackOptions.resetOption(newRowId);
@@ -619,14 +626,14 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				});
 			} else {
 				setter[slaPrefix + "create-attack-entry"] = 0;
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+				setAttrs(setter,PFConst.silentParams,done);
 			}
 		}
 	});
 }
 export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.updateAssociatedAttack");
+		//TAS.debug("leaving PFAbility.updateAssociatedAttack");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -669,7 +676,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 						if (silently) {
 							params = PFConst.silentParams;
 						}
-						SWUtils.setWrapper(setter, params, function(){
+						setAttrs(setter, params, function(){
 							PFAttackOptions.resetSomeOptions(idlist);
 						});
 					} else {
@@ -682,7 +689,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 }
 function updateCharLevel (id,callback,eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateCharLevel");
+		//TAS.debug("leaving updateCharLevel");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -707,7 +714,7 @@ function updateCharLevel (id,callback,eventInfo){
 			TAS.error("PFAbility.updateCharLevel",err);
 		} finally {
 			if (_.size(setter)){
-				SWUtils.setWrapper(setter,{},done);
+				setAttrs(setter,{},done);
 			} else {
 				done();
 			}
@@ -716,7 +723,7 @@ function updateCharLevel (id,callback,eventInfo){
 }
 function updateAbilityRange (id, callback, silently, eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateAbilityRange");
+		//TAS.debug("leaving updateAbilityRange");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -748,7 +755,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 			TAS.error("updateAbilityRange",err);
 		} finally {
 			if (_.size(setter)){
-				SWUtils.setWrapper(setter,{},done);
+				setAttrs(setter,{},done);
 			} else {
 				done();
 			}
@@ -756,7 +763,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 	});
 }
 /** to use in calls to _.invoke or otherwise, sets switch variables to setter for given row
- * @param {jsobj} setter to pass in first var of SWUtils.setWrapper
+ * @param {jsobj} setter to pass in first var of setAttrs
  * @param {string} id the id of this row, or null if we are within the row context already
  * @param {jsobj} v the values needed returned by getAttrs
  */
@@ -820,7 +827,7 @@ function resetOption (setter, id, v, eventInfo){
 }
 function resetOptionAsync (id, callback , eventInfo){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.resetOption");
+		//TAS.debug("leaving PFAbility.resetOption");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -839,7 +846,7 @@ function resetOptionAsync (id, callback , eventInfo){
 			TAS.error("PFAbility.recalcAbilities",err);
 		} finally {
 			if (_.size(setter)){
-				SWUtils.setWrapper(setter,PFConst.silentParams,done,eventInfo);
+				setAttrs(setter,PFConst.silentParams,done,eventInfo);
 			} else {
 				done();
 			}
@@ -849,7 +856,7 @@ function resetOptionAsync (id, callback , eventInfo){
 
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.recalcAbilities");
+		//TAS.debug("leaving PFAbility.recalcAbilities");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -887,13 +894,13 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.migrateRepeatingMacros");
+		//TAS.debug("leaving PFAbility.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	migrated = _.once(function(){
-		SWUtils.setWrapper({'migrated_ability_macrosv112':1},PFConst.silentParams);
+		setAttrs({'migrated_ability_macrosv112':1},PFConst.silentParams);
 		done();
 	}),
 	defaultName = '',defaultMacro='',
@@ -912,7 +919,7 @@ export function migrateRepeatingMacros (callback){
 				//TAS.debug("PFAbility.migrateRepeatingMacros about to call PFMacros",defaultMacro);
 				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
 			} else {
-				migrated();
+				done();
 			} 
 		} catch (err){
 			TAS.error("PFAbility.migrateRepeatingMacros error setting up "+section,err);
@@ -922,14 +929,14 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback){
 	var done = function(){
-		TAS.debug("leaving PFAbility.migrate");
+		//TAS.debug("leaving PFAbility.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}
 	};
 	migrateRepeatingMacros(done);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {
@@ -953,7 +960,7 @@ export function recalculate (callback, silently, oldversion) {
 		TAS.error("PFAbility.recalculate, ", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",

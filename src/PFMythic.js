@@ -32,7 +32,7 @@ function updateMythicPathHP (callback, silently) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				SWUtils.setWrapper(setter, params, done);
+				setAttrs(setter, params, done);
 			} else {
 				done();
 			}
@@ -67,7 +67,7 @@ function updateTierMythicPower (callback, silently) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				SWUtils.setWrapper(setter, params, done);
+				setAttrs(setter, params, done);
 			} else {
 				done();
 			}
@@ -79,9 +79,9 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFMythic.recalculate");
+		//TAS.debug("leaving PFMythic.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -99,7 +99,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		}
 	});
-}
+});
 function registerEventHandlers () {
 	//mythic path and power
 	on("change:mythic-tier change:mythic-hp", TAS.callback(function eventupdateMythicPathHP(eventInfo) {

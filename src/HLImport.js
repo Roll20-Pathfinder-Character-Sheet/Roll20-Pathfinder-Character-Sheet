@@ -2,7 +2,6 @@
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog, PFConsole} from './PFLog';
-import * as SWUtils from './SWUtils';
 import * as PFSheet from './PFSheet';
 export function parseNum (num)
 {
@@ -371,7 +370,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 					}
 				}
 			});
-			SWUtils.setWrapper(attrs);
+			setAttrs(attrs);
 		});
 	});
 }
@@ -526,7 +525,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					{
 						var attr = {}
 						attr["Concentration-"+spellClassIndex+"-ability"] = "@{"+abScores[j]._name.substr(0,3).toUpperCase()+"-mod}";
-						SWUtils.setWrapper(attr);
+						setAttrs(attr);
 						break;
 					}
 				}
@@ -680,7 +679,7 @@ export function importSpells (spells,spellclasses)
 				
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
-			SWUtils.setWrapper(attrs);
+			setAttrs(attrs);
 		});
 	});
 }
@@ -1156,7 +1155,7 @@ export function importCharacter (characterObj)
 			_.each(featuresArray, function(obj){ featuresList[obj.rowID] = obj; });
 			importFeatures(asyncAttrs, featuresList, specials, archetypes, resources);
 
-			SWUtils.setWrapper(asyncAttrs);
+			setAttrs(asyncAttrs);
 		});
 	});
 
@@ -1236,7 +1235,7 @@ export function importCharacter (characterObj)
 		characterObj.favoredclasses.favoredclass = arrayify(characterObj.favoredclasses.favoredclass);
 		attrs["class-favored"] = buildList(characterObj.favoredclasses.favoredclass, "_name");
 	}
-	SWUtils.setWrapper(attrs,{},function() { PFSheet.recalculate(); });
+	setAttrs(attrs,{},function() { PFSheet.recalculate(); });
 }
 export function registerEventHandlers () {
 	on("change:herolab_import", function(eventInfo) {
@@ -1253,9 +1252,9 @@ export function registerEventHandlers () {
 					importCharacter(xmlObj.document.public.character[0]);
 				else
 					importCharacter(xmlObj.document.public.character);
-				SWUtils.setWrapper({herolab_import:""},{silent: true});
+				setAttrs({herolab_import:""},{silent: true});
 			}
-			catch(err) {console.log(err);SWUtils.setWrapper({herolab_import: err.message},{silent: true});}
+			catch(err) {console.log(err);setAttrs({herolab_import: err.message},{silent: true});}
 		});
 	});
 }

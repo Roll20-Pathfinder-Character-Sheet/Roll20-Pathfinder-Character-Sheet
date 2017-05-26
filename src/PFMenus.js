@@ -299,7 +299,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
  */
 export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     var done = _.once(function () {
-            //TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
+            ////TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
             if (typeof callback === "function") {
                 callback();
             }

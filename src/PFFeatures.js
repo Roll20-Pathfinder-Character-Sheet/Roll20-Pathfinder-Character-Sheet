@@ -143,7 +143,7 @@ events = {
  */
 export function resetTopCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetTopCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetTopCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -205,7 +205,7 @@ export function resetTopCommandMacro (callback){
 			TAS.error("PFFeatures.resetTopCommandMacro",err);
 		}finally {
 			if (_.size(setter)>0){
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -217,7 +217,7 @@ export function resetTopCommandMacro (callback){
  */
 export function resetCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -294,7 +294,7 @@ export function resetCommandMacro (callback){
  * Loops through all rows in the given repeating section.
  * @param {string} section= the name of the section after the word "repeating_"
  * @param {function} callback when done
- * @param {boolean} silently if T then call SWUtils.setWrapper with {silent:true}
+ * @param {boolean} silently if T then call setAttrs with {silent:true}
  */
 function recalculateRepeatingMaxUsed (section, callback, silently) {
 	var done = _.once(function () {
@@ -345,7 +345,7 @@ export function getAbilities (callback,errorcallback,section){
 			done();
 		}
 	});
-	TAS.debug("at PFFeatures.getAbilities "+section);
+	//TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
 		var fields,isSLA=0;
@@ -450,7 +450,7 @@ export function copyToAbilities(callback,section,eventInfo){
 		if(eventInfo && (/merge/i).test(eventInfo.sourceAttribute)){
 			setter={};
 			setter[eventInfo.sourceAttribute]=0;
-			SWUtils.setWrapper(setter,PFConst.silentParams);
+			setAttrs(setter,PFConst.silentParams);
 		}
 		if (typeof callback === "function"){
 			callback(param);
@@ -463,7 +463,7 @@ export function copyToAbilities(callback,section,eventInfo){
 			PFMenus.resetOneCommandMacro(section,true);
 		},true,0);
 	});
-	TAS.debug("at PFFeatures.copyToAbilities:"+section);
+	//TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
 		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
 		if(list && _.size(list)>0){
@@ -479,7 +479,7 @@ export function copyToAbilities(callback,section,eventInfo){
 }
 export function setNewDefaults (callback,section){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.setNewDefaults");
+		//TAS.debug("leaving PFFeatures.setNewDefaults");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -517,7 +517,7 @@ export function setNewDefaults (callback,section){
 			TAS.error("PFFeatures.setNewDefaults error setting defaults for "+section,err);
 		} finally {
 			if (_.size(setter)>0){
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+				setAttrs(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -526,13 +526,13 @@ export function setNewDefaults (callback,section){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
+		//TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	doneOne = _.after(_.size(featureLists),function(){
-		SWUtils.setWrapper({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
+		setAttrs({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
 	});
 	_.each(featureLists,function(section){
 		var defaultName = '',defaultMacro='';
@@ -556,7 +556,7 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback, oldversion){
 	var done = function(){
-		TAS.debug("leaving PFFeatures.migrate");
+		//TAS.debug("leaving PFFeatures.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -586,7 +586,7 @@ export function migrate (callback, oldversion){
 		}
 	});
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFFeatures.recalculate");
 		if (typeof callback === "function") {
@@ -609,7 +609,7 @@ export function recalculate (callback, silently, oldversion) {
 		TAS.error("PFFeatures.recalculate, ", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	var tempstr="";
 

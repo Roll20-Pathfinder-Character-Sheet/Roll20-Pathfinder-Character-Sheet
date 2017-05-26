@@ -364,7 +364,7 @@ export function updateBuffTotalAsync (col, callback,silently){
 						if (silently){
 							params = PFConst.silentParams;
 						}
-						SWUtils.setWrapper(setter,params,done);
+						setAttrs(setter,params,done);
 					} else {
 						done();
 					}
@@ -433,7 +433,7 @@ export function updateBuffTotalsAsync (callback,silently){
 
 export function migrate (outerCallback) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFBuffs.migrate");
+		//TAS.debug("leaving PFBuffs.migrate");
 		if (typeof outerCallback === "function") {
 			outerCallback();
 		}
@@ -447,7 +447,7 @@ export function migrate (outerCallback) {
 			}
 		}),
 		migrated = function(){
-			SWUtils.setWrapper({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
+			setAttrs({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
 		};
 		getAttrs(['migrated_buffs_rangeddmg_abiilty'],function(vout){
 			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_abiilty,10)||0;
@@ -463,10 +463,10 @@ export function migrate (outerCallback) {
 						getAttrs(fields,function(v){
 							var setter={},resetconditions=false,tempInt=0;
 							try {
-								TAS.debug("###########","PFBuffs.migrate found ",v);
+								//TAS.debug("###########","PFBuffs.migrate found ",v);
 								ids.forEach(function(id){
 									var prefix = 'repeating_buff_'+id+'_buff-';
-									TAS.debug("at id "+id);
+									//TAS.debug("at id "+id);
 									if(v[prefix+'DMG_macro-text']&&!v[prefix+'DMG_ranged_macro-text']){
 										setter[prefix+'DMG_ranged_macro-text']=v[prefix+'DMG_macro-text'];
 										setter[prefix+'DMG_ranged']=parseInt(v[prefix+'DMG'],10)||0;
@@ -508,7 +508,7 @@ export function migrate (outerCallback) {
 							}finally {
 								if (_.size(setter)){
 									TAS.debug("###########","PFBuffs migrate setting ",setter);
-									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
+									setAttrs(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
 										PFInitiative.updateInitiative();
@@ -542,7 +542,7 @@ export function migrate (outerCallback) {
 			TAS.error("PFBuffs.migrate", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, PFConst.silentParams);
+				setAttrs(setter, PFConst.silentParams);
 			}
 		}
 	});
@@ -554,7 +554,7 @@ export function migrate (outerCallback) {
  * @param {string} bufftype  -string from buffColumns
  * @param {string} buffmacro ?
  * @param {number} modamount - value for the buff
- * @param {map} newRowAttrs - object of {name:value} to pass to SWUtils.setWrapper
+ * @param {map} newRowAttrs - object of {name:value} to pass to setAttrs
  * @returns {map} return newRowAttrs after adding maps to it.
  */
 export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
@@ -626,7 +626,7 @@ function resetStatuspanel (callback) {
 			TAS.error("PFBuffs.resetStatuspanel error inside calculate exists", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, { silent: true }, done);
+				setAttrs(setter, { silent: true }, done);
 			} else {
 				done();
 			}
@@ -656,10 +656,10 @@ function setBuff (id, col, callback, silently) {
 			}
 		},true,done);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		resetStatuspanel();
-		TAS.debug("Leaving PFBuffs.recalculate");
+		//TAS.debug("leaving PFBuffs.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -728,7 +728,7 @@ export function recalculate (callback, silently, oldversion) {
 		updateBuffTotalsAsync(done);
 	};
 	migrate(recalculateItAll);
-}
+});
 function registerEventHandlers () {
 			TAS.notice("############ BUFF TOTAL FIELDS ARE:", buffTotFields);
 			TAS.notice("############ BUFF BONUS FIELDS ARE:", charBonusFields);

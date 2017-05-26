@@ -707,7 +707,7 @@ export function addNumberToMacro (macroText, macroVal, miscMacroText, miscVal){
  */
 export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,miscMacroAttr,miscAttr) {
     var done=_.once(function(){
-        //TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
+        ////TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
         if (typeof callback === "function"){
             callback();
         }
@@ -769,7 +769,7 @@ export function migrateMaxSkills (callback){
  */
 export function migrateNPC (callback, oldversion) {
     var done = _.once(function () {
-        TAS.debug("Leaving migrateNPC");
+        //TAS.debug("leaving migrateNPC");
         if (typeof callback === "function") {
             callback();
         }
@@ -784,7 +784,7 @@ export function migrateNPC (callback, oldversion) {
     * if undead then sets ability to CHA */
     migrateNPCHP = function (callback) {
         var done=_.once(function(){
-            TAS.debug("Leaving PFMigrate.migrateNPCHP");
+            //TAS.debug("leaving PFMigrate.migrateNPCHP");
             if(typeof callback === "function"){
                 callback();
             }
@@ -973,7 +973,7 @@ export function migrateAltAttackGridrowFlags  (callback) {
 }
 export function migrateExperience  (callback) {
     var done = _.once(function () { 
-        TAS.debug("leaving migrateExperience");
+        //TAS.debug("leaving migrateExperience");
         if (typeof callback === "function") { callback(); } 
     });
     getAttrs(['migrated_experience', 'use_prestige_fame', 'use_hero_points', 'prestige', 'fame', 'hero-points', 'faction_notes'], function (v) {
@@ -997,7 +997,7 @@ export function migrateExperience  (callback) {
 }
 export function migrateUsesSpellFlag (callback){
     var done = _.once(function () { 
-        TAS.debug("leaving migrateUsesSpellFlag");
+        //TAS.debug("leaving migrateUsesSpellFlag");
         if (typeof callback === "function") { callback(); } 
     }),
     setFlag= function(){
@@ -1117,7 +1117,7 @@ export function migrateRepeatingItemAttributes (callback) {
 }
 export function migrateAbilityListFlags (callback){
     var done=_.once(function(){
-        TAS.debug("leaving migrateAbilityListFlags");
+        //TAS.debug("leaving migrateAbilityListFlags");
         if (typeof callback === "function"){
             callback();
         }
@@ -1173,7 +1173,7 @@ export function migrateSpellPointFlag (callback,oldversion){
             callback();
         }
     });
-    TAS.debug("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
+    //TAS.debug("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
     if (oldversion > 1.18){
         done();
     }
@@ -1196,7 +1196,7 @@ export function migrateSpellPointFlag (callback,oldversion){
 
 export function migrateWhisperDropdowns (callback){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
     getAttrs(['migrated_whispers','PC-whisper','NPC-whisper'],function(v){
@@ -1226,7 +1226,7 @@ export function migrateWhisperDropdowns (callback){
 
 export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
     migrateNPC(function(){migrateHPMisc(done);});
@@ -1240,7 +1240,7 @@ export function migrateConfigFlags (callback,oldversion){
 }
 
 export function getAllMigrateFlags (v){
-    TAS.debug("at PFMigrate.getAllMigrateFlags");
+    //TAS.debug("at PFMigrate.getAllMigrateFlags");
     v=v||{};
     v['migrated_buffs']=1;
     v['migrated_effects']=1;
@@ -1266,11 +1266,15 @@ export function getAllMigrateFlags (v){
     v['migrated_attacklist_defaults111']=1;
     v['migrated_itemlist_defaults']=1;
     v['migrated_abilityflags109']=1;
+    v['migrated_whispers']=1;
+    v['migrated_linked_attacks']=1;
+    v['migrated_take10_dropdown']=1;
+    v['migrated_buffs_rangeddmg_abiilty']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate setAllMigrateFlags");
+        //TAS.debug("leaving PFMigrate setAllMigrateFlags");
         if (typeof callback === "function") { callback(); }
     });
     setAttrs(getAllMigrateFlags(), PFConst.silentParams, done);

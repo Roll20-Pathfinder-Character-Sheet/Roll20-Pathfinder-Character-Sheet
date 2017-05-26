@@ -2,7 +2,6 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
 
@@ -246,7 +245,7 @@ function updateCurrentLoad (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -422,7 +421,7 @@ export function updateLoadsAndLift (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -521,7 +520,7 @@ export function updateModifiedSpeed  (callback) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, {}, done);
+                setAttrs(setter, {}, done);
             } else {
                 done();
             }
@@ -537,7 +536,7 @@ export function migrate (callback){
     getAttrs(['max-dex-source'],function(v){
         var val = parseInt(v['max-dex-source'],10);
         if (isNaN(val)){
-            SWUtils.setWrapper({'max-dex-source':0},PFConst.silentParams,done);
+            setAttrs({'max-dex-source':0},PFConst.silentParams,done);
         } else {
             done();
         }
@@ -545,9 +544,9 @@ export function migrate (callback){
 
 
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFEncumbrance.recalculate");
+        //TAS.debug("leaving PFEncumbrance.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -567,7 +566,7 @@ export function recalculate (callback, silently, oldversion) {
         TAS.error("PFEncumbrance.recalculate", err);
         done();
     }
-}
+});
 function registerEventHandlers  () {
     on("change:current-load change:speed-base change:race change:armor3-equipped change:armor3-type change:max-dex-source change:run-mult", TAS.callback(function eventUpdateModifiedSpeed(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

@@ -38,7 +38,7 @@ events = {
  * http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#combat-maneuver-defense
  * Any penalties to a creature's AC also apply to its CMD
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export var updateDefenses = TAS.callback(function callupdateDefenses( callback, silently, eventInfo) {
@@ -56,7 +56,7 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
     "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
-    "buff_dodge-total","buff_deflection-total",
+    "buff_dodge-total","buff_deflection-total", "buffsumac", "buffsumtouch", "buffsumff", "buffsumcmd", "buffsumffcmd ",
     "current-load", "max-dex-source"], function (v) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
@@ -130,7 +130,6 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
             buffcmd = buffsCMD+dodgebuff+deflectbuff;
             buffffcmd = buffsCMD+flatfootedbuff+dodgebuff+deflectbuff;
-
 
             dodge += dodgebuff;
             deflect += deflectbuff;
@@ -237,13 +236,21 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
 
-         //   buffcmd = buffs
-            setter.buffsumac=buffac;
-            setter.buffsumtouch=bufftouch;
-            setter.buffsumff=buffff;
-            setter.buffsumcmd=buffcmd;
-            setter.buffsumffcmd = buffffcmd;
-
+            if(parseInt(v.buffsumac,10)!==buffac){
+                setter.buffsumac=buffac;
+            }
+            if(parseInt(v.buffsumtouch,10)!==bufftouch){
+                setter.buffsumtouch=bufftouch;
+            }
+            if(parseInt(v.buffsumff,10)!==buffff){
+                setter.buffsumff=buffff;
+            }
+            if(parseInt(v.buffsumcmd,10)!==buffcmd){
+                setter.buffsumcmd=buffcmd;
+            }
+            if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
+                setter.buffsumffcmd = buffffcmd;
+            }
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }
@@ -286,7 +293,7 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -308,7 +315,7 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
  */
 export var setDefenseDropdownMod = TAS.callback(function callsetDefenseDropdownMod(dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
+        //TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
             callback();
         }
@@ -370,7 +377,7 @@ export var setDefenseDropdownMod = TAS.callback(function callsetDefenseDropdownM
                             setter["CMD-ability"]=v['AC-ability'];
                             setter[defenseDropdowns["CMD-ability"]]=currACmod;
                         }
-                        SWUtils.setWrapper(setter,PFConst.silentParams,updateAndDone);
+                        setAttrs(setter,PFConst.silentParams,updateAndDone);
                     } else {
                         updateAndDone();
                     }
@@ -389,7 +396,7 @@ export var setDefenseDropdownMod = TAS.callback(function callsetDefenseDropdownM
  * if not proficient sets attack penalty
  * for backward compatibility, proficiency is string and 0 is proficient, anything else non proficient
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export var updateArmor = TAS.callback(function callupdateArmor(callback, silently, eventInfo) {
@@ -486,7 +493,7 @@ export var updateArmor = TAS.callback(function callupdateArmor(callback, silentl
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -496,12 +503,12 @@ export var updateArmor = TAS.callback(function callupdateArmor(callback, silentl
 /** applyConditions Updates the AC-penalty and CMD-penalty field based on conditions
  *only difference is CMD penalty affected by energy drain for some reason
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export var applyConditions = TAS.callback(function callapplyConditions(callback, silently,eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.applyConditions");
+        //TAS.debug("leaving PFDefense.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
@@ -542,7 +549,7 @@ export var applyConditions = TAS.callback(function callapplyConditions(callback,
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -556,7 +563,7 @@ export var applyConditions = TAS.callback(function callapplyConditions(callback,
  */
 export var migrate = TAS.callback(function callmigrate(callback,oldversion){
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.migrate");
+        //TAS.debug("leaving PFDefense.migrate");
         if (typeof callback === "function") {
             callback();
         }
@@ -580,7 +587,7 @@ export var migrate = TAS.callback(function callmigrate(callback,oldversion){
                 TAS.error("PFDefense.migrate",err);
             } finally {
                 if (_.size(setter)>0){
-                    SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                    setAttrs(setter,PFConst.silentParams,done);
                 } else {
                     done();
                 }
@@ -593,12 +600,12 @@ export var migrate = TAS.callback(function callmigrate(callback,oldversion){
 
 /** recalculate defense grid
  * @param {function} callback guaranteed call when done
- * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
+ * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
  * @param {number} oldversion 
  */
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.recalculate");
+        //TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
             callback();
         }

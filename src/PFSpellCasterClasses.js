@@ -46,7 +46,7 @@ export var ifSpellClassExists = TAS.callback(function callifSpellClassExists(spe
  */
 export var updateMultiClassedCasterFlag = TAS.callback(function callupdateMultiClassedCasterFlag(dummy, eventInfo, callback) {
     var done=_.once(function(){
-        TAS.debug("leaving updateMultiClassedCasterFlag");
+        //TAS.debug("leaving updateMultiClassedCasterFlag");
         if (typeof callback === "function"){
             callback();
         }
@@ -61,7 +61,7 @@ export var updateMultiClassedCasterFlag = TAS.callback(function callupdateMultiC
             setter.spellclasses_multiclassed= 0;
         } 
         if(_.size(setter)>0){
-            SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            setAttrs(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -107,7 +107,7 @@ var updateCasterRanges =TAS.callback(function callupdateCasterRanges(spellclassi
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -160,7 +160,7 @@ var updateSaveDCs = TAS.callback(function callupdateSaveDCs(classidx, eventInfo,
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -222,7 +222,7 @@ var updateBonusSpells = TAS.callback(function callupdateBonusSpells(classidx, ev
             TAS.error("PFSpellCasterClasses.updateBonusSpells", err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -250,7 +250,7 @@ var updateMaxSpellsPerDay = TAS.callback(function callupdateMaxSpellsPerDay(clas
         }
         if (newCount !== curr){
             setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-            SWUtils.setWrapper(setter,{},done);
+            setAttrs(setter,{},done);
         } else {
             done();
         }
@@ -289,7 +289,7 @@ export var applyConditions = TAS.callback(function callapplyConditions(callback,
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, done);
+                setAttrs(setter, params, done);
             } else {
                 done();
             }
@@ -298,7 +298,7 @@ export var applyConditions = TAS.callback(function callapplyConditions(callback,
 });
 var recalcOneClass = TAS.callback(function callrecalcOneClass(spellClassIdx, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
+        //TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
         if (typeof callback === "function") {
             callback();
         }
@@ -323,7 +323,7 @@ var recalcOneClass = TAS.callback(function callrecalcOneClass(spellClassIdx, cal
 */
 var updateCasterLevel = TAS.callback(function callupdateCasterLevel(spellclassidx, eventInfo, classlevel, callback, silently) {
     var done = _.once(function () {
-        TAS.debug("leaving updateCasterLevel " + spellclassidx);
+        //TAS.debug("leaving updateCasterLevel " + spellclassidx);
         if (typeof callback === "function") {
             callback();
         }
@@ -367,7 +367,7 @@ var updateCasterLevel = TAS.callback(function callupdateCasterLevel(spellclassid
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, params, function(){
+                setAttrs(setter, params, function(){
                     if (recalcAfter){
                         recalcOneClass(spellclassidx,done,silently);
                     } else {
@@ -448,7 +448,7 @@ export var setCasterClassFromDropdown = TAS.callback(function callsetCasterClass
                     TAS.error("PFSpellCasterClasses.setCasterClassFromDropdown", err);
                 } finally {
                     if (_.size(setter) > 0) {
-                        SWUtils.setWrapper(setter, {
+                        setAttrs(setter, {
                             silent: true
                         }, done);
                         if (updateLevel) {
@@ -512,7 +512,7 @@ export var updateCasterFromClassLevel = TAS.callback(function callupdateCasterFr
             if (newCasterLevel !== currCasterLevel || isNaN(currCasterLevel) || force) {
                 setter[spellclasslevelField] = newCasterLevel;
                 setter[prefix + "-name"] = v[classNameField];
-                SWUtils.setWrapper(setter, {
+                setAttrs(setter, {
                     silent: true
                 });
                 updateCasterLevel(classidx, eventInfo, newCasterLevel);
@@ -533,7 +533,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
     }),
     recalcTopSection = function (callback, silently) {
         var done = _.once(function () {
-            TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
+            //TAS.debug("leaving PFSpellCasterClasses.recalculate.recalcTopSection");
             if (typeof callback === "function") {
                 callback();
             }
