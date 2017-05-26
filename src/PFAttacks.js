@@ -493,7 +493,6 @@ function  getRecalculatedAttack (id,v,setter){
 		}
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
-		TAS.debug("newTotalDamage:o "+newTotalDamage);
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
 			localsetter[prefix+ "total-damage"] = newTotalDamage;
 		}

@@ -51,7 +51,6 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 	getAttrs(["condition-Drained", "condition_is_drained"], function (v) {
 		var levels = parseInt(v["condition-Drained"], 10) || 0,
 		drained = parseInt(v["condition_is_drained"], 10) || 0;
-		TAS.debug("################","PFConditions.updateDrainCheckbox we found ",v," and levels="+levels+", drained="+drained,"##############");
 		if (levels !== 0 && drained === 0) {
 			setAttrs({
 				"condition_is_drained": "1"
