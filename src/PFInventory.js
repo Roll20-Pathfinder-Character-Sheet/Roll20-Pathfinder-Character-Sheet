@@ -66,7 +66,6 @@ export function migrateRepeatingMacros(callback){
     });
 }
 /** resetCommandMacro sets command button macro with all rows from one ability list.
- * calls PFMenus.getRepeatingCommandMacro
  * sets the returned string to macro with attribute name: section+"_buttons_macro"
  *@param {function} callback  when done
  */

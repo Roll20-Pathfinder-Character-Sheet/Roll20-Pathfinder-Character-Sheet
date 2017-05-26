@@ -5,22 +5,15 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
-	var bad=false,dmg=false;
+	var bad=false;
 	TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
 		if (!v && isNaN(v)){
 			TAS.error("Setting NaN! at "+k);
 			bad=true;
 		}
-		if(k.indexOf('damage-mod')>0 || k.indexOf('ability-damage-mod')>0){
-			dmg=true;
-		}
 	});
 	if (bad){
-		TAS.callstack();
-	}
-	if(dmg){
-		TAS.notice("WE are setting damage even though it is equal",a);
 		TAS.callstack();
 	}
 	setAttrs(a,b,c);
@@ -292,10 +285,6 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 						isError=1;
 					} finally {
 						if(isChanged){
-							if(writeField.indexOf('damage-mod')>0){
-								TAS.notice("writing to "+writeField+" values:",setter);
-								TAS.callstack();
-							}							
 							setWrapper(setter, params, function () {
 								if (!isError){
 									done(value2, currVal, isChanged,currError);
@@ -313,8 +302,6 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
 		} catch (err) {
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
 			errordone(0,0,0,0);
-			//setter[writeField+'_error']=1;
-			//setWrapper(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 });
@@ -328,7 +315,7 @@ export var evaluateAndSetNumber = TAS.callback(function callevaluateAndSetNumber
  * @param {function(int)} callback pass the value the dropdown selection represents
  *   exceptions: if readField is not found pass in "", if readField is 0 or starts with 0 pass in 0.
  */
-export function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
+export var getDropdownValue = TAS.callback(function callgetDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 	if (!readField || (callback && typeof callback !== "function") || typeof synchrousFindAttributeFunc !== "function") {
 		return;
 	}
@@ -348,7 +335,7 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
 			});
 		}
 	});
-}
+});
 /** Looks at a dropdown value, and sets writeField(s) with the number to which selected option refers.
  * calls getDropdownValue
  * @param {string} readField the dropdown field
@@ -358,7 +345,7 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
  *         with the value we set as the only parameter.
  * @param {boolean} silently if true call setWrapper with {silent:true}
  */
-export function setDropdownValue (readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
+export var setDropdownValue = TAS.callback(function callsetDropdownValue(readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
 	var done = function (newval, currval, changed) {
 		if (typeof callback === "function") {
 			callback(newval, currval, changed);
@@ -403,7 +390,7 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
 			});
 		}
 	});
-}
+});
 /** getRowTotal return newvalue, currentvalue, allvalues in callback. Summed up floats and round total to int. 
  * THIS IS PROBABLY SLOWER THAN DOING IT YOURSELF, just wrote to make things simpler.
  * @param {Array} fields array of field names to be added up, EXCEPT the first field which is ignored (at index 0) which is the total current value
