@@ -73,7 +73,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
 }
 /* resets one row of repeating_weapons
  * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
-export var resetOption = TAS.callback(function callresetOption(id, eventInfo, callback) {
+export function resetOption (id, eventInfo, callback) {
     var done = _.once(function(){
         TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
         if (typeof callback === "function"){
@@ -86,6 +86,7 @@ export var resetOption = TAS.callback(function callresetOption(id, eventInfo, ca
     }),
     allFields = optionToggles;
     allFields = allFields.concat(rowfields);
+    allFields.push(prefix + "macro_options");
     //TAS.log("resetOption, fields to get",allFields);
     getAttrs(allFields, function (v) {
         var toggleValues = _.reduce(optionToggles, function (memo, attr) {
@@ -95,17 +96,17 @@ export var resetOption = TAS.callback(function callresetOption(id, eventInfo, ca
         optionText = "",
         setter = {};
         optionText = getOptionText(prefix, toggleValues, v)||"";
-        if (typeof optionText !== "undefined" && optionText !== null) {
+        if (typeof optionText !== "undefined" && optionText !== null && optionText !== v[prefix + "macro_options"]) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
-            SWUtils.setWrapper(setter, PFConst.silentParams, done);
+            setAttrs(setter, PFConst.silentParams, done);
         } else {
             done();
         }
     });
-});
-export var resetSomeOptions = TAS.callback(function callresetSomeOptions(ids,eventInfo,callback){
+}
+export function resetSomeOptions (ids,eventInfo,callback){
     var done=_.once(function(){
         if (typeof callback === 'function'){
             callback();
@@ -136,25 +137,25 @@ export var resetSomeOptions = TAS.callback(function callresetSomeOptions(ids,eve
                 }
             },{});
             if(_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+                setAttrs(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
         });
     });
-});
+}
 /*resetOptions - updates repeating_weapon_ attack _options for all attacks.*/
-export var resetOptions = TAS.callback(function callresetOptions(callback,eventInfo) {
+export function resetOptions (callback,eventInfo) {
     getSectionIDs("repeating_weapon", function (ids) {
         resetSomeOptions(ids,eventInfo,callback);
     });
-});
-export var migrate = TAS.callback(function callmigrate(callback){
+}
+export function migrate (callback){
     if (typeof callback === "function"){
         callback();
     }
-});
-export var recalculate = TAS.callback(function callrecalculate(callback) {
+}
+export var recalculate = TAS.callback(function callrecalculate (callback) {
     resetOptions(callback);
 });
 function registerEventHandlers () {
