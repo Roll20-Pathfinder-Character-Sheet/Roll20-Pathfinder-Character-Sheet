@@ -15,7 +15,7 @@ function setSanityThreshold (callback){
     getAttrs(['use_horror_adventures','sanity_threshold','sanity-ability-mod','sanity_threshold_misc-mod'],function(v){
         var currThreshold=0,newThreshold=0,setter={};
         try {
-            TAS.debug("At PFHorror.setSanityThreshold:",v);
+            //TAS.debug("At PFHorror.setSanityThreshold:",v);
             if (parseInt(v.use_horror_adventures,10)){
                 currThreshold=parseInt(v.sanity_threshold,10)||0;
                 newThreshold=(parseInt(v['sanity-ability-mod'],10)||0)+(parseInt(v['sanity_threshold_misc-mod'],10)||0);
@@ -48,7 +48,7 @@ function setSanityScore (callback){
     'buff_WIS-total_penalty','buff_INT-total_penalty','buff_CHA-total_penalty'],function(v){
         var currSanity=0,newSanity=0,newEdge=0,setter={};
         try {
-            TAS.debug("At PFHorror.setSanityScore:",v);
+            //TAS.debug("At PFHorror.setSanityScore:",v);
             if (parseInt(v.use_horror_adventures,10)){
                 currSanity = parseInt(v.sanity_score_max,10)||0;
                 newSanity = (parseInt(v['sanity_score_misc-mod'],10)||0) + 

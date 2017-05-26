@@ -161,7 +161,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				var prefix = 'repeating_buff_'+id+'_buff-';
 				return  (parseInt(v[prefix + col + '-show'],10)||0) && (parseInt(v[prefix+col],10)||0);
 			});
-		TAS.debug("PFBuffs there are "+ _.size(ids)+" ids which are ",ids);
+		//TAS.debug("PFBuffs there are "+ _.size(ids)+" ids which are ",ids);
 		if(_.size(ids)===0){
 			return setter;
 		}

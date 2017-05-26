@@ -544,16 +544,16 @@ export function recalculateSkills (callback, silently) {
 		try {
 			if (v["unchained_skills-show"] == "1") {
 				if (v["BG-Skill-Use"] == "1") {
-					TAS.debug("PFSkills.recalculate: has background skills");
+					//TAS.debug("PFSkills.recalculate: has background skills");
 					recalculateSkillArray(backgroundOnlySkills, null, silently);
 					//return after long one
 					recalculateSkillArray(allCoreSkills, done, silently);
 				} else {
-					TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
+					//TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
 					recalculateSkillArray(consolidatedSkills, done, silently);
 				}
 			} else {
-				TAS.debug("PFSkills.recalculate: has core skills skills");
+				//TAS.debug("PFSkills.recalculate: has core skills skills");
 				recalculateSkillArray(allCoreSkills, done, silently);
 			}
 		} catch (err) {

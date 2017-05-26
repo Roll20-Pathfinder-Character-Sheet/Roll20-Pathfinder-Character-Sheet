@@ -124,7 +124,7 @@ export var updateDefenses = TAS.callback(function callupdateDefenses( callback, 
         setter = {},
         params = {};
         try {
-            TAS.debug("PFDefense.updateDefenses:",v);
+            //TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
             bufftouch=buffsTouch+dodgebuff+deflectbuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;

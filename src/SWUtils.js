@@ -7,6 +7,7 @@ import * as ExExp from './ExExp';
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 	var bad=false;
 	TAS.debug("setting "+_.size(a)+" values:",a);
+	TAS.callstack();
 	_.each(a,function(v,k){
 		if (!v && isNaN(v)){
 			TAS.error("Setting NaN! at "+k);

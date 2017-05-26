@@ -553,7 +553,7 @@ function recalculateCore (callback, silently, oldversion) {
 */
 export function recalculate (oldversion, callback, silently) {
 	var done = function () {
-		TAS.callstack();
+		//TAS.callstack();
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
 			callback();
