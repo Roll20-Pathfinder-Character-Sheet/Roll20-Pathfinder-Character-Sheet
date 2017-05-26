@@ -51,7 +51,7 @@ events = {
 	},
 	// events do NOT pass in column updated
 	buffTotalEventsNoParam: {
-		"DMG": [PFAttackGrid.updateRepeatingWeaponDamages],
+		"DMG": [PFAttacks.updateRepeatingWeaponDamages],
 		"DMG_ranged": [PFAttacks.updateRepeatingWeaponDamages],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
