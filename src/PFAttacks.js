@@ -354,15 +354,19 @@ function getRecalculatedDamageOnly (id,v){
 		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
 		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
 		dmgConditions = v["condition-Sickened"],
-		damageBuffs = v["buff_DMG-total"], 
+		meleeBuffs = v["buff_DMG-total"], 
 		rangedBuff = v["buff_DMG_Ranged-total"],
+		damageBuffs=0,
 		abilityTotDmg=0,
 		newTotalDamage=0,
 		localsetter={};
 	try {
 		if(isRanged){
-			damageBuffs+=rangedBuff;
-		} else if( isNaN(maxAbility)) {
+			damageBuffs=rangedBuff;
+		} else {
+			damageBuffs=meleeBuffs;
+		}
+		if( !isRanged || isNaN(maxAbility)) {
 			maxAbility=999;
 		}
 
@@ -777,6 +781,9 @@ function recalcOtherFields (ids,callback){
 			return [attr, parseInt(v[attr],10)||0];
 		}));
 		_.extend(v,charAttMap);
+		v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
+		v["buff_DMG_Ranged-total"]=parseInt(v["buff_DMG_Ranged-total"],10)||0;
+		v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={}
