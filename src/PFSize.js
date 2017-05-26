@@ -212,7 +212,7 @@ export function updateSize (v,eventInfo,setter) {
 			}
 		}
 		try {
-			tempstr=reverseSizeMap[String(size)];
+			tempstr=reverseSizeNameMap[String(size)];
 			if (tempstr){
 				sizeDisplay = getTranslationByKey(sizeDisplay);
 			}
