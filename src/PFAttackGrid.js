@@ -179,7 +179,7 @@ export var resetCommandMacro = TAS.callback(function callresetCommandMacro(callb
             callback();
         }
     });
-    TAS.debug("at PFAttackGrid.resetCommandMacro");
+    //TAS.debug("at PFAttackGrid.resetCommandMacro");
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 });

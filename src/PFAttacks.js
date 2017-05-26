@@ -778,7 +778,7 @@ var recalcOtherFields = TAS.callback(function callrecalcOtherFields(ids,callback
 			return [attr, parseInt(v[attr],10)||0];
 		}));
 		_.extend(v,charAttMap);
-		TAS.debug("PFAttacks.recalcOtherFields has values ",v);
+		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={}
 			try {
