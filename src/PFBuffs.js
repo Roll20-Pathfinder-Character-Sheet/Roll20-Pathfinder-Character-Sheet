@@ -380,7 +380,7 @@ export function migrate (outerCallback) {
 						getAttrs(fields,function(v){
 							var setter={},resetconditions=false,tempInt=0;
 							try {
-								TAS.debug("###########","PFBuffs.migrate found ",v);
+								//TAS.debug("###########","PFBuffs.migrate found ",v);
 								ids.forEach(function(id){
 									var prefix = 'repeating_buff_'+id+'_buff-';
 									//TAS.debug("at id "+id);

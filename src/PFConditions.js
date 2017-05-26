@@ -53,11 +53,11 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 		drained = parseInt(v["condition_is_drained"], 10) || 0;
 		if (levels !== 0 && drained === 0) {
 			setAttrs({
-				"condition_is_drained": "1"
+				"condition_is_drained": 1
 			}, PFConst.silentParams, done);
 		} else if (levels === 0 && drained !== 0) {
 			setAttrs({
-				"condition_is_drained": "0"
+				"condition_is_drained": 0
 			}, PFConst.silentParams,done);
 		} else {
 			done();
