@@ -889,6 +889,13 @@ button[type=roll].sheet-command-button::before {
 .sheet-macro-text-inline {
     width: 9em;
 }
+.sheet-section0.sheet-section-abilities span ~ input[type="checkbox"], 
+.sheet-section1.sheet-section-skills span ~ input[type="checkbox"], 
+.sheet-section2.sheet-section-attack span ~ input[type="checkbox"], 
+.sheet-section3.sheet-section-defense span ~ input[type="checkbox"], 
+.sheet-section4.sheet-section-other span ~ input[type="checkbox"] {
+    margin-right: 1em;
+}
 
 /********************************************* TABS ****************************************************/
 /* can delete these soon just make margin above and clear both */
@@ -958,6 +965,23 @@ input.sheet-tabinput {
     width: 10%;
     margin-right: -10%;
 }
+
+.sheet-buffsnav ~ .sheet-tab {
+    width: 10%;
+}
+.sheet-buffsnav ~ .sheet-tabinput {
+    width: 10%;
+    margin-right: -10%;
+}
+/* added keep tabs getting too compressed when using split-column */
+.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-sect .sheet-main .sheet-buffsnav ~ .sheet-tabinput {
+    width: 16%;
+    margin-right: -16%;
+}
+.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-sect .sheet-main .sheet-buffsnav ~ .sheet-tab {
+    width: 16%;
+}
+
 .sheet-spellclassnav ~ .sheet-tab {
     width: 20%;
 }
@@ -1047,6 +1071,14 @@ input.sheet-tabinput {
     color: White;
 }
 /************** TAB AREAS ***********************/
+
+.sheet-tabinput.sheet-tab0:not(:checked) ~ .sheet-section0.sheet-section-abilities, 
+.sheet-tabinput.sheet-tab1:not(:checked) ~ .sheet-section1.sheet-section-skills, 
+.sheet-tabinput.sheet-tab2:not(:checked) ~ .sheet-section2.sheet-section-attack, 
+.sheet-tabinput.sheet-tab3:not(:checked) ~ .sheet-section3.sheet-section-defense, 
+.sheet-tabinput.sheet-tab4:not(:checked) ~ .sheet-section4.sheet-section-other {
+    display: none;
+}
 
 .sheet-tabs:not(.sheet-custbordernav) ~ .sheet-tabinput.sheet-tab0:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section0,
 .sheet-tabs:not(.sheet-custbordernav) ~ .sheet-tabinput.sheet-tab1:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section1,
