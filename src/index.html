@@ -2649,8 +2649,22 @@
 									<label class="sheet-small-label2 sheet-entry-short sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="sheet-macro-text-inline" /><span class="sheet-super sheet-note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
-								<span class="sheet-divider-db sheet-nondual-sect">+</span>
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+								<span class="sheet-divider-db sheet-nondual-sect">+</span>								
+								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
+									<select type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
+										<option value="0.5">0.5</option>
+										<option value="1" selected>&#8226;1</option>
+										<option value="1.5">1.5</option>
+										<option value="2">2.5</option>
+										<option value="3">3</option>
+										<option value="3.5">3.5</option>
+										<option value="4">4.5</option>
+										<option value="5">5</option>
+										<option value="5.5">5.5</option>
+										<option value="6">6</option>
+									</select>
+									<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
+								</label>
 								<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
 								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 									<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
@@ -9703,7 +9717,21 @@
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
 									<span class="sheet-divider-db sheet-nondual-sect">+</span>
-									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
+										<select type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
+											<option value="0.5">0.5</option>
+											<option value="1" selected>&#8226;1</option>
+											<option value="1.5">1.5</option>
+											<option value="2">2.5</option>
+											<option value="3">3</option>
+											<option value="3.5">3.5</option>
+											<option value="4">4.5</option>
+											<option value="5">5</option>
+											<option value="5.5">5.5</option>
+											<option value="6">6</option>
+										</select>
+										<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
+									</label>
 									<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
 									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 										<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
