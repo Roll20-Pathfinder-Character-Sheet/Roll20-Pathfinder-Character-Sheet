@@ -308,7 +308,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 			}
 		}
 	} catch(err){
-		TAS.debug("PFBuffs.updateBuffTotal",err);
+		TAS.error("PFBuffs.updateBuffTotal",err);
 	} finally {
 		return setter;
 	}
@@ -360,7 +360,6 @@ export function updateBuffTotalAsync (col, callback,silently){
 					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
-						TAS.notice("######################","PFBuffs setting ",setter);
 						if (silently){
 							params = PFConst.silentParams;
 						}
@@ -507,7 +506,7 @@ export function migrate (outerCallback) {
 								TAS.error("PFBuffs.migrateDmgAbility",err);
 							}finally {
 								if (_.size(setter)){
-									TAS.debug("###########","PFBuffs migrate setting ",setter);
+									//TAS.debug("###########","PFBuffs migrate setting ",setter);
 									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
@@ -730,9 +729,6 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 	migrate(recalculateItAll);
 });
 function registerEventHandlers () {
-			TAS.notice("############ BUFF TOTAL FIELDS ARE:", buffTotFields);
-			TAS.notice("############ BUFF BONUS FIELDS ARE:", charBonusFields);
-	
 	//BUFFS
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
