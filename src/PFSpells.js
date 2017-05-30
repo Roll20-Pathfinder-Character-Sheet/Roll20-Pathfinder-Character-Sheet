@@ -1494,10 +1494,10 @@ export function importFromCompendium (id, eventInfo) {
                 setSilent["repeating_spells_range"] = newRangeSettings.rangetext;
                 if (newRangeSettings.dropdown==='touch' ) {
                     isAttack=true;
-                    setSilent["repeating_spells_attack-type"]='attk-melee';
+                    setSilent["repeating_spells_spell-attack-type"]='attk-melee';
                 } else if ( (/ranged touch|ray\s/i).test(v["repeating_spells_description"])  ) {
                     isAttack=true;
-                    setSilent["repeating_spells_attack-type"]='attk-ranged';
+                    setSilent["repeating_spells_spell-attack-type"]='attk-ranged';
                 }
             } catch (err2) {
                 TAS.error(err2);
@@ -1654,7 +1654,7 @@ function registerEventHandlers  () {
         var attr;
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
         attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (attr === 'attack-type')){
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (attr === 'spell-attack-type')){
             updateAssociatedAttack(null,null,null,eventInfo);
         }
     }));
