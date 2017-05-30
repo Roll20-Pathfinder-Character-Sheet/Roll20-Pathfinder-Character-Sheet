@@ -1622,12 +1622,10 @@ function registerEventHandlers  () {
             resetCommandMacro();
         }
     }));
-
    	on("remove:repeating_spells", TAS.callback(function eventUpdateRemoveLinkedSpell(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         PFAttacks.removeLinkedAttack(null, PFAttacks.linkedAttackType.spell , SWUtils.getRowId(eventInfo.sourceAttribute));
-	}));	
-    
+	}));
     on("remove:repeating_spells change:repeating_spells:spellclass_number change:repeating_spells:spell_level change:repeating_spells:slot change:repeating_spells:used change:repeating_spells:school change:repeating_spells:metamagic change:repeating_spells:isDomain change:repeating_spells:isMythic change:_reporder_repeating_spells", TAS.callback(function eventRepeatingSpellAffectingMenu(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -1654,9 +1652,9 @@ function registerEventHandlers  () {
         var attr;
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
         attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (attr === 'spell-attack-type')){
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ){
             updateAssociatedAttack(null,null,null,eventInfo);
-        }
+        }//do we really keep out api or not?
     }));
 }
 registerEventHandlers();
