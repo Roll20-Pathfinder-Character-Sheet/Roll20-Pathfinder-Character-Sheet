@@ -138,7 +138,7 @@ export function clearBuffTotals(callback,silently){
 				params =PFConst.silentParams;
 			}
 			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
-			getAttrs(setter,params,done);
+			SWUtils.setWrapper(setter,params,done);
 		} else {
 			done();
 		}
@@ -421,7 +421,7 @@ export function updateBuffTotalsAsync (callback,silently){
 					if (silently){
 						params = PFConst.silentParams;
 					}
-					getAttrs(setter,params,done);
+					SWUtils.setWrapper(setter,params,done);
 				} else {
 					done();
 				}
