@@ -118,7 +118,7 @@ function updateRepeatingAddInMacro(id, eventInfo) {
 			setter[damageMacroNm] = newDmgMacro;
 		}
 		if (_.size(setter)) {
-			getAttrs(setter);
+			SWUtils.setWrapper(setter);
 		}
 	});
 }
@@ -157,7 +157,7 @@ function setRepeatingWeaponInsertMacro(id, eventInfo) {
 			setter[prefix + "attack-type_macro_insert"] = "0";
 		}
 		//TAS.debug("setRepeatingWeaponInsertMacro",setter);
-		getAttrs(setter, PFConst.silentParams, done);
+		SWUtils.setWrapper(setter, PFConst.silentParams, done);
 	});
 }
 /** updateRepeatingWeaponAttack - calculates total-attack
@@ -190,7 +190,7 @@ function updateRepeatingWeaponAttack(id, eventInfo) {
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
 			setter[totalAttackField] = newTotalAttack;
-			getAttrs(setter, PFConst.silentParams, resetOptionsWhenDone);
+			SWUtils.setWrapper(setter, PFConst.silentParams, resetOptionsWhenDone);
 		}
 	});
 }
@@ -247,7 +247,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 				setter[totalDamageField] = totalDamage;
 			}
 			if (_.size(setter)) {
-				getAttrs(setter, PFConst.silentParams, resetOptionsWhenDone);
+				SWUtils.setWrapper(setter, PFConst.silentParams, resetOptionsWhenDone);
 			}
 		}
 	});
@@ -270,7 +270,7 @@ function updateRepeatingWeaponCrit(id, eventInfo) {
 			setter = {};
 			if (newBonus !== currCritBonus) {
 				setter[critConfirmTotalField] = newBonus;
-				getAttrs(setter, {
+				SWUtils.setWrapper(setter, {
 					silent: true
 				});
 			}
@@ -313,7 +313,7 @@ function updateRepeatingWeaponsFromCrit(attacktype, eventInfo) {
 				}
 			});
 			if (_.size(setter) > 0) {
-				getAttrs(setter, {
+				SWUtils.setWrapper(setter, {
 					silent: true
 				});
 			}
@@ -338,7 +338,7 @@ function setRepeatingWeaponRangedFlag(id){
 		}
 		if ((parseInt(v[isRangedAttr],10)||0) !== newIsRanged){
 			setter[isRangedAttr]=newIsRanged;
-			getAttrs(setter,PFConst.silentParams);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 	});
 
@@ -411,7 +411,7 @@ export function updateRepeatingWeaponDamages(callback,silently,eventInfo) {
 				return m;
 			},{});
 			if(_.size(setter)){
-				getAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
@@ -569,7 +569,7 @@ function syncDefaultDamageDiceAsync (id,eventInfo){
 		useSizeMod=parseInt(v.modify_dmg_by_size,10)||0;
 		syncDefaultDamageDice(id,v,setter,useSizeMod,prefix);
 		if(_.size(setter)){
-			getAttrs(setter,PFConst.silentParams);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 	});
 }
@@ -585,7 +585,7 @@ export function syncAllDefaultDamageDiceAsync (){
 						syncDefaultDamageDice(id,v,setter,modifyDMG);
 					});
 					if(_.size(setter)){
-					getAttrs(setter,PFConst.silentParams);
+					SWUtils.setWrapper(setter,PFConst.silentParams);
 					}
 				});
 			}
@@ -707,7 +707,7 @@ function adjustDamageDiceAsync (id,callback){
 			}
 		} finally {
 			if (_.size(setter)){
-				getAttrs(setter);
+				SWUtils.setWrapper(setter);
 			}
 		}
 	});
@@ -737,7 +737,7 @@ export function adjustAllDamageDiceAsync (callback, eventInfo){
 							adjustDamageDice(id,currCharSize,v,setter);
 						});
 						if (_.size(setter)){
-							getAttrs(setter,PFConst.silentParams,done)
+							SWUtils.setWrapper(setter,PFConst.silentParams,done)
 						}
 					});
 				
@@ -802,7 +802,7 @@ function recalcOtherFields (ids,callback){
 			}
 		},{});
 		if(_.size(setter)){
-			getAttrs(setter,{},done);
+			SWUtils.setWrapper(setter,{},done);
 		} else {
 			done();
 		}
@@ -919,7 +919,7 @@ export function removeLinkedAttack (callback,linkType,linkid){
 				}
 			});
 			if(_.size(setter)){
-				getAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -1140,20 +1140,20 @@ export function createDualWield (callback){
 								setter.create_twoweapon_attack = 0;
 								setter.mainhand_id='';
 								setter.offhand_id='';
-								getAttrs(setter,PFConst.silentParams,function(){
+								SWUtils.setWrapper(setter,PFConst.silentParams,function(){
 									PFAttackGrid.resetCommandMacro();
 									done();
 								});
 							} else {
 								setter.create_twoweapon_attack = 0;
-								getAttrs(setter,PFConst.silentParams,done);
+								SWUtils.setWrapper(setter,PFConst.silentParams,done);
 							}
 						}
 					});
 				} else {
 					//TAS.debug("they are not there1");
 					setter.create_twoweapon_attack = 0;
-					getAttrs(setter,PFConst.silentParams,done);
+					SWUtils.setWrapper(setter,PFConst.silentParams,done);
 				}
 			});
 		}
@@ -1226,7 +1226,7 @@ export var setNewDefaults = TAS.callback(function callsetNewDefaults(callback){
 					TAS.error("PFAttacks.setNewDefaults errout ",errout);
 				} finally {
 					if (_.size(setter)){
-						getAttrs(setter,PFConst.silentParams,finishedMigrating);
+						SWUtils.setWrapper(setter,PFConst.silentParams,finishedMigrating);
 					} else {
 						done();
 					}
@@ -1293,7 +1293,7 @@ export function migrateLinkedAttacks (callback, oldversion){
 			});
 			setter.migrated_linked_attacks=1;
 			if (_.size(setter)){
-				getAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}

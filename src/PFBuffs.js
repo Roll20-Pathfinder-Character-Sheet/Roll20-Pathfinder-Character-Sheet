@@ -140,7 +140,7 @@ export function clearBuffTotals(callback,silently){
 			}
 			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
 
-			getAttrs(setter,params,done);
+			SWUtils.setWrapper(setter,params,done);
 		} else {
 			done();
 		}
@@ -426,7 +426,7 @@ export function updateBuffTotalsAsync (callback,silently){
 					if (silently){
 						params = PFConst.silentParams;
 					}
-					getAttrs(setter,params,done);
+					SWUtils.setWrapper(setter,params,done);
 				} else {
 					done();
 				}
@@ -559,7 +559,7 @@ export function migrate (outerCallback) {
  * @param {string} bufftype  -string from buffColumns
  * @param {string} buffmacro ?
  * @param {number} modamount - value for the buff
- * @param {map} newRowAttrs - object of {name:value} to pass to SWUtils.setWrapper
+ * @param {map} newRowAttrs - object of {name:value} to pass to setAttrs
  * @returns {map} return newRowAttrs after adding maps to it.
  */
 export function createTotalBuffEntry (name, bufftype, buffmacro, modamount, newRowAttrs) {
