@@ -217,7 +217,7 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                TAS.notice("#######################","PFAbilities apply conditions setting",setter);
+                //TAS.notice("#######################","PFAbilities apply conditions setting",setter);
                 SWUtils.setWrapper(setter, params, done);
             } else {
                 done();

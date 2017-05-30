@@ -355,15 +355,19 @@ function getRecalculatedDamageOnly (id,v){
 		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
 		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
 		dmgConditions = v["condition-Sickened"],
-		damageBuffs = v["buff_DMG-total"], 
+		meleeBuffs = v["buff_DMG-total"], 
 		rangedBuff = v["buff_DMG_Ranged-total"],
+		damageBuffs=0,
 		abilityTotDmg=0,
 		newTotalDamage=0,
 		localsetter={};
 	try {
 		if(isRanged){
-			damageBuffs+=rangedBuff;
-		} else if( isNaN(maxAbility)) {
+			damageBuffs=rangedBuff;
+		} else {
+			damageBuffs=meleeBuffs;
+		}
+		if( !isRanged || isNaN(maxAbility)) {
 			maxAbility=999;
 		}
 
@@ -779,6 +783,9 @@ function recalcOtherFields (ids,callback){
 			return [attr, parseInt(v[attr],10)||0];
 		}));
 		_.extend(v,charAttMap);
+		v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
+		v["buff_DMG_Ranged-total"]=parseInt(v["buff_DMG_Ranged-total"],10)||0;
+		v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={}
@@ -942,11 +949,11 @@ export function setDualWieldVals (params,setter,id,updMode){
 	tempStr2='';
 
 	try {
-		TAS.debug("PFAttacks.setDualWieldVals",params);
+		//TAS.debug("PFAttacks.setDualWieldVals",params);
 		setter=setter||{};
 		if (!id){
 			id = generateRowID();
-			TAS.debug("the new id is "+id);
+			//TAS.debug("the new id is "+id);
 		}
 		offhandCountdown=params.offhand_improved;
 		prefix='repeating_weapon_'+id+'_';
@@ -1034,7 +1041,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 	} catch (err){
 		TAS.error("PFAttacks.setDualWieldVals outererr",err);
 	} finally {
-		TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
+		//TAS.debug("PFAttacks.setDualWieldVals returning:",setter);
 		return setter;
 	}
 }
@@ -1083,15 +1090,15 @@ function updateDualWield (callback,eventInfo){
 							params.mainhand_name = v[prefix+'source-main-name'];
 							params.offhand_name = v[prefix+'source-off-name'];
 							params.offhand_mult = mult ;
-							TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setDualWieldVals(params,setter,id,true);
 						}
 					});
 				}
 				if(_.size(setter)){
 					setter['update_twoweapon_attack']=0;
-					TAS.debug("after updating now set with ",setter);
-					getAttrs(setter,PFConst.silentParams,done);
+					//TAS.debug("after updating now set with ",setter);
+					SWUtils.setWrapper(setter,PFConst.silentParams,done);
 				}else{
 					finished();
 				}
@@ -1112,7 +1119,7 @@ export function createDualWield (callback){
 			getSectionIDs('repeating_weapon',function(ids){
 				//TAS.debug("at PFAttacks.createDualWield values are ",v,ids);
 				if(_.contains(ids,v.mainhand_id) && _.contains(ids,v.offhand_id)){
-					TAS.debug("they are there!");
+					//TAS.debug("they are there!");
 					getAttrs(['repeating_weapon_'+v.mainhand_id+'_name','repeating_weapon_'+v.offhand_id+'_name'],function(w){
 						try {
 							params.mainhand_id = v.mainhand_id;
@@ -1124,7 +1131,7 @@ export function createDualWield (callback){
 							params.mainhand_name = w['repeating_weapon_'+v.mainhand_id+'_name'];
 							params.offhand_name = w['repeating_weapon_'+v.offhand_id+'_name'];
 							params.offhand_mult =parseFloat(v.offhand_str_mult)||0.5;
-							TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setter=setDualWieldVals(params,setter);
 						} catch (outererr){
 							TAS.error("PFAttacks.createDualWield outererr",outererr);
@@ -1144,7 +1151,7 @@ export function createDualWield (callback){
 						}
 					});
 				} else {
-					TAS.debug("they are not there1");
+					//TAS.debug("they are not there1");
 					setter.create_twoweapon_attack = 0;
 					getAttrs(setter,PFConst.silentParams,done);
 				}
@@ -1348,7 +1355,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 			callback();
 		}
 	};
-	TAS.debug("at PFAttacks.recalculate");
+	//TAS.debug("at PFAttacks.recalculate");
 	PFAttackGrid.recalculate( function(){
 		migrate(function(){
 			setAdvancedMacroCheckbox();

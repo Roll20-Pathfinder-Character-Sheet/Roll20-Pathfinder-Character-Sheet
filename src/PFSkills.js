@@ -149,7 +149,7 @@ function migrateMacros (callback){
 		SWUtils.setWrapper({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
 	});
 	try {
-		TAS.debug("at PFSkills.migrateMacros");
+		//TAS.debug("at PFSkills.migrateMacros");
 		getAttrs(['migrated_skill_macrosv1'],function(v){
 			if(! parseInt(v.migrated_skill_macrosv1,10)) {
 				//TAS.debug"migrateMacros, calling migrateStaticMacrosMult on regular skills ");
@@ -950,7 +950,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 			callback();
 		}
 	});
-	TAS.debug("PFSkills.recalculate");
+	//TAS.debug("PFSkills.recalculate");
 	migrate(function () {
 		//TAS.debug"PFSkills.recalculate back from PFSkills.migrate");
 		updateMaxSkills();

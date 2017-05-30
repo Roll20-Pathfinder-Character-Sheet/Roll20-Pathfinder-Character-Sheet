@@ -267,10 +267,10 @@ export function copyToAbilities(callback,abilities) {
 	if (_.size(abilities)){
 		_.each(abilities,function(ability){
 			var xtra= getNewAbilityAttrs(ability);
-			TAS.debug("PFAbility.copyToAbilities adding ",xtra);
+			//TAS.debug("PFAbility.copyToAbilities adding ",xtra);
 			_.extend(setter,xtra);
 		});
-		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
+		//TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
 	}
 	if(_.size(setter)){
 		 SWUtils.setWrapper(setter,PFConst.silentParams,done);

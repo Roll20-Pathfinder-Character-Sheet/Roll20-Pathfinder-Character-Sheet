@@ -82,7 +82,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         filterField=baseAttribs.filterField||filterField;
         altUsesField=baseAttribs.altUsesField||altUsesField;
         altGroupByField=baseAttribs.altGroupBy||'';
-        // TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
+        //TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
     } catch (outerErr){
         TAS.error("PFMenus.getRepeatingCommandMacro outererror for "+ baseAttribs.section, outerErr);
         done("");

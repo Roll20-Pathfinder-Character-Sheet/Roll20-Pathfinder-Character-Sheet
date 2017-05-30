@@ -271,7 +271,7 @@ function migrateWornEquipment (callback) {
             newEquipType = equipMap.noEquipType;
             // Migrate the worn equipment entry to equipment if the name is populated
             try {
-                TAS.debug("PFInventory.copyWornEquipmentToNewItem checking "+row+" it is:"+v["worn-" + row]);
+                //TAS.debug("PFInventory.copyWornEquipmentToNewItem checking "+row+" it is:"+v["worn-" + row]);
                 if (v["worn-" + row]) {
                     newRowId = generateRowID();
                     /* Assign defined worn equipment values to new repeating_item entry */
@@ -621,7 +621,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
             try {
                 location = parseInt(v[locationField], 10);
                 if (isNaN(location)){
-                    TAS.debug("why is location not set!?");
+                    //TAS.debug("why is location not set!?");
                     location = locationMap.NotCarried;
                     wornItemAttrs[locationField]=location;
                 }
@@ -839,7 +839,7 @@ function updateLocations (callback){
                 return;
             }
             total = _.size(ids);
-            TAS.debug("PFInventory.updateLocations there are "+total+" rows in items");
+            //TAS.debug("PFInventory.updateLocations there are "+total+" rows in items");
             doneOne = _.after(total,done);
             _.each(ids,function(id){
                 updateEquipmentLocation(id,doneOne,null,null);
@@ -866,7 +866,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
     idStr = SWUtils.getRepeatingIDStr(itemId),
     item_entry = 'repeating_item_' + idStr;
 
-    TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
+    //TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
     attribList.push(item_entry + "name");
     commonLinkedAttributes.forEach(function (attr) {
         attribList.push(item_entry + "item-" + attr);
@@ -889,7 +889,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             } else {
                 newRowId = weaponId;
             }
-            TAS.debug("the new row id is: "+newRowId);
+            //TAS.debug("the new row id is: "+newRowId);
             //TAS.debug("v[" + item_entry + "name]=" + v[item_entry + "name"]);
             if (v[item_entry + "name"]) {
                 if (!weaponId){
@@ -1510,7 +1510,7 @@ export function setNewDefaults (callback, oldversion){
                     } finally {
                         if (_.size(setter)>0){
                             setter['migrated_itemlist_defaults']=1;
-                            TAS.debug("PFInventory.setNewDefaults setting",setter);
+                            //TAS.debug("PFInventory.setNewDefaults setting",setter);
                             SWUtils.setWrapper(setter,PFConst.silentParams,done);
                         } else {
                             done();
@@ -1547,7 +1547,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
         }
     }),
     setTotals = _.after(2, function () {
-        TAS.debug("PFInventory.recalculate at setTotals");
+        //TAS.debug("PFInventory.recalculate at setTotals");
         updateLocations(TAS.callback(updateUses));
         resetCommandMacro();
         deleteOrphanWornRows();

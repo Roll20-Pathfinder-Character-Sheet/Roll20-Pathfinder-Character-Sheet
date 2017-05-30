@@ -1211,7 +1211,7 @@ function parseSpecialAbilities (str) {
 	lines = SWUtils.trimBoth(lines).filter(function(line){
 		return (line && !(/^special abilities$/i).test(line));
 	});
-	TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",lines);
+	//TAS.debug("PFNPCParser.parseSpecialAbilities  split into ",lines);
 	saObj = _.reduce(lines, function (memo, line) {
 		var spObj = {}, splitter = '',tempstr='', startIdx, endIdx = -1, matches, abilitytype='';
 		try {
@@ -3158,8 +3158,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (_.size(setter) > 0) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
-				TAS.info("##############################################","END OF importFromCompendium");
-				TAS.debug("setting",setter);
+				//TAS.info("##############################################","END OF importFromCompendium");
 				SWUtils.setWrapper(setter, PFConst.silentParams, done);
 			} else {
 				setter["npc_import_now"]=0;

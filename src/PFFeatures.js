@@ -382,7 +382,7 @@ export function getAbilities (callback,errorcallback,section){
 									if (obj['CL-basis']==="@{level}"){
 										obj["class-name"]=v['race'];
 									} else if (v[prefix+'class-number']){
-										TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
+										//TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
 										obj["class-name"]=v[v[prefix+'class-number']];
 									} else {
 										obj["class-name"]="";
@@ -465,9 +465,9 @@ export function copyToAbilities(callback,section,eventInfo){
 	});
 	//TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
-		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
+		//TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
 		if(list && _.size(list)>0){
-			TAS.debug("now calling PFAbilitycopytoAbilities");
+			//TAS.debug("now calling PFAbilitycopytoAbilities");
 			PFAbility.copyToAbilities(merged,list);
 		} else {
 			done();

@@ -310,7 +310,7 @@ export function resetOption (id, eventInfo,callback) {
         optionText = getOptionText(id, eventInfo, toggleValues, v)||"";
         if(v[prefix+'spell_options']!==optionText){
             setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
-            getAttrs(setter, PFConst.silentParams,done);
+            SWUtils.setWrapper(setter, PFConst.silentParams,done);
         } else {
             done();
         }

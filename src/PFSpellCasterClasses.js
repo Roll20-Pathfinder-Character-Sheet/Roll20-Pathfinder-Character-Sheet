@@ -138,7 +138,7 @@ var updateSaveDCs = TAS.callback(function callupdateSaveDCs(classidx, eventInfo,
             callback();
         }
     });
-    getAttrs(["Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc"], function (v) {
+    getAttrs(["use_spells","spellclass-"+classidx+"-exists","Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc"], function (v) {
         var mod = parseInt(v["Concentration-" + classidx + "-mod"], 10) || 0,
         dcLvlZero = 10 + mod,
         currDC = parseInt(v["spellclass-" + classidx + "-level-0-savedc"], 10),
@@ -228,9 +228,15 @@ var updateBonusSpells = TAS.callback(function callupdateBonusSpells(classidx, ev
             }
         }
     });
-});
-/* updateMaxSpellsPerDay */
-var updateMaxSpellsPerDay = TAS.callback(function callupdateMaxSpellsPerDay(classidx, spelllvl, callback, silently) {
+}
+/** updates max spells per day for a given class. ALWAYS SILENT
+ * 
+ * @param {*} classidx 
+ * @param {*} spelllvl 
+ * @param {*} callback 
+ * @param {*} silently 
+ */
+function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
     var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
@@ -250,7 +256,7 @@ var updateMaxSpellsPerDay = TAS.callback(function callupdateMaxSpellsPerDay(clas
         }
         if (newCount !== curr){
             setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-            SWUtils.setWrapper(setter,{},done);
+            SWUtils.setWrapper(setter,PFConst.silentParams,done);
         } else {
             done();
         }
@@ -303,10 +309,12 @@ var recalcOneClass = TAS.callback(function callrecalcOneClass(spellClassIdx, cal
             callback();
         }
     }),
-    doneOne = _.after(4, done);
+    doneOne = _.after(5, done),
+    doneOneLevel = _.after(10,doneOne);
+    
     //TAS.debug("at PFSpellCasterClasses.recalcOneClass");
     _.times(10,function(spelllvl){
-        updateMaxSpellsPerDay(spellClassIdx,spelllvl);
+        updateMaxSpellsPerDay(spellClassIdx,spelllvl,doneOneLevel,silently);
     });
     
     updateConcentration(spellClassIdx, null, doneOne, silently);
@@ -315,50 +323,58 @@ var recalcOneClass = TAS.callback(function callrecalcOneClass(spellClassIdx, cal
     updateBonusSpells(spellClassIdx, null, doneOne, silently);
 });
 /** updates {spellclass-X-level-total}, sets minimum of 1 if {spellclass-X-level} is > 0
-*@param {int} spellclassidx 0,1,2 the spell casting tab
-*@param {eventInfo} eventInfo unused eventinfo from 'on' method
-*@param {int} classlevel optional override for class level, use this if you know it and sheet attribute might not be updated yet.
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
-var updateCasterLevel = TAS.callback(function callupdateCasterLevel(spellclassidx, eventInfo, classlevel, callback, silently) {
+ *@param {int} spellclassidx 0,1,2 the spell casting tab
+ *@param {eventInfo} eventInfo unused eventinfo from 'on' method
+ *@param {int} classlevel optional override for class level, use this if you know it and sheet attribute might not be updated yet.
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
+function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, silently, forceRecalc) {
     var done = _.once(function () {
         //TAS.debug("leaving updateCasterLevel " + spellclassidx);
         if (typeof callback === "function") {
             callback();
         }
     });
-    getAttrs(["spellclass-" + spellclassidx + "-level", "spellclass-" + spellclassidx + "-level-total", "spellclass-" + spellclassidx + "-level-misc", "buff_CasterLevel-total", "CasterLevel-Penalty", "spellclass-" + spellclassidx + "-exists"], function (v) {
+    getAttrs(["use_spells","spellclass-" + spellclassidx + "-level", "spellclass-" + spellclassidx + "-level-total", "spellclass-" + spellclassidx + "-level-misc", "buff_CasterLevel-total", "CasterLevel-Penalty", "spellclass-" + spellclassidx + "-exists"], function (v) {
         var baseLevel = classlevel || parseInt(v["spellclass-" + spellclassidx + "-level"], 10) || 0,
         totalLevel = parseInt(v["spellclass-" + spellclassidx + "-level-total"], 10) || 0,
         spellClassExists = parseInt(v["spellclass-" + spellclassidx + "-exists"], 10) || 0,
+        usesSpells = parseInt(v["use_spells"],10)||0,
         casterlevel = 0,
         setter = {},
         recalcAfter=0,
         params = {};
         try {
-            casterlevel = baseLevel + (parseInt(v["spellclass-" + spellclassidx + "-level-misc"], 10) || 0) + (parseInt(v["buff_CasterLevel-total"], 10) || 0) + (parseInt(v["CasterLevel-Penalty"], 10) || 0);
-            //if has spells then minimum level is 1 no matter what minuses apply
-            if (casterlevel <= 0) {
+            if(usesSpells){
+                casterlevel = baseLevel + (parseInt(v["spellclass-" + spellclassidx + "-level-misc"], 10) || 0) + (parseInt(v["buff_CasterLevel-total"], 10) || 0) + (parseInt(v["CasterLevel-Penalty"], 10) || 0);
+                //if has spells then minimum level is 1 no matter what minuses apply
+                if (casterlevel <= 0) {
+                    if (baseLevel > 0) {
+                        casterlevel = 1;
+                    } else {
+                        casterlevel = 0;
+                    }
+                }
+                if (casterlevel !== totalLevel) {
+                    setter["spellclass-" + spellclassidx + "-level-total"] = casterlevel;
+                    if(baseLevel >0){
+                        recalcAfter=1;
+                    }
+                }
                 if (baseLevel > 0) {
-                    casterlevel = 1;
-                } else {
-                    casterlevel = 0;
-                }
-            }
-            if (casterlevel !== totalLevel) {
-                setter["spellclass-" + spellclassidx + "-level-total"] = casterlevel;
-                if (totalLevel===0 && eventInfo){
-                    recalcAfter=1;
-                }
-            }
-            if (baseLevel > 0) {
-                if (spellClassExists === 0) {
-                    setter["spellclass-" + spellclassidx + "-exists"] = "1";
-                    recalcAfter=1;
+                    if (spellClassExists === 0) {
+                        setter["spellclass-" + spellclassidx + "-exists"] = 1;
+                        recalcAfter=1;
+                    }
+                    if(forceRecalc){
+                        recalcAfter=1;
+                    }
+                } else if (spellClassExists === 1) {
+                    setter["spellclass-" + spellclassidx + "-exists"] = 0;
                 }
             } else if (spellClassExists === 1) {
-                setter["spellclass-" + spellclassidx + "-exists"] = "0";
+                setter["spellclass-" + spellclassidx + "-exists"] = 0;
             }
         } catch (err) {
             TAS.error("PFSpellCasterClasses.updateCasterLevel", err);
@@ -543,11 +559,12 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
         _.each(PFConst.spellClassIndexes, function (spellClassIdx) {
             try {
                 setCasterClassFromDropdown(spellClassIdx, null, function () {
-                    updateCasterLevel(spellClassIdx, null, 0, function () {
-                        ifSpellClassExists(spellClassIdx, function () {
-                            recalcOneClass(spellClassIdx,doneOne,silently);
-                        }, doneOne);
-                    }, silently);
+                    updateCasterLevel(spellClassIdx, null, 0, doneOne, silently,true);
+                    //updateCasterLevel(spellClassIdx, null, 0,function () {
+                    //    ifSpellClassExists(spellClassIdx, function () {
+                    //        recalcOneClass(spellClassIdx,doneOne,silently);
+                    //    }, doneOne);
+                    //}, silently);
                 }, silently);
             } catch (err) {
                 TAS.error("PFSpellCasterClasses.recalculate_recalcTopSection", err);

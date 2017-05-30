@@ -9,12 +9,10 @@ import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFSize from './PFSize';
 import * as PFUtilsAsync  from './PFUtilsAsync';
-//import * as PFMacros from './PFMacros';
-//import * as PFMenus from './PFMenus';
 import * as PFInitiative from './PFInitiative';
 import * as PFSkills from './PFSkills';
 import * as PFEncumbrance from './PFEncumbrance';
-import* as PFInventory from './PFInventory';
+import * as PFInventory from './PFInventory';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFBuffs from './PFBuffs';
 import * as PFSaves from './PFSaves';
@@ -424,9 +422,11 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFBuffs.recalculate(null,false,oldversion);
 				PFSkills.migrate(null,oldversion);
 				PFSize.recalculate(function(){
-					PFBuffs.recalculate();
 					PFEncumbrance.migrate();
 				});
+			}
+			if (oldversion < 1.54){
+				PFBuffs.recalculate();
 			}
 		}
 	} catch (err) {
