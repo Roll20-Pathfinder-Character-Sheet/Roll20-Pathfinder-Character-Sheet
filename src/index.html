@@ -34,8 +34,10 @@
 				<li>Fix to nonlethal hp resetting on level drain</li>
 				<li>Fix to @{size_display} stuck on medium</li>
 				<li>Fix to spell class calculations when spell class not set</li>
+				<li>Fix to spell-attack-type reference in spells</li>
+				<li>Fix to buffs writing NaN and undefined</li>
 			</ol>
-			<p>1.52:</p>
+			<p>1.53:</p>
 			<ol>
 				<li><strong style="font-size:1rem;font-weight:bold;">Fix to skills</strong> not rolling. </li>
 				<li>Fix to initiative and size buffs</li>
@@ -10991,8 +10993,8 @@ abilities:
 							<input type="checkbox" name="attr_tabcat11" value="1" class="sheet-tabcopy custnavsection-11" role="presentation" />
 							<div class="sheet-custrepeating-border sheet-nontable-repeating compendium-drop-target">
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-								<span style="display:none;" class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
-								<span class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
+								<span class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
+								<span style="display:none;" class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
 								<label class="sheet-small-label2" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink">
 									<select class="sheet-select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
@@ -11089,7 +11091,7 @@ abilities:
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
 									<div class="sheet-misc">										
-										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-noshow"/>
+										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-or-A-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
 											<input type="checkbox" value="1" name="attr_showextrafields" />
@@ -11134,15 +11136,16 @@ abilities:
 											</select>
 											<span data-i18n-title="difficulty-class-effect-basis-desc" data-i18n-aria-label="difficulty-class-effect-basis-desc" data-i18n="difficulty-class-effect-basis" >DC/Effect Basis</span>
 										</label>
-										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra">+(</label>
-										<label class="sheet-small-label2 sheet-linked-tablecell sheet-section-extra sheet-nowrap sheet-entry-15p-shrink">
+										<input type="checkbox" value="0" class="sheet-noshow sheet-or-B-show" name="attr_spell_level-basis" role="presentation"/>
+										<label class="sheet-divider-db-lg sheet-nowrap sheet-either-or-sect">+(</label>
+										<label class="sheet-small-label2 sheet-linked-tablecell sheet-either-or-sect sheet-nowrap sheet-entry-15p-shrink">
 											<input type="checkbox" value="1" name="attr_spell_level-misc-mod_error" class="sheet-error-mshow" />
 											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{repeating_ability_$X_spell_level-misc}" name="attr_spell_level-misc" data-i18n-placeholder="equation-macro-place" style="display:inline-block;"></textarea>
 											<input type="number" value="0" name="attr_spell_level-misc-mod" title="@{repeating_ability_$X_spell_level-misc-mod}" class="sheet-narrow-numbers sheet-calc sheet-linked-cellfield sheet-highlight" style="display:inline-block;" readonly />
 											<br>
 											<span class="sheet-super sheet-note-a" data-i18n-aria-label="spell-level-miscellaneous-desc" data-i18n-title="spell-level-miscellaneous-desc" data-i18n="miscellaneous-abbrv" style="display:inline-block;">Misc</span>
 										</label>
-										<label class="sheet-divider-db-lg sheet-nowrap sheet-section-extra" style="margin-left:-.5em;">)=</label>
+										<label class="sheet-divider-db-lg sheet-nowrap sheet-either-or-sect" style="margin-left:-.5em;">)=</label>
 										<label class="sheet-small-label2 sheet-section-extra sheet-number">
 											<input type="text" value="(@{spell_level-basis}+@{spell_level-misc-mod})" title="@{repeating_ability_$X_spell_level}" name="attr_spell_level" disabled />
 											<span data-i18n-title="effective-spell-level" data-i18n-aria-label="effective-spell-level" data-i18n="spell-level-abbrv" >Spell lvl</span>
