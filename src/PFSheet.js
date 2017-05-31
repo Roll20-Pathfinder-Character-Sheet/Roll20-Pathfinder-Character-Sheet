@@ -640,10 +640,11 @@ function registerEventHandlers () {
 		}
 	});
 	//GENERIC DROPDOWNS
-	_.each(PFConst.manualDropdowns, function (write, read) {
+	_.each(PFConst.abilityScoreModDropdowns, function (write, read) {
 		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+				//user changed the SELECTION
 				PFUtilsAsync.setDropdownValue(read, write);
 			}
 		}));
@@ -652,6 +653,7 @@ function registerEventHandlers () {
 		on("change:" + read, TAS.callback(function eventAutoCalcDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType==="sheetworker"|| eventInfo.sourceType==="api"){
+				//sheetworker changed the VALUE of autocalc
 				PFUtilsAsync.setDropdownValue(read, write);
 			}
 		}));
