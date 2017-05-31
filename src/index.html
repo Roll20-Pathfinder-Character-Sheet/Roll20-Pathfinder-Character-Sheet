@@ -1614,12 +1614,12 @@ abilities:
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<input type="hidden" name="attr_AC-ability-mod" value="0">
@@ -1643,12 +1643,12 @@ abilities:
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<input type="checkbox" name="attr_nodex-toggle" class="sheet-warn-mshow" value="1" />
@@ -1673,21 +1673,21 @@ abilities:
 									<input type="checkbox" value="1" name="attr_unlock_def_ability" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" />
 									<input type="checkbox" value="1" name="attr_uncanny_dodge" class="sheet-nextitem-show sheet-noshow" />
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small sheet-sect-inverse sheet-nextitem">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 									<select title="@{FF-ability}" name="attr_FF-ability" class="sheet-select-small sheet-sect">
 										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<input type="hidden" name="attr_FF-DEX" value="0">
@@ -1748,32 +1748,32 @@ abilities:
 								</span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<select title="@{CMD-ability1}" name="attr_CMD-ability1" class="sheet-select-small">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<span class="sheet-table-cell"><input title="@{CMD-STR}" type="number" name="attr_CMD-STR" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<input type="checkbox" value="1" name="attr_unlock_def_ability" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" />
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small sheet-sect-inverse">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 									<select title="@{CMD-ability2}" name="attr_CMD-ability2" class="sheet-select-small sheet-sect">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<input type="hidden" name="attr_CMD-DEX" value="0">
@@ -1803,12 +1803,12 @@ abilities:
 								</span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<select title="@{CMD-ability1}" name="attr_CMD-ability1" class="sheet-select-small">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<span class="sheet-table-cell"><input title="@{CMD-STR}" type="number" name="attr_CMD-STR" value="0" class="sheet-calc" readonly></span>
@@ -1816,21 +1816,21 @@ abilities:
 									<input type="checkbox" value="1" name="attr_unlock_def_ability" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" />
 									<input type="checkbox" value="1" name="attr_uncanny_dodge" class="sheet-nextitem-show sheet-noshow" />
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small sheet-sect-inverse sheet-nextitem">
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 									<select title="@{CMD-ability}" name="attr_CMD-ability" class="sheet-select-small sheet-sect">
 										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="( ((@{STR-mod} + [[ @{max-dex-source} ]]) - abs(@{STR-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="strength-abbrv">STR</option>
-										<option value="( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="( ((@{CON-mod} + [[ @{max-dex-source} ]]) - abs(@{CON-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="constitution-abbrv">CON</option>
-										<option value="( ((@{INT-mod} + [[ @{max-dex-source} ]]) - abs(@{INT-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="intelligence-abbrv">INT</option>
-										<option value="( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )" data-i18n="charisma-abbrv">CHA</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
 								</span>
 								<input type="hidden" name="attr_FF-CMD-DEX" value="0" />

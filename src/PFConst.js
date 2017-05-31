@@ -1,7 +1,7 @@
 export default {
 	/* Pathfinder SHEET constants */
 
-	version: 1.6,
+	version: 1.61,
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"

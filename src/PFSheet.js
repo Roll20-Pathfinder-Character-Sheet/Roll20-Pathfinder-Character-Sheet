@@ -418,7 +418,6 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
 			if (oldversion < 1.53){
-				PFBuffs.recalculate(null,false,oldversion);
 				PFSkills.migrate(null,oldversion);
 				PFSize.recalculate(function(){
 					PFEncumbrance.migrate();
@@ -426,6 +425,11 @@ export function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
+			}
+			if (oldversion < 1.61){
+				TAS.notice("UPgrading to 1.61");
+				PFBuffs.migrate(null,oldversion);
+				PFAbilityScores.migrate();
 			}
 		}
 	} catch (err) {
