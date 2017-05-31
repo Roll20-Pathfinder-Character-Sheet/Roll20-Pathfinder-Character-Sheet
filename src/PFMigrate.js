@@ -1270,6 +1270,7 @@ export function getAllMigrateFlags (v){
     v['migrated_linked_attacks']=1;
     v['migrated_take10_dropdown']=1;
     v['migrated_buffs_rangeddmg_abiilty']=1;
+    v['migrated_ability_dropdowns']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){

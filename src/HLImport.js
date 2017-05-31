@@ -61,7 +61,7 @@ export function arrayify (stuff)
 export function importInit (attrs,initObj)
 {
 	attrs["init-misc"] = parseNum(initObj._total)-parseNum(initObj._attrtext);
-	attrs["init-ability"] = "@{"+initObj._attrname.substr(0,3).toUpperCase()+"-mod}";
+	attrs["init-ability"] = initObj._attrname.substr(0,3).toUpperCase()+"-mod";
 	attrs["init_notes"] = initObj.situationalmodifiers._text;
 }
 
@@ -524,7 +524,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
 						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = "@{"+abScores[j]._name.substr(0,3).toUpperCase()+"-mod}";
+						attr["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
 						setAttrs(attr);
 						break;
 					}
@@ -944,7 +944,7 @@ export function importSkills (attrs,skills,size,ACP)
 			skillAttrPrefix = skill._name.toLowerCase().replace(/\s/g,"-").replace("(","").replace(")","").replace("-hand","-Hand").replace("e-device","e-Device").replace("-artist","-Artist").replace("-animal","-Animal");
 		
 		attrs[skillAttrPrefix+"-ranks"] = parseNum(skill._ranks);
-		attrs[skillAttrPrefix+"-ability"] = "@{"+skill._attrname+"-mod}";
+		attrs[skillAttrPrefix+"-ability"] = skill._attrname+"-mod";
 		attrs[skillAttrPrefix+"-ability-mod"] = parseNum(skill._attrbonus);
 		
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;

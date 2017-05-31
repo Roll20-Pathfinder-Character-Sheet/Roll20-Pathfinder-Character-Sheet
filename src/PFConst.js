@@ -11,7 +11,7 @@ export default {
 
 	//attribute of a dropdown mapped to attribute to write evaluated number to.
 	//all simple dropdowns that do not need to call any other function when evaluating besides setDropdownValue and findAbilityInString
-
+	//non repeating
 	abilityScoreModDropdowns: {
 		"HP-ability": "HP-ability-mod",
 		"init-ability": "init-ability-mod",
@@ -24,7 +24,15 @@ export default {
 		"ranged2-ability": "ranged2-ability-mod",
 		"CMB-ability": "CMB-ability-mod",
 		"CMB2-ability": "CMB2-ability-mod",
-		"sanity-ability": "sanity-ability-mod"
+		"sanity-ability": "sanity-ability-mod",
+		"concentration-0-ability": "concentration-0-ability-mod",
+		"concentration-1-ability": "concentration-1-ability-mod",
+		"concentration-2-ability": "concentration-2-ability-mod",
+        'AC-ability': 'AC-ability-mod',
+        'FF-ability': 'FF-DEX',
+        'CMD-ability': 'CMD-STR',
+        'CMD-ability1': 'CMD-DEX',
+        'CMD-ability2':	'FF-CMD'
 	},
 	dropdowns: {
 	},

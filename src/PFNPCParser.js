@@ -1685,7 +1685,7 @@ function setCasterFields (setter, casterObj, classidx) {
 				setter["spellclass-" + classidx + "-casting_type"] = 1;//spontaneous
 			}
 			if (casterObj.ability) {
-				setter["Concentration-" + classidx + "-ability"] = "@{" + casterObj.ability + "-mod}";
+				setter["Concentration-" + classidx + "-ability"] =  casterObj.ability + "-mod";
 			}
 			setter["Concentration-" + classidx + "-mod"] = casterObj.abilityMod;
 			if (casterObj.concentrationBonus) {
