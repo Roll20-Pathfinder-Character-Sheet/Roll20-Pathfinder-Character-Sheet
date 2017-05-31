@@ -264,13 +264,12 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		SWUtils.setWrapper({'attentionv154-show':1,'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
 		});
 	});
-	
 	getAttrs(['is_npc', 'set_pfs'],function(v){
 		var isNPC = parseInt(v.is_npc,10)||0,
 		isPFS = parseInt(v.set_pfs,10)||0;
@@ -335,18 +334,60 @@ function recalcDropdowns (callback, silently, oldversion) {
 
 var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
     var done = function(){
+		TAS.notice("migrateDropdowns.down","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         if (typeof callback === "function"){
             callback();
         }
     }, 
     updatedGroup = _.after(3,function(){
-        //setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,done);
-		TAS.notice("Finished","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,done);
+		TAS.notice("migrateDropdowns.updatedGroup","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        done();
+        //done();
     }),
 	updateRepeatingAttackTypes = function(){
-		updatedGroup();
+		var sections,doneOneSection;
+		sections  = Object.keys(PFConst.repeatingAttackTypeManualDropdowns);
+		if(!_.size(sections)){
+			updatedGroup();
+			return;
+		}
+		doneOneSection = _.after(_.size(sections),updatedGroup);
+		TAS.debug("the sections are ",sections);
+		sections.forEach(function(section){
+			getSectionIDs('repeating_'+section,function(ids){
+				var fields, attr='';
+				if(!ids || _.size(ids)===0){
+					TAS.warn("migrate repeating attackDropdowns, there are no rows for "+ section);
+					doneOneSection();
+					return;
+				}
+				attr='_'+PFConst.repeatingAttackTypeManualDropdowns[section];
+				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,[attr]);
+				getAttrs(fields,function(v){
+					var setter;
+					try{
+						TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+						setter = ids.reduce(function(m,id){
+							var a = 'repeating_'+section+'_'+id+attr;
+							if (v[a] && v[a]!=="0"){
+								m[a]=v[a].replace('@{','').replace('}','');
+							}				
+							return m;
+						},{});
+					} catch (err){
+						TAS.error("PFSheet.migrate repeating attacktype dropdowns for: "+section,err);
+					} finally {
+						if (_.size(setter)>0){
+							TAS.debug("Migrate attack dropdowns setting:",setter);
+							setAttrs(setter,PFConst.silentParams,doneOneSection);
+						} else {
+							doneOneSection();
+						}
+					}
+				});
+			});
+		});
 	},
     updateRepeating= function(){
         getSectionIDs("repeating_weapon",function(ids){
@@ -359,6 +400,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
             getAttrs(fields,function(v){
                 var setter;
 				try {
+					TAS.debug("migrate repeating AbilityDropdowns getting:",v);					
 					setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
 						if (v[a] && v[a]!=="0"){
 							m[a]=v[a].replace('@{','').replace('}','');
@@ -367,9 +409,10 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 					},{});
 					TAS.debug("migrate ability dropdowns setting:",setter);
 				} catch (err){
-					TAS.error("PFSheet.migrate repaeating ability dropdowns ",err);
+					TAS.error("PFSheet.migrate repeating ability dropdowns ",err);
 				} finally {
-				if (_.size(setter)){
+					if (_.size(setter)){
+						TAS.debug("Migrate repeating ability dropdowns setting:",setter);
 						setAttrs(setter,PFConst.silentParams,updatedGroup);
 					} else {
 						updatedGroup();
@@ -401,11 +444,11 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 					}
 					return m;
 				},{});
-				TAS.debug("migrate ability dropdowns setting:",setter);
 			} catch (err){
 				TAS.error("PFSheet.migrate AbilityModDropdowns ",err);
 			} finally {
 				if (_.size(setter)){
+					TAS.debug("Migrate ability dropdowns setting:",setter);
 					setAttrs(setter,PFConst.silentParams,updatedGroup);
 				} else {
 					updatedGroup();
@@ -413,7 +456,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 			}
         });
     };
-    getAttrs('migrated_ability_dropdowns',function(v){
+    getAttrs(['migrated_ability_dropdowns'],function(v){
         var setter={};
         TAS.debug("migrateAbilityDropdowns getting:",v);
         if(!parseInt(v.migrated_ability_dropdowns,10)){
@@ -426,7 +469,11 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
     });
 });
 
-export function migrate (oldversion, callback, errorCallback) {
+export var migrate = TAS.callback(function callSheetMigrate(callback,oldversion){
+	migrateDropdowns(callback,oldversion);
+});
+
+function upgrade (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
@@ -526,7 +573,7 @@ export function migrate (oldversion, callback, errorCallback) {
 				migrateDropdowns();
 			}
 		}
-		migrateDropdowns();
+
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
 		errorDone();
@@ -646,10 +693,10 @@ function recalculateCore (callback, silently, oldversion) {
 
 }
 /** recalculate - all pages in sheet!  
-*@param {number} oldversion the current version attribute
-*@param {function} callback when done if no errors
-*@param {function} errorCallback  call this if we get an error
-*/
+ *@param {number} oldversion the current version attribute
+ *@param {function} callback when done if no errors
+ *@param {function} errorCallback  call this if we get an error
+ */
 export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
@@ -662,12 +709,16 @@ export var recalculate = TAS.callback(function callrecalculate(oldversion, callb
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
 		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
+	}),
+	callRecalcCore = TAS.callback(function callRecalculateCore(){
+		recalculateCore(callEncumbrance, silently, oldversion);
 	});
 	silently=true;
-	recalculateCore(callEncumbrance, silently, oldversion);
+	migrate(callRecalcCore,oldversion);
 });
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
-*  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
+ *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
+ * */
 function checkForUpdate () {
 	var done = function () {
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
@@ -712,7 +763,7 @@ function checkForUpdate () {
 		if (newSheet) {
 			setupNewSheet(done);
 		} else if (migrateSheet){
-			migrate(currVer, setUpgradeFinished, errorDone);
+			upgrade(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
 			recalculate(currVer, done, true);
