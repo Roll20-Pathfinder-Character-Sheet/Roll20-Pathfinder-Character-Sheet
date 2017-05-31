@@ -640,12 +640,22 @@ function registerEventHandlers () {
 		}
 	});
 	//GENERIC DROPDOWNS
-	_.each(PFConst.dropdowns, function (write, read) {
-		on("change:" + read, TAS.callback(function eventGenericDropdowns(eventInfo) {
+	_.each(PFConst.manualDropdowns, function (write, read) {
+		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			PFUtilsAsync.setDropdownValue(read, write);
+			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+				PFUtilsAsync.setDropdownValue(read, write);
+			}
 		}));
 	});
+	_.each(PFConst.dropdowns, function (write, read) {
+		on("change:" + read, TAS.callback(function eventAutoCalcDropdown(eventInfo) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType==="sheetworker"|| eventInfo.sourceType==="api"){
+				PFUtilsAsync.setDropdownValue(read, write);
+			}
+		}));
+	});	
 	//GENERIC EQUATIONS
 	_.each(PFConst.equationMacros, function (write, read) {
 		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {

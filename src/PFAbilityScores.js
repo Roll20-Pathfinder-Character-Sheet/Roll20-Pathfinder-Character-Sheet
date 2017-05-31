@@ -36,6 +36,67 @@ export function getAllAttributes (){
     return fields;
 }
 
+function getAbilityModUpdates(attr,newval,v,setter){
+    TAS.debug("getAbilityModUpdates, attr:"+attr+", oldval:"+newval+", v:",v);
+    var localsetter = Object.keys(PFConst.manualDropdowns).filter(function(a){
+        return v[a]===attr;
+    }).reduce(function(m,a){
+        var oldval = parseInt(v[PFConst.manualDropdowns[a]],10)||0;
+        TAS.debug("getAbilityMods in reduce:"+a+", old val:"+oldval+", newval:"+newval);
+        if(newval !== oldval){
+            m[PFConst.manualDropdowns[a]]=newval;
+        }
+        return m;
+    },{});
+    TAS.debug("getAbilityMods found updates:",localsetter);
+    if(_.size(localsetter)){
+        if (setter){
+            setter = _.extend(setter,localsetter);
+            return setter;
+        } else {
+            return localsetter;
+        }
+    } else {
+        return setter||{};
+    }
+}
+/** Looks at the ability-mod changed and then updates rest of sheet. For non repeating
+ * @param {string|Array} attr string name of attribute, or array of attributes abilitymods, if null then abilitymods
+ * @param {int} oldval 
+ */
+var propagateAbilScoresAsync = TAS.callback(function callPropagateAbilityScores(attr,newval){
+    var attrs, fields ,dropdowns;
+    if (Array.isArray(attr)){
+        attrs = attr;
+    } else if(attr){
+        attr = attr.slice(0,3).toUpperCase()+'-mod';
+        attrs = [attr];
+    } else {
+        attrs = abilitymods;
+    }
+    fields = attrs;
+    fields = fields.concat(Object.keys(PFConst.manualDropdowns));
+    fields = fields.concat(_.values(PFConst.manualDropdowns));
+    TAS.debug("propagateAbilScoresAsync about to get fields:",fields);
+    getAttrs(fields,function(v){
+        var  newval=0, setter;
+        TAS.debug("propagateAbilScoresAsync, returned with ",v);
+        setter= attrs.reduce(function(m,a){
+            var l;
+            TAS.debug("at reduce:",a);
+            newval = newval||parseInt(v[attr],10)||0;
+            l=getAbilityModUpdates(attr,newval,v);
+            _.extend(m,l);
+            return m;
+        },{});
+        if(_.size(setter)){
+            TAS.debug("propagateAbilScoresAsync",setter);
+            setAttrs(setter);
+        }
+    });
+});
+
+
 /** Looks at current values and calculates new ability , ability-mod and ability-modded values
  * @param {string} ability string matching a value in abilities
  * @param {Map} values map of return values from getAttrs
@@ -225,6 +286,8 @@ export function applyConditions (callback, silently) {
         }
     });
 }
+
+
 /** migrate (currently empty just calls callback
  * @param {function} callback when done
  * @param {Number} oldversion
@@ -275,6 +338,15 @@ function registerEventHandlers () {
             updateAbilityScore("DEX", eventInfo);
         }
     }));
+
+    abilitymods.forEach(function(attr){
+        on("change:"+attr, TAS.callback(function eventAbilityModUpdate(eventInfo){
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType === "api"){
+                propagateAbilScoresAsync(eventInfo.sourceAttribute);
+            }
+        }));
+    });
 }
 registerEventHandlers();
 PFConsole.log('   PFAbilityScores module loaded  ');

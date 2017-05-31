@@ -11,7 +11,8 @@ export default {
 
 	//attribute of a dropdown mapped to attribute to write evaluated number to.
 	//all simple dropdowns that do not need to call any other function when evaluating besides setDropdownValue and findAbilityInString
-	dropdowns: {
+
+	manualDropdowns: {
 		"HP-ability": "HP-ability-mod",
 		"init-ability": "init-ability-mod",
 		"Fort-ability": "Fort-ability-mod",
@@ -22,7 +23,9 @@ export default {
 		"ranged-ability": "ranged-ability-mod",
 		"ranged2-ability": "ranged2-ability-mod",
 		"CMB-ability": "CMB-ability-mod",
-		"CMB2-ability": "CMB2-ability-mod",
+		"CMB2-ability": "CMB2-ability-mod"
+	},
+	dropdowns: {
 		"sanity-ability": "sanity-ability-mod"
 	},
 	//attribute of a macro, mapped to attribute to write evaluation to
