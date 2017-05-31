@@ -34,7 +34,19 @@ export default {
         'CMD-ability1': 'CMD-DEX',
         'CMD-ability2':	'FF-CMD'
 	},
+	repeatingAbilityScoreModDropdowns: {
+		"weapon": "damage-ability"
+	},
+	repeatingAttackTypeManualDropdowns:{
+		"weapon":"attack-type",
+		"item":"item-attack-type",
+		"spells":"spell-attack-type",
+		"ability":"abil-attack-type"
+	},
 	dropdowns: {
+	},
+	repeatingAutoCalcDropdowns: {
+		"ability": "ability-basis"
 	},
 	//attribute of a macro, mapped to attribute to write evaluation to
 	//all simple macros that do not need to call other functions besides evaluateAndSetNumber

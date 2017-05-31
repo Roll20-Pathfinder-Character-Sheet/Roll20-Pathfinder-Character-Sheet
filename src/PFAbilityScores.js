@@ -286,45 +286,6 @@ export function applyConditions (callback, silently) {
     });
 }
 
-var migrateAbilityDropdownsToManual = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
-    var done = function(){
-        if (typeof callback === "function"){
-            callback();
-        }
-    }, fields;
-    fields = Object.keys(PFConst.abilityScoreModDropdowns);
-    fields.push('migrated_ability_dropdowns');
-    getAttrs(fields,function(v){
-        var setter={};
-        TAS.debug("migrateAbilityDropdowns getting:",v);
-        if(!parseInt(v.migrated_ability_dropdowns,10)){
-            setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
-                if (v[a] && v[a]!=="0"){
-                    switch(a){
-                        case 'AC-ability':
-                        case 'FF-ability':
-                        case 'CMD-ability':
-                        case 'CMD-ability1':
-                        case 'CMD-ability2':
-                            m[a]=PFUtils.findAbilityInString(v[a]);
-                            break;
-                        default:
-                            m[a]=v[a].replace('@{','').replace('}','');
-                            break;
-                    }
-                }
-                return m;
-            },{});
-        }
-        TAS.debug("migrate ability dropdowns setting:",setter);
-        if (_.size(setter)){
-            setAttrs(setter,PFConst.silentParams,done);
-        } else {
-            done();
-        }
-    });
-});
-
 /** migrate (currently empty just calls callback
  * @param {function} callback when done
  * @param {Number} oldversion
@@ -335,7 +296,7 @@ export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,ol
             callback();
         }
     };
-    migrateAbilityDropdownsToManual(callback);
+    callback();
 });
 /** recalculates all attributes written to by this module.
  *@param {function()} callback to call when done.

@@ -332,6 +332,100 @@ function recalcDropdowns (callback, silently, oldversion) {
 		done();
 	}
 }
+
+var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
+    var done = function(){
+        if (typeof callback === "function"){
+            callback();
+        }
+    }, 
+    updatedGroup = _.after(3,function(){
+        //setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,done);
+		TAS.notice("Finished","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        done();
+    }),
+	updateRepeatingAttackTypes = function(){
+		updatedGroup();
+	},
+    updateRepeating= function(){
+        getSectionIDs("repeating_weapon",function(ids){
+            var fields;
+            if (!ids || _.size(ids)===0){
+                updatedGroup();
+                return;
+            }
+            fields =SWUtils.cartesianAppend(['repeating_weapon_'],ids,['damage-ability']);
+            getAttrs(fields,function(v){
+                var setter;
+				try {
+					setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
+						if (v[a] && v[a]!=="0"){
+							m[a]=v[a].replace('@{','').replace('}','');
+						}
+						return m;
+					},{});
+					TAS.debug("migrate ability dropdowns setting:",setter);
+				} catch (err){
+					TAS.error("PFSheet.migrate repaeating ability dropdowns ",err);
+				} finally {
+				if (_.size(setter)){
+						setAttrs(setter,PFConst.silentParams,updatedGroup);
+					} else {
+						updatedGroup();
+					}
+				}
+            });
+        });
+    },
+    updateNonRepeating = function(){
+        var fields = Object.keys(PFConst.abilityScoreModDropdowns);
+        getAttrs(fields,function(v){
+            var setter={};
+			try{
+				TAS.debug("migrateAbilityDropdowns getting:",v);
+				setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
+					if (v[a] && v[a]!=="0"){
+						switch(a){
+							case 'AC-ability':
+							case 'FF-ability':
+							case 'CMD-ability':
+							case 'CMD-ability1':
+							case 'CMD-ability2':
+								m[a]=PFUtils.findAbilityInString(v[a]);
+								break;
+							default:
+								m[a]=v[a].replace('@{','').replace('}','');
+								break;
+						}
+					}
+					return m;
+				},{});
+				TAS.debug("migrate ability dropdowns setting:",setter);
+			} catch (err){
+				TAS.error("PFSheet.migrate AbilityModDropdowns ",err);
+			} finally {
+				if (_.size(setter)){
+					setAttrs(setter,PFConst.silentParams,updatedGroup);
+				} else {
+					updatedGroup();
+				}
+			}
+        });
+    };
+    getAttrs('migrated_ability_dropdowns',function(v){
+        var setter={};
+        TAS.debug("migrateAbilityDropdowns getting:",v);
+        if(!parseInt(v.migrated_ability_dropdowns,10)){
+            updateRepeating();
+            updateNonRepeating();
+			updateRepeatingAttackTypes();
+        } else {
+            done();
+        }
+    });
+});
+
 export function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFSheet.migrate");
@@ -429,9 +523,10 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.61){
 				TAS.notice("UPgrading to 1.61");
 				PFBuffs.migrate(null,oldversion);
-				PFAbilityScores.migrate();
+				migrateDropdowns();
 			}
 		}
+		migrateDropdowns();
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
 		errorDone();
