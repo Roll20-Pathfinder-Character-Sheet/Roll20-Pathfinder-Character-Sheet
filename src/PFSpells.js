@@ -65,9 +65,7 @@ export function resetCommandMacro (eventInfo, callback) {
             }
         }
         if (_.size(attrs) > 0) {
-            SWUtils.setWrapper(attrs, {
-                silent: true
-            }, done);
+            SWUtils.setWrapper(attrs, PFConst.silentParams, done);
         } else {
             done();
         }
@@ -270,9 +268,7 @@ export function resetCommandMacro (eventInfo, callback) {
                             }	
                         }
                         if (_.size(attrs) > 0) {
-                            SWUtils.setWrapper(attrs, {
-                                silent: true
-                            }, done);
+                            SWUtils.setWrapper(attrs, PFConst.silentParams, done);
                         } else {
                             done();
                         }
@@ -657,9 +653,7 @@ function updatePreparedSpellState (id, eventInfo) {
             if (hideUnprepared) {
                 SWUtils.setWrapper(setter, PFConst.silentParams, resetCommandMacro());
             } else {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                });
+                SWUtils.setWrapper(setter, PFConst.silentParams);
             }
         }
     });
@@ -690,9 +684,7 @@ function resetSpellsPrepared () {
                 }
             });
             if (_.size(setter)) {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                });
+                SWUtils.setWrapper(setter, PFConst.silentParams);
             }
         });
     });
@@ -995,9 +987,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                 if (isNaN(slot)) {
                     slot = level;
                     setter[spellSlotField] = level;
-                    SWUtils.setWrapper(setter, {
-                        silent: true
-                    }, done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams, done);
                     return;
                 }
                 if (slot !== spellLevelRadio) {
@@ -1006,9 +996,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                     if (spellLevelRadio===-1){
                         setter["spells_tab"] = slot;
                     }
-                    SWUtils.setWrapper(setter, {
-                        silent: true
-                    }, done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams, done);
                     return;
                 }
             }
@@ -1252,9 +1240,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             TAS.error("PFSpells.updateSpell:" + id, err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                }, done);
+                SWUtils.setWrapper(setter, PFConst.silentParams, done);
             } else {
                 done();
             }
