@@ -19,7 +19,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv16-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv154-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
@@ -30,10 +30,25 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Drodpowns changed to not have @{} so macros can see text of value chosen</li>
-				<li>API companion compatiblity updates</li>
+				<li>Fix to melee damage buff not applying without hitting recalc</li>
+				<li>Fix to nonlethal hp resetting on level drain</li>
+				<li>Fix to @{size_display} stuck on medium</li>
+				<li>Fix to spell class calculations when spell class not set</li>
+				<li>Fix to spell-attack-type reference in spells</li>
+				<li>Fix to buffs writing NaN and undefined</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv16-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<p>1.53:</p>
+			<ol>
+				<li><strong style="font-size:1rem;font-weight:bold;">Fix to skills</strong> not rolling. </li>
+				<li>Fix to initiative and size buffs</li>
+				<li>Fix to skill size adjustment not resetting when set to default. Added @{size_display} back and translated</li>
+				<li>Fix to default encumbrance and font (in default campaign settings)</li>
+				<li>Fix Melee attack and damage properly. +melee copied to +cmb, +dmg copied to +ranged_dmg for existing buffs between 1.2 and 1.3</li>
+				<li>Armor, Shield, Natural Armor buffs <strong>hidden</strong> due to continued development in beta changing how they work.</li>
+				<li><strong>Attack row size</strong> dropdown corrected: now can implement <em>Strong Jaw</em> or <em>Improved Natural Attack</em> or change the size of any attack without changing the size of the character.</li>
+				<li><strong>If you experience locking</strong> please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong></li>
+			</ol>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv154-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
@@ -3151,12 +3166,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Acrobatics-ranks}" type="number" name="attr_Acrobatics-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Acrobatics-ability}" name="attr_Acrobatics-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Acrobatics-ability-mod}" type="number" name="attr_Acrobatics-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3180,12 +3195,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Appraise-ranks}" type="number" name="attr_Appraise-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Appraise-ability}" name="attr_Appraise-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Appraise-ability-mod}" type="number" name="attr_Appraise-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3215,12 +3230,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry-ranks}" type="number" name="attr_Artistry-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry-ability}" name="attr_Artistry-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry-ability-mod}" type="number" name="attr_Artistry-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3244,12 +3259,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry2-ranks}" type="number" name="attr_Artistry2-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry2-ability}" name="attr_Artistry2-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry2-ability-mod}" type="number" name="attr_Artistry2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3273,12 +3288,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry3-ranks}" type="number" name="attr_Artistry3-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry3-ability}" name="attr_Artistry3-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry3-ability-mod}" type="number" name="attr_Artistry3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3302,12 +3317,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry4-ranks}" type="number" name="attr_Artistry4-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry4-ability}" name="attr_Artistry4-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry4-ability-mod}" type="number" name="attr_Artistry4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3331,12 +3346,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry5-ranks}" type="number" name="attr_Artistry5-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry5-ability}" name="attr_Artistry5-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry5-ability-mod}" type="number" name="attr_Artistry5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3360,12 +3375,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry6-ranks}" type="number" name="attr_Artistry6-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry6-ability}" name="attr_Artistry6-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry6-ability-mod}" type="number" name="attr_Artistry6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3389,12 +3404,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry7-ranks}" type="number" name="attr_Artistry7-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry7-ability}" name="attr_Artistry7-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry7-ability-mod}" type="number" name="attr_Artistry7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3418,12 +3433,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry8-ranks}" type="number" name="attr_Artistry8-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry8-ability}" name="attr_Artistry8-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry8-ability-mod}" type="number" name="attr_Artistry8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3447,12 +3462,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry9-ranks}" type="number" name="attr_Artistry9-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry9-ability}" name="attr_Artistry9-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry9-ability-mod}" type="number" name="attr_Artistry9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3476,12 +3491,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Artistry10-ranks}" type="number" name="attr_Artistry10-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Artistry10-ability}" name="attr_Artistry10-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Artistry10-ability-mod}" type="number" name="attr_Artistry10-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3505,12 +3520,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Bluff-ranks}" type="number" name="attr_Bluff-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Bluff-ability}" name="attr_Bluff-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Bluff-ability-mod}" type="number" name="attr_Bluff-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3534,12 +3549,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Climb-ranks}" type="number" name="attr_Climb-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Climb-ability}" name="attr_Climb-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Climb-ability-mod}" type="number" name="attr_Climb-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3569,12 +3584,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft-ranks}" type="number" name="attr_Craft-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft-ability}" name="attr_Craft-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft-ability-mod}" type="number" name="attr_Craft-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3598,12 +3613,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft2-ranks}" type="number" name="attr_Craft2-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft2-ability}" name="attr_Craft2-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft2-ability-mod}" type="number" name="attr_Craft2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3627,12 +3642,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft3-ranks}" type="number" name="attr_Craft3-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft3-ability}" name="attr_Craft3-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft3-ability-mod}" type="number" name="attr_Craft3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3656,12 +3671,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft4-ranks}" type="number" name="attr_Craft4-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft4-ability}" name="attr_Craft4-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft4-ability-mod}" type="number" name="attr_Craft4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3685,12 +3700,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft5-ranks}" type="number" name="attr_Craft5-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft5-ability}" name="attr_Craft5-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft5-ability-mod}" type="number" name="attr_Craft5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3714,12 +3729,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft6-ranks}" type="number" name="attr_Craft6-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft6-ability}" name="attr_Craft6-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft6-ability-mod}" type="number" name="attr_Craft6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3743,12 +3758,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft7-ranks}" type="number" name="attr_Craft7-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft7-ability}" name="attr_Craft7-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft7-ability-mod}" type="number" name="attr_Craft7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3772,12 +3787,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft8-ranks}" type="number" name="attr_Craft8-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft8-ability}" name="attr_Craft8-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft8-ability-mod}" type="number" name="attr_Craft8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3801,12 +3816,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft9-ranks}" type="number" name="attr_Craft9-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft9-ability}" name="attr_Craft9-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft9-ability-mod}" type="number" name="attr_Craft9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3830,12 +3845,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Craft10-ranks}" type="number" name="attr_Craft10-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Craft10-ability}" name="attr_Craft10-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Craft10-ability-mod}" type="number" name="attr_Craft10-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3859,12 +3874,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Diplomacy-ranks}" type="number" name="attr_Diplomacy-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Diplomacy-ability}" name="attr_Diplomacy-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Diplomacy-ability-mod}" type="number" name="attr_Diplomacy-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3888,12 +3903,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Disable-Device-ranks}" type="number" name="attr_Disable-Device-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Disable-Device-ability}" name="attr_Disable-Device-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Disable-Device-ability-mod}" type="number" name="attr_Disable-Device-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3917,12 +3932,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Disguise-ranks}" type="number" name="attr_Disguise-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Disguise-ability}" name="attr_Disguise-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Disguise-ability-mod}" type="number" name="attr_Disguise-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3946,12 +3961,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Escape-Artist-ranks}" type="number" name="attr_Escape-Artist-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Escape-Artist-ability}" name="attr_Escape-Artist-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Escape-Artist-ability-mod}" type="number" name="attr_Escape-Artist-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -3975,12 +3990,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Fly-ranks}" type="number" name="attr_Fly-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Fly-ability}" name="attr_Fly-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Fly-ability-mod}" type="number" name="attr_Fly-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4004,12 +4019,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Handle-Animal-ranks}" type="number" name="attr_Handle-Animal-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Handle-Animal-ability}" name="attr_Handle-Animal-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Handle-Animal-ability-mod}" type="number" name="attr_Handle-Animal-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4033,12 +4048,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Heal-ranks}" type="number" name="attr_Heal-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Heal-ability}" name="attr_Heal-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Heal-ability-mod}" type="number" name="attr_Heal-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4062,12 +4077,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Intimidate-ranks}" type="number" name="attr_Intimidate-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Intimidate-ability}" name="attr_Intimidate-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Intimidate-ability-mod}" type="number" name="attr_Intimidate-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4097,12 +4112,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Arcana-ranks}" type="number" name="attr_Knowledge-Arcana-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Arcana-ability}" name="attr_Knowledge-Arcana-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Arcana-ability-mod}" type="number" name="attr_Knowledge-Arcana-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4126,12 +4141,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Dungeoneering-ranks}" type="number" name="attr_Knowledge-Dungeoneering-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Dungeoneering-ability}" name="attr_Knowledge-Dungeoneering-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Dungeoneering-ability-mod}" type="number" name="attr_Knowledge-Dungeoneering-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4155,12 +4170,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Engineering-ranks}" type="number" name="attr_Knowledge-Engineering-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Engineering-ability}" name="attr_Knowledge-Engineering-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Engineering-ability-mod}" type="number" name="attr_Knowledge-Engineering-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4184,12 +4199,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Geography-ranks}" type="number" name="attr_Knowledge-Geography-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Geography-ability}" name="attr_Knowledge-Geography-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Geography-ability-mod}" type="number" name="attr_Knowledge-Geography-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4213,12 +4228,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-History-ranks}" type="number" name="attr_Knowledge-History-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-History-ability}" name="attr_Knowledge-History-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-History-ability-mod}" type="number" name="attr_Knowledge-History-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4242,12 +4257,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Local-ranks}" type="number" name="attr_Knowledge-Local-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Local-ability}" name="attr_Knowledge-Local-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Local-ability-mod}" type="number" name="attr_Knowledge-Local-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4271,12 +4286,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Nature-ranks}" type="number" name="attr_Knowledge-Nature-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Nature-ability}" name="attr_Knowledge-Nature-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Nature-ability-mod}" type="number" name="attr_Knowledge-Nature-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4300,12 +4315,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Nobility-ranks}" type="number" name="attr_Knowledge-Nobility-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Nobility-ability}" name="attr_Knowledge-Nobility-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Nobility-ability-mod}" type="number" name="attr_Knowledge-Nobility-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4329,12 +4344,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Planes-ranks}" type="number" name="attr_Knowledge-Planes-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Planes-ability}" name="attr_Knowledge-Planes-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Planes-ability-mod}" type="number" name="attr_Knowledge-Planes-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4358,12 +4373,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Knowledge-Religion-ranks}" type="number" name="attr_Knowledge-Religion-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Knowledge-Religion-ability}" name="attr_Knowledge-Religion-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Knowledge-Religion-ability-mod}" type="number" name="attr_Knowledge-Religion-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4387,12 +4402,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Linguistics-ranks}" type="number" name="attr_Linguistics-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Linguistics-ability}" name="attr_Linguistics-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Linguistics-ability-mod}" type="number" name="attr_Linguistics-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4422,12 +4437,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore-ranks}" type="number" name="attr_Lore-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore-ability}" name="attr_Lore-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore-ability-mod}" type="number" name="attr_Lore-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4451,12 +4466,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore2-ranks}" type="number" name="attr_Lore2-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore2-ability}" name="attr_Lore2-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore2-ability-mod}" type="number" name="attr_Lore2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4480,12 +4495,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore3-ranks}" type="number" name="attr_Lore3-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore3-ability}" name="attr_Lore3-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore3-ability-mod}" type="number" name="attr_Lore3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4509,12 +4524,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore4-ranks}" type="number" name="attr_Lore4-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore4-ability}" name="attr_Lore4-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore4-ability-mod}" type="number" name="attr_Lore4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4538,12 +4553,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore5-ranks}" type="number" name="attr_Lore5-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore5-ability}" name="attr_Lore5-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore5-ability-mod}" type="number" name="attr_Lore5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4567,12 +4582,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore6-ranks}" type="number" name="attr_Lore6-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore6-ability}" name="attr_Lore6-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore6-ability-mod}" type="number" name="attr_Lore6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4596,12 +4611,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore7-ranks}" type="number" name="attr_Lore7-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore7-ability}" name="attr_Lore7-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore7-ability-mod}" type="number" name="attr_Lore7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4625,12 +4640,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore8-ranks}" type="number" name="attr_Lore8-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore8-ability}" name="attr_Lore8-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore8-ability-mod}" type="number" name="attr_Lore8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4654,12 +4669,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore9-ranks}" type="number" name="attr_Lore9-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore9-ability}" name="attr_Lore9-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore9-ability-mod}" type="number" name="attr_Lore9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4683,12 +4698,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Lore10-ranks}" type="number" name="attr_Lore10-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Lore10-ability}" name="attr_Lore10-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Lore10-ability-mod}" type="number" name="attr_Lore10-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4712,12 +4727,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perception-ranks}" type="number" name="attr_Perception-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perception-ability}" name="attr_Perception-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perception-ability-mod}" type="number" name="attr_Perception-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4747,12 +4762,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform-ranks}" type="number" name="attr_Perform-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform-ability}" name="attr_Perform-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform-ability-mod}" type="number" name="attr_Perform-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4776,12 +4791,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform2-ranks}" type="number" name="attr_Perform2-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform2-ability}" name="attr_Perform2-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform2-ability-mod}" type="number" name="attr_Perform2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4805,12 +4820,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform3-ranks}" type="number" name="attr_Perform3-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform3-ability}" name="attr_Perform3-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform3-ability-mod}" type="number" name="attr_Perform3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4834,12 +4849,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform4-ranks}" type="number" name="attr_Perform4-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform4-ability}" name="attr_Perform4-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform4-ability-mod}" type="number" name="attr_Perform4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4863,12 +4878,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform5-ranks}" type="number" name="attr_Perform5-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform5-ability}" name="attr_Perform5-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform5-ability-mod}" type="number" name="attr_Perform5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4892,12 +4907,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform6-ranks}" type="number" name="attr_Perform6-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform6-ability}" name="attr_Perform6-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform6-ability-mod}" type="number" name="attr_Perform6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4921,12 +4936,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform7-ranks}" type="number" name="attr_Perform7-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform7-ability}" name="attr_Perform7-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform7-ability-mod}" type="number" name="attr_Perform7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4950,12 +4965,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform8-ranks}" type="number" name="attr_Perform8-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform8-ability}" name="attr_Perform8-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform8-ability-mod}" type="number" name="attr_Perform8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -4979,12 +4994,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform9-ranks}" type="number" name="attr_Perform9-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform9-ability}" name="attr_Perform9-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform9-ability-mod}" type="number" name="attr_Perform9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5008,12 +5023,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Perform10-ranks}" type="number" name="attr_Perform10-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Perform10-ability}" name="attr_Perform10-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Perform10-ability-mod}" type="number" name="attr_Perform10-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5043,12 +5058,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession-ranks}" type="number" name="attr_Profession-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession-ability}" name="attr_Profession-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession-ability-mod}" type="number" name="attr_Profession-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5072,12 +5087,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession2-ranks}" type="number" name="attr_Profession2-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession2-ability}" name="attr_Profession2-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession2-ability-mod}" type="number" name="attr_Profession2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5101,12 +5116,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession3-ranks}" type="number" name="attr_Profession3-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession3-ability}" name="attr_Profession3-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession3-ability-mod}" type="number" name="attr_Profession3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5130,12 +5145,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession4-ranks}" type="number" name="attr_Profession4-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession4-ability}" name="attr_Profession4-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession4-ability-mod}" type="number" name="attr_Profession4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5159,12 +5174,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession5-ranks}" type="number" name="attr_Profession5-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession5-ability}" name="attr_Profession5-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession5-ability-mod}" type="number" name="attr_Profession5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5188,12 +5203,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession6-ranks}" type="number" name="attr_Profession6-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession6-ability}" name="attr_Profession6-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession6-ability-mod}" type="number" name="attr_Profession6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5217,12 +5232,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession7-ranks}" type="number" name="attr_Profession7-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession7-ability}" name="attr_Profession7-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession7-ability-mod}" type="number" name="attr_Profession7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5246,12 +5261,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession8-ranks}" type="number" name="attr_Profession8-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession8-ability}" name="attr_Profession8-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession8-ability-mod}" type="number" name="attr_Profession8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5275,12 +5290,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession9-ranks}" type="number" name="attr_Profession9-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession9-ability}" name="attr_Profession9-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession9-ability-mod}" type="number" name="attr_Profession9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5304,12 +5319,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Profession10-ranks}" type="number" name="attr_Profession10-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Profession10-ability}" name="attr_Profession10-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Profession10-ability-mod}" type="number" name="attr_Profession10-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5333,12 +5348,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Ride-ranks}" type="number" name="attr_Ride-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Ride-ability}" name="attr_Ride-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Ride-ability-mod}" type="number" name="attr_Ride-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5362,12 +5377,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Sense-Motive-ranks}" type="number" name="attr_Sense-Motive-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Sense-Motive-ability}" name="attr_Sense-Motive-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Sense-Motive-ability-mod}" type="number" name="attr_Sense-Motive-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5391,12 +5406,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Sleight-of-Hand-ranks}" type="number" name="attr_Sleight-of-Hand-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Sleight-of-Hand-ability}" name="attr_Sleight-of-Hand-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Sleight-of-Hand-ability-mod}" type="number" name="attr_Sleight-of-Hand-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5420,12 +5435,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Spellcraft-ranks}" type="number" name="attr_Spellcraft-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Spellcraft-ability}" name="attr_Spellcraft-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Spellcraft-ability-mod}" type="number" name="attr_Spellcraft-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5449,12 +5464,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Stealth-ranks}" type="number" name="attr_Stealth-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Stealth-ability}" name="attr_Stealth-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Stealth-ability-mod}" type="number" name="attr_Stealth-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5478,12 +5493,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Survival-ranks}" type="number" name="attr_Survival-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Survival-ability}" name="attr_Survival-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Survival-ability-mod}" type="number" name="attr_Survival-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5507,12 +5522,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Swim-ranks}" type="number" name="attr_Swim-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Swim-ability}" name="attr_Swim-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Swim-ability-mod}" type="number" name="attr_Swim-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5536,12 +5551,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{Use-Magic-Device-ranks}" type="number" name="attr_Use-Magic-Device-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{Use-Magic-Device-ability}" name="attr_Use-Magic-Device-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Use-Magic-Device-ability-mod}" type="number" name="attr_Use-Magic-Device-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5572,12 +5587,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-0-ability}" name="attr_Misc-Skill-0-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-0-ability-mod}" type="number" name="attr_Misc-Skill-0-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5602,12 +5617,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-1-ability}" name="attr_Misc-Skill-1-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-1-ability-mod}" type="number" name="attr_Misc-Skill-1-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5632,12 +5647,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-2-ability}" name="attr_Misc-Skill-2-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-2-ability-mod}" type="number" name="attr_Misc-Skill-2-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5662,12 +5677,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-3-ability}" name="attr_Misc-Skill-3-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-3-ability-mod}" type="number" name="attr_Misc-Skill-3-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5692,12 +5707,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-4-ability}" name="attr_Misc-Skill-4-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-4-ability-mod}" type="number" name="attr_Misc-Skill-4-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5722,12 +5737,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-5-ability}" name="attr_Misc-Skill-5-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-5-ability-mod}" type="number" name="attr_Misc-Skill-5-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5752,12 +5767,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-6-ability}" name="attr_Misc-Skill-6-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-6-ability-mod}" type="number" name="attr_Misc-Skill-6-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5782,12 +5797,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-7-ability}" name="attr_Misc-Skill-7-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-7-ability-mod}" type="number" name="attr_Misc-Skill-7-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5812,12 +5827,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-8-ability}" name="attr_Misc-Skill-8-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-8-ability-mod}" type="number" name="attr_Misc-Skill-8-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5842,12 +5857,12 @@ abilities:
 							<span class="sheet-table-cell">
 								<select title="@{Misc-Skill-9-ability}" name="attr_Misc-Skill-9-ability" class="sheet-select-small">
 									<option value="0" data-i18n="none" selected>None</option>
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{Misc-Skill-9-ability-mod}" type="number" name="attr_Misc-Skill-9-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5871,12 +5886,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Acrobatics-ranks}" type="number" name="attr_CS-Acrobatics-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Acrobatics-ability}" name="attr_CS-Acrobatics-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Acrobatics-ability-mod}" type="number" name="attr_CS-Acrobatics-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5900,12 +5915,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Athletics-ranks}" type="number" name="attr_CS-Athletics-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Athletics-ability}" name="attr_CS-Athletics-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Athletics-ability-mod}" type="number" name="attr_CS-Athletics-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5929,12 +5944,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Finesse-ranks}" type="number" name="attr_CS-Finesse-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Finesse-ability}" name="attr_CS-Finesse-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Finesse-ability-mod}" type="number" name="attr_CS-Finesse-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5958,12 +5973,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Influence-ranks}" type="number" name="attr_CS-Influence-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Influence-ability}" name="attr_CS-Influence-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Influence-ability-mod}" type="number" name="attr_CS-Influence-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -5987,12 +6002,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Nature-ranks}" type="number" name="attr_CS-Nature-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Nature-ability}" name="attr_CS-Nature-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Nature-ability-mod}" type="number" name="attr_CS-Nature-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6016,12 +6031,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Perception-ranks}" type="number" name="attr_CS-Perception-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Perception-ability}" name="attr_CS-Perception-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Perception-ability-mod}" type="number" name="attr_CS-Perception-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6045,12 +6060,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Performance-ranks}" type="number" name="attr_CS-Performance-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Performance-ability}" name="attr_CS-Performance-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv-default" selected>&#8226;CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Performance-ability-mod}" type="number" name="attr_CS-Performance-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6074,12 +6089,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Religion-ranks}" type="number" name="attr_CS-Religion-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Religion-ability}" name="attr_CS-Religion-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Religion-ability-mod}" type="number" name="attr_CS-Religion-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6103,12 +6118,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Society-ranks}" type="number" name="attr_CS-Society-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Society-ability}" name="attr_CS-Society-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Society-ability-mod}" type="number" name="attr_CS-Society-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6132,12 +6147,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Spellcraft-ranks}" type="number" name="attr_CS-Spellcraft-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Spellcraft-ability}" name="attr_CS-Spellcraft-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv-default" selected>&#8226;INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Spellcraft-ability-mod}" type="number" name="attr_CS-Spellcraft-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6161,12 +6176,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Stealth-ranks}" type="number" name="attr_CS-Stealth-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Stealth-ability}" name="attr_CS-Stealth-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Stealth-ability-mod}" type="number" name="attr_CS-Stealth-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6190,12 +6205,12 @@ abilities:
 							<span class="sheet-table-cell"><input title="@{CS-Survival-ranks}" type="number" name="attr_CS-Survival-ranks" value="0" /></span>
 							<span class="sheet-table-cell">
 								<select title="@{CS-Survival-ability}" name="attr_CS-Survival-ability" class="sheet-select-small">
-									<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod}" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
-									<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv-default" selected>&#8226;WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input title="@{CS-Survival-ability-mod}" type="number" name="attr_CS-Survival-ability-mod" value="0" class="sheet-calc" readonly /></span>
@@ -6477,13 +6492,13 @@ abilities:
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell" style="width:8%;">
 								<select title="@{selected-ability-psionic-power}" name="attr_selected-ability-psionic-power" style="font-size:1em;">
-									<option value="0 - [[ @{condition-sickened} ]]" data-i18n="none-default" selected>&#8226;None</option>
-									<option value="@{STR-mod} - [[ @{condition-sickened} ]]" data-i18n="strength-abbrv">STR</option>
-									<option value="@{DEX-mod} - [[ @{condition-sickened} ]]" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="@{CON-mod} - [[ @{condition-sickened} ]]" data-i18n="constitution-abbrv">CON</option>
-									<option value="@{INT-mod} - [[ @{condition-sickened} ]]" data-i18n="intelligence-abbrv">INT</option>
-									<option value="@{WIS-mod} - [[ @{condition-sickened} ]]" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="@{CHA-mod} - [[ @{condition-sickened} ]]" data-i18n="charisma-abbrv">CHA</option>
+									<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 								</select>
 							</span>
 							<span class="sheet-table-cell"><input type="number" title="@{ability-psionic-power}" name="attr_ability-psionic-power" value="0" class="sheet-calc" readonly /></span>
@@ -8731,7 +8746,7 @@ abilities:
 									<input type="text" value="" name="attr_effect_from_compendium" accept="Effect" />
 									<input type="text" value="" name="attr_compendium_category" accept="Category" />
 								</div>
-								<input type="text" name="attr_spell_options" value="" />
+								<input type="hidden" name="attr_spell_options" value="" />
 								<div class="sheet-sect sheet-expand">
 									<input type="checkbox" class="sheet-showarrow sheet-misc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
 									<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>

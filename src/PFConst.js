@@ -32,7 +32,8 @@ export default {
         'FF-ability': 'FF-DEX',
         'CMD-ability': 'CMD-STR',
         'CMD-ability1': 'CMD-DEX',
-        'CMD-ability2':	'FF-CMD'
+        'CMD-ability2':	'FF-CMD',
+		'selected-ability-psionic-power': 'ability-psionic-power'
 	},
 	repeatingAbilityScoreModDropdowns: {
 		"weapon": "damage-ability"

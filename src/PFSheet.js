@@ -339,11 +339,11 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
             callback();
         }
     }, 
-    updatedGroup = _.after(3,function(){
-        setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,done);
-		TAS.notice("migrateDropdowns.updatedGroup","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    updatedGroup = _.after(4,function(){
+        setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,callback);
+		TAS.notice("PFSheet.migrateDropdown.updatedGroup","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        //done();
+
     }),
 	updateRepeatingAttackTypes = function(){
 		var sections,doneOneSection;
@@ -363,27 +363,30 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 					return;
 				}
 				attr='_'+PFConst.repeatingAttackTypeManualDropdowns[section];
-				fields = SWUtils.cartesianAppend(['repeating_'+section+'_'],ids,[attr]);
+				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
 				getAttrs(fields,function(v){
-					var setter;
-					try{
-						TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
-						setter = ids.reduce(function(m,id){
-							var a = 'repeating_'+section+'_'+id+attr;
-							if (v[a] && v[a]!=="0"){
-								m[a]=v[a].replace('@{','').replace('}','');
-							}				
+					var setter, tempstr='';
+					TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+					setter = Object.keys(v).reduce(function(m,a){
+						//var a = 'repeating_'+section+'_'+id+attr;
+						try{
+							if (v[a] && v[a][0]!=="0"){
+								tempstr=v[a].replace('@{','').replace('}','');
+								if (tempstr!==v[a]){
+									m[a]=tempstr;
+								}
+							}
+						} catch (err){
+							TAS.error("PFSheet.migrate repeating attacktype dropdowns for: "+section,err);
+						} finally {
 							return m;
-						},{});
-					} catch (err){
-						TAS.error("PFSheet.migrate repeating attacktype dropdowns for: "+section,err);
-					} finally {
-						if (_.size(setter)>0){
-							TAS.debug("Migrate attack dropdowns setting:",setter);
-							setAttrs(setter,PFConst.silentParams,doneOneSection);
-						} else {
-							doneOneSection();
 						}
+					},{});
+					if (_.size(setter)>0){
+						TAS.debug("Migrate attack dropdowns setting:",setter);
+						setAttrs(setter,PFConst.silentParams,doneOneSection);
+					} else {
+						doneOneSection();
 					}
 				});
 			});
@@ -400,19 +403,22 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
             getAttrs(fields,function(v){
                 var setter;
 				try {
-					TAS.debug("migrate repeating AbilityDropdowns getting:",v);					
-					setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
+					TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
+					setter = Object.keys(v).reduce(function(m,a){
+						var tempstr='';
 						if (v[a] && v[a]!=="0"){
-							m[a]=v[a].replace('@{','').replace('}','');
+							tempstr=v[a].replace('@{','').replace('}','');
+							if (tempstr!==v[a]){
+								m[a]=tempstr;
+							}
 						}
 						return m;
 					},{});
-					TAS.debug("migrate ability dropdowns setting:",setter);
 				} catch (err){
 					TAS.error("PFSheet.migrate repeating ability dropdowns ",err);
 				} finally {
 					if (_.size(setter)){
-						TAS.debug("Migrate repeating ability dropdowns setting:",setter);
+						TAS.debug("Migrate repeatingweapon ability dropdowns setting:",setter);
 						setAttrs(setter,PFConst.silentParams,updatedGroup);
 					} else {
 						updatedGroup();
@@ -428,6 +434,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 			try{
 				TAS.debug("migrateAbilityDropdowns getting:",v);
 				setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
+					var tempstr='';
 					if (v[a] && v[a]!=="0"){
 						switch(a){
 							case 'AC-ability':
@@ -435,12 +442,18 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 							case 'CMD-ability':
 							case 'CMD-ability1':
 							case 'CMD-ability2':
-								m[a]=PFUtils.findAbilityInString(v[a]);
+							case 'selected-ability-psionic-power':
+								tempstr=PFUtils.findAbilityInString(v[a])||"0";
 								break;
 							default:
-								m[a]=v[a].replace('@{','').replace('}','');
+								tempstr=v[a].replace('@{','').replace('}','');
 								break;
 						}
+						if (tempstr!==v[a]){
+							m[a]=tempstr;
+						}
+					} else if (v[a] && v[a][0]==="0" && String(v[a]).length > 1){
+						m[a]="0";
 					}
 					return m;
 				},{});
@@ -455,14 +468,44 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 				}
 			}
         });
+    },
+    updateSkills = function(){
+        var fields = PFSkills.allTheSkills.map(function(s){return s+"-ability";});
+        getAttrs(fields,function(v){
+            var setter={};
+			try{
+				TAS.debug("updateSkills getting:",v);
+				setter = Object.keys(v).reduce(function(m,a){
+					var tempstr='';
+					if (v[a] ){
+						tempstr=v[a].replace('@{','').replace('}','');
+						if (tempstr!==v[a]){
+							m[a]=tempstr;
+						}
+					}
+					return m;
+				},{});
+			} catch (err){
+				TAS.error("PFSheet.migrate Skills dropdowns ",err);
+			} finally {
+				if (_.size(setter)){
+					TAS.debug("Migrate skill dropdowns setting:",setter);
+					setAttrs(setter,PFConst.silentParams,updatedGroup);
+				} else {
+					updatedGroup();
+				}
+			}
+        });
     };
     getAttrs(['migrated_ability_dropdowns'],function(v){
         var setter={};
-        TAS.debug("migrateAbilityDropdowns getting:",v);
+		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
         if(!parseInt(v.migrated_ability_dropdowns,10)){
             updateRepeating();
             updateNonRepeating();
 			updateRepeatingAttackTypes();
+			updateSkills();
         } else {
             done();
         }
