@@ -1,4 +1,5 @@
 {
+  "equivalent-to": "Equivalent to",
   "linked-attacks": "Linked attacks",
   "use-buff-bonus-stacking": " Use buff bonus types and stacking",
   "bonus-type": "Bonus Type",
@@ -631,7 +632,7 @@
   "damage-modifier-abbrv": "Dmg Mods",
   "damage-modifiers": "Damage Modifiers",
   "damage-multiplier-place": "15 etc",
-  "damage-multiplier-title": "Damage ability modifier: 5, 15, 2, etc, can leave blank to represent 1",
+  "damage-multiplier-title": "Damage ability modifier: 5, 15, 2, etc.",
   "damage-reduction": "Damage Reduction",
   "damage-resistance-abbrv": " DR",
   "damage-resistance-title": "Damage Reduction: The amount of damage ignored and the type of weapon that negates the ability (eg 5/silver)",
