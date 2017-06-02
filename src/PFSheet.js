@@ -45,6 +45,7 @@ function expandAll  () {
 				"expandall": "0",
 				pagetab: "99",
 				abilities_tab: "99",
+				"npc-abilities_tab": "99",
 				skills_tab: "99",
 				spellclass_tab: "99",
 				spells_tab: "99",
@@ -610,11 +611,15 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
 			}
+
+			if (oldversion < 1.55){
+				PFAttacks.recalculate();
+			}
 			if (oldversion < 1.61){
-				TAS.notice("UPgrading to 1.61");
 				PFBuffs.migrate(null,oldversion);
 				migrateDropdowns();
 			}
+
 		}
 
 	} catch (err) {

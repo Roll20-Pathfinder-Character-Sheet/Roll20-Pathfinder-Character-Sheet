@@ -82,7 +82,16 @@ function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 	}
 	return "";
 }
-
+function getDamageMult(str){
+	var abilityMult=1;
+	if(str){
+		abilityMult= Number(String(str).replace(',','.'));
+		if (!abilityMult) { 
+			abilityMult =1;
+		}
+	}
+	return abilityMult;
+}
 function updateRepeatingAddInMacro(id, eventInfo) {
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix = "repeating_weapon_" + idStr,
@@ -231,10 +240,10 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 				damageBuffs = parseInt(v["buff_DMG-total"], 10) || 0;
 			}
 
-			if(v[abilityMultField]=="1.5"||v[abilityMultField]=="1,5"){
-				abilityMult=1.5;
-			}
-			
+
+			abilityMult=getDamageMult(v[abilityMultField]);
+
+
 			damageBuffs +=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
 			if(!rangedAttack || isNaN(maxA)) {
@@ -371,9 +380,9 @@ function getRecalculatedDamageOnly (id,v){
 		}
 
 		damageBuffs += dmgConditions;
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
-		}
+
+		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
+
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -477,9 +486,9 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
-		}
+
+		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
+
 
 		if (isRanged){
 			damageBuffs =  parseInt(v['buff_DMG_ranged-total'],10)||0;

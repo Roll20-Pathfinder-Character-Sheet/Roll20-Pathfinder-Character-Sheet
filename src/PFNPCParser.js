@@ -1988,7 +1988,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 					if (attack.naturaltype === 'secondary') {
 						dmgMult = 0.5;
 					} else if (attack.dmgMult && attack.dmgMult === 1.5) {
-						memo[prefix + "damage_ability_mult"] = 1.5;
+						memo[prefix + "damage_ability_mult"] = "1.5";
 						dmgMult = 1.5;
 					}
 				}

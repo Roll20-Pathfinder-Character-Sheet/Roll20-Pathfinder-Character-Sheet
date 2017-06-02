@@ -65,9 +65,7 @@ export function resetCommandMacro (eventInfo, callback) {
             }
         }
         if (_.size(attrs) > 0) {
-            SWUtils.setWrapper(attrs, {
-                silent: true
-            }, done);
+            SWUtils.setWrapper(attrs, PFConst.silentParams, done);
         } else {
             done();
         }
@@ -270,9 +268,7 @@ export function resetCommandMacro (eventInfo, callback) {
                             }	
                         }
                         if (_.size(attrs) > 0) {
-                            SWUtils.setWrapper(attrs, {
-                                silent: true
-                            }, done);
+                            SWUtils.setWrapper(attrs, PFConst.silentParams, done);
                         } else {
                             done();
                         }
@@ -657,9 +653,7 @@ function updatePreparedSpellState (id, eventInfo) {
             if (hideUnprepared) {
                 SWUtils.setWrapper(setter, PFConst.silentParams, resetCommandMacro());
             } else {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                });
+                SWUtils.setWrapper(setter, PFConst.silentParams);
             }
         }
     });
@@ -690,9 +684,7 @@ function resetSpellsPrepared () {
                 }
             });
             if (_.size(setter)) {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                });
+                SWUtils.setWrapper(setter, PFConst.silentParams);
             }
         });
     });
@@ -995,9 +987,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                 if (isNaN(slot)) {
                     slot = level;
                     setter[spellSlotField] = level;
-                    SWUtils.setWrapper(setter, {
-                        silent: true
-                    }, done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams, done);
                     return;
                 }
                 if (slot !== spellLevelRadio) {
@@ -1006,9 +996,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                     if (spellLevelRadio===-1){
                         setter["spells_tab"] = slot;
                     }
-                    SWUtils.setWrapper(setter, {
-                        silent: true
-                    }, done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams, done);
                     return;
                 }
             }
@@ -1252,9 +1240,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             TAS.error("PFSpells.updateSpell:" + id, err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, {
-                    silent: true
-                }, done);
+                SWUtils.setWrapper(setter, PFConst.silentParams, done);
             } else {
                 done();
             }
@@ -1321,7 +1307,6 @@ function updateSpellsOld  (callback, silently, eventInfo) {
  *@param {object} eventInfo used to find row id since id param will be null
  */
 export function importFromCompendium (id, eventInfo) {
-
     getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description"], function (v) {
         var levelStrBase = v["repeating_spells_spell_lvlstr"],
         rangeText = v["repeating_spells_range_from_compendium"],
