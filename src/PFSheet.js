@@ -45,6 +45,7 @@ function expandAll  () {
 				"expandall": "0",
 				pagetab: "99",
 				abilities_tab: "99",
+				"npc-abilities_tab": "99",
 				skills_tab: "99",
 				spellclass_tab: "99",
 				spells_tab: "99",

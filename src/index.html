@@ -149,7 +149,7 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_CHA_skills_penalty_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-charisma-penalty-title"><input title="@{buff_CHA_skills-total_penalty}" name="attr_buff_CHA_skills-total_penalty" type="number" value="0" class="sheet-calc" readonly />-<span class="sheet-nowrap-over" data-i18n="charisma-skills-abbrv-penalty">CHA</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Fort_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-fortitude-title"><input title="@{buff_Fort-total}" name="attr_buff_Fort-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="fortitude-abbrv">Fort</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Ref_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-reflex-title"><input title="@{buff_Ref-total}" name="attr_buff_Ref-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="reflex-abbrv">Ref</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Will_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-will-title"><input title="@{buff_Will-total}" name="attr_buff_Will-total" type="number" value="0" class="sheet-calc" readonly />-<span class="sheet-nowrap-over" data-i18n="willpower-abbrv">Will</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Will_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-will-title"><input title="@{buff_Will-total}" name="attr_buff_Will-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="willpower-abbrv">Will</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_AC_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-armor-class-title"><input title="@{buff_AC-total}" name="attr_buff_AC-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="armor-class-abbrv">AC</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Touch_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-touch-title"><input title="@{buff_Touch-total}" name="attr_buff_Touch-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="touch-armor-class-abbrv">Touch AC</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Flat-Footed_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-flat-footed-title"><input title="@{buff_flat-footed-total}" name="attr_buff_flat-footed-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="flat-footed-abbrv">Flat-Footed AC</span></label>
@@ -2652,18 +2652,12 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
 								<span class="sheet-divider-db sheet-nondual-sect">+</span>								
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
-									<select type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
+								<label class="sheet-small-label2 sheet-entry-vshort sheet-sect sheet-nondual-sect">
+									<select name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
 										<option value="0.5">0.5</option>
 										<option value="1" selected>&#8226;1</option>
 										<option value="1.5">1.5</option>
-										<option value="2">2.5</option>
-										<option value="3">3</option>
-										<option value="3.5">3.5</option>
-										<option value="4">4.5</option>
-										<option value="5">5</option>
-										<option value="5.5">5.5</option>
-										<option value="6">6</option>
+										<option value="2">2</option>
 									</select>
 									<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
 								</label>
@@ -8708,7 +8702,21 @@
 									<span data-i18n="class">Class</span>
 								</label>
 								<label class="sheet-small-label2 sheet-spell-multiclassed sheet-entry-8p"><input title="@{repeating_spells_$X_spellclass}" type="text" value="" name="attr_spellclass" /><span data-i18n="class">Class</span></label>
-								<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_spell_level}" type="number" value="" name="attr_spell_level" /><span data-i18n="level">Level</span></label>
+								<label class="sheet-small-label2 sheet-entry-vshort">
+									<select title="@{repeating_spells_$X_spell_level}" name="attr_spell_level" >
+										<option value="0" selected >0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+									</select>
+									<span data-i18n="level">Level</span>
+								</label>
 								<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
 								<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
 								<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
@@ -9719,18 +9727,12 @@
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
 									<span class="sheet-divider-db sheet-nondual-sect">+</span>
-									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
-										<select type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
+									<label class="sheet-small-label2 sheet-entry-vshort sheet-sect sheet-nondual-sect">
+										<select name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
 											<option value="0.5">0.5</option>
 											<option value="1" selected>&#8226;1</option>
 											<option value="1.5">1.5</option>
-											<option value="2">2.5</option>
-											<option value="3">3</option>
-											<option value="3.5">3.5</option>
-											<option value="4">4.5</option>
-											<option value="5">5</option>
-											<option value="5.5">5.5</option>
-											<option value="6">6</option>
+											<option value="2">2</option>
 										</select>
 										<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
 									</label>
@@ -10305,7 +10307,21 @@
 											<span data-i18n="class">Class</span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-8p"><input title="@{repeating_spells_$X_spellclass}" type="text" value="" name="attr_spellclass" /><span data-i18n="class">Class</span></label>
-										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_spell_level}" type="number" value="" name="attr_spell_level" /><span data-i18n="level">Level</span></label>
+										<label class="sheet-small-label2 sheet-entry-vshort">
+											<select title="@{repeating_spells_$X_spell_level}" name="attr_spell_level" >
+												<option value="0" selected >0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+											</select>
+											<span data-i18n="level">Level</span>
+										</label>
 										<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
