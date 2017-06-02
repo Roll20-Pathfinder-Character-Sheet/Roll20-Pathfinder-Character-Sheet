@@ -428,6 +428,9 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
 			}
+			if (oldversion < 1.55){
+				PFAttacks.recalculate();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
