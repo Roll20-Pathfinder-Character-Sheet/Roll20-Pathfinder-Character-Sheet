@@ -231,9 +231,13 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 				damageBuffs = parseInt(v["buff_DMG-total"], 10) || 0;
 			}
 
-			if(v[abilityMultField]=="1.5"||v[abilityMultField]=="1,5"){
-				abilityMult=1.5;
+			if(v[abilityMultField]){
+				abilityMult= Number(v[abilityMultField].replace(',','.'));
+				if (!abilityMult) { 
+					abilityMult =1;
+				}
 			}
+
 			
 			damageBuffs +=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
@@ -371,9 +375,13 @@ function getRecalculatedDamageOnly (id,v){
 		}
 
 		damageBuffs += dmgConditions;
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
+		if(v[prefix+ "damage_ability_mult"]){
+			abilityMult= Number(v[prefix+ "damage_ability_mult"].replace(',','.'));
+			if (!abilityMult) { 
+				abilityMult =1;
+			}
 		}
+
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -477,8 +485,11 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
+		if(v[prefix+ "damage_ability_mult"]){
+			abilityMult= Number(v[prefix+ "damage_ability_mult"].replace(',','.'));
+			if (!abilityMult) { 
+				abilityMult =1;
+			}
 		}
 
 		if (isRanged){
