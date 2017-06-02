@@ -4,6 +4,27 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 
+export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
+	var bad=false;
+	TAS.debug("setting "+_.size(a)+" values:",a);
+	_.each(a,function(v,k){
+		if (!v && (isNaN(v) || v === undefined)){
+			TAS.error("Setting NaN or undefined at "+k);
+			bad=true;
+		}
+	});
+	if (bad){
+		TAS.callstack();
+	}
+	setAttrs(a,b,c);
+});
+
+export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
+	getAttrs(a,function(vals){
+		cb(vals);
+	});
+});
+
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
@@ -143,7 +164,7 @@ export function evaluateExpression (exprStr, callback) {
 				replacedStr = newexprStr;
 			}
 			if (!isNaN(Number(replacedStr)) && isFinite(replacedStr)) {
-				evaluated = parseFloat(replacedStr);
+				evaluated = parseInt(replacedStr,10);
 				if (!isNaN(evaluated)) {
 					callback(evaluated);
 					return;
@@ -196,7 +217,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 	},
 	errordone = function(a,b,c,currError){
 		var donesetter={};
-		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
+		////TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
 			setAttrs(donesetter,{silent:true});				
@@ -251,9 +272,9 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 						if (value2 === null || value2===undefined || isNaN(value2)) {
 							isError=1;
 							value2=trueDefault;
-							//TAS.debug("setting "+ writeField+" to " +value2);
 						}
-						if (isNaN(currVal) || currVal !== value2) {
+						//changed to 2 equals and flip so value2 on left. 
+						if (isNaN(currVal) || value2 != currVal) {
 							setter[writeField] = value2;
 						} 
 						if (_.size(setter)>0){
@@ -277,8 +298,6 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 		} catch (err) {
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
 			errordone(0,0,0,0);
-			//setter[writeField+'_error']=1;
-			//setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 }
@@ -629,12 +648,12 @@ export function deleteRepeating(callback,section){
 		done();
 		return;
 	}
-	TAS.debug("SWUtils.deleteFeatures",section);
+	//TAS.debug("SWUtils.deleteFeatures",section);
 	getSectionIDs(section,function(ids){
 		var prefix="repeating_"+section+"_";
 		if(ids && _.size(ids)){
 			ids.forEach(function(id) {
-				TAS.debug("deleting "+prefix+id);
+				//TAS.debug("deleting "+prefix+id);
 				removeRepeatingRow(prefix+id);
 			});
 			done();

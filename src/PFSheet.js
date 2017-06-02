@@ -9,12 +9,10 @@ import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFSize from './PFSize';
 import * as PFUtilsAsync  from './PFUtilsAsync';
-//import * as PFMacros from './PFMacros';
-//import * as PFMenus from './PFMenus';
 import * as PFInitiative from './PFInitiative';
 import * as PFSkills from './PFSkills';
 import * as PFEncumbrance from './PFEncumbrance';
-import* as PFInventory from './PFInventory';
+import * as PFInventory from './PFInventory';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFBuffs from './PFBuffs';
 import * as PFSaves from './PFSaves';
@@ -43,10 +41,11 @@ function expandAll  () {
 			//set tabs to "all"
 			//set conditions and buffs to "show"
 			//set all others to default (which is "show")
-			setAttrs({
+			SWUtils.setWrapper({
 				"expandall": "0",
 				pagetab: "99",
 				abilities_tab: "99",
+				"npc-abilities_tab": "99",
 				skills_tab: "99",
 				spellclass_tab: "99",
 				spells_tab: "99",
@@ -252,7 +251,7 @@ function expandAll  () {
 						}
 						return memo;
 					}, {});
-					setAttrs(setter, {
+					SWUtils.setWrapper(setter, {
 						silent: true
 					});
 				});
@@ -266,7 +265,7 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -290,7 +289,7 @@ function setupNewSheet (callback){
 function recalcExpressions (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.equationMacros),
 	done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalcExpressions");
+		//TAS.debug("leaving PFSheet.recalcExpressions");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -336,7 +335,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 }
 export function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.migrate");
+		//TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -352,7 +351,7 @@ export function migrate (oldversion, callback, errorCallback) {
 	doneOne;
 	try {
 		//don't need to check if oldversion > 0 since this is only called if it is.
-		TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
+		//TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
 		if (oldversion < 1.0) {
 			doneOne=_.after(7,function(){
 				TAS.info("we finished calling all the migrates");
@@ -422,7 +421,15 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.53){
 				PFBuffs.recalculate(null,false,oldversion);
 				PFSkills.migrate(null,oldversion);
+				PFSize.recalculate(function(){
+					PFEncumbrance.migrate();
+				});
+			}
+			if (oldversion < 1.54){
 				PFBuffs.recalculate();
+			}
+			if (oldversion < 1.55){
+				PFAttacks.recalculate();
 			}
 		}
 	} catch (err) {
@@ -434,7 +441,7 @@ export function migrate (oldversion, callback, errorCallback) {
 }
 function recalculateParallelModules (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateParallelModules");
+		//TAS.debug("leaving PFSheet.recalculateParallelModules");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -461,7 +468,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		doneOneModuleInner();
 	};
 
-	TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
+	//TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
 	try {
 		_.each(parallelRecalcFuncs, function (methodToCall) {
 			try {
@@ -480,7 +487,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 }
 function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
+		//TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -499,7 +506,7 @@ function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 }
 function recalculateCore (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateCore");
+		//TAS.debug("leaving PFSheet.recalculateCore");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -548,7 +555,7 @@ function recalculateCore (callback, silently, oldversion) {
 *@param {function} callback when done if no errors
 *@param {function} errorCallback  call this if we get an error
 */
-export function recalculate (oldversion, callback, silently) {
+export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
@@ -556,23 +563,23 @@ export function recalculate (oldversion, callback, silently) {
 		}
 	},
 	callParallel = TAS.callback(function callRecalculateParallelModules() {
-		recalculateParallelModules(TAS.callback(done), silently, oldversion);
+		recalculateParallelModules(done, silently, oldversion);
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
-		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
+		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
 	});
 	silently=true;
 	recalculateCore(callEncumbrance, silently, oldversion);
-}
+});
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
 *  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
 function checkForUpdate () {
 	var done = function () {
-		setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
+		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
 	errorDone = _.once(function (){
 		TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
-		setAttrs({ recalc1: 0, migrate1: 0 }, { silent: true });
+		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
 	'race', 'class-0-name', 'npc-type', 'level'], function (v) {
@@ -583,7 +590,7 @@ function checkForUpdate () {
 		recalc = false,
 		currVer = parseFloat(v.PFSheet_Version, 10) || 0,
 		setUpgradeFinished = function() {
-			setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
+			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
 			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
@@ -698,7 +705,7 @@ function registerEventHandlers () {
 					PFNPCParser.importFromCompendium(eventInfo, function(){
 						//instead of just calling recalculate set recalc button and call checkforupdate
 						//so users sees something is happening.
-						setAttrs({recalc1:1},PFConst.silentParams,function(){
+						SWUtils.setWrapper({recalc1:1},PFConst.silentParams,function(){
 							checkForUpdate();
 						});
 					});
@@ -720,7 +727,7 @@ function registerEventHandlers () {
 							setter={};
 							setter[eventInfo.sourceAttribute]=0;
 							setter[eventInfo.sourceAttribute+'_btn']=0;
-							setAttrs(setter,{silent:true});
+							SWUtils.setWrapper(setter,{silent:true});
 							if ((/buff/i).test(eventInfo.sourceAttribute)){
 								PFBuffs.clearBuffTotals();
 							}		

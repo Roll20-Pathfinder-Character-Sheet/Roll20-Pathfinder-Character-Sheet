@@ -75,7 +75,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
  * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
 export function resetOption (id, eventInfo, callback) {
     var done = _.once(function(){
-        TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
+        //TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
         if (typeof callback === "function"){
             callback();
         }
@@ -86,6 +86,7 @@ export function resetOption (id, eventInfo, callback) {
     }),
     allFields = optionToggles;
     allFields = allFields.concat(rowfields);
+    allFields.push(prefix + "macro_options");
     //TAS.log("resetOption, fields to get",allFields);
     getAttrs(allFields, function (v) {
         var toggleValues = _.reduce(optionToggles, function (memo, attr) {
@@ -95,11 +96,11 @@ export function resetOption (id, eventInfo, callback) {
         optionText = "",
         setter = {};
         optionText = getOptionText(prefix, toggleValues, v)||"";
-        if (typeof optionText !== "undefined" && optionText !== null) {
+        if (typeof optionText !== "undefined" && optionText !== null && optionText !== v[prefix + "macro_options"]) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
-            setAttrs(setter, PFConst.silentParams, done);
+            SWUtils.setWrapper(setter, PFConst.silentParams, done);
         } else {
             done();
         }
@@ -122,6 +123,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
             return memo;
         }, {});
         fields = SWUtils.cartesianAppend(["repeating_weapon_"],ids,repeatingOptionGetAttrsLU);
+        fields = fields.concat(SWUtils.cartesianAppend(["repeating_weapon_"],ids,["_macro_options"]));
         getAttrs(fields,function(v){
             var setter = _.reduce(ids,function(memo,id){
                 var prefix='repeating_weapon_'+id+'_',tempstr='';
@@ -136,7 +138,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
                 }
             },{});
             if(_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -154,9 +156,9 @@ export function migrate (callback){
         callback();
     }
 }
-export function recalculate  (callback) {
+export var recalculate = TAS.callback(function callrecalculate (callback) {
     resetOptions(callback);
-}
+});
 function registerEventHandlers () {
     _.each(optionToggles, function (toggleField) {
         on("change:" + toggleField, TAS.callback(function toggleAttackNoteOption(eventInfo) {
@@ -170,7 +172,7 @@ function registerEventHandlers () {
     _.each(events.attackOptionEventsAuto, function (fieldToWatch) {
         var eventToWatch = "change:repeating_weapon:" + fieldToWatch;
         on(eventToWatch, TAS.callback(function eventUpdateAttackTypeOptionSheet(eventInfo) {
-            if (eventInfo.sourceType === "sheetworker") {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 resetOption(null, eventInfo);
             }

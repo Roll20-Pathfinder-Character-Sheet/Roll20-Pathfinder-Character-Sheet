@@ -30,7 +30,7 @@ function updatePsionicBonusPower (callback, silently) {
 						params = PFConst.silentParams;
 					}
 					finished = true;
-					setAttrs({
+					SWUtils.setWrapper({
 						"ability-psionic-power": newTotal
 					}, params, done);
 				}
@@ -49,7 +49,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFPsionic.recalculate");
 		if (typeof callback === "function") {
@@ -68,7 +68,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		}
 	});
-}
+});
 function registerEventHandlers () {
 	on("change:psionic-level change:psionic-level-misc", TAS.callback(function eventUpdatePsionicLevel(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -78,7 +78,7 @@ function registerEventHandlers () {
 	}));
 	on("change:class-psionic-power change:ability-psionic-power change:misc-psionic-power", TAS.callback(function eventUpdatePsionicPower(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && eventInfo.sourceAttribute==='ability-psionic-power')) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && eventInfo.sourceAttribute==='ability-psionic-power')) {
 			SWUtils.updateRowTotal(["psionic-power_max", "class-psionic-power", "ability-psionic-power", "misc-psionic-power"]);
 		}
 	}));

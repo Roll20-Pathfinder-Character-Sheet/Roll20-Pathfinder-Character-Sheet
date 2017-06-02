@@ -164,7 +164,7 @@ export function migrateRepeatingDamage (ids,callback) {
             TAS.error("migrateRepeatingDamage outer error!? SHOULD NOT HAPPEN", err);
         } finally {
             if (_.size(setter)>0){
-                setAttrs(setter, PFConst.silentParams, done);
+                SWUtils.setWrapper(setter, PFConst.silentParams, done);
             } else {
                 done();
             }
@@ -180,7 +180,7 @@ export function migrateMaxDexAndACP () {
         currMaxDex = parseInt(v["max-dex-source"],10) || 0,
         setter = {};
         if (currMaxDex >= 99) {
-            setAttrs(setter, { silent: true });
+            SWUtils.setWrapper(setter, { silent: true });
         }
     });
 }
@@ -243,7 +243,7 @@ export function migrateSpellRanges (callback) {
                 });
                 setter["spellranges_migrated"] = "1";
                 if (_.size(setter) > 0) {
-                    setAttrs(setter, {
+                    SWUtils.setWrapper(setter, {
                         silent: true
                     }, callback);
                 } else {
@@ -256,7 +256,7 @@ export function migrateSpellRanges (callback) {
 /** copies spells from repeating-lvl-*-spells and npc spells to repeating_spells 
  * there are bugs in this, but it's so old we never were able to find them all and fix them. 
  * @param {function} callback call when done
- * @param {boolean} silently if true call setAttrs with PFConst.silentParams 
+ * @param {boolean} silently if true call SWUtils.setWrapper with PFConst.silentParams 
  */
 export function migrateSpells (callback) {
     var done = function () {
@@ -428,11 +428,11 @@ export function migrateSpells (callback) {
                     }
                 }
                 if (setAny) {
-                    setAttrs(setter, {
+                    SWUtils.setWrapper(setter, {
                         silent: true
                     });
                 }
-                //cannot wait for callback of setAttrs since it will not call if there were no changes.
+                //cannot wait for callback of SWUtils.setWrapper since it will not call if there were no changes.
                 if (typeof callback === "function") {
                     callback();
                 }
@@ -450,7 +450,7 @@ export function migrateSpells (callback) {
         sectionsToMigrate = ["lvl-0-spells", "lvl-1-spells", "lvl-2-spells", "lvl-3-spells", "lvl-4-spells", "lvl-5-spells", "lvl-6-spells", "lvl-7-spells", "lvl-8-spells", "lvl-9-spells", "npc-spells1", "npc-spells2"],
         finishUp = function () {
             var params = {};
-            setAttrs({
+            SWUtils.setWrapper({
                 "spellmap": JSON.stringify(idmap),
                 "migrated_spells": "1"
             }, PFConst.silentParams, done);
@@ -542,7 +542,7 @@ export function migrateSpells (callback) {
                 setter[newPrefix + "spell_class_r"] = parseInt(v[prefix + "spellclass_number"], 10) || 0;
                 //TAS.debug("Setting "+newPrefix+"spellclass_number:"+ setter[newPrefix+"spellclass_number"] +", spell_level_r:"+setter[newPrefix+"spell_level"]+" and ensure undefined old level "+ setter[prefix+"spell_level"]+" for spell new "+setter[newPrefix+"name"]+", old:" + v[prefix+"name"]);
                 //TAS.log(setter);
-                setAttrs(setter, {
+                SWUtils.setWrapper(setter, {
                     silent: true
                 }, function () {
                     updateAtEnd();
@@ -653,9 +653,9 @@ export function migrateRollTemplateImages () {
         } catch (erro){
             TAS.error("migrateRollTemplateImages outer error",erro);
         } finally {
-            setter['migrated_rolltemplateimages']=1;
             if (_.size(setter) > 0) {
-                setAttrs(setter, PFConst.silentParams);
+                setter['migrated_rolltemplateimages']=1;
+                SWUtils.setWrapper(setter, PFConst.silentParams);
             }
         }
     });
@@ -707,7 +707,7 @@ export function addNumberToMacro (macroText, macroVal, miscMacroText, miscVal){
  */
 export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,miscMacroAttr,miscAttr) {
     var done=_.once(function(){
-        //TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
+        ////TAS.debug("leaving PFMigrate.migrateMoveIntIntoMacro: "+ macroAttr);
         if (typeof callback === "function"){
             callback();
         }
@@ -741,7 +741,7 @@ export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,
             TAS.error("PFMigrate.migrateMoveIntIntoMacro:" + migrateFlag,err);
         } finally {
             if (_.size(setter)>0){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -769,13 +769,13 @@ export function migrateMaxSkills (callback){
  */
 export function migrateNPC (callback, oldversion) {
     var done = _.once(function () {
-        TAS.debug("Leaving migrateNPC");
+        //TAS.debug("leaving migrateNPC");
         if (typeof callback === "function") {
             callback();
         }
     }),
     migrateNPCConfig = function(callback){
-            setAttrs({ 'normal_macro_show': 1,
+            SWUtils.setWrapper({ 'normal_macro_show': 1,
                 'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 }, 
                 PFConst.silentParams,callback);
     },
@@ -784,7 +784,7 @@ export function migrateNPC (callback, oldversion) {
     * if undead then sets ability to CHA */
     migrateNPCHP = function (callback) {
         var done=_.once(function(){
-            TAS.debug("Leaving PFMigrate.migrateNPCHP");
+            //TAS.debug("leaving PFMigrate.migrateNPCHP");
             if(typeof callback === "function"){
                 callback();
             }
@@ -876,7 +876,7 @@ export function migrateNPC (callback, oldversion) {
             } finally {
                 setter["migrated_npc"]= 1;
                 if(_.size(setter)>0){
-                    setAttrs(setter, PFConst.silentParams,done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams,done);
                 } else {
                     done();
                 }
@@ -910,7 +910,7 @@ export function migrateNPC (callback, oldversion) {
                 TAS.error("migrateNPCSenses",err);
             } finally {
                 if (_.size(setter)>0){
-                    setAttrs(setter, PFConst.silentParams, done);
+                    SWUtils.setWrapper(setter, PFConst.silentParams, done);
                 } else {
                     done();
                 }
@@ -926,7 +926,7 @@ export function migrateNPC (callback, oldversion) {
             isMigrated = parseInt(v["migrated_npc"], 10) || 0;
             if (!isNPC ){
                 if  (!isMigrated) {
-                    setAttrs({"migrated_npc": 1}, PFConst.silentParams,done);
+                    SWUtils.setWrapper({"migrated_npc": 1}, PFConst.silentParams,done);
                 } else{
                     done();
                 }
@@ -964,7 +964,7 @@ export function migrateAltAttackGridrowFlags  (callback) {
             TAS.error("PFMigrate.migrateAltAttackGridrowFlags",err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, { silent: true }, done);
+                SWUtils.setWrapper(setter, { silent: true }, done);
             } else {
                 done();
             }
@@ -973,7 +973,7 @@ export function migrateAltAttackGridrowFlags  (callback) {
 }
 export function migrateExperience  (callback) {
     var done = _.once(function () { 
-        TAS.debug("leaving migrateExperience");
+        //TAS.debug("leaving migrateExperience");
         if (typeof callback === "function") { callback(); } 
     });
     getAttrs(['migrated_experience', 'use_prestige_fame', 'use_hero_points', 'prestige', 'fame', 'hero-points', 'faction_notes'], function (v) {
@@ -992,31 +992,36 @@ export function migrateExperience  (callback) {
         setter.misc_skill_num_show = 1;
         setter.migrated_experience = 1;
         setter.custom_skill_num_show = 1;
-        setAttrs(setter, { silent: true }, done);
+        SWUtils.setWrapper(setter, { silent: true }, done);
     });
 }
 export function migrateUsesSpellFlag (callback){
     var done = _.once(function () { 
-        TAS.debug("leaving migrateUsesSpellFlag");
+        //TAS.debug("leaving migrateUsesSpellFlag");
         if (typeof callback === "function") { callback(); } 
     }),
     setFlag= function(){
-        setAttrs( {'migrated_spellflag':1},PFConst.silentParams,done );
+        SWUtils.setWrapper( {'migrated_spellflag':1},PFConst.silentParams,done );
     },
     tryTwoJustCountRows = function(){
         getSectionIDs('repeating_spells',function(ids){
             if(ids && _.size(ids)>0){
-                setAttrs( {'use_spells':1},PFConst.silentParams,setFlag );
+                SWUtils.setWrapper( {'use_spells':1},PFConst.silentParams,setFlag );
             } else {
-                setAttrs( {'use_spells':0},PFConst.silentParams,setFlag );
+                SWUtils.setWrapper( {'use_spells':0},PFConst.silentParams,setFlag );
             }
         });
     };
     getAttrs(['spellclass-0-level','spellclass-1-level','spellclass-2-level','use_spells','migrated_spellflag'],function(v){
-        var lvl1=0,lvl2=0,lvl3=0,usesSpells=0,setter={};
+        var lvl1=0,lvl2=0,lvl3=0,usesSpells=0,migrated=0,setter={};
         try {
+            migrated=parseInt(v.migrated_spellflag,10)||0;
+            if(migrated){
+                done();
+                return;
+            }
             usesSpells = parseInt(v.use_spells,10)||0;
-            if ((parseInt(v.migrated_spellflag,10)||0)!==1 && !usesSpells){
+            if (migrated!==1 && !usesSpells){
                 lvl1=parseInt(v['spellclass-0-level'],10)||0;
                 lvl2=parseInt(v['spellclass-1-level'],10)||0;
                 lvl3=parseInt(v['spellclass-3-level'],10)||0;
@@ -1032,7 +1037,7 @@ export function migrateUsesSpellFlag (callback){
             TAS.error("FMigrate.migrateUsesSpellFlag",err);
         } finally {
             if (usesSpells){
-                setAttrs(setter,PFConst.silentParams,setFlag);
+                SWUtils.setWrapper(setter,PFConst.silentParams,setFlag);
             } else {
                 tryTwoJustCountRows();
             }
@@ -1059,7 +1064,7 @@ export function migrateRepeatingItemAttributes (callback) {
         getSectionIDs("repeating_item", function (ids) {
             var fields = [];
             if(!(ids && _.size(ids)>0)){
-                setAttrs({'migrated_repeating_item_attributes':1},PFConst.silentParams,done);
+                SWUtils.setWrapper({'migrated_repeating_item_attributes':1},PFConst.silentParams,done);
                 return;
             }
             fields = _.reduce(ids, function (memo, id) {
@@ -1099,9 +1104,9 @@ export function migrateRepeatingItemAttributes (callback) {
                 } catch (err){
                     TAS.error("migrateRepeatingItemAttributes",err);
                 } finally {
-                    TAS.debug("##### PFMigrate.migrateRepeatingItemAttributes setting  ",setter);
+                    //TAS.debug("##### PFMigrate.migrateRepeatingItemAttributes setting  ",setter);
                     if (_.size(setter) > 0) {
-                        setAttrs(setter, {}, done);
+                        SWUtils.setWrapper(setter, {}, done);
                     } else {
                         done();
                     }
@@ -1112,49 +1117,49 @@ export function migrateRepeatingItemAttributes (callback) {
 }
 export function migrateAbilityListFlags (callback){
     var done=_.once(function(){
-        TAS.debug("leaving migrateAbilityListFlags");
+        //TAS.debug("leaving migrateAbilityListFlags");
         if (typeof callback === "function"){
             callback();
         }
     }),
     setFlag = _.after(5,function(){
-        setAttrs({'migrated_abilityflags109':1},PFConst.silentParams,done);
+        SWUtils.setWrapper({'migrated_abilityflags109':1},PFConst.silentParams,done);
     });
     getAttrs(['migrated_abilityflags109','uses_feats','uses_traits','use_racial_traits','use_class_features','use_npc-spell-like-abilities'],function(vm){
         if (! parseInt(vm['migrated_abilityflags109'],10)){
             getSectionIDs('repeating_npc-spell-like-abilities',function(ids){
                 if(ids && _.size(ids)>0){
-                    setAttrs( {'use_npc-spell-like-abilities':1},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_npc-spell-like-abilities':1},PFConst.silentParams,setFlag );
                 } else {
-                    setAttrs( {'use_npc-spell-like-abilities':0},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_npc-spell-like-abilities':0},PFConst.silentParams,setFlag );
                 }
             });
             getSectionIDs('repeating_feat',function(ids){
                 if(ids && _.size(ids)>0){
-                    setAttrs( {'use_feats':1},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_feats':1},PFConst.silentParams,setFlag );
                 } else {
-                    setAttrs( {'use_feats':0},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_feats':0},PFConst.silentParams,setFlag );
                 }
             });
             getSectionIDs('repeating_class-ability',function(ids){
                 if(ids && _.size(ids)>0){
-                    setAttrs( {'use_class_features':1},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_class_features':1},PFConst.silentParams,setFlag );
                 } else {
-                    setAttrs( {'use_class_features':0},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_class_features':0},PFConst.silentParams,setFlag );
                 }
             });
             getSectionIDs('repeating_trait',function(ids){
                 if(ids && _.size(ids)>0){
-                    setAttrs( {'use_traits':1},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_traits':1},PFConst.silentParams,setFlag );
                 } else {
-                    setAttrs( {'use_traits':0},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_traits':0},PFConst.silentParams,setFlag );
                 }
             });
             getSectionIDs('repeating_racial-trait',function(ids){
                 if(ids && _.size(ids)>0){
-                    setAttrs( {'use_racial_traits':1},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_racial_traits':1},PFConst.silentParams,setFlag );
                 } else {
-                    setAttrs( {'use_racial_traits':0},PFConst.silentParams,setFlag );
+                    SWUtils.setWrapper( {'use_racial_traits':0},PFConst.silentParams,setFlag );
                 }
             });
         } else {
@@ -1168,7 +1173,7 @@ export function migrateSpellPointFlag (callback,oldversion){
             callback();
         }
     });
-    TAS.debug("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
+    //TAS.debug("AT PFMigrate.migrateSpellPointFlag: oldversion:"+oldversion);
     if (oldversion > 1.18){
         done();
     }
@@ -1180,9 +1185,9 @@ export function migrateSpellPointFlag (callback,oldversion){
             var usesPoints=parseInt('spellclass-0-spell-points-class',10) || parseInt('spellclass-0-spell-points-bonus',10) || parseInt('spellclass-0-spell-points-misc',10) ||
                 parseInt('spellclass-1-spell-points-class',10) || parseInt('spellclass-1-spell-points-bonus',10) || parseInt('spellclass-1-spell-points-misc',10) ||
                 parseInt('spellclass-2-spell-points-class',10) || parseInt('spellclass-2-spell-points-bonus',10) || parseInt('spellclass-2-spell-points-misc',10);
-                TAS.debug("PFMigrate.migrateSpellPointFlag found ",v);
+                //TAS.debug("PFMigrate.migrateSpellPointFlag found ",v);
             if (usesPoints && (! parseInt(v.use_spell_points,10))) {
-                setAttrs({'uses_spell_points':1},PFConst.silentParams,done);
+                SWUtils.setWrapper({'uses_spell_points':1},PFConst.silentParams,done);
             } else{
                 done();
             }
@@ -1191,7 +1196,7 @@ export function migrateSpellPointFlag (callback,oldversion){
 
 export function migrateWhisperDropdowns (callback){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
     getAttrs(['migrated_whispers','PC-whisper','NPC-whisper'],function(v){
@@ -1211,7 +1216,7 @@ export function migrateWhisperDropdowns (callback){
             TAS.error("PFMigrate.migrateWhispers",err);
         } finally {
             if(_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -1221,7 +1226,7 @@ export function migrateWhisperDropdowns (callback){
 
 export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate migrateConfigFlags");
+        //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
     migrateNPC(function(){migrateHPMisc(done);});
@@ -1235,7 +1240,7 @@ export function migrateConfigFlags (callback,oldversion){
 }
 
 export function getAllMigrateFlags (v){
-    TAS.debug("at PFMigrate.getAllMigrateFlags");
+    //TAS.debug("at PFMigrate.getAllMigrateFlags");
     v=v||{};
     v['migrated_buffs']=1;
     v['migrated_effects']=1;
@@ -1261,14 +1266,18 @@ export function getAllMigrateFlags (v){
     v['migrated_attacklist_defaults111']=1;
     v['migrated_itemlist_defaults']=1;
     v['migrated_abilityflags109']=1;
+    v['migrated_whispers']=1;
+    v['migrated_linked_attacks']=1;
+    v['migrated_take10_dropdown']=1;
+    v['migrated_buffs_rangeddmg_abiilty']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){
     var done = _.once(function(){ 
-        TAS.debug("leaving PFMigrate setAllMigrateFlags");
+        //TAS.debug("leaving PFMigrate setAllMigrateFlags");
         if (typeof callback === "function") { callback(); }
     });
-    setAttrs(getAllMigrateFlags(), PFConst.silentParams, done);
+    SWUtils.setWrapper(getAllMigrateFlags(), PFConst.silentParams, done);
 }
 
 PFConsole.log( '   PFMigrate module loaded        ' );

@@ -39,7 +39,7 @@ export function getAllAttributes (){
 /** Looks at current values and calculates new ability , ability-mod and ability-modded values
  * @param {string} ability string matching a value in abilities
  * @param {Map} values map of return values from getAttrs
- * @param {Map} setter map of values to pass to setAttrs. or null
+ * @param {Map} setter map of values to pass to SWUtils.setWrapper. or null
  * @returns {Map}  same setter passed in, with added values if necessary
  */
 export function getAbilityScore (ability, values, setter) {
@@ -141,7 +141,7 @@ export function updateAbilityScore (ability,eventInfo,callback,silently){
             if (silently) {
                 params = PFConst.silentParams;
             }
-            setAttrs(setter, params, done);
+            SWUtils.setWrapper(setter, params, done);
         } else {
             done();
         }
@@ -168,7 +168,7 @@ export function updateAbilityScores (callback, silently) {
             if (silently) {
                 params = PFConst.silentParams;
             }
-            setAttrs(setter, params, done);
+            SWUtils.setWrapper(setter, params, done);
         } else {
             done();
         }
@@ -182,7 +182,7 @@ export function updateAbilityScores (callback, silently) {
  */
 export function applyConditions (callback, silently) {
     var done = function () {
-        TAS.debug("leaving PFAbilityScores.applyConditions");
+        //TAS.debug("leaving PFAbilityScores.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
@@ -217,8 +217,8 @@ export function applyConditions (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                TAS.notice("#######################","PFAbilities apply conditions setting",setter);
-                setAttrs(setter, params, done);
+                //TAS.notice("#######################","PFAbilities apply conditions setting",setter);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -239,9 +239,9 @@ export function migrate (callback,oldversion){
  *@param {boolean} silently if true update with PFConst.silentParams
  *@param {float} oldversion the current @{PFVersion} in the attributes
  */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFAbilityScores.recalculate");
+        //TAS.debug("leaving PFAbilityScores.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -250,7 +250,7 @@ export function recalculate (callback, silently, oldversion) {
         updateAbilityScores(done, silently);
     });
     applyConditions(updateScoresOnce, silently);
-}
+});
 
 /** Calls 'on' function for everything related to this module */
 function registerEventHandlers () {
@@ -258,7 +258,7 @@ function registerEventHandlers () {
     _.each(abilities, function (ability) {
         on((events.abilityEventsAuto.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbility(eventInfo) {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            if (eventInfo.sourceType === "sheetworker") {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 updateAbilityScore(ability, eventInfo);
             }
         }));
