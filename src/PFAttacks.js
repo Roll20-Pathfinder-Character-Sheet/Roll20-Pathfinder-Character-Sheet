@@ -371,8 +371,24 @@ function getRecalculatedDamageOnly (id,v){
 		}
 
 		damageBuffs += dmgConditions;
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
+		abilityMult=1;
+		if(v[prefix+ "damage_ability_mult"]){
+			switch(String(v[prefix+ "damage_ability_mult"])){
+				case "0.5":
+					abilityMult=0.5;
+					break;
+				case "1.5":
+				case "1,5":
+					abilityMult=1.5;
+					break;
+				case "2":
+				case "2.0":
+					abilityMult=2;
+					break;
+				default:
+					abilityMult=1;
+					break;
+			}
 		}
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
@@ -477,9 +493,26 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
-		if(v[prefix+ "damage_ability_mult"]=="1.5"||v[prefix+ "damage_ability_mult"]=="1,5"){
-			abilityMult=1.5;
+		abilityMult=1;
+		if(v[prefix+ "damage_ability_mult"]){
+			switch(String(v[prefix+ "damage_ability_mult"])){
+				case "0.5":
+					abilityMult=0.5;
+					break;
+				case "1.5":
+				case "1,5":
+					abilityMult=1.5;
+					break;
+				case "2":
+				case "2.0":
+					abilityMult=2;
+					break;
+				default:
+					abilityMult=1;
+					break;
+			}
 		}
+
 
 		if (isRanged){
 			damageBuffs =  parseInt(v['buff_DMG_ranged-total'],10)||0;
