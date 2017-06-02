@@ -107,8 +107,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
     fields;
     if (attackGridFields[attype]) {
         fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
-            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff
-            ];
+            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff];
         if (attype==='CMB'){
             fields.push('buff_Melee-total');
         }
