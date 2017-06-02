@@ -85,19 +85,9 @@ function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 function getDamageMult(str){
 	var abilityMult=1;
 	if(str){
-		switch(String(str)){
-			case "0.5":
-			case ".5":
-				abilityMult=0.5;
-				break;
-			case "1.5":
-			case "1,5":
-				abilityMult=1.5;
-				break;
-			case "2.0":
-			case "2":
-				abilityMult=2;
-				break;
+		abilityMult= Number(String(str).replace(',','.'));
+		if (!abilityMult) { 
+			abilityMult =1;
 		}
 	}
 	return abilityMult;
@@ -250,7 +240,9 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 				damageBuffs = parseInt(v["buff_DMG-total"], 10) || 0;
 			}
 
+
 			abilityMult=getDamageMult(v[abilityMultField]);
+
 
 			damageBuffs +=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
@@ -388,8 +380,9 @@ function getRecalculatedDamageOnly (id,v){
 		}
 
 		damageBuffs += dmgConditions;
+
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
-		
+
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -493,6 +486,7 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
+
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
 
 

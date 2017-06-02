@@ -19,7 +19,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv154-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv161-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
@@ -30,25 +30,11 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Fix to melee damage buff not applying without hitting recalc</li>
-				<li>Fix to nonlethal hp resetting on level drain</li>
-				<li>Fix to @{size_display} stuck on medium</li>
-				<li>Fix to spell class calculations when spell class not set</li>
-				<li>Fix to spell-attack-type reference in spells</li>
-				<li>Fix to buffs writing NaN and undefined</li>
+				<li>BONUS TYPES in buffs!</li>
+				<li>API companion compatiblity!</li>
+				<li>SLOWER!</li>
 			</ol>
-			<p>1.53:</p>
-			<ol>
-				<li><strong style="font-size:1rem;font-weight:bold;">Fix to skills</strong> not rolling. </li>
-				<li>Fix to initiative and size buffs</li>
-				<li>Fix to skill size adjustment not resetting when set to default. Added @{size_display} back and translated</li>
-				<li>Fix to default encumbrance and font (in default campaign settings)</li>
-				<li>Fix Melee attack and damage properly. +melee copied to +cmb, +dmg copied to +ranged_dmg for existing buffs between 1.2 and 1.3</li>
-				<li>Armor, Shield, Natural Armor buffs <strong>hidden</strong> due to continued development in beta changing how they work.</li>
-				<li><strong>Attack row size</strong> dropdown corrected: now can implement <em>Strong Jaw</em> or <em>Improved Natural Attack</em> or change the size of any attack without changing the size of the character.</li>
-				<li><strong>If you experience locking</strong> please report your computer, operating system, and browser and version to <strong>http://tinyurl.com/PF-Thread</strong></li>
-			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv154-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv161-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
@@ -2662,18 +2648,7 @@
 									<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
 								</label>
 								<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
-								<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
-									<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
-										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="@{STR-mod}" data-i18n="strength-abbrv">STR</option>
-										<option value="@{DEX-mod}" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="@{CON-mod}" data-i18n="constitution-abbrv">CON</option>
-										<option value="@{INT-mod}" data-i18n="intelligence-abbrv">INT</option>
-										<option value="@{WIS-mod}" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="@{CHA-mod}" data-i18n="charisma-abbrv">CHA</option>
-									</select>
-									<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
-								</label>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
 								<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 								<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">(</span>
 								<label class="sheet-small-label2 sheet-sect sheet-sect2 sheet-nondual-sect" style="width:1.75em;">
@@ -9727,15 +9702,7 @@
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
 									<span class="sheet-divider-db sheet-nondual-sect">+</span>
-									<label class="sheet-small-label2 sheet-entry-vshort sheet-sect sheet-nondual-sect">
-										<select name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}">
-											<option value="0.5">0.5</option>
-											<option value="1" selected>&#8226;1</option>
-											<option value="1.5">1.5</option>
-											<option value="2">2</option>
-										</select>
-										<span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc.">Mult</span>
-									</label>
+									<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
 									<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
 									<label class="sheet-small-label2 sheet-entry-small sheet-sect sheet-nondual-sect">
 										<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">
