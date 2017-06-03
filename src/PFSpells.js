@@ -1030,7 +1030,6 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     updateSlot = false,
     updateStr = "",
     tempMatches;
-         
 
     if (eventInfo && eventInfo.sourceAttribute) {
         updateStr = eventInfo.sourceAttribute.toLowerCase();
@@ -1081,6 +1080,10 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         }
     } else {
         updateClass=true;
+    }
+    fields=[];
+    if (updateRange){
+        fields=fields.concat([casterlevelField,prefix + "range_pick", prefix + "range", prefix + "range_numeric"]);
     }
 
     fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc", 
@@ -1622,6 +1625,9 @@ var events = {
         "change:repeating_spells:metamagic": [toggleMetaMagic],
         "change:repeating_spells:name": [updateSpell]
     },
+    repeatingSpellMenuUpdatePlayer:
+        ['name','spellclass_number','spell_level','slot','used','school','metamagic','isDomain','isMythic'],
+    
     //repeatingSpellEventsAuto: {
     //    "change:repeating_spells:spellclass_number change:repeating_spells:spell_level": [updateSpell]
     //},
@@ -1638,9 +1644,7 @@ function registerEventHandlers  () {
         return memo;
     },"");
     on(tempstr,	TAS.callback(function playerUpdateSpell(eventInfo) {
-        var attr;
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-        attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ){
             updateSpell(null,eventInfo);
         }
@@ -1676,14 +1680,25 @@ function registerEventHandlers  () {
         }
 	}));	
      on("change:spellmenu_groupby_school change:spellmenu_show_uses change:spellclass-0-hide_unprepared change:spellclass-1-hide_unprepared change:spellclass-2-hide_unprepared change:spellclass-0-show_domain_spells change:spellclass-1-show_domain_spells change:spellclass-2-show_domain_spells", TAS.callback(function eventOptionChange(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             resetCommandMacro();
         }
-    }));   
-    on("change:repeating_spells:spellclass_number change:repeating_spells:spell_level change:repeating_spells:slot change:repeating_spells:used change:repeating_spells:school change:repeating_spells:metamagic change:repeating_spells:isDomain change:repeating_spells:isMythic change:_reporder_repeating_spells", TAS.callback(function eventRepeatingSpellAffectingMenu(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+    }));
+
+    tempstr = _.reduce(events.repeatingSpellMenuUpdatePlayer,function(memo,attr){
+        memo+="change:repeating_spells:"+attr+" ";
+        return memo;
+    },"");
+    on(tempstr,	TAS.callback(function eventRepeatingSpellMenuUpdate(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ){
+            updateSpell(null,eventInfo);
+        }
+    }));
+    on("change:_reporder_repeating_spells", TAS.callback(function eventReorderRepeatingspells(eventInfo) {
+        if (eventInfo.sourceType === "player" ) {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             resetCommandMacro();
         }
     }));
