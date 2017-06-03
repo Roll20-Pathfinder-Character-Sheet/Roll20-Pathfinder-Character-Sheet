@@ -1351,7 +1351,6 @@ function updateSpellsOld  (callback, silently, eventInfo) {
  *@param {object} eventInfo used to find row id since id param will be null
  */
 export function importFromCompendium (id, eventInfo) {
-    
     getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description"], function (v) {
         var levelStrBase = v["repeating_spells_spell_lvlstr"],
         rangeText = v["repeating_spells_range_from_compendium"],
@@ -1712,7 +1711,7 @@ function registerEventHandlers  () {
         attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ){
             updateAssociatedAttack(null,null,null,eventInfo);
-        }
+        }//do we really keep out api or not?
     }));
     tempstr = _.reduce(events.repeatingSpellAttackEventsAuto,function(memo,attr){
         memo+="change:repeating_spells:"+attr+" ";
