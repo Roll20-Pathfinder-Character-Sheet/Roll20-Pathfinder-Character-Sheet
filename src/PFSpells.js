@@ -1134,7 +1134,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
             if (!updateClass && eventInfo && eventInfo.sourceAttribute) {
                 updateStr = eventInfo.sourceAttribute.toLowerCase();
-                tempMatches = updateStr.match(/lvlstr|range_pick|range|sp_misc|cl_misc|spellclass_number|spell_level|dc_misc|concen|slot/);
+                tempMatches = updateStr.match(/lvlstr|category|range_pick|range|sp_misc|cl_misc|spellclass_number|spell_level|dc_misc|concen|slot/);
                 if (tempMatches && tempMatches[0]) {
                     switch (tempMatches[0]) {
                         case 'range_pick':
@@ -1163,6 +1163,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                             updateSlot = true;
                             break;
                         case 'lvlstr':
+                        case 'category':
                             updateClass = true;
                             updateClassLevel = true;
                             updateConcentration = true;
