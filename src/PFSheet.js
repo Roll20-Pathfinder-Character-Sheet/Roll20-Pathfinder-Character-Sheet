@@ -310,7 +310,7 @@ function recalcExpressions (callback, silently, oldversion) {
 	}
 }
 function recalcDropdowns (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.dropdowns),
+	var countEqs = _.size(PFConst.abilityScoreManualDropdowns),
 	done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -318,7 +318,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 	}),
 	doneOne = _.after(countEqs, done);
 	try {
-		_.each(PFConst.dropdowns, function (writeField, readField) {
+		_.each(PFConst.abilityScoreManualDropdowns, function (writeField, readField) {
 			try {
 				PFUtilsAsync.setDropdownValue(readField, writeField, doneOne, silently);
 			} catch (err) {
@@ -429,12 +429,12 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
         });
     },
     updateNonRepeating = function(){
-        var fields = Object.keys(PFConst.abilityScoreModDropdowns);
+        var fields = Object.keys(PFConst.abilityScoreManualDropdowns);
         getAttrs(fields,function(v){
             var setter={};
 			try{
 				TAS.debug("migrateAbilityDropdowns getting:",v);
-				setter = Object.keys(PFConst.abilityScoreModDropdowns).reduce(function(m,a){
+				setter = Object.keys(PFConst.abilityScoreManualDropdowns).reduce(function(m,a){
 					var tempstr='';
 					if (v[a] && v[a]!=="0"){
 						switch(a){
@@ -838,7 +838,7 @@ function registerEventHandlers () {
 		}
 	});
 	//GENERIC DROPDOWNS
-	_.each(PFConst.abilityScoreModDropdowns, function (write, read) {
+	_.each(PFConst.abilityScoreManualDropdowns, function (write, read) {
 		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
@@ -847,7 +847,7 @@ function registerEventHandlers () {
 			}
 		}));
 	});
-	_.each(PFConst.dropdowns, function (write, read) {
+	/*_.each(PFConst.dropdowns, function (write, read) {
 		on("change:" + read, TAS.callback(function eventAutoCalcDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType==="sheetworker"|| eventInfo.sourceType==="api"){
@@ -855,7 +855,7 @@ function registerEventHandlers () {
 				PFUtilsAsync.setDropdownValue(read, write);
 			}
 		}));
-	});	
+	});	*/
 	//GENERIC EQUATIONS
 	_.each(PFConst.equationMacros, function (write, read) {
 		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {

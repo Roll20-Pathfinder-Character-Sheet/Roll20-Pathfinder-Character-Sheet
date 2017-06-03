@@ -39,13 +39,13 @@ export function getAllAttributes (){
 function getAbilityModUpdates(abilityModName,newval,v,setter){
     //TAS.debug("getAbilityModUpdates, attr:"+abilityModName+", oldval:"+newval+", v:",v);
     setter = setter||{};
-    return Object.keys(PFConst.abilityScoreModDropdowns).filter(function(a){
+    return Object.keys(PFConst.abilityScoreManualDropdowns).filter(function(a){
         return v[a]===abilityModName;
     }).reduce(function(m,a){
-        var oldval = parseInt(v[PFConst.abilityScoreModDropdowns[a]],10)||0;
+        var oldval = parseInt(v[PFConst.abilityScoreManualDropdowns[a]],10)||0;
         //TAS.debug("getAbilityMods in reduce:"+a+", old val:"+oldval+", newval:"+newval);
         if(newval !== oldval){
-            m[PFConst.abilityScoreModDropdowns[a]]=newval;
+            m[PFConst.abilityScoreManualDropdowns[a]]=newval;
         }
         return m;
     },setter);
@@ -71,8 +71,8 @@ export var propagateAbilityModsAsync = TAS.callback(function callPropagateAbilit
         attrs = abilitymods;
     }
     fields = attrs;
-    fields = fields.concat(Object.keys(PFConst.abilityScoreModDropdowns));
-    fields = fields.concat(_.values(PFConst.abilityScoreModDropdowns));
+    fields = fields.concat(Object.keys(PFConst.abilityScoreManualDropdowns));
+    fields = fields.concat(_.values(PFConst.abilityScoreManualDropdowns));
     //TAS.debug("propagateAbilityModsAsync about to get fields:",fields);
     getAttrs(fields,function(v){
         var  newval=0, setter, params ={};

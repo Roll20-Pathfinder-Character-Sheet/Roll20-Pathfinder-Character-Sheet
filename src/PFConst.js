@@ -12,7 +12,7 @@ export default {
 	//attribute of a dropdown mapped to attribute to write evaluated number to.
 	//all simple dropdowns that do not need to call any other function when evaluating besides setDropdownValue and findAbilityInString
 	//non repeating
-	abilityScoreModDropdowns: {
+	abilityScoreManualDropdowns: {
 		"HP-ability": "HP-ability-mod",
 		"init-ability": "init-ability-mod",
 		"Fort-ability": "Fort-ability-mod",
@@ -35,7 +35,7 @@ export default {
         'CMD-ability2':	'FF-CMD',
 		'selected-ability-psionic-power': 'ability-psionic-power'
 	},
-	repeatingAbilityScoreModDropdowns: {
+	repeatingAbilityScoreManualDropdowns: {
 		"weapon": "damage-ability"
 	},
 	repeatingAttackTypeManualDropdowns:{
@@ -44,7 +44,7 @@ export default {
 		"spells":"spell-attack-type",
 		"ability":"abil-attack-type"
 	},
-	dropdowns: {
+	autoCalcDropdowns: {
 	},
 	repeatingAutoCalcDropdowns: {
 		"ability": "ability-basis"
