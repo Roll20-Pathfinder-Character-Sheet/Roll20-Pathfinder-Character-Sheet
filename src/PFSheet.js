@@ -265,7 +265,8 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
+			'attentionv154-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -430,6 +431,7 @@ export function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
+				PFSkills.migrate();
 			}
 		}
 	} catch (err) {
@@ -550,12 +552,12 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
-/** recalculate - all pages in sheet!  
-*@param {number} oldversion the current version attribute
-*@param {function} callback when done if no errors
-*@param {function} errorCallback  call this if we get an error
-*/
-export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
+/** recalculate - all pages in sheet!
+ *@param {number} oldversion the current version attribute
+ *@param {function} callback when done if no errors
+ *@param {function} errorCallback  call this if we get an error
+ */
+export function recalculate (oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
@@ -610,7 +612,9 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
+		//force this on sheet open, not sure wtf is wrong
+		PFSkills.migrate();
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}

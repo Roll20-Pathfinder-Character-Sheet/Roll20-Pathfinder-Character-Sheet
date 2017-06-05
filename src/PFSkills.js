@@ -935,8 +935,8 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	};
-	migrateTake10Dropdown(doneOne);
 	//TAS.debug("at PFSkills.migrate");
+	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
