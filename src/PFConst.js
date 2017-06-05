@@ -1,6 +1,7 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.6,
+	version: 1.61,
+
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
@@ -10,7 +11,8 @@ export default {
 
 	//attribute of a dropdown mapped to attribute to write evaluated number to.
 	//all simple dropdowns that do not need to call any other function when evaluating besides setDropdownValue and findAbilityInString
-	dropdowns: {
+	//non repeating
+	abilityScoreManualDropdowns: {
 		"HP-ability": "HP-ability-mod",
 		"init-ability": "init-ability-mod",
 		"Fort-ability": "Fort-ability-mod",
@@ -22,7 +24,30 @@ export default {
 		"ranged2-ability": "ranged2-ability-mod",
 		"CMB-ability": "CMB-ability-mod",
 		"CMB2-ability": "CMB2-ability-mod",
-		"sanity-ability": "sanity-ability-mod"
+		"sanity-ability": "sanity-ability-mod",
+		"concentration-0-ability": "concentration-0-ability-mod",
+		"concentration-1-ability": "concentration-1-ability-mod",
+		"concentration-2-ability": "concentration-2-ability-mod",
+        'AC-ability': 'AC-ability-mod',
+        'FF-ability': 'FF-DEX',
+        'CMD-ability': 'CMD-STR',
+        'CMD-ability1': 'CMD-DEX',
+        'CMD-ability2':	'FF-CMD',
+		'selected-ability-psionic-power': 'ability-psionic-power'
+	},
+	repeatingAbilityScoreManualDropdowns: {
+		"weapon": "damage-ability"
+	},
+	repeatingAttackTypeManualDropdowns:{
+		"weapon":"attack-type",
+		"item":"item-attack-type",
+		"spells":"spell-attack-type",
+		"ability":"abil-attack-type"
+	},
+	autoCalcDropdowns: {
+	},
+	repeatingAutoCalcDropdowns: {
+		"ability": "ability-basis"
 	},
 	//attribute of a macro, mapped to attribute to write evaluation to
 	//all simple macros that do not need to call other functions besides evaluateAndSetNumber

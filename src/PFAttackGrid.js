@@ -107,8 +107,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
     fields;
     if (attackGridFields[attype]) {
         fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
-            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff
-            ];
+            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff];
         if (attype==='CMB'){
             fields.push('buff_Melee-total');
         }
@@ -245,17 +244,13 @@ export var recalculate = TAS.callback(function callrecalculate (callback, silent
 });
 function registerEventHandlers () {
     _.each(attackGridFields, function (attackFields, attack) {
-        on("change:bab change:" + attackFields.size, TAS.callback(function eventBABSizeAbilityModchange(eventInfo) {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            updateAttack(attack);
-        }));
         on("change:" + attackFields.misc, TAS.callback(function eventAttackMisc(eventInfo) {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
             }
         }));
-        on("change:attk-penalty change:" + attackFields.abilityMod , TAS.callback(function eventAttackPenalty(eventInfo) {
+        on("change:bab change:attk-penalty change:" + attackFields.abilityMod , TAS.callback(function eventAttackPenalty(eventInfo) {
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
