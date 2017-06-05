@@ -214,7 +214,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				return m;
 			},sums);
 		} else if (useBonuses) {
-			bonuses = {			
+			bonuses = {
 				'alchemical':0,'circumstance':0,'competence':0,'deflection':0,
 				'enhancement':0,'equivalent':0,'inherent':0,'insight':0,'luck':0,
 				'morale':0,'penalty': 0,'profane':0,'racial':0,'resistance':0,'sacred':0,
