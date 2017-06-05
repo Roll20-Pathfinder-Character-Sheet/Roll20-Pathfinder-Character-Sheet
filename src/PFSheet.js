@@ -265,7 +265,8 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'attentionv154-show':1,'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
+			'attentionv161-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -614,6 +615,7 @@ function upgrade (oldversion, callback, errorCallback) {
 
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
+				PFSkills.migrate();
 			}
 			if (oldversion < 1.61){
 				PFBuffs.migrate(null,oldversion);
@@ -804,7 +806,9 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
+		//force this on sheet open, not sure wtf is wrong
+		PFSkills.migrate();
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
