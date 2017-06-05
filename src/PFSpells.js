@@ -1162,7 +1162,6 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         hadToSetClass = false,
         newRange = 0;
         try {
-
             if (updateClass || updateClassLevel || updateConcentration || updateDC || updateRange ||updateSP){
                 baseClassNum = parseInt(v[classNumberField], 10);
                 classNum = baseClassNum || 0;

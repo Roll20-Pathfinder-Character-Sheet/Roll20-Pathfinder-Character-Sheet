@@ -153,6 +153,6 @@
 			"options": ["1d20+@{skill-invest-query}","?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}","@{skill-invest-query}+@{custom_dice}"],
 			"optiontranslationkeys": ["no","yes","custom-roll"],
 			"default": "1d20+@{skill-invest-query}"
-		}	
+		}
 	]
 }
