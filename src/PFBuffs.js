@@ -214,13 +214,11 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 				return m;
 			},sums);
 		} else if (useBonuses) {
-			bonuses = {
-				'ability':0,'alchemical':0,'circumstance':0,'competence':0,
-				'deflection':0,'enhancement':0,'equivalent':0,'inherent':0,
-				'insight':0,'luck':0,'morale':0,'penalty': 0,'profane':0,'racial':0,'sacred':0,
+			bonuses = {			
+				'alchemical':0,'circumstance':0,'competence':0,'deflection':0,
+				'enhancement':0,'equivalent':0,'inherent':0,'insight':0,'luck':0,
+				'morale':0,'penalty': 0,'profane':0,'racial':0,'resistance':0,'sacred':0,
 				'size':0,'trait':0,'untyped':0,'natural':0,'armor':0,'shield':0,'dodge':0};
-			//bonuses = {};
-			
 			bonuses = rows.reduce(function(m,row){
 				if (row.val<0){
 					m.penalty += row.val;
