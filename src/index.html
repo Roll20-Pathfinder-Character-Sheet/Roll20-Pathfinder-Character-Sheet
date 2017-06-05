@@ -36,6 +36,12 @@
 				<li>Fix monster "plus x" damage parsing</li>
 				<li>Update NPC page ability list</li>
 				<li>Announcements hidden by default on new sheets</li>
+				<li><b>UPCOMING CHANGE:</b> remove @{ and } from dropdown values, so they will only be strings, EXCEPT for the repeating_ability. This was necessary to:
+				<ol><li>Stop looping behavior when using API to set values</li>
+					<li>Improve ability of macros to determine if an attack is melee, ranged, etc</li>					
+					</ol>
+					This may impact your macros or may not. Please test your macros against the beta site.
+				</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv154-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
