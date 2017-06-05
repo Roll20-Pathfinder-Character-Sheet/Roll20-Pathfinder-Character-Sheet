@@ -2091,7 +2091,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				}
 			} else if (attack.plus) {
 				memo[prefix + "precision_dmg_type"] = "Plus";
-				memo[prefix + "precision_dmg_macro"] =  attack.plus;
+				memo[prefix + "precision_dmg_macro"] = attack.plus;
 			}
 			if (attack.dmgtype) {
 				memo[prefix + "notes"] = memo[prefix + "notes"] + ", damage type:" + attack.dmgtype;

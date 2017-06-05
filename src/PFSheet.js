@@ -552,7 +552,8 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
-/** recalculate - all pages in sheet!
+/** recalculate - all pages in sheet!  
+>>>>>>> development
  *@param {number} oldversion the current version attribute
  *@param {function} callback when done if no errors
  *@param {function} errorCallback  call this if we get an error
