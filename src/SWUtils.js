@@ -50,7 +50,7 @@ function validNumericStr (preeval) {
  * @param {string} stringToSearch = string containing one or more @{fieldname}
  * @param {function(string)} callback when done passes resultant string to callback
  */
-export function findAndReplaceFields (stringToSearch, callback) {
+export var findAndReplaceFields = TAS.callback(function callfindAndReplaceFields(stringToSearch, callback) {
 	var fieldnames ;
 	if (typeof callback !== "function") {
 		return;
@@ -97,7 +97,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
-}
+});
 /** Replaces kl1 and kh1 with min and max
  * example: replaces {x,y}kh1 with min(x,y)
  * @param {string} str the string to search
@@ -138,7 +138,7 @@ function validateMatchingParens(str){
  *@param {function(Number)} callback a function taking one parameter - always Number, could be 0 but never null or undefined
  *@param {function} errcallback function called if it cannot evaluate to a number
  */
-export function evaluateExpression (exprStr, callback, errcallback) {
+export var evaluateExpression = TAS.callback( function callevaluateExpression (exprStr, callback, errcallback) {
 	var value;
 	if (typeof callback !== "function") {
 		return;
@@ -152,11 +152,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 		callback(value);
 		return;
 	}
-	//convert double square brackets to parens
-	exprStr = exprStr.replace(/\s+/g, '').replace(/\[\[/g, "(").replace(/\]\]/g, ")");
-	//delete any notes (words between brackets)
-	exprStr = exprStr.replace(/\[[^\]]+\]/g,'');
-	exprStr = convertKL1KH1toMinMax(exprStr);
+
 
 	if(!validateMatchingParens(exprStr)){
 		TAS.warn("evaluateExpression: Mismatched brackets, cannot evaluate:" + exprStr);
@@ -172,7 +168,12 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 			return;
 		}
 		try {
-			TAS.debug("replacedStr is now "+newexprStr);
+			//convert double square brackets to parens
+			replacedStr = replacedStr.replace(/\s+/g, '').replace(/\[\[/g, "(").replace(/\]\]/g, ")");
+			//delete any notes (words between brackets)
+			replacedStr = replacedStr.replace(/\[[^\]]+\]/g,'');
+			replacedStr = convertKL1KH1toMinMax(replacedStr);
+			//TAS.debug("replacedStr is now "+replacedStr);
 			if (replacedStr === "" || replacedStr === null || replacedStr === undefined || !validNumericStr(replacedStr)) {
 				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
 				callback(0);
@@ -196,7 +197,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 			errcallback(null);
 		}
 	});
-}
+});
 /** evaluateAndSetNumber
  * Examines the string in readField, and tests to see if it is a number
  * if it's a number immediately write it to writeField.
@@ -213,7 +214,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
  * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
-export function evaluateAndSetNumber (readField, writeField, defaultVal, callback, silently, errcallback) {
+export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
 	var done = function (a, b, c,currError) {
 		var donesetter={};
 		if (currError){
@@ -237,39 +238,37 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			callback(a, b, c);
 		}
 	};
-	getAttrs([readField, writeField, writeField+"_error"], function (values) {
-		var setter = {},
-		params = {},
+	TAS.debug("evaluateAndSetNumber about to get "+readField);
+	getAttrs([readField, writeField, writeField+"_error"], function (v) {
+		var params = {},
 		trueDefault=0, 
 		currVal=0,
 		isError=0,
-		currError=0,
-		isChanged=false,
-		value=0;	
+		currError=0;
 		try {
+			TAS.debug("evaluateAndSetNumber values are ",v);
 			if (silently){params.silent=true;}
-			currError= parseInt(values[writeField+"_error"],10)||0;
+			currError= parseInt(v[writeField+"_error"],10)||0;
 			trueDefault = defaultVal || 0;
-			currVal = parseInt(values[writeField], 10);
-			value = Number(values[readField]);
-			evaluateExpression(values[readField],trueDefault, function (value2) {
-				TAS.debug("returned with number "+value2);
+			currVal = parseInt(v[writeField], 10);
+			evaluateExpression(v[readField], function (value) {
+				var setter={};
+				TAS.debug("evaluateExpression returned with number "+value);
 				//changed to 2 equals and flip so value2 on left. 
-				if (isNaN(currVal) || value2 != currVal) {
-					setter[writeField] = value2;
-					isChanged=true;
-					setAttrs(setter, params, function () { done(value2, currVal, isChanged,currError)});
+				if (isNaN(currVal) || value != currVal) {
+					setter[writeField] = value;
+					setWrapper(setter, params, function () { done(value, currVal, true,currError)});
 				} else {
-					done(value2, currVal, isChanged,currError);
+					done(value, currVal, false,currError);
 				}
 			}, function(){
-				TAS.debug("returned with error");
+				var setter={};
+				TAS.debug("evaluateExpression returned with error");
 				if (isNaN(currVal) || trueDefault != currVal) {
 					setter[writeField] = trueDefault;
-					isChanged=true;
-					setAttrs(setter, params, function () { errordone(trueDefault, currVal, isChanged,currError)});
+					setWrapper(setter, params, function () { errordone(trueDefault, currVal, true,currError)});
 				} else {
-					errordone(trueDefault,currVal,isChanged,currError);
+					errordone(trueDefault,currVal,false,currError);
 				}
 			});
 		} catch (err) {
@@ -277,7 +276,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			errordone(0,0,0,0);
 		}
 	});
-}
+});
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
  * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
