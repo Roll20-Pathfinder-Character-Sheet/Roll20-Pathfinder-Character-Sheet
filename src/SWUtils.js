@@ -46,10 +46,11 @@ function validNumericStr (preeval) {
 }
 /** searches a string for @{attribute} and replaces those with their values, passes result to the callback
  * if error then passes null
+ * recursive: if replace str also has @{attribute} references then calls this function again
  * @param {string} stringToSearch = string containing one or more @{fieldname}
  * @param {function(string)} callback when done passes resultant string to callback
  */
-export function findAndReplaceFields (stringToSearch, callback) {
+export var findAndReplaceFields = TAS.callback(function callfindAndReplaceFields(stringToSearch, callback) {
 	var fieldnames ;
 	if (typeof callback !== "function") {
 		return;
@@ -96,7 +97,7 @@ export function findAndReplaceFields (stringToSearch, callback) {
 		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
-}
+});
 /** Replaces kl1 and kh1 with min and max
  * example: replaces {x,y}kh1 with min(x,y)
  * @param {string} str the string to search
@@ -121,12 +122,167 @@ function convertKL1KH1toMinMax  (str) {
 	}
 	return str;
 }
+
+function validateMatchingParens(str){
+	if ((str.match(/\(/g) || []).length !== (str.match(/\)/g) || []).length || 
+		(str.match(/\{/g) || []).length !== (str.match(/\}/g) || []).length ||
+		(str.match(/\[/g) || []).length !== (str.match(/\]/g) || []).length ) {
+			return 0;
+	}
+	return 1;
+}
+
+/** Reads in the string, evaluates it to a single number, passes that number to a callback
+ * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
+ *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
+ *@param {function(Number)} callback a function taking one parameter - always Number, could be 0 but never null or undefined
+ *@param {function} errcallback function called if it cannot evaluate to a number
+ */
+export var evaluateExpression = TAS.callback( function callevaluateExpression (exprStr, callback, errcallback) {
+	var value;
+	if (typeof callback !== "function") {
+		return;
+	}
+	if (exprStr === "" || exprStr === null || exprStr === undefined) {
+		callback(0);
+		return;
+	}
+	value = Number(exprStr);
+	if (!isNaN(value)) {
+		callback(value);
+		return;
+	}
+
+
+	if(!validateMatchingParens(exprStr)){
+		TAS.warn("evaluateExpression: Mismatched brackets, cannot evaluate:" + exprStr);
+		errcallback(null);
+		return;
+	}
+
+	findAndReplaceFields(exprStr, function (replacedStr) {
+		var evaluated;
+		TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
+		if (replacedStr === null || replacedStr === undefined) {
+			callback(0);
+			return;
+		}
+		try {
+			//convert double square brackets to parens
+			replacedStr = replacedStr.replace(/\s+/g, '').replace(/\[\[/g, "(").replace(/\]\]/g, ")");
+			//delete any notes (words between brackets)
+			replacedStr = replacedStr.replace(/\[[^\]]+\]/g,'');
+			replacedStr = convertKL1KH1toMinMax(replacedStr);
+			//TAS.debug("replacedStr is now "+replacedStr);
+			if (replacedStr === "" || replacedStr === null || replacedStr === undefined || !validNumericStr(replacedStr)) {
+				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
+				callback(0);
+				return;
+			}
+			//if only number left.
+			evaluated = Number(replacedStr);
+			if (!isNaN(evaluated) && isFinite(replacedStr)) {
+				callback(evaluated);
+				return;
+			}
+			evaluated = ExExp.handleExpression(replacedStr);
+			if (!isNaN(evaluated)) {
+				callback(evaluated);
+			} else {
+				TAS.warn("cannot evaluate this to number: " + exprStr +" came back with " + replacedStr);
+				errcallback(null);
+			}
+		} catch (err3) {
+			TAS.error("error trying to convert to number:" + err3);
+			errcallback(null);
+		}
+	});
+});
+/** evaluateAndSetNumber
+ * Examines the string in readField, and tests to see if it is a number
+ * if it's a number immediately write it to writeField.
+ * if not, then replace any @{field} references with numbers, and then evaluate it
+ * as a mathematical expression till we find a number.
+ *
+ * note this is NOT recursive, you can't point one field of
+ *
+ * @param {string} readField= field to read containing string to parse
+ * @param {string} writeField= field to write to
+ * @param {number} defaultVal= optional, default to set if we cannot evaluate the field. If not supplied assume 0
+ * @param {function(newval, oldval, ischanged)} callback - function(newval, oldval, ischanged)
+ * @param {boolean} silently if true set new val with {silent:true}
+ * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
+ * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
+ */
+export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
+	var done = function (a, b, c,currError) {
+		var donesetter={};
+		if (currError){
+			donesetter[writeField+'_error']=0;
+			setAttrs(donesetter,{silent:true});
+		}
+		if (typeof callback === "function") {
+			callback(a, b, c);
+		}
+	},
+	errordone = function(a,b,c,currError){
+		var donesetter={};
+		////TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
+		if (!currError){
+			donesetter[writeField+'_error']=1;
+			setAttrs(donesetter,{silent:true});				
+		}
+		if (typeof errcallback === "function") {
+			errcallback(a, b, c);
+		} else if (typeof callback === "function") {
+			callback(a, b, c);
+		}
+	};
+	TAS.debug("evaluateAndSetNumber about to get "+readField);
+	getAttrs([readField, writeField, writeField+"_error"], function (v) {
+		var params = {},
+		trueDefault=0, 
+		currVal=0,
+		isError=0,
+		currError=0;
+		try {
+			TAS.debug("evaluateAndSetNumber values are ",v);
+			if (silently){params.silent=true;}
+			currError= parseInt(v[writeField+"_error"],10)||0;
+			trueDefault = defaultVal || 0;
+			currVal = parseInt(v[writeField], 10);
+			evaluateExpression(v[readField], function (value) {
+				var setter={};
+				TAS.debug("evaluateExpression returned with number "+value);
+				//changed to 2 equals and flip so value2 on left. 
+				if (isNaN(currVal) || value != currVal) {
+					setter[writeField] = value;
+					setWrapper(setter, params, function () { done(value, currVal, true,currError)});
+				} else {
+					done(value, currVal, false,currError);
+				}
+			}, function(){
+				var setter={};
+				TAS.debug("evaluateExpression returned with error");
+				if (isNaN(currVal) || trueDefault != currVal) {
+					setter[writeField] = trueDefault;
+					setWrapper(setter, params, function () { errordone(trueDefault, currVal, true,currError)});
+				} else {
+					errordone(trueDefault,currVal,false,currError);
+				}
+			});
+		} catch (err) {
+			TAS.error("SWUtils.evaluateAndSetNumber", err);
+			errordone(0,0,0,0);
+		}
+	});
+});
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
  * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
  *@param {function(Number)} callback a function taking one parameter - could be int or float
  */
-export function evaluateExpression (exprStr, callback) {
+export function evaluateExpressionold (exprStr, callback) {
 	var bmatches1 = 0, bmatches2 = 0, pmatches1 = 0, pmatches2 = 0, smatches1 = 0, smatches2 = 0;
 	if (typeof callback !== "function") {
 		return;
@@ -204,7 +360,7 @@ export function evaluateExpression (exprStr, callback) {
  * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
-export function evaluateAndSetNumber (readField, writeField, defaultVal, callback, silently, errcallback) {
+export function evaluateAndSetNumberold (readField, writeField, defaultVal, callback, silently, errcallback) {
 	var done = function (a, b, c,currError) {
 		var donesetter={};
 		if (currError){
@@ -267,7 +423,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 				}
 			} else {
 				//pass to evaluateExpression 
-				evaluateExpression(values[readField], function (value2) {
+				evaluateExpressionold(values[readField], function (value2) {
 					try {
 						if (value2 === null || value2===undefined || isNaN(value2)) {
 							isError=1;
