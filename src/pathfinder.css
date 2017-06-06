@@ -2686,6 +2686,11 @@ input[type="number"].sheet-entry-wide {
 .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-space-right-collapse {
     margin-right: .125em;
 }
+.sheet-linked-fields.sheet-nextitem {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    margin: .125em 0 .125em 0;
+}
 
 .sheet-sect-buff .sheet-linked-fields {
     width: 13.5em;

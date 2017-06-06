@@ -61,7 +61,7 @@ export function arrayify (stuff)
 export function importInit (attrs,initObj)
 {
 	attrs["init-misc"] = parseNum(initObj._total)-parseNum(initObj._attrtext);
-	attrs["init-ability"] = "@{"+initObj._attrname.substr(0,3).toUpperCase()+"-mod}";
+	attrs["init-ability"] = initObj._attrname.substr(0,3).toUpperCase()+"-mod";
 	attrs["init_notes"] = initObj.situationalmodifiers._text;
 }
 
@@ -524,7 +524,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
 						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = "@{"+abScores[j]._name.substr(0,3).toUpperCase()+"-mod}";
+						attr["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
 						setAttrs(attr);
 						break;
 					}
@@ -944,7 +944,7 @@ export function importSkills (attrs,skills,size,ACP)
 			skillAttrPrefix = skill._name.toLowerCase().replace(/\s/g,"-").replace("(","").replace(")","").replace("-hand","-Hand").replace("e-device","e-Device").replace("-artist","-Artist").replace("-animal","-Animal");
 		
 		attrs[skillAttrPrefix+"-ranks"] = parseNum(skill._ranks);
-		attrs[skillAttrPrefix+"-ability"] = "@{"+skill._attrname+"-mod}";
+		attrs[skillAttrPrefix+"-ability"] = skill._attrname+"-mod";
 		attrs[skillAttrPrefix+"-ability-mod"] = parseNum(skill._attrbonus);
 		
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;
@@ -1008,12 +1008,12 @@ export function importAC (attrs,acObj)
 	{
 		if (acObj._fromcharisma !== "")
 		{
-			attrs["AC-ability"] = "( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability"] = "CHA-mod";
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
 		else if (acObj._fromwisdom !== "")
 		{
-			attrs["AC-ability"] = "( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability"] = "WIS-mod";
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
 		else

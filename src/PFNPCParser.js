@@ -1685,7 +1685,7 @@ function setCasterFields (setter, casterObj, classidx) {
 				setter["spellclass-" + classidx + "-casting_type"] = 1;//spontaneous
 			}
 			if (casterObj.ability) {
-				setter["Concentration-" + classidx + "-ability"] = "@{" + casterObj.ability + "-mod}";
+				setter["Concentration-" + classidx + "-ability"] =  casterObj.ability + "-mod";
 			}
 			setter["Concentration-" + classidx + "-mod"] = casterObj.abilityMod;
 			if (casterObj.concentrationBonus) {
@@ -1953,19 +1953,19 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			memo[prefix+"default_size"]=sizeMap.size;
 			if (attack.atktype === 'ranged') {
 				basebonus = attackGrid.ranged;
-				memo[prefix + "attack-type"] = "@{attk-ranged}";
+				memo[prefix + "attack-type"] = "attk-ranged";
 				memo[prefix + "attack-type-mod"] = attackGrid.ranged;
 				memo[prefix + "isranged"] = 1;
 			} else if ( PFDB.cmbPlusStrsrch.test(basename)){
 				basebonus = attackGrid.cmb;
-				memo[prefix + "attack-type"] = "@{CMB}";
+				memo[prefix + "attack-type"] = "CMB";
 				memo[prefix + "attack-type-mod"] = attackGrid.cmb;
 				dmgAbilityStr=true;
 				dmgMult = 1.5;
 				specCMB=true;
 			} else if (attack.atktype === 'cmb') {
 				basebonus = attackGrid.cmb;
-				memo[prefix + "attack-type"] = "@{CMB}";
+				memo[prefix + "attack-type"] = "CMB";
 				memo[prefix + "attack-type-mod"] = attackGrid.cmb;
 			} else if (attack.atktype === 'special') {
 				basebonus = 0;
@@ -1977,11 +1977,11 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				if (importantFeats.weaponfinesse) {
 					//assume all attacks use weapon finesse
 					basebonus = attackGrid.melee2;
-					memo[prefix + "attack-type"] = "@{attk-melee2}";
+					memo[prefix + "attack-type"] = "attk-melee2";
 					memo[prefix + "attack-type-mod"] = attackGrid.melee2;
 				} else {
 					basebonus = attackGrid.melee;
-					memo[prefix + "attack-type"] = "@{attk-melee}";
+					memo[prefix + "attack-type"] = "attk-melee";
 					memo[prefix + "attack-type-mod"] = attackGrid.melee;
 				}
 				if (attack.type === 'natural') {
@@ -2001,7 +2001,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 					memo[prefix + "damage-ability"] = "0";
 					dmgMod=0;
 				} else {
-					memo[prefix + "damage-ability"] = "@{STR-mod}";
+					memo[prefix + "damage-ability"] = "STR-mod";
 					if (dmgMult !== 1){
 						dmgMod = Math.floor(dmgMult * abilityScores.str.mod);
 						memo[prefix + "damage_ability_mult"] = dmgMult;
@@ -2090,8 +2090,8 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 					memo[prefix + "precision_dmg_type"] = attack.plustype;
 				}
 			} else if (attack.plus) {
-				memo[prefix + "precision_dmg_type"] =attack.plus;
-				memo[prefix + "precision_dmg_macro"] =  "Plus";
+				memo[prefix + "precision_dmg_type"] = "Plus";
+				memo[prefix + "precision_dmg_macro"] = attack.plus;
 			}
 			if (attack.dmgtype) {
 				memo[prefix + "notes"] = memo[prefix + "notes"] + ", damage type:" + attack.dmgtype;
@@ -2181,9 +2181,9 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		}
 		//has uncanny dodge
 		if (acMap.uncanny) {
-			setter["FF-ability"] = "@{XXX-mod}".replace(/XXX/g, acAbility);
+			setter["FF-ability"] = acAbility + "-mod"; 
 			setter["FF-ability-mod"] = acDexDef;
-			setter["CMD-ability"] = "( ((@{XXX-mod} + [[ @{max-dex-source} ]]) - abs(@{XXX-mod} - [[ @{max-dex-source} ]])) / 2 )".replace(/XXX/g, acAbility);
+			setter["CMD-ability"] = acAbility + "-mod"; 
 			setter["CMD-ability"] = acDexDef;
 			setter["uncanny_dodge"] = 1;
 			setter["uncanny_cmd_dodge"] = 1;
@@ -2256,7 +2256,8 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 				//set default ability for skill and substitute adjustments, make sure to use copy not original
 				tempAbilities = _.extend({}, PFSkills.coreSkillAbilityDefaults, racial.abilitymods);
 				setter = _.reduce(racial.abilitymods, function (memo, ability, skill) {
-					memo[skill + "-ability"] = "@{" + ability.toUpperCase() + "-mod}";
+					//CBTEST 20170601
+					///memo[skill + "-ability"] =  + ability.toUpperCase() ; //can we do without setting this? 
 					memo[skill + "-ability-mod"] = abilityScores[ability].mod;
 					return memo;
 				}, setter);
@@ -2343,6 +2344,9 @@ function createSkillEntries (setter, skills, racial, abilityScores, importantFea
 					}
 					memo[skill + "-ranks"] = ranks;
 					memo[skill + "-ability-mod"] = abilitymod;
+					if (ranks < 0){
+						memo[skill+"-note"]="Ranks less than 0, possible parse error or error in statblock";
+					}
 					runningTot++;
 				} else {
 					TAS.warn("createSkillEntries, skill " + skill + " not found");
@@ -2385,7 +2389,7 @@ function createInitEntries (setter, baseInit, abilityScores, importantFeats) {
 function createHPAbilityModEntry (setter, abilityScores, isUndead) {
 	try {
 		if (isUndead || abilityScores.con.base === "-") {
-			setter["HP-ability"] = "@{CHA-mod}";
+			setter["HP-ability"] = "CHA-mod";
 			setter["HP-ability-mod"] = abilityScores.cha.mod;
 		} else {
 			setter["HP-ability-mod"] = abilityScores.con.mod;
@@ -2477,7 +2481,7 @@ function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 		willMisc = baseSaves.baseWill - abilityScores.wis.mod;
 		if (isUndead || abilityScores.con.base === "-") {
 			fortMisc = baseSaves.baseFort - abilityScores.cha.mod;
-			setter["Fort-ability"] = "@{CHA-mod}";
+			setter["Fort-ability"] = "CHA-mod";
 			setter["Fort-ability-mod"] = abilityScores.cha.mod;
 		} else {
 			setter["Fort-ability-mod"] = abilityScores.con.mod;
@@ -2576,7 +2580,7 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 			setter["melee_crit_conf"] = 4;
 		}
 		if (importantFeats.weaponfinesse) {
-			setter["melee2-ability"] = "@{DEX-mod}";
+			setter["melee2-ability"] = "DEX-mod";
 			setter["melee2-ability-mod"] = abilityScores.dex.mod;
 			setter["attk-melee2"] = abilityScores.dex.mod + bab + sizeMap.size;
 			attackGrid.melee2 = abilityScores.dex.mod + bab + sizeMap.size;
@@ -2587,7 +2591,7 @@ function parseAndCreateAttacks (setter, abilityScores, sizeMap, importantFeats, 
 		}
 		try {
 			if (importantFeats.agilemaneuvers) {
-				setter["CMB-ability"] = "@{DEX-mod}";
+				setter["CMB-ability"] = "DEX-mod";
 				setter["CMB-ability-mod"] = abilityScores.dex.mod;
 				calcCMB=abilityScores.dex.mod + bab - sizeMap.size;
 				setter["cmb_desc"] = 'Agile Maneuvers';

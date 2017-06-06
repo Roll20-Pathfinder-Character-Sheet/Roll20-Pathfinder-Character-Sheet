@@ -265,13 +265,13 @@ function expandAll  () {
 */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))) },PFConst.silentParams,function(){
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
+			'attentionv161-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
 		});
 	});
-	
 	getAttrs(['is_npc', 'set_pfs'],function(v){
 		var isNPC = parseInt(v.is_npc,10)||0,
 		isPFS = parseInt(v.set_pfs,10)||0;
@@ -311,7 +311,7 @@ function recalcExpressions (callback, silently, oldversion) {
 	}
 }
 function recalcDropdowns (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.dropdowns),
+	var countEqs = _.size(PFConst.abilityScoreManualDropdowns),
 	done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -319,7 +319,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 	}),
 	doneOne = _.after(countEqs, done);
 	try {
-		_.each(PFConst.dropdowns, function (writeField, readField) {
+		_.each(PFConst.abilityScoreManualDropdowns, function (writeField, readField) {
 			try {
 				PFUtilsAsync.setDropdownValue(readField, writeField, doneOne, silently);
 			} catch (err) {
@@ -333,7 +333,192 @@ function recalcDropdowns (callback, silently, oldversion) {
 		done();
 	}
 }
-export function migrate (oldversion, callback, errorCallback) {
+
+var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
+    var done = function(){
+		TAS.notice("migrateDropdowns.down","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        if (typeof callback === "function"){
+            callback();
+        }
+    }, 
+    updatedGroup = _.after(4,function(){
+        setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,callback);
+		TAS.notice("PFSheet.migrateDropdown.updatedGroup","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+    }),
+	updateRepeatingAttackTypes = function(){
+		var sections,doneOneSection;
+		sections  = Object.keys(PFConst.repeatingAttackTypeManualDropdowns);
+		if(!_.size(sections)){
+			updatedGroup();
+			return;
+		}
+		doneOneSection = _.after(_.size(sections),updatedGroup);
+		TAS.debug("the sections are ",sections);
+		sections.forEach(function(section){
+			getSectionIDs('repeating_'+section,function(ids){
+				var fields, attr='';
+				if(!ids || _.size(ids)===0){
+					TAS.warn("migrate repeating attackDropdowns, there are no rows for "+ section);
+					doneOneSection();
+					return;
+				}
+				attr='_'+PFConst.repeatingAttackTypeManualDropdowns[section];
+				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
+				getAttrs(fields,function(v){
+					var setter, tempstr='';
+					TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+					setter = Object.keys(v).reduce(function(m,a){
+						//var a = 'repeating_'+section+'_'+id+attr;
+						try{
+							if (v[a] && v[a][0]!=="0"){
+								tempstr=v[a].replace('@{','').replace('}','');
+								if (tempstr!==v[a]){
+									m[a]=tempstr;
+								}
+							}
+						} catch (err){
+							TAS.error("PFSheet.migrate repeating attacktype dropdowns for: "+section,err);
+						} finally {
+							return m;
+						}
+					},{});
+					if (_.size(setter)>0){
+						TAS.debug("Migrate attack dropdowns setting:",setter);
+						setAttrs(setter,PFConst.silentParams,doneOneSection);
+					} else {
+						doneOneSection();
+					}
+				});
+			});
+		});
+	},
+    updateRepeating= function(){
+        getSectionIDs("repeating_weapon",function(ids){
+            var fields;
+            if (!ids || _.size(ids)===0){
+                updatedGroup();
+                return;
+            }
+            fields =SWUtils.cartesianAppend(['repeating_weapon_'],ids,['damage-ability']);
+            getAttrs(fields,function(v){
+                var setter;
+				try {
+					TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
+					setter = Object.keys(v).reduce(function(m,a){
+						var tempstr='';
+						if (v[a] && v[a]!=="0"){
+							tempstr=v[a].replace('@{','').replace('}','');
+							if (tempstr!==v[a]){
+								m[a]=tempstr;
+							}
+						}
+						return m;
+					},{});
+				} catch (err){
+					TAS.error("PFSheet.migrate repeating ability dropdowns ",err);
+				} finally {
+					if (_.size(setter)){
+						TAS.debug("Migrate repeatingweapon ability dropdowns setting:",setter);
+						setAttrs(setter,PFConst.silentParams,updatedGroup);
+					} else {
+						updatedGroup();
+					}
+				}
+            });
+        });
+    },
+    updateNonRepeating = function(){
+        var fields = Object.keys(PFConst.abilityScoreManualDropdowns);
+        getAttrs(fields,function(v){
+            var setter={};
+			try{
+				TAS.debug("migrateAbilityDropdowns getting:",v);
+				setter = Object.keys(PFConst.abilityScoreManualDropdowns).reduce(function(m,a){
+					var tempstr='';
+					if (v[a] && v[a]!=="0"){
+						switch(a){
+							case 'AC-ability':
+							case 'FF-ability':
+							case 'CMD-ability':
+							case 'CMD-ability1':
+							case 'CMD-ability2':
+							case 'selected-ability-psionic-power':
+								tempstr=PFUtils.findAbilityInString(v[a])||"0";
+								break;
+							default:
+								tempstr=v[a].replace('@{','').replace('}','');
+								break;
+						}
+						if (tempstr!==v[a]){
+							m[a]=tempstr;
+						}
+					} else if (v[a] && v[a][0]==="0" && String(v[a]).length > 1){
+						m[a]="0";
+					}
+					return m;
+				},{});
+			} catch (err){
+				TAS.error("PFSheet.migrate AbilityModDropdowns ",err);
+			} finally {
+				if (_.size(setter)){
+					TAS.debug("Migrate ability dropdowns setting:",setter);
+					setAttrs(setter,PFConst.silentParams,updatedGroup);
+				} else {
+					updatedGroup();
+				}
+			}
+        });
+    },
+    updateSkills = function(){
+        var fields = PFSkills.allTheSkills.map(function(s){return s+"-ability";});
+        getAttrs(fields,function(v){
+            var setter={};
+			try{
+				TAS.debug("updateSkills getting:",v);
+				setter = Object.keys(v).reduce(function(m,a){
+					var tempstr='';
+					if (v[a] ){
+						tempstr=v[a].replace('@{','').replace('}','');
+						if (tempstr!==v[a]){
+							m[a]=tempstr;
+						}
+					}
+					return m;
+				},{});
+			} catch (err){
+				TAS.error("PFSheet.migrate Skills dropdowns ",err);
+			} finally {
+				if (_.size(setter)){
+					TAS.debug("Migrate skill dropdowns setting:",setter);
+					setAttrs(setter,PFConst.silentParams,updatedGroup);
+				} else {
+					updatedGroup();
+				}
+			}
+        });
+    };
+    getAttrs(['migrated_ability_dropdowns'],function(v){
+        var setter={};
+		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
+        if(!parseInt(v.migrated_ability_dropdowns,10)){
+            updateRepeating();
+            updateNonRepeating();
+			updateRepeatingAttackTypes();
+			updateSkills();
+        } else {
+            done();
+        }
+    });
+});
+
+export var migrate = TAS.callback(function callSheetMigrate(callback,oldversion){
+	migrateDropdowns(callback,oldversion);
+});
+
+function upgrade (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
@@ -419,7 +604,6 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFAttacks.migrateLinkedAttacks(null,oldversion);
 			}
 			if (oldversion < 1.53){
-				PFBuffs.recalculate(null,false,oldversion);
 				PFSkills.migrate(null,oldversion);
 				PFSize.recalculate(function(){
 					PFEncumbrance.migrate();
@@ -428,10 +612,18 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
 			}
+
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
+				PFSkills.migrate();
 			}
+			if (oldversion < 1.61){
+				PFBuffs.migrate(null,oldversion);
+				migrateDropdowns();
+			}
+
 		}
+
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
 		errorDone();
@@ -551,10 +743,10 @@ function recalculateCore (callback, silently, oldversion) {
 
 }
 /** recalculate - all pages in sheet!  
-*@param {number} oldversion the current version attribute
-*@param {function} callback when done if no errors
-*@param {function} errorCallback  call this if we get an error
-*/
+ *@param {number} oldversion the current version attribute
+ *@param {function} callback when done if no errors
+ *@param {function} errorCallback  call this if we get an error
+ */
 export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
 	var done = function () {
 		TAS.info("leaving PFSheet.recalculate");
@@ -567,12 +759,16 @@ export var recalculate = TAS.callback(function callrecalculate(oldversion, callb
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
 		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
+	}),
+	callRecalcCore = TAS.callback(function callRecalculateCore(){
+		recalculateCore(callEncumbrance, silently, oldversion);
 	});
 	silently=true;
-	recalculateCore(callEncumbrance, silently, oldversion);
+	migrate(callRecalcCore,oldversion);
 });
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
-*  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
+ *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
+ * */
 function checkForUpdate () {
 	var done = function () {
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
@@ -610,14 +806,16 @@ function checkForUpdate () {
 			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
 			//NEW SHEET:
 			newSheet=true;
-		} 
+		}
+		//force this on sheet open, not sure wtf is wrong
+		PFSkills.migrate();
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
 		if (newSheet) {
 			setupNewSheet(done);
 		} else if (migrateSheet){
-			migrate(currVer, setUpgradeFinished, errorDone);
+			upgrade(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
 			recalculate(currVer, done, true);
@@ -644,12 +842,24 @@ function registerEventHandlers () {
 		}
 	});
 	//GENERIC DROPDOWNS
-	_.each(PFConst.dropdowns, function (write, read) {
-		on("change:" + read, TAS.callback(function eventGenericDropdowns(eventInfo) {
+	_.each(PFConst.abilityScoreManualDropdowns, function (write, read) {
+		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			PFUtilsAsync.setDropdownValue(read, write);
+			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+				//user changed the SELECTION
+				PFUtilsAsync.setDropdownValue(read, write);
+			}
 		}));
 	});
+	/*_.each(PFConst.dropdowns, function (write, read) {
+		on("change:" + read, TAS.callback(function eventAutoCalcDropdown(eventInfo) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType==="sheetworker"|| eventInfo.sourceType==="api"){
+				//sheetworker changed the VALUE of autocalc
+				PFUtilsAsync.setDropdownValue(read, write);
+			}
+		}));
+	});	*/
 	//GENERIC EQUATIONS
 	_.each(PFConst.equationMacros, function (write, read) {
 		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {
