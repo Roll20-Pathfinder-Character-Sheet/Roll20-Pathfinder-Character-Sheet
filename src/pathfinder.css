@@ -511,6 +511,12 @@ input[type="text"].sheet-number,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly input[type=text].sheet-number{
 	width: 2.5em;
 }
+.sheet-wide-buff-exists.sheet-small-label2.sheet-number {
+    width:4.1em;
+}
+.sheet-wide-buff-exists.sheet-small-label2.sheet-number input {
+    margin-left:.25em;
+}
 
 .sheet-buff-row {
     display: table-row;
@@ -2686,11 +2692,6 @@ input[type="number"].sheet-entry-wide {
 .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-space-right-collapse {
     margin-right: .125em;
 }
-.sheet-linked-fields.sheet-nextitem {
-    border: 1px solid #808080;
-    border-radius: 5px;
-    margin: .125em 0 .125em 0;
-}
 
 .sheet-sect-buff .sheet-linked-fields {
     width: 13.5em;
@@ -2713,7 +2714,16 @@ input[type="number"].sheet-entry-wide {
 .sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
     width: 10.5rem;
 }
+.sheet-bonustype-show:checked ~ .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields.sheet-buff-notype,
+.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-buff-notype {
+    width: 3.1rem;
+}
 
+.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields:not(.sheet-buff-notype) {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    margin: .125em 0 .125em 0;
+}
 
 /******* end of generic repeating items ********/
 

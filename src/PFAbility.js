@@ -1045,14 +1045,30 @@ function registerEventHandlers () {
 		memo+="change:repeating_ability:"+attr+" ";
 		return memo;
 	},"");
-	on(eventToWatch,	TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+	on(eventToWatch, TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		updateAssociatedAttack(null,null,null,eventInfo);
 	}));
 	on("change:repeating_ability:rule_category change:repeating_ability:ability_type", TAS.callback(function eventUpdateSLARuleCat(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setRuleTab(null,null,eventInfo);
 	}));
+/*	on("change:repeating_ability:rule_category", TAS.callback(function eventSetRuleCategory(eventInfo){
+		if(eventInfo.sourceType==='player'){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			getAttrs(['repeating_ability_rule_category','repeating_ability_CL-basis','repeating_ability_ability_type'],function(v){
+				var setter={};
+				if( v.repeating_ability_rule_category === 'class-features' && v['repeating_ability_CL-basis']=="0"){
+					setter['repeating_ability_CL-basis']='@{class-0-level}';
+				} else if (v.repeating_ability_rule_category === 'racial-traits' && v['repeating_ability_CL-basis']=="0"){
+					setter['repeating_ability_CL-basis']='@{npc-hd-num}';
+				} else if(v.repeating_ability_rule_category==='spell-like-abilities' && v.repeating_ability_ability_type !== 'Sp'){
+					setter.repeating_ability_ability_type='Sp';
+				}
+			});
+		}
+	}));
+	*/
 }
 registerEventHandlers();
 PFConsole.log('   PFAbility module loaded        ' );
