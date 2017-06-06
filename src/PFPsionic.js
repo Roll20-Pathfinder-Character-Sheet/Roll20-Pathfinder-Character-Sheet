@@ -12,13 +12,16 @@ function updatePsionicBonusPower (callback, silently) {
 		if (typeof callback === "function") {
 			callback();
 		}
-	});
+	}),
+	params={};
+	if (silently) {
+		params = PFConst.silentParams;
+	}
 	getAttrs(["selected-ability-psionic-power", "psionic-level-total", "ability-psionic-power"], function (v) {
 		SWUtils.evaluateExpression(v["selected-ability-psionic-power"], function (value) {
 			var ability = 0,
 			currentTotal = 0,
 			newTotal = 0,
-			params = {},
 			finished = false;
 			try {
 				ability = parseInt(value, 10) || 0;
@@ -26,9 +29,6 @@ function updatePsionicBonusPower (callback, silently) {
 				newTotal = Math.floor(ability * (parseInt(v["psionic-level-total"], 10) || 0) * 0.5);
 				//TAS.debug("ability=" + ability, "newTotal=" + newTotal, "currentTotal=" + currentTotal);
 				if (currentTotal !== newTotal) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
 					finished = true;
 					SWUtils.setWrapper({
 						"ability-psionic-power": newTotal
@@ -41,6 +41,10 @@ function updatePsionicBonusPower (callback, silently) {
 					done();
 				}
 			}
+		},function(){
+			SWUtils.setWrapper({
+				"ability-psionic-power": 0
+			}, params, done);
 		});
 	});
 }
