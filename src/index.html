@@ -221,7 +221,7 @@
 							</label>
 							<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name" title="@{repeating_buff_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
 
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b1-show" value="1" />
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b1-show" value="1" checked />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b1_bonustype" title="repeating_buff_$X_b1_bonustype">
@@ -247,6 +247,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b1_bonus" title="repeating_buff_$X_b1_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -262,6 +263,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
@@ -318,6 +320,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b2_bonus" title="repeating_buff_$X_b2_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -333,6 +336,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
@@ -389,6 +393,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b3_bonus" title="repeating_buff_$X_b3_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -404,6 +409,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
@@ -460,6 +466,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b4_bonus" title="repeating_buff_$X_b4_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -475,6 +482,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
@@ -531,6 +539,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b5_bonus" title="repeating_buff_$X_b5_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -546,6 +555,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
@@ -602,6 +612,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b6_bonus" title="repeating_buff_$X_b6_bonus">
+										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
 										<option value="melee" data-i18n="melee-attack">melee attack</option>
 										<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
@@ -617,6 +628,7 @@
 										<option value="check_skills" data-i18n="skill-checks">skill checks</option>
 										<option value="casterlevel" data-i18n="caster-level">caster level</option>
 										<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+										<option value="saves" data-i18n="all-saves">saves</option>
 										<option value="fort" data-i18n="fortitude-abbrv">fort</option>
 										<option value="will" data-i18n="willpower-abbrv">will</option>
 										<option value="ref" data-i18n="reflex-abbrv">ref</option>
