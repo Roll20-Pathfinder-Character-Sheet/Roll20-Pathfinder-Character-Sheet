@@ -1,4 +1,8 @@
 {
+  "melee-damage": "Melee damage",
+  "ranged-damage": "Ranged damage",
+"ability-skill-checks": "Ability & Skill Checks",
+    "natural-armor": "Natural Armor",
   "ability-attack-dropdowns": "Ability and Attack Type Dropdowns",
   "linked-attacks": "Linked attacks",
   "use-buff-bonus-stacking": " Use buff bonus types and stacking",
