@@ -112,6 +112,8 @@ addThisToThat = {
 	'dmg':['dmg_melee','dmg_ranged'],
 	'saves':['fort','ref','will']
 },
+//this spreads buff out which works but might fill up space
+//another way would beto make it subtractThatFromThis
 applyMaxThatToThis = {
 	'melee':['attack'],
 	'ranged':['attack'],
