@@ -2718,6 +2718,9 @@ input[type="number"].sheet-entry-wide {
 .sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-buff-notype {
     width: 3.1rem;
 }
+.sheet-sect-buff .sheet-linked-fields {
+    width: 25em !important;
+}
 
 .sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields:not(.sheet-buff-notype) {
     border: 1px solid #808080;

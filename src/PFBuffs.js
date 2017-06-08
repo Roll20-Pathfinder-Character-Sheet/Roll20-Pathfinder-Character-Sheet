@@ -27,6 +27,7 @@ buffToTot = {
 	'ac':'AC',
 	'armor':'armor',
 	'attack':'attack',
+	'casterlevel':'CasterLevel',
 	'cha':'CHA',
 	'cha_skills':'CHA_skills',
 	'check':'Check',					//change
@@ -313,6 +314,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 	tempInt=0,
 	totaldodge=0,
 	totaldeflection=0, 
+	totalcol='',
 	columns=[col];
 	try {
 		setter = setter || {};
@@ -408,22 +410,23 @@ function updateBuffTotal2 (col,rows,v,setter){
 			}
 		}
 		TAS.debug("PFBUFFS NOW totals are: ",sums);
-		if ( (parseInt(v['buff_'+col+'-total'],10)||0)!==sums.sum){
-			setter['buff_'+col+'-total']=sums.sum;
+		totalcol=buffToTot[col];
+		if ( (parseInt(v['buff_'+totalcol+'-total'],10)||0)!==sums.sum){
+			setter['buff_'+totalcol+'-total']=sums.sum;
 		}
 		if (sums.sum > 0){
-			setter['buff_'+col+'_exists']=1;
-		} else if ((parseInt(v['buff_'+col+'_exists'],10)||0)===1){
-			setter['buff_'+col+'_exists']=0;
+			setter['buff_'+totalcol+'_exists']=1;
+		} else if ((parseInt(v['buff_'+totalcol+'_exists'],10)||0)===1){
+			setter['buff_'+totalcol+'_exists']=0;
 		}
 		if (isAbility){
-			if ( (parseInt(v['buff_'+col+'-total_penalty'],10)||0)!==sums.pen){
-				setter['buff_'+col+'-total_penalty']=sums.pen;
+			if ( (parseInt(v['buff_'+totalcol+'-total_penalty'],10)||0)!==sums.pen){
+				setter['buff_'+totalcol+'-total_penalty']=sums.pen;
 			}
 			if (sums.pen){
-				setter['buff_'+col+'_penalty_exists']=1;
-			} else if ((parseInt(v['buff_'+col+'_penalty_exists'],10)||0)===1){
-				setter['buff_'+col+'_penalty_exists']=0;
+				setter['buff_'+totalcol+'_penalty_exists']=1;
+			} else if ((parseInt(v['buff_'+totalcol+'_penalty_exists'],10)||0)===1){
+				setter['buff_'+totalcol+'_penalty_exists']=0;
 			}
 		}
 	} catch(err){
@@ -433,7 +436,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 	}
 }
 
-export function updateBuffTotalAsync2 (col, callback,silently){
+export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsync2(col, callback,silently){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffs.updateBuffTotalAsync for "+col);
 		if (typeof callback === "function") {
@@ -517,10 +520,10 @@ export function updateBuffTotalAsync2 (col, callback,silently){
 			clearBuffTotals(callback);
 		}
 	});	
-}
+});
 
 
-export function updateAllBuffTotalsAsync2 (callback,silently,eventInfo){
+export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTotalsAsync2(callback,silently,eventInfo){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffs.updateBuffTotalAsync for "+col);
 		if (typeof callback === "function") {
@@ -570,9 +573,8 @@ export function updateAllBuffTotalsAsync2 (callback,silently,eventInfo){
 				}
 			}
 		});
-
 	});		
-}
+});
 
 function updateBuffTotal (col,ids,v,setter,useBonuses){
 	var isAbility=0,
@@ -1135,7 +1137,7 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 		});
 	},
 	recalculateItAll=function(){
-		updateAllBuffTotalsAsync2();
+		updateAllBuffTotalsAsync2(done,true);
 		//recalculateAll();
 		//updateAllBuffTotalsAsync(done);
 	};
@@ -1148,40 +1150,59 @@ function registerEventHandlers () {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
 			SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0);
 		}));
-		on(prefix + "-show " + prefix + "_bonustype", TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
+		on(prefix + "_bonustype", TAS.callback(function PFBuffs_updateBuffbonustype(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'-show','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+					if (parseInt(v['repeating_buff2_'+b+'show'],10) && parseInt(v['repeating_buff2_enable_toggle'],10) && 
+							parseInt(v['repeating_buff2_'+b+'_val'],10) && v['repeating_buff2_'+b+'_bonus']) {
+						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
+					}
+				});
+			}
+		}));
+		on(prefix + "-show ", TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
 					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'_val'],10) && 
 							v['repeating_buff2_'+b+'_bonus']) {
-						TAS.debug("Applying  "+v['repeating_buff2_'+b+'_bonus'] +" bonus of "+parseInt(v['repeating_buff2_'+b+'_val'],10) );
 						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
 			}
 		}));
 		on(prefix + "_val" , TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType ==="api") {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				getAttrs(['repeating_buff2_'+b+'-show','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
-					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'-show'],10) &&v['repeating_buff2_'+b+'_bonus']) {
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'-show'],10) &&
+					   v['repeating_buff2_'+b+'_bonus']) {
 						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
 			}
 		}));
-		on(prefix + "_bonus" , TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
-			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType ==="api") {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		on(prefix + "_bonus" , TAS.callback(function PFBuffs_updateBuffbonus(eventInfo) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
-					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'_val'],10) && 
-							v['repeating_buff2_'+b+'_bonus']) {
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'_val'],10)) {
 						updateAllBuffTotalsAsync2(null,null,eventInfo);
 					}
 				});
 			}
 		}));
 	});
+	on('change:repeating_buff2:enable_toggle',TAS.callback(function PFBuffs_enabletoggle(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
+			updateAllBuffTotalsAsync2(null,null,eventInfo);
+		}
+	}));
 	on("remove:repeating_buff2", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
