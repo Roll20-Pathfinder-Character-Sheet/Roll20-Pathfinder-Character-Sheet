@@ -1159,7 +1159,7 @@ function registerEventHandlers () {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'-show','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
-					if (parseInt(v['repeating_buff2_'+b+'show'],10) && parseInt(v['repeating_buff2_enable_toggle'],10) && 
+					if (parseInt(v['repeating_buff2_'+b+'-show'],10) && parseInt(v['repeating_buff2_enable_toggle'],10) && 
 							parseInt(v['repeating_buff2_'+b+'_val'],10) && v['repeating_buff2_'+b+'_bonus']) {
 						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
