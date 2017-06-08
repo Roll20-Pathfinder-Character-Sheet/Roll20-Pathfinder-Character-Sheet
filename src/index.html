@@ -148,9 +148,9 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-melee-title"><input title="@{buff_Melee-total}" name="attr_buff_Melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="melee">Melee</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-ranged-title"><input title="@{buff_Ranged-total}" name="attr_buff_Ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="ranged">Ranged</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_CMB_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-cmd-title"><input title="@{buff_CMB-total}" name="attr_buff_CMB-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-melee-abbrv">Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
+<!--					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage">Dmg</span></label>-->
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-melee-abbrv">Melee Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Check_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-ability-checks-title"><input title="@{buff_Check-total}" name="attr_buff_Check-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="all-checks">all checks</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_check_ability_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-ability-checks-title"><input title="@{buff_check_ability-total}" name="attr_buff_check_ability-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="ability-checks-abbrv">Abil Check</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_check_skills_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-skills-checks-title"><input title="@{buff_check_skills-total}" name="attr_buff_check_skills-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="skill-checks-abbrv">skill chks</span></label>
@@ -224,28 +224,6 @@
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_b1-show" value="1" checked />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b1_bonustype" title="repeating_buff_$X_b1_bonustype">
-										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
-										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
-										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
-										<option value="competence" data-i18n="competence">Competence</option>
-										<option value="deflection" data-i18n="deflection">Deflection</option>
-										<option value="dodge" data-i18n="dodge">Dodge</option>
-										<option value="enhancement" data-i18n="enhancement">Enhancement</option>
-										<option value="inherent" data-i18n="inherent">Inherent</option>
-										<option value="insight" data-i18n="insight">Insight</option>
-										<option value="luck" data-i18n="luck">Luck</option>
-										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
-										<option value="profane" data-i18n="profane">Profane</option>
-										<option value="racial" data-i18n="racial-bonus">Racial</option>
-										<option value="sacred" data-i18n="sacred">Sacred</option>
-										<option value="size" data-i18n="size">Size</option>
-										<option value="trait" data-i18n="trait">Trait</option>
-									</select>
-									<span data-i18n="bonus-type">Bonus Type</span>
-								</label>
-								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b1_bonus" title="repeating_buff_$X_b1_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
 										<option value="attack" data-i18n="attack">attack</option>
@@ -289,15 +267,8 @@
 									</select>
 									<span data-i18n="bonus">Bonus</span>
 								</label>
-								<input type="checkbox" name="attr_b1_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b1_macro-text" title="@{repeating_buff_$X_b1_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b1 calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b1_val" title="@{repeating_buff_$X_b1_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b1</span></label>
-							</div>
-
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b2-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b2_bonustype" title="repeating_buff_$X_b2_bonustype">
+									<select class="sheet-select-small" name="attr_b1_bonustype" title="repeating_buff_$X_b1_bonustype">
 										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -312,12 +283,20 @@
 										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
 										<option value="sacred" data-i18n="sacred">Sacred</option>
 										<option value="size" data-i18n="size">Size</option>
 										<option value="trait" data-i18n="trait">Trait</option>
 									</select>
 									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
+								<input type="checkbox" name="attr_b1_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b1_macro-text" title="@{repeating_buff_$X_b1_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b1 calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b1_val" title="@{repeating_buff_$X_b1_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b1</span></label>
+							</div>
+
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b2-show" value="1" />
+							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b2_bonus" title="repeating_buff_$X_b2_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
@@ -362,15 +341,8 @@
 									</select>
 									<span data-i18n="bonus">Bonus</span>
 								</label>
-								<input type="checkbox" name="attr_b2_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b2_macro-text" title="@{repeating_buff_$X_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b2 calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b2_val" title="@{repeating_buff_$X_b2_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b2</span></label>
-							</div>
-
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b3-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b3_bonustype" title="repeating_buff_$X_b3_bonustype">
+									<select class="sheet-select-small" name="attr_b2_bonustype" title="repeating_buff_$X_b2_bonustype">
 										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -385,12 +357,20 @@
 										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
 										<option value="sacred" data-i18n="sacred">Sacred</option>
 										<option value="size" data-i18n="size">Size</option>
 										<option value="trait" data-i18n="trait">Trait</option>
 									</select>
 									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
+								<input type="checkbox" name="attr_b2_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b2_macro-text" title="@{repeating_buff_$X_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b2 calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b2_val" title="@{repeating_buff_$X_b2_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b2</span></label>
+							</div>
+
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b3-show" value="1" />
+							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b3_bonus" title="repeating_buff_$X_b3_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
@@ -435,15 +415,8 @@
 									</select>
 									<span data-i18n="bonus">Bonus</span>
 								</label>
-								<input type="checkbox" name="attr_b3_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b3_macro-text" title="@{repeating_buff_$X_b3_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b3 calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b3_val" title="@{repeating_buff_$X_b3_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b3</span></label>
-							</div>
-
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b4-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b4_bonustype" title="repeating_buff_$X_b4_bonustype">
+									<select class="sheet-select-small" name="attr_b3_bonustype" title="repeating_buff_$X_b3_bonustype">
 										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -458,12 +431,20 @@
 										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
 										<option value="sacred" data-i18n="sacred">Sacred</option>
 										<option value="size" data-i18n="size">Size</option>
 										<option value="trait" data-i18n="trait">Trait</option>
 									</select>
 									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
+								<input type="checkbox" name="attr_b3_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b3_macro-text" title="@{repeating_buff_$X_b3_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b3 calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b3_val" title="@{repeating_buff_$X_b3_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b3</span></label>
+							</div>
+
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b4-show" value="1" />
+							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b4_bonus" title="repeating_buff_$X_b4_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
@@ -508,15 +489,8 @@
 									</select>
 									<span data-i18n="bonus">Bonus</span>
 								</label>
-								<input type="checkbox" name="attr_b4_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b4_macro-text" title="@{repeating_buff_$X_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b4 calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b4_val" title="@{repeating_buff_$X_b4_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b4</span></label>
-							</div>
-
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b5-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b5_bonustype" title="repeating_buff_$X_b5_bonustype">
+									<select class="sheet-select-small" name="attr_b4_bonustype" title="repeating_buff_$X_b4_bonustype">
 										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -531,12 +505,20 @@
 										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
 										<option value="sacred" data-i18n="sacred">Sacred</option>
 										<option value="size" data-i18n="size">Size</option>
 										<option value="trait" data-i18n="trait">Trait</option>
 									</select>
 									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
+								<input type="checkbox" name="attr_b4_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b4_macro-text" title="@{repeating_buff_$X_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b4 calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b4_val" title="@{repeating_buff_$X_b4_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b4</span></label>
+							</div>
+
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b5-show" value="1" />
+							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b5_bonus" title="repeating_buff_$X_b5_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
@@ -581,15 +563,8 @@
 									</select>
 									<span data-i18n="bonus">Bonus</span>
 								</label>
-								<input type="checkbox" name="attr_b5_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b5_macro-text" title="@{repeating_buff_$X_b5_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b5 calc</span></label>
-								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b5_val" title="@{repeating_buff_$X_b5_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b5</span></label>
-							</div>
-
-							<input class="sheet-nextitem-show" type="checkbox" name="attr_b6-show" value="1" />
-							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
-									<select class="sheet-select-small" name="attr_b6_bonustype" title="repeating_buff_$X_b6_bonustype">
+									<select class="sheet-select-small" name="attr_b5_bonustype" title="repeating_buff_$X_b5_bonustype">
 										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -604,12 +579,20 @@
 										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
 										<option value="sacred" data-i18n="sacred">Sacred</option>
 										<option value="size" data-i18n="size">Size</option>
 										<option value="trait" data-i18n="trait">Trait</option>
 									</select>
 									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
+								<input type="checkbox" name="attr_b5_error" class="sheet-error-mshow" value="1" />
+								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b5_macro-text" title="@{repeating_buff_$X_b5_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b5 calc</span></label>
+								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b5_val" title="@{repeating_buff_$X_b5_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-abbrv">b5</span></label>
+							</div>
+
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_b6-show" value="1" />
+							<div class="sheet-linked-fields sheet-nextitem">
 								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" name="attr_b6_bonus" title="repeating_buff_$X_b6_bonus">
 										<option value="" data-i18n="select-one-default">select one</option>
@@ -653,6 +636,29 @@
 										<option value="natural" data-i18n="natural-armor">natural</option>
 									</select>
 									<span data-i18n="bonus">Bonus</span>
+								</label>
+								<label class="sheet-small-label2 sheet-entry-med">
+									<select class="sheet-select-small" name="attr_b6_bonustype" title="repeating_buff_$X_b6_bonustype">
+										<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
+										<option value="alchemical" data-i18n="alchemical">Alchemical</option>
+										<option value="circumstance" data-i18n="circumstance">Circumstance</option>
+										<option value="competence" data-i18n="competence">Competence</option>
+										<option value="deflection" data-i18n="deflection">Deflection</option>
+										<option value="dodge" data-i18n="dodge">Dodge</option>
+										<option value="enhancement" data-i18n="enhancement">Enhancement</option>
+										<option value="inherent" data-i18n="inherent">Inherent</option>
+										<option value="insight" data-i18n="insight">Insight</option>
+										<option value="luck" data-i18n="luck">Luck</option>
+										<option value="morale" data-i18n="morale">Morale</option>
+										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="profane" data-i18n="profane">Profane</option>
+										<option value="racial" data-i18n="racial-bonus">Racial</option>
+										<option value="resistance" data-i18n="resistance">Resistance</option>
+										<option value="sacred" data-i18n="sacred">Sacred</option>
+										<option value="size" data-i18n="size">Size</option>
+										<option value="trait" data-i18n="trait">Trait</option>
+									</select>
+									<span data-i18n="bonus-type">Bonus Type</span>
 								</label>
 								<input type="checkbox" name="attr_b6_error" class="sheet-error-mshow" value="1" />
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b6_macro-text" title="@{repeating_buff_$X_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-abbrv">b6 calc</span></label>

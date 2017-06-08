@@ -19,8 +19,8 @@ import * as PFSkills from './PFSkills';
 
 export var buffColumns2 = [
 	'ac',	'armor',	'attack',	'casterlevel',	'cha',	'cha_skills',	'check',	'check_ability',	'check_skills',
-	'cmb',	'cmd',	'con',	'con_skills',	'deflection',	'dex',	'dex_skills',	'dmg',	'dmg_melee',	'dmg_ranged',
-	'dodge',	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
+	'cmb',	'cmd',	'con',	'con_skills',		'dex',	'dex_skills',	'dmg',	'dmg_melee',	'dmg_ranged',
+	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
 	'will',	'wis',	'wis_skills'],
 buffToTot = {
@@ -43,6 +43,7 @@ buffToTot = {
 	'dmg_melee':'dmg_melee',
 	'dmg_ranged':'DMG_ranged',
 	'flatfooted':'flat-footed',
+	'fort':'Fort',
 	'hptemp':'HP-temp',
 	'initiative':'Initiative',
 	'int':'INT',
@@ -50,6 +51,7 @@ buffToTot = {
 	'melee':'Melee',
 	'natural':'natural',
 	'ranged':'Ranged',
+	'ref':'Ref',
 	'saves':'saves',
 	'shield':'shield',
 	'size':'size',
@@ -57,6 +59,7 @@ buffToTot = {
 	'str':'STR',
 	'str_skills':'STR_skills',
 	'touch':'Touch',
+	'will':'Will',
 	'wis':'WIS',
 	'wis_skills':'WIS_skills'},
 otherCharBonuses2 ={
