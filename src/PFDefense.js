@@ -129,7 +129,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
             bufftouch=buffsTouch+dodgebuff+deflectbuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
             buffcmd = buffs+buffsCMD+dodgebuff+deflectbuff;
-            buffffcmd = buffs+buffsCMD+flatfootedbuff+dodgebuff+deflectbuff;
+            buffffcmd = buffs+buffsCMD+flatfootedbuff+deflectbuff;
 
             dodge += dodgebuff;
             deflect += deflectbuff;
