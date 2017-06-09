@@ -1269,18 +1269,17 @@ function registerEventHandlers () {
 			}
 		}));
 		on(prefix + "_bonus" , TAS.callback(function PFBuffs_updateBuffbonus(eventInfo) {
-			var bonus='',setter={};
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-				bonus=SWUtils.getAttributeName(eventInfo.sourceAttribute);
-				TAS.debug("new bonus is "+bonus);
-				if (bonusesWithNoTypes.indexOf(bonus)>=0){
-					setter['repeating_buff2_'+b+'_hide']=1;
-					SWUtils.setWrapper(setter,PFConst.silentParams);
-				}
-				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_enable_toggle'],function(v){
+				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'_bonus','repeating_buff2_'+b+'_hide','repeating_buff2_enable_toggle'],function(v){
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
-					if (bonusesWithNoTypes.indexOf())
+					var setter={};
+					if (bonusesWithNoTypes.indexOf(v['repeating_buff2_'+b+'_bonus'])>=0){
+						setter['repeating_buff2_'+b+'_hide']=1;
+						SWUtils.setWrapper(setter,PFConst.silentParams);
+					} else if(parseInt(v['repeating_buff2_'+b+'_hide'],10)===1){
+						setter['repeating_buff2_'+b+'_hide']=0;
+						SWUtils.setWrapper(setter,PFConst.silentParams);
+					}
 					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'_val'],10)) {
 						updateAllBuffTotalsAsync2(null,null,eventInfo);
 					}
