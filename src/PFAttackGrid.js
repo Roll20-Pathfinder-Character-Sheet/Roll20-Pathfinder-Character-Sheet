@@ -107,18 +107,41 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
     fields;
     if (attackGridFields[attype]) {
         fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
-            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff];
-        if (attype==='CMB'){
-            fields.push('buff_Melee-total');
-        }
+            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff, 
+            'buff_attack-total'];
+        //if do this then have to stack buffs in 
+        //if (attype==='CMB'){
+        //    fields.push('buff_Melee-total');
+        //}
         SWUtils.updateRowTotal(fields, 0, [], false, done, silently);
     } else {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
         done();
     }
 }
-
-
+/** wrapper for updateAttack
+ * 
+ * @param {string} buffType buff column without 'buff_' or '-total'
+ * @param {*} eventInfo 
+ */
+export function updateAttackGrid(buffType,eventInfo){
+    switch(buffType.toLowerCase()){
+        case 'melee':
+            updateAttack('melee', eventInfo);
+            updateAttack('melee2', eventInfo);
+            updateAttack('CMB', eventInfo);
+            updateAttack('CMB2', eventInfo);
+            break;
+        case 'ranged':
+            updateAttack('ranged', eventInfo);
+            updateAttack('ranged2', eventInfo);
+            break;
+        case 'cmb':
+            updateAttack('CMB', eventInfo);
+            updateAttack('CMB2', eventInfo);
+            break;
+    }
+}
 
 function getTopMacros(setter,v){
     var header="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll)",
@@ -182,31 +205,14 @@ export function resetCommandMacro (callback){
     PFMenus.resetOneCommandMacro('attacks',false,done," @{attacks_header_macro}",groupMapForMenu);
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
-/**
- * 
- * @param {string} buffType buff column without 'buff_' or '-total'
- * @param {*} eventInfo 
- */
-export function updateAttackGrid(buffType,eventInfo){
-    switch(buffType.toLowerCase()){
-        case 'melee':
-            updateAttack('melee', eventInfo);
-            updateAttack('melee2', eventInfo);
-            updateAttack('CMB', eventInfo);
-            updateAttack('CMB2', eventInfo);
-            break;
-        case 'ranged':
-            updateAttack('ranged', eventInfo);
-            updateAttack('ranged2', eventInfo);
-            break;
-        case 'cmb':
-            updateAttack('CMB', eventInfo);
-            updateAttack('CMB2', eventInfo);
-            break;
-    }
+
+
+export function updateAttacks(callback,silently){
+    var doneAttack=_.after(6,callback);
+    _.each(attackGridFields, function (attrMap, attack) {
+        updateAttack(attack,null,doneAttack,silently);
+    });
 }
-
-
 export function migrate (callback, oldversion){
     var done = function () {
         //TAS.debug("leaving PFAttackGrid.migrate");
@@ -229,11 +235,8 @@ export var recalculate = TAS.callback(function callrecalculate (callback, silent
             callback();
         }
     },
-    doneAttack=_.after(6,done),
     callUpdateAttacksAndDamage = _.once(function(){
-        _.each(attackGridFields, function (attrMap, attack) {
-            updateAttack(attack,null,doneAttack,silently);
-        });
+        updateAttacks(done,silently);
     }),
     callApplyConditions = _.once(function(){
         applyConditions(callUpdateAttacksAndDamage,silently);
