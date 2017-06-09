@@ -132,7 +132,7 @@ defaultSkillAttrName='REPLACE-macro',
 keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 events = {
-	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
+	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp",
 	//skillGlobalEventAuto: "change:phys-skills-cond change:acp",
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
 	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
