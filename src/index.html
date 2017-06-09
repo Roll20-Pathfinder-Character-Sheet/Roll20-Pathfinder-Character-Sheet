@@ -2645,7 +2645,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee-misc}" type="number" name="attr_attk-melee-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Melee-total}" name="attr_buff_Melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
@@ -2680,7 +2680,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee2-misc}" type="number" name="attr_attk-melee2-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Melee-total}" name="attr_buff_Melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
@@ -2714,7 +2714,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged-misc}" type="number" name="attr_attk-ranged-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Ranged-total}" type="number" name="attr_buff_Ranged-total" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged_crit_conf}" type="number" name="attr_attk_ranged_crit_conf" value="0" /></span>
@@ -2749,7 +2749,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged2-misc}" type="number" name="attr_attk-ranged2-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Ranged-total}" type="number" name="attr_buff_Ranged-total" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged2_crit_conf}" type="number" name="attr_attk_ranged2_crit_conf" value="0" /></span>
@@ -2783,7 +2783,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-CMB-misc}" type="number" name="attr_attk-CMB-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Melee-total}" name="attr_buff_Melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb_crit_conf}" type="number" name="attr_attk_cmb_crit_conf" value="0" /></span>
@@ -2818,7 +2818,7 @@
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-CMB2-misc}" type="number" name="attr_attk-CMB2-misc" value="0" /></span>
 							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_Melee-total}" name="attr_buff_Melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb2_crit_conf}" type="number" name="attr_attk_cmb2_crit_conf" value="0" /></span>
@@ -9130,8 +9130,8 @@
 					<div class="sheet-spells sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_spells">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-delete-row">Error! You must delete this row before editing any items in this section.</span></span>
-							<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new"  role="presentation" />
-							<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" checked role="presentation" />
+							<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
+							<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" role="presentation" />
 							<input type="radio" name="attr_spell_level_r" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
 							<input type="radio" name="attr_spell_level_r" value="2" class="sheet-tabcopy custnavsection-2" role="presentation" />
 							<input type="radio" name="attr_spell_level_r" value="3" class="sheet-tabcopy custnavsection-3" role="presentation" />
@@ -10728,8 +10728,8 @@
 							<div class="sheet-npc-spells sheet-repeating-fields sheet-hiderepborder">
 								<fieldset class="repeating_spells">
 									<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-delete-row">Error! You must delete this row before editing any items in this section.</span></span>
-									<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new"  role="presentation" />
-									<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" checked role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
+									<input type="radio" name="attr_spell_level_r" value="0" class="sheet-tabcopy custnavsection-0" role="presentation" />
 									<input type="radio" name="attr_spell_level_r" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
 									<input type="radio" name="attr_spell_level_r" value="2" class="sheet-tabcopy custnavsection-2" role="presentation" />
 									<input type="radio" name="attr_spell_level_r" value="3" class="sheet-tabcopy custnavsection-3" role="presentation" />
