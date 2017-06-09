@@ -155,6 +155,17 @@ buffTotFields = _.chain(buffColumns).map(function(buff){
 			return ['buff_'+buff+'-total','buff_'+buff+'_exists','buff_'+buff+'-total_penalty', 'buff_'+buff+'_penalty_exists'];
 		}
 	}).flatten().value(),
+buffTotFields2 = _.chain(buffColumns2).map(function(buff){
+		var isAbility = (PFAbilityScores.abilities.indexOf(buff) >= 0) && buff.indexOf('skill')<1;
+		if (!isAbility){
+			return ['buff_'+buff+'-total','buff_'+buff+'_exists'];
+		} else {
+			return ['buff_'+buff+'-total','buff_'+buff+'_exists','buff_'+buff+'-total_penalty', 'buff_'+buff+'_penalty_exists'];
+		}
+	}).flatten().value(),
+
+
+
 //bonus types that are repeated elsewhere on the sheet
 charBonusTypes = _.chain(otherCharBonuses).values().map(function(v){return _.keys(v);}).flatten().union().value().sort(),
 charBonusTypes2 = _.chain(otherCharBonuses2).values().map(function(v){return _.keys(v);}).flatten().union().value().sort(),
@@ -451,10 +462,11 @@ function updateBuffTotal2 (col,rows,v,setter){
 
 		TAS.debug("PFBUFFS NOW totals are: ",sums);
 		totalcol=buffToTot[col];
+		TAS.debug("total field for "+ col + " is "+ totalcol + " and curravl is "+ parseInt(v['buff_'+totalcol+'-total'],10));
 		if ( (parseInt(v['buff_'+totalcol+'-total'],10)||0)!==sums.sum){
 			setter['buff_'+totalcol+'-total']=sums.sum;
 		}
-		if (sums.sum > 0){
+		if (sums.sum !== 0){
 			setter['buff_'+totalcol+'_exists']=1;
 		} else if ((parseInt(v['buff_'+totalcol+'_exists'],10)||0)===1){
 			setter['buff_'+totalcol+'_exists']=0;
@@ -586,7 +598,7 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 			return;
 		}
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs2);
-		fields = fields.concat(buffTotFields);
+		fields = fields.concat(buffTotFields2);
 		fields = fields.concat(charBonusFields2);
 		TAS.debug("############ updateAllBuffTotalsAsync2 BUFF FIELDS ARE:", fields);
 		
