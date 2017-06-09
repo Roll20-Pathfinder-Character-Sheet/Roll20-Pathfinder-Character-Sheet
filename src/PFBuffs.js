@@ -107,7 +107,7 @@ otherCharBonuses ={
 buffsAffectingOthers = {
 	'ac':['cmd','flatfooted'],
 	'attack':['melee','ranged','cmb'],
-	'check':['check_skills','check_ability','str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills'],
+	'check':['initiative','check_skills','check_ability','str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills'],
 	'dmg':['dmg_melee','dmg_ranged'],
 	'saves':['fort','ref','will'],
 	'check_skills':['str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills']
@@ -123,6 +123,7 @@ affectedBuffs = {
 	'cmd':['ac'],
 	'flatfooted':['ac'],
 	'fort':['saves'],
+	'initiative':['check_ability','check'],
 	'ref':['saves'],
 	'will':['saves'],
 	'check_skills':['check'],
