@@ -366,6 +366,7 @@
   "buff": "Buff",
   "buff-armor-class-title": "Bonus to armor class and CMD",
   "buff-attack-title": "Bonus to all attacks",
+  "buff-calculation": "Buff calc",
   "buff-caster-level-title": "Bonus to spell caster level",
   "buff-charisma-title": "Bonus to Charisma ability score",
   "buff-cmd-title": "Bonus to CMD only",
