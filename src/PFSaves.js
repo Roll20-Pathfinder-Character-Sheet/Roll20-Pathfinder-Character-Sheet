@@ -53,11 +53,24 @@ export function applyConditions (callback, silently) {
 	});
 }
 /* updateSave - updates the saves for a character
-* @save = type of save: Fort, Ref, Will  (first character capitalized)
-*/
+ * @save = type of save: Fort, Ref, Will  (first character capitalized)
+ */
 export function updateSave (save, callback, silently) {
 	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc", "saves-cond", "buff_" + save + "-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
+}
+export function updateSaves(callback,silently){
+	var done = _.once(function () {
+		if (typeof callback === "function") {
+			callback();
+		}
+	}),
+	saved = _.after(3, function () {
+		done();
+	});
+	updateSave("Fort", saved, silently);
+	updateSave("Ref", saved, silently);
+	updateSave("Will", saved, silently);
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
@@ -65,22 +78,11 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 		if (typeof callback === "function") {
 			callback();
 		}
-	}),
-	saved = _.after(3, function () {
-		//TAS.debug"finished 3 saves");
-		done();
 	});
 	//TAS.debug("at PFSaves.recalculate");
 	try {
 		applyConditions(function () {
-			try {
-				updateSave("Fort", saved, silently);
-				updateSave("Ref", saved, silently);
-				updateSave("Will", saved, silently);
-			} catch (err2) {
-				TAS.error("PFSaves.recalculate inner saves", err2);
-				done();
-			}
+			updateSaves(done,silently);
 		}, silently);
 	} catch (err) {
 		TAS.error("PFSaves.recalculate OUTER", err);

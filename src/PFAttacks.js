@@ -26,7 +26,7 @@ updateRowAttrs=["attack-mod","attack-type","attack-type-mod","crit_conf_mod","cr
 updateRowAttrsLU = _.map(updateRowAttrs,function(a){return '_'+a;}),
 sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
 sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
-updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","condition-Sickened","buff_DMG-total","buff_DMG_Ranged-total","size","default_char_size","modify_dmg_by_size"],
+updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf","condition-Sickened","buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","size","default_char_size","modify_dmg_by_size"],
 linkedAttackType = { 'equipment':1, 'spell':2, 'ability':3,  'weapon':4};
 
 var defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
@@ -242,9 +242,9 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	if (eventInfo && eventInfo.sourceAttribute.toLowerCase()==='buff_dmg_ranged-total'){
 		rangedUpdate=true;
 	}
-	getAttrs([maxname, modname, "buff_DMG-total","buff_DMG_Ranged-total", "condition-Sickened",rangedField, totalDamageField, 
+	getAttrs([maxname, modname, "buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total", "condition-Sickened",rangedField, totalDamageField, 
 		enhanceField, miscDmgField, abilityMultField], function (v) {
-		var maxA , ability,abilityMult,abilityTot,damageBuffs,currTotalDmg,dmgConditions,
+		var maxA , ability,abilityMult,abilityTot,damageBuffs,currTotalDmg,dmgConditions,genDmgBuff=0,
 		miscDmg,enhance,totalDamage,rangedAttack,setter = {};
 		rangedAttack =  parseInt(v[rangedField],10)||0;
 		if ( !rangedUpdate || rangedAttack ){
@@ -256,11 +256,12 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			enhance = parseInt(v[enhanceField], 10) || 0;
 			TAS.debug('PFAttacks update damage values are :',v);
 			if (rangedAttack){
-				damageBuffs = (parseInt(v["buff_DMG_Ranged-total"],10)||0);
+				damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
 			} else {
-				damageBuffs = parseInt(v["buff_DMG-total"], 10) || 0;
+				damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
 			}
-
+			genDmgBuff=parseInt(v['buff_DMG-total'],10)||0;
+			damageBuffs+=genDmgBuff;
 
 			abilityMult=getDamageMult(v[abilityMultField]);
 
@@ -384,17 +385,17 @@ function getRecalculatedDamageOnly (id,v){
 		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
 		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
 		dmgConditions = v["condition-Sickened"],
-		meleeBuffs = v["buff_DMG-total"], 
-		rangedBuff = v["buff_DMG_Ranged-total"],
-		damageBuffs=0,
+		meleeBuffs = v["buff_dmg_melee-total"]||0, 
+		rangedBuff = v["buff_dmg_ranged-total"]||0,
+		damageBuffs = v['buff_DMG-total']||0,
 		abilityTotDmg=0,
 		newTotalDamage=0,
 		localsetter={};
 	try {
 		if(isRanged){
-			damageBuffs=rangedBuff;
+			damageBuffs+=rangedBuff;
 		} else {
-			damageBuffs=meleeBuffs;
+			damageBuffs+=meleeBuffs;
 		}
 		if( !isRanged || isNaN(maxAbility)) {
 			maxAbility=999;
@@ -426,13 +427,15 @@ export function updateRepeatingWeaponDamages(callback,silently,eventInfo) {
 		var fields;
 		fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,damageRowAttrsLU);
 		fields.push("buff_DMG-total");
-		fields.push("buff_DMG_Ranged-total");
+		fields.push("buff_dmg_melee-total");
+		fields.push("buff_dmg_ranged-total");
 		fields.push("condition-Sickened");
 		getAttrs(fields,function(v){
 			var setter;
 			//replace with int versions
 			v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
-			v["buff_DMG_Ranged-total"]=parseInt(v["buff_DMG_Ranged-total"],10)||0;
+			v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
+			v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
 			v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 			setter = _.reduce(ids,function(m,id){
 				var xtra=getRecalculatedDamageOnly(id,v);
@@ -497,7 +500,7 @@ function  getRecalculatedAttack (id,v,setter){
 		currCritBonus = (parseInt(v[prefix+ "crit_conf_mod"], 10) || 0),
 		critConfirmBonus = (parseInt(v[prefix+ "crit_confirm"], 10) || 0),
 		attkType = PFUtils.findAbilityInString(v[prefix+ "attack-type"]),
-		damageBuffs = 0, 
+		damageBuffs = parseInt(v['buff_DMG-total'],10)||0, 
 		attkTypeForGrid='',
 		attackTypeCritBonusField='',
 		attackTypeCritBonus =0,
@@ -512,9 +515,9 @@ function  getRecalculatedAttack (id,v,setter){
 
 
 		if (isRanged){
-			damageBuffs =  parseInt(v['buff_DMG_ranged-total'],10)||0;
+			damageBuffs +=  parseInt(v['buff_dmg_ranged-total'],10)||0;
 		} else {
-			damageBuffs=  parseInt(v['buff_DMG-total'],10)||0;
+			damageBuffs +=  parseInt(v['buff_dmg_melee-total'],10)||0;
 		}
 		damageBuffs += parseInt(v['condition-Sickened'],10)||0;
 		localsetter = setter || {};
@@ -812,7 +815,8 @@ function recalcOtherFields (ids,callback){
 		}));
 		_.extend(v,charAttMap);
 		v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
-		v["buff_DMG_Ranged-total"]=parseInt(v["buff_DMG_Ranged-total"],10)||0;
+		v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
+		v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
 		v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){

@@ -195,7 +195,10 @@ events = {
 	// events do NOT pass in column updated
 	buffTotalEventsNoParam: {
 		"DMG": [PFAttacks.updateRepeatingWeaponDamages],
-		"DMG_ranged": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_ranged": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_melee": [PFAttacks.updateRepeatingWeaponDamages],
+		"saves": [PFSaves.updateSaves],
+		"attack": [PFAttackGrid.updateAttacks],
 		"AC": [PFDefense.updateDefenses],
 		"Touch": [PFDefense.updateDefenses],
 		"armor": [PFDefense.updateDefenses],
@@ -206,7 +209,8 @@ events = {
 		"flat-footed": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
-		"Check": [PFInitiative.updateInitiative],
+		"Check": [PFInitiative.updateInitiative,PFSkills.recalculate],
+		"check_ability": [PFInitiative.updateInitiative],
 		"check_skills": [PFSkills.recalculate],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],

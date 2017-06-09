@@ -1781,8 +1781,6 @@
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header sheet-super sheet-note-a" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
 										<span class="sheet-table-header"></span>
-										<span class="sheet-table-header"></span>                                        
-										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
                                         <span class="sheet-table-header"></span>
@@ -1820,19 +1818,16 @@
 										<input type="checkbox" name="attr_init-misc-mod_error" class="sheet-error-mshow" value="1" />
 										<span class="sheet-table-cell sheet-hide-readonly sheet-entry-20p-shrink sheet-highlight"><input class="sheet-macro-text-inline" type="text" title="@{init-misc}" name="attr_init-misc" value="" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></span>
 										<span class="sheet-table-cell sheet-hide-readonly sheet-highlight"><input type="number" title="@{init-misc-mod}" name="attr_init-misc-mod" value="0" class="sheet-calc" readonly></span>
-										<span class="sheet-divider-lg sheet-hide-readonly">-</span>
-										<span class="sheet-table-cell"><input type="number" title="@{condition-Deafened}" name="attr_condition-Deafened" value="0" class="sheet-calc" readonly>
-										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
-										</span>
 										<span class="sheet-divider sheet-hide-readonly">+</span>
-										<span class="sheet-table-cell"><input type="number" title="@{checks-cond}" name="attr_checks-cond" value="0" class="sheet-calc" readonly>
-										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
+										<span class="sheet-table-cell">
+											<input type="text" title="@{init_mods}" name="attr_init_mods" value="(@{checks-cond}-@{condition-Deafened})" class="sheet-number" disabled />
+											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
 										</span>
                                         <span class="sheet-divider sheet-hide-readonly">+</span>
-                                        <span class="sheet-table-cell"><input type="number" title="@{buff_initiative-total}" name="attr_buff_initiative-total" value="0" class="sheet-calc" readonly>
-										<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="buff">Buff</span></span>
+                                        <span class="sheet-table-cell">
+											<input type="text" title="@{allbuffs_initiative}" name="attr_allbuffs_initiative" value="(@{buff_initiative-total}+@{buff_Check-total}+@{buff_check_ability-total})" class="sheet-number" disabled >
+											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="buff">Buff</span></span>
 										</span>
-
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
 										</span>

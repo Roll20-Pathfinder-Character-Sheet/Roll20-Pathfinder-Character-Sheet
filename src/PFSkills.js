@@ -333,7 +333,7 @@ export function updateSkill (skill, callback, silently) {
 	rtNm = skill + "-ReqTrain";
 	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, 
 	"enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", 
-	"Perception-cond", "buff_check_skills-total",
+	"Perception-cond", "buff_check_skills-total","buff_Check-total",
 	"buff_STR_skills-total","buff_DEX_skills-total","buff_CON_skills-total","buff_INT_skills-total","buff_WIS_skills-total","buff_CHA_skills-total"	], 
 	function (v) {
 		var skillSize = 0,
@@ -349,7 +349,8 @@ export function updateSkill (skill, callback, silently) {
 		ranks = parseInt(v[ranksNm], 10) || 0,
 		rt = parseInt(v[rtNm], 10) || 0,
 		allCond = parseInt(v["checks-cond"], 10) || 0,
-		buffs= parseInt(v["buff_check_skills-total"],10)||0,
+		buffs= (parseInt(v["buff_check_skills-total"],10)||0) + 
+			(parseInt(v["buff_Check-total"],10)||0),
 		abilityModName = '',
 		abilityName='',
 		physCond = 0,
