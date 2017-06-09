@@ -162,12 +162,12 @@ buffsWithCharFields2 = Object.keys(otherCharBonuses2).sort(),
 //character bonus/buff fields elsewhere on the sheet that stack with buffs
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value().sort(),
 charBonusFields2 = _.chain(otherCharBonuses2).values().map(function(v){return _.values(v);}).flatten().value().sort(),
-buffRowAttrs2 = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
-	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
-	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype',
-	'_b4-show','_b4_val','_b4_bonus','_b4_bonustype',
-	'_b5-show','_b5_val','_b5_bonus','_b5_bonustype',
-	'_b6-show','_b6_val','_b6_bonus','_b6_bonustype',
+buffRowAttrs2 = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype','_b1_hide',
+	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype','_b2_hide',
+	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype','_b3_hide',
+	'_b4-show','_b4_val','_b4_bonus','_b4_bonustype','_b4_hide',
+	'_b5-show','_b5_val','_b5_bonus','_b5_bonustype','_b5_hide',
+	'_b6-show','_b6_val','_b6_bonus','_b6_bonustype','_b6_hide',
 	'_enable_toggle'],
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
@@ -510,6 +510,9 @@ function updateBuffTotal2 (col,rows,v,setter){
 	}
 }
 
+
+
+
 export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsync2(col, callback,silently){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffs.updateBuffTotalAsync for "+col);
@@ -575,9 +578,7 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 						return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 					});
 					if(_.size(ids)){
-						TAS.debug("getting rows");
 						rows = assembleRows(ids,v,col);
-						TAS.debug("after assembling rows we have ",rows);
 						setter = columnsToUpdate.reduce(function(m,c){
 							return updateBuffTotal2(c,rows,v,m);
 						},{});
@@ -659,56 +660,25 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 	});		
 });
 
-function updateBuffTotal (col,ids,v,setter,useBonuses){
+function updateBuffTotal (col,ids,v,setter){
 	var isAbility=0,
-	bonuses = {},
 	sums={'sum':0,'pen':0},
 	tempInt=0,
 	rows=[];
 	try {
 		setter = setter || {};
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
-		//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
-		//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
-
-		//TAS.debug("PFBuffs ids are now ",ids);
 		ids = ids.filter(function(id){
 				var prefix = 'repeating_buff_'+id+'_buff-';
 				return  (parseInt(v[prefix + col + '-show'],10)||0) && (parseInt(v[prefix+col],10)||0);
 			});
-		//TAS.debug("PFBuffs there are "+ _.size(ids)+" ids which are ",ids);
 		if(_.size(ids)>0){
-			if (!useBonuses){
-				rows = ids.map(function(id){
-					var vals={val:0},prefix='';
-					try {
-						prefix='repeating_buff_'+id+'_buff-'+col;
-						vals.val = parseInt(v[prefix],10);
-					} catch (er){
-					} finally {
-						return vals;
-					}
-				});
-			} else {
-				rows = ids.map(function(id){
-					var vals={'bonusType':'untyped',val:0},prefix='';
-					prefix='repeating_buff_'+id+'_buff-'+col;
-					try {
-						vals.val = parseInt(v[prefix],10)||0;
-						if (bonusesWithNoTypes.indexOf(col)>=0){
-							vals.bonusType=col;
-						} else if (selfTypeOrEnhance.indexOf(col)>=0){
-							vals.bonusType = v[prefix+'_type']||col;
-						} else {
-							vals.bonusType = v[prefix+'_type']||'untyped';
-						}
-					} catch (erri3){
-						TAS.error("PFBuffs.updateTtotals erri3:",erri3);
-					}finally {
-						return vals;
-					}
-				});
-			}
+			rows = ids.map(function(id){
+				var vals={val:0};
+				vals.val = parseInt(v['repeating_buff_'+id+'_buff-'+col],10)||0;
+				return vals;
+			});
+
 			//TAS.debug("PFBUFFS ROWS NOW:",rows);
 			if(col==='HP-temp'){
 				sums.sum = rows.filter(function(row){
@@ -726,64 +696,6 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 					}
 					return m;
 				},sums);
-			} else if (useBonuses) {
-				bonuses = {
-					'alchemical':0,'circumstance':0,'competence':0,'deflection':0,
-					'enhancement':0,'equivalent':0,'inherent':0,'insight':0,'luck':0,
-					'morale':0,'penalty': 0,'profane':0,'racial':0,'resistance':0,'sacred':0,
-					'size':0,'trait':0,'untyped':0,'natural':0,'armor':0,'shield':0,'dodge':0};
-				bonuses = rows.reduce(function(m,row){
-					if (row.val<0){
-						m.penalty += row.val;
-					}else if(stackingTypes.includes(row.bonusType) ) {
-						m[row.bonusType] += row.val;
-					} else{
-						m[row.bonusType] = Math.max(m[row.bonusType],row.val);
-					}
-					return m;
-				},bonuses);
-
-				bonuses = _.omit(bonuses,function(val,bonusType){
-					if ((!val || val === 0) && bonusType !== 'penalty'){
-						return 1;
-					}
-					return 0;
-				});
-				//TAS.debug("PFBUFFS BONUSES NOW:",bonuses);
-				//look at bonuses on rest of sheet to see if they overlap and don't stack:
-				if (otherCharBonuses[col]){
-					bonuses = _.mapObject(bonuses,function(val,bonusType){
-						var retval=val;
-						try{
-							if(charBonusTypes.indexOf(bonusType) && otherCharBonuses[col][bonusType]){
-								tempInt = parseInt(v[otherCharBonuses[col][bonusType]],10)||0;
-								//TAS.debug("looking at "+bonusType+" buff  to "+col+" of "+val+", already existing modifier "+ tempInt+" at "+otherCharBonuses[col][bonusType] );
-								if(tempInt>0){
-									if (val<= tempInt){
-										retval=0;
-									}else {
-										retval-=tempInt;
-									}
-								}		
-							}
-						} catch (erri2){
-							TAS.error("error finding other related value on sheet for "+ bonusType+" buff to "+col,erri2);
-						} finally {
-							return retval;
-						}
-					});
-				}
-				//TAS.debug("PFBUFFS FINAL BONUSES:",bonuses);
-				if (isAbility){
-					try {
-						sums.pen = bonuses.penalty||0;
-					} catch (er2){}
-					bonuses.penalty=0;
-				}
-				sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-					m+=bonus;
-					return m;
-				},0);
 			} else if (isAbility) {
 				sums = rows.reduce(function(m,row){
 					if (row.val<0){
@@ -844,7 +756,6 @@ export function updateBuffTotalAsync (col, callback,silently){
 				totfields = totfields.concat(['buff_'+col+'-total_penalty', 'buff_'+col+'_penalty_exists']);
 			}
 			fields = fields.concat(totfields);
-			fields.push('use_buff_bonuses');
 			if (otherCharBonuses[col]){
 				otherfields= _.reduce(otherCharBonuses[col],function(m,field,bonusType){
 					m.push(field);
@@ -856,18 +767,16 @@ export function updateBuffTotalAsync (col, callback,silently){
 			}
 
 			getAttrs(fields,function(v){
-				var useBonuses=false,
-				bonuses = {},
+				var bonuses = {},
 				params={}, setter={};
 				try {
 					//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
-					useBonuses=parseInt(v.use_buff_bonuses,10)||0;
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						var prefix = 'repeating_buff_'+id+'_buff-';
 						return  (parseInt(v[prefix+'enable_toggle'],10)||0);
 					});
-					setter = updateBuffTotal(col,ids,v,setter,useBonuses);
+					setter = updateBuffTotal(col,ids,v,setter);
 				} catch (errou){
 					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col "+col,errou);
 				} finally {
@@ -1149,6 +1058,7 @@ function setBuff (id, col, callback, silently) {
 			}
 		},true,done);
 }
+
 
 
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
