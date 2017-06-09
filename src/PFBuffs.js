@@ -163,12 +163,12 @@ buffsWithCharFields2 = Object.keys(otherCharBonuses2).sort(),
 //character bonus/buff fields elsewhere on the sheet that stack with buffs
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value().sort(),
 charBonusFields2 = _.chain(otherCharBonuses2).values().map(function(v){return _.values(v);}).flatten().value().sort(),
-buffRowAttrs2 = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype','_b1_hide',
-	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype','_b2_hide',
-	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype','_b3_hide',
-	'_b4-show','_b4_val','_b4_bonus','_b4_bonustype','_b4_hide',
-	'_b5-show','_b5_val','_b5_bonus','_b5_bonustype','_b5_hide',
-	'_b6-show','_b6_val','_b6_bonus','_b6_bonustype','_b6_hide',
+buffRowAttrs2 = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
+	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
+	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype',
+	'_b4-show','_b4_val','_b4_bonus','_b4_bonustype',
+	'_b5-show','_b5_val','_b5_bonus','_b5_bonustype',
+	'_b6-show','_b6_val','_b6_bonus','_b6_bonustype',
 	'_enable_toggle'],
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
@@ -266,7 +266,7 @@ function assembleRows (ids,v,col){
 	if(col && relatedBuffs2[col] ){
 		relatedBuffsL=relatedBuffs2[col];
 	}
-	//TAS.debug("assembleRows for "+col);
+	TAS.debug("assembleRows for "+col);
 	var rows = ids.reduce(function(m,id){
 		var valArray,prefix='repeating_buff2_'+id+'_';
 		try {
@@ -274,10 +274,9 @@ function assembleRows (ids,v,col){
 				var innerPrefix=prefix+n,
 				bonusField=innerPrefix+'_bonus',vals={};
 				try{
-					//TAS.debug("assembleRows looking at "+ bonusField);
+					TAS.debug("assembleRows looking at "+ bonusField);
 					if(v[innerPrefix+'-show']=='1'){ 
 						if (!col || v[bonusField]===col || relatedBuffsL.indexOf(v[bonusField])>=0) {
-							//vals={'bonus':col, 'bonusType':'untyped','val':0};
 							vals.bonus=v[bonusField];
 							vals.val = parseInt(v[innerPrefix+'_val'],10)||0;
 							if (bonusesWithNoTypes.indexOf(col)>=0){
@@ -291,7 +290,7 @@ function assembleRows (ids,v,col){
 							} else {
 								vals.bonusType = v[innerPrefix+'_bonustype']||'untyped';
 							}
-							//TAS.debug("adding the set ",vals);
+							TAS.debug("adding the set ",vals);
 							im.push(vals);
 						}
 					} 
@@ -311,7 +310,7 @@ function assembleRows (ids,v,col){
 			return m;
 		}
 	},[]);
-	//TAS.debug("assembleRows returning with ",rows);
+	TAS.debug("assembleRows returning with ",rows);
 	return rows;
 }
 
@@ -330,7 +329,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 		if (!isAbility && affectedBuffs[col]){
 			columns=columns.concat(affectedBuffs[col]);
 		}
-		//TAS.debug('updateBuffTotal2 for '+col+' columns are ',columns);
+		TAS.debug('updateBuffTotal2 for '+col+' columns are ',columns);
 		rows = rows.filter(function(row){
 			if(columns.indexOf(row.bonus)>=0){
 				return 1;
@@ -338,7 +337,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 			return 0;
 		});
 		if (rows && _.size(rows)){
-			//TAS.debug("PFBUFFS ROWS NOW:",rows);
+			TAS.debug("PFBUFFS ROWS NOW:",rows);
 			if(col==='hptemp'){
 				sums.sum = rows.filter(function(row){
 					return row.val>0;
@@ -368,9 +367,9 @@ function updateBuffTotal2 (col,rows,v,setter){
 					}
 					return m;
 				},{});
-				//TAS.debug("Bonuses",bonuses);
+				TAS.debug("Bonuses",bonuses);
 				if(_.size(columns)>1){
-					//TAS.debug("subtract other bonuses");
+					TAS.debug("subtract other bonuses");
 					//rest added together so don't stack
 					bonuses = rows.reduce(function(m,row){
 						if (stackingTypes.indexOf(row.bonusType)<0 && 
@@ -384,7 +383,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 						}
 						return m;
 					},bonuses);
-					//TAS.debug("PFBUFFS BONUSES before subtraacting  ",bonuses);
+					TAS.debug("PFBUFFS BONUSES before subtraacting  ",bonuses);
 				}
 				//look at bonuses on rest of sheet to see if they overlap and don't stack:
 				_.each(otherCharBonuses2[col],function(charField,bonusType){
@@ -398,7 +397,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 						}
 					}
 				});
-				//TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
+				TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
 				if (isAbility){
 					try {
 						sums.pen = bonuses.penalty||0;
@@ -450,7 +449,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 			}
 		}
 
-		//TAS.debug("PFBUFFS NOW totals are: ",sums);
+		TAS.debug("PFBUFFS NOW totals are: ",sums);
 		totalcol=buffToTot[col];
 		if ( (parseInt(v['buff_'+totalcol+'-total'],10)||0)!==sums.sum){
 			setter['buff_'+totalcol+'-total']=sums.sum;
@@ -473,6 +472,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 	} catch(err){
 		TAS.error("PFBuffs.updateBuffTotal",err);
 	} finally {
+		TAS.debug("###############################","returning with ",setter);
 		return setter;
 	}
 }
@@ -532,11 +532,11 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 				done();
 				return;
 			}
-			//TAS.debug("updateBuffTotalAsync2 fields ",fields,'#######################################');
+			TAS.debug("updateBuffTotalAsync2 fields ",fields,'#######################################');
 			getAttrs(fields,function(v){
 				var rows,params={}, setter={};
 				try {
-					//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
+					TAS.debug("PFBuffs.totals for "+ col+" v is",v);
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
@@ -1238,7 +1238,7 @@ function registerEventHandlers () {
 		var prefix = "change:repeating_buff2:" + b ;
 		on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0);
+			SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0,null,false);
 		}));
 		on(prefix + "_bonustype", TAS.callback(function PFBuffs_updateBuffbonustype(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
@@ -1270,6 +1270,7 @@ function registerEventHandlers () {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
 					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'-show'],10) &&
 						v['repeating_buff2_'+b+'_bonus']) {
+							TAS.notice("OK this one counts so call it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
