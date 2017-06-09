@@ -76,7 +76,6 @@ otherCharBonuses2 ={
 	'ac':{'natural':'AC-natural','deflection':'AC-deflect','armor':'armor3-acbonus','shield':'shield3-acbonus'},
 	'armor':{'enhancement':'armor3-enhance'},
 	'shield':{'enhancement':'shield3-enhance'}
-	//'natural':{'natural':'AC-natural'},only enhancement to natural this is not on sheet
 	},
 buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	"AC", "Touch", "CMD", "armor","shield","natural","flat-footed",
@@ -105,16 +104,17 @@ otherCharBonuses ={
 	'natural':{'natural':'AC-natural'},
 	'deflection':{'deflection':'AC-deflect'}
 },
-addThisToThat = {
-	'ac':['cmd'],
+buffsAffectingOthers = {
+	'ac':['cmd','flatfooted'],
 	'attack':['melee','ranged','cmb'],
-	'check':['check_skills','check_ability'],
+	'check':['check_skills','check_ability','str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills'],
 	'dmg':['dmg_melee','dmg_ranged'],
-	'saves':['fort','ref','will']
+	'saves':['fort','ref','will'],
+	'check_skills':['str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills']
 },
 //this spreads buff out which works but might fill up space
 //another way would beto make it subtractThatFromThis
-applyMaxThatToThis = {
+affectedBuffs = {
 	'melee':['attack'],
 	'ranged':['attack'],
 	'cmb':['attack'],
@@ -134,18 +134,15 @@ applyMaxThatToThis = {
 	'wis_skills':['check_skills','check'],
 	'cha_skills':['check_skills','check']
 },
-subtractThisFromThat = {
-	'check_skills':['str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills']	
-},
-relatedBuffs2=_.extend({},applyMaxThatToThis,addThisToThat),
+relatedBuffs2=_.extend({},affectedBuffs,buffsAffectingOthers),
 armorcols2=['ac','touch','flatfooted','cmd'];
 
 var buffsPerRow=['b1','b2','b3','b4','b5','b6'],
 //these aways stack don't need to use max
 stackingTypes =['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
-selfTypeOnly=['dodge','deflection','size'],
-//these have only their own type (like selfTypeOnly) or 'enhancement'
+bonusesWithNoTypes=['dodge','deflection','size','hptemp'],//rmeove dodge deflection for v2
+//these have only their own type (like bonusesWithNoTypes) or 'enhancement'
 selfTypeOrEnhance=['armor','shield','natural'],
 //all total fields
 buffTotFields = _.chain(buffColumns).map(function(buff){
@@ -251,6 +248,40 @@ export function clearBuffTotals(callback,silently){
 		}
 	});
 }
+export function clearBuffTotals2(callback,silently){
+	var done=function(){
+		if(typeof callback === "function"){
+			callback();
+		}
+	},
+	fields;
+	fields = SWUtils.cartesianAppend(['buff_'],buffColumns2,['-total','_exists']);
+	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
+	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
+	getAttrs(fields,function(v){
+		var setter={},params={};
+		//TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
+		setter = _.reduce(v,function(memo,val,attr){
+			if ((/exists/).test(attr)){
+				if (parseInt(val,10)){
+					memo[attr]=0;
+				}
+			} else if (parseInt(val,10) || typeof val === "undefined"){
+				memo[attr]=0;
+			}
+			return memo;
+		},{});
+		if (_.size(setter)){
+			if(silently){
+				params =PFConst.silentParams;
+			}
+			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			SWUtils.setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	});
+}
 
 /** Gets list of buffs from the buff rows for v2, so we don't have to keep looping through the ids.
  * @param {[string]} ids ids for list
@@ -277,7 +308,7 @@ function assembleRows (ids,v,col){
 							//vals={'bonus':col, 'bonusType':'untyped','val':0};
 							vals.bonus=v[bonusField];
 							vals.val = parseInt(v[innerPrefix+'_val'],10)||0;
-							if (selfTypeOnly.indexOf(col)>=0){
+							if (bonusesWithNoTypes.indexOf(col)>=0){
 								vals.bonusType=col;
 							} else if (selfTypeOrEnhance.indexOf(col)>=0){
 								if(v[innerPrefix+'_bonustype']==='enhancement') {
@@ -317,16 +348,17 @@ function updateBuffTotal2 (col,rows,v,setter){
 	bonuses = {},
 	sums={'sum':0,'pen':0},
 	tempInt=0,
-	totaldodge=0,
-	totaldeflection=0, 
+	totaldodge=0,tempdodge=0,
+	totaldeflection=0, tempdeflect=0,
 	totalcol='',
 	columns=[col];
 	try {
 		setter = setter || {};
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
-		if (!isAbility && relatedBuffs2[col]){
-			columns=columns.concat(relatedBuffs2[col]);
+		if (!isAbility && affectedBuffs[col]){
+			columns=columns.concat(affectedBuffs[col]);
 		}
+		TAS.debug('updateBuffTotal2 for '+col+' columns are ',columns);
 		rows = rows.filter(function(row){
 			if(columns.indexOf(row.bonus)>=0){
 				return 1;
@@ -353,20 +385,38 @@ function updateBuffTotal2 (col,rows,v,setter){
 				},sums);
 			} else {
 				bonuses = rows.reduce(function(m,row){
-					if (row.val<0){
-						m.penalty = (m.penalty||0) + row.val;
-					} else if(stackingTypes.includes(row.bonusType) ) {
-						m[row.bonusType] = (m[row.bonusType]||0) + row.val;
-					} else {
-						m[row.bonusType] = Math.max((m[row.bonusType]||0),row.val);
+					if(row.bonus===col){
+						if (row.val<0){
+							m.penalty = (m.penalty||0) + row.val;
+						} else if(stackingTypes.includes(row.bonusType) ) {
+							m[row.bonusType] = (m[row.bonusType]||0) + row.val;
+						} else {
+							m[row.bonusType] = Math.max((m[row.bonusType]||0),row.val);
+						}
 					}
 					return m;
 				},{});
-
-				TAS.debug("PFBUFFS BONUSES for "+ col+" NOW:",bonuses);
-
+				TAS.debug("Bonuses",bonuses);
+				if(_.size(columns)>1){
+					TAS.debug("subtract other bonuses");
+					//rest added together so don't stack
+					bonuses = rows.reduce(function(m,row){
+						if (stackingTypes.indexOf(row.bonusType)<0 && 
+							affectedBuffs[col].indexOf(row.bonus)>=0 &&
+							row.val >0 && m[row.bonusType]>0){
+								if(row.val < m[row.bonusType]){
+									m[row.bonusType] -= row.val;
+								} else {
+									m[row.bonusType]=0;
+								}
+						}
+						return m;
+					},bonuses);
+					TAS.debug("PFBUFFS BONUSES before subtraacting  ",bonuses);
+				}
 				//look at bonuses on rest of sheet to see if they overlap and don't stack:
 				_.each(otherCharBonuses2[col],function(charField,bonusType){
+					TAS.debug('comparing to val of '+charField+', type is '+bonusType);
 					if(bonuses[bonusType]){
 						tempInt = parseInt(v[charField],10)||0;
 						if(bonuses[bonusType] <= tempInt){
@@ -376,7 +426,6 @@ function updateBuffTotal2 (col,rows,v,setter){
 						}
 					}
 				});
-				
 				TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
 				if (isAbility){
 					try {
@@ -402,19 +451,34 @@ function updateBuffTotal2 (col,rows,v,setter){
 						}
 						return m;
 					},0);
-					if(col==='ac'){
-						//ignore dodge and deflect for any other than ac
-						if(totaldodge){
-							setter['buff_dodge-total']=totaldodge;
-						}
-						if(totaldeflection){
-							setter['buff_deflection-total']=totaldodge;
-						}
-					}
 				}
 			}
 		}
-		TAS.debug("PFBUFFS NOW totals are: ",sums);
+
+		if(col==='ac'){
+			TAS.debug("column is AC, setting dodge to "+totaldodge+" and deflection to "+ totaldeflection);
+			tempdodge=parseInt(v['buff_dodge-total'],10)||0;
+			tempdeflect=parseInt(v['buff_deflection-total'],10)||0;
+			//ignore dodge and deflect for any other than ac
+			if (totaldodge !== tempdodge){
+				setter['buff_dodge-total']=totaldodge;
+				if(totaldodge){
+					setter['buff_dodge_exists']=1;
+				} else {
+					setter['buff_dodge_exists']=0;
+				}
+			}
+			if (totaldeflection!==tempdeflect){
+				setter['buff_deflection-total']=totaldodge;
+				if(totaldeflection){
+					setter['buff_deflection_exists']=1;
+				} else {
+					setter['buff_deflection_exists']=0;
+				}
+			}
+		}
+
+		//TAS.debug("PFBUFFS NOW totals are: ",sums);
 		totalcol=buffToTot[col];
 		if ( (parseInt(v['buff_'+totalcol+'-total'],10)||0)!==sums.sum){
 			setter['buff_'+totalcol+'-total']=sums.sum;
@@ -453,43 +517,54 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 	getSectionIDs('repeating_buff2',function(ids){
 		var fields,totfields,otherfields,totals=[],columnsToGet=[],columnsToUpdate=[];
 		if(ids && _.size(ids)){
-			fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs2);
-			//columns = concat(addThisToThat[col]||[]).concat(applyMaxThatToThis[col]||[]);
-			columnsToGet=[col];
-			columnsToUpdate=[col];
-			if(addThisToThat[col]){
-				columnsToGet=columnsToGet.concat(addThisToThat[col]);
-				columnsToUpdate=columnsToUpdate.concat(addThisToThat[col]);
-			}
-			if(applyMaxThatToThis[col]){
-				columnsToGet = columnsToGet.concat(applyMaxThatToThis[col]);
-			}
-
-			totals = columnsToUpdate.map(function(b){return buffToTot[b];});
-
-			totfields = totals.map(function(t){return 'buff_'+t+'-total'}).concat(
-				totals.map(function(t){return 'buff_'+t+'_exists'}));
-			if (isAbility){
-				totfields = totfields.concat(['buff_'+buffToTot[col]+'-total_penalty', 'buff_'+buffToTot[col]+'_penalty_exists']);
-			}
-			fields = fields.concat(totfields);
-			//fields.push('use_buff_bonuses');
-
-			otherfields = columnsToGet.reduce(function(m,c){
-				if (otherCharBonuses[c]){
-					m=m.concat(otherCharBonuses[c]);
+			try {
+				fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs2);
+				//columns = concat(buffsAffectingOthers[col]||[]).concat(affectedBuffs[col]||[]);
+				columnsToGet=[col];
+				columnsToUpdate=[col];
+				if(buffsAffectingOthers[col]){
+					columnsToGet=columnsToGet.concat(buffsAffectingOthers[col]);
+					columnsToUpdate=columnsToUpdate.concat(buffsAffectingOthers[col]);
 				}
-				return m;
-			},[]);
-			if(_.size(otherfields)){
-				fields = fields.concat(otherfields);
+				if(affectedBuffs[col]){
+					columnsToGet = columnsToGet.concat(affectedBuffs[col]);
+				}
+
+				totals = columnsToUpdate.map(function(b){return buffToTot[b];});
+
+				totfields = totals.map(function(t){return 'buff_'+t+'-total'}).concat(
+					totals.map(function(t){return 'buff_'+t+'_exists'}));
+				if (isAbility){
+					totfields = totfields.concat(['buff_'+buffToTot[col]+'-total_penalty', 'buff_'+buffToTot[col]+'_penalty_exists']);
+				}
+				fields = fields.concat(totfields);
+				//fields.push('use_buff_bonuses');
+
+				if(col==='ac'){
+					fields.push('buff_dodge-total');
+					fields.push('buff_deflection-total');
+				}
+				otherfields = columnsToGet.reduce(function(m,c){
+					if (otherCharBonuses2[c]){
+						_.each(otherCharBonuses2[c],function(bonus,bonustype){
+							m.push(bonus);
+						});
+					}
+					return m;
+				},[]);
+				if(_.size(otherfields)){
+					fields = fields.concat(otherfields);
+				}
+			} catch (outerr){
+				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getattrs",outerr);
+				done();
+				return;
 			}
-			
-			TAS.debug("updateBuffTotalAsync2 fields ",fields,'#######################################');
+			//TAS.debug("updateBuffTotalAsync2 fields ",fields,'#######################################');
 			getAttrs(fields,function(v){
 				var rows,params={}, setter={};
 				try {
-					TAS.debug("PFBuffs.totals for "+ col+" v is",v);
+					//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
@@ -499,13 +574,12 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 						rows = assembleRows(ids,v,col);
 						TAS.debug("after assembling rows we have ",rows);
 						setter = columnsToUpdate.reduce(function(m,c){
-							TAS.debug("now calling updatebufftotal on "+c);
 							return updateBuffTotal2(c,rows,v,m);
 						},{});
 					} else {
 						TAS.debug("there are no rows!");
 						//all have 0!
-						clearBuffTotals();
+						clearBuffTotals2();
 					}
 				} catch (errou){
 					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col "+col,errou);
@@ -522,7 +596,7 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 				}
 			});
 		} else {
-			clearBuffTotals(callback);
+			clearBuffTotals2(callback);
 		}
 	});	
 });
@@ -539,7 +613,7 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 	getSectionIDs('repeating_buff2',function(ids){
 		var fields,buffRepFields;
 		if(!ids || _.size(ids)===0){
-			clearBuffTotals(done,silently);
+			clearBuffTotals2(done,silently);
 			return;
 		}
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs2);
@@ -555,13 +629,12 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 					return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 				});
 				if(!ids || _.size(ids)===0){
-					clearBuffTotals(done,silently);
+					clearBuffTotals2(done,silently);
 					return;
 				}
-				TAS.debug("getting rows");
 				rows = assembleRows(ids,v);
-				TAS.debug("after assembling rows we have ",rows);
 				_.each(buffColumns2,function(col){
+					TAS.debug("updateAllBuffTotalsAsync2 now calling updatebufftotal on "+col);
 					setter=updateBuffTotal2(col,rows,v,setter);
 				});
 			} catch (errou){
@@ -617,7 +690,7 @@ function updateBuffTotal (col,ids,v,setter,useBonuses){
 					prefix='repeating_buff_'+id+'_buff-'+col;
 					try {
 						vals.val = parseInt(v[prefix],10)||0;
-						if (selfTypeOnly.indexOf(col)>=0){
+						if (bonusesWithNoTypes.indexOf(col)>=0){
 							vals.bonusType=col;
 						} else if (selfTypeOrEnhance.indexOf(col)>=0){
 							vals.bonusType = v[prefix+'_type']||col;
@@ -1184,17 +1257,25 @@ function registerEventHandlers () {
 				getAttrs(['repeating_buff2_'+b+'-show','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
 					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'-show'],10) &&
-					   v['repeating_buff2_'+b+'_bonus']) {
+						v['repeating_buff2_'+b+'_bonus']) {
 						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
 			}
 		}));
 		on(prefix + "_bonus" , TAS.callback(function PFBuffs_updateBuffbonus(eventInfo) {
+			var bonus='',setter={};
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){
+				bonus=SWUtils.getAttributeName(eventInfo.sourceAttribute);
+				TAS.debug("new bonus is "+bonus);
+				if (bonusesWithNoTypes.indexOf(bonus)>=0){
+					setter['repeating_buff2_'+b+'_hide']=1;
+					SWUtils.setWrapper(setter,PFConst.silentParams);
+				}
+				getAttrs(['repeating_buff2_'+b+'_val','repeating_buff2_enable_toggle'],function(v){
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+					if (bonusesWithNoTypes.indexOf())
 					if (parseInt(v['repeating_buff2_enable_toggle'],10) && parseInt(v['repeating_buff2_'+b+'_val'],10)) {
 						updateAllBuffTotalsAsync2(null,null,eventInfo);
 					}
@@ -1213,8 +1294,8 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			updateAllBuffTotalsAsync2(null,null,eventInfo);
 		}
-	}));	
-	/*
+	}));
+/*
 	//BUFFS
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
