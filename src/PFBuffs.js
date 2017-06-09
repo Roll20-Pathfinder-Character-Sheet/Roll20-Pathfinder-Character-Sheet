@@ -694,44 +694,44 @@ function reEvaluateCustomMacros2(callback,silently){
 			callback();
 		}
 	}),
-	numColumns = _.size(buffColumns2),
-	columnDone = _.after(numColumns, function(){
-		updateAllBuffTotalsAsync2(done,silently);		
-	}),
-	recalculateBuffColumn = function (ids, col) {
-		var rowtotal = _.size(ids),
-			rowDone;
-		rowDone = _.after(rowtotal, columnDone);
+
+	buffRowMacros2 =['_b1-show','_b1_val','_b1_macro-text',
+		'_b2-show','_b2_val','_b2_macro-text',
+		'_b3-show','_b3_val','_b3_macro-text',
+		'_b4-show','_b4_val','_b4_macro-text',
+		'_b5-show','_b5_val','_b5_macro-text',
+		'_b6-show','_b6_val','_b6_macro-text',
+		'_enable_toggle'],
+	recalculateBuffRow = function (callback,id,v) {
+		var buffDone = _.after(6, callback);
 		try {
-			_.each(ids, function (id) {
-				try {
-					getAttrs(['repeating_buff_'+id+'_buff-enable_toggle',
-					'repeating_buff_'+id+'_buff-' + col + '-show'],function(v){
-						if (parseInt(v['repeating_buff_'+id+'_buff-enable_toggle'],10) && 
-							parseInt(v['repeating_buff_'+id+'_buff-' + col + '-show'],10) ) {
-								//setBuff(id, col, rowDone, silently);
-								SWUtils.evaluateAndSetNumber('repeating_buff_'+id+'_buff-' + col + "_macro-text", 'repeating_buff_'+id+'_buff-' + col,0,rowDone,true);
-						} else {
-							rowDone();
-						}
-					});
-				} catch (err) {
-					TAS.error("PFBuffs.recalculate_recalculateBuffColumn:" + col + ", rowid" + id, err);
-					rowDone();
+			buffsPerRow.forEach(function(b){
+				if (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10) && 
+					parseInt(v['repeating_buff2_'+id+'_' + b + '-show'],10) ) {
+						SWUtils.evaluateAndSetNumber('repeating_buff2_'+id+'_' +b + "_macro-text", 'repeating_buff2_'+id+'_' + b+'_val',0,buffDone,true);
+				} else {
+					buffDone();
 				}
 			});
-		} catch (err2) {
-			TAS.error("PFBuffs.reEvaluateCustomMacros2 OUTER error:" + col, err2);
-			columnDone();
+		} catch (err) {
+			TAS.error("PFBuffs.reEvaluateCustomMacros2:  rowid" + id, err);
+			buffDone();
 		}
+
 	};
 
 	getSectionIDs("repeating_buff", function (ids) {
 		//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
+		var fields;
 		try {
 			if (_.size(ids) > 0) {
-				_.each(buffColumns, function (col) {
-					recalculateBuffColumn(ids, col);
+				fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowMacros2);
+				getAttrs(fields,function(v){
+					var numRows = _.size(ids),
+					doneRow = _.after(numRows, function(){updateAllBuffTotalsAsync2(done,silently);});
+					ids.forEach(function(id){
+						recalculateBuffRow(doneRow,id,v);
+					});
 				});
 			} else {
 				clearBuffTotals2(done);
@@ -813,38 +813,7 @@ function resetStatuspanel (callback) {
 }
 
 export function clearBuffTotals(callback,silently){
-	var done=function(){
-		if(typeof callback === "function"){
-			callback();
-		}
-	},
-	fields;
-	fields = SWUtils.cartesianAppend(['buff_'],buffColumns,['-total','_exists']);
-	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
-	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
-	getAttrs(fields,function(v){
-		var setter={},params={};
-		//TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
-		setter = _.reduce(v,function(memo,val,attr){
-			if ((/exists/).test(attr)){
-				if (parseInt(val,10)){
-					memo[attr]=0;
-				}
-			} else if (parseInt(val,10) || typeof val === "undefined"){
-				memo[attr]=0;
-			}
-			return memo;
-		},{});
-		if (_.size(setter)){
-			if(silently){
-				params =PFConst.silentParams;
-			}
-			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
-			SWUtils.setWrapper(setter,params,done);
-		} else {
-			done();
-		}
-	});
+	clearBuffTotals2(callback,silently);
 }
 function updateBuffTotal (col,ids,v,setter){
 	var isAbility=0,
@@ -1257,12 +1226,14 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 			if(parseInt(v.use_buff_bonuses,10)===1){
 				reEvaluateCustomMacros2(done,silently);
 			} else {
-				reEvaluateCustomMacros2(done,silently);
+				reEvaluateCustomMacros(done,silently);
 			}
 		});
 	});
 });
 function registerEventHandlers () {
+	//======== NEW BUFFS ==================================================
+	
 	buffsPerRow.forEach(function(b){
 		var prefix = "change:repeating_buff2:" + b ;
 		on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
@@ -1335,8 +1306,8 @@ function registerEventHandlers () {
 			updateAllBuffTotalsAsync2(null,null,eventInfo);
 		}
 	}));
-/*
-	//BUFFS
+
+	//======== OLD BUFFS ==================================================
 	_.each(buffColumns, function (col) {
 		//Evaluate macro text upon change
 		var prefix = "change:repeating_buff:buff-" + col ;
@@ -1387,7 +1358,8 @@ function registerEventHandlers () {
 			});
 		}
 	}));
-	*/
+	//======== END OF OLD BUFFS ==================================================
+
 	//generic easy buff total updates
 	_.each(events.buffTotalNonAbilityEvents, function (functions, col) {
 		var eventToWatch = "change:buff_" + col + "-total";

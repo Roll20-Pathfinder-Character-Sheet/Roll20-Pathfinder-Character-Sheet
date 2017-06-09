@@ -2715,7 +2715,11 @@ input[type="number"].sheet-entry-wide {
     display:none;
 }
 
-
+.sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
+    border: 1px solid #808080;
+    border-radius: 5px;
+    margin: .125em 0 .125em 0;
+}
 /******* end of generic repeating items ********/
 
 .sheet-extra-damage,
