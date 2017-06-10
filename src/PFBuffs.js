@@ -219,23 +219,35 @@ export function clearBuffTotals2(callback,silently){
 			callback();
 		}
 	},
+	columns,
 	fields;
-	fields = SWUtils.cartesianAppend(['buff_'],buffColumns2,['-total','_exists']);
+	columns=buffColumns2.concat(['dodge','deflection']);
+	fields = SWUtils.cartesianAppend(['buff_'],columns,['-total','_exists']);
 	fields = fields.concat(SWUtils.cartesianAppend(['buff_'],PFAbilityScores.abilities,['-total_penalty','_penalty_exists']));
-	//TAS.debug("PFBuffs.clearBuffTotals getting fields:",fields);
 	getAttrs(fields,function(v){
 		var setter={},params={};
 		//TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
-		setter = _.reduce(v,function(memo,val,attr){
-			if ((/exists/).test(attr)){
-				if (parseInt(val,10)){
-					memo[attr]=0;
-				}
-			} else if (parseInt(val,10) || typeof val === "undefined"){
-				memo[attr]=0;
+		setter = _.reduce(columns,function(memo,col){
+			var val = parseInt(v['buff_'+col+'-total']||0),
+			exists =parseInt(v['buff_'+col+'_exists']||0);
+			if(val && !exists){
+				memo['buff_'+col+'_exists']=1;
+			} else if (!val && exists){
+				memo['buff_'+col+'_exists']=0;
 			}
 			return memo;
 		},{});
+		
+		setter = _.reduce(PFAbilityScores.abilities,function(memo,col){
+			var val = parseInt(v['buff_'+col+'-total_penalty']||0),
+			exists =parseInt(v['buff_'+col+'_penalty_exists']||0);
+			if(val && !exists){
+				memo['buff_'+col+'_penalty_exists']=1;
+			} else if (!val && exists){
+				memo['buff_'+col+'_penalty_exists']=0;
+			}
+			return memo;
+		},setter);
 		if (_.size(setter)){
 			if(silently){
 				params =PFConst.silentParams;
@@ -589,6 +601,10 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs2);
 		fields = fields.concat(buffTotFields2);
 		fields = fields.concat(charBonusFields2);
+		fields.push('buff_dodge-total');
+		fields.push('buff_dodge_enable');
+		fields.push('buff_deflection-total');
+		fields.push('buff_deflection_enable');
 		TAS.debug("############ updateAllBuffTotalsAsync2 BUFF FIELDS ARE:", fields);
 		
 		getAttrs(fields,function(v){
@@ -1313,7 +1329,7 @@ function registerEventHandlers () {
 		}
 	}));
 	on("remove:repeating_buff2", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		TAS.debug("caught remove " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			updateAllBuffTotalsAsync2(null,null,eventInfo);
 		}
