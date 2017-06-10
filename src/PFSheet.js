@@ -618,8 +618,11 @@ function upgrade (oldversion, callback, errorCallback) {
 				migrateDropdowns();
 			}
 			if (oldversion < 1.62){
-				PFSkills.recalculateSkills();
+				PFSkills.migrate(function(){
+					PFSkills.recalculateSkills();
+				});
 			}
+
 		}
 
 	} catch (err) {

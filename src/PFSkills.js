@@ -896,6 +896,25 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
+	migrateMacros2 = function(callback){
+		getAttrs(['migrated_skill_speedup'],function(vout){
+			var fields;
+			if(parseInt(vout.migrated_skill_speedup,10)===1){
+				if (typeof callback === "function"){ callback();}
+				return;
+			}
+			fields = allTheSkills.map(function(skill){return skill+'-macro';});
+			getAttrs(fields,function(v){
+				var setter={};
+				setter=_.reduce(v,function(m,macro,attr){
+					m[attr]=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+					return m;
+				},{});
+				setter.migrated_skill_speedup=1;
+				setAttrs(setter,PFConst.silentParams,callback);
+			});
+		});
+	},
 	migrateTake10Dropdown = function(callback,oldversion){
 		var done = function(){
 			if (typeof callback === "function"){
@@ -937,8 +956,11 @@ export function migrate (callback, oldversion) {
 	//TAS.debug("at PFSkills.migrate");
 	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
-	migrateMacros(doneOne);
+	migrateMacros(function(){
+		migrateMacros2(doneOne);
+	});
 	PFMigrate.migrateMaxSkills(doneOne);
+	
 }
 /* recalculate - updates ALL skills  - calls PFUtilsAsync.setDropdownValue for ability then updateSkill */
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
