@@ -120,7 +120,6 @@ affectedBuffs = {
 	'wis_skills':['check_skills','check'],
 	'cha_skills':['check_skills','check']
 },
-relatedBuffs2=_.extend({},affectedBuffs,buffsAffectingOthers),
 armorcols2=['ac','touch','flatfooted','cmd'];
 
 var buffsPerRow=['b1','b2','b3','b4','b5','b6'],
@@ -257,10 +256,11 @@ export function clearBuffTotals2(callback,silently){
  */
 function assembleRows (ids,v,col){
 	var	relatedBuffsL=[];
-	if(col && relatedBuffs2[col] ){
-		relatedBuffsL=relatedBuffs2[col];
+	if (col){
+		relatedBuffsL=affectedBuffs[col]||[];
+		relatedBuffsL=relatedBuffsL.concat(buffsAffectingOthers[col]||[]);
 	}
-	TAS.debug("assembleRows for "+col);
+	TAS.debug("assembleRows for "+col + " includes fields "+ relatedBuffsL);
 	var rows = ids.reduce(function(m,id){
 		var valArray,prefix='repeating_buff2_'+id+'_';
 		try {
@@ -268,8 +268,8 @@ function assembleRows (ids,v,col){
 				var innerPrefix=prefix+n,
 				bonusField=innerPrefix+'_bonus',vals={};
 				try{
-					TAS.debug("assembleRows looking at "+ bonusField);
-					if(v[innerPrefix+'-show']=='1'){ 
+					TAS.debug("assembleRows looking at "+ bonusField  +" = " + v[bonusField] + " show is "+ v[innerPrefix+'-show']);
+					if(v[bonusField] && parseInt(v[innerPrefix+'-show'],10)===1){ 
 						if (!col || v[bonusField]===col || relatedBuffsL.indexOf(v[bonusField])>=0) {
 							vals.bonus=v[bonusField];
 							vals.val = parseInt(v[innerPrefix+'_val'],10)||0;
