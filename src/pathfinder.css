@@ -2188,6 +2188,9 @@ input[type="text"][name="attr_source-ability"]
     /* otherwise defaults from base.css hardcode it too tall */
     position: relative;
 }
+.sheet-small-label2 > select {
+    padding-top: 0;
+}
 /* added for ability level basis inline formulas */
 .sheet-small-label2 > input.sheet-error-mshow {
     display: none;
@@ -2693,38 +2696,33 @@ input[type="number"].sheet-entry-wide {
     margin-right: .125em;
 }
 
-.sheet-sect-buff .sheet-linked-fields {
+/* old buffs */
+.sheet-sect-buff.sheet-oldbuff .sheet-linked-fields {
     width: 13.5em;
 }
-
-.sheet-bonustype-show:not(:checked) ~ .sheet-sect-buff .sheet-linked-fields .sheet-small-label2.sheet-entry-med {
+.sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-oldbuff .sheet-linked-fields,
+.sheet-sect-buff.sheet-oldbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
+    width: 3.1rem;
+}
+/* new buffs*/
+.sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
+    width: 32em;
+}
+.sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff .sheet-linked-fields,
+.sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
+    width: 20.5rem;
+}
+/* also hide bonustype dropdown */
+.sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff.sheet-linked-fields .sheet-small-label2.sheet-entry-med,
+.sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields .sheet-small-label2.sheet-entry-med{
     display:none;
 }
-.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields {
-    width:22em;
-}
-.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields.sheet-buff-notype {
-    width: 13.5em;
-}
-.sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
-.sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
-    width: 3.1rem;
-}
-.sheet-bonustype-show:checked ~ .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields,
-.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
-    width: 10.5rem;
-}
-.sheet-bonustype-show:checked ~ .sheet-minimize-show:checked ~ .sheet-sect-buff .sheet-linked-fields.sheet-buff-notype,
-.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-counted:not(:checked) ~ .sheet-linked-fields.sheet-buff-notype {
-    width: 3.1rem;
-}
 
-.sheet-bonustype-show:checked ~ .sheet-sect-buff .sheet-linked-fields:not(.sheet-buff-notype) {
+.sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
     border: 1px solid #808080;
     border-radius: 5px;
     margin: .125em 0 .125em 0;
 }
-
 /******* end of generic repeating items ********/
 
 .sheet-extra-damage,
@@ -2884,6 +2882,7 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:checked ~ .sheet-dont-use-size,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
+.sheet-nextitem2-hide:checked + .sheet-nextitem2,
 
 input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
 
@@ -4665,7 +4664,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
-
+.sheet-bonustype-show:not(:checked) ~ .sheet-sect-buff.sheet-newbuff,
+.sheet-bonustype-show:checked ~ .sheet-sect-buff.sheet-oldbuff,
 .sheet-wounds-show:not(:checked) ~ .sheet-wound-threshold,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advanced-macros,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advmacro-text-showlabel,

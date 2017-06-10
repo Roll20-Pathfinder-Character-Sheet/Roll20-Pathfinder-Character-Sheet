@@ -132,8 +132,7 @@ defaultSkillAttrName='REPLACE-macro',
 keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 events = {
-	skillGlobalEventAuto: "change:checks-cond change:phys-skills-cond change:acp change:buff_check_skills-total",
-	//skillGlobalEventAuto: "change:phys-skills-cond change:acp",
+	skillGlobalEventAuto: "change:phys-skills-cond change:acp", //checks-cond
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
 	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
@@ -332,8 +331,8 @@ export function updateSkill (skill, callback, silently) {
 	utNm = skill + "-ut",
 	rtNm = skill + "-ReqTrain";
 	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, 
-	"enforce_requires_training", "size_skill", "size_skill_double", "acp", "checks-cond", "Phys-skills-cond", 
-	"Perception-cond", "buff_check_skills-total",
+	"enforce_requires_training", "size_skill", "size_skill_double", "acp", "Phys-skills-cond", 
+	"Perception-cond", 
 	"buff_STR_skills-total","buff_DEX_skills-total","buff_CON_skills-total","buff_INT_skills-total","buff_WIS_skills-total","buff_CHA_skills-total"	], 
 	function (v) {
 		var skillSize = 0,
@@ -348,8 +347,8 @@ export function updateSkill (skill, callback, silently) {
 		currSkill = parseInt(v[skill], 10), //no default
 		ranks = parseInt(v[ranksNm], 10) || 0,
 		rt = parseInt(v[rtNm], 10) || 0,
-		allCond = parseInt(v["checks-cond"], 10) || 0,
-		buffs= parseInt(v["buff_check_skills-total"],10)||0,
+		allCond = 0,
+		buffs= 0,
 		abilityModName = '',
 		abilityName='',
 		physCond = 0,
@@ -379,7 +378,7 @@ export function updateSkill (skill, callback, silently) {
 				mods += "0/";
 			}
 			if (abilityModName){
-				abilityName = abilityModName.slice(0,3);
+				abilityName = abilityModName.slice(0,3).toUpperCase();
 				buffs += parseInt(v['buff_'+abilityName+'_skills-total'],10)||0;
 			}
 
@@ -897,6 +896,25 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
+	migrateMacros2 = function(callback){
+		getAttrs(['migrated_skill_speedup'],function(vout){
+			var fields;
+			if(parseInt(vout.migrated_skill_speedup,10)===1){
+				if (typeof callback === "function"){ callback();}
+				return;
+			}
+			fields = allTheSkills.map(function(skill){return skill+'-macro';});
+			getAttrs(fields,function(v){
+				var setter={};
+				setter=_.reduce(v,function(m,macro,attr){
+					m[attr]=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+					return m;
+				},{});
+				setter.migrated_skill_speedup=1;
+				setAttrs(setter,PFConst.silentParams,callback);
+			});
+		});
+	},
 	migrateTake10Dropdown = function(callback,oldversion){
 		var done = function(){
 			if (typeof callback === "function"){
@@ -938,8 +956,11 @@ export function migrate (callback, oldversion) {
 	//TAS.debug("at PFSkills.migrate");
 	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
-	migrateMacros(doneOne);
+	migrateMacros(function(){
+		migrateMacros2(doneOne);
+	});
 	PFMigrate.migrateMaxSkills(doneOne);
+	
 }
 /* recalculate - updates ALL skills  - calls PFUtilsAsync.setDropdownValue for ability then updateSkill */
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {

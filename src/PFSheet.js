@@ -336,16 +336,12 @@ function recalcDropdowns (callback, silently, oldversion) {
 
 var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
     var done = function(){
-		TAS.notice("migrateDropdowns.down","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         if (typeof callback === "function"){
             callback();
         }
     }, 
     updatedGroup = _.after(4,function(){
         setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,callback);
-		TAS.notice("PFSheet.migrateDropdown.updatedGroup","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-
     }),
 	updateRepeatingAttackTypes = function(){
 		var sections,doneOneSection;
@@ -620,6 +616,11 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.61){
 				PFBuffs.migrate(null,oldversion);
 				migrateDropdowns();
+			}
+			if (oldversion < 1.62){
+				PFSkills.migrate(function(){
+					PFSkills.recalculateSkills();
+				});
 			}
 
 		}
