@@ -227,9 +227,10 @@ export function clearBuffTotals2(callback,silently){
 		setter = _.reduce(totColumns,function(memo,col){
 			var val = parseInt(v['buff_'+col+'-total'],10)||0,
 			exists =parseInt(v['buff_'+col+'_exists'],10)||0;
-			if(val && !exists){
-				memo['buff_'+col+'_exists']=1;
-			} else if (!val && exists){
+			if(val ){
+				memo['buff_'+col+'-total']=0;
+			}
+			if ( exists){
 				memo['buff_'+col+'_exists']=0;
 			}
 			return memo;
@@ -237,9 +238,10 @@ export function clearBuffTotals2(callback,silently){
 		setter = _.reduce(PFAbilityScores.abilities,function(memo,col){
 			var val = parseInt(v['buff_'+col+'-total_penalty'],10)||0,
 			exists =parseInt(v['buff_'+col+'_penalty_exists'],10)||0;
-			if(val && !exists){
-				memo['buff_'+col+'_penalty_exists']=1;
-			} else if (!val && exists){
+			if(val ){
+				memo['buff_'+col+'-total_penalty']=0;
+			}
+			if ( exists){
 				memo['buff_'+col+'_penalty_exists']=0;
 			}
 			return memo;
