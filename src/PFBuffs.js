@@ -48,7 +48,7 @@ buffToTot = {
 	'dex_skills':'DEX_skills',
 	'dmg':'DMG',
 	'dmg_melee':'dmg_melee',
-	'dmg_ranged':'DMG_ranged',
+	'dmg_ranged':'dmg_ranged',
 	'flatfooted':'flat-footed',
 	'fort':'Fort',
 	'hptemp':'HP-temp',
@@ -221,7 +221,7 @@ export function clearBuffTotals2(callback,silently){
 	};
 	TAS.notice("the total fields are ",buffTotFields2);
 	getAttrs(buffTotFields2,function(v){
-		var setter={},params={};
+		var setter={},setter2={},params={};
 		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
 		TAS.notice("now using ",totColumns);
 		setter = _.reduce(totColumns,function(memo,col){
@@ -235,7 +235,7 @@ export function clearBuffTotals2(callback,silently){
 			}
 			return memo;
 		},{});
-		setter = _.reduce(PFAbilityScores.abilities,function(memo,col){
+		setter2 = _.reduce(PFAbilityScores.abilities,function(memo,col){
 			var val = parseInt(v['buff_'+col+'-total_penalty'],10)||0,
 			exists =parseInt(v['buff_'+col+'_penalty_exists'],10)||0;
 			if(val ){
@@ -245,7 +245,8 @@ export function clearBuffTotals2(callback,silently){
 				memo['buff_'+col+'_penalty_exists']=0;
 			}
 			return memo;
-		},setter);
+		},{});
+		_.extend(setter,setter2);
 		if (_.size(setter)){
 			if(silently){
 				params =PFConst.silentParams;
