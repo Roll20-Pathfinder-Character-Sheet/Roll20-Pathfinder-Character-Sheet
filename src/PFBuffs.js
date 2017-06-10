@@ -219,12 +219,14 @@ export function clearBuffTotals2(callback,silently){
 			callback();
 		}
 	};
+	TAS.notice("the total fields are ",buffTotFields2);
 	getAttrs(buffTotFields2,function(v){
 		var setter={},params={};
-		//TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
+		TAS.debug("PFBuffs.clearBuffTotals we got back the following: ",v);
+		TAS.notice("now using ",totColumns);
 		setter = _.reduce(totColumns,function(memo,col){
-			var val = parseInt(v['buff_'+col+'-total']||0),
-			exists =parseInt(v['buff_'+col+'_exists']||0);
+			var val = parseInt(v['buff_'+col+'-total'],10)||0,
+			exists =parseInt(v['buff_'+col+'_exists'],10)||0;
 			if(val && !exists){
 				memo['buff_'+col+'_exists']=1;
 			} else if (!val && exists){
@@ -232,10 +234,9 @@ export function clearBuffTotals2(callback,silently){
 			}
 			return memo;
 		},{});
-		
 		setter = _.reduce(PFAbilityScores.abilities,function(memo,col){
-			var val = parseInt(v['buff_'+col+'-total_penalty']||0),
-			exists =parseInt(v['buff_'+col+'_penalty_exists']||0);
+			var val = parseInt(v['buff_'+col+'-total_penalty'],10)||0,
+			exists =parseInt(v['buff_'+col+'_penalty_exists'],10)||0;
 			if(val && !exists){
 				memo['buff_'+col+'_penalty_exists']=1;
 			} else if (!val && exists){
@@ -247,7 +248,7 @@ export function clearBuffTotals2(callback,silently){
 			if(silently){
 				params =PFConst.silentParams;
 			}
-			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
+			TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
 			SWUtils.setWrapper(setter,params,done);
 		} else {
 			done();
@@ -267,7 +268,7 @@ function assembleRows (ids,v,col){
 		relatedBuffsL=affectedBuffs[col]||[];
 		relatedBuffsL=relatedBuffsL.concat(buffsAffectingOthers[col]||[]);
 	}
-	//TAS.debug("assembleRows for "+col + " includes fields "+ relatedBuffsL);
+	TAS.debug("assembleRows for "+col + " includes fields "+ relatedBuffsL);
 	var rows = ids.reduce(function(m,id){
 		var valArray,prefix='repeating_buff2_'+id+'_';
 		try {
