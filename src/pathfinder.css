@@ -2188,6 +2188,9 @@ input[type="text"][name="attr_source-ability"]
     /* otherwise defaults from base.css hardcode it too tall */
     position: relative;
 }
+.sheet-small-label2 > select {
+    padding-top: 0;
+}
 /* added for ability level basis inline formulas */
 .sheet-small-label2 > input.sheet-error-mshow {
     display: none;
