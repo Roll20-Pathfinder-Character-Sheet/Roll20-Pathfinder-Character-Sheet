@@ -5,7 +5,7 @@ export default {
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
-	repeatingSections: ["weapon", "ability", "class-ability", "feat", "racial-trait", "trait", "item", "npc-spell-like-abilities", "mythic-ability", "mythic-feat", "buff", "spells"],
+	repeatingSections: ["weapon", "ability", "class-ability", "feat", "racial-trait", "trait", "item", "npc-spell-like-abilities", "mythic-ability", "mythic-feat", "buff", "spells", "buff2"],
 	//repeating sections that have used and used|max and max-calculation fields
 	repeatingMaxUseSections: ["class-ability", "feat", "racial-trait", "trait", "mythic-ability", "mythic-feat", "ability"],
 
