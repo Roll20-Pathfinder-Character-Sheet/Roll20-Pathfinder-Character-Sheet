@@ -471,7 +471,11 @@ function updateBuffTotal2 (col,rows,v,setter){
 		return setter;
 	}
 }
-
+/** update total for given buff
+ * @param {string} col the bonus/buff to calculate
+ * @param {function} callback when done
+ * @param {boolean} silently if set with silent true
+ */
 export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsync2(col, callback,silently){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffs.updateBuffTotalAsync for "+col);
@@ -509,7 +513,9 @@ export var updateBuffTotalAsync2  = TAS.callback(function callupdateBuffTotalAsy
 
 				if(col==='ac'){
 					fields.push('buff_dodge-total');
+					fields.push('buff_dodge_enable');
 					fields.push('buff_deflection-total');
+					fields.push('buff_deflection_enable');
 				}
 				otherfields = columnsToGet.reduce(function(m,c){
 					if (otherCharBonuses2[c]){
@@ -1294,9 +1300,16 @@ function registerEventHandlers () {
 		}));
 	});
 	on('change:repeating_buff2:enable_toggle',TAS.callback(function PFBuffs_enabletoggle(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
-			updateAllBuffTotalsAsync2(null,null,eventInfo);
+			getAttrs(['repeating_buff2_b1_bonus','repeating_buff2_b2_bonus','repeating_buff2_b3_bonus',
+				'repeating_buff2_b4_bonus','repeating_buff2_b5_bonus','repeating_buff2_b6_bonus'],function(v){
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+					_.each(v,function(bonus,field){
+						if(bonus){
+							updateBuffTotalAsync2(bonus);
+						}
+					});
+				});
 		}
 	}));
 	on("remove:repeating_buff2", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
