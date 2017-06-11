@@ -250,7 +250,6 @@ export function clearBuffTotals2(callback,silently){
 			if(silently){
 				params =PFConst.silentParams;
 			}
-			//TAS.debug("PFBuffs.clearBuffTotals, setting",setter);
 			SWUtils.setWrapper(setter,params,done);
 		} else {
 			done();
