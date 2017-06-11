@@ -128,8 +128,8 @@ export function updateDefenses ( callback, silently, eventInfo) {
             buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
             bufftouch=buffsTouch+dodgebuff+deflectbuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
-            buffcmd = buffsCMD+dodgebuff+deflectbuff;
-            buffffcmd = buffsCMD+flatfootedbuff+dodgebuff+deflectbuff;
+            buffcmd = buffs+buffsCMD+dodgebuff+deflectbuff;
+            buffffcmd = buffs+buffsCMD+flatfootedbuff+deflectbuff;
 
             dodge += dodgebuff;
             deflect += deflectbuff;
@@ -236,17 +236,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
 
-            if(parseInt(v.buffsumac,10)!==buffac){
-                setter.buffsumac=buffac;
-            }
-            if(parseInt(v.buffsumtouch,10)!==bufftouch){
-                setter.buffsumtouch=bufftouch;
-            }
+
             if(parseInt(v.buffsumff,10)!==buffff){
                 setter.buffsumff=buffff;
-            }
-            if(parseInt(v.buffsumcmd,10)!==buffcmd){
-                setter.buffsumcmd=buffcmd;
             }
             if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
                 setter.buffsumffcmd = buffffcmd;
