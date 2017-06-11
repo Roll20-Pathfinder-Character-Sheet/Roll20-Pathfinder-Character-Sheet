@@ -48,7 +48,7 @@ buffToTot = {
 	'dex_skills':'DEX_skills',
 	'dmg':'DMG',
 	'dmg_melee':'dmg_melee',
-	'dmg_ranged':'DMG_ranged',
+	'dmg_ranged':'dmg_ranged',
 	'flatfooted':'flat-footed',
 	'fort':'Fort',
 	'hptemp':'HP-temp',
