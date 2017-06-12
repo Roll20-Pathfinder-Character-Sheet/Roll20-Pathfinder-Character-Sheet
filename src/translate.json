@@ -1,4 +1,5 @@
 {
+	"old-sanity": "Old Sanity Damage",
 	"information-abbrv": "Info",
 	"init-speed-info": "Initiative and Speed Info",
 	"init-speed-title": "%{init-speed-info} Post initiative and speed information.",

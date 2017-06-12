@@ -280,7 +280,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -355,7 +355,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -430,7 +430,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -505,7 +505,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -580,7 +580,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -655,7 +655,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -2395,7 +2395,7 @@
 							</div>
 							<div class="sheet-table-cell sheet-small-label">
 								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="This is old sanity damage field. copy this to the new sanity damage field at left. it is invalid and this field will disappear next build." value="0" class="sheet-calc" readonly  />
-								<br/><span>old sanity damage</span>
+								<br/><span data-i18n="old-sanity">old sanity damage</span>
 							</div>
 							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
 						</div>
@@ -2533,8 +2533,8 @@
 						<div class="sheet-table-row sheet-sect">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
+								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
