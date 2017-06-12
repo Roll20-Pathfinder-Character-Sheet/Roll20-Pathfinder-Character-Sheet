@@ -307,12 +307,15 @@ export function verifyHasSkill (skill, callback) {
 		callback(false);
 	}
 }
+
+
+
 /** updates one  skill row
  * @param {string} skill to update, must have same capitalization as on HTML
  * @param {function} callback = callback after done with params newvalue, oldvalue.
  * @param {boolean} silently = whether to update silently or not. ignored, always silent.
  */
-export function updateSkill (skill, callback, silently) {
+export function updateSkillOld (skill, callback, silently) {
 	var done = function (newVal, oldVal) {
 		if (typeof callback === "function") {
 			callback(newVal, oldVal);
@@ -503,7 +506,7 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
 	});
 }
 /** recalculateSkillArray recalculates skills first dropdown, then misc mod, then skill total.
- * calls updateSkill for each. Does all dropdowns at once since they are easy to merge into one.
+ * calls updateSkillOld for each. Does all dropdowns at once since they are easy to merge into one.
  * @param {Array} skills array of skills to update.
  * @param {function} callback when done
  * @param {boolean} silently whether to call SWUtils.setWrapper of skill total with silent or not.
@@ -519,7 +522,7 @@ function recalculateSkillArray (skills, callback, silently) {
 	doneMisc = function (skill) {
 		//TAS.debug("PFSkills.recalculateSkillArray done with misc skills call updateSkill on "+skill);
 		//final: update each skill
-		updateSkill(skill, done, silently);
+		updateSkillOld(skill, done, silently);
 	},
 	doneDrop = function () {
 		//second do misc one by one (since it is asynchronous)
@@ -801,7 +804,7 @@ export function applyConditions (callback,silently,eventInfo){
 	},		
 	updateSkillArray  = function(skills){
 		_.each(skills,function(skill){
-			updateSkill(skill);
+			updateSkillOld(skill);
 		});
 	};
 	//TAS.debug("at apply conditions");
@@ -1000,7 +1003,7 @@ function registerEventHandlers () {
 			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				verifyHasSkill(skill, function (hasSkill) {
 					if (hasSkill) {
-						updateSkill(skill, eventInfo);
+						updateSkillOld(skill, eventInfo);
 					}
 				});
 			}
@@ -1010,7 +1013,7 @@ function registerEventHandlers () {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 				verifyHasSkill(skill, function (hasSkill) {
 					if (hasSkill) {
-						updateSkill(skill, eventInfo);
+						updateSkillOld(skill, eventInfo);
 					}
 				});
 			}
@@ -1054,14 +1057,14 @@ function registerEventHandlers () {
 			on("change:size_skill", TAS.callback(function eventUpdateSizeSkill(eventInfo) {
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateSkill(skill, eventInfo);
+					updateSkillOld(skill, eventInfo);
 				}
 			}));
 		} else if (mult === 2) {
 			on("change:size_skill_double", TAS.callback(function eventUpdateSizeSkillDouble(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-					updateSkill(skill, eventInfo);
+					updateSkillOld(skill, eventInfo);
 				}
 			}));
 		}

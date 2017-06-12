@@ -123,9 +123,9 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		PFSkills.verifyHasSkill("Perception",function(hasSkill){
 			if (hasSkill){
-				PFSkills.updateSkill("Perception", eventInfo);
+				PFSkills.updateSkillOld("Perception", eventInfo);
 			} else {
-				PFSkills.updateSkill("CS-Perception", eventInfo);
+				PFSkills.updateSkillOld("CS-Perception", eventInfo);
 			}
 		});
 	}));
