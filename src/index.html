@@ -532,7 +532,7 @@
 				<button type="roll" name="roll_items" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv-caps}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
-				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{toggle_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
+				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{var_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
@@ -846,7 +846,7 @@
 											<span class="sheet-table-header" title="Alternate Favored Class point counter" data-i18n-title="alternate-favored-class" data-i18n-aria-label="alternate-favored-class" data-i18n="alternate-favored-class-abbrv">FC Alt</span>
 											<span class="sheet-table-header" title="Fortitude Save" data-i18n-title="fortitude-save" data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv" aria-label="Fortitude Save">Fort</span>
 											<span class="sheet-table-header" title="Reflex Save" data-i18n-title="reflex-save" data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save" data-i18n-aria-label="willpower-save" data-i18n="willpower-abbrv">Will</span>
+											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save-abbrv" data-i18n-aria-label="willpower-save-abbrv" data-i18n="willpower-abbrv">Will</span>
 										</div>
 									</div>
 									<div class="sheet-table-group sheet-not-C-or-D-sect">
@@ -857,13 +857,13 @@
 											<span class="sheet-table-cell"><input title="@{class-0-hd}" type="text" name="attr_class-0-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-0-hp}" type="number" name="attr_class-0-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-0-fchp}" type="number" name="attr_class-0-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-bab}" type="number" name="attr_class-0-bab" value="0" step="0.01" min="0"/></span>
+											<span class="sheet-table-cell"><input title="@{class-0-bab}" type="number" name="attr_class-0-bab" value="0" step="0" min="0"/></span>
 											<span class="sheet-table-cell"><input title="@{class-0-skill}" type="number" name="attr_class-0-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-0-fcskill}" type="number" name="attr_class-0-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-fcalt}" type="number" name="attr_class-0-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Fort}" type="number" name="attr_class-0-Fort" value="0" step="0.01" min="0"/></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Ref}" type="number" name="attr_class-0-Ref" value="0" step="0.01" min="0"/></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Will}" type="number" name="attr_class-0-Will" value="0" step="0.01" min="0"/></span>
+											<span class="sheet-table-cell"><input title="@{class-0-fcalt}" type="number" name="attr_class-0-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-0-Fort}" type="number" name="attr_class-0-Fort" value="0" step="0" min="0"/></span>
+											<span class="sheet-table-cell"><input title="@{class-0-Ref}" type="number" name="attr_class-0-Ref" value="0" step="0" min="0"/></span>
+											<span class="sheet-table-cell"><input title="@{class-0-Will}" type="number" name="attr_class-0-Will" value="0" step="0" min="0"/></span>
 										</div>
 										<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_class1_show" value="1" title="Expand to Multiclass" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"  /><span class="sheet-showsect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
 										<div class="sheet-table-row sheet-sect">
@@ -873,13 +873,13 @@
 											<span class="sheet-table-cell"><input title="@{class-1-hd}" type="text" name="attr_class-1-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-1-hp}" type="number" name="attr_class-1-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-1-fchp}" type="number" name="attr_class-1-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-bab}" type="number" name="attr_class-1-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-1-bab}" type="number" name="attr_class-1-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-1-skill}" type="number" name="attr_class-1-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-1-fcskill}" type="number" name="attr_class-1-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-fcalt}" type="number" name="attr_class-1-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Fort}" type="number" name="attr_class-1-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Ref}" type="number" name="attr_class-1-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Will}" type="number" name="attr_class-1-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-1-fcalt}" type="number" name="attr_class-1-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-1-Fort}" type="number" name="attr_class-1-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-1-Ref}" type="number" name="attr_class-1-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-1-Will}" type="number" name="attr_class-1-Will" value="0" step="0" min="0" /></span>
 										</div>
 										<input type="checkbox" class="sheet-showarrow sheet-sect2-show sheet-sect sheet-expand-arrow sheet-expand2" name="attr_class2_show" value="1"  data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
 										<div class="sheet-table-row sheet-sect sheet-sect2">
@@ -889,13 +889,13 @@
 											<span class="sheet-table-cell"><input title="@{class-2-hd}" type="text" name="attr_class-2-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-2-hp}" type="number" name="attr_class-2-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-2-fchp}" type="number" name="attr_class-2-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-bab}" type="number" name="attr_class-2-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-2-bab}" type="number" name="attr_class-2-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-2-skill}" type="number" name="attr_class-2-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-2-fcskill}" type="number" name="attr_class-2-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-fcalt}" type="number" name="attr_class-2-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Fort}" type="number" name="attr_class-2-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Ref}" type="number" name="attr_class-2-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Will}" type="number" name="attr_class-2-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-2-fcalt}" type="number" name="attr_class-2-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-2-Fort}" type="number" name="attr_class-2-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-2-Ref}" type="number" name="attr_class-2-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-2-Will}" type="number" name="attr_class-2-Will" value="0" step="0" min="0" /></span>
 										</div>
 										<input type="checkbox" class="sheet-showarrow sheet-sect3-show sheet-sect sheet-sect2 sheet-expand-arrow sheet-expand3" name="attr_class3_show" value="1" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect sheet-sect2" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
 										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
@@ -905,13 +905,13 @@
 											<span class="sheet-table-cell"><input title="@{class-3-hd}" type="text" name="attr_class-3-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-3-hp}" type="number" name="attr_class-3-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-3-fchp}" type="number" name="attr_class-3-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-bab}" type="number" name="attr_class-3-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-3-bab}" type="number" name="attr_class-3-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-3-skill}" type="number" name="attr_class-3-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-3-fcskill}" type="number" name="attr_class-3-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-fcalt}" type="number" name="attr_class-3-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Fort}" type="number" name="attr_class-3-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Ref}" type="number" name="attr_class-3-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Will}" type="number" name="attr_class-3-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-3-fcalt}" type="number" name="attr_class-3-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-3-Fort}" type="number" name="attr_class-3-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-3-Ref}" type="number" name="attr_class-3-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-3-Will}" type="number" name="attr_class-3-Will" value="0" step="0" min="0" /></span>
 										</div>
 										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
 											<span class="sheet-table-cell"><b data-i18n-title="class-4-title" data-i18n="5-ordinal">5th</b></span>
@@ -920,13 +920,13 @@
 											<span class="sheet-table-cell"><input title="@{class-4-hd}" type="text" name="attr_class-4-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-4-hp}" type="number" name="attr_class-4-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-4-fchp}" type="number" name="attr_class-4-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-bab}" type="number" name="attr_class-4-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-4-bab}" type="number" name="attr_class-4-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-4-skill}" type="number" name="attr_class-4-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-4-fcskill}" type="number" name="attr_class-4-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-fcalt}" type="number" name="attr_class-4-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Fort}" type="number" name="attr_class-4-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Ref}" type="number" name="attr_class-4-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Will}" type="number" name="attr_class-4-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-4-fcalt}" type="number" name="attr_class-4-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-4-Fort}" type="number" name="attr_class-4-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-4-Ref}" type="number" name="attr_class-4-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-4-Will}" type="number" name="attr_class-4-Will" value="0" step="0" min="0" /></span>
 										</div>
 										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
 											<span class="sheet-table-cell"><b data-i18n-title="class-5-title" data-i18n="6-ordinal">6th</b></span>
@@ -935,13 +935,13 @@
 											<span class="sheet-table-cell"><input title="@{class-5-hd}" type="text" name="attr_class-5-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{class-5-hp}" type="number" name="attr_class-5-hp" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-5-fchp}" type="number" name="attr_class-5-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-bab}" type="number" name="attr_class-5-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-5-bab}" type="number" name="attr_class-5-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-5-skill}" type="number" name="attr_class-5-skill" value="0" /></span>
 											<span class="sheet-table-cell"><input title="@{class-5-fcskill}" type="number" name="attr_class-5-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-fcalt}" type="number" name="attr_class-5-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Fort}" type="number" name="attr_class-5-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Ref}" type="number" name="attr_class-5-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Will}" type="number" name="attr_class-5-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-5-fcalt}" type="number" name="attr_class-5-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-5-Fort}" type="number" name="attr_class-5-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-5-Ref}" type="number" name="attr_class-5-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{class-5-Will}" type="number" name="attr_class-5-Will" value="0" step="0" min="0" /></span>
 										</div>
 									</div>
 									<span class="sheet-nontable-name sheet-secondary-table-name sheet-either-or-sect sheet-show-readonly" style="position: absolute;" data-i18n="monster-racial-hit-dice-abbrv">Monster Racial HD</span>
@@ -959,7 +959,7 @@
 											<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
 											<span class="sheet-table-header" title="Fortitude Save" data-i18n-title="fortitude-save" data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv">Fort</span>
 											<span class="sheet-table-header" title="Reflex Save" data-i18n-title="reflex-save" data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save" data-i18n-aria-label="willpower-save" data-i18n="willpower-abbrv">Will</span>
+											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save-abbrv" data-i18n-aria-label="willpower-save-abbrv" data-i18n="willpower-abbrv">Will</span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell" data-i18n-title="type-or-sub-type" title="Type (sub-type)" style="padding-left:.5em;"><b><span data-i18n="type">Type</span></b></span>
@@ -968,13 +968,13 @@
 											<span class="sheet-table-cell"><input title="@{npc-hd}" type="text" name="attr_npc-hd" value="" class="sheet-number" /></span>
 											<span class="sheet-table-cell"><input title="@{NPC-HP}" type="number" name="attr_NPC-HP" value="0" /></span>
 											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fchp}" type="number" name="attr_npc-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-bab}" type="number" name="attr_npc-bab" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{npc-bab}" type="number" name="attr_npc-bab" value="0" step="0" min="0" /></span>
 											<span class="sheet-table-cell"><input title="@{npc-skill}" type="number" name="attr_npc-skill" value="0" /></span>
 											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcskill}" type="number" name="attr_npc-fcskill" value="0" /></span>
-											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcalt}" type="number" name="attr_npc-fcalt" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Fort}" type="number" name="attr_npc-Fort" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Ref}" type="number" name="attr_npc-Ref" value="0" step="0.01" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Will}" type="number" name="attr_npc-Will" value="0" step="0.01" min="0" /></span>
+											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcalt}" type="number" name="attr_npc-fcalt" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{npc-Fort}" type="number" name="attr_npc-Fort" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{npc-Ref}" type="number" name="attr_npc-Ref" value="0" step="0" min="0" /></span>
+											<span class="sheet-table-cell"><input title="@{npc-Will}" type="number" name="attr_npc-Will" value="0" step="0" min="0" /></span>
 										</div>
 									</div>
 									<div class="sheet-total-row">
@@ -1229,7 +1229,11 @@
 										<input type="checkbox" class="sheet-showarrow sheet-init-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:.25em;">
 										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>								
 										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit;">
-											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Full Macro" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
+											<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
+ 											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
+ 											<br>
+ 											<span class="sheet-super sheet-note-d" data-i18n="init-speed-full-macro">Init and Speed Info Full Macro:</span>
+ 											<textarea class="sheet-inline-textarea" name="attr_init_speed-macro-text" title="@{init_speed-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place">/w &#34;@{character_name}&#34; &amp;{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{init-speed-info}}} {{righttext_1=**INIT:** [[ @{init} ]] }} {{lefttext_2=**Init Notes:** @{init_notes} }} {{righttext_3=**Speed:** [[ @{speed-modified} ]] **Fly:** [[ @{speed-fly} ]] **Swim:** [[ @{speed-swim} ]] **Climb:** [[ @{speed-climb} ]] **Run:** [[ @{speed-run} ]] }} {{lefttext_4=**Speed Notes:** @{speed-notes} }}</textarea>
 										</div>
 										<div class="sheet-init-notes" style="vertical-align:top; width:100%; height:auto; clear:both;">
 											<textarea class="sheet-inline-textarea" name="attr_init_notes" title="@{init_notes}" placeholder="Initiative Notes" data-i18n-placeholder="initiative-notes"></textarea>
