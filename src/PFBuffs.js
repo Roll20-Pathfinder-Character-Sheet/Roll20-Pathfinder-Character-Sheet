@@ -483,7 +483,7 @@ function updateBuffTotal2 (col,rows,v,setter){
 	} catch(err){
 		TAS.error("PFBuffs.updateBuffTotal",err);
 	} finally {
-		TAS.debug("######################","PFBuffs setting ",setter);
+		//TAS.debug("######################","PFBuffs setting ",setter);
 		return setter;
 	}
 }
@@ -603,7 +603,7 @@ export var updateAllBuffTotalsAsync2 = TAS.callback(function callupdateAllBuffTo
 		getAttrs(fields,function(v){
 			var rows=[], params={}, setter={};
 			try {
-				TAS.debug("PFBuffs.updateAllBuffTotalsAsync2 v is",v);
+				//TAS.debug("PFBuffs.updateAllBuffTotalsAsync2 v is",v);
 				ids = ids.filter(function(id){
 					return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 				});
