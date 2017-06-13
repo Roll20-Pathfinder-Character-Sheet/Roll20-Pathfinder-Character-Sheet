@@ -101,7 +101,6 @@ coreSkillAbilityDefaults = {
 	"Swim": "str",
 	"Use-Magic-Device": "cha"
 },
-
 defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultSkillMacroMap = {
 	'&{template:':{'current':'pf_generic}'},
@@ -131,10 +130,15 @@ defaultSkillDeletedMacroAttrs=['{{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}
 defaultSkillAttrName='REPLACE-macro',
 keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
 valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
+globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
+	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
+	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
+	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total'],
+skillNameAppends = ['', '-cs', '-ranks', '-class', '-ability', '-ability-mod', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
 events = {
 	skillGlobalEventAuto: "change:phys-skills-cond change:acp", //checks-cond
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
-	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
+	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ability change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
 
 function migrateMacros (callback){
@@ -307,116 +311,153 @@ export function verifyHasSkill (skill, callback) {
 		callback(false);
 	}
 }
-/** updates one  skill row
- * @param {string} skill to update, must have same capitalization as on HTML
- * @param {function} callback = callback after done with params newvalue, oldvalue.
- * @param {boolean} silently = whether to update silently or not. ignored, always silent.
+/** synchronous calculates new value for skill and returns values for setAttrs
+ * @param {string} skill name of skill to update
+ * @param {Map<string,string>} v attributes and values from sheet
+ * @param {Map<string,Number>} setter optional, map to send to setAttrs so far
+ * @returns {Map<string,Number>} setter with additional values, or new map, for setAttrs
  */
-export function updateSkill (skill, callback, silently) {
-	var done = function (newVal, oldVal) {
-		if (typeof callback === "function") {
-			callback(newVal, oldVal);
-		}
-	},
+function getNewSkillVals (skill, v, setter){
+	var skillSize = 0,
+	watchrt = parseInt(v["enforce_requires_training"], 10) || 0,
 	csNm = skill + "-cs",
 	ranksNm = skill + "-ranks",
 	classNm = skill + "-class",
 	abNm = skill + "-ability",
-	modNm = skill + "-ability-mod",
+	//modNm = skill + "-ability-mod",
 	racialNm = skill + "-racial",
 	traitNm = skill + "-trait",
 	featNm = skill + "-feat",
 	itemNm = skill + "-item",
 	miscNm = skill + "-misc-mod",
 	utNm = skill + "-ut",
-	rtNm = skill + "-ReqTrain";
-	getAttrs([skill, csNm, ranksNm, classNm, abNm, modNm, racialNm, traitNm, featNm, itemNm, miscNm, rtNm, utNm, 
-	"enforce_requires_training", "size_skill", "size_skill_double", "acp", "Phys-skills-cond", 
-	"Perception-cond", 
-	"buff_STR_skills-total","buff_DEX_skills-total","buff_CON_skills-total","buff_INT_skills-total","buff_WIS_skills-total","buff_CHA_skills-total"	], 
-	function (v) {
-		var skillSize = 0,
-		adj,
-		skillTot = 0,
-		setter = {},
-		params = {},
-		mods = "",
-		setAny = 0,
-		cond = 0,
-		cs = parseInt(v[csNm], 10) || 0,
-		currSkill = parseInt(v[skill], 10), //no default
-		ranks = parseInt(v[ranksNm], 10) || 0,
-		rt = parseInt(v[rtNm], 10) || 0,
-		allCond = 0,
-		buffs= 0,
-		abilityModName = '',
-		abilityName='',
-		physCond = 0,
-		perCond = 0,
-		watchrt = parseInt(v["enforce_requires_training"], 10) || 0;
-		try {
-			abilityModName = PFUtils.findAbilityInString(v[abNm]);
-			if (rt && ranks === 0) {
-				if (v[utNm] !== "{{untrained=1}}") {
-					setter[utNm] = "{{untrained=1}}";
-				}
-			} else if (v[utNm] !== "{{untrained=}}") {
-				setter[utNm] = "{{untrained=}}"; //cannot set to "" because then it chooses the default which is "{{untrained=1}}"
+	rtNm = skill + "-ReqTrain",
+	adj,
+	skillTot = 0,
+	mods = "",
+	setAny = 0,
+	cond = 0,
+	cs = parseInt(v[csNm], 10) || 0,
+	currSkill = parseInt(v[skill], 10), //no default
+	ranks = parseInt(v[ranksNm], 10) || 0,
+	rt = parseInt(v[rtNm], 10) || 0,
+	allCond = 0,
+	buffs= 0,
+	abilityModName = '',
+	abilityName='',
+	physCond = 0,
+	perCond = 0;	
+		
+	try {
+		setter = setter || {};
+		abilityModName = v[abNm]; //PFUtils.findAbilityInString(v[abNm]);
+
+		if (rt && ranks === 0) {
+			if (v[utNm] !== "{{untrained=1}}") {
+				setter[utNm] = "{{untrained=1}}";
 			}
-			if (ranks && cs) {
-				skillTot += 3;
-				mods = "3/";
-			} else {
-				mods = "0/";
-			}
-			if (abilityModName === "DEX-mod" || abilityModName === "STR-mod") {
-				adj = parseInt(v["acp"], 10) || 0;
+		} else if (v[utNm] !== "{{untrained=}}") {
+			setter[utNm] = "{{untrained=}}"; //cannot set to "" because then it chooses the default which is "{{untrained=1}}"
+		}
+		if (ranks && cs) {
+			skillTot += 3;
+			mods = "3/";
+		} else {
+			mods = "0/";
+		}
+		if (abilityModName === "DEX-mod" || abilityModName === "STR-mod") {
+			adj = parseInt(v["acp"], 10) || 0;
+			skillTot += adj;
+			mods += adj + "/";
+			physCond = parseInt(v["Phys-skills-cond"], 10) || 0;
+		} else {
+			mods += "0/";
+		}
+		if (abilityModName){
+			abilityName = abilityModName.slice(0,3).toUpperCase();
+			buffs += parseInt(v['buff_'+abilityName+'_skills-total'],10)||0;
+		}
+
+		skillSize = sizeSkills[skill];
+		if (skillSize) {
+			if (skillSize === 1) {
+				adj = parseInt(v["size_skill"], 10) || 0;
 				skillTot += adj;
 				mods += adj + "/";
-				physCond = parseInt(v["Phys-skills-cond"], 10) || 0;
-			} else {
-				mods += "0/";
+			} else if (skillSize === 2) {
+				adj = parseInt(v["size_skill_double"], 10) || 0;
+				skillTot += adj;
+				mods += adj + "/";
 			}
-			if (abilityModName){
-				abilityName = abilityModName.slice(0,3).toUpperCase();
-				buffs += parseInt(v['buff_'+abilityName+'_skills-total'],10)||0;
-			}
+		} else {
+			mods += "0/";
+		}
 
-			skillSize = sizeSkills[skill];
-			if (skillSize) {
-				if (skillSize === 1) {
-					adj = parseInt(v["size_skill"], 10) || 0;
-					skillTot += adj;
-					mods += adj + "/";
-				} else if (skillSize === 2) {
-					adj = parseInt(v["size_skill_double"], 10) || 0;
-					skillTot += adj;
-					mods += adj + "/";
-				}
-			} else {
-				mods += "0/";
-			}
+		if (skill === "Perception" || skill === "CS-Perception") {
+			perCond = parseInt(v["Perception-cond"], 10) || 0;
+		}
+		cond = allCond + physCond + perCond + buffs;
+		mods += cond;
+		skillTot += ranks + cond + (parseInt(v[abilityModName], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
+		if (currSkill !== skillTot) {
+			setter[skill] = skillTot;
+		}
+		if (v[classNm]  !== mods) {
+			setter[classNm] = mods;
+		}
+	} catch (erskill){
+		TAS.error("PFSkills.setNewSkillVal",erskill);
+	} finally {
+		return setter;
+	}
+}
 
-			if (skill === "Perception" || skill === "CS-Perception") {
-				perCond = parseInt(v["Perception-cond"], 10) || 0;
-			}
-			cond = allCond + physCond + perCond + buffs;
-			mods += cond;
-			skillTot += ranks + cond + (parseInt(v[modNm], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
-			if (currSkill !== skillTot) {
-				setter[skill] = skillTot;
-			}
-			if (v[classNm]  !== mods) {
-				setter[classNm] = mods;
-			}
+function getMinorSkillUpdate(skill,diff,v,setter){
+
+}
+/** when user checks class skill, +3 or -3 depending on if ranks > 0, if ranks 0 no change 
+ * 
+ */
+export function classSkillUpdateAsync(skill){
+
+}
+/** Updates skill when all we know is the diff to apply 
+ * Can be used when value of ability mod changes, or when buff changes
+ * 
+ * @param {string} skill 
+ * @param {Number} diff 
+ */
+export function minorSkillUpdateAsync (skill,diff){
+
+}
+
+
+/** updates one  skill row
+ * @param {string} skill to update, must have same capitalization as on HTML
+ * @param {function} callback = callback after done with params newvalue, oldvalue.
+ * @param {boolean} silently = whether to update silently or not. ignored, always silent.
+ */
+export function updateSkillAsync (skill, callback, silently) {
+	var done = function (newVal, oldVal) {
+		if (typeof callback === "function") {
+			callback(newVal, oldVal);
+		}
+	},
+	fields = skillNameAppends.map(function(append){return skill+append;});
+	fields = fields.concat(globalSkillModAttrs);
+	getAttrs(fields,function (v) {
+		var setter = {},
+		params = {},
+		currSkill=0;
+		try {
+			currSkill = parseInt(v[skill], 10);
+			setter = getNewSkillVals(skill,v,setter);
 		} catch (err) {
 			TAS.error(err);
 		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, {
-					silently: true
-				}, function () {
-					done(skillTot, currSkill);
+				SWUtils.setWrapper(setter, PFConst.silentParams, function () {
+					done(setter[skill] , currSkill);
 				});
 			} else {
 				done(currSkill, currSkill);
@@ -502,13 +543,49 @@ function recalculateSkillDropdowns (skills, callback, errorCallback) {
 		}
 	});
 }
-/** recalculateSkillArray recalculates skills first dropdown, then misc mod, then skill total.
- * calls updateSkill for each. Does all dropdowns at once since they are easy to merge into one.
+
+function recalculateSkillmisc (skills, callback){
+	var doneOneMisc = _.after(_.size(skills),callback);
+	_.each(skills, function (skill) {
+		SWUtils.evaluateAndSetNumber(skill + "-misc", skill + "-misc-mod", 0, function () {
+			doneOneMisc();
+		}, true);
+	});	
+}
+
+function recalcSkillArrayOnly (skills,callback,silently){
+	var done = _.once(function () {
+		if (typeof callback === "function") {
+			callback();
+		}
+	}),
+	fields, subfields;
+	fields = globalSkillModAttrs;
+	_.each(skills,function(skill){
+		var subfields=skillNameAppends.map(function(append){return skill+append;});
+		fields = fields.concat(subfields);
+	});
+	getAttrs(fields,function(v){
+		var setter={};
+		setter=_.reduce(skills,function(m,skill){
+			try {m = getNewSkillVals(skill,v,m);} catch (e){} finally {
+				return m;
+			}
+		},{});
+		if(_.size(setter)){
+			SWUtils.setWrapper(setter,PFConst.silentParams,done);
+		} else {
+			done();
+		}
+	});	
+}
+/** recalcSkillDropdownMiscValArray recalculates skills first dropdown, then misc mod, then skill total.
+ * calls updateSkillAsync for each. Does all dropdowns at once since they are easy to merge into one.
  * @param {Array} skills array of skills to update.
  * @param {function} callback when done
  * @param {boolean} silently whether to call SWUtils.setWrapper of skill total with silent or not.
  */
-function recalculateSkillArray (skills, callback, silently) {
+function recalcSkillDropdownMiscValArray (skills, callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -516,24 +593,17 @@ function recalculateSkillArray (skills, callback, silently) {
 	}),
 	skillCount = _.size(skills),
 	skillsHandled = 0,
-	doneMisc = function (skill) {
-		//TAS.debug("PFSkills.recalculateSkillArray done with misc skills call updateSkill on "+skill);
-		//final: update each skill
-		updateSkill(skill, done, silently);
+	doneMisc = function () {
+		recalcSkillArrayOnly(skills,done,silently);
 	},
 	doneDrop = function () {
-		//second do misc one by one (since it is asynchronous)
-		_.each(skills, function (skill) {
-			SWUtils.evaluateAndSetNumber(skill + "-misc", skill + "-misc-mod", 0, function () {
-				doneMisc(skill);
-			}, true);
-		});
+		recalculateSkillmisc(skills,doneMisc)
 	};
-	//TAS.debug("at PFSkills.recalculateSkillArray for ",skills);
+	//TAS.debug("at PFSkills.recalcSkillDropdownMiscValArray for ",skills);
 	recalculateSkillDropdowns(skills, doneDrop, done);
 }
 
-export function recalculateSkills (callback, silently) {
+export function recalculateSkills (callback, silently, onlySkills) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -543,17 +613,30 @@ export function recalculateSkills (callback, silently) {
 		try {
 			if (v["unchained_skills-show"] == "1") {
 				if (v["BG-Skill-Use"] == "1") {
-					//TAS.debug("PFSkills.recalculate: has background skills");
-					recalculateSkillArray(backgroundOnlySkills, null, silently);
-					//return after long one
-					recalculateSkillArray(allCoreSkills, done, silently);
+					if(onlySkills){
+						recalcSkillArrayOnly(backgroundOnlySkills, null, silently);
+						recalcSkillArrayOnly(allCoreSkills, done, silently);
+					}else {
+						//TAS.debug("PFSkills.recalculate: has background skills");
+						recalcSkillDropdownMiscValArray(backgroundOnlySkills, null, silently);
+						//return after long one
+						recalcSkillDropdownMiscValArray(allCoreSkills, done, silently);
+					}
 				} else {
-					//TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
-					recalculateSkillArray(consolidatedSkills, done, silently);
+					if (onlySkills){
+						recalcSkillArrayOnly(consolidatedSkills, done, silently);
+					}else {
+						//TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
+						recalcSkillDropdownMiscValArray(consolidatedSkills, done, silently);
+					}
 				}
 			} else {
-				//TAS.debug("PFSkills.recalculate: has core skills skills");
-				recalculateSkillArray(allCoreSkills, done, silently);
+					if (onlySkills){
+						recalcSkillArrayOnly(allCoreSkills, done, silently);
+					}else {
+						//TAS.debug("PFSkills.recalculate:has core skills skills");
+						recalcSkillDropdownMiscValArray(allCoreSkills, done, silently);
+					}
 			}
 		} catch (err) {
 			TAS.error("PFSKills.recalculate", err);
@@ -561,8 +644,44 @@ export function recalculateSkills (callback, silently) {
 		}
 	});
 }
-export function recalculateAbilityBasedSkills (abilityBuff,callback,silently){
-	recalculateSkills();
+export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
+	var done=function(){
+		if (typeof callback === "function"){ callback();}
+	},
+	updatedAttr = '',tempstr='',matches,fields;
+	if(eventInfo){
+		tempstr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+	} else if(abilityBuff) {
+		tempstr = abilityBuff;
+	}
+	if(tempstr){
+		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
+		if(matches){
+			updatedAttr=matches[0].toUpperCase+'-mod';
+		}		
+	}
+	if(!updatedAttr){
+		done();
+		return;			
+	}
+	fields = allTheSkills.map(function(skill){
+		return skill+'-ability';
+	});
+	getAttrs(fields,function(v){
+		var skillArray=[];
+		skillArray = _.reduce(v,function(m,val,field){
+			if(val===updatedAttr){
+				m.push(field);
+			}
+			return m;
+		},[]);
+		TAS.notice("PFSkills updateAbilityBasedSkills getting array:",skillArray);
+		if(_.size(skillArray)){
+			recalcSkillArrayOnly(skillArray,done,silently);
+		} else {
+			done();
+		}
+	});
 }
 /** updates the macros for only the 7 subskill rolltemplates 
  * @param {boolean} background -if background skills turned on
@@ -801,7 +920,7 @@ export function applyConditions (callback,silently,eventInfo){
 	},		
 	updateSkillArray  = function(skills){
 		_.each(skills,function(skill){
-			updateSkill(skill);
+			updateSkillAsync(skill);
 		});
 	};
 	//TAS.debug("at apply conditions");
@@ -979,6 +1098,12 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 	}, oldversion);
 });
 function registerEventHandlers () {
+	on("change:str-mod change:dex-mod change:con-mod change:int-mod change:wis-mod change:cha-mod",TAS.callback(function eventAbilityScoreToSkill(eventInfo){
+		TAS.notice("################# caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+			recalculateAbilityBasedSkills(null,eventInfo);
+		}
+	}));
 	//SKILLS************************************************************************
 	on("change:total-skill change:total-fcskill change:int-mod change:level change:max-skill-ranks-mod change:unchained_skills-show change:BG-Skill-Use", TAS.callback(function eventUpdateMaxSkills(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1000,7 +1125,7 @@ function registerEventHandlers () {
 			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				verifyHasSkill(skill, function (hasSkill) {
 					if (hasSkill) {
-						updateSkill(skill, eventInfo);
+						updateSkillAsync(skill, eventInfo);
 					}
 				});
 			}
@@ -1008,20 +1133,12 @@ function registerEventHandlers () {
 		on((events.skillEventsPlayer.replace(/REPLACE/g, skill)), TAS.callback(function eventSkillsPlayer(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + skill + ", " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				verifyHasSkill(skill, function (hasSkill) {
-					if (hasSkill) {
-						updateSkill(skill, eventInfo);
-					}
-				});
+				updateSkillAsync(skill);
 			}
 		}));
 		on("change:" + skill + "-ability", TAS.callback(function eventSkillDropdownAbility(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			verifyHasSkill(skill, function (hasSkill) {
-				if (hasSkill) {
-					PFUtilsAsync.setDropdownValue(skill + "-ability", skill + "-ability-mod");
-				}
-			});
+			updateSkillAsync(skill);
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMacroAbility(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1054,14 +1171,14 @@ function registerEventHandlers () {
 			on("change:size_skill", TAS.callback(function eventUpdateSizeSkill(eventInfo) {
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateSkill(skill, eventInfo);
+					updateSkillAsync(skill);
 				}
 			}));
 		} else if (mult === 2) {
 			on("change:size_skill_double", TAS.callback(function eventUpdateSizeSkillDouble(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-					updateSkill(skill, eventInfo);
+					updateSkillAsync(skill);
 				}
 			}));
 		}
