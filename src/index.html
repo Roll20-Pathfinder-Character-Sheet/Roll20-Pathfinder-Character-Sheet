@@ -7090,7 +7090,7 @@
 											<span data-i18n-title="effective-spell-level" data-i18n-aria-label="effective-spell-level" data-i18n="spell-level-abbrv" >Spell lvl</span>
 										</label>
 										<label class="sheet-divider-db-lg">|</label>
-										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span></label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span><span name="attr_save" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-number">
 											<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />												
 											<span data-i18n-title="difficulty-class-calculation-desc" data-i18n-aria-label="difficulty-class-calculation-desc" data-i18n="difficulty-class-abbrv" >DC</span>
@@ -7147,8 +7147,8 @@
 										<label class="sheet-small-label2">
 											<input title="@{repeating_ability_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" class="sheet-calc" readonly ><span data-i18n="range-in-feet">Range</span>
 										</label>
-										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" placeholder="Duration" data-i18n-placeholder="spell-duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" placeholder="School etc" data-i18n-placeholder="school-etc"  accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span></label>
+										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" placeholder="Duration" data-i18n-placeholder="spell-duration" accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" placeholder="School etc" data-i18n-placeholder="school-etc"  accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
 									<div class="sheet-weapon-attributes sheet-non-table">
 										<label class="sheet-small-label2 sheet-entry-short">
@@ -7167,17 +7167,17 @@
 											</select>
 											<span data-i18n="attack-type">Attack Type</span>
 										</label>
-										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand">
 											<input title="@{repeating_ability_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" />
-											<span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span>
+											<span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="sheet-autoexpand"></span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink" style="height:auto;">
 											<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_ability_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
 											<span class="sheet-super sheet-note-b" data-i18n-title="damage-macro-desc" data-i18n-aria-label="damage-macro-desc" data-i18n="damage">Damage</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand">
 											<input type="text" name="attr_damage-type" title="@{repeating_ability_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
-											<span data-i18n="damage-type">Damage Type</span>
+											<span data-i18n="damage-type">Damage Type</span><span name="attr_damage-type" class="sheet-autoexpand"></span>
 										</label>
 									</div>
 									<input type="text" name="attr_is_sp" value="" class="sheet-noshow" />
@@ -9054,9 +9054,9 @@
 								<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
 								<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
 								<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
-								<label class="sheet-small-label2 sheet-entry-12p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
+								<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span><span name="attr_school" class="sheet-autoexpand"></span></label>									
 								<label class="sheet-small-label2 sheet-entry-small">
-									<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
+									<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">								
 										<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
 										<option value="Yes" data-i18n="yes">Yes</option>
 										<option value="No" data-i18n="no">No</option>
@@ -9066,7 +9066,7 @@
 									</select>
 									<span data-i18n="spell-resistance-abbrv">SR</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
+								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span><span name="attr_save" class="sheet-autoexpand"></span></label>
 								<label class="sheet-small-label2 sheet-entry-short">
 									<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
 										<option value="blank" data-i18n="blank" selected>Blank</option>
@@ -9092,10 +9092,10 @@
 									<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
 									<span data-i18n="range-in-feet">Range</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
-								<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-								<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
+								<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="sheet-autoexpand"></span></label>								
+								<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
+								<label class="sheet-small-label2 sheet-entry-8p sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span><span name="attr_cast-time" class="sheet-autoexpand"></span></label>
+								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span><span name="attr_components" class="sheet-autoexpand"></span></label>
 								<div style="display:none;">
 									<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
 									<input type="text" value="" name="attr_spell_lvlstr" accept="Level" />
@@ -9155,9 +9155,9 @@
 											<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
 											<span class="sheet-super sheet-note-b" data-i18n="damage">Damage</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand">
 											<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
-											<span data-i18n="damage-type">Damage Type</span>
+											<span data-i18n="damage-type">Damage Type</span><span name="attr_damage-type" class="sheet-autoexpand"></span>
 										</label>											
 									</div>
 									<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
@@ -9630,7 +9630,7 @@
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-crit-target}" name="attr_item-crit-target" type="number" value="20" min="1" /><span data-i18n="critical-abbrv">Crit</span></label>
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-crit-multiplier}" name="attr_item-crit-multiplier" type="number" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
 										<label class="sheet-small-label2"><input title="@{repeating_item_$X_item-range}" name="attr_item-range" type="number" value="0" min="0" /><span data-i18n="range-in-feet">Range</span></label>
-										<label class="sheet-small-label2 sheet-entry-small"><input title="@{repeating_item_$X_item-dmg-type}" name="attr_item-dmg-type" type="text" value="" accept="Type" /><span data-i18n="damage-type">Damage Type</span></label>
+										<label class="sheet-small-label2 sheet-entry-small sheet-autoexpand"><input title="@{repeating_item_$X_item-dmg-type}" name="attr_item-dmg-type" type="text" value="" accept="Type" /><span data-i18n="damage-type">Damage Type</span><span name="attr_item-dmg-type" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-med">
 											<select title="@{repeating_item_$X_default_size}" name="attr_default_size" >
 												<option value="-8" data-i18n="size-colossal">Colossal</option>
@@ -10652,8 +10652,8 @@
 										<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span></label>
-										<label class="sheet-small-label2 sheet-entry-small">
+										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span><span name="attr_school" class="sheet-autoexpand"></span></label>										<label class="sheet-small-label2 sheet-entry-small">
+										<label class="sheet-small-label2 sheet-entry-small">	
 											<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
 												<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
 												<option value="Yes" data-i18n="yes">Yes</option>
@@ -10664,7 +10664,7 @@
 											</select>
 											<span data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span></label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_save}" type="text" value="" name="attr_save" placeholder="Save Effect" data-i18n-placeholder="save-effect" accept="Saving Throw"><span data-i18n="save">Save</span><span name="attr_save" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-short">
 											<select class="sheet-select-small" title="@{repeating_spells_$X_range_pick}" name="attr_range_pick">
 												<option value="blank" data-i18n="blank" selected>Blank</option>
@@ -10690,10 +10690,10 @@
 											<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
 											<span data-i18n="range-in-feet">Range</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span></label>
-										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-										<label class="sheet-small-label2 sheet-entry-8p sheet-sect"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span></label>
-										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span></label>
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" /><span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="sheet-autoexpand"></span></label>										
+										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_duration}" type="text" value="" name="attr_duration" placeholder="Duration" data-i18n-placeholder="duration" accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
+										<label class="sheet-small-label2 sheet-entry-8p sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_cast-time}" type="text" value="" name="attr_cast-time" placeholder="Casting Time" data-i18n-placeholder="spell-casting-time-place" accept="Casting Time" /><span data-i18n="casting-time-abbrv">Cast Time</span><span name="attr_cast-time" class="sheet-autoexpand"></span></label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect sheet-autoexpand"><input title="@{repeating_spells_$X_components}" type="text" value="" name="attr_components" placeholder="Components" data-i18n-placeholder="spell-components" accept="Components"><span data-i18n="spell-components">Components</span><span name="attr_components" class="sheet-autoexpand"></span></label>
 										<div style="display:none;">
 											<input type="text" value="" name="attr_range_from_compendium" accept="Range" />
 											<input type="text" value="" name="attr_spell_lvlstr" accept="Level" />
@@ -10753,9 +10753,9 @@
 													<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
 													<span class="sheet-super sheet-note-b" data-i18n="damage">Damage</span>
 												</label>
-												<label class="sheet-small-label2 sheet-entry-15p-shrink">
+												<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand">
 													<input type="text" name="attr_damage-type" title="@{repeating_spells_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
-													<span data-i18n="damage-type">Damage Type</span>
+													<span data-i18n="damage-type">Damage Type</span><span name="attr_damage-type" class="sheet-autoexpand"></span>
 												</label>											
 											</div>
 											<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
@@ -11540,7 +11540,7 @@
 											<span data-i18n-title="effective-spell-level" data-i18n-aria-label="effective-spell-level" data-i18n="spell-level-abbrv" >Spell lvl</span>
 										</label>
 										<label class="sheet-divider-db-lg">|</label>
-										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span></label>
+										<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_save}" type="text" name="attr_save" value="" placeholder="Save" data-i18n-placeholder="save" accept="Saving Throw" /><span data-i18n="save">Save</span><span name="attr_save" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-number">
 											<input type="text" value="(10+@{ability-basis} + @{spell_level})" name="attr_savedc" title="@{repeating_ability_$X_savedc}" class="sheet-number" disabled />												
 											<span data-i18n-title="difficulty-class-calculation-desc" data-i18n-aria-label="difficulty-class-calculation-desc" data-i18n="difficulty-class-abbrv" >DC</span>
@@ -11597,8 +11597,8 @@
 										<label class="sheet-small-label2">
 											<input title="@{repeating_ability_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" class="sheet-calc" readonly ><span data-i18n="range-in-feet">Range</span>
 										</label>
-										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" placeholder="Duration" data-i18n-placeholder="spell-duration" accept="Duration" /><span data-i18n="duration">Duration</span></label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" placeholder="School etc" data-i18n-placeholder="school-etc"  accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span></label>
+										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" placeholder="Duration" data-i18n-placeholder="spell-duration" accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" placeholder="School etc" data-i18n-placeholder="school-etc"  accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
 									<div class="sheet-weapon-attributes sheet-non-table">
 										<label class="sheet-small-label2 sheet-entry-short">
@@ -11617,17 +11617,17 @@
 											</select>
 											<span data-i18n="attack-type">Attack Type</span>
 										</label>
-										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand">
 											<input title="@{repeating_ability_$X_targets}" type="text" value="" name="attr_targets" placeholder="Targets/Area/Effect" data-i18n-placeholder="spell-targets-area-effect" />
-											<span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span>
+											<span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="sheet-autoexpand"></span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink" style="height:auto;">
 											<textarea class="sheet-inline-textarea" name="attr_damage-macro-text" title="@{repeating_ability_$X_damage-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place" ></textarea>
 											<span class="sheet-super sheet-note-b" data-i18n-title="damage-macro-desc" data-i18n-aria-label="damage-macro-desc" data-i18n="damage">Damage</span>
 										</label>
-										<label class="sheet-small-label2 sheet-entry-15p-shrink">
+										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand">
 											<input type="text" name="attr_damage-type" title="@{repeating_ability_$X_damage-type}" placeholder="Damage Type" data-i18n-placeholder="damage-type" />
-											<span data-i18n="damage-type">Damage Type</span>
+											<span data-i18n="damage-type">Damage Type</span><span name="attr_damage-type" class="sheet-autoexpand"></span>
 										</label>
 									</div>
 									<input type="text" name="attr_is_sp" value="" class="sheet-noshow" />
