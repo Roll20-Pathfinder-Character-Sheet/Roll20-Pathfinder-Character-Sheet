@@ -267,7 +267,7 @@ function expandAll  () {
 function setupNewSheet (callback){
 	var done = _.once(function(){
 		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
-			'attentionv154-show':1 },PFConst.silentParams,function(){
+			'attentionv156-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -432,6 +432,9 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
 				PFSkills.migrate();
+			}
+			if (oldversion < 1.56){
+				PFAttacks.updateRepeatingWeaponDamages();
 			}
 		}
 	} catch (err) {
