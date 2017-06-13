@@ -101,7 +101,6 @@ coreSkillAbilityDefaults = {
 	"Swim": "str",
 	"Use-Magic-Device": "cha"
 },
-
 defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultSkillMacroMap = {
 	'&{template:':{'current':'pf_generic}'},
@@ -139,7 +138,7 @@ skillNameAppends = ['', '-cs', '-ranks', '-class', '-ability', '-ability-mod', '
 events = {
 	skillGlobalEventAuto: "change:phys-skills-cond change:acp", //checks-cond
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
-	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
+	skillEventsPlayer: "change:REPLACE-cs change:REPLACE-ability change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
 
 function migrateMacros (callback){
@@ -325,7 +324,7 @@ function getNewSkillVals (skill, v, setter){
 	ranksNm = skill + "-ranks",
 	classNm = skill + "-class",
 	abNm = skill + "-ability",
-	modNm = skill + "-ability-mod",
+	//modNm = skill + "-ability-mod",
 	racialNm = skill + "-racial",
 	traitNm = skill + "-trait",
 	featNm = skill + "-feat",
@@ -351,7 +350,8 @@ function getNewSkillVals (skill, v, setter){
 		
 	try {
 		setter = setter || {};
-		abilityModName = PFUtils.findAbilityInString(v[abNm]);
+		abilityModName = v[abNm]; //PFUtils.findAbilityInString(v[abNm]);
+
 		if (rt && ranks === 0) {
 			if (v[utNm] !== "{{untrained=1}}") {
 				setter[utNm] = "{{untrained=1}}";
@@ -398,7 +398,7 @@ function getNewSkillVals (skill, v, setter){
 		}
 		cond = allCond + physCond + perCond + buffs;
 		mods += cond;
-		skillTot += ranks + cond + (parseInt(v[modNm], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
+		skillTot += ranks + cond + (parseInt(v[abilityModName], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
 		if (currSkill !== skillTot) {
 			setter[skill] = skillTot;
 		}
@@ -644,8 +644,44 @@ export function recalculateSkills (callback, silently, onlySkills) {
 		}
 	});
 }
-export function recalculateAbilityBasedSkills (abilityBuff,callback,silently){
-	recalculateSkills(callback,silently,true);
+export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
+	var done=function(){
+		if (typeof callback === "function"){ callback();}
+	},
+	updatedAttr = '',tempstr='',matches,fields;
+	if(eventInfo){
+		tempstr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+	} else if(abilityBuff) {
+		tempstr = abilityBuff;
+	}
+	if(tempstr){
+		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
+		if(matches){
+			updatedAttr=matches[0].toUpperCase+'-mod';
+		}		
+	}
+	if(!updatedAttr){
+		done();
+		return;			
+	}
+	fields = allTheSkills.map(function(skill){
+		return skill+'-ability';
+	});
+	getAttrs(fields,function(v){
+		var skillArray=[];
+		skillArray = _.reduce(v,function(m,val,field){
+			if(val===updatedAttr){
+				m.push(field);
+			}
+			return m;
+		},[]);
+		TAS.notice("PFSkills updateAbilityBasedSkills getting array:",skillArray);
+		if(_.size(skillArray)){
+			recalcSkillArrayOnly(skillArray,done,silently);
+		} else {
+			done();
+		}
+	});
 }
 /** updates the macros for only the 7 subskill rolltemplates 
  * @param {boolean} background -if background skills turned on
@@ -1065,7 +1101,7 @@ function registerEventHandlers () {
 	on("change:str-mod change:dex-mod change:con-mod change:int-mod change:wis-mod change:cha-mod",TAS.callback(function eventAbilityScoreToSkill(eventInfo){
 		TAS.notice("################# caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-			recalculateAbilityBasedSkills();
+			recalculateAbilityBasedSkills(null,eventInfo);
 		}
 	}));
 	//SKILLS************************************************************************
@@ -1097,20 +1133,12 @@ function registerEventHandlers () {
 		on((events.skillEventsPlayer.replace(/REPLACE/g, skill)), TAS.callback(function eventSkillsPlayer(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + skill + ", " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-				verifyHasSkill(skill, function (hasSkill) {
-					if (hasSkill) {
-						updateSkillAsync(skill, eventInfo);
-					}
-				});
+				updateSkillAsync(skill);
 			}
 		}));
 		on("change:" + skill + "-ability", TAS.callback(function eventSkillDropdownAbility(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			verifyHasSkill(skill, function (hasSkill) {
-				if (hasSkill) {
-					PFUtilsAsync.setDropdownValue(skill + "-ability", skill + "-ability-mod");
-				}
-			});
+			updateSkillAsync(skill);
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMacroAbility(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1143,14 +1171,14 @@ function registerEventHandlers () {
 			on("change:size_skill", TAS.callback(function eventUpdateSizeSkill(eventInfo) {
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-					updateSkillAsync(skill, eventInfo);
+					updateSkillAsync(skill);
 				}
 			}));
 		} else if (mult === 2) {
 			on("change:size_skill_double", TAS.callback(function eventUpdateSizeSkillDouble(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-					updateSkillAsync(skill, eventInfo);
+					updateSkillAsync(skill);
 				}
 			}));
 		}
