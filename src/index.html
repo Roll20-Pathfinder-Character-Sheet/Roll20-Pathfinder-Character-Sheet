@@ -19,31 +19,21 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv154-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv156-show" value="1" data-i18n-title="show-announcements" aria-label="Check to reveal Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
 		<div class="sheet-footer" style="text-align:left; padding:5px; margin:5px;">
-			<h2 style="margin-top:0;margin-bottom:1em;">
+			<h2 style="margin-top:0;margin-bottom:.5em;">
 				<span data-i18n="version">Version</span>
 				<input type="text" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly title="A non-blank version indicates attributes have been successfully recalculated." />
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>FIX SKILLS (again)</li>
-				<li>Fix ability damage multiplier on attack rows</li>
-				<li>Fix spells linked to attacks</li>
-				<li>Fix monster "plus x" damage parsing</li>
-				<li>Update NPC page ability list</li>
-				<li>Announcements hidden by default on new sheets</li>
-				<li><b>UPCOMING CHANGE:</b> remove @{ and } from dropdown values, so they will only be strings, EXCEPT for the repeating_ability. This was necessary to:
-				<ol><li>Stop looping behavior when using API to set values</li>
-					<li>Improve ability of macros to determine if an attack is melee, ranged, etc</li>					
-					</ol>
-					This may impact your macros or may not. Please test your macros against the beta site.
-				</li>
+				<li>Fix sickened damage adjustment</li>
+				<li><span style="font-size:1rem;font-weight:bold;">Buff bonus types coming</span> check out <strong>Beta campaign</strong> (link in footer) to test</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv154-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv156-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
