@@ -266,7 +266,8 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			abilityMult=getDamageMult(v[abilityMultField]);
 
 
-			damageBuffs +=dmgConditions;
+			
+			damageBuffs -=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
 			if(!rangedAttack || isNaN(maxA)) {
 				maxA=990;
@@ -401,10 +402,8 @@ function getRecalculatedDamageOnly (id,v){
 			maxAbility=999;
 		}
 
-		damageBuffs += dmgConditions;
-
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
-
+		damageBuffs -= dmgConditions;
 		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -519,7 +518,7 @@ function  getRecalculatedAttack (id,v,setter){
 		} else {
 			damageBuffs +=  parseInt(v['buff_dmg_melee-total'],10)||0;
 		}
-		damageBuffs += parseInt(v['condition-Sickened'],10)||0;
+		damageBuffs -= parseInt(v['condition-Sickened'],10)||0;
 		localsetter = setter || {};
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
