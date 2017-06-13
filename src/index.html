@@ -280,7 +280,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -355,7 +355,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -430,7 +430,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -505,7 +505,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -580,7 +580,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -655,7 +655,7 @@
 										<option value="insight" data-i18n="insight">Insight</option>
 										<option value="luck" data-i18n="luck">Luck</option>
 										<option value="morale" data-i18n="morale">Morale</option>
-										<option value="natural" data-i18na="natural-armor">Natural Armor</option>
+										<option value="natural" data-i18n="natural-armor">Natural Armor</option>
 										<option value="profane" data-i18n="profane">Profane</option>
 										<option value="racial" data-i18n="racial-bonus">Racial</option>
 										<option value="resistance" data-i18n="resistance">Resistance</option>
@@ -1015,7 +1015,7 @@
 				<button type="roll" name="roll_items" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv-caps}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
-				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{toggle_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
+				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{var_save_notes} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
@@ -1327,7 +1327,7 @@
 											<span class="sheet-table-header" title="Alternate Favored Class point counter" data-i18n-title="alternate-favored-class" data-i18n-aria-label="alternate-favored-class" data-i18n="alternate-favored-class-abbrv">FC Alt</span>
 											<span class="sheet-table-header" title="Fortitude Save" data-i18n-title="fortitude-save" data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv" aria-label="Fortitude Save">Fort</span>
 											<span class="sheet-table-header" title="Reflex Save" data-i18n-title="reflex-save" data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save" data-i18n-aria-label="willpower-save" data-i18n="willpower-abbrv">Will</span>
+											<span class="sheet-table-header" title="Will Save" data-i18n-title="willpower-save-abbrv" data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
 										</div>
 									</div>
 									<div class="sheet-table-group sheet-not-C-or-D-sect">
@@ -1440,7 +1440,7 @@
 											<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
 											<span class="sheet-table-header" title="Fortitude Save" data-i18n-title="fortitude-save" data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv">Fort</span>
 											<span class="sheet-table-header" title="Reflex Save" data-i18n-title="reflex-save" data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" title="Willpower Save" data-i18n-title="willpower-save" data-i18n-aria-label="willpower-save" data-i18n="willpower-abbrv">Will</span>
+											<span class="sheet-table-header" title="Will Save" data-i18n-title="willpower-save-abbrv" data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
 										</div>
 										<div class="sheet-table-row">
 											<span class="sheet-table-cell" data-i18n-title="type-or-sub-type" title="Type (sub-type)" style="padding-left:.5em;"><b><span data-i18n="type">Type</span></b></span>
@@ -1656,6 +1656,7 @@
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
                                         <span class="sheet-table-header"></span>
                                         <span class="sheet-table-header" data-i18n="buff">Buff</span>
+										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n="notes">Notes</span>
 										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>									
@@ -1699,6 +1700,7 @@
 											<input type="text" title="@{allbuffs_initiative}" name="attr_allbuffs_initiative" value="(@{buff_initiative-total}+@{buff_Check-total}+@{buff_check_ability-total})" class="sheet-number" disabled >
 											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n="buff">Buff</span></span>
 										</span>
+										<span class="sheet-table-cell" style="vertical-align: top;"><button data-i18n-title="init-speed-title" title="%{init-speed-info} Post initiative and speed information." type="roll" name="roll_init-speed-info" value="@{init_speed-macro-text}" style="height: 1.85em ; margin-top: 2px" class="btn ui-draggable">&nbsp;<span style="vertical-align: middle" data-i18n="information-abbrv">Info</span>&nbsp;</button></span>
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
 										</span>
@@ -1712,7 +1714,11 @@
 										<input type="checkbox" class="sheet-showarrow sheet-init-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:.25em;">
 										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>								
 										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit;">
-											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Full Macro" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
+											<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
+											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place">&amp;{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
+											<br>
+											<span class="sheet-super sheet-note-d" data-i18n="init-speed-full-macro">Init and Speed Info Full Macro:</span>
+											<textarea class="sheet-inline-textarea" name="attr_init_speed-macro-text" title="@{init_speed-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place">/w &#34;@{character_name}&#34; &amp;{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{init-speed-info}}} {{righttext_1=**INIT:** [[ @{init} ]] }} {{lefttext_2=**Init Notes:** @{init_notes} }} {{righttext_3=**Speed:** [[ @{speed-modified} ]] **Fly:** [[ @{speed-fly} ]] **Swim:** [[ @{speed-swim} ]] **Climb:** [[ @{speed-climb} ]] **Run:** [[ @{speed-run} ]] }} {{lefttext_4=**Speed Notes:** @{speed-notes} }}</textarea>
 										</div>
 										<div class="sheet-init-notes" style="vertical-align:top; width:100%; height:auto; clear:both;">
 											<textarea class="sheet-inline-textarea" name="attr_init_notes" title="@{init_notes}" placeholder="Initiative Notes" data-i18n-placeholder="initiative-notes"></textarea>
@@ -2389,7 +2395,7 @@
 							</div>
 							<div class="sheet-table-cell sheet-small-label">
 								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="This is old sanity damage field. copy this to the new sanity damage field at left. it is invalid and this field will disappear next build." value="0" class="sheet-calc" readonly  />
-								<br/><span>old sanity damage</span>
+								<br/><span data-i18n="old-sanity">old sanity damage</span>
 							</div>
 							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
 						</div>
@@ -2527,8 +2533,8 @@
 						<div class="sheet-table-row sheet-sect">
 							<span class="sheet-table-cell">
 								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}">Melee2</span></button>
+								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
+								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>

@@ -6,10 +6,10 @@ import * as ExExp from './ExExp';
 
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 	var bad=false;
-	TAS.debug("setting "+_.size(a)+" values:",a);
+	//TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
 		if (!v && (isNaN(v) || v === undefined)){
-			TAS.error("Setting NaN or undefined at "+k);
+			TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
 			bad=true;
 		}
 	});
@@ -238,7 +238,7 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 			callback(a, b, c);
 		}
 	};
-	TAS.debug("evaluateAndSetNumber about to get "+readField);
+	//TAS.debug("evaluateAndSetNumber about to get "+readField);
 	getAttrs([readField, writeField, writeField+"_error"], function (v) {
 		var params = {},
 		trueDefault=0, 
@@ -246,14 +246,14 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 		isError=0,
 		currError=0;
 		try {
-			TAS.debug("evaluateAndSetNumber values are ",v);
+			//TAS.debug("evaluateAndSetNumber values are ",v);
 			if (silently){params.silent=true;}
 			currError= parseInt(v[writeField+"_error"],10)||0;
 			trueDefault = defaultVal || 0;
 			currVal = parseInt(v[writeField], 10);
 			evaluateExpression(v[readField], function (value) {
 				var setter={};
-				TAS.debug("evaluateExpression returned with number "+value);
+				//TAS.debug("evaluateExpression returned with number "+value);
 				//changed to 2 equals and flip so value2 on left. 
 				if (isNaN(currVal) || value != currVal) {
 					setter[writeField] = value;
@@ -263,7 +263,7 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 				}
 			}, function(){
 				var setter={};
-				TAS.debug("evaluateExpression returned with error");
+				//TAS.debug("evaluateExpression returned with error");
 				if (isNaN(currVal) || trueDefault != currVal) {
 					setter[writeField] = trueDefault;
 					setWrapper(setter, params, function () { errordone(trueDefault, currVal, true,currError)});
@@ -497,7 +497,7 @@ function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 export function setDropdownValue (readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
 	var done = function (newval, currval, changed) {
 		if (typeof callback === "function") {
-			TAS.notice("SWUtils.setDropdownValue returning new:"+newval+", old:"+currval+", changed:"+changed);
+			//TAS.notice("SWUtils.setDropdownValue returning new:"+newval+", old:"+currval+", changed:"+changed);
 			callback(newval, currval, changed);
 		}
 	};
