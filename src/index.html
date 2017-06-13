@@ -31,7 +31,7 @@
 			</h2>
 			<ol>
 				<li>Fix sickened damage adjustment</li>
-				<li><span style="font-size:1rem;font-weight:bold;">Buff bonus types coming</span> check out <strong>Beta campaign</strong> (link in footer) to test</li>
+				<li><span style="font-size:1rem;font-weight:bold;">Buff bonus types and API companion coming</span> check out <strong>Beta campaign</strong> (link in footer) to test</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv156-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -226,7 +226,6 @@
 								<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_buff-STR_skills_macro-text" title="@{repeating_buff_$X_buff-STR_skills_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="strength-calculation-skills-abbrv">STR_skills calc</span></label>
 								<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_buff-STR_skills" title="@{repeating_buff_$X_buff-STR_skills}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="strength-skills-abbrv">STR_skills</span></label>
 							</div>
-
 							<input class="sheet-nextitem-show" type="checkbox" name="attr_buff-DEX-show" value="1" />
 							<div class="sheet-linked-fields sheet-nextitem">
 								<input type="checkbox" name="attr_buff-DEX_error" class="sheet-error-mshow" value="1" />
@@ -1166,6 +1165,7 @@
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 										<span class="sheet-table-header" data-i18n="notes">Notes</span>
+										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>									
 									<div class="sheet-table-row">
@@ -1209,6 +1209,7 @@
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
 										</span>
+										<span class="sheet-table-cell" style="vertical-align: top;"><button data-i18n-title="init-speed-title" title="%{init-speed-info} Post initiative and speed information." type="roll" name="roll_init-speed-info" value="@{init_speed-macro-text}" style="height: 1.85em ; margin-top: 2px" class="btn ui-draggable">&nbsp;<span data-i18n="information-abbrv" style="vertical-align: middle">Info</span>&nbsp;</button></span>										
 										<span class="sheet-table-cell sheet-table-rightcell sheet-hide-readonly"></span>
 									</div>									
 								</div>
@@ -1896,10 +1897,6 @@
 								<input type="number" name="attr_sanity_threshold_misc-mod" title="@{sanity_threshold_misc-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
 								<br/><span data-i18n="modifier-abbrv">Mod</span>
 							</div>
-							<div class="sheet-table-cell sheet-small-label">
-								<input type="number" name="attr_sanity_score sheet-narrow-numbers" title="This is old sanity damage field. copy this to the new sanity damage field at left. it is invalid and this field will disappear next build." value="0" class="sheet-calc" readonly  />
-								<br/><span>old sanity damage</span>
-							</div>
 							<div class="sheet-table-cell sheet-extra-sect-inverse" style="width:25%;max-width:25%;"></div>
 						</div>
 					</div>
@@ -2207,7 +2204,7 @@
 						</div>
 						<div class="sheet-table-row">
 							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;" data-i18n="damage">Damage</span></span>
-							<span class="sheet-table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="@{buff_DMG-total}+@{condition-Sickened}" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="@{buff_DMG-total}-@{condition-Sickened}" class="sheet-calc sheet-number" disabled /></span>
 							<span class="sheet-divider">=</span>
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-divider"></span>
