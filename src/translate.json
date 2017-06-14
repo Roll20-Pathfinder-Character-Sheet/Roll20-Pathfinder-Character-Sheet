@@ -1,5 +1,6 @@
 {
-	"old-sanity": "Old Sanity Damage",
+	"acp-verysmall-abbrv": "A",
+	"madnesss-and-effects": "Madnesses and effects",
 	"information-abbrv": "Info",
 	"init-speed-info": "Initiative and Speed Info",
 	"init-speed-title": "%{init-speed-info} Post initiative and speed information.",
