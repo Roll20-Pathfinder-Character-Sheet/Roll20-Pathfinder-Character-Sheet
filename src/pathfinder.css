@@ -3010,33 +3010,37 @@ input[type="text"].sheet-skill-conds {
 	width:4.5em;
 	text-align:center;
 }
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(2),
+/*
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(5),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(14),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(5),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(14)
+*/
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(7),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(8),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(9),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(10),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(15),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(2),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row + .sheet-table-cell + .sheet-table-cell,
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(2),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(8),
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(9),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(10),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(15){
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(10) {
 	display: none;
 }
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(3), 
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(3),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(3), 
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(3) {
+.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(6), 
+.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(6),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(6), 
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(6) {
 	width:12em;
 	max-width:12em;
 }
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(4), 
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(4),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(4), 
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(4) {
-	width:4em;
-	max-width:4em;
+
+.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(2), 
+.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(2),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(2),
+.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(2) {
+	width:14em;
+    min-width:14em;
 }
 
 /********************************************** Roll Templates ***************************************************************************/
@@ -4524,25 +4528,18 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-divider,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(7),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(8),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(9),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(10),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(11),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(12),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(13),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(15),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(17),
-
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(8),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(9),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(10),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(11),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(12),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(13),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(15),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(17),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills-key {
     display: none;
 }
