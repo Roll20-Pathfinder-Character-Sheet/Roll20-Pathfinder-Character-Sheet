@@ -644,21 +644,23 @@ export function recalculateSkills (callback, silently, onlySkills) {
 		}
 	});
 }
-export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
+export var recalculateAbilityBasedSkills = TAS.callback(function callrecalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
 	var done=function(){
 		if (typeof callback === "function"){ callback();}
 	},
 	updatedAttr = '',tempstr='',matches,fields;
 	if(eventInfo){
-		tempstr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+		tempstr = eventInfo.sourceAttribute;
 	} else if(abilityBuff) {
 		tempstr = abilityBuff;
 	}
 	if(tempstr){
 		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
 		if(matches){
-			updatedAttr=matches[0].toUpperCase+'-mod';
-		}		
+			TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
+			updatedAttr=matches[0].toUpperCase()+'-mod';
+		}
+		TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
 	}
 	if(!updatedAttr){
 		done();
@@ -667,11 +669,14 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	fields = allTheSkills.map(function(skill){
 		return skill+'-ability';
 	});
+	TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
 	getAttrs(fields,function(v){
 		var skillArray=[];
+		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",v);
 		skillArray = _.reduce(v,function(m,val,field){
 			if(val===updatedAttr){
-				m.push(field);
+				TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
+				m.push(field.slice(0,-8));
 			}
 			return m;
 		},[]);
@@ -682,7 +687,7 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 			done();
 		}
 	});
-}
+});
 /** updates the macros for only the 7 subskill rolltemplates 
  * @param {boolean} background -if background skills turned on
  * @param {boolean} rt - if Enforce Requires Training checked 
