@@ -335,13 +335,13 @@ function recalcDropdowns (callback, silently, oldversion) {
 }
 
 var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
-    var done = function(){
+    var done = _.once(function(){
         if (typeof callback === "function"){
             callback();
         }
-    }, 
+    }), 
     updatedGroup = _.after(4,function(){
-        setAttrs({'migrated_ability_dropdowns':1},PFConst.silentParams,callback);
+        setAttrs({'migrated_ability_dropdowns2':1},PFConst.silentParams,done);
     }),
 	updateRepeatingAttackTypes = function(){
 		var sections,doneOneSection;
@@ -472,14 +472,20 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
         getAttrs(fields,function(v){
             var setter={};
 			try{
-				TAS.debug("updateSkills getting:",v);
+				TAS.debug("updateSkills getting:",fields,v);
 				setter = Object.keys(v).reduce(function(m,a){
 					var tempstr='';
 					if (v[a] ){
-						tempstr=v[a].replace('@{','').replace('}','');
-						if (tempstr!==v[a]){
-							m[a]=tempstr;
-						}
+						//if(v[a].indexOf('@{')>=0){
+							tempstr=v[a].replace('@{','').replace('}','');
+							if (tempstr!==v[a]){
+								m[a]=tempstr;
+							}
+						//} else {
+						//	m[a]='';
+						//}
+					//} else {
+					//	m[a]='';
 					}
 					return m;
 				},{});
@@ -495,11 +501,11 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 			}
         });
     };
-    getAttrs(['migrated_ability_dropdowns'],function(v){
+    getAttrs(['migrated_ability_dropdowns2'],function(v){
         var setter={};
 		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
 		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
-        if(!parseInt(v.migrated_ability_dropdowns,10)){
+        if(!parseInt(v.migrated_ability_dropdowns2,10)){
             updateRepeating();
             updateNonRepeating();
 			updateRepeatingAttackTypes();
@@ -616,17 +622,15 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.56){
 				PFAttacks.updateRepeatingWeaponDamages();
 			}
-			if (oldversion < 1.61){
-				PFBuffs.migrate(null,oldversion);
-				migrateDropdowns();
-			}
-			if (oldversion < 1.62){
-				PFSkills.migrate(function(){
-					PFSkills.recalculateSkills();
+			if (oldversion < 1.63){
+				migrateDropdowns(function(){
+					PFBuffs.migrate(null,oldversion);
+					PFSkills.migrate(function(){
+						PFSkills.recalculateSkills();
+					});
 				});
 			}
 		}
-
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
 		errorDone();

@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.62,
+	version: 1.63,
 
 
 	/***************************************Lists of Fields ************************************************************/

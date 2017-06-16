@@ -672,7 +672,7 @@ export var recalculateAbilityBasedSkills = TAS.callback(function callrecalculate
 	TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
 	getAttrs(fields,function(v){
 		var skillArray=[];
-		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",v);
+		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
 		skillArray = _.reduce(v,function(m,val,field){
 			if(val===updatedAttr){
 				TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
