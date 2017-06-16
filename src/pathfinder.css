@@ -971,6 +971,27 @@ input.sheet-tabinput {
     width: 10%;
     margin-right: -10%;
 }
+.sheet-buffnav2 ~ .sheet-tab {
+    width: 7%;
+}
+.sheet-buffnav2 ~ .sheet-tabinput {
+    width: 7%;
+    margin-right: -7%;
+}
+.sheet-buffnav2 ~ .sheet-tab.sheet-wider-tab {
+    width: 10%;
+}
+.sheet-buffnav2 ~ .sheet-tabinput.sheet-wider-tab {
+    width: 10%;
+    margin-right: -10%;
+}
+.sheet-buffnav2 ~ .sheet-tab.sheet-narrow-tab {
+    width: 4%;
+}
+.sheet-buffnav2 ~ .sheet-tabinput.sheet-narrow-tab {
+    width: 4%;
+    margin-right: -4%;
+}
 
 .sheet-buffsnav ~ .sheet-tab {
     width: 10%;
@@ -4663,8 +4684,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
-.sheet-bonustype-show:not(:checked) ~ .sheet-sect-buff.sheet-newbuff,
-.sheet-bonustype-show:checked ~ .sheet-sect-buff.sheet-oldbuff,
+.sheet-bonustype-show:not(:checked) ~ .sheet-newbuff,
+.sheet-bonustype-show:checked ~ .sheet-oldbuff,
 .sheet-wounds-show:not(:checked) ~ .sheet-wound-threshold,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advanced-macros,
 .sheet-advanced-macro-show:not(:checked) ~ .sheet-main .sheet-advmacro-text-showlabel,
