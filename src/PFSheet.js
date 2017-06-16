@@ -351,12 +351,12 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 			return;
 		}
 		doneOneSection = _.after(_.size(sections),updatedGroup);
-		TAS.debug("the sections are ",sections);
+		//TAS.debug("the sections are ",sections);
 		sections.forEach(function(section){
 			getSectionIDs('repeating_'+section,function(ids){
 				var fields, attr='';
 				if(!ids || _.size(ids)===0){
-					TAS.warn("migrate repeating attackDropdowns, there are no rows for "+ section);
+					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for "+ section);
 					doneOneSection();
 					return;
 				}
@@ -364,9 +364,8 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
 				getAttrs(fields,function(v){
 					var setter, tempstr='';
-					TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
 					setter = Object.keys(v).reduce(function(m,a){
-						//var a = 'repeating_'+section+'_'+id+attr;
 						try{
 							if (v[a] && v[a][0]!=="0"){
 								tempstr=v[a].replace('@{','').replace('}','');
@@ -401,7 +400,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
             getAttrs(fields,function(v){
                 var setter;
 				try {
-					TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
+					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
 					setter = Object.keys(v).reduce(function(m,a){
 						var tempstr='';
 						if (v[a] && v[a]!=="0"){
@@ -430,8 +429,8 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
         getAttrs(fields,function(v){
             var setter={};
 			try{
-				TAS.debug("migrateAbilityDropdowns getting:",v);
-				setter = Object.keys(PFConst.abilityScoreManualDropdowns).reduce(function(m,a){
+				//TAS.debug("migrateAbilityDropdowns getting:",v);
+				setter =fields.reduce(function(m,a){
 					var tempstr='';
 					if (v[a] && v[a]!=="0"){
 						switch(a){
@@ -472,22 +471,47 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
         getAttrs(fields,function(v){
             var setter={};
 			try{
-				TAS.debug("updateSkills getting:",fields,v);
-				setter = Object.keys(v).reduce(function(m,a){
-					var tempstr='';
-					if (v[a] ){
-						//if(v[a].indexOf('@{')>=0){
+				//TAS.debug("updateSkills getting:",fields,v);
+				setter = fields.reduce(function(m,a){
+					var tempstr='',tempskill='',matches,tempmatch='';
+					try {
+						if (v[a] && v[a].indexOf('@{')>=0){
 							tempstr=v[a].replace('@{','').replace('}','');
-							if (tempstr!==v[a]){
-								m[a]=tempstr;
+						} else if ( !(/misc/i).test(a) && ( !v[a] ||  PFAbilityScores.abilitymods.indexOf(v[a])<0)){
+							matches = a.match(/Perform|Profession|Craft|Lore|Artistry|Knowledge/i);
+							if(matches){
+								switch(matches[0]){
+									case 'Perform':
+										tempstr='CHA-mod';
+										break;
+									case 'Craft':
+									case 'Knowledge':
+									case 'Profession':
+									case 'Artistry':
+									case 'Lore':
+										tempstr='INT-mod';
+										break;
+								}
 							}
-						//} else {
-						//	m[a]='';
-						//}
-					//} else {
-					//	m[a]='';
+							if (!tempstr){
+								tempskill=a.slice(0,-8);
+								tempstr=PFSkills.coreSkillAbilityDefaults[tempskill];
+								if (!tempstr) {
+									tempstr = PFSkills.consolidatedSkillAbilityDefaults[tempskill];
+								}
+								if(tempstr){
+									tempstr=tempstr.toUpperCase()+'-mod';
+								}
+							}
+						}
+						if (tempstr && tempstr!==v[a]){
+							m[a]=tempstr;
+						}
+					} catch (skillerri) {
+						TAS.error("Migrate Skill dropdowns error skillerri on "+a,skillerri);
+					} finally {
+						return m;
 					}
-					return m;
 				},{});
 			} catch (err){
 				TAS.error("PFSheet.migrate Skills dropdowns ",err);
@@ -496,6 +520,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 					TAS.debug("Migrate skill dropdowns setting:",setter);
 					setAttrs(setter,PFConst.silentParams,updatedGroup);
 				} else {
+					TAS.error("Migrate skill dropdowns, there was nothing to set!");
 					updatedGroup();
 				}
 			}
@@ -503,8 +528,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
     };
     getAttrs(['migrated_ability_dropdowns2'],function(v){
         var setter={};
-		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-		"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
+		//TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
         if(!parseInt(v.migrated_ability_dropdowns2,10)){
             updateRepeating();
             updateNonRepeating();

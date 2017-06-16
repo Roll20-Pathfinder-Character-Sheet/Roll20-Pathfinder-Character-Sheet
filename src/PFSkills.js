@@ -101,6 +101,20 @@ coreSkillAbilityDefaults = {
 	"Swim": "str",
 	"Use-Magic-Device": "cha"
 },
+consolidatedSkillAbilityDefaults = {
+	"CS-Acrobatics": "dex",
+	"CS-Athletics": "str",
+	"CS-Finesse": "dex",
+	"CS-Influence": "cha",
+	"CS-Nature": "int",
+	"CS-Perception": "wis",
+	"CS-Performance": "cha",
+	"CS-Religion": "int",
+	"CS-Society": "int",
+	"CS-Spellcraft": "int",
+	"CS-Stealth": "dex",
+	"CS-Survival": "wis"
+},
 defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultSkillMacroMap = {
 	'&{template:':{'current':'pf_generic}'},
@@ -134,7 +148,7 @@ globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_do
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
 	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total'],
-skillNameAppends = ['', '-cs', '-ranks', '-class', '-ability', '-ability-mod', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
+skillNameAppends = ['', '-cs', '-ranks', '-class', '-ability', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
 events = {
 	skillGlobalEventAuto: "change:phys-skills-cond change:acp", //checks-cond
 	skillEventsAuto: "change:REPLACE-ability-mod change:REPLACE-misc-mod",
