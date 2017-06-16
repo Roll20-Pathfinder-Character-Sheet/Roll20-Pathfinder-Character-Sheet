@@ -1296,16 +1296,31 @@ function registerEventHandlers () {
 	on('change:repeating_buff2:enable_toggle',TAS.callback(function PFBuffs_enabletoggle(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			getAttrs(['repeating_buff2_b1_bonus','repeating_buff2_b2_bonus','repeating_buff2_b3_bonus',
-				'repeating_buff2_b4_bonus','repeating_buff2_b5_bonus','repeating_buff2_b6_bonus'],function(v){
-					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
-					_.each(v,function(bonus,field){
-						if(bonus){
-							updateBuffTotalAsync2(bonus);
-						}
-					});
+				'repeating_buff2_b4_bonus','repeating_buff2_b5_bonus','repeating_buff2_b6_bonus',
+				'repeating_buff2_enable_toggle','repeating_buff2_tabcat2'],function(v){
+				var setter={};
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
+				_.each(v,function(bonus,field){
+					if(bonus){
+						updateBuffTotalAsync2(bonus);
+					}
 				});
+				setter['repeating_buff2_tabcat2']=v.repeating_buff2_enable_toggle||'0';
+				SWUtils.setWrapper(setter,PFConst.silentParams);
+			});
 		}
 	}));
+	on("change:repeating_buff2:bufftype", TAS.callback(function eventBuff2Type(eventInfo){
+		var setter={};
+		if (eventInfo.sourceType === "player") {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			getAttrs(['buffs_tab','repeating_buff2_bufftype','repeating_buff2_tabcat'],function(v){
+				setter['buffs_tab'] = v.repeating_buff2_bufftype||'99';
+				setter['repeating_buff2_tabcat']=v.repeating_buff2_bufftype||'-1';
+				SWUtils.setWrapper(setter,PFConst.silentParams);
+			});
+		}
+	}));	
 	on("remove:repeating_buff2", TAS.callback(function PFBuffs_removeBuffRow(eventInfo) {
 		TAS.debug("caught remove " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
