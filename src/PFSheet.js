@@ -624,6 +624,7 @@ function upgrade (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.63){
 				migrateDropdowns(function(){
+					PFSkills.migrate();
 					PFBuffs.migrate(null,oldversion);
 					PFSkills.migrate(function(){
 						PFSkills.recalculateSkills();
@@ -815,11 +816,11 @@ function checkForUpdate () {
 			newSheet=true;
 		}
 		//force this on sheet open, not sure wtf is wrong
-		PFSkills.migrate();
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
 		if (newSheet) {
+			PFSkills.migrate();
 			setupNewSheet(done);
 		} else if (migrateSheet){
 			upgrade(currVer, setUpgradeFinished, errorDone);
