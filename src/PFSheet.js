@@ -613,6 +613,9 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFAttacks.recalculate();
 				PFSkills.migrate();
 			}
+			if (oldversion < 1.56){
+				PFAttacks.updateRepeatingWeaponDamages();
+			}
 			if (oldversion < 1.61){
 				PFBuffs.migrate(null,oldversion);
 				migrateDropdowns();
@@ -622,7 +625,6 @@ function upgrade (oldversion, callback, errorCallback) {
 					PFSkills.recalculateSkills();
 				});
 			}
-
 		}
 
 	} catch (err) {
