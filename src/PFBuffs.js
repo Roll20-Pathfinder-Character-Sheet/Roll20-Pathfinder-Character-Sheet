@@ -1297,12 +1297,14 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			getAttrs(['repeating_buff2_b1_bonus','repeating_buff2_b2_bonus','repeating_buff2_b3_bonus',
 				'repeating_buff2_b4_bonus','repeating_buff2_b5_bonus','repeating_buff2_b6_bonus',
+				'repeating_buff2_b1-show','repeating_buff2_b2-show','repeating_buff2_b3-show',
+				'repeating_buff2_b4-show','repeating_buff2_b5-show','repeating_buff2_b6-show',				
 				'repeating_buff2_enable_toggle','repeating_buff2_tabcat2'],function(v){
 				var setter={};
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType,v);
-				_.each(v,function(bonus,field){
-					if(bonus){
-						updateBuffTotalAsync2(bonus);
+				buffsPerRow.forEach(function(b){
+					if(v['repeating_buff2_'+b+'_bonus'] && parseInt(v['repeating_buff2_'+b+'-show'],10)){
+						updateBuffTotalAsync2(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
 				setter['repeating_buff2_tabcat2']=v.repeating_buff2_enable_toggle||'0';
