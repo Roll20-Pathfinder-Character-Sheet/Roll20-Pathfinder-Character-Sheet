@@ -926,6 +926,26 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1_macro-text']='min(5,1+floor((@{class-0-level}-1)/6))';//+2, +3 at 11
 			setter[prefix+'b1_val']=1;
 			break;
+		case 'shield':
+			setter[prefix+'name']='Shield';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='shield';
+			setter[prefix+'b1_bonustype']='shield';
+			setter[prefix+'b1_macro-text']='4';//+2, +3 at 11
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'notes']='It negates magic missile attacks directed at you. This bonus applies against incorporeal touch attacks, since it is a force effect. The shield has no armor check penalty or arcane spell failure chance.';
+			break;
+		case 'magearmor':
+			setter[prefix+'name']='Mage Armor';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='armor';
+			setter[prefix+'b1_bonustype']='armor';
+			setter[prefix+'b1_macro-text']='4';//+2, +3 at 11
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'notes']='entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can\'t bypass it the way they do normal armor.';
+			break;
 
 	}
 	if(_.size(setter)){
