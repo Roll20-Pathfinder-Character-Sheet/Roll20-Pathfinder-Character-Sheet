@@ -1084,6 +1084,182 @@ function reEvaluateCustomMacros(callback,silently){
 	});
 }
 
+
+export function addCommonBuff(name,callback){
+	var done=function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	},
+	id,prefix='',setter={};
+	if(!name){
+		return;
+	}
+	id = generateRowID();
+	prefix = 'repeating_buff2_'+id+'_';
+	switch(name){
+		case 'rage':
+			setter[prefix+'name']='Rage';
+			setter[prefix+'bufftype']='class';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='str';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='4+(2*floor((@{class-0-level}-1)/10))';//+, +6 at 11
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='con';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='4+(2*floor((@{class-0-level}-1)/10))';
+			setter[prefix+'b2_val']=4;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ac';
+			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_macro-text']='-3';
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='will';
+			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_macro-text']='2';
+			break;
+		case 'unchainedrage':
+			setter[prefix+'name']='Rage';
+			setter[prefix+'bufftype']='class';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='melee';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='2+(floor((@{class-0-level}-1)/10))';//+2, +3 at 11
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg_melee';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='2+(floor((@{class-0-level}-1)/10))';
+			setter[prefix+'b2_val']=4;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ac';
+			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_macro-text']='-3';
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='will';
+			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'b5-show']=1;
+			setter[prefix+'b5_bonus']='temphp';
+			setter[prefix+'b5_bonustype']='morale';
+			setter[prefix+'b5_macro-text']='2*@{level}';
+			break;
+		case 'giant':
+			setter[prefix+'name']='Giant';
+			setter[prefix+'bufftype']='template';
+			setter[prefix+'enabled_toggle']=1;
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='size';
+			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='natural';
+			setter[prefix+'b2_bonustype']='size';
+			setter[prefix+'b2_macro-text']='3';
+			setter[prefix+'b2_val']=3;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='str';
+			setter[prefix+'b3_bonustype']='size';
+			setter[prefix+'b3_macro-text']='4';
+			setter[prefix+'b3_val']=4;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='con';
+			setter[prefix+'b4_bonustype']='size';
+			setter[prefix+'b4_macro-text']='4';
+			setter[prefix+'b4_val']=4;
+			setter[prefix+'b5-show']=1;
+			setter[prefix+'b5_bonus']='dex';
+			setter[prefix+'b5_bonustype']='size';
+			setter[prefix+'b5_macro-text']='-2';
+			setter[prefix+'b5_val']=-2;
+			break;
+		case 'young':
+			setter[prefix+'name']='Young';
+			setter[prefix+'bufftype']='template';
+			setter[prefix+'enabled_toggle']=1;
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='size';
+			setter[prefix+'b1_macro-text']='-1';//+2, +3 at 11
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='natural';
+			setter[prefix+'b2_bonustype']='size';
+			setter[prefix+'b2_macro-text']='-2';
+			setter[prefix+'b2_val']=-2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='str';
+			setter[prefix+'b3_bonustype']='size';
+			setter[prefix+'b3_macro-text']='-4';
+			setter[prefix+'b3_val']=-4;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='con';
+			setter[prefix+'b4_bonustype']='size';
+			setter[prefix+'b4_macro-text']='-4';
+			setter[prefix+'b4_val']=-4;
+			setter[prefix+'b5-show']=1;
+			setter[prefix+'b5_bonus']='dex';
+			setter[prefix+'b5_bonustype']='size';
+			setter[prefix+'b5_macro-text']='4';
+			setter[prefix+'b5_val']=4;
+			break;
+		case 'prayer':
+			setter[prefix+'name']='Prayer';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='luck';
+			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='luck';
+			setter[prefix+'b2_macro-text']='1';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_bonustype']='luck';
+			setter[prefix+'b3_macro-text']='1';
+			setter[prefix+'b3_val']=1;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='check_skills';
+			setter[prefix+'b4_bonustype']='luck';
+			setter[prefix+'b4_macro-text']='1';
+			setter[prefix+'b4_val']=1;
+			break;
+		case 'haste':
+			setter[prefix+'name']='Haste';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='untyped';
+			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='ac';
+			setter[prefix+'b2_bonustype']='dodge';
+			setter[prefix+'b2_macro-text']='1';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ref';
+			setter[prefix+'b3_bonustype']='dodge';
+			setter[prefix+'b3_macro-text']='1';
+			setter[prefix+'b3_val']=1;
+			break;
+			
+
+	}
+	if(_.size(setter)){
+		SWUtils.setWrapper(setter,PFConst.silentParams,done);
+	} else {
+		done();
+	}
+
+}
+
+
+
 export function migrate (outerCallback) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffs.migrate");
