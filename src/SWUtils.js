@@ -3,6 +3,15 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
+TAS.config({
+ logging: {
+   info: process.env.NODE_ENV !== 'production',
+   debug: process.env.NODE_ENV !== 'production'
+ }
+});
+if (process.env.NODE_ENV !== 'production') {
+  TAS.debugMode();
+}
 
 export var setWrapper = TAS.callback(function callSetAttrs(a,b,c){
 	var bad=false;
