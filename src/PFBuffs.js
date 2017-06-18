@@ -65,6 +65,7 @@ buffToTot = {
 	'wis':'WIS',
 	'wis_skills':'WIS_skills'},
 totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort();
+
 var otherCharBonuses ={
 	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
 	'dex':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
@@ -197,6 +198,10 @@ events = {
 		"size": [PFSize.updateSizeAsync]
 	}
 };
+
+
+
+
 
 function clearBuffTotals (callback,silently){
 	var done=function(){
@@ -720,6 +725,70 @@ function reEvaluateCustomMacros(callback,silently){
 			//what to do? just quit
 			done();
 		}
+	});
+}
+
+function mergeOldIntoNewBuffs(callback){
+	var done = function(){
+		//set checkbox
+		if(typeof callback === "function"){
+			callback();
+		}
+	};
+	PFBuffsOld.getAllRowAttrs(function(ids,v){
+		var setter={};
+		if(!ids ||!v){
+			done();
+			return;
+		}
+		ids.forEach(function(id){
+			var prefix = 'repeating_buff_'+id+'_',
+			newId=generateRowID(),
+			newprefix='repeating_buff2_'+newId+'_',
+			buffCounter=0,
+			buffprefix=newprefix+'b',
+			doneAttacks=0,
+			doneAC=0,
+			doneSaves=0;
+			if(v[prefix+'buff-CMD_macro-text']){
+				if( v[prefix+'buff-AC_macro-text']===v[prefix+'buff-CMD_macro-text']){
+					buffCounter++;
+					buffprefix = buffprefix + buffCounter + '_';
+					setter[buffprefix+'macro-text']= v[prefix+'buff-AC_macro-text'];
+					setter[buffprefix+'val']=v[prefix+'buff-AC'];
+					setter[buffprefix+'bonus']='ac';
+					setter[buffprefix+'bonustype']='untyped';
+					doneAC=1;
+				}
+			}
+			if(v[prefix+'buff-Melee_macro-text']){
+				if(v[prefix+'buff-Melee_macro-text']===v[prefix+'buff-Ranged_macro-text']){
+					buffCounter++;
+					buffprefix = buffprefix + buffCounter + '_';
+					setter[buffprefix+'macro-text']= v[prefix+'buff-Melee_macro-text'];
+					setter[buffprefix+'val']=v[prefix+'buff-Melee'];
+					setter[buffprefix+'bonus']='attack';
+					setter[buffprefix+'bonustype']='untyped';
+					doneAttacks=1;
+				}
+			}
+			if(v[prefix+'buff-Fort_macro-text']){
+				if(v[prefix+'buff-Fort_macro-text']===v[prefix+'buff-Ref_macro-text'] && 
+				v[prefix+'buff-Fort_macro-text']===v[prefix+'buff-Will_macro-text']){
+					buffCounter++;
+					buffprefix = buffprefix + buffCounter + '_';
+					setter[buffprefix+'macro-text']= v[prefix+'buff-Melee_macro-text'];
+					setter[buffprefix+'val']=v[prefix+'buff-Melee'];
+					setter[buffprefix+'bonus']='saves';
+					setter[buffprefix+'bonustype']='untyped';
+					doneSaves=1;
+				}
+			}
+			
+			PFBuffsOld.buffColumns.forEach(function(buff){
+
+			});
+		});
 	});
 }
 

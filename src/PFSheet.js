@@ -261,8 +261,8 @@ function expandAll  () {
 }
 
 /** Sets any values if sheet created brand new. Makes sure all migrations up to date.
-* makes sure NPC value set. 
-*/
+ * makes sure NPC value set. 
+ */
 function setupNewSheet (callback){
 	var done = _.once(function(){
 		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
@@ -339,7 +339,7 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
         if (typeof callback === "function"){
             callback();
         }
-    }), 
+    }),
     updatedGroup = _.after(4,function(){
         setAttrs({'migrated_ability_dropdowns2':1},PFConst.silentParams,done);
     }),
@@ -432,25 +432,30 @@ var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual
 				//TAS.debug("migrateAbilityDropdowns getting:",v);
 				setter =fields.reduce(function(m,a){
 					var tempstr='';
-					if (v[a] && v[a]!=="0"){
+					if (v[a]){
 						switch(a){
-							case 'AC-ability':
+							case 'concentration-0-ability':
+							case 'concentration-1-ability':
+							case 'concentration-2-ability':
 							case 'FF-ability':
 							case 'CMD-ability':
-							case 'CMD-ability1':
-							case 'CMD-ability2':
+							case 'sanity-ability':
 							case 'selected-ability-psionic-power':
+							case 'melee2-ability':
+							case 'ranged2-ability':
+							case 'cmb2-ability':
 								tempstr=PFUtils.findAbilityInString(v[a])||"0";
 								break;
 							default:
-								tempstr=v[a].replace('@{','').replace('}','');
+								tempstr=PFUtils.findAbilityInString(v[a]);
 								break;
 						}
-						if (tempstr!==v[a]){
-							m[a]=tempstr;
-						}
-					} else if (v[a] && v[a][0]==="0" && String(v[a]).length > 1){
-						m[a]="0";
+					}
+					if (!tempstr && PFConst.manualDropdownDefaults[a]){
+						tempstr=PFConst.manualDropdownDefaults[a];
+					}
+					if (tempstr && tempstr!==v[a]){
+						m[a]=tempstr;
 					}
 					return m;
 				},{});
