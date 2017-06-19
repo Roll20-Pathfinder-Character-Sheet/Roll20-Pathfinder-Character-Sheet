@@ -2130,6 +2130,9 @@ input.sheet-highlight[readonly]
 .sheet-nontable-repeating .sheet-linked-fields {
     vertical-align: top;
 }
+.sheet-linked-fields.sheet-use-size {
+    max-height:3.6em;
+}
 .sheet-small-label2 span:not(.sheet-autoexpand) {
     padding: 0 .07em 0 .07em;
     text-align: center;
@@ -2886,7 +2889,7 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-subsect-show:not(:checked) ~ div .sheet-sect,
 .sheet-subsect2-show:not(:checked) ~ div .sheet-sect2,
 .sheet-subsect3-show:not(:checked) ~ div .sheet-sect3,
-.sheet-deletesect-show:not(:checked) ~ .sheet-deletesect,
+.sheet-deletesect-show:not(:checked) + span + .sheet-deletesect,
 .sheet-extra-show:not(:checked) ~ .sheet-extra-sect,
 .sheet-extra-show:not(:checked) ~ div .sheet-extra-sect,
 .sheet-extra-show:checked ~ .sheet-extra-sect-inverse,
@@ -4681,7 +4684,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
-.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header.sheet-super:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
 .sheet-bonustype-show:not(:checked) ~ .sheet-newbuff,
