@@ -4684,7 +4684,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-ability-scores .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
-.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header:last-child,
+.sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group-head .sheet-table-header.sheet-super:last-child,
 .sheet-all-macro-text-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-table .sheet-table-group .sheet-table-cell:last-child,
 
 .sheet-bonustype-show:not(:checked) ~ .sheet-newbuff,

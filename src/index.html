@@ -253,7 +253,7 @@
 								<h3 class="sheet-offscreen">Buff <span name="attr_name"></span></h3>
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<label class="sheet-small-label2" data-i18n-title="toggle-buff" data-i18n-aria-label="toggle-buff" title="When checked, this buff is active and will count towards the totals, which will then affect the rest of the sheet. Also, only the visible/selected buffs will count towards the totals.">
-									<input type="checkbox" name="attr_enable_toggle" title="@{repeating_buff_$X_enable_toggle}" value="1" />
+									<input type="checkbox" name="attr_enable_toggle" title="@{repeating_buff2_$X_enable_toggle}" value="1" />
 									<span data-i18n="enabled-chkbox">Enabled</span>
 								</label>
 								<label class="sheet-small-label2 sheet-entry-25p-shrink"><input type="text" name="attr_name" title="@{repeating_buff2_$X_name}" placeholder="Name" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
@@ -319,7 +319,7 @@
 									</label>
 									<input type="checkbox" name="attr_b1_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b1_bonustype" title="repeating_buff2_$x_b1_bonustype">
+										<select class="sheet-select-small" name="attr_b1_bonustype" title="repeating_buff2_$X_b1_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -342,14 +342,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b1_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b1_macro-text" title="@{repeating_buff2_$x_b1_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b1 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b1_val" title="@{repeating_buff2_$x_b1_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b1</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b1_macro-text" title="@{repeating_buff2_$X_b1_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b1 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b1_val" title="@{repeating_buff2_$X_b1_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b1</span></label>
 								</div>
 
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b2-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b2_bonus" title="repeating_buff2_$x_b2_bonus">
+										<select class="sheet-select-small" name="attr_b2_bonus" title="repeating_buff2_$X_b2_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
@@ -394,7 +394,7 @@
 									</label>
 									<input type="checkbox" name="attr_b2_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b2_bonustype" title="repeating_buff2_$x_b2_bonustype">
+										<select class="sheet-select-small" name="attr_b2_bonustype" title="repeating_buff2_$X_b2_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -417,14 +417,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b2_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b2_macro-text" title="@{repeating_buff2_$x_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b2 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b2_val" title="@{repeating_buff2_$x_b2_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b2</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b2_macro-text" title="@{repeating_buff2_$X_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b2 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b2_val" title="@{repeating_buff2_$X_b2_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b2</span></label>
 								</div>
 
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b3-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b3_bonus" title="repeating_buff2_$x_b3_bonus">
+										<select class="sheet-select-small" name="attr_b3_bonus" title="repeating_buff2_$X_b3_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
@@ -469,7 +469,7 @@
 									</label>
 									<input type="checkbox" name="attr_b3_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b3_bonustype" title="repeating_buff2_$x_b3_bonustype">
+										<select class="sheet-select-small" name="attr_b3_bonustype" title="repeating_buff2_$X_b3_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -492,14 +492,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b3_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b3_macro-text" title="@{repeating_buff2_$x_b3_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b3 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b3_val" title="@{repeating_buff2_$x_b3_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b3</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b3_macro-text" title="@{repeating_buff2_$X_b3_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b3 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b3_val" title="@{repeating_buff2_$X_b3_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b3</span></label>
 								</div>
 
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b4-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b4_bonus" title="repeating_buff2_$x_b4_bonus">
+										<select class="sheet-select-small" name="attr_b4_bonus" title="repeating_buff2_$X_b4_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
@@ -544,7 +544,7 @@
 									</label>
 									<input type="checkbox" name="attr_b4_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b4_bonustype" title="repeating_buff2_$x_b4_bonustype">
+										<select class="sheet-select-small" name="attr_b4_bonustype" title="repeating_buff2_$X_b4_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -567,14 +567,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b4_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b4_macro-text" title="@{repeating_buff2_$x_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b4 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b4_val" title="@{repeating_buff2_$x_b4_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b4</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b4_macro-text" title="@{repeating_buff2_$X_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b4 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b4_val" title="@{repeating_buff2_$X_b4_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b4</span></label>
 								</div>
 
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b5-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b5_bonus" title="repeating_buff2_$x_b5_bonus">
+										<select class="sheet-select-small" name="attr_b5_bonus" title="repeating_buff2_$X_b5_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
@@ -619,7 +619,7 @@
 									</label>
 									<input type="checkbox" name="attr_b5_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b5_bonustype" title="repeating_buff2_$x_b5_bonustype">
+										<select class="sheet-select-small" name="attr_b5_bonustype" title="repeating_buff2_$X_b5_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -642,14 +642,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b5_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b5_macro-text" title="@{repeating_buff2_$x_b5_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b5 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b5_val" title="@{repeating_buff2_$x_b5_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b5</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b5_macro-text" title="@{repeating_buff2_$X_b5_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b5 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b5_val" title="@{repeating_buff2_$X_b5_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b5</span></label>
 								</div>
 
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b6-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b6_bonus" title="repeating_buff2_$x_b6_bonus">
+										<select class="sheet-select-small" name="attr_b6_bonus" title="repeating_buff2_$X_b6_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
@@ -694,7 +694,7 @@
 									</label>
 									<input type="checkbox" name="attr_b6_hide" class="sheet-nextitem2-hide sheet-noshow" value="1" />
 									<label class="sheet-small-label2 sheet-nextitem2 sheet-entry-med">
-										<select class="sheet-select-small" name="attr_b6_bonustype" title="repeating_buff2_$x_b6_bonustype">
+										<select class="sheet-select-small" name="attr_b6_bonustype" title="repeating_buff2_$X_b6_bonustype">
 											<option value="untyped" data-i18n="untyped-default" selected >&#8226;Untyped</option>
 											<option value="alchemical" data-i18n="alchemical">Alchemical</option>
 											<option value="circumstance" data-i18n="circumstance">Circumstance</option>
@@ -717,14 +717,14 @@
 										<span data-i18n="bonus-type">Bonus Type</span>
 									</label>
 									<input type="checkbox" name="attr_b6_val_error" class="sheet-error-mshow" value="1" />
-									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b6_macro-text" title="@{repeating_buff2_$x_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b6 calc</span></label>
-									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b6_val" title="@{repeating_buff2_$x_b6_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b6</span></label>
+									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b6_macro-text" title="@{repeating_buff2_$X_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b6 calc</span></label>
+									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b6_val" title="@{repeating_buff2_$X_b6_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b6</span></label>
 								</div>
 
 								<div class="sheet-sect sheet-expand">
-									<input type="checkbox" class="sheet-showarrow sheet-options-show" title="@{repeating_buff2_$x_options-show}" name="attr_options-show" value="1" checked />
+									<input type="checkbox" class="sheet-showarrow sheet-options-show" title="@{repeating_buff2_$X_options-show}" name="attr_options-show" value="1" checked />
 									<label class="sheet-showsect sheet-options-showlabel" data-i18n="select-buffs">Select Buffs</label>
-									<input type="checkbox" class="sheet-showarrow sheet-desc-show" title="@{repeating_buff2_$x_description-show}" name="attr_description-show" value="1" />
+									<input type="checkbox" class="sheet-showarrow sheet-desc-show" title="@{repeating_buff2_$X_description-show}" name="attr_description-show" value="1" />
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="notes">Notes</label>
 									<input type="checkbox" class="sheet-showarrow sheet-id-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_ids-show" value="1" />
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
@@ -738,7 +738,7 @@
 										<span data-i18n="buff">Buff</span> 5:<input name="attr_b5-show" type="checkbox" value="1" />&nbsp;&nbsp;
 										<span data-i18n="buff">Buff</span> 6:<input name="attr_b6-show" type="checkbox" value="1" />
 									</div>
-									<textarea class="sheet-desc sheet-half" name="attr_buff-notes" title="@{repeating_buff2_$x_buff-notes}" placeholder="Buff Notes" data-i18n-placeholder="buff-notes"></textarea>
+									<textarea class="sheet-desc sheet-half" name="attr_buff-notes" title="@{repeating_buff2_$X_buff-notes}" placeholder="Buff Notes" data-i18n-placeholder="buff-notes"></textarea>
 									<div class="sheet-repeating-id">
 										<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
 									</div>
@@ -1754,8 +1754,7 @@
 										<span class="sheet-table-cell" style="vertical-align: top;"><button data-i18n-title="init-speed-title" title="%{init-speed-info} Post initiative and speed information." type="roll" name="roll_init-speed-info" value="@{init_speed-macro-text}" style="height: 1.85em ; margin-top: 2px" class="btn ui-draggable">&nbsp;<span style="vertical-align: middle" data-i18n="information-abbrv">Info</span>&nbsp;</button></span>
 										<span class="sheet-table-cell sheet-nowrap" style="padding-left: 0.25em;vertical-align: top;padding-top: .25em;">
 											<input class="sheet-selectedlabel-check" type="checkbox" title="@{toggle_init_notes}" name="attr_toggle_init_notes" value="@{var_init_notes}" checked="checked"><b data-i18n-title="initiative-notes-title" data-i18n-aria-label="initiative-notes-title" data-i18n="include-notes" title="Include initiative notes with roll." aria-label="Include initiative notes with roll.">Include notes in roll</b><br class="sheet-show-readonly sheet-inverse-readonly">
-										</span>
-										<span class="sheet-table-cell" style="vertical-align: top;"><button data-i18n-title="init-speed-title" title="%{init-speed-info} Post initiative and speed information." type="roll" name="roll_init-speed-info" value="@{init_speed-macro-text}" style="height: 1.85em ; margin-top: 2px" class="btn ui-draggable">&nbsp;<span data-i18n="information-abbrv" style="vertical-align: middle">Info</span>&nbsp;</button></span>										
+										</span>										
 										<span class="sheet-table-cell sheet-table-rightcell sheet-hide-readonly"></span>
 									</div>									
 								</div>
@@ -1765,7 +1764,7 @@
 										<label class="sheet-showsect sheet-macro-text-showlabel sheet-hide-readonly sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
 										<input type="checkbox" class="sheet-showarrow sheet-init-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:.25em;">
 										<label class="sheet-showsect sheet-init-notes-showlabel" data-i18n="notes">Notes</label>								
-										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit;">
+										<div class="sheet-macro-text sheet-hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:.25em; background-color:inherit; font-weight:bold;">
 											<span class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</span>
  											<textarea class="sheet-inline-textarea" name="attr_init-macro-text" title="@{init-macro-text}" placeholder="Macro/Query" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options}</textarea>
  											<br>
@@ -2450,7 +2449,7 @@
 					</div>
 					<div class="sheet-linked-custom-notes">
 						<span data-i18n="madnesses">Madnesses:</span>
-						<textarea name="attr_madnesses" class="sheet-inline-textarea sheet-half" data-i18n-placeholder="madnesss-and-effects" placeholder="Madnesses and effects" ></textarea>
+						<textarea name="attr_madnesses" class="sheet-inline-textarea sheet-half" data-i18n-placeholder="madnesses-and-effects" placeholder="Madnesses and effects" ></textarea>
 					</div>
 				</div>
 				<div class="sheet-cheat"></div>
