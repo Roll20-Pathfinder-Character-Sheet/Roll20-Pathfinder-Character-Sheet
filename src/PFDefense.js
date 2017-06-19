@@ -85,6 +85,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         currNoDexLimit = parseInt(v["nodex-toggle"], 10) || 0,
         unlockDefAbility = parseInt(v.unlock_def_ability,10)||0,
         lockDefAbility = unlockDefAbility?0:1,
+        tempint=0,
         ac = 10,
         touch = 10,
         ff = 10,
@@ -133,17 +134,32 @@ export function updateDefenses ( callback, silently, eventInfo) {
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if (acAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                ability = Math.min(ability, maxDex);
-                if (maxDex < ability) {dexModShowLimit = 1; }
+                tempint = Math.min(ability, maxDex);
+                if (tempint !== ability){
+                    ability=tempint;
+                    dexModShowLimit = 1;
+                }
             }
             if (uncannyAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                ffAbility = Math.min(ffAbility, maxDex);
+                tempint = Math.min(ffAbility, maxDex);
+                if (tempint !== ffAbility){
+                    ffAbility=tempint;
+                    dexModShowLimit = 1;
+                }
             }
             if (cmdAbilityDDvalName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                cmdAbility2 = Math.min(cmdAbility2, maxDex);
+                tempint = Math.min(cmdAbility2, maxDex);
+                if (tempint !== cmdAbility2){
+                    cmdAbility2=tempint;
+                    dexModShowLimit = 1;
+                }
             }
             if (uncannyCMDabilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                cmdFFAbility2 = Math.min(cmdFFAbility2, maxDex);
+                tempint = Math.min(cmdFFAbility2, maxDex);
+                if (tempint !== cmdFFAbility2){
+                    cmdFFAbility2=tempint;
+                    dexModShowLimit = 1;
+                }
             }
 
             //if ability is below zero, FF dex adj must be set to negative too
