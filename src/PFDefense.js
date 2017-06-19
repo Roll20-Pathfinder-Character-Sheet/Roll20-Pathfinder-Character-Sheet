@@ -132,12 +132,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             setter.buffsumffcmd = buffffcmd;
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
-            if ((maxDex) < ability) {
-                //assume ability, FF-ability, CMD-ability2 all set the same (or to "none" for ff)
-                dexModShowLimit = 1;
-            }
             if (acAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
                 ability = Math.min(ability, maxDex);
+                if ((maxDex) < ability) {dexModShowLimit = 1; }
             }
             if (uncannyAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
                 ffAbility = Math.min(ffAbility, maxDex);

@@ -436,6 +436,9 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.56){
 				PFAttacks.updateRepeatingWeaponDamages();
 			}
+			if (oldversion < 1.57){
+				PFDefense.updateDefenses();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
