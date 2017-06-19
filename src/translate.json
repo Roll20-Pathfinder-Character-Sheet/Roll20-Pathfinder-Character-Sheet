@@ -141,6 +141,7 @@
 	"mainhand-id": "Mainhand Id",
 	"mainhand-penalty-abbrv": "M.H. Pen",
 	"mainhand-penalty": "Mainhand penalty when dual wielding",
+	"merge-buffs": "Copy old buffs list into new buffs list",
 	"offhand-id": "Offhand Id",
 	"offhand-penalty": "Offhand penalty when dual wielding",
 	"offhand-penalty-abbrv": "O.H. Pen",

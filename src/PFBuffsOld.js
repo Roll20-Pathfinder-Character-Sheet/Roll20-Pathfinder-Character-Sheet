@@ -84,7 +84,7 @@ export function getAllRowAttrs(callback){
 		if(!(ids && _.size(ids))){
 			return callback(null,null);
 		}
-		attrs = SWUtils.cartesianAppend(['_'],buffColumns,['_macro-text','','-show']);
+		attrs = SWUtils.cartesianAppend(['_buff-'],buffColumns,['_macro-text','','-show']);
 		attrs = attrs.concat(['_buff-enable_toggle','_buff-name','_buff-notes']);
 		fields =  SWUtils.cartesianAppend(['repeating_buff_'],ids,attrs );
 		TAS.debug("these are the fields "+fields);

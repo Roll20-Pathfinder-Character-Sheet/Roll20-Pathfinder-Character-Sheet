@@ -208,7 +208,7 @@
 				<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_buff-expand-show" value="1" /><span></span>
 				<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_buff-column-show" value="1" /><span></span>
 				<input class="sheet-deletebutton sheet-oldbuff sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_buff_btn" value="1" data-i18n-title="delete-buff" data-i18n-aria-label="delete-buff-must-confirm-next-checkbox" /><span class="sheet-oldbuff"></span><label class="sheet-deletesect sheet-allrows-note sheet-oldbuff"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-rows-are-you-sure">delete all rows are you sure</b></label>
-				<input class="sheet-deletebutton sheet-newbuff sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_buff2_btn" value="1" data-i18n-title="delete-buff" data-i18n-aria-label="delete-buff-must-confirm-next-checkbox" /><span class="sheet-newbuff"></span><label class="sheet-deletesect sheet-allrows-note sheet-newbuff"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-rows-are-you-sure">delete all rows are you sure</b></label>
+				<input class="sheet-deletebutton sheet-newbuff sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_buff2_btn" value="1" data-i18n-title="delete-buff" data-i18n-aria-label="delete-buff-must-confirm-next-checkbox" /><span class="sheet-newbuff"></span><label class="sheet-deletesect sheet-allrows-note sheet-newbuff"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_buff2" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-rows-are-you-sure">delete all rows are you sure</b></label>
 				<div class="sheet-cheat sheet-newbuff"></div>
 				<div role="menubar" class="sheet-newbuff sheet-buffnav2 sheet-tabs sheet-custbordernav" aria-label="buff menubar"></div>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab0" name="attr_buffs_tab" value="permanent" data-i18n-title="permanent" data-i18n-aria-label="permanent" />
@@ -12429,8 +12429,11 @@
 					<span class="sheet-table-config-row-name"  data-i18n="buffs">Buffs</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
+						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_buffs_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-buffs" data-i18n="merge">Merge</span>
 					</span>
-					<span class="sheet-table-cell sheet-left">&nbsp;</span>
+					<span class="sheet-table-cell sheet-left">
+
+					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name"  data-i18n="spells">Spells</span>
@@ -12449,7 +12452,7 @@
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{use_racial_traits}" name="attr_use_racial_traits" value="1" class="sheet-selectedlabel-check sheet-sect2-show" /><b><span data-i18n="use-racial-traits">Use Separate Racial Traits List</span></b>
-						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_race_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>						
+						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_race_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>
 					</span>
 				</div>
 				<div class="sheet-table-row">
