@@ -721,7 +721,7 @@ function reEvaluateCustomMacros(callback,silently){
 }
 
 function mergeOldIntoNewBuffs(callback){
-	var done = function(){
+	var done = function(failed){
 		//set checkbox
 		SWUtils.setWrapper({'merge_buffs_now':0},PFConst.silentParams,function(){
 			if(typeof callback === "function"){
@@ -729,12 +729,14 @@ function mergeOldIntoNewBuffs(callback){
 			}
 		});
 		//parallel
-		updateAllBuffTotalsAsync();
+		if(!failed){
+			updateAllBuffTotalsAsync();
+		}
 	};
 	PFBuffsOld.getAllRowAttrs(function(ids,v){
 		var setter={};
 		if(!ids ||!v){
-			done();
+			done(1);
 			return;
 		}
 		TAS.debug("OLD BUFFS ARE: ", ids, v);
@@ -746,30 +748,32 @@ function mergeOldIntoNewBuffs(callback){
 			tempprefix='',
 			buffprefix='',
 			newBuffName='',
-			keys=[],
 			buffs=[],
 			doneAttacks=0,
 			doneAC=0,
 			doneSaves=0;
 			try {
-				TAS.debug("at id "+id);
-				keys = Object.keys(v).filter(function(attr){
+				//filter for attribute/ values from v for this id row:
+				//then filter for buffs w macro-text only (to get one val per row, and only where user entered text, cause others there too w/defaults
+				//then get the attr name from the macro text attribute (after id_, before _macro-text)
+				//then filter for buffs where -show is 1
+				buffs = Object.keys(v).filter(function(attr){
 					return (attr.indexOf(prefix)===0);
-				}).sort();
-				TAS.debug("THE ATTRS FOR id "+ id + " ARE ",keys);
-				buffs = keys.filter (function(attr){
+				}).filter (function(attr){
 					return (/\macro\-text/i).test(attr);
 				}).filter(function(macroattr){
 					if(v[macroattr]){
-						TAS.debug(" macro "+macroattr+" is "+ v[macroattr]);
 						return true;
 					}
 					return false;
 				}).map(function(attr){
-					return SWUtils.getAttributeName(attr).slice(5,-11);
+					return SWUtils.getAttributeName(attr).slice(5,-11); //get only the buff name
+				}).filter(function(attr){
+					return ( parseInt(v['repeating_buff_'+id+'_buff-'+attr+'-show'],10) === 1); //only where -show checked
 				});
-				TAS.debug("BUFFS LEFT ON ROW "+id+" are ",buffs);
-				if(buffs && _.size(buffs)){
+				//TAS.debug("BUFFS LEFT ON ROW "+id+" are ",buffs);
+				//if any left then create new buff2 row
+				if (_.size(buffs)) {
 					newId=generateRowID();
 					newprefix='repeating_buff2_'+newId+'_';
 					tempprefix=newprefix+'b';
@@ -778,16 +782,16 @@ function mergeOldIntoNewBuffs(callback){
 					if(v[prefix+'buff-notes']){
 						setter[newprefix+'notes']=v[prefix+'buff-notes'];
 					}
-					//check for combined
+					//check for buffs that should be combined into 1:
 					if(buffs.indexOf('CMD')>=0 && buffs.indexOf('AC')>=0){
-						//if( v[prefix+'buff-AC_macro-text']===v[prefix+'buff-CMD_macro-text']){
-							TAS.debug('both ac and cmd');
+						if( parseInt(v[prefix+'buff-AC'],10)===parseInt(v[prefix+'buff-CMD'],10)){
+							//TAS.debug('both ac and cmd');
 							buffCounter++;
 							buffprefix = tempprefix + buffCounter ;
 							setter[buffprefix+'_macro-text']= v[prefix+'buff-AC_macro-text'];
 							setter[buffprefix+'_val']=v[prefix+'buff-AC'];
 							setter[buffprefix+'_bonus']='ac';
-							if(buffs.indexOf('Touch')){
+							if(buffs.indexOf('Touch') ){
 								setter[buffprefix+'_bonustype']='deflection';
 							} else {
 								setter[buffprefix+'_bonustype']='untyped';
@@ -795,12 +799,12 @@ function mergeOldIntoNewBuffs(callback){
 							setter[buffprefix+'-show']=1;
 							//if flat footed assume uncanny dodge already so will be built in
 							buffs = _.without(buffs,'AC','CMD','flat-footed','Touch');
-						//}
+						}
 					}
 					if(buffs.indexOf('Melee')>=0 && buffs.indexOf('Ranged')>=0){
 						//assume they did not add CMB since it is brand new
-						//if(v[prefix+'buff-Melee_macro-text']===v[prefix+'buff-Ranged_macro-text']){
-							TAS.debug('both melee and ranged');
+						if(parseInt(v[prefix+'buff-Melee'],10)===parseInt(v[prefix+'buff-Ranged'],10)){
+							//TAS.debug('both melee and ranged');
 							buffCounter++;
 							buffprefix = tempprefix + buffCounter;
 							setter[buffprefix+'_macro-text']= v[prefix+'buff-Melee_macro-text'];
@@ -809,12 +813,11 @@ function mergeOldIntoNewBuffs(callback){
 							setter[buffprefix+'_bonustype']='untyped';
 							setter[buffprefix+'-show']=1;
 							buffs = _.without(buffs,'Melee','Ranged','CMB');
-						//}
+						}
 					}
 					if(buffs.indexOf('Fort')>=0 && buffs.indexOf('Will')>=0 && buffs.indexOf('Ref')>=0) {
-						//if(v[prefix+'buff-Fort_macro-text']===v[prefix+'buff-Ref_macro-text'] && 
-						//v[prefix+'buff-Fort_macro-text']===v[prefix+'buff-Will_macro-text']){
-							TAS.debug('all saves');
+						if(parseInt(v[prefix+'buff-Fort'],10)===parseInt(v[prefix+'buff-Will'],10)===parseInt(v[prefix+'buff-Ref'],10)){
+							//TAS.debug('all saves');
 							buffCounter++;
 							buffprefix = tempprefix + buffCounter;
 							setter[buffprefix+'_macro-text']= v[prefix+'buff-Fort_macro-text'];
@@ -823,64 +826,62 @@ function mergeOldIntoNewBuffs(callback){
 							setter[buffprefix+'_bonustype']='untyped';
 							setter[buffprefix+'-show']=1;					
 							buffs = _.without(buffs,'Fort','Will','Ref');
-						//}
+						}
 					}
 					if(buffs.indexOf('Check')>=0 && buffs.indexOf('check_skills')>=0){
-						TAS.debug('both ac and cmd');
-						buffCounter++;
-						buffprefix = tempprefix + buffCounter ;
-						setter[buffprefix+'_macro-text']= v[prefix+'buff-Check_macro-text'];
-						setter[buffprefix+'_val']=v[prefix+'buff-Check'];
-						setter[buffprefix+'_bonus']='check';
-						setter[buffprefix+'_bonustype']='untyped';
-						setter[buffprefix+'-show']=1;
-						buffs = _.without(buffs,'Check','check_skills');
+						if(parseInt(v[prefix+'buff-Check'],10)===parseInt(v[prefix+'buff-check_skills'],10)){
+							//TAS.debug('both Check and check_skills');
+							buffCounter++;
+							buffprefix = tempprefix + buffCounter ;
+							setter[buffprefix+'_macro-text']= v[prefix+'buff-Check_macro-text'];
+							setter[buffprefix+'_val']=v[prefix+'buff-Check'];
+							setter[buffprefix+'_bonus']='check';
+							setter[buffprefix+'_bonustype']='untyped';
+							setter[buffprefix+'-show']=1;
+							buffs = _.without(buffs,'Check','check_skills');
+						}
 					}
 					if(buffs.indexOf('DMG')>=0 && buffs.indexOf('DMG_ranged')>=0){
-						TAS.debug("found all damage");
+						if(parseInt(v[prefix+'buff-DMG'],10)===parseInt(v[prefix+'buff-DMG_ranged'],10)){
+							//TAS.debug("found all damage");
+							buffCounter++;
+							buffprefix = tempprefix + buffCounter ;
+							setter[buffprefix+'_macro-text']= v[prefix+'buff-DMG_macro-text'];
+							setter[buffprefix+'_val']=v[prefix+'buff-DMG'];
+							setter[buffprefix+'_bonus']='dmg';
+							setter[buffprefix+'_bonustype']='untyped';
+							setter[buffprefix+'-show']=1;
+							buffs = _.without(buffs,'DMG','DMG_ranged');						
+						}
+					}
+					//loop through any buffs left
+					buffs.forEach(function(buff){
+						//TAS.debug("adding buff "+buff+" to setter, macro is "+v[prefix+'buff-'+buff+'_macro-text']);
 						buffCounter++;
-						buffprefix = tempprefix + buffCounter ;
-						setter[buffprefix+'_macro-text']= v[prefix+'buff-DMG_macro-text'];
-						setter[buffprefix+'_val']=v[prefix+'buff-DMG'];
-						setter[buffprefix+'_bonus']='dmg';
+						if(buffCounter>6){
+							buffCounter=1;
+							newId=generateRowID();
+							newprefix='repeating_buff2_'+newId+'_';
+							tempprefix=newprefix+'b';
+							setter[newprefix+'enable_toggle']=v[prefix+'buff-enable_toggle'];
+							setter[newprefix+'name']=v[prefix+'buff-name'];
+						}
+						buffprefix = tempprefix + buffCounter;
+						setter[buffprefix+'_macro-text']= v[prefix+'buff-'+buff+'_macro-text'];
+						setter[buffprefix+'_val']=v[prefix+'buff-'+buff]||0;
+						newBuffName=buff.toLowerCase().replace('-','');
+						if(newBuffName==='check'){
+							newBuffName='check_ability';
+						} else if (newBuffName==='dmg'){
+							newBuffName='dmg_melee';
+						}
+						setter[buffprefix+'_bonus']=newBuffName;
 						setter[buffprefix+'_bonustype']='untyped';
 						setter[buffprefix+'-show']=1;
-						buffs = _.without(buffs,'DMG','DMG_ranged');						
-					}
-					if(_.size(buffs)){
-						TAS.debug("BUFFS LEFT ARE: ",buffs);
-						buffs.forEach(function(buff){
-							TAS.debug("adding buff "+buff+" to setter, macro is "+v[prefix+'buff-'+buff+'_macro-text']);
-							if(v[prefix+'buff-'+buff+'_macro-text']){
-								buffCounter++;
-								if(buffCounter>6){
-									buffCounter=1;
-									newId=generateRowID();
-									newprefix='repeating_buff2_'+newId+'_';
-									tempprefix=newprefix+'b';
-									setter[newprefix+'enable_toggle']=v[prefix+'buff-enable_toggle'];
-									setter[newprefix+'name']=v[prefix+'buff-name'];
-								}
-								buffprefix = tempprefix + buffCounter;
-								setter[buffprefix+'_macro-text']= v[prefix+'buff-'+buff+'_macro-text'];
-								setter[buffprefix+'_val']=v[prefix+'buff-'+buff]||0;
-								newBuffName=buff.toLowerCase().replace('-','');
-								if(newBuffName==='check'){
-									newBuffName='check_ability';
-								} else if (newBuffName==='dmg'){
-									newBuffName='dmg_melee';
-								}
-								setter[buffprefix+'_bonus']=newBuffName;
-								setter[buffprefix+'_bonustype']='untyped';
-								setter[buffprefix+'-show']=1;
-							} else {
-								TAS.error("Why cannot find macro for "+buff);
-							}
-						});
-					}
+					});
 				}
 			} catch (erri){
-				TAS.error("Buff copy error",erri);
+				TAS.error("Buff copy error for "+id+" "+ (v['repeating_buff_'+id+'_buff-name']||'') ,erri);
 			} 
 		});
 		if(_.size(setter)){
