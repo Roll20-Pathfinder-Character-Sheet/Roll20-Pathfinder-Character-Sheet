@@ -781,64 +781,6 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b5_bonustype']='morale';
 			setter[prefix+'b5_macro-text']='2*@{level}';
 			break;
-		case 'giant':
-			setter[prefix+'name']='Giant';
-			setter[prefix+'bufftype']='template';
-			setter[prefix+'enabled_toggle']=1;
-			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='size';
-			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
-			setter[prefix+'b1_val']=1;
-			setter[prefix+'b2-show']=1;
-			setter[prefix+'b2_bonus']='natural';
-			setter[prefix+'b2_bonustype']='size';
-			setter[prefix+'b2_macro-text']='3';
-			setter[prefix+'b2_val']=3;
-			setter[prefix+'b3-show']=1;
-			setter[prefix+'b3_bonus']='str';
-			setter[prefix+'b3_bonustype']='size';
-			setter[prefix+'b3_macro-text']='4';
-			setter[prefix+'b3_val']=4;
-			setter[prefix+'b4-show']=1;
-			setter[prefix+'b4_bonus']='con';
-			setter[prefix+'b4_bonustype']='size';
-			setter[prefix+'b4_macro-text']='4';
-			setter[prefix+'b4_val']=4;
-			setter[prefix+'b5-show']=1;
-			setter[prefix+'b5_bonus']='dex';
-			setter[prefix+'b5_bonustype']='size';
-			setter[prefix+'b5_macro-text']='-2';
-			setter[prefix+'b5_val']=-2;
-			break;
-		case 'young':
-			setter[prefix+'name']='Young';
-			setter[prefix+'bufftype']='template';
-			setter[prefix+'enabled_toggle']=1;
-			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='size';
-			setter[prefix+'b1_macro-text']='-1';//+2, +3 at 11
-			setter[prefix+'b1_val']=-1;
-			setter[prefix+'b2-show']=1;
-			setter[prefix+'b2_bonus']='natural';
-			setter[prefix+'b2_bonustype']='size';
-			setter[prefix+'b2_macro-text']='-2';
-			setter[prefix+'b2_val']=-2;
-			setter[prefix+'b3-show']=1;
-			setter[prefix+'b3_bonus']='str';
-			setter[prefix+'b3_bonustype']='size';
-			setter[prefix+'b3_macro-text']='-4';
-			setter[prefix+'b3_val']=-4;
-			setter[prefix+'b4-show']=1;
-			setter[prefix+'b4_bonus']='con';
-			setter[prefix+'b4_bonustype']='size';
-			setter[prefix+'b4_macro-text']='-4';
-			setter[prefix+'b4_val']=-4;
-			setter[prefix+'b5-show']=1;
-			setter[prefix+'b5_bonus']='dex';
-			setter[prefix+'b5_bonustype']='size';
-			setter[prefix+'b5_macro-text']='4';
-			setter[prefix+'b5_val']=4;
-			break;
 		case 'prayer':
 			setter[prefix+'name']='Prayer';
 			setter[prefix+'bufftype']='spell';

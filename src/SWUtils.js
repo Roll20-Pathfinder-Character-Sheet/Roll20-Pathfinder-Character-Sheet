@@ -34,6 +34,20 @@ export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 	});
 });
 
+export function getTranslated (str){
+	var tempstr;
+	try{
+		if(str){
+			tempstr=getTranslationByKey(str)||(str[0].toUpperCase()+str.slice(1));
+		}
+	} catch(e){
+		tempstr=(str[0].toUpperCase()+str.slice(1));
+	} finally {
+		return tempstr;
+	}
+}
+
+
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1

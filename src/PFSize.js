@@ -188,17 +188,17 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 	}
 }
 
-export function updateSize (v,eventInfo,setter) {
+export function updateSize (levelChange,v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
-		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';
+		 skillSize = 0, tempstr='',sizeDisplay='';
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
 		size = parseInt(v['size'], 10) || 0;
-		buffLevels=parseInt(v['buff_size-total'],10)||0;
-		if (buffLevels!==0 ){
+//		levelChange=parseInt(v['buff_size-total'],10)||0;
+		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
-			newlevel = deflevel+buffLevels;
+			newlevel = deflevel+levelChange;
 			buffSize = reverseSizeMap[String(newlevel)];
 			if (buffSize!==size){
 				setter['size']=buffSize;
@@ -239,11 +239,14 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 			callback();
 		}
 	});
-	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
+	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size",
+	"buff_size-total","size_display"], function (v) {
 		var params = {},
-		setter = {};
+		setter = {},
+		levelChange=0;
 		try {
-			updateSize(v,eventInfo,setter);
+			levelChange=parseInt(v['buff_size-total'],10)||0;
+			updateSize(levelChange,v,eventInfo,setter);
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
