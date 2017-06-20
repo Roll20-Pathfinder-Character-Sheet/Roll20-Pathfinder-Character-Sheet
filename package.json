@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "curl https://raw.githubusercontent.com/shdwjk/TheAaronSheet/master/TheAaronSheet.js -o node_modules/TheAaronSheet.js",
     "build": "webpack --config webpack.config.js",
-    "prod": "SET NODE_ENV=production& webpack --config webpack.config.js"
+    "prod": "SET NODE_ENV=production& webpack --config webpack.config.js --optimize-minimize"
   },
   "keywords": [],
   "author": "",

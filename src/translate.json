@@ -80,6 +80,8 @@
 	"damage-ranged-calculation-abbrv": "Ranged dmg calc",
 	"deflection": "Deflection",
 	"deflection-calculation-abbrv": "Deflection calc",
+	"delete-all-old-rows-are-you-sure": " Deletes ALL buffs in old list, are you sure?",
+	"delete-old-buff-list": "Deletes all buffs from the OLD list",
 	"dexterity-calculation-skills-abbrv": "Dex skills calc",
 	"dexterity-skills-abbrv": "DEX skills",
 	"dodge-calculation-abbrv": "Dodge calc",
