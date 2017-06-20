@@ -651,6 +651,9 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.56){
 				PFAttacks.updateRepeatingWeaponDamages();
 			}
+			if (oldversion < 1.57){
+				PFDefense.updateDefenses();
+			}
 			if (oldversion < 1.63){
 				migrateDropdowns(function(){
 					PFSkills.migrate();
