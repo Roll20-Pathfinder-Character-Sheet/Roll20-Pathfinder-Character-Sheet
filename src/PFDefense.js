@@ -682,4 +682,4 @@ function registerEventHandlers () {
 }
 registerEventHandlers();
 PFConsole.log( '   PFDefense module loaded        ' );
-PFLog.modulecount++;
+//PFLog.modulecount++;

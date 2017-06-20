@@ -586,4 +586,4 @@ function registerEventHandlers  () {
 }
 registerEventHandlers();
 PFConsole.log( '   PFEncumbrance module loaded    ' );
-PFLog.modulecount++;
+//PFLog.modulecount++;

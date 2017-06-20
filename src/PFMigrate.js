@@ -1282,4 +1282,4 @@ export function setAllMigrateFlags (callback){
 }
 
 PFConsole.log( '   PFMigrate module loaded        ' );
-PFLog.modulecount++;
+//PFLog.modulecount++;

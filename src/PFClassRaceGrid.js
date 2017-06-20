@@ -332,5 +332,5 @@ function registerEventHandlers  () {
     }));
 }
 registerEventHandlers();
-PFConsole.log('   PFClassRaceGrid module loaded  ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFClassRaceGrid module loaded  ' );
+//PFLog.modulecount++;

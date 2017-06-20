@@ -992,5 +992,5 @@ export function handleExpression (msg) {
   return sendCommand(chunks, asts, [], {});
 }
 
-PFConsole.log('   ExExp module loaded            ');
-PFLog.modulecount++;
+//PFConsole.log('   ExExp module loaded            ');
+//PFLog.modulecount++;

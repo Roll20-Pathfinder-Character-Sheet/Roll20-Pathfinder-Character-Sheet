@@ -1754,5 +1754,5 @@ function registerEventHandlers  () {
     }));    
 }
 registerEventHandlers();
-PFConsole.log('   PFSpells module loaded         ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFSpells module loaded         ' );
+//PFLog.modulecount++;

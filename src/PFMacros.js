@@ -672,5 +672,5 @@ export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defa
         done();
     }
 }
-PFConsole.log('   PFMacros module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFMacros module loaded         ');
+//PFLog.modulecount++;

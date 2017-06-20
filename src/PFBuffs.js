@@ -1073,5 +1073,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFBuffs module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFBuffs module loaded          ');
+//PFLog.modulecount++;

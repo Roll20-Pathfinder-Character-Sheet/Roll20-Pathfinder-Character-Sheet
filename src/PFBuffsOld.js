@@ -622,5 +622,5 @@ function registerEventHandlers () {
 	//======== END OF OLD BUFFS ==================================================
 }
 registerEventHandlers();
-PFConsole.log('   PFBuffs module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFBuffs module loaded          ');
+//PFLog.modulecount++;

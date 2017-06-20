@@ -1531,5 +1531,5 @@ function registerEventHandlers () {
 	
 }
 registerEventHandlers();
-PFConsole.log('   PFAttacks module loaded        ');
-PFLog.modulecount++;
+//PFConsole.log('   PFAttacks module loaded        ');
+//PFLog.modulecount++;

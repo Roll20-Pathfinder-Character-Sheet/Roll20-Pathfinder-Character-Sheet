@@ -273,5 +273,5 @@ function registerEventHandlers () {
     }));
 }
 registerEventHandlers();
-PFConsole.log('   PFAttackGrid module loaded     ');
-PFLog.modulecount++;
+//PFConsole.log('   PFAttackGrid module loaded     ');
+//PFLog.modulecount++;

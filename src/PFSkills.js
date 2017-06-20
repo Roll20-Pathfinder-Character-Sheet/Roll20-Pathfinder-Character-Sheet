@@ -1238,5 +1238,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFSkills module loaded         ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFSkills module loaded         ' );
+//PFLog.modulecount++;

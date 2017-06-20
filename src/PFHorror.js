@@ -103,6 +103,6 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFHorror module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFHorror module loaded         ');
+//PFLog.modulecount++;
 
