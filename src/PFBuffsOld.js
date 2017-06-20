@@ -78,10 +78,23 @@ function clearBuffTotals (callback,silently){
 	});
 }
 
+export function getAllRowAttrs(callback){
+	getSectionIDs('repeating_buff',function(ids){
+		var fields,attrs;
+		if(!(ids && _.size(ids))){
+			return callback(null,null);
+		}
+		attrs = SWUtils.cartesianAppend(['_buff-'],buffColumns,['_macro-text','','-show']);
+		attrs = attrs.concat(['_buff-enable_toggle','_buff-name','_buff-notes']);
+		fields =  SWUtils.cartesianAppend(['repeating_buff_'],ids,attrs );
+		TAS.debug("these are the fields "+fields);
+		getAttrs(fields,function(v){
+			callback(ids,v);
+		});
+	});
+	
+}
 
-//=========================================================================================
-//             OLD BUFFS
-//=========================================================================================
 /**Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotalAsync. 
  * @param {function} callback 
  */
@@ -239,7 +252,7 @@ function updateBuffTotalAsync (col, callback,silently){
 	getSectionIDs('repeating_buff',function(ids){
 		var fields,totfields,otherfields;
 		if(ids){
-			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle','_buff-'+col+'_type']);
+			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle']);
 			totfields = ['buff_'+col+'-total', 'buff_'+col+'_exists'];
 			if (isAbility){
 				totfields = totfields.concat(['buff_'+col+'-total_penalty', 'buff_'+col+'_penalty_exists']);
