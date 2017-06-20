@@ -3174,5 +3174,5 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 	});
 }
 
-PFConsole.log('   NPCParser module loaded        ');
-PFLog.modulecount++;
+//PFConsole.log('   NPCParser module loaded        ');
+//PFLog.modulecount++;

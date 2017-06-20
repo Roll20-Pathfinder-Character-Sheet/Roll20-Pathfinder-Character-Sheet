@@ -663,4 +663,4 @@ function registerEventHandlers () {
 }
 registerEventHandlers();
 PFConsole.log( 'PFSpellCasterClasses module loaded');
-PFLog.modulecount++;
+//PFLog.modulecount++;

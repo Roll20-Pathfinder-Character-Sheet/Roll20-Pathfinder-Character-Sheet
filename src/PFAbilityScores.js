@@ -355,5 +355,5 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-PFConsole.log('   PFAbilityScores module loaded  ');
-PFLog.modulecount++;
+//PFConsole.log('   PFAbilityScores module loaded  ');
+//PFLog.modulecount++;

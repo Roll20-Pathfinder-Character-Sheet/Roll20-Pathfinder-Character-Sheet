@@ -1071,6 +1071,6 @@ function registerEventHandlers () {
 	*/
 }
 registerEventHandlers();
-PFConsole.log('   PFAbility module loaded        ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFAbility module loaded        ' );
+//PFLog.modulecount++;
 

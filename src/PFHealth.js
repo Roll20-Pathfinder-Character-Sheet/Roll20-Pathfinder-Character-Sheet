@@ -392,5 +392,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFHealth module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFHealth module loaded         ');
+//PFLog.modulecount++;

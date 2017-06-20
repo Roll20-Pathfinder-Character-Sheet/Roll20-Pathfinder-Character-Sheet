@@ -110,5 +110,5 @@ function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-PFConsole.log('   PFSaves module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFSaves module loaded          ');
+//PFLog.modulecount++;

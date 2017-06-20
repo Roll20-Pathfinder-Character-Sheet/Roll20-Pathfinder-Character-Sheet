@@ -102,10 +102,10 @@
 					<input type="checkbox" class="sheet-or-A-show sheet-noshow" name="attr_max-dex-source" value="0" role="Presentation" />
 					<input type="checkbox" class="sheet-or-B-show sheet-noshow" name="attr_max-dex-source" value="2" role="Presentation" />
 					<div class="sheet-either-or-sect">
-						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="1" role="Presentation"><label data-i18n-title="encumbered-title" data-i18n-aria-label="encumbered-speed"><b data-i18n="encumbered-speed"> Encumbered</b></label>
-						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="2" role="Presentation"><label data-i18n-title="encumbered-title" data-i18n-aria-label="encumbered-speed"><b data-i18n="encumbered-speed"> Encumbered</b></label>
-						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="3" role="Presentation"><label data-i18n-title="overloaded-title" data-i18n-aria-label="overloaded"><b data-i18n="overloaded"> Overloaded</b></label>
-						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="4" role="Presentation"><label data-i18n-title="overloaded-title" data-i18n-aria-label="overloaded"><b data-i18n="overloaded"> Overloaded</b></label>
+						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="1" role="Presentation"/><label data-i18n-title="encumbered-title" data-i18n-aria-label="encumbered-speed"><b data-i18n="encumbered-speed"> Encumbered</b></label>
+						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="2" role="Presentation"/><label data-i18n-title="encumbered-title" data-i18n-aria-label="encumbered-speed"><b data-i18n="encumbered-speed"> Encumbered</b></label>
+						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="3" role="Presentation"/><label data-i18n-title="overloaded-title" data-i18n-aria-label="overloaded"><b data-i18n="overloaded"> Overloaded</b></label>
+						<input type="checkbox" class="sheet-condition-exists" name="attr_current-load" value="4" role="Presentation"/><label data-i18n-title="overloaded-title" data-i18n-aria-label="overloaded"><b data-i18n="overloaded"> Overloaded</b></label>
 					</div>
 					<span class="sheet-panel-name" data-i18n="current-conditions">Current Conditions</span>
 				</div>
@@ -2781,7 +2781,7 @@
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-table-cell"></span>
 							<span class="sheet-divider"></span>
-							<span class="sheet-table-cell"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell"><input title="@{buff_DMG_ranged-total}" name="attr_buff_DMG_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">-</span>
 							<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
 							<span class="sheet-table-cell sheet-left-border"></span>
@@ -3026,19 +3026,19 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
-									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >dmg dice</span>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 								</div>
 								<div class="sheet-linked-fields sheet-sect3 sheet-use-size sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
-									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >adj damage dice</span>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
 								</div>
 								<div class="sheet-linked-fields sheet-use-size sheet-nondual-sect">
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
 									<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 									<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
-									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >dmg dice</span>
+									<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 								</div>
 								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
 								<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
@@ -10407,19 +10407,19 @@
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0"/></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" /></label>
-										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >dmg dice</span>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 									</div>
 									<div class="sheet-linked-fields sheet-sect3 sheet-use-size sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-dice-num" title="@{repeating_weapon_$X_damage-dice-num}" value="0" class="sheet-calc" readonly /></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_damage-die" title="@{repeating_weapon_$X_damage-die}" value="0" class="sheet-calc" readonly /></label>
-										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >adj damage dice</span>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >adj damage dice</span>
 									</div>
 									<div class="sheet-linked-fields sheet-use-size sheet-nondual-sect">
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-dice-num" title="@{repeating_weapon_$X_default_damage-dice-num}" value="0" min="0" /></label>
 										<span class="sheet-divider-db-lg" style="padding-bottom: 10px;margin-right:-.125em;" data-i18n="dice-abbrv">d</span>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input type="number" name="attr_default_damage-die" title="@{repeating_weapon_$X_default_damage-die}" value="0" min="0" /></label>
-										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -2.9em;" >dmg dice</span>
+										<span style="display: block; text-align: center; font-size: .7rem; font-style: italic; font-weight: bold; color: Black; margin-top: -1.7em;" >dmg dice</span>
 									</div>
 									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
 									<div class="sheet-linked-fields sheet-sect sheet-nondual-sect">
@@ -12427,8 +12427,9 @@
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name"  data-i18n="buffs">Buffs</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
-						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_buffs_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-buffs" data-i18n="merge">Merge</span>
+						<input type="checkbox" class="sheet-selectedlabel-check sheet-bonustype-show" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>&nbsp;
+						<input class="sheet-csstextbutton sheet-newbuff" type="checkbox" name="attr_merge_buffs_now" value="1" /><span class="sheet-newbuff" data-i18n-title="merge-buffs" data-i18n="merge">Merge</span>&nbsp;
+						<input class="sheet-deletebutton sheet-newbuff sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_buff_btn" value="1" data-i18n-title="delete-old-buff-list" data-i18n-aria-label="delete-old-buff-list" /><span class="sheet-newbuff"></span><label class="sheet-deletesect sheet-allrows-note sheet-newbuff"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-old-rows-are-you-sure">delete all old rows are you sure</b></label>
 					</span>
 					<span class="sheet-table-cell sheet-left">
 
@@ -12447,11 +12448,11 @@
 					<span class="sheet-table-config-row-name" style="border-bottom:none;" data-i18n="lists">Lists</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{use_traits}" name="attr_use_traits" value="1" class="sheet-selectedlabel-check sheet-sect2-show" /><b><span data-i18n="use-traits">Use Separate Traits List</span></b>
-						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-traits" data-i18n="merge">Merge</span>
+						<input class="sheet-csstextbutton sheet-sect2" type="checkbox" name="attr_merge_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-traits" data-i18n="merge">Merge</span>
 					</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{use_racial_traits}" name="attr_use_racial_traits" value="1" class="sheet-selectedlabel-check sheet-sect2-show" /><b><span data-i18n="use-racial-traits">Use Separate Racial Traits List</span></b>
-						<input class="sheet-csstextbutton sheet-sect-show sheet-sect2" type="checkbox" name="attr_merge_race_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>
+						<input class="sheet-csstextbutton sheet-sect2" type="checkbox" name="attr_merge_race_traits_now" value="1" /><span class="sheet-sect2" data-i18n-title="merge-race-traits" data-i18n="merge">Merge</span>
 					</span>
 				</div>
 				<div class="sheet-table-row">
@@ -13962,7 +13963,7 @@
 			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
-			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="https://tinyurl.com/PF-roll20"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
+			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/Sheet-Guide"><b style="font-size:.75em;" data-i18n="sheet-guide">Wiki 'how to use' Sheet Guide</b></button></span>
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" title="url will appear in chat" style="color: #0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:.75em;" data-i18n="help-translate">Help Translate</b></button></span>
 		</div>

@@ -965,11 +965,11 @@ input.sheet-tabinput {
     margin-right: -7%;
 }
 .sheet-mainnav ~ .sheet-tab.sheet-wider-tab {
-    width: 10%;
+    width: 11%;
 }
 .sheet-mainnav ~ .sheet-tabinput.sheet-wider-tab {
-    width: 10%;
-    margin-right: -10%;
+    width: 11%;
+    margin-right: -11%;
 }
 .sheet-buffnav2 ~ .sheet-tab {
     width: 7%;

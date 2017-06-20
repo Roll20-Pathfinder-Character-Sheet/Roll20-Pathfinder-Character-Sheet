@@ -92,5 +92,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFPsionic module loaded        ');
-PFLog.modulecount++;
+//PFConsole.log('   PFPsionic module loaded        ');
+//PFLog.modulecount++;

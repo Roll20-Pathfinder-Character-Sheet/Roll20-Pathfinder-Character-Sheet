@@ -55,5 +55,5 @@ export function applyConditions (callback, silently) {
 		}
 	});
 }
-PFConsole.log('   PFChecks module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFChecks module loaded         ');
+//PFLog.modulecount++;

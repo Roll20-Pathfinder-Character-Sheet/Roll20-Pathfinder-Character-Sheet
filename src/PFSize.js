@@ -295,5 +295,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFSize module loaded           ');
-PFLog.modulecount++;
+//PFConsole.log('   PFSize module loaded           ');
+//PFLog.modulecount++;

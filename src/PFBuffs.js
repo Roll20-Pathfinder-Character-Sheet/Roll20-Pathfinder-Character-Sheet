@@ -723,10 +723,13 @@ function reEvaluateCustomMacros(callback,silently){
 function mergeOldIntoNewBuffs(callback){
 	var done = function(){
 		//set checkbox
-		SWUtils.setWrapper({'merge_buffs_now':0},PFConst.silentParams);
-		if(typeof callback === "function"){
-			callback();
-		}
+		SWUtils.setWrapper({'merge_buffs_now':0},PFConst.silentParams,function(){
+			if(typeof callback === "function"){
+				callback();
+			}
+		});
+		//parallel
+		updateAllBuffTotalsAsync();
 	};
 	PFBuffsOld.getAllRowAttrs(function(ids,v){
 		var setter={};
@@ -761,16 +764,15 @@ function mergeOldIntoNewBuffs(callback){
 						TAS.debug(" macro "+macroattr+" is "+ v[macroattr]);
 						return true;
 					}
-					TAS.debug("removing "+pre);
 					return false;
 				}).map(function(attr){
 					return SWUtils.getAttributeName(attr).slice(5,-11);
 				});
 				TAS.debug("BUFFS LEFT ON ROW "+id+" are ",buffs);
 				if(buffs && _.size(buffs)){
-					newId=generateRowID(),
-					newprefix='repeating_buff2_'+newId+'_',
-					tempprefix=newprefix+'b',
+					newId=generateRowID();
+					newprefix='repeating_buff2_'+newId+'_';
+					tempprefix=newprefix+'b';
 					setter[newprefix+'enable_toggle']=v[prefix+'buff-enable_toggle']||'0';
 					setter[newprefix+'name']=v[prefix+'buff-name']||'';
 					if(v[prefix+'buff-notes']){
@@ -1073,5 +1075,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFBuffs module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFBuffs module loaded          ');
+//PFLog.modulecount++;

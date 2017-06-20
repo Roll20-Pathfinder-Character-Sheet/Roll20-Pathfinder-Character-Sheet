@@ -124,6 +124,6 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFMythic module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFMythic module loaded         ');
+//PFLog.modulecount++;
 

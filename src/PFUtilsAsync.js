@@ -65,5 +65,5 @@ export function registerEventHandlers() {
 }
 
 registerEventHandlers();
-PFConsole.log('   PFUtilsAsync module loaded     ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFUtilsAsync module loaded     ' );
+//PFLog.modulecount++;
