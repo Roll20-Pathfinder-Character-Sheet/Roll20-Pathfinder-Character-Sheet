@@ -49,5 +49,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFNPC module loaded            ');
-PFLog.modulecount++;
+//PFConsole.log('   PFNPC module loaded            ');
+//PFLog.modulecount++;

@@ -1714,5 +1714,5 @@ function registerEventHandlers  () {
     }));
 }
 registerEventHandlers();
-PFConsole.log('   PFInventory module loaded      ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFInventory module loaded      ' );
+//PFLog.modulecount++;

@@ -393,7 +393,7 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-PFConsole.log('   PFSpellOptions module loaded   ');
-PFLog.modulecount++;
+//PFConsole.log('   PFSpellOptions module loaded   ');
+//PFLog.modulecount++;
 
 

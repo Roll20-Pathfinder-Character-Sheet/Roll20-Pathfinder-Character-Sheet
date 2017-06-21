@@ -661,6 +661,6 @@ function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-PFConsole.log('   PFFeatures module loaded       ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFFeatures module loaded       ' );
+//PFLog.modulecount++;
 

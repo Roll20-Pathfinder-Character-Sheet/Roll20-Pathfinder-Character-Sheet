@@ -131,5 +131,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFConditions module loaded     ');
-PFLog.modulecount++;
+//PFConsole.log('   PFConditions module loaded     ');
+//PFLog.modulecount++;

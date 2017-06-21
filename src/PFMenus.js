@@ -368,5 +368,5 @@ export function resetOneCommandMacroNoNPC (section,callback,header){
     });
 }
 
-PFConsole.log('   PFMenus module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFMenus module loaded          ');
+//PFLog.modulecount++;

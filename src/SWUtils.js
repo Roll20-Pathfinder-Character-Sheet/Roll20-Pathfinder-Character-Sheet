@@ -861,4 +861,4 @@ export function deleteRepeating(callback,section){
 
 
 PFConsole.log( '   SWUtils module loaded          ' );
-PFLog.modulecount++;
+//PFLog.modulecount++;

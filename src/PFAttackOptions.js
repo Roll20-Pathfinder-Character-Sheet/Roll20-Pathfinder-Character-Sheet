@@ -190,4 +190,4 @@ function registerEventHandlers () {
 }
 registerEventHandlers();
 PFConsole.log( '   PFAttackOptions module loaded  ');
-PFLog.modulecount++;
+//PFLog.modulecount++;

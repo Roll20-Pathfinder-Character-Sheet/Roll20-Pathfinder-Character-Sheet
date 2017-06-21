@@ -58,5 +58,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFInitiative module loaded     ');
-PFLog.modulecount++;
+//PFConsole.log('   PFInitiative module loaded     ');
+//PFLog.modulecount++;
