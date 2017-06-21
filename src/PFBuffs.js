@@ -144,7 +144,7 @@ buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
 	'_b4-show','_b4_val','_b4_bonus','_b4_bonustype',
 	'_b5-show','_b5_val','_b5_bonus','_b5_bonustype',
 	'_b6-show','_b6_val','_b6_bonus','_b6_bonustype',
-	'_enable_toggle'],
+	'_enable_toggle','_add_note_to_roll'],
 events = {
 	// events pass in the column updated macro-text is "either", buffs are auto only
 	buffTotalNonAbilityEvents: {
@@ -587,6 +587,11 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 			var rows=[], params={}, setter={};
 			try {
 				//TAS.debug("PFBuffs.updateAllBuffTotalsAsync2 v is",v);
+				setter = ids.reduce(function(m,id){
+					m = getBuffNotes(id,v,m);
+					v = _.extend(v,m); // copy any updates back for next pass
+					return m;
+				},setter);
 				ids = ids.filter(function(id){
 					return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 				});
@@ -803,8 +808,8 @@ function getCommonBuffEntries(name){
 	}
 	id = generateRowID();
 	prefix = 'repeating_buff2_'+id+'_';
-	setter[prefix+'enabled_toggle']='0';
-	setter[prefix+'tabcat2']='0';//should be enabled by default?
+	setter[prefix+'enabled_toggle']='1';
+	setter[prefix+'tabcat2']='1';//should be enabled by default?
 	switch(name){
 		case 'rage':
 			setter[prefix+'name']='Rage (Ex)';
@@ -1118,7 +1123,7 @@ export function addCommonBuff(callback){
 			}
 			setter.add_common_buff = 0;
 			TAS.debug("common buff setting: ",setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams,done);
+			SWUtils.setWrapper(setter,PFConst.silentParams,updateAllBuffTotalsAsync);
 		}
 	});
 }
