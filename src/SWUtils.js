@@ -720,7 +720,7 @@ export function escapeForRollTemplate  (str) {
 /** escapes string so it can be used in the name section of another link button
  *if it finds [name](link) in a string it will remove the [ and ] and the (link)
  * replaces [ and ] with escaped versions everywhere else.
- *@param {string] str the string we want to use inside a link button
+ *@param {string} str the string we want to use inside a link button
  *@returns {string} safe to use new name for button
  */
 export function escapeForChatLinkButton (str){

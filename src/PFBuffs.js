@@ -720,6 +720,67 @@ function reEvaluateCustomMacros(callback,silently){
 	});
 }
 
+function addNoteAsync(id,eventInfo){
+	var idStr = SWUtils.getRepeatingIDStr((id||SWUtils.getRowId(eventInfo.sourceAttribute) )),
+	prefix = 'repeating_buff2_'+idStr,
+	fields=['buff_attack_notes','buff_save_notes','buff_init_notes'],
+	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
+	TAS.debug("the fields are ",fields);
+	getAttrs(allfields,function(v){
+		var notestr='',notefield='',notereg, addNote=0,setter={},tempstr='';
+		TAS.debug("PFBuffs notes fields are ",allfields,v);
+		if(v[prefix+'add_note_to_roll']){
+			notefield = 'buff_'+v[prefix+'add_note_to_roll']+'_notes';
+		}
+		if (parseInt(v[prefix+'enable_toggle'],10)===1 && notefield){
+			addNote=1;
+		}
+		notestr='@{'+prefix+'notes}';
+		notereg = new RegExp (SWUtils.escapeForRegExp(notestr),'i');
+		if(notefield){
+			tempstr=v[notefield]||'';
+			TAS.debug("the note is "+tempstr);
+			if(!tempstr){
+				if(addNote){
+					setter[notefield] = notestr;
+				}
+			} else if (notereg.test(tempstr)){
+				if (!addNote){
+					setter[notefield] = tempstr.replace(notereg,'');
+				}
+			} else if (addNote){
+				setter[notefield] = tempstr+notestr;
+			}
+			fields.forEach(function(note){
+				if(note!==notefield){
+					tempstr=v[note];
+					if(tempstr){
+						tempstr=tempstr.replace(notereg,'');
+						if(tempstr!==v[note]){
+							setter[note]=tempstr;
+						}
+					}
+				}
+			});
+		} else {
+			//delete from all
+			fields.forEach(function(note){
+				tempstr=v[note];
+				if(tempstr){
+					tempstr=tempstr.replace(notereg,'');
+					if(tempstr!==v[note]){
+						setter[note]=tempstr;
+					}
+				}
+			});
+		}
+		if (_.size(setter)){
+			TAS.debug('PFBuffs set notes',setter);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
+		}
+	});
+}
+
 export function addCommonBuff(name,callback){
 	var done=function(){
 		if (typeof callback === "function"){
@@ -1168,6 +1229,12 @@ function registerEventHandlers () {
 			}
 		}));
 	});
+	on('change:repeating_buff2:add_note_to_roll',TAS.callback(function PFBuffs_addnote(eventInfo){
+		if (eventInfo.sourceType === "player" ){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			addNoteAsync(null,eventInfo);
+		}
+	}));
 	on('change:repeating_buff2:enable_toggle',TAS.callback(function PFBuffs_enabletoggle(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			getAttrs(['repeating_buff2_b1_bonus','repeating_buff2_b2_bonus','repeating_buff2_b3_bonus',
