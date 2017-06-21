@@ -781,13 +781,14 @@ function addNoteAsync(id,eventInfo){
 	});
 }
 
-export function addCommonBuff(name,callback){
+export function addCommonBuff(name,callback,v){
 	var done=function(){
 		if (typeof callback === "function"){
 			callback();
 		}
 	},
-	id,prefix='',setter={};
+	id,prefix='',setter={},calc;
+	
 	if(!name){
 		return;
 	}
@@ -795,52 +796,60 @@ export function addCommonBuff(name,callback){
 	prefix = 'repeating_buff2_'+id+'_';
 	switch(name){
 		case 'rage':
-			setter[prefix+'name']='Rage';
+			setter[prefix+'name']='Rage (Ex)';
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='4+(2*floor((@{class-0-level}-1)/10))';//+, +6 at 11
+			setter[prefix+'b1_macro-text']='4+(2*floor((@{level}-1)/10))';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='con';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='4+(2*floor((@{class-0-level}-1)/10))';
+			setter[prefix+'b2_macro-text']='4+(2*floor((@{level}-1)/10))';
 			setter[prefix+'b2_val']=4;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_bonustype']='untyped';
 			setter[prefix+'b3_macro-text']='-3';
+			setter[prefix+'b3_val']=-3;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_val']=2;
 			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'add_note_to_roll']='skill';
+			setter[prefix+'note']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
 			break;
 		case 'unchainedrage':
-			setter[prefix+'name']='Rage';
+			setter[prefix+'name']='Rage (Unchained) (Ex)';
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='melee';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='2+(floor((@{class-0-level}-1)/10))';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='2+(floor((@{level}-1)/10))';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg_melee';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='2+(floor((@{class-0-level}-1)/10))';
+			setter[prefix+'b2_macro-text']='2+(floor((@{level}-1)/10))';
 			setter[prefix+'b2_val']=4;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_bonustype']='untyped';
 			setter[prefix+'b3_macro-text']='-3';
+			setter[prefix+'b3_val']=-3;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
 			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'b4_val']=2;
 			setter[prefix+'b5-show']=1;
 			setter[prefix+'b5_bonus']='temphp';
-			setter[prefix+'b5_bonustype']='morale';
 			setter[prefix+'b5_macro-text']='2*@{level}';
+			setter[prefix+'b5_val']=2;
+			setter[prefix+'add_note_to_roll']='skill';
+			setter[prefix+'note']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
 			break;
 		case 'prayer':
 			setter[prefix+'name']='Prayer';
@@ -848,7 +857,7 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
-			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='1';
 			setter[prefix+'b1_val']=1;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
@@ -866,13 +875,47 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b4_macro-text']='1';
 			setter[prefix+'b4_val']=1;
 			break;
+		case 'bless':
+			setter[prefix+'name']='Bless';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='1';
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='will';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='2';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'add_note_to_roll']='save';
+			setter[prefix+'note']='Will save includes +1 morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
+			break;
+		case 'aid':
+			setter[prefix+'name']='Aid';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='1';
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='temphp';
+			setter[prefix+'b2_macro-text']='1d8 + casterlvl';
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='will';
+			setter[prefix+'b3_bonustype']='morale';
+			setter[prefix+'b3_macro-text']='2';
+			setter[prefix+'b3_val']=2;
+			setter[prefix+'add_note_to_roll']='save';
+			setter[prefix+'note']='Will save includes +1 morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
+			break;
 		case 'haste':
 			setter[prefix+'name']='Haste';
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='1';
 			setter[prefix+'b1_val']=1;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='ac';
@@ -884,13 +927,19 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b3_bonustype']='dodge';
 			setter[prefix+'b3_macro-text']='1';
 			setter[prefix+'b3_val']=1;
+			setter[prefix+'b5-show']=1;
+			setter[prefix+'b5_bonus']='speed';
+			setter[prefix+'b3_bonustype']='enhancement';
+			setter[prefix+'b3_macro-text']='min(@{speed-base},30)';
+			setter[prefix+'b3_val']=30;
+			setter[prefix+'note']='When making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. All modes of movement increase.';
 			break;
 		case 'enlargeperson':
 			setter[prefix+'name']='Enlarge Person';
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='size';
-			setter[prefix+'b1_macro-text']='1';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='1';
 			setter[prefix+'b1_val']=1;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='str';
@@ -902,6 +951,7 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
+			setter[prefix+'note']='Reach increased, height x2, weight x4';
 			break;
 		case 'divinefavor':
 			setter[prefix+'name']='Divine Favor';
@@ -909,13 +959,13 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
-			setter[prefix+'b1_macro-text']='min(3,1+floor((@{class-0-level}-1)/3))';//+2, +3 at 11
-			setter[prefix+'b1_val']=1;
+			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level}-1)/3))';
+			setter[prefix+'b1_val']=2;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='damage';
 			setter[prefix+'b2_bonustype']='luck';
-			setter[prefix+'b2_macro-text']='min(3,1+floor((@{class-0-level}-1)/3))';
-			setter[prefix+'b2_val']=1;
+			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level}-1)/3))';
+			setter[prefix+'b2_val']=2;
 			break;
 		case 'shieldoffaith':
 			setter[prefix+'name']='Shield of Faith';
@@ -923,8 +973,8 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='min(5,1+floor((@{class-0-level}-1)/6))';//+2, +3 at 11
-			setter[prefix+'b1_val']=1;
+			setter[prefix+'b1_macro-text']='2+floor((@{level})/6)';
+			setter[prefix+'b1_val']=2;
 			break;
 		case 'shield':
 			setter[prefix+'name']='Shield';
@@ -932,7 +982,7 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='shield';
 			setter[prefix+'b1_bonustype']='shield';
-			setter[prefix+'b1_macro-text']='4';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'notes']='It negates magic missile attacks directed at you. This bonus applies against incorporeal touch attacks, since it is a force effect. The shield has no armor check penalty or arcane spell failure chance.';
 			break;
@@ -942,9 +992,74 @@ export function addCommonBuff(name,callback){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='armor';
-			setter[prefix+'b1_macro-text']='4';//+2, +3 at 11
+			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'notes']='entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can\'t bypass it the way they do normal armor.';
+			break;
+		case 'inspirecourage':
+			setter[prefix+'name']='Inspire Courage';
+			setter[prefix+'bufftype']='song';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='competence';
+			setter[prefix+'b1_macro-text']='1+floor((@{level}+1)/6)';
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='competence';
+			setter[prefix+'b2_macro-text']='1+floor((@{level}+1)/6)';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='will';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='1+floor((@{level}+1)/6)';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'add_note_to_roll']='save';
+			setter[prefix+'note']='Will save includes +1 morale bonus on saving throws against charm and fear effects. Uncheck buff when not saving vs charm or fear.';
+			break;
+		case 'inspiregreatness':
+			setter[prefix+'name']='Inspire Greatness';
+			setter[prefix+'bufftype']='song';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='competence';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='fort';
+			setter[prefix+'b2_bonustype']='competence';
+			setter[prefix+'b2_macro-text']='2';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='temphp';
+			setter[prefix+'b3_macro-text']='2d10+(2*@{CON-mod})';
+			setter[prefix+'note']='increase '
+			break;
+		case 'inspiredrage':
+			setter[prefix+'name']='Inspired Rage';
+			setter[prefix+'bufftype']='song';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='str';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='2+(2*floor((@{level}+1)/8))';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='con';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='2+(2*floor((@{level}+1)/8))';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ac';
+			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_macro-text']='-1';
+			setter[prefix+'b3_val']=-1;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='will';
+			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_macro-text']='1+floor((@{level}+1)/4)';
+			setter[prefix+'b4_val']=1;
+			setter[prefix+'add_note_to_roll']='skill';
+			setter[prefix+'note']='While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration';
 			break;
 
 	}
