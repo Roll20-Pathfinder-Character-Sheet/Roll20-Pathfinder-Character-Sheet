@@ -808,7 +808,7 @@ function getCommonBuffEntries(name){
 	}
 	id = generateRowID();
 	prefix = 'repeating_buff2_'+id+'_';
-	setter[prefix+'enabled_toggle']='1';
+	setter[prefix+'enable_toggle']='1';
 	setter[prefix+'tabcat2']='1';//should be enabled by default?
 	switch(name){
 		case 'rage':
