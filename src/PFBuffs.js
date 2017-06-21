@@ -195,6 +195,80 @@ events = {
 };
 
 
+function getBuffNotes(id,v,setter){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+	prefix='repeating_buff2_'+idStr,
+	notestr='',notefield='',notereg, addNote=0,tempstr='';
+	try {
+		setter=setter||{};
+		if(v[prefix+'add_note_to_roll']){
+			notefield = 'buff_'+v[prefix+'add_note_to_roll']+'_notes';
+		}
+		if (parseInt(v[prefix+'enable_toggle'],10)===1 && notefield){
+			addNote=1;
+		}
+		notestr='@{'+prefix+'notes}';
+		notereg = new RegExp (SWUtils.escapeForRegExp(notestr),'i');
+		if(notefield){
+			tempstr=v[notefield]||'';
+			TAS.debug("the note is "+tempstr);
+			if(!tempstr){
+				if(addNote){
+					setter[notefield] = notestr;
+				}
+			} else if (notereg.test(tempstr)){
+				if (!addNote){
+					setter[notefield] = tempstr.replace(notereg,'');
+				}
+			} else if (addNote){
+				setter[notefield] = tempstr+notestr;
+			}
+			buffNoteFields.forEach(function(note){
+				if(note!==notefield){
+					tempstr=v[note];
+					if(tempstr){
+						tempstr=tempstr.replace(notereg,'');
+						if(tempstr!==v[note]){
+							setter[note]=tempstr;
+						}
+					}
+				}
+			});
+		} else {
+			//delete from all
+			buffNoteFields.forEach(function(note){
+				tempstr=v[note];
+				if(tempstr){
+					tempstr=tempstr.replace(notereg,'');
+					if(tempstr!==v[note]){
+						setter[note]=tempstr;
+					}
+				}
+			});
+		}
+	} catch (er){
+
+	} finally {
+		return setter;
+	}
+}
+function addNoteAsync(id,eventInfo){
+	var idStr,prefix,fields,allfields;
+	id=id||SWUtils.getRowId(eventInfo.sourceAttribute);
+	idStr = SWUtils.getRepeatingIDStr(id);
+	prefix = 'repeating_buff2_'+idStr;
+	
+	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
+	TAS.debug("the fields are ",fields);
+	getAttrs(allfields,function(v){
+		var setter = getBuffNotes(id,v);
+		if (_.size(setter)){
+			TAS.debug('PFBuffs set notes',setter);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
+		}
+	});
+}
+
 function clearBuffTotals (callback,silently){
 	var done=function(){
 		if(typeof callback === "function"){
@@ -723,80 +797,6 @@ function reEvaluateCustomMacros(callback,silently){
 			TAS.error("PFBuffs.reEvaluateCustomMacros2", err);
 			//what to do? just quit
 			done();
-		}
-	});
-}
-
-function getBuffNotes(id,v,setter){
-	var idStr = SWUtils.getRepeatingIDStr(id),
-	prefix='repeating_buff2_'+idStr,
-	notestr='',notefield='',notereg, addNote=0,tempstr='';
-	try {
-		setter=setter||{};
-		if(v[prefix+'add_note_to_roll']){
-			notefield = 'buff_'+v[prefix+'add_note_to_roll']+'_notes';
-		}
-		if (parseInt(v[prefix+'enable_toggle'],10)===1 && notefield){
-			addNote=1;
-		}
-		notestr='@{'+prefix+'notes}';
-		notereg = new RegExp (SWUtils.escapeForRegExp(notestr),'i');
-		if(notefield){
-			tempstr=v[notefield]||'';
-			TAS.debug("the note is "+tempstr);
-			if(!tempstr){
-				if(addNote){
-					setter[notefield] = notestr;
-				}
-			} else if (notereg.test(tempstr)){
-				if (!addNote){
-					setter[notefield] = tempstr.replace(notereg,'');
-				}
-			} else if (addNote){
-				setter[notefield] = tempstr+notestr;
-			}
-			buffNoteFields.forEach(function(note){
-				if(note!==notefield){
-					tempstr=v[note];
-					if(tempstr){
-						tempstr=tempstr.replace(notereg,'');
-						if(tempstr!==v[note]){
-							setter[note]=tempstr;
-						}
-					}
-				}
-			});
-		} else {
-			//delete from all
-			buffNoteFields.forEach(function(note){
-				tempstr=v[note];
-				if(tempstr){
-					tempstr=tempstr.replace(notereg,'');
-					if(tempstr!==v[note]){
-						setter[note]=tempstr;
-					}
-				}
-			});
-		}
-	} catch (er){
-
-	} finally {
-		return setter;
-	}
-}
-function addNoteAsync(id,eventInfo){
-	var idStr,prefix,fields,allfields;
-	id=id||SWUtils.getRowId(eventInfo.sourceAttribute);
-	idStr = SWUtils.getRepeatingIDStr(id);
-	prefix = 'repeating_buff2_'+idStr;
-	
-	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
-	TAS.debug("the fields are ",fields);
-	getAttrs(allfields,function(v){
-		var setter = getBuffNotes(id,v);
-		if (_.size(setter)){
-			TAS.debug('PFBuffs set notes',setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 	});
 }
