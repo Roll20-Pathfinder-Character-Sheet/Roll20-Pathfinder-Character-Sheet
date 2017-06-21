@@ -34,6 +34,20 @@ export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 	});
 });
 
+export function getTranslated (str){
+	var tempstr;
+	try{
+		if(str){
+			tempstr=getTranslationByKey(str)||(str[0].toUpperCase()+str.slice(1));
+		}
+	} catch(e){
+		tempstr=(str[0].toUpperCase()+str.slice(1));
+	} finally {
+		return tempstr;
+	}
+}
+
+
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
@@ -706,7 +720,7 @@ export function escapeForRollTemplate  (str) {
 /** escapes string so it can be used in the name section of another link button
  *if it finds [name](link) in a string it will remove the [ and ] and the (link)
  * replaces [ and ] with escaped versions everywhere else.
- *@param {string] str the string we want to use inside a link button
+ *@param {string} str the string we want to use inside a link button
  *@returns {string} safe to use new name for button
  */
 export function escapeForChatLinkButton (str){
@@ -846,5 +860,5 @@ export function deleteRepeating(callback,section){
 }
 
 
-PFConsole.log( '   SWUtils module loaded          ' );
+//PFConsole.log( '   SWUtils module loaded          ' );
 //PFLog.modulecount++;

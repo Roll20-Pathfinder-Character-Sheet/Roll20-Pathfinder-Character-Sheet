@@ -95,6 +95,32 @@ export var propagateAbilityModsAsync = TAS.callback(function callPropagateAbilit
     });
 });
 
+/** modifies ability-base by val (even #s) and adds the new vals to setter.
+ * 
+ * @param {string} ability 
+ * @param {Number} val 
+ * @param {Map<string,string>} v 
+ * @param {Map<string,number>} setter 
+ * @returns {Map<string,number>} returns setter plus updated values for XYZ-base, XYZ-mod , and XYZ
+ */
+export function modifyAbility (ability,val,v,setter){
+    var tempint;
+    setter=setter||{};
+    ability=ability.toUpperCase();
+    tempint = parseInt(v[ability+'-base'],10)||10;
+    tempint+=val;
+    tempint=Math.max(tempint,1);
+    setter[ability+'-base']=tempint;
+    tempint = parseInt(v[ability],10)||10;
+    tempint+=val;
+    tempint=Math.max(tempint,1);
+    setter[ability]=tempint;
+    tempint=parseInt(v[ability+'-mod'],10)||0;
+    tempint+=(Math.floor(val/2));
+    tempint=Math.max(tempint,1);
+    setter[ability+'-mod']=tempint;
+    return setter;    
+}
 
 /** Looks at current values and calculates new ability , ability-mod and ability-modded values
  * @param {string} ability string matching a value in abilities
