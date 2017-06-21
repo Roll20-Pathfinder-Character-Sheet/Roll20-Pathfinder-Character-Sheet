@@ -64,7 +64,8 @@ buffToTot = {
 	'will':'Will',
 	'wis':'WIS',
 	'wis_skills':'WIS_skills'},
-totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort();
+totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort(),
+buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes'];
 
 var otherCharBonuses ={
 	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
@@ -508,7 +509,8 @@ function updateBuffTotalAsync (col, callback,silently){
 					totfields = totfields.concat(['buff_'+buffToTot[col]+'-total_penalty', 'buff_'+buffToTot[col]+'_penalty_exists']);
 				}
 				fields = fields.concat(totfields);
-
+				fields = fields.concat(buffNoteFields);
+		
 				otherfields = columnsToGet.reduce(function(m,c){
 					if (otherCharBonuses[c]){
 						_.each(otherCharBonuses[c],function(bonus,bonustype){
@@ -538,7 +540,7 @@ function updateBuffTotalAsync (col, callback,silently){
 						rows = assembleRows(ids,v,col);
 						setter = columnsToUpdate.reduce(function(m,c){
 							return updateBuffTotal(c,rows,v,m);
-						},{});
+						},setter);
 					} else {
 						//all have 0!
 						clearBuffTotals();
@@ -579,7 +581,7 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs);
 		fields = fields.concat(buffTotFields);
 		fields = fields.concat(charBonusFields);
-
+		fields = fields.concat(buffNoteFields);
 		
 		getAttrs(fields,function(v){
 			var rows=[], params={}, setter={};
@@ -594,7 +596,7 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 				}
 				rows = assembleRows(ids,v);
 				_.each(buffColumns,function(col){
-					if(col==='dmg' || col==='str'||col==='temphp'){
+					if(col==='dmg' || col==='str'||col==='hptemp'){
 					TAS.debug("updateAllBuffTotalsAsync2 now calling updatebufftotal on "+col);
 					}
 					setter=updateBuffTotal(col,rows,v,setter);
@@ -720,15 +722,12 @@ function reEvaluateCustomMacros(callback,silently){
 	});
 }
 
-function addNoteAsync(id,eventInfo){
-	var idStr = SWUtils.getRepeatingIDStr((id||SWUtils.getRowId(eventInfo.sourceAttribute) )),
-	prefix = 'repeating_buff2_'+idStr,
-	fields=['buff_attack_notes','buff_save_notes','buff_init_notes'],
-	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
-	TAS.debug("the fields are ",fields);
-	getAttrs(allfields,function(v){
-		var notestr='',notefield='',notereg, addNote=0,setter={},tempstr='';
-		TAS.debug("PFBuffs notes fields are ",allfields,v);
+function getBuffNotes(id,v,setter){
+	var idStr = SWUtils.getRepeatingIDStr(id),
+	prefix='repeating_buff2_'+idStr,
+	notestr='',notefield='',notereg, addNote=0,tempstr='';
+	try {
+		setter=setter||{};
 		if(v[prefix+'add_note_to_roll']){
 			notefield = 'buff_'+v[prefix+'add_note_to_roll']+'_notes';
 		}
@@ -751,7 +750,7 @@ function addNoteAsync(id,eventInfo){
 			} else if (addNote){
 				setter[notefield] = tempstr+notestr;
 			}
-			fields.forEach(function(note){
+			buffNoteFields.forEach(function(note){
 				if(note!==notefield){
 					tempstr=v[note];
 					if(tempstr){
@@ -764,7 +763,7 @@ function addNoteAsync(id,eventInfo){
 			});
 		} else {
 			//delete from all
-			fields.forEach(function(note){
+			buffNoteFields.forEach(function(note){
 				tempstr=v[note];
 				if(tempstr){
 					tempstr=tempstr.replace(notereg,'');
@@ -774,6 +773,22 @@ function addNoteAsync(id,eventInfo){
 				}
 			});
 		}
+	} catch (er){
+
+	} finally {
+		return setter;
+	}
+}
+function addNoteAsync(id,eventInfo){
+	var idStr,prefix,fields,allfields;
+	id=id||SWUtils.getRowId(eventInfo.sourceAttribute);
+	idStr = SWUtils.getRepeatingIDStr(id);
+	prefix = 'repeating_buff2_'+idStr;
+	
+	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
+	TAS.debug("the fields are ",fields);
+	getAttrs(allfields,function(v){
+		var setter = getBuffNotes(id,v);
 		if (_.size(setter)){
 			TAS.debug('PFBuffs set notes',setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams);
@@ -788,10 +803,13 @@ function getCommonBuffEntries(name){
 	}
 	id = generateRowID();
 	prefix = 'repeating_buff2_'+id+'_';
+	setter[prefix+'enabled_toggle']='0';
+	setter[prefix+'tabcat2']='0';//should be enabled by default?
 	switch(name){
 		case 'rage':
 			setter[prefix+'name']='Rage (Ex)';
 			setter[prefix+'bufftype']='class';
+			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
@@ -819,6 +837,7 @@ function getCommonBuffEntries(name){
 		case 'unchainedrage':
 			setter[prefix+'name']='Rage (Unchained) (Ex)';
 			setter[prefix+'bufftype']='class';
+			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='melee';
 			setter[prefix+'b1_bonustype']='morale';
@@ -840,7 +859,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_macro-text']='2';
 			setter[prefix+'b4_val']=2;
 			setter[prefix+'b5-show']=1;
-			setter[prefix+'b5_bonus']='temphp';
+			setter[prefix+'b5_bonus']='hptemp';
 			setter[prefix+'b5_macro-text']='2*@{level}';
 			setter[prefix+'b5_val']=2;
 			setter[prefix+'add_note_to_roll']='skill';
@@ -850,6 +869,7 @@ function getCommonBuffEntries(name){
 		case 'prayer':
 			setter[prefix+'name']='Prayer';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
@@ -874,6 +894,7 @@ function getCommonBuffEntries(name){
 		case 'bless':
 			setter[prefix+'name']='Bless';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
@@ -891,6 +912,7 @@ function getCommonBuffEntries(name){
 		case 'aid':
 			setter[prefix+'name']='Aid';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
@@ -902,15 +924,17 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_val']=2;
 			setter[prefix+'b3_val']=1;
 			setter[prefix+'b3-show']=1;
-			setter[prefix+'b3_bonus']='temphp';
+			setter[prefix+'b3_bonus']='hptemp';
+			setter[prefix+'b3_val_error']=1;
 			setter[prefix+'b3_macro-text']='1d8 + casterlvl';
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Will save includes +@{b3_val} morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
+			setter[prefix+'notes']='Will save includes +@{b2_val} morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'haste':
 			setter[prefix+'name']='Haste';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='untyped';
@@ -926,17 +950,19 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='dodge';
 			setter[prefix+'b3_macro-text']='1';
 			setter[prefix+'b3_val']=1;
-			setter[prefix+'b5-show']=1;
-			setter[prefix+'b5_bonus']='speed';
-			setter[prefix+'b3_bonustype']='enhancement';
-			setter[prefix+'b3_macro-text']='min(@{speed-base},30)';
-			setter[prefix+'b3_val']=30;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='speed';
+			setter[prefix+'b4_bonustype']='enhancement';
+			setter[prefix+'b4_macro-text']='min(@{speed-base},30)';
+			setter[prefix+'b4_val']=30;
+			setter[prefix+'add_note_to_roll']='attack';
 			setter[prefix+'notes']='When making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. All modes of movement increase.';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'enlargeperson':
 			setter[prefix+'name']='Enlarge Person';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='size';
 			setter[prefix+'b1_macro-text']='1';
@@ -956,6 +982,7 @@ function getCommonBuffEntries(name){
 		case 'divinefavor':
 			setter[prefix+'name']='Divine Favor';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
@@ -970,6 +997,7 @@ function getCommonBuffEntries(name){
 		case 'shieldoffaith':
 			setter[prefix+'name']='Shield of Faith';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
@@ -979,6 +1007,7 @@ function getCommonBuffEntries(name){
 		case 'shield':
 			setter[prefix+'name']='Shield';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='shield';
 			setter[prefix+'b1_bonustype']='shield';
@@ -990,6 +1019,7 @@ function getCommonBuffEntries(name){
 		case 'magearmor':
 			setter[prefix+'name']='Mage Armor';
 			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='armor';
@@ -1001,6 +1031,7 @@ function getCommonBuffEntries(name){
 		case 'inspirecourage':
 			setter[prefix+'name']='Inspire Courage';
 			setter[prefix+'bufftype']='song';
+			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='competence';
@@ -1023,6 +1054,7 @@ function getCommonBuffEntries(name){
 		case 'inspiregreatness':
 			setter[prefix+'name']='Inspire Greatness';
 			setter[prefix+'bufftype']='song';
+			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='competence';
@@ -1034,12 +1066,13 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_macro-text']='2';
 			setter[prefix+'b2_val']=2;
 			setter[prefix+'b3-show']=1;
-			setter[prefix+'b3_bonus']='temphp';
+			setter[prefix+'b3_bonus']='hptemp';
 			setter[prefix+'b3_macro-text']='2d10+(2*@{CON-mod})';
 			break;
 		case 'inspiredrage':
 			setter[prefix+'name']='Inspired Rage';
 			setter[prefix+'bufftype']='song';
+			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
@@ -1074,8 +1107,9 @@ export function addCommonBuff(callback){
 		if (typeof callback === "function"){
 			callback();
 		}
-	}, setter={};
-	getAttrs(['add_common_buff','common_buff_toadd'],function(v){
+	}, setter={}, fields;
+	fields = ['add_common_buff','common_buff_toadd'];
+	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
 			if(v['common_buff_toadd']){
