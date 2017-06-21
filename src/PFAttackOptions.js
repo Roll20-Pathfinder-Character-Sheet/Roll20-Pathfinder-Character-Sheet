@@ -189,5 +189,5 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-PFConsole.log( '   PFAttackOptions module loaded  ');
+//PFConsole.log( '   PFAttackOptions module loaded  ');
 //PFLog.modulecount++;

@@ -662,5 +662,5 @@ function registerEventHandlers () {
     }); //end of spell classes
 }
 registerEventHandlers();
-PFConsole.log( 'PFSpellCasterClasses module loaded');
+//PFConsole.log( 'PFSpellCasterClasses module loaded');
 //PFLog.modulecount++;

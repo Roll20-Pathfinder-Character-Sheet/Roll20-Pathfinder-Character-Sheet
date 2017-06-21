@@ -523,7 +523,7 @@ input[type="text"].sheet-number,
     vertical-align: bottom;
 }
 /* we should go and change all sheet-table-cell to div */
-.sheet-compendium-note,
+.sheet-compendium-note .sheet-vertical-middle,
 .sheet-condition-exists + label,
 .sheet-table-cell.sheet-small-label span,
 .sheet-table-header,

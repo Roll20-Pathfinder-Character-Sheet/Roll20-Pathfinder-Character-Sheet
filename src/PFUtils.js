@@ -755,5 +755,5 @@ export function removeWhisperFromMacro (macrostr){
     return macrostr;
 }
 
-PFConsole.log( '   PFUtils module loaded          ');
+//PFConsole.log( '   PFUtils module loaded          ');
 //PFLog.modulecount++;
