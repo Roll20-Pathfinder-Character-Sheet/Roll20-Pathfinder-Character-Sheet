@@ -1360,12 +1360,10 @@ function getCommonBuffEntries(name){
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
-			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='-1';
 			setter[prefix+'b1_val']=-1;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='will';
-			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='-1';
 			setter[prefix+'b2_val']=-1;
 			setter[prefix+'add_note_to_roll']='save';
@@ -1380,7 +1378,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='enhancement';
 			setter[prefix+'b1_macro-text']='2';
-			setter[prefix+'b1_val']=-2;
+			setter[prefix+'b1_val']=2;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='casterlevel';
 			setter[prefix+'b2_bonustype']='untyped';
@@ -1403,6 +1401,95 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonustype']='enhancement';
 			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
 			setter[prefix+'b1_val']=1;
+			break;
+		case 'ward':
+			setter[prefix+'name']='Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='saves';
+			setter[prefix+'b2_bonustype']='resistance';
+			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'add_note_to_roll']='save';			
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='This ward lasts until the warded creature is hit or fails a saving throw';
+			break;
+		case 'battlespirit':
+			setter[prefix+'name']='Battle Spirit';
+			setter[prefix+'bufftype']='aura';
+			setter[prefix+'tabcat']='aura';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b2_val']=1;
+			break;
+		case 'battleward':
+			setter[prefix+'name']='Battle Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=3;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
+			break;
+		case 'hamperinghex':
+			setter[prefix+'name']='hampering Hex';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_macro-text']='-2';
+			setter[prefix+'b1_val']=-2;
+			setter[prefix+'notes']='At 8th level the penalty becomes -4';
+			break;
+		case 'boneward':
+			setter[prefix+'name']='Bone Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=2;
+			break;
+		case 'stardust':
+			setter[prefix+'name']='Stardust';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-1 - (floor(@{level}/4)';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'add_note_to_roll']='skill';
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Also apply @{b1_val} penalty to sight based perception checks';
+			break;
+		case 'airbarrier':
+			setter[prefix+'name']='Air Barrier';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='armor';
+			setter[prefix+'b1_bonustype']='armor';
+			setter[prefix+'b1_macro-text']='4 + ((floor((@{level}-3)/4)';
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50% miss chance.';
 			break;
 	}
 	return setter;

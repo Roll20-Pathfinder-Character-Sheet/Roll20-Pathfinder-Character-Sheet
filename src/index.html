@@ -214,8 +214,12 @@
 						<select name="attr_common_buff_toadd" class="sheet-select-small">
 							<option value="" selected>Select one</option>
 							<option value="aid">&nbsp;<span>Aid</span></option>
+							<option value="airbarrier">&nbsp;<span>Air Barrier</span></option>
+							<option value="battlespirit">&nbsp;<span>Battle Spirit</span></option>
+							<option value="battleward">&nbsp;<span>Battle Ward</span></option>
 							<option value="bless">&nbsp;<span>Bless</span></option>
 							<option value="blessingoffervor">&nbsp;<span>Blessing of Fervor</span></option>
+							<option value="boneward">&nbsp;<span>Bone Ward</span></option>
 							<option value="deathknell">&nbsp;<span>Death Knell</span></option>
 							<option value="descrate">&nbsp;<span>Desecrate (if undead)</span></option>
 							<option value="divinefavor">&nbsp;<span>Divine Favor</span></option>
@@ -233,14 +237,17 @@
 							<option value="unchainedrage">&nbsp;<span>Rage (Unchained)</span></option>
 							<option value="shield">&nbsp;<span>Shield</span></option>
 							<option value="shieldoffaith">&nbsp;<span>Shield of Faith</span></option>
+							<option value="ward">&nbsp;<span>Ward</span></option>
 							<option value="0">DEBUFFS</option>
 							<option value="archonsaura">&nbsp;<span>Archon's Aura</span></option>
 							<option value="bane">&nbsp;<span>Bane</span></option>
 							<option value="consecrate">&nbsp;<span>Consecrate (if undead)</span></option>
 							<option value="crushingdespair">&nbsp;<span>Crushing Despair</span></option>
 							<option value="curse">&nbsp;<span>Curse</span></option>
+							<option value="hamperinghex">&nbsp;<span>Hampering Hex</span></option>
 							<option value="prayerdebuff">&nbsp;<span>Prayer (Debuff)</span></option>
 							<option value="reduceperson">&nbsp;<span>Reduce Person</span></option>
+							<option value="stardust">&nbsp;<span>Stardust</span></option>
 							<option value="slow">&nbsp;<span>Slow</span></option>						</select>
 						<span>Common Buff</span>
 					</label>
@@ -267,6 +274,8 @@
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab6 sheet-wider-tab" data-i18n="template">Template</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="aura" data-i18n-title="aura" data-i18n-aria-label="aura" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="aura">aura</label>
+				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab8 sheet-narrow-tab" name="attr_buffs_tab" value="hex" data-i18n-title="hex" data-i18n-aria-label="hex" />
+				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab8 sheet-narrow-tab" data-i18n="hex">hex</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_buffs_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab99 sheet-narrow-tab" data-i18n="all">All</label>
 				<span class="sheet-newbuff sheet-divider-db-lg">&nbsp;</span>
@@ -288,6 +297,7 @@
 							<input type="radio" name="attr_tabcat" value="item" class="sheet-tabcopy custnavsection-5" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="template" class="sheet-tabcopy custnavsection-6" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="aura" class="sheet-tabcopy custnavsection-7" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="hex" class="sheet-tabcopy custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="1" class="sheet-tabcopy custnavsection-10" checked role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="0" class="sheet-tabcopy custnavsection-11" role="presentation" />
 							<div class="sheet-custrepeating-border sheet-nontable-repeating compendium-drop-target">
@@ -308,6 +318,7 @@
 										<option value="class" data-i18n="class">Class</option>
 										<option value="item" data-i18n="item">Item</option>
 										<option value="aura" data-i18n="aura">Aura</option>
+										<option value="hex" data-i18n="hex">Hex</option>										
 										<option value="template" data-i18n="template">Template</option>
 										<option value="other" data-i18n="other">Other</option>
 									</select>
