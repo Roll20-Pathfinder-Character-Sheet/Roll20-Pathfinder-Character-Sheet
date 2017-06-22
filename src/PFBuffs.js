@@ -1365,6 +1365,13 @@ export function addCommonBuff(callback){
 			if(v['common_buff_toadd'] && v['common_buff_toadd']!=='0'){
 				setter = getCommonBuffEntries(v['common_buff_toadd']);
 				setter.common_buff_toadd='';
+				switch(v['common_buff_toadd']){
+					case 'slow':
+						setter['condition-Staggered']=1;
+						break;
+				}
+			} else if (v['common_buff_toadd']==='0'){
+				setter.common_buff_toadd='';
 			}
 			setter.add_common_buff = 0;
 			TAS.debug("common buff setting: ",setter);
