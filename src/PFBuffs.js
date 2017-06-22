@@ -26,48 +26,19 @@ buffColumns = [
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
 	'will',	'wis',	'wis_skills'],
 buffToTot = {
-	'ac':'AC',
-	'armor':'armor',
-	'attack':'attack',
-	'casterlevel':'CasterLevel',
-	'cha':'CHA',
-	'cha_skills':'CHA_skills',
-	'check':'Check',
-	'check_ability':'check_ability',
-	'check_skills':'check_skills',
-	'cmb':'CMB',
-	'cmd':'CMD',
-	'con':'CON',
-	'con_skills':'CON_skills',
-	'dex':'DEX',
-	'dex_skills':'DEX_skills',
-	'dmg':'DMG',
-	'dmg_melee':'dmg_melee',
-	'dmg_ranged':'dmg_ranged',
-	'flatfooted':'flat-footed',
-	'fort':'Fort',
-	'hptemp':'HP-temp',
-	'initiative':'Initiative',
-	'int':'INT',
-	'int_skills':'INT_skills',
-	'melee':'Melee',
-	'natural':'natural',
-	'ranged':'Ranged',
-	'ref':'Ref',
-	'saves':'saves',
-	'shield':'shield',
-	'size':'size',
-	'speed':'speed',
-	'str':'STR',
-	'str_skills':'STR_skills',
-	'touch':'Touch',
-	'will':'Will',
-	'wis':'WIS',
-	'wis_skills':'WIS_skills'},
+	'ac':'AC',	'armor':'armor',	'attack':'attack',	'casterlevel':'CasterLevel',
+	'cha':'CHA',	'cha_skills':'CHA_skills',
+	'check':'Check',	'check_ability':'check_ability',	'check_skills':'check_skills',
+	'cmb':'CMB',	'cmd':'CMD',	'con':'CON',	'con_skills':'CON_skills',
+	'dex':'DEX',	'dex_skills':'DEX_skills',
+	'dmg':'DMG',	'dmg_melee':'dmg_melee',	'dmg_ranged':'dmg_ranged',
+	'flatfooted':'flat-footed',	'fort':'Fort',	'hptemp':'HP-temp',	'initiative':'Initiative',
+	'int':'INT',	'int_skills':'INT_skills',	'melee':'Melee',
+	'natural':'natural',	'ranged':'Ranged',	'ref':'Ref',	'saves':'saves',
+	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
+	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills'},
 totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort(),
-buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes'];
-
-var otherCharBonuses ={
+otherCharBonuses ={
 	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
 	'dex':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
 	'con':{'inherent':'CON-inherent','enhancement':'CON-enhance'},
@@ -82,7 +53,6 @@ var otherCharBonuses ={
 	'armor':{'enhancement':'armor3-enhance'},
 	'shield':{'enhancement':'shield3-enhance'}
 	},
-
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
 	'deflection','dodge','natural',	'shield','armor'],
@@ -118,15 +88,6 @@ affectedBuffs = {
 	'wis_skills':['check_skills','check'],
 	'cha_skills':['check_skills','check']
 },
-armorcols=['ac','touch','flatfooted','cmd'],
-
-buffsPerRow=['b1','b2','b3','b4','b5','b6'],
-//these aways stack don't need to use max
-stackingTypes =['untyped','circumstance','dodge','penalty'],
-//these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
-bonusesWithNoTypes=['dodge','deflection','size','hptemp'],//rmeove dodge deflection for v2
-//these have only their own type (like bonusesWithNoTypes) or 'enhancement'
-selfTypeOrEnhance=['armor','shield','natural'],
 //all total fields
 buffTotFields = _.chain(totColumns).map(function(totstr){
 		var isAbility = (PFAbilityScores.abilities.indexOf(totstr) >= 0) && totstr.indexOf('skill')<1;
@@ -137,7 +98,18 @@ buffTotFields = _.chain(totColumns).map(function(totstr){
 		}
 	}).flatten().value(),
 //character bonus/buff fields elsewhere on the sheet that stack with buffs
-charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value().sort(),
+charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value().sort();
+
+
+var buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes'],
+armorcols=['ac','touch','flatfooted','cmd'],
+buffsPerRow=['b1','b2','b3','b4','b5','b6'],
+//these aways stack don't need to use max
+stackingTypes =['untyped','circumstance','dodge','penalty'],
+//these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
+bonusesWithNoTypes=['dodge','deflection','size','hptemp'],//rmeove dodge deflection for v2
+//these have only their own type (like bonusesWithNoTypes) or 'enhancement'
+selfTypeOrEnhance=['armor','shield','natural'],
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
 	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
 	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype',
@@ -194,7 +166,12 @@ events = {
 	}
 };
 
-
+/** Looks at add_note_to_roll attribute of row and sets notes appropriately.
+ * @param {string} id id of row to calculate on
+ * @param {Map<string,string>} v from getAttrs
+ * @param {Map<string,string>} setter map to write to for setAttrs, optional
+ * @returns {Map<string,string>} setter or new map for setAttrs
+ */
 function getBuffNotes(id,v,setter){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_buff2_'+idStr,
@@ -252,15 +229,23 @@ function getBuffNotes(id,v,setter){
 		return setter;
 	}
 }
+/**Looks at add_note_to_roll attribute of row and sets notes appropriately.
+ * calls getBuffNotes
+ * @param {string} id id of row, optional
+ * @param {object} eventInfo from on function, either id or this must be populated.
+ */
 function addNoteAsync(id,eventInfo){
-	var idStr,prefix,fields,allfields;
+	var idStr,prefix,fields;
+	if (!id && !eventInfo){
+		return;
+	}
 	id=id||SWUtils.getRowId(eventInfo.sourceAttribute);
 	idStr = SWUtils.getRepeatingIDStr(id);
 	prefix = 'repeating_buff2_'+idStr;
 	
-	allfields=fields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
+	fields=buffNoteFields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
 	TAS.debug("the fields are ",fields);
-	getAttrs(allfields,function(v){
+	getAttrs(fields,function(v){
 		var setter = getBuffNotes(id,v);
 		if (_.size(setter)){
 			TAS.debug('PFBuffs set notes',setter);
@@ -268,7 +253,10 @@ function addNoteAsync(id,eventInfo){
 		}
 	});
 }
-
+/** sets all buff totals to 0, and the buff notes fields to blank.
+ * @param {function} callback 
+ * @param {boolean} silently 
+ */
 function clearBuffTotals (callback,silently){
 	var done=function(){
 		if(typeof callback === "function"){
@@ -291,17 +279,22 @@ function clearBuffTotals (callback,silently){
 			}
 			return memo;
 		},{});
+		//zero ability penalties
 		setter = _.reduce(PFAbilityScores.abilities,function(memo,col){
 			var val = parseInt(v['buff_'+col+'-total_penalty'],10)||0,
 			exists =parseInt(v['buff_'+col+'_penalty_exists'],10)||0;
 			if(val ){
 				memo['buff_'+col+'-total_penalty']=0;
-			} 
+			}
 			if (exists){
 				memo['buff_'+col+'_penalty_exists']=0;
 			}
 			return memo;
 		},setter);
+		//clear notes
+		buffNoteFields.forEach(function(attr){
+			setter[attr]='';
+		});
 		if (_.size(setter)){
 			if(silently){
 				params =PFConst.silentParams;
@@ -313,10 +306,12 @@ function clearBuffTotals (callback,silently){
 	});
 }
 
-/** Gets list of buffs from the buff rows for v2, so we don't have to keep looping through the ids.
+/** Gets list of buffs from the buff rows for  so we don't have to keep looping through the ids.
+ * Returns between 0 to 6 "rows" for each id , each correspondes to b1..b6 buffs.
+ * only returns buffs where -show is 1 and _val is != 0 (i.e. ones that exist for totalling)
  * @param {[string]} ids ids for list
- * @param {Map<string,string>} v 
- * @param {string} col  optional, buff to limit on
+ * @param {Map<string,string>} v from getAttrs
+ * @param {string} col  optional, buff to limit on. If supplied, only returns buffs where bonus =col, plus any related buffs 
  * @returns {[{'bonus':string,'bonusType':string,'val':Number}]} array of entries from rows
  */
 function assembleRows (ids,v,col){
@@ -372,7 +367,13 @@ function assembleRows (ids,v,col){
 	//TAS.debug("assembleRows returning with ",rows);
 	return rows;
 }
-
+/** Calculates total for given bonus and returns it in setter map. Synchronous.
+ * @param {string} col which bonus we are calculating (val from 'bonus' dropdown)
+ * @param {[{'bonus':string,'bonusType':string,'val':Number}]} rows output from assembleRows
+ * @param {Map<string,string>} v from getAttrs
+ * @param {Map<string,string>} setter map to write to for setAttrs, optional
+ * @returns {Map<string,string>} setter or new map for setAttrs
+ */
 function updateBuffTotal (col,rows,v,setter){
 	var isAbility=0,
 	bonuses = {},
@@ -542,7 +543,7 @@ function updateBuffTotal (col,rows,v,setter){
 		return setter;
 	}
 }
-/** update total for given buff
+/** update total for given buff. calls assembleRows, updateBuffTotal for the column.
  * @param {string} col the bonus/buff to calculate
  * @param {function} callback when done
  * @param {boolean} silently if set with silent true
@@ -655,17 +656,12 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs);
 		fields = fields.concat(buffTotFields);
 		fields = fields.concat(charBonusFields);
-		fields = fields.concat(buffNoteFields);
+		//don't need to get notes since we're forcing a reset
+		//fields = fields.concat(buffNoteFields);
 		
 		getAttrs(fields,function(v){
 			var rows=[], params={}, setter={};
 			try {
-				//TAS.debug("PFBuffs.updateAllBuffTotalsAsync2 v is",v);
-				setter = ids.reduce(function(m,id){
-					m = getBuffNotes(id,v,m);
-					v = _.extend(v,m); // copy any updates back for next pass
-					return m;
-				},setter);
 				ids = ids.filter(function(id){
 					return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 				});
@@ -673,11 +669,20 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 					clearBuffTotals(done,silently);
 					return;
 				}
+				//start with blank notes to force reset
+				buffNoteFields.forEach(function(attr){
+					setter[attr]='';
+					v[attr]='';
+				});
+				//TAS.debug("PFBuffs.updateAllBuffTotalsAsync2 v is",v);
+				setter = ids.reduce(function(m,id){
+					m = getBuffNotes(id,v,m);
+					v = _.extend(v,m); // copy any updates back for next pass
+					return m;
+				},setter);
+				//now calculate totals.
 				rows = assembleRows(ids,v);
 				_.each(buffColumns,function(col){
-					if(col==='dmg' || col==='str'||col==='hptemp'){
-					TAS.debug("updateAllBuffTotalsAsync2 now calling updatebufftotal on "+col);
-					}
 					setter=updateBuffTotal(col,rows,v,setter);
 				});
 			} catch (errou){
@@ -696,8 +701,9 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 		});
 	});		
 }
-/**Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotalAsync. 
- * @param {function} callback 
+/**Sets 1 or 0 for buffexists in status panel (only for recalculate)
+ * REFACTOR:  i think this can be deleted
+ * @param {function} callback when done
  */
 function resetStatuspanel (callback) {
 	var done = _.once(function () { if (typeof callback === "function") { callback(); } });
@@ -1007,7 +1013,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
-			setter[prefix+'notes']='Reach increased, height x2, weight x4. You must incrase attack row sizes manually.';
+			setter[prefix+'notes']='Reach increased, height x2, weight x4.';
 			break;
 		case 'divinefavor':
 			setter[prefix+'name']='Divine Favor';
@@ -1346,7 +1352,144 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='+2';
 			setter[prefix+'b3_val']=+2;
-			setter[prefix+'notes']='Reach decreased, height /2, weight /4. You must shrink attack row sizes manually.';
+			setter[prefix+'notes']='Reach decreased, height /2, weight /4.';
+			break;
+		case 'bane':
+			setter[prefix+'name']='Bane';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='will';
+			setter[prefix+'b2_macro-text']='-1';
+			setter[prefix+'b2_val']=-1;
+			setter[prefix+'add_note_to_roll']='save';
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Will save includes @{b2_val} to save vs fear, reverse if not saving vs fear';
+			break;
+		case 'deathknell':
+			setter[prefix+'name']='Death Knell';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='str';
+			setter[prefix+'b1_bonustype']='enhancement';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='casterlevel';
+			setter[prefix+'b2_bonustype']='untyped';
+			setter[prefix+'b2_macro-text']='1';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='hptemp';
+			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_macro-text']='1d8';
+			setter[prefix+'b3_val']=4;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='roll 1d8 and place in temp hp macro textbox';
+			break;
+		case 'magicvestment':
+			setter[prefix+'name']='Magic Vestment';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='enhancement';
+			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
+			setter[prefix+'b1_val']=1;
+			break;
+		case 'ward':
+			setter[prefix+'name']='Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='saves';
+			setter[prefix+'b2_bonustype']='resistance';
+			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'add_note_to_roll']='save';			
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='This ward lasts until the warded creature is hit or fails a saving throw';
+			break;
+		case 'battlespirit':
+			setter[prefix+'name']='Battle Spirit';
+			setter[prefix+'bufftype']='aura';
+			setter[prefix+'tabcat']='aura';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b2_val']=1;
+			break;
+		case 'battleward':
+			setter[prefix+'name']='Battle Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=3;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
+			break;
+		case 'hamperinghex':
+			setter[prefix+'name']='hampering Hex';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_macro-text']='-2';
+			setter[prefix+'b1_val']=-2;
+			setter[prefix+'notes']='At 8th level the penalty becomes -4';
+			break;
+		case 'boneward':
+			setter[prefix+'name']='Bone Ward';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='deflection';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_val']=2;
+			break;
+		case 'stardust':
+			setter[prefix+'name']='Stardust';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-1 - (floor(@{level}/4)';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'add_note_to_roll']='skill';
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Also apply @{b1_val} penalty to sight based perception checks';
+			break;
+		case 'airbarrier':
+			setter[prefix+'name']='Air Barrier';
+			setter[prefix+'bufftype']='hex';
+			setter[prefix+'tabcat']='hex';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='armor';
+			setter[prefix+'b1_bonustype']='armor';
+			setter[prefix+'b1_macro-text']='4 + ((floor((@{level}-3)/4)';
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50% miss chance.';
 			break;
 	}
 	return setter;
@@ -1362,8 +1505,15 @@ export function addCommonBuff(callback){
 	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
-			if(v['common_buff_toadd'] && v['common_buff_toadd']!=='0'){
+			if(v['common_buff_toadd'] && v['common_buff_toadd']!='0'){
 				setter = getCommonBuffEntries(v['common_buff_toadd']);
+				setter.common_buff_toadd='';
+				switch(v['common_buff_toadd']){
+					case 'slow':
+						setter['condition-Staggered']=1;
+						break;
+				}
+			} else if (v['common_buff_toadd']=='0'){
 				setter.common_buff_toadd='';
 			}
 			setter.add_common_buff = 0;
@@ -1573,15 +1723,13 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 	});
 });
 function registerEventHandlers () {
-	
 	on("change:add_common_buff",TAS.callback(function eventAddCommonBuff(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + ", event: " + eventInfo.sourceType);
 			addCommonBuff();
 		}
 	}));
-	
-	//======== NEW BUFFS ==================================================
+
 	_.each(otherCharBonuses,function(charFieldMap,buff){
 		_.each(charFieldMap,function(field,bonustype){
 			on("change:"+field,TAS.callback(function eventCharFieldUpdatesBuff(eventInfo){
@@ -1673,6 +1821,7 @@ function registerEventHandlers () {
 						updateBuffTotalAsync(v['repeating_buff2_'+b+'_bonus']);
 					}
 				});
+				addNoteAsync(null,eventInfo);
 				setter['repeating_buff2_tabcat2']=v.repeating_buff2_enable_toggle||'0';
 				SWUtils.setWrapper(setter,PFConst.silentParams);
 			});
