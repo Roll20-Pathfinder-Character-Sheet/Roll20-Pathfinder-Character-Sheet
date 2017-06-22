@@ -1362,7 +1362,7 @@ export function addCommonBuff(callback){
 	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
-			if(v['common_buff_toadd'] && v['common_buff_toadd']!=='0'){
+			if(v['common_buff_toadd'] && v['common_buff_toadd']!='0'){
 				setter = getCommonBuffEntries(v['common_buff_toadd']);
 				setter.common_buff_toadd='';
 				switch(v['common_buff_toadd']){
@@ -1370,7 +1370,7 @@ export function addCommonBuff(callback){
 						setter['condition-Staggered']=1;
 						break;
 				}
-			} else if (v['common_buff_toadd']==='0'){
+			} else if (v['common_buff_toadd']=='0'){
 				setter.common_buff_toadd='';
 			}
 			setter.add_common_buff = 0;
