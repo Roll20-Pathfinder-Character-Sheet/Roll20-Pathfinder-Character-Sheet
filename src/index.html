@@ -215,9 +215,13 @@
 							<option value="" selected>Select one</option>
 							<option value="aid">Aid</option>
 							<option value="bless">Bless</option>
+							<option value="blessingoffervor">Blessing of Fervor</option>
+							<option value="descrate">Desecrate (if undead)</option>
 							<option value="divinefavor">Divine Favor</option>
 							<option value="enlargeperson">Enlarge Person</option>
+							<option value="goodhope">Good Hope</option>
 							<option value="haste">Haste</option>
+							<option value="heroism">Heroism</option>
 							<option value="inspirecourage">Inspire Courage</option>
 							<option value="inspiregreatness">Inspire Greatness</option>
 							<option value="inspiredrage">Inspired Rage</option>
@@ -227,6 +231,14 @@
 							<option value="unchainedrage">Rage (Unchained)</option>
 							<option value="shield">Shield</option>
 							<option value="shieldoffaith">Shield of Faith</option>
+							<option value="0">DEBUFFS</option>
+							<option value="archonsaura">Archon's Aura</option>
+							<option value="consecrate">Consecrate (if undead)</option>
+							<option value="crushingdespair">Crushing Despair</option>
+							<option value="curse">Curse</option>
+							<option value="prayerdebuff">Prayer (Debuff)</option>
+							<option value="reduceperson">Reduce Person</option>
+							<option value="slow">Slow</option>
 						</select>
 						<span>Common Buff</span>
 					</label>
@@ -296,6 +308,16 @@
 										<option value="other" data-i18n="other">Other</option>
 									</select>
 									<span data-i18n="type">Type</span>
+								</label>
+								<label class="sheet-small-label2 sheet-entry-med">
+									<select name="attr_add_note_to_roll" title="@{repeating_buff2_$X_add_note_to_roll}" class="sheet-select-small">
+										<option value="" data-i18n="not-applicable-abbrv-default" selected>N/A</option>
+										<option value="attack" data-i18n="attack">attack</option>
+										<option value="save" data-i18n="save">save</option>
+										<option value="init" data-i18n="initiative-abbrv">Init</option>
+										<option value="skill" data-i18n="skill">Skill</option>
+									</select>
+									<span  data-i18n="add-note-to-roll">Add note to roll</span>
 								</label>
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b1-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
@@ -746,16 +768,6 @@
 									<label class="sheet-small-label2 sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b6_macro-text" title="@{repeating_buff2_$X_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b6 calc</span></label>
 									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b6_val" title="@{repeating_buff2_$X_b6_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b6</span></label>
 								</div>
-								<label class="sheet-small-label2 sheet-entry-med">
-									<select name="attr_add_note_to_roll" title="@{repeating_buff2_$X_add_note_to_roll}" class="sheet-select-small">
-										<option value="" data-i18n="not-applicable-abbrv-default" selected>N/A</option>
-										<option value="attack" data-i18n="attack">attack</option>
-										<option value="save" data-i18n="save">save</option>
-										<option value="init" data-i18n="initiative-abbrv">Init</option>
-										<option value="skill" data-i18n="skill">Skill</option>
-									</select>
-									<span  data-i18n="add-note-to-roll">Add note below to roll</span>
-								</label>
 								<div class="sheet-sect sheet-expand">
 									<input type="checkbox" class="sheet-showarrow sheet-options-show" title="@{repeating_buff2_$X_options-show}" name="attr_options-show" value="1" checked />
 									<label class="sheet-showsect sheet-options-showlabel" data-i18n="select-buffs">Select Buffs</label>
