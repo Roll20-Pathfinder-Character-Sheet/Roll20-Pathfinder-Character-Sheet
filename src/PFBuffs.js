@@ -1013,7 +1013,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
-			setter[prefix+'notes']='Reach increased, height x2, weight x4. You must incrase attack row sizes manually.';
+			setter[prefix+'notes']='Reach increased, height x2, weight x4.';
 			break;
 		case 'divinefavor':
 			setter[prefix+'name']='Divine Favor';
@@ -1352,7 +1352,57 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='+2';
 			setter[prefix+'b3_val']=+2;
-			setter[prefix+'notes']='Reach decreased, height /2, weight /4. You must shrink attack row sizes manually.';
+			setter[prefix+'notes']='Reach decreased, height /2, weight /4.';
+			break;
+		case 'bane':
+			setter[prefix+'name']='Bane';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='will';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='-1';
+			setter[prefix+'b2_val']=-1;
+			setter[prefix+'add_note_to_roll']='save';
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Will save includes @{b2_val} to save vs fear, reverse if not saving vs fear';
+			break;
+		case 'deathknell':
+			setter[prefix+'name']='Death Knell';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='str';
+			setter[prefix+'b1_bonustype']='enhancement';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=-2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='casterlevel';
+			setter[prefix+'b2_bonustype']='untyped';
+			setter[prefix+'b2_macro-text']='1';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='hptemp';
+			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_macro-text']='1d8';
+			setter[prefix+'b3_val']=4;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='roll 1d8 and place in temp hp macro textbox';
+			break;
+		case 'magicvestment':
+			setter[prefix+'name']='Magic Vestment';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonustype']='enhancement';
+			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
+			setter[prefix+'b1_val']=1;
 			break;
 	}
 	return setter;

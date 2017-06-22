@@ -213,33 +213,35 @@
 					<label class="sheet-small-label2">
 						<select name="attr_common_buff_toadd" class="sheet-select-small">
 							<option value="" selected>Select one</option>
-							<option value="aid">Aid</option>
-							<option value="bless">Bless</option>
-							<option value="blessingoffervor">Blessing of Fervor</option>
-							<option value="descrate">Desecrate (if undead)</option>
-							<option value="divinefavor">Divine Favor</option>
-							<option value="enlargeperson">Enlarge Person</option>
-							<option value="goodhope">Good Hope</option>
-							<option value="haste">Haste</option>
-							<option value="heroism">Heroism</option>
-							<option value="inspirecourage">Inspire Courage</option>
-							<option value="inspiregreatness">Inspire Greatness</option>
-							<option value="inspiredrage">Inspired Rage</option>
-							<option value="magearmor">Mage Armor</option>
-							<option value="prayer">Prayer</option>
-							<option value="rage">Rage</option>
-							<option value="unchainedrage">Rage (Unchained)</option>
-							<option value="shield">Shield</option>
-							<option value="shieldoffaith">Shield of Faith</option>
+							<option value="aid">&nbsp;<span>Aid</span></option>
+							<option value="bless">&nbsp;<span>Bless</span></option>
+							<option value="blessingoffervor">&nbsp;<span>Blessing of Fervor</span></option>
+							<option value="deathknell">&nbsp;<span>Death Knell</span></option>
+							<option value="descrate">&nbsp;<span>Desecrate (if undead)</span></option>
+							<option value="divinefavor">&nbsp;<span>Divine Favor</span></option>
+							<option value="enlargeperson">&nbsp;<span>Enlarge Person</span></option>
+							<option value="goodhope">&nbsp;<span>Good Hope</span></option>
+							<option value="haste">&nbsp;<span>Haste</span></option>
+							<option value="heroism">&nbsp;<span>Heroism</span></option>
+							<option value="inspirecourage">&nbsp;<span>Inspire Courage</span></option>
+							<option value="inspiregreatness">&nbsp;<span>Inspire Greatness</span></option>
+							<option value="inspiredrage">&nbsp;<span>Inspired Rage</span></option>
+							<option value="magearmor">&nbsp;<span>Mage Armor</span></option>
+							<option value="magicvestment">&nbsp;<span>Magic Vestment</span></option>							
+							<option value="prayer">&nbsp;<span>Prayer</span></option>
+							<option value="rage">&nbsp;<span>Rage</span></option>
+							<option value="unchainedrage">&nbsp;<span>Rage (Unchained)</span></option>
+							<option value="shield">&nbsp;<span>Shield</span></option>
+							<option value="shieldoffaith">&nbsp;<span>Shield of Faith</span></option>
 							<option value="0">DEBUFFS</option>
-							<option value="archonsaura">Archon's Aura</option>
-							<option value="consecrate">Consecrate (if undead)</option>
-							<option value="crushingdespair">Crushing Despair</option>
-							<option value="curse">Curse</option>
-							<option value="prayerdebuff">Prayer (Debuff)</option>
-							<option value="reduceperson">Reduce Person</option>
-							<option value="slow">Slow</option>
-						</select>
+							<option value="archonsaura">&nbsp;<span>Archon's Aura</span></option>
+							<option value="bane">&nbsp;<span>Bane</span></option>
+							<option value="consecrate">&nbsp;<span>Consecrate (if undead)</span></option>
+							<option value="crushingdespair">&nbsp;<span>Crushing Despair</span></option>
+							<option value="curse">&nbsp;<span>Curse</span></option>
+							<option value="prayerdebuff">&nbsp;<span>Prayer (Debuff)</span></option>
+							<option value="reduceperson">&nbsp;<span>Reduce Person</span></option>
+							<option value="slow">&nbsp;<span>Slow</span></option>						</select>
 						<span>Common Buff</span>
 					</label>
 					<label class="sheet-small-label2">
@@ -263,8 +265,8 @@
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab5" data-i18n="item">Item</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab6 sheet-wider-tab" name="attr_buffs_tab" value="template" data-i18n-title="monster-template" data-i18n-aria-label="monster-template" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab6 sheet-wider-tab" data-i18n="template">Template</label>
-				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="other" data-i18n-title="other" data-i18n-aria-label="other" />
-				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="other">Other</label>
+				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="aura" data-i18n-title="aura" data-i18n-aria-label="aura" />
+				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="aura">aura</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_buffs_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab99 sheet-narrow-tab" data-i18n="all">All</label>
 				<span class="sheet-newbuff sheet-divider-db-lg">&nbsp;</span>
@@ -285,6 +287,7 @@
 							<input type="radio" name="attr_tabcat" value="class" class="sheet-tabcopy custnavsection-4" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="item" class="sheet-tabcopy custnavsection-5" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="template" class="sheet-tabcopy custnavsection-6" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="aura" class="sheet-tabcopy custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="1" class="sheet-tabcopy custnavsection-10" checked role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="0" class="sheet-tabcopy custnavsection-11" role="presentation" />
 							<div class="sheet-custrepeating-border sheet-nontable-repeating compendium-drop-target">
@@ -304,6 +307,7 @@
 										<option value="song" data-i18n="song">Song</option>
 										<option value="class" data-i18n="class">Class</option>
 										<option value="item" data-i18n="item">Item</option>
+										<option value="aura" data-i18n="aura">Aura</option>
 										<option value="template" data-i18n="template">Template</option>
 										<option value="other" data-i18n="other">Other</option>
 									</select>
