@@ -896,6 +896,31 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_macro-text']='1';
 			setter[prefix+'b4_val']=1;
 			break;
+		case 'prayerdebuff':
+			setter[prefix+'name']='Prayer (debuff)';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='luck';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='luck';
+			setter[prefix+'b2_macro-text']='-1';
+			setter[prefix+'b2_val']=-1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_bonustype']='luck';
+			setter[prefix+'b3_macro-text']='-1';
+			setter[prefix+'b3_val']=-1;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='check_skills';
+			setter[prefix+'b4_bonustype']='luck';
+			setter[prefix+'b4_macro-text']='-1';
+			setter[prefix+'b4_val']=-1;
+			break;
 		case 'bless':
 			setter[prefix+'name']='Bless';
 			setter[prefix+'bufftype']='spell';
@@ -982,7 +1007,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
-			setter[prefix+'notes']='Reach increased, height x2, weight x4';
+			setter[prefix+'notes']='Reach increased, height x2, weight x4. You must incrase attack row sizes manually.';
 			break;
 		case 'divinefavor':
 			setter[prefix+'name']='Divine Favor';
@@ -1102,7 +1127,227 @@ function getCommonBuffEntries(name){
 			setter[prefix+'notes']='While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration';
 			setter[prefix+'description-show']=1;
 			break;
-
+		case 'heroism':
+			setter[prefix+'name']='Heroism';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='saves';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='2';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='check_skills';
+			setter[prefix+'b3_bonustype']='morale';
+			setter[prefix+'b3_macro-text']='2';
+			setter[prefix+'b3_val']=2;
+			break;
+		case 'blessingoffervor':
+			setter[prefix+'name']='Blessing of Fervor';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='untyped';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='ac';
+			setter[prefix+'b2_bonustype']='dodge';
+			setter[prefix+'b2_macro-text']='2';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ref';
+			setter[prefix+'b3_bonustype']='dodge';
+			setter[prefix+'b3_macro-text']='2';
+			setter[prefix+'b3_val']=2;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='speed';
+			setter[prefix+'b4_bonustype']='enhancement';
+			setter[prefix+'b4_macro-text']='30';
+			setter[prefix+'b4_val']=30;
+			setter[prefix+'notes']='Pick speed bonus, or Attack/AC/Reflex bonus, or other bonuses per round.';
+			setter[prefix+'description-show']=1;
+			break;
+		case 'goodhope':
+			setter[prefix+'name']='Good Hope';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='2';
+			setter[prefix+'b1_val']=2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_macro-text']='2';
+			setter[prefix+'b2_val']=2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_bonustype']='morale';
+			setter[prefix+'b3_macro-text']='2';
+			setter[prefix+'b3_val']=2;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='check';
+			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'b4_val']=2;
+			break;
+		case 'crushingdespair':
+			setter[prefix+'name']='Crushing Despair';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-2';
+			setter[prefix+'b1_val']=-2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_macro-text']='-2';
+			setter[prefix+'b2_val']=-2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_macro-text']='-2';
+			setter[prefix+'b3_val']=-2;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='check';
+			setter[prefix+'b4_macro-text']='-2';
+			setter[prefix+'b4_val']=-2;
+			break;
+		case 'archonsaura':
+			setter[prefix+'name']='Archon\'s Aura';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-2';
+			setter[prefix+'b1_val']=-2;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='saves';
+			setter[prefix+'b2_macro-text']='-2';
+			setter[prefix+'b2_val']=-2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ac';
+			setter[prefix+'b3_macro-text']='-2';
+			setter[prefix+'b3_val']=-2;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='until it successfully hits caster with an attack';
+			break;
+		case 'curse':
+			setter[prefix+'name']='Curse';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='str';
+			setter[prefix+'b1_macro-text']='-6';
+			setter[prefix+'b1_val']=-6;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='attack';
+			setter[prefix+'b2_macro-text']='-4';
+			setter[prefix+'b2_val']=-4;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='saves';
+			setter[prefix+'b2_macro-text']='-4';
+			setter[prefix+'b2_val']=-4;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='check';
+			setter[prefix+'b2_macro-text']='-4';
+			setter[prefix+'b2_val']=-4;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Choose -6 to any ability or the other debuffs, or turn all off and on each turn, the target has a 50% chance to act normally; otherwise, it takes no action';
+			break;
+		case 'desecrate':
+			setter[prefix+'name']='Desecrate (If Undead)';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='profane';
+			setter[prefix+'b1_macro-text']='1';
+			setter[prefix+'b1_val']=1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_bonustype']='profane';
+			setter[prefix+'b2_macro-text']='1';
+			setter[prefix+'b2_val']=1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_bonustype']='profane';
+			setter[prefix+'b3_macro-text']='1';
+			setter[prefix+'b3_val']=1;
+			setter[prefix+'add_note_to_roll']='save'
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='add +3 to save vs channel energy.'
+			break;
+		case 'consecrate':
+			setter[prefix+'name']='Consecrate (If Undead)';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg';
+			setter[prefix+'b2_macro-text']='-1';
+			setter[prefix+'b2_val']=-1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='saves';
+			setter[prefix+'b3_macro-text']='-1';
+			setter[prefix+'b3_val']=-1;
+			setter[prefix+'add_note_to_roll']='save'
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Channel energy save DCs increase by 3 (equivalent to -3 penalty)'
+			break;
+		case 'slow':
+			setter[prefix+'name']='Slow';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='ac';
+			setter[prefix+'b2_macro-text']='-1';
+			setter[prefix+'b2_val']=-1;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='ref';
+			setter[prefix+'b3_macro-text']='-1';
+			setter[prefix+'b3_val']=-1;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b3_bonus']='speed';
+			setter[prefix+'b3_macro-text']='-ceil(ceil(@{speed-base}/2)/5)*5';
+			setter[prefix+'b3_val']=-15;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='Also apply staggered condition'
+			break;
+		case 'reduceperson':
+			setter[prefix+'name']='Reduce Person';
+			setter[prefix+'bufftype']='spell';
+			setter[prefix+'tabcat']='spell';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='size';
+			setter[prefix+'b1_macro-text']='-1';
+			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='str';
+			setter[prefix+'b2_bonustype']='size';
+			setter[prefix+'b2_macro-text']='-2';
+			setter[prefix+'b2_val']=-2;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='dex';
+			setter[prefix+'b3_bonustype']='size';
+			setter[prefix+'b3_macro-text']='+2';
+			setter[prefix+'b3_val']=+2;
+			setter[prefix+'notes']='Reach decreased, height /2, weight /4. You must shrink attack row sizes manually.';
+			break;
 	}
 	return setter;
 }
@@ -1117,7 +1362,7 @@ export function addCommonBuff(callback){
 	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
-			if(v['common_buff_toadd']){
+			if(v['common_buff_toadd'] && v['common_buff_toadd']!=='0'){
 				setter = getCommonBuffEntries(v['common_buff_toadd']);
 				setter.common_buff_toadd='';
 			}
