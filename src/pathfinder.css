@@ -2730,7 +2730,7 @@ input[type="number"].sheet-entry-wide {
 }
 /* new buffs*/
 .sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
-    width: 32em;
+    max-width: 32em;
 }
 .sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff .sheet-linked-fields,
 .sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields {

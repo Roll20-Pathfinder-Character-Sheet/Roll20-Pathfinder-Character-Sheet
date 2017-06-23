@@ -107,7 +107,7 @@ buffsPerRow=['b1','b2','b3','b4','b5','b6'],
 //these aways stack don't need to use max
 stackingTypes =['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
-bonusesWithNoTypes=['dodge','deflection','size','hptemp'],//rmeove dodge deflection for v2
+bonusesWithNoTypes=['size','hptemp'],//rmeove dodge deflection for v2
 //these have only their own type (like bonusesWithNoTypes) or 'enhancement'
 selfTypeOrEnhance=['armor','shield','natural'],
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
@@ -871,8 +871,10 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_val']=2;
 			setter[prefix+'b5-show']=1;
 			setter[prefix+'b5_bonus']='hptemp';
+			setter[prefix+'b5_hide']=1;
 			setter[prefix+'b5_macro-text']='2*@{level}';
 			setter[prefix+'b5_val']=2;
+			setter[prefix+'b5_val_error']=1;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'notes']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
 			setter[prefix+'description-show']=1;
@@ -961,6 +963,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_val']=1;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='hptemp';
+			setter[prefix+'b3_hide']=1;
 			setter[prefix+'b3_val_error']=1;
 			setter[prefix+'b3_macro-text']='1d8 + casterlvl';
 			setter[prefix+'add_note_to_roll']='save';
@@ -1001,6 +1004,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='size';
+			setter[prefix+'b1_hide']=1;
 			setter[prefix+'b1_macro-text']='1';
 			setter[prefix+'b1_val']=1;
 			setter[prefix+'b2-show']=1;
@@ -1103,7 +1107,9 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_val']=2;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='hptemp';
+			setter[prefix+'b3_hide']=1;
 			setter[prefix+'b3_macro-text']='2d10+(2*@{CON-mod})';
+			setter[prefix+'b3_val_error']=1;
 			break;
 		case 'inspiredrage':
 			setter[prefix+'name']='Inspired Rage';
@@ -1340,6 +1346,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='size';
+			setter[prefix+'b1_hide']=1;
 			setter[prefix+'b1_macro-text']='-1';
 			setter[prefix+'b1_val']=-1;
 			setter[prefix+'b2-show']=1;
@@ -1386,9 +1393,10 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_val']=1;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='hptemp';
-			setter[prefix+'b3_bonustype']='untyped';
+			setter[prefix+'b3_hide']=1;
 			setter[prefix+'b3_macro-text']='1d8';
 			setter[prefix+'b3_val']=4;
+			setter[prefix+'b3_val_error']=1;			
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='roll 1d8 and place in temp hp macro textbox';
 			break;

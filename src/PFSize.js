@@ -174,9 +174,11 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				currDie=parseInt(matches[2],10);
 				currow =newrow;
 				if (sizediff >0 ) {
+					currSize--;
 					sizediff--;
 					if (currow===20){break;}
 				} else {
+					currSize++;
 					sizediff++;
 					if (currow===1) {break;}
 				}
