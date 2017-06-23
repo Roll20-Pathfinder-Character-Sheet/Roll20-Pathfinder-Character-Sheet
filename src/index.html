@@ -709,7 +709,6 @@
 									<label class="sheet-small-label2 sheet-sect sheet-macro-text-inline sheet-highlight"><input type="text" name="attr_b5_macro-text" title="@{repeating_buff2_$X_b5_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="sheet-super sheet-note-a" data-i18n="buff-calculation">b5 calc</span></label>
 									<label class="sheet-small-label2 sheet-number sheet-highlight"><input type="number" name="attr_b5_val" title="@{repeating_buff2_$X_b5_val}" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n="buff">b5</span></label>
 								</div>
-
 								<input class="sheet-nextitem-show" type="checkbox" name="attr_b6-show" value="1" />
 								<div class="sheet-linked-fields sheet-nextitem">
 									<label class="sheet-small-label2 sheet-entry-med">
@@ -1078,7 +1077,7 @@
 											<span title="Bonus to combat maneuver defense." data-i18n-title="buff-cmd-title" data-i18n-aria-label="buff-cmd-title"><span data-i18n="combat-maneuver-defense-abbrv">CMD</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMD-show}" name="attr_buff-CMD-show" value="1" /></span>
 											<span title="Bonus to armor." data-i18n-title="buff-armor-title" data-i18n-aria-label="buff-armor-title"><span data-i18n="armor">Armor</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-armor-show}" name="attr_buff-armor-show" value="1" /></span>
 											<span title="Bonus to shield." data-i18n-title="buff-shield-title" data-i18n-aria-label="buff-shield-title"><span data-i18n="shield">Shield</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-shield-show}" name="attr_buff-shield-show" value="1" /></span>
-											<span title="Bonus to natural." data-i18n-title="buff-natural-title" data-i18n-aria-label="buff-natural-title"><span data-i18n="natural-abbrv">Natural armor</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-natural-show}" name="attr_buff-natural-show" value="1" /></span>
+											<span title="Bonus to natural." data-i18n-title="buff-natural-title" data-i18n-aria-label="buff-natural-title"><span data-i18n="natural-armor">Natural armor</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-natural-show}" name="attr_buff-natural-show" value="1" /></span>
 											<span title="Bonus to deflection." data-i18n-title="buff-deflection-title" data-i18n-aria-label="buff-deflection-title"><span data-i18n="deflection">Deflection</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-deflection-show}" name="attr_buff-deflection-show" value="1" /></span>
 											<span title="Bonus to dodge." data-i18n-title="buff-dodge-title" data-i18n-aria-label="buff-dodge-title"><span data-i18n="dodge">Dodge</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-dodge-show}" name="attr_buff-dodge-show" value="1" /></span>
 										</div>
@@ -7387,15 +7386,15 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
-										<option value="0" data-i18n="custom" >Custom</option>
+										<option value="0" data-i18n="not-applicable" >N/A</option>
+										<option value="@{level}" data-i18n="character-level" selected>Character Level</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
 										<option value="@{class-1-level}" data-i18n="2-ordinal-class">2nd Class</option>
 										<option value="@{class-2-level}" data-i18n="3-ordinal-class">3rd Class</option>
 										<option value="@{class-3-level}" data-i18n="4-ordinal-class">4th Class</option>
 										<option value="@{class-4-level}" data-i18n="5-ordinal-class">5th Class</option>
 										<option value="@{class-5-level}" data-i18n="6-ordinal-class">6th Class</option>
-										<option value="@{npc-hd-num}" data-i18n="race-hd-default" selected>Race only</option>
-										<option value="@{level}" data-i18n="character-level" >Character Level</option>
+										<option value="@{npc-hd-num}" data-i18n="race-hd-default">Race only</option>
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
@@ -7423,6 +7422,7 @@
 										<option value="perday" data-i18n="per-day-abbrv">/day</option>
 										<option value="hexfreq" data-i18n="24-per-target-abbrv">/24/target</option>
 										<option value="everyrounds" data-i18n="every-rounds-abbrv">Every n rnds</option>
+										<option value="perweek" data-i18n="per-week-abbrv">/week</option>
 										<option value="permonth" data-i18n="per-month-abbrv">/month</option>
 										<option value="other" data-i18n="other">Other</option>
 									</select>
@@ -7430,14 +7430,15 @@
 								</label>
 								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-sect sheet-nextitem sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_rounds_between}" name="attr_rounds_between" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place" ></textarea><span data-i18n="rounds">Rounds</span></label>
-								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-or3-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
-								<label class="sheet-divider-db-lg sheet-or3-sect">/</label>
+								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="perweek" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-or4-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
+								<label class="sheet-divider-db-lg sheet-or4-sect">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-highlight sheet-or3-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or3-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-highlight sheet-or4-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or4-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -11837,15 +11838,15 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
-										<option value="0" data-i18n="custom" >Custom</option>
+										<option value="0" data-i18n="not-applicable" >n/a</option>
+										<option value="@{level}" data-i18n="character-level" selected>Character Level</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
 										<option value="@{class-1-level}" data-i18n="2-ordinal-class">2nd Class</option>
 										<option value="@{class-2-level}" data-i18n="3-ordinal-class">3rd Class</option>
 										<option value="@{class-3-level}" data-i18n="4-ordinal-class">4th Class</option>
 										<option value="@{class-4-level}" data-i18n="5-ordinal-class">5th Class</option>
 										<option value="@{class-5-level}" data-i18n="6-ordinal-class">6th Class</option>
-										<option value="@{npc-hd-num}" data-i18n="race-hd-default" selected>Race only</option>
-										<option value="@{level}" data-i18n="character-level" >Character Level</option>
+										<option value="@{npc-hd-num}" data-i18n="race-hd-default">Race only</option>
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
@@ -11873,6 +11874,7 @@
 										<option value="perday" data-i18n="per-day-abbrv">/day</option>
 										<option value="hexfreq" data-i18n="24-per-target-abbrv">/24/target</option>
 										<option value="everyrounds" data-i18n="every-rounds-abbrv">Every n rnds</option>
+										<option value="perweek" data-i18n="per-week-abbrv">/week</option>
 										<option value="permonth" data-i18n="per-month-abbrv">/month</option>
 										<option value="other" data-i18n="other">Other</option>
 									</select>
@@ -11880,14 +11882,15 @@
 								</label>
 								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-sect sheet-nextitem sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_rounds_between}" name="attr_rounds_between" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place" ></textarea><span data-i18n="rounds">Rounds</span></label>
-								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-or3-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
-								<label class="sheet-divider-db-lg sheet-or3-sect">/</label>
+								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="perweek" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or4-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-or4-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
+								<label class="sheet-divider-db-lg sheet-or4-sect">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-highlight sheet-or3-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or3-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-highlight sheet-or4-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or4-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
