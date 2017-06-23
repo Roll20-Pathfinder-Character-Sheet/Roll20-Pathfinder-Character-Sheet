@@ -107,7 +107,7 @@ buffsPerRow=['b1','b2','b3','b4','b5','b6'],
 //these aways stack don't need to use max
 stackingTypes =['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
-bonusesWithNoTypes=['dodge','deflection','size','hptemp'],//rmeove dodge deflection for v2
+bonusesWithNoTypes=['size','hptemp'],//rmeove dodge deflection for v2
 //these have only their own type (like bonusesWithNoTypes) or 'enhancement'
 selfTypeOrEnhance=['armor','shield','natural'],
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
