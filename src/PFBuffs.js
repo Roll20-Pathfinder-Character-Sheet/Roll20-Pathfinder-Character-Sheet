@@ -105,7 +105,7 @@ var buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','bu
 armorcols=['ac','touch','flatfooted','cmd'],
 buffsPerRow=['b1','b2','b3','b4','b5','b6'],
 //these aways stack don't need to use max
-stackingTypes =['untyped','circumstance','dodge','penalty'],
+stackingTypes =['untyped','circumstance','dodge','penalty','hptemp'],
 //these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
 bonusesWithNoTypes=['size','hptemp'],//rmeove dodge deflection for v2
 //these have only their own type (like bonusesWithNoTypes) or 'enhancement'
@@ -402,7 +402,7 @@ function updateBuffTotal (col,rows,v,setter){
 				sums.sum = rows.filter(function(row){
 					return row.val>0;
 				}).reduce(function(m,row){
-					m = Math.max(row.val,m);
+					m += (row.val||0);
 					return m;
 				},0);
 			} else if (col==='size' ){
