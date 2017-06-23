@@ -272,8 +272,8 @@
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab5" data-i18n="item">Item</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="aura" data-i18n-title="aura" data-i18n-aria-label="aura" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="aura">aura</label>
-				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab8 sheet-narrow-tab" name="attr_buffs_tab" value="hex" data-i18n-title="hex" data-i18n-aria-label="hex" />
-				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab8 sheet-narrow-tab" data-i18n="hex">hex</label>
+				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab8" name="attr_buffs_tab" value="hex" data-i18n-title="hex" data-i18n-aria-label="hex" />
+				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab8" data-i18n="hex">hex</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab6 sheet-wider-tab" name="attr_buffs_tab" value="template" data-i18n-title="monster-template" data-i18n-aria-label="monster-template" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab6 sheet-wider-tab" data-i18n="template">Template</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_buffs_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
@@ -284,7 +284,7 @@
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab11 sheet-wider-tab" name="attr_buffs_tab" value="11" data-i18n-title="disabled-buffs" data-i18n-aria-label="disabled-buffs" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab11 sheet-wider-tab" data-i18n="disabled-only">Disabled</label>
 				<div class="sheet-cheat"></div>
-				<div class="sheet-sect-buff sheet-newbuff sheet-repeating-fields">
+				<div class="sheet-sect-buff sheet-newbuff sheet-repeating-fields sheet-hiderepborder">
 					<fieldset class="repeating_buff2">
 						<div class="sheet-nontable-repeating">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
@@ -3518,7 +3518,7 @@
 									<br>
 									<label>
 										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-										<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
+										<input type="hidden" name="attr_skill_options" value="@{buff_skill_notes} @{toggle_skill-notes}" disabled >
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
 									</label>
 									<br>
@@ -7428,16 +7428,16 @@
 									</select>
 									<span data-i18n-title="frequency-title" data-i18n-aria-label="frequency-title" data-i18n="frequency-abbrv">Freq</span>
 								</label>
-								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-or-C-show sheet-noshow" />
+								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-sect sheet-nextitem sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_rounds_between}" name="attr_rounds_between" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place" ></textarea><span data-i18n="rounds">Rounds</span></label>
-								<input type="checkbox" value="not-applicable" name="attr_frequency" class="sheet-or-D-show sheet-noshow" />
-								<input type="checkbox" value="constant" name="attr_frequency" class="sheet-or-A-show sheet-noshow" />
-								<input type="checkbox" value="atwill" name="attr_frequency" class="sheet-or-B-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-nor-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
-								<label class="sheet-divider-db-lg sheet-nor-sect sheet-sect-inverse">/</label>
+								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-or3-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
+								<label class="sheet-divider-db-lg sheet-or3-sect">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-highlight sheet-nor-sect sheet-sect-inverse" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-highlight sheet-or3-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or3-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -11370,7 +11370,7 @@
 									<br>
 									<label>
 										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-										<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
+										<input type="hidden" name="attr_skill_options" value="{{buff_note=@{buff_skill_notes}}} @{toggle_skill-notes}" disabled >
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
 									</label>
 									<br>
@@ -11878,16 +11878,16 @@
 									</select>
 									<span data-i18n-title="frequency-title" data-i18n-aria-label="frequency-title" data-i18n="frequency-abbrv">Freq</span>
 								</label>
-								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-or-C-show sheet-noshow" />
+								<input type="checkbox" value="everyrounds" name="attr_frequency" class="sheet-nextitem-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-sect sheet-nextitem sheet-entry-10p-shrink"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_rounds_between}" name="attr_rounds_between" placeholder="Query/Macro" data-i18n-placeholder="full-macro-place" ></textarea><span data-i18n="rounds">Rounds</span></label>
-								<input type="checkbox" value="not-applicable" name="attr_frequency" class="sheet-or-D-show sheet-noshow" />
-								<input type="checkbox" value="constant" name="attr_frequency" class="sheet-or-A-show sheet-noshow" />
-								<input type="checkbox" value="atwill" name="attr_frequency" class="sheet-or-B-show sheet-noshow" />
-								<label class="sheet-small-label2 sheet-nor-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
-								<label class="sheet-divider-db-lg sheet-nor-sect sheet-sect-inverse">/</label>
+								<input type="checkbox" value="perday" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<input type="checkbox" value="permonth" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<input type="checkbox" value="other" name="attr_frequency" class="sheet-or3-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-or3-sect" ><input class="sheet-narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="0" /><span class="sheet-nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
+								<label class="sheet-divider-db-lg sheet-or3-sect">/</label>
 								<input type="checkbox" name="attr_used_max_error" class="sheet-error-mshow" value="1" />
-								<label class="sheet-small-label2 sheet-highlight sheet-nor-sect sheet-sect-inverse" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-nor-sect sheet-sect-inverse sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+								<label class="sheet-small-label2 sheet-highlight sheet-or3-sect" ><input class="sheet-narrow-numbers sheet-calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="0" readonly /><span class="sheet-nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
+								<label class="sheet-small-label2 sheet-sect sheet-highlight sheet-hide-readonly sheet-or3-sect sheet-entry-10p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" ></textarea><span class="sheet-super sheet-note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
 								<div style="display:none;">
 									<input type="text" name="attr_compendium_category" accept="Category" value="" />
 									<input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />

@@ -2730,19 +2730,12 @@ input[type="number"].sheet-entry-wide {
 }
 /* new buffs*/
 .sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
-    width: 32em;
+    max-width: 32em;
 }
 .sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff .sheet-linked-fields,
 .sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields {
     width: 13.5em;
 }
-/* also hide bonustype dropdown 
-.sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff.sheet-linked-fields .sheet-small-label2.sheet-nextitem2,
-.sheet-minimize-show:checked ~ .sheet-sect-buff.sheet-newbuff.sheet-linked-fields .sheet-small-label2.sheet-macro-text-inline,
-.sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields .sheet-small-label2.sheet-nextitem2,
-.sheet-sect-buff.sheet-newbuff .sheet-counted:not(:checked) ~ .sheet-linked-fields .sheet-small-label2.sheet-macro-text-inline {
-    display:none;
-}*/
 
 .sheet-sect-buff.sheet-newbuff .sheet-linked-fields {
     border: 1px solid #808080;
@@ -2941,6 +2934,7 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-xor-A-show:checked~.sheet-xor-B-show:checked~.sheet-xor-sect,
 .sheet-nexor-A-show:checked~.sheet-nexor-B-show:not(:checked)~.sheet-nexor-sect,
 .sheet-nexor-A-show:not(:checked)~.sheet-nexor-B-show:checked~.sheet-nexor-sect,
+.sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked) ~ .sheet-or3-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ .sheet-either-or-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-class-table .sheet-either-or-sect,
 .sheet-spells-per-day .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-table .sheet-either-or-sect,
