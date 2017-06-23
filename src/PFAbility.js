@@ -1053,22 +1053,34 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setRuleTab(null,null,eventInfo);
 	}));
-/*	on("change:repeating_ability:rule_category", TAS.callback(function eventSetRuleCategory(eventInfo){
+	on("change:repeating_ability:rule_category", TAS.callback(function eventSetRuleCategory(eventInfo){
 		if(eventInfo.sourceType==='player'){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			getAttrs(['repeating_ability_rule_category','repeating_ability_CL-basis','repeating_ability_ability_type'],function(v){
+			getAttrs(['repeating_ability_frequency',  'repeating_ability_rule_category','repeating_ability_CL-basis','repeating_ability_ability_type'],function(v){
 				var setter={};
-				if( v.repeating_ability_rule_category === 'class-features' && v['repeating_ability_CL-basis']=="0"){
-					setter['repeating_ability_CL-basis']='@{class-0-level}';
-				} else if (v.repeating_ability_rule_category === 'racial-traits' && v['repeating_ability_CL-basis']=="0"){
-					setter['repeating_ability_CL-basis']='@{npc-hd-num}';
-				} else if(v.repeating_ability_rule_category==='spell-like-abilities' && v.repeating_ability_ability_type !== 'Sp'){
-					setter.repeating_ability_ability_type='Sp';
+				if( v.repeating_ability_rule_category === 'class-features' && 
+				 	(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0")){
+						setter['repeating_ability_CL-basis']='@{class-0-level}';
+				} else if (v.repeating_ability_rule_category === 'racial-traits' && 
+					(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0")){
+						setter['repeating_ability_CL-basis']='@{level}';
+				} else if(v.repeating_ability_rule_category==='spell-like-abilities'){
+					if(!v.repeating_ability_ability_type || v.repeating_ability_ability_type != 'Sp'){
+						setter.repeating_ability_ability_type='Sp';
+					}
+					if(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0"){
+						setter['repeating_ability_CL-basis']='@{level}';
+					}
+				}
+				if(! v.repeating_ability_frequency){
+					setter.repeating_ability_frequency="not-applicable";
+				}
+				if(_.size(setter)){
+					SWUtils.setWrapper(setter,{},setClassName);
 				}
 			});
 		}
 	}));
-	*/
 }
 registerEventHandlers();
 //PFConsole.log('   PFAbility module loaded        ' );
