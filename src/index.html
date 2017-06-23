@@ -3518,7 +3518,7 @@
 									<br>
 									<label>
 										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-										<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
+										<input type="hidden" name="attr_skill_options" value="@{buff_skill_notes} @{toggle_skill-notes}" disabled >
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
 									</label>
 									<br>
@@ -11370,7 +11370,7 @@
 									<br>
 									<label>
 										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-										<input type="hidden" name="attr_skill_options" value="@{toggle_skill-notes}" disabled >
+										<input type="hidden" name="attr_skill_options" value="{{buff_note=@{buff_skill_notes}}} @{toggle_skill-notes}" disabled >
 										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
 									</label>
 									<br>
