@@ -105,10 +105,10 @@ export function getSizeLevelChange (currSize,defaultSize) {
 	return levelChange;
 }
 /**updateDamageDice returns new dice for weapon/attack damage change due to size
- *@param {int} sizediff difference in LEVELS of size (Medium to Large is 1, Medium to Small is -1)
- *@param {int} defaultSize size modifier, necessary since different rules for small
- *@param {int} currDice num dice from 1 to n
- *@param {int} currDie num sides of die : valid only from 1 to 12
+ *@param {Number} sizediff difference in LEVELS of size (Medium to Large is 1, Medium to Small is -1)
+ *@param {Number} defaultSize size modifier, necessary since different rules for small
+ *@param {Number} currDice num dice from 1 to n
+ *@param {Number} currDie num sides of die : valid only from 1 to 12
  *@returns {jsobj} {dice:n,die:n}
  */
 export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
@@ -143,6 +143,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		if(!(isNaN(currDice)||isNaN(currDie))){
 			dicestring=currDice+"d"+currDie;
 			currSize=sizeModToEasySizeMap[String(defaultSize)];
+			TAS.debug("currSize now : "+currSize);
 			if (currDice<=0 || currDie > 12 ) {return null;}
 			if (currDie===4 && currDice >24){ currDice=24;}
 			else if (currDie===6 && currDice > 16) {currDice=16;}
@@ -168,16 +169,18 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				newrow = currow + rowdiff;
 				newrow = Math.min(Math.max(newrow,1),20);
 				dicestring = diceSizes[newrow][0];
+				TAS.debug("PFSize "+currDice+"d"+currDie+" is currrow:"+currow+" going from size:"+
+				   currSize+" of diff:"+sizediff+", move "+rowdiff+" levels to "+ newrow+" dice is "+dicestring);
 				matches=dicestring.match(/(\d+)d(\d+)/);
 				currDice=parseInt(matches[1],10);
 				currDie=parseInt(matches[2],10);
 				currow =newrow;
 				if (sizediff >0 ) {
-					currSize--;
+					currSize++;
 					sizediff--;
 					if (currow===20){break;}
 				} else {
-					currSize++;
+					currSize--;
 					sizediff++;
 					if (currow===1) {break;}
 				}
