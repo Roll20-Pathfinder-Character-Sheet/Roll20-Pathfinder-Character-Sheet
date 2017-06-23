@@ -179,11 +179,17 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				if (sizediff >0 ) {
 					currSize++;
 					sizediff--;
-					if (currow===20){break;}
+					if (currow>=20){
+						TAS.warn("PFSize.updateDamageDice increased off top of grid to row "+currrow);
+						break;
+					}
 				} else {
 					currSize--;
 					sizediff++;
-					if (currow===1) {break;}
+					if (currow<=1) {
+						TAS.warn("PFSize.updateDamageDice decreased under bottom of grid to row "+currrow);
+						break;
+					}
 				}
 			}
 		}
