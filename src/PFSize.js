@@ -137,6 +137,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return memo;
 	  },{});
 	try {
+		defaultSize = sizeModToEasySizeMap[String(defaultSize)];
 		//TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
 		currDice=parseInt(currDice,10);
 		currDie=parseInt(currDie,10);
