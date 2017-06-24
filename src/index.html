@@ -270,12 +270,10 @@
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab4" data-i18n="class">Class</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab5" name="attr_buffs_tab" value="item" data-i18n-title="item" data-i18n-aria-label="item" />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab5" data-i18n="item">Item</label>
-				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="aura" data-i18n-title="aura" data-i18n-aria-label="aura" />
-				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="aura">aura</label>
-				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab8" name="attr_buffs_tab" value="hex" data-i18n-title="hex" data-i18n-aria-label="hex" />
-				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab8" data-i18n="hex">hex</label>
-				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab6 sheet-wider-tab" name="attr_buffs_tab" value="template" data-i18n-title="monster-template" data-i18n-aria-label="monster-template" />
-				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab6 sheet-wider-tab" data-i18n="template">Template</label>
+				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab6" name="attr_buffs_tab" value="aura" data-i18n-title="aura" data-i18n-aria-label="aura" />
+				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab6" data-i18n="aura">aura</label>
+				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab7" name="attr_buffs_tab" value="hex" data-i18n-title="hex" data-i18n-aria-label="hex" />
+				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab7" data-i18n="hex">hex</label>
 				<input type="radio" class="sheet-newbuff sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_buffs_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
 				<label role="menuitem" class="sheet-newbuff sheet-tab sheet-tab99 sheet-narrow-tab" data-i18n="all">All</label>
 				<span class="sheet-newbuff sheet-divider-db-lg">&nbsp;</span>
@@ -295,8 +293,7 @@
 							<input type="radio" name="attr_tabcat" value="song" class="sheet-tabcopy custnavsection-3" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="class" class="sheet-tabcopy custnavsection-4" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="item" class="sheet-tabcopy custnavsection-5" role="presentation" />
-							<input type="radio" name="attr_tabcat" value="template" class="sheet-tabcopy custnavsection-6" role="presentation" />
-							<input type="radio" name="attr_tabcat" value="aura" class="sheet-tabcopy custnavsection-7" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="aura" class="sheet-tabcopy custnavsection-6" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="hex" class="sheet-tabcopy custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="1" class="sheet-tabcopy custnavsection-10" checked role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="0" class="sheet-tabcopy custnavsection-11" role="presentation" />
@@ -311,15 +308,14 @@
 								<label class="sheet-small-label2 sheet-sect">
 									<select name="attr_bufftype" title="@{repeating_buff2_$X_bufftype">
 										<option value="" data-i18n="not-applicable-abbrv-default">N/A</option>
-										<option value="permanent" data-i18n="permanent-abbrv">Perm</option>
-										<option value="temporary" data-i18n="temporary-abbrv">Temp</option>
 										<option value="spell" data-i18n="spell">Spell</option>
 										<option value="song" data-i18n="song">Song</option>
 										<option value="class" data-i18n="class">Class</option>
 										<option value="item" data-i18n="item">Item</option>
 										<option value="aura" data-i18n="aura">Aura</option>
 										<option value="hex" data-i18n="hex">Hex</option>										
-										<option value="template" data-i18n="template">Template</option>
+										<option value="permanent" data-i18n="permanent-abbrv">Perm</option>
+										<option value="temporary" data-i18n="temporary-abbrv">Temp</option>
 										<option value="other" data-i18n="other">Other</option>
 									</select>
 									<span data-i18n="type">Type</span>
@@ -340,44 +336,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b1_bonus" title="repeating_buff2_$X_b1_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -415,44 +411,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b2_bonus" title="repeating_buff2_$X_b2_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -490,44 +486,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b3_bonus" title="repeating_buff2_$X_b3_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -565,44 +561,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b4_bonus" title="repeating_buff2_$X_b4_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -640,44 +636,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b5_bonus" title="repeating_buff2_$X_b5_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -714,44 +710,44 @@
 									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" name="attr_b6_bonus" title="repeating_buff2_$X_b6_bonus">
 											<option value="" data-i18n="select-one-default">select one</option>
-											<option value="attack" data-i18n="attack">attack</option>
+											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" data-i18n="melee-attack">melee attack</option>
 											<option value="ranged" data-i18n="ranged-attack">ranged attack</option>
 											<option value="cmb" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
-											<option value="dmg" data-i18n="damage">damage</option>
+											<option value="dmg" class="sheet-option-header" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
-											<option value="initiative" data-i18n="initiative-abbrv">init</option>
-											<option value="size" data-i18n="size">size</option>
-											<option value="speed" data-i18n="speed">speed</option>
-											<option value="check" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
-											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
-											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
-											<option value="casterlevel" data-i18n="caster-level">caster level</option>
-											<option value="hptemp" data-i18n="temporary-hit-points-abbrv">hptemp</option>
-											<option value="saves" data-i18n="all-saves">saves</option>
-											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
-											<option value="will" data-i18n="willpower-abbrv">will</option>
-											<option value="ref" data-i18n="reflex-abbrv">ref</option>
-											<option value="str" data-i18n="strength">str</option>
-											<option value="dex" data-i18n="dexterity">dex</option>
-											<option value="con" data-i18n="constitution">con</option>
-											<option value="int" data-i18n="intelligence">int</option>
-											<option value="wis" data-i18n="wisdom">wis</option>
-											<option value="cha" data-i18n="charisma">cha</option>
-											<option value="str_skills" data-i18n="strength-skills-abbrv">str_skills</option>
-											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
-											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
-											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
-											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
-											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
-											<option value="ac" data-i18n="armor-class-abbrv">ac</option>
+											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" data-i18n="touch">touch</option>
 											<option value="cmd" data-i18n="combat-maneuver-defense-abbrv">cmd</option>
 											<option value="flatfooted" data-i18n="flat-footed">flatfooted</option>
 											<option value="armor" data-i18n="armor">armor</option>
 											<option value="shield" data-i18n="shield">shield</option>
 											<option value="natural" data-i18n="natural-armor">natural</option>
+											<option value="check" class="sheet-option-header" data-i18n="ability-skill-checks">ability &amp; skill checks</option>
+											<option value="check_ability" data-i18n="ability-checks">ability checks</option>
+											<option value="check_skills" data-i18n="skill-checks">skill checks</option>
+											<option value="initiative" data-i18n="initiative-abbrv">init</option>
+											<option value="casterlevel" data-i18n="caster-level">caster level</option>
+											<option value="size" class="sheet-option-header" data-i18n="size">size</option>
+											<option value="speed" class="sheet-option-header" data-i18n="speed">speed</option>
+											<option value="hptemp" class="sheet-option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
+											<option value="saves" class="sheet-option-header" data-i18n="all-saves">saves</option>
+											<option value="fort" data-i18n="fortitude-abbrv">fort</option>
+											<option value="will" data-i18n="willpower-abbrv">will</option>
+											<option value="ref" data-i18n="reflex-abbrv">ref</option>
+											<option value="str" class="sheet-option-header" data-i18n="strength">str</option>
+											<option value="dex" data-i18n="dexterity">dex</option>
+											<option value="con" data-i18n="constitution">con</option>
+											<option value="int" data-i18n="intelligence">int</option>
+											<option value="wis" data-i18n="wisdom">wis</option>
+											<option value="cha" data-i18n="charisma">cha</option>
+											<option value="str_skills" class="sheet-option-header" data-i18n="strength-skills-abbrv">str_skills</option>
+											<option value="dex_skills" data-i18n="dexterity-skills-abbrv">dex_skills</option>
+											<option value="con_skills" data-i18n="constitution-skills-abbrv">con_skills</option>
+											<option value="int_skills" data-i18n="intelligence-skills-abbrv">int_skills</option>
+											<option value="wis_skills" data-i18n="wisdom-skills-abbrv">wis_skills</option>
+											<option value="cha_skills" data-i18n="charisma-skills-abbrv">cha_skills</option>
 										</select>
 										<span data-i18n="bonus">Bonus</span>
 									</label>
@@ -7307,32 +7303,32 @@
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 					<div role="menubar" class="sheet-abilitiesnav sheet-tabs sheet-custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
-					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_abilities_tab" value="0" data-i18n-title="original-class-features-list" data-i18n-aria-label="class-features" />
+					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_abilities_tab" value="class-features" data-i18n-title="original-class-features-list" data-i18n-aria-label="class-features" />
 					<label role="menuitem" class="sheet-tab sheet-tab0 sheet-wider-tab" data-i18n="class-features">Features</label>
-					<input type="radio" class="sheet-tabinput sheet-tab1 sheet-med-tab" name="attr_abilities_tab" value="1" data-i18n-title="original-feats-list" data-i18n-aria-label="feats" />
+					<input type="radio" class="sheet-tabinput sheet-tab1 sheet-med-tab" name="attr_abilities_tab" value="feats" data-i18n-title="original-feats-list" data-i18n-aria-label="feats" />
 					<label role="menuitem" class="sheet-tab sheet-tab1 sheet-med-tab" data-i18n="feats">Feats</label>
-					<input type="radio" class="sheet-tabinput sheet-tab2 sheet-med-tab" name="attr_abilities_tab" value="2" data-i18n-title="traits-and-racial-traits" data-i18n-aria-label="traits-and-racial-traits" />
+					<input type="radio" class="sheet-tabinput sheet-tab2 sheet-med-tab" name="attr_abilities_tab" value="traits" data-i18n-title="traits-and-racial-traits" data-i18n-aria-label="traits-and-racial-traits" />
 					<label role="menuitem" class="sheet-tab sheet-tab2 sheet-med-tab" data-i18n="traits">Traits</label>
-					<input type="radio" class="sheet-tabinput sheet-tab3 sheet-section-mythic sheet-wider-tab" name="attr_abilities_tab" value="3" data-i18n-title="mythic-abilities" data-i18n-aria-label="mythic-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab3 sheet-section-mythic sheet-wider-tab" name="attr_abilities_tab" value="mythic" data-i18n-title="mythic-abilities" data-i18n-aria-label="mythic-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab3 sheet-section-mythic sheet-wider-tab" data-i18n="mythic-abilities">Mythic Abilities</label>
-					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_abilities_tab" value="4" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
+					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_abilities_tab" value="special-attacks" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
 					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n="special-attacks-abbrv">Spec Atk</label>
-					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_abilities_tab" value="5" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n="special-abilities-abbrv">Spec Abil</label>
-					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_abilities_tab" value="6" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_abilities_tab" value="spell-like-abilities" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n="spell-like-abilities-abbrv">Spell-like</label>
-					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_abilities_tab" value="7" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
+					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_abilities_tab" value="special-qualities" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
 					<label role="menuitem" class="sheet-tab sheet-tab7 sheet-narrow-tab" data-i18n="special-qualities-abbrv">SQ</label>
-					<input type="radio" class="sheet-tabinput sheet-tab8 sheet-med-tab" name="attr_abilities_tab" value="8" data-i18n-title="all-other-desc" data-i18n-aria-label="all-other-desc"  />
+					<input type="radio" class="sheet-tabinput sheet-tab8 sheet-med-tab" name="attr_abilities_tab" value="other" data-i18n-title="all-other-desc" data-i18n-aria-label="all-other-desc"  />
 					<label role="menuitem" class="sheet-tab sheet-tab8 sheet-med-tab" data-i18n="miscellaneous-abbrv">Misc</label>
 					<input type="radio" class="sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_abilities_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
 					<label role="menuitem" class="sheet-tab sheet-tab99 sheet-narrow-tab" data-i18n="all">All</label>
 					<span class="sheet-divider-db-lg">&nbsp;</span>
-					<input type="radio" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" name="attr_abilities_tab" value="9" data-i18n-title="extraordinary-abilities" data-i18n-aria-label="extraordinary-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" name="attr_abilities_tab" value="Ex" data-i18n-title="extraordinary-abilities" data-i18n-aria-label="extraordinary-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n="extraordinary-abbrv">Ex</label>
-					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" name="attr_abilities_tab" value="10" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" name="attr_abilities_tab" value="Sp" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n="spell-like-abbrv">Sp</label>
-					<input type="radio" class="sheet-tabinput sheet-tab11 sheet-narrow-tab" name="attr_abilities_tab" value="11" data-i18n-title="supernatural-abilities" data-i18n-aria-label="supernatural-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab11 sheet-narrow-tab" name="attr_abilities_tab" value="Su" data-i18n-title="supernatural-abilities" data-i18n-aria-label="supernatural-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab11 sheet-narrow-tab" data-i18n="supernatural-abbrv">Su</label>
 					<div class="sheet-cheat"></div>
 					<span class="sheet-nontable-name sheet-selected-tabtitle" data-i18n="all-abilities">All Abilities</span>
@@ -7349,19 +7345,20 @@
 					<div class="sheet-repeating-fields sheet-table sheet-hiderepborder sheet-section-ability-list">
 						<fieldset class="repeating_ability">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-							<input type="checkbox" name="attr_tabcat-1" value="1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
-							<input type="checkbox" name="attr_tabcat0" value="1" class="sheet-tabcopy custnavsection-0" role="presentation" />
-							<input type="checkbox" name="attr_tabcat1" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
-							<input type="checkbox" name="attr_tabcat2" value="1" class="sheet-tabcopy custnavsection-2" role="presentation" />
-							<input type="checkbox" name="attr_tabcat3" value="1" class="sheet-tabcopy custnavsection-3" role="presentation" />
-							<input type="checkbox" name="attr_tabcat4" value="1" class="sheet-tabcopy custnavsection-4" role="presentation" />
-							<input type="checkbox" name="attr_tabcat5" value="1" class="sheet-tabcopy custnavsection-5" role="presentation" />
-							<input type="checkbox" name="attr_tabcat6" value="1" class="sheet-tabcopy custnavsection-6" role="presentation" />
-							<input type="checkbox" name="attr_tabcat7" value="1" class="sheet-tabcopy custnavsection-7" role="presentation" />
-							<input type="checkbox" name="attr_tabcat8" value="1" class="sheet-tabcopy custnavsection-8" role="presentation" />
-							<input type="checkbox" name="attr_tabcat9" value="1" class="sheet-tabcopy custnavsection-9" role="presentation" />
-							<input type="checkbox" name="attr_tabcat10" value="1" class="sheet-tabcopy custnavsection-10" role="presentation" />
-							<input type="checkbox" name="attr_tabcat11" value="1" class="sheet-tabcopy custnavsection-11" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
+							<input type="radio" name="attr_tabcat" value="class-features" class="sheet-tabcopy custnavsection-0" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="feats" class="sheet-tabcopy custnavsection-1" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="traits" class="sheet-tabcopy custnavsection-2" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="mythic" class="sheet-tabcopy custnavsection-3" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-attacks" class="sheet-tabcopy custnavsection-4" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-abilities" class="sheet-tabcopy custnavsection-5" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="spell-like-abilities" class="sheet-tabcopy custnavsection-6" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-qualities" class="sheet-tabcopy custnavsection-7" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="other" class="sheet-tabcopy custnavsection-8" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="-1" class="sheet-noshow" checked role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Ex" class="sheet-tabcopy custnavsection-9" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Sp" class="sheet-tabcopy custnavsection-10" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Su" class="sheet-tabcopy custnavsection-11" role="presentation" />
 							<div class="sheet-custrepeating-border sheet-nontable-repeating compendium-drop-target">
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<span style="display:none;" class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
@@ -11759,32 +11756,32 @@
 <!-- NPC -->
 					<div role="menubar" class="sheet-abilitiesnav sheet-tabs sheet-custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
-					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_npc-abilities_tab" value="0" data-i18n-title="original-class-features-list" data-i18n-aria-label="class-features" />
+					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_npc-abilities_tab" value="class-features" data-i18n-title="original-class-features-list" data-i18n-aria-label="class-features" />
 					<label role="menuitem" class="sheet-tab sheet-tab0 sheet-wider-tab" data-i18n="class-features">Features</label>
-					<input type="radio" class="sheet-tabinput sheet-tab1 sheet-med-tab" name="attr_npc-abilities_tab" value="1" data-i18n-title="original-feats-list" data-i18n-aria-label="feats" />
+					<input type="radio" class="sheet-tabinput sheet-tab1 sheet-med-tab" name="attr_npc-abilities_tab" value="feats" data-i18n-title="original-feats-list" data-i18n-aria-label="feats" />
 					<label role="menuitem" class="sheet-tab sheet-tab1 sheet-med-tab" data-i18n="feats">Feats</label>
-					<input type="radio" class="sheet-tabinput sheet-tab2 sheet-med-tab" name="attr_npc-abilities_tab" value="2" data-i18n-title="traits-and-racial-traits" data-i18n-aria-label="traits-and-racial-traits" />
+					<input type="radio" class="sheet-tabinput sheet-tab2 sheet-med-tab" name="attr_npc-abilities_tab" value="traits" data-i18n-title="traits-and-racial-traits" data-i18n-aria-label="traits-and-racial-traits" />
 					<label role="menuitem" class="sheet-tab sheet-tab2 sheet-med-tab" data-i18n="traits">Traits</label>
-					<input type="radio" class="sheet-tabinput sheet-tab3 sheet-section-mythic sheet-wider-tab" name="attr_npc-abilities_tab" value="3" data-i18n-title="mythic-abilities" data-i18n-aria-label="mythic-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab3 sheet-section-mythic sheet-wider-tab" name="attr_npc-abilities_tab" value="mythic" data-i18n-title="mythic-abilities" data-i18n-aria-label="mythic-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab3 sheet-section-mythic sheet-wider-tab" data-i18n="mythic-abilities">Mythic Abilities</label>
-					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_npc-abilities_tab" value="4" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
+					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_npc-abilities_tab" value="special-attacks" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
 					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n="special-attacks-abbrv">Spec Atk</label>
-					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_npc-abilities_tab" value="5" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_npc-abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n="special-abilities-abbrv">Spec Abil</label>
-					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_npc-abilities_tab" value="6" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_npc-abilities_tab" value="spell-like-abilities" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n="spell-like-abilities-abbrv">Spell-like</label>
-					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_npc-abilities_tab" value="7" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
+					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_npc-abilities_tab" value="special-qualities" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
 					<label role="menuitem" class="sheet-tab sheet-tab7 sheet-narrow-tab" data-i18n="special-qualities-abbrv">SQ</label>
-					<input type="radio" class="sheet-tabinput sheet-tab8 sheet-med-tab" name="attr_npc-abilities_tab" value="8" data-i18n-title="all-other-desc" data-i18n-aria-label="all-other-desc"  />
+					<input type="radio" class="sheet-tabinput sheet-tab8 sheet-med-tab" name="attr_npc-abilities_tab" value="other" data-i18n-title="all-other-desc" data-i18n-aria-label="all-other-desc"  />
 					<label role="menuitem" class="sheet-tab sheet-tab8 sheet-med-tab" data-i18n="miscellaneous-abbrv">Misc</label>
 					<input type="radio" class="sheet-tabinput sheet-tab99 sheet-narrow-tab" name="attr_npc-abilities_tab" value="99" data-i18n-title="all" data-i18n-aria-label="all" checked />
 					<label role="menuitem" class="sheet-tab sheet-tab99 sheet-narrow-tab" data-i18n="all">All</label>
 					<span class="sheet-divider-db-lg">&nbsp;</span>
-					<input type="radio" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" name="attr_npc-abilities_tab" value="9" data-i18n-title="extraordinary-abilities" data-i18n-aria-label="extraordinary-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab9 sheet-narrow-tab" name="attr_npc-abilities_tab" value="Ex" data-i18n-title="extraordinary-abilities" data-i18n-aria-label="extraordinary-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab9 sheet-narrow-tab" data-i18n="extraordinary-abbrv">Ex</label>
-					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" name="attr_npc-abilities_tab" value="10" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" name="attr_npc-abilities_tab" value="Sp" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n="spell-like-abbrv">Sp</label>
-					<input type="radio" class="sheet-tabinput sheet-tab11 sheet-narrow-tab" name="attr_npc-abilities_tab" value="11" data-i18n-title="supernatural-abilities" data-i18n-aria-label="supernatural-abilities" />
+					<input type="radio" class="sheet-tabinput sheet-tab11 sheet-narrow-tab" name="attr_npc-abilities_tab" value="Su" data-i18n-title="supernatural-abilities" data-i18n-aria-label="supernatural-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab11 sheet-narrow-tab" data-i18n="supernatural-abbrv">Su</label>
 					<div class="sheet-cheat"></div>
 					<span class="sheet-nontable-name sheet-selected-tabtitle" data-i18n="all-abilities">All Abilities</span>
@@ -11801,19 +11798,19 @@
 					<div class="sheet-repeating-fields sheet-table sheet-hiderepborder sheet-section-ability-list">
 						<fieldset class="repeating_ability">
 							<span class="sheet-error"><span class="sheet-pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-							<input type="checkbox" name="attr_tabcat-1" value="1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
-							<input type="checkbox" name="attr_tabcat0" value="1" class="sheet-tabcopy custnavsection-0" role="presentation" />
-							<input type="checkbox" name="attr_tabcat1" value="1" class="sheet-tabcopy custnavsection-1" role="presentation" />
-							<input type="checkbox" name="attr_tabcat2" value="1" class="sheet-tabcopy custnavsection-2" role="presentation" />
-							<input type="checkbox" name="attr_tabcat3" value="1" class="sheet-tabcopy custnavsection-3" role="presentation" />
-							<input type="checkbox" name="attr_tabcat4" value="1" class="sheet-tabcopy custnavsection-4" role="presentation" />
-							<input type="checkbox" name="attr_tabcat5" value="1" class="sheet-tabcopy custnavsection-5" role="presentation" />
-							<input type="checkbox" name="attr_tabcat6" value="1" class="sheet-tabcopy custnavsection-6" role="presentation" />
-							<input type="checkbox" name="attr_tabcat7" value="1" class="sheet-tabcopy custnavsection-7" role="presentation" />
-							<input type="checkbox" name="attr_tabcat8" value="1" class="sheet-tabcopy custnavsection-8" role="presentation" />
-							<input type="checkbox" name="attr_tabcat9" value="1" class="sheet-tabcopy custnavsection-9" role="presentation" />
-							<input type="checkbox" name="attr_tabcat10" value="1" class="sheet-tabcopy custnavsection-10" role="presentation" />
-							<input type="checkbox" name="attr_tabcat11" value="1" class="sheet-tabcopy custnavsection-11" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="-1" class="sheet-tabcopy custnavsection-new" checked role="presentation" />
+							<input type="radio" name="attr_tabcat" value="class-features" class="sheet-tabcopy custnavsection-0" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="feats" class="sheet-tabcopy custnavsection-1" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="traits" class="sheet-tabcopy custnavsection-2" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="mythic" class="sheet-tabcopy custnavsection-3" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-attacks" class="sheet-tabcopy custnavsection-4" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-abilities" class="sheet-tabcopy custnavsection-5" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="spell-like-abilities" class="sheet-tabcopy custnavsection-6" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="special-qualities" class="sheet-tabcopy custnavsection-7" role="presentation" />
+							<input type="radio" name="attr_tabcat" value="other" class="sheet-tabcopy custnavsection-8" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Ex" class="sheet-tabcopy custnavsection-9" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Sp" class="sheet-tabcopy custnavsection-10" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="Su" class="sheet-tabcopy custnavsection-11" role="presentation" />
 							<div class="sheet-custrepeating-border sheet-nontable-repeating compendium-drop-target">
 								<input type="checkbox" class="sheet-counted sheet-sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<span class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
@@ -11838,7 +11835,7 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
-										<option value="0" data-i18n="not-applicable" >n/a</option>
+										<option value="0" data-i18n="not-applicable" >N/A</option>
 										<option value="@{level}" data-i18n="character-level" selected>Character Level</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
 										<option value="@{class-1-level}" data-i18n="2-ordinal-class">2nd Class</option>
@@ -11867,8 +11864,8 @@
 								</label>
 								<label class="sheet-small-label2 sheet-entry-20p-shrink" style="height:auto;"><textarea class="sheet-inline-textarea sheet-both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" placeholder="Short Description" data-i18n-placeholder="short-description" ></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
 								<label class="sheet-small-label2" style="width:6em;">
-									<select class="sheet-select-small" name="attr_frequency" style="width:100%;">
-										<option value="not-applicable" data-i18n="not-applicable-abbrv-default" selected>&#8226; N/A</option>
+									<select class="sheet-select-small" title="@{repeating_ability_$X_frequency}" name="attr_frequency" style="width:100%;">
+										<option value="not-applicable" data-i18n="not-applicable-abbrv-default" selected >&#8226; N/A</option>
 										<option value="constant" data-i18n="constant">Constant</constant>
 										<option value="atwill" data-i18n="at-will">At Will</option>
 										<option value="perday" data-i18n="per-day-abbrv">/day</option>

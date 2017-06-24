@@ -98,55 +98,117 @@ events = {
 	attackEventsSLA:["damage-macro-text","damage-type","abil-sr","save","abil-attack-type","name","range_numeric"],
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
 };
-/** sets tab for an ability. these have multiple checkboxes, not a radio
- *@param {string} id optional id of row
- *@param {function} callback call when done
- *@param {obj} eventInfo from 'on' event change:rule_category
- */
-function setRuleTab (id,callback, eventInfo){
-	var idStr = SWUtils.getRepeatingIDStr(id),
-	prefix = "repeating_ability_" + idStr,
-	catfields=[],
-	ruleCategoryField=prefix+"rule_category",
-	abilityTypeField=prefix+'ability_type',
-	fields=[ruleCategoryField,abilityTypeField];
-	catfields=_.map(categoryAttrs,function(attr){
-		return prefix+attr;
-	});
-	fields = fields.concat(catfields);
-	getAttrs(fields,function(v){
-		var setter, ruleType=0,abilityType=0;
-		setter = _.reduce(catfields,function(m,attr){
-			m[attr]=0;
-			return m;
-		},{});
-		if (v[abilityTypeField] ){
-			abilityType= tabTypeSorted[v[abilityTypeField]];
-			if(v[prefix+'tabcat'+abilityType]!="1"){
-				setter[prefix+'tabcat'+abilityType]=1;
+
+function setClassName (id,callback,eventInfo){
+	var done = _.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	}),
+	idStr = SWUtils.getRepeatingIDStr(id),
+	prefix="repeating_ability_"+idStr,
+	clbasisField=prefix+"CL-basis";
+	getAttrs([prefix+'CL-basis',prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+		var clBase='',setter={},match;
+		try {
+			if (v[clbasisField]){
+				if (v[clbasisField]==="@{level}"){
+					clBase =v["race"];
+				} else if (v[clbasisField]==="@{npc-hd-num}"){
+					clBase = v["race"];
+				} else if (parseInt(v[clbasisField],10)===0){
+					clBase ="";
+				} else {
+					match = v[prefix+"CL-basis"].match(/\d+/);
+					if (match){
+						clBase=v["class-"+match[0]+"-name"];
+					}
+				}
+				if(v[prefix+'class-name']!==clBase){
+					setter[prefix+'class-name']=clBase;
+				}
+			}
+		} catch(err) {
+			TAS.error("PFAbility.setClassName",err);
+		} finally {
+			if (_.size(setter)>0){
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+			} else {
+				done();
 			}
 		}
-		if (v[ruleCategoryField]) {
-			ruleType=tabRuleSorted[v[ruleCategoryField]];
-			if(v[prefix+'tabcat'+ruleType]!="1"){
-				setter[prefix+'tabcat'+ruleType]=1;
-			}
-			if(v[prefix+'tabcat-1']!="0"){
-				setter[prefix+'tabcat-1']=0;
-			}
-		} else {
-			if(v[prefix+'tabcat-1']!="1"){
-				setter[prefix+'tabcat-1']=1;
-			}
-		}
-		//TAS.debug("PFAbility.setRuleTab, setting",setter);
-		SWUtils.setWrapper(setter,PFConst.silentParams);
 	});
 }
-function setRuleTabs (){
+
+function setTypeTab(callback,silently,id,eventInfo){
+	var prefix = 'repeating_ability_'+SWUtils.getRepeatingIDStr(id);
+	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
+		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
+		var setter={},params=PFConst.silentParams;
+		TAS.debug("############ PFAbility setTypeTab",v);
+		setter[prefix + 'tabcat2']=v[prefix + 'ability_type']||'-1';
+		TAS.notice("############","Ability setting ",setter);
+		SWUtils.setWrapper(setter,params);
+	});
+}
+function setRuleTab (callback,silently,id,eventInfo){
+	var prefix = 'repeating_ability_'+SWUtils.getRepeatingIDStr(id);
+	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
+		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
+		var setter={}, ruleForTab='', params=PFConst.silentParams;
+		TAS.debug("############ PFAbility setRuleTab",v);
+		switch(v[prefix + 'rule_category']){
+			case 'racial-trait':
+				ruleForTab='trait';
+				break;
+			case 'monster-rule':
+				ruleForTab='other';
+				break;
+			default:
+				ruleForTab=v[prefix + 'rule_category']||'';
+				break;
+		}
+		if(!ruleForTab){ ruleForTab='-1';}
+		setter[prefix + 'tabcat'] = ruleForTab;
+
+		//if users changed the rule then change the tab we're checked on
+		if(eventInfo ) {
+			if (ruleForTab!=='-1'){  
+				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilites_tab) ){
+					setter.abilities_tab = ruleForTab;
+				}
+				if( v['npc-abilities_tab'] !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v['npc-abilities_tab']) ){
+					setter['npc-abilities_tab'] = ruleForTab;
+				}
+			}
+			if( v[prefix + 'rule_category'] === 'class-features' && 
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+					setter[prefix + 'CL-basis']='@{class-0-level}';
+					params={};
+			} else if (v[prefix + 'rule_category'] === 'racial-traits' && 
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+					setter[prefix + 'CL-basis']='@{level}';
+					params={};
+			}
+		}
+		if(v[prefix + 'rule_category']==='spell-like-abilities'){
+			v[prefix + 'tabcat2']='Sp';
+			setter[prefix + 'ability_type']='Sp';
+		}
+		if(! v[prefix + 'frequency']){
+			setter[prefix + 'frequency']="not-applicable";
+		}
+		if(_.size(setter)){
+			TAS.notice("############","Ability setting ",setter);
+			SWUtils.setWrapper(setter,params,setClassName);
+		}
+	});
+}
+export function setRuleTabs (){
 	getSectionIDs("repeating_ability",function(ids){
 		_.each(ids,function(id){
-			setRuleTab(id);
+			setRuleTab(null,null,id);
+			setTypeTab(null,null,id);
 		});
 	});
 }
@@ -458,46 +520,7 @@ export function importFromCompendium (callback,eventInfo){
 		}
 	});
 }
-function setClassName (id,callback,eventInfo){
-	var done = _.once(function(){
-		if (typeof callback === "function"){
-			callback();
-		}
-	}),
-	idStr = SWUtils.getRepeatingIDStr(id),
-	prefix="repeating_ability_"+idStr,
-	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis',prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
-		var clBase='',setter={},match;
-		try {
-			if (v[clbasisField]){
-				if (v[clbasisField]==="@{level}"){
-					clBase =v["race"];
-				} else if (v[clbasisField]==="@{npc-hd-num}"){
-					clBase = v["race"];
-				} else if (parseInt(v[clbasisField],10)===0){
-					clBase ="";
-				} else {
-					match = v[prefix+"CL-basis"].match(/\d+/);
-					if (match){
-						clBase=v["class-"+match[0]+"-name"];
-					}
-				}
-				if(v[prefix+'class-name']!==clBase){
-					setter[prefix+'class-name']=clBase;
-				}
-			}
-		} catch(err) {
-			TAS.error("PFAbility.setClassName",err);
-		} finally {
-			if (_.size(setter)>0){
-				SWUtils.setWrapper(setter,PFConst.silentParams,done);
-			} else {
-				done();
-			}
-		}
-	});
-}
+
 export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 	var notes="",attackType="";
 	setter = setter||{};
@@ -1049,38 +1072,15 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		updateAssociatedAttack(null,null,null,eventInfo);
 	}));
-	on("change:repeating_ability:rule_category change:repeating_ability:ability_type", TAS.callback(function eventUpdateSLARuleCat(eventInfo){
+	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		setRuleTab(null,null,eventInfo);
+		setRuleTab(null,null,null,eventInfo);
 	}));
-	on("change:repeating_ability:rule_category", TAS.callback(function eventSetRuleCategory(eventInfo){
-		if(eventInfo.sourceType==='player'){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			getAttrs(['repeating_ability_frequency',  'repeating_ability_rule_category','repeating_ability_CL-basis','repeating_ability_ability_type'],function(v){
-				var setter={};
-				if( v.repeating_ability_rule_category === 'class-features' && 
-				 	(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0")){
-						setter['repeating_ability_CL-basis']='@{class-0-level}';
-				} else if (v.repeating_ability_rule_category === 'racial-traits' && 
-					(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0")){
-						setter['repeating_ability_CL-basis']='@{level}';
-				} else if(v.repeating_ability_rule_category==='spell-like-abilities'){
-					if(!v.repeating_ability_ability_type || v.repeating_ability_ability_type != 'Sp'){
-						setter.repeating_ability_ability_type='Sp';
-					}
-					if(!v['repeating_ability_CL-basis'] ||v['repeating_ability_CL-basis']=="0"){
-						setter['repeating_ability_CL-basis']='@{level}';
-					}
-				}
-				if(! v.repeating_ability_frequency){
-					setter.repeating_ability_frequency="not-applicable";
-				}
-				if(_.size(setter)){
-					SWUtils.setWrapper(setter,{},setClassName);
-				}
-			});
-		}
+	on("change:repeating_ability:ability_type", TAS.callback(function eventUpdateAbilityType(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		setTypeTab(null,null,null,eventInfo);
 	}));
+
 }
 registerEventHandlers();
 //PFConsole.log('   PFAbility module loaded        ' );

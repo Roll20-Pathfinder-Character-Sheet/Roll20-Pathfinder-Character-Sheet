@@ -666,6 +666,9 @@ function upgrade (oldversion, callback, errorCallback) {
 					});
 				});
 			}
+			if (oldversion===1.63){
+				PFAbility.setRuleTabs();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
