@@ -1138,15 +1138,6 @@ input.sheet-tabinput {
 	display:block !important;
 }
 
-/* for navs with "two" sets of tabs, second set must ignore even if it's a new item */
-.sheet-tabs.sheet-custbordernav.sheet-abilitiesnav  ~ .sheet-tabinput.sheet-tab9:checked ~ .sheet-repeating-fields .sheet-custnavsection-new:checked ~ .sheet-custnavsection-9:not(:checked)  ~ .sheet-custrepeating-border,
-.sheet-tabs.sheet-custbordernav.sheet-abilitiesnav  ~ .sheet-tabinput.sheet-tab10:checked ~ .sheet-repeating-fields .sheet-custnavsection-new:checked ~ .sheet-custnavsection-10:not(:checked)  ~ .sheet-custrepeating-border,
-.sheet-tabs.sheet-custbordernav.sheet-abilitiesnav  ~ .sheet-tabinput.sheet-tab11:checked ~ .sheet-repeating-fields .sheet-custnavsection-new:checked ~ .sheet-custnavsection-11:not(:checked)  ~ .sheet-custrepeating-border,
-.sheet-tabs.sheet-custbordernav.sheet-equipmentnav  ~ .sheet-tabinput.sheet-tab9:checked ~ .sheet-repeating-fields .sheet-custnavsection-new:checked ~ .sheet-custnavsection-9:not(:checked)  ~ .sheet-custrepeating-border,
-.sheet-tabs.sheet-custbordernav.sheet-equipmentnav  ~ .sheet-tabinput.sheet-tab10:checked ~ .sheet-repeating-fields .sheet-custnavsection-new:checked ~ .sheet-custnavsection-10:not(:checked)  ~ .sheet-custrepeating-border {
-	display:none;
-}
-
 /* extra abiliites tab: hide old sections */
 .sheet-tabs.sheet-custbordernav.sheet-abilitiesnav ~ .sheet-tabinput.sheet-tab0:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section0,
 .sheet-tabs.sheet-custbordernav.sheet-abilitiesnav ~ .sheet-tabinput.sheet-tab1:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section1,
@@ -4652,7 +4643,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	display:none;
 }
 
-
+.sheet-option-header {
+    border-top:1px solid black !important;
+    background-color: lightgrey;
+}
 
 /*skill too crowded*/
 .sheet-skills .sheet-divider,
