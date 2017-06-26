@@ -212,48 +212,48 @@
 				<span class="sheet-compendium-note" style="margin-right:2em;">
 					<label class="sheet-small-label2">
 						<select name="attr_common_buff_toadd" class="sheet-select-small">
-							<option value="" selected>Select one</option>
-							<option value="aid">Aid</option>
-							<option value="airbarrier">Air Barrier</option>
-							<option value="archonsaura">Archon's Aura</option>
-							<option value="bane">Bane</option>
-							<option value="battlespirit">Battle Spirit</option>
-							<option value="battleward">Battle Ward</option>
-							<option value="bless">Bless</option>
-							<option value="blessingoffervor">Blessing of Fervor</option>
-							<option value="boneward">Bone Ward</option>
-							<option value="consecrate">Consecrate (if undead)</option>
-							<option value="crushingdespair">Crushing Despair</option>
-							<option value="curse">Curse</option>
-							<option value="deathknell">Death Knell</option>
-							<option value="descrate">Desecrate (if undead)</option>
-							<option value="divinefavor">Divine Favor</option>
-							<option value="enlargeperson">Enlarge Person</option>
-							<option value="goodhope">Good Hope</option>
-							<option value="hamperinghex">Hampering Hex</option>
-							<option value="haste">Haste</option>
-							<option value="heroism">Heroism</option>
-							<option value="inspirecourage">Inspire Courage</option>
-							<option value="inspiredrage">Inspired Rage</option>
-							<option value="inspiregreatness">Inspire Greatness</option>
-							<option value="magearmor">Mage Armor</option>
-							<option value="magicvestment">Magic Vestment</option>							
-							<option value="prayer">Prayer</option>
-							<option value="prayerdebuff">Prayer (Debuff)</option>
-							<option value="rage">Rage</option>
-							<option value="unchainedrage">Rage (Unchained)</option>
-							<option value="reduceperson">Reduce Person</option>
-							<option value="shield">Shield</option>
-							<option value="shieldoffaith">Shield of Faith</option>
-							<option value="slow">Slow</option>
-							<option value="stardust">Stardust</option>
-							<option value="ward">Ward</option>
+							<option value="" data-i18n="select-one-default" selected>Select one</option>
+							<option value="aid" data-i18n="buff-aid">Aid</option>
+							<option value="airbarrier" data-i18n="buff-air-barrier">Air Barrier</option>
+							<option value="archonsaura" data-i18n="buff-archons-aura">Archon's Aura</option>
+							<option value="bane" data-i18n="buff-bane">Bane</option>
+							<option value="battlespirit" data-i18n="buff-battle-spirit">Battle Spirit</option>
+							<option value="battleward" data-i18n="buff-battle-ward">Battle Ward</option>
+							<option value="bless" data-i18n="buff-bless">Bless</option>
+							<option value="blessingoffervor" data-i18n="buff-blessing-of-fervor">Blessing of Fervor</option>
+							<option value="boneward" data-i18n="buff-bone-ward">Bone Ward</option>
+							<option value="consecrate" data-i18n="buff-consecrate">Consecrate (if undead)</option>
+							<option value="crushingdespair" data-i18n="buff-crushing-despair">Crushing Despair</option>
+							<option value="curse" data-i18n="buff-curse">Curse</option>
+							<option value="deathknell" data-i18n="buff-death-knell">Death Knell</option>
+							<option value="descrate" data-i18n="buff-desecrate">Desecrate (if undead)</option>
+							<option value="divinefavor" data-i18n="buff-divine-favor">Divine Favor</option>
+							<option value="enlargeperson" data-i18n="buff-enlarge-person">Enlarge Person</option>
+							<option value="goodhope" data-i18n="buff-good-hope">Good Hope</option>
+							<option value="hamperinghex" data-i18n="buff-hampering-hex">Hampering Hex</option>
+							<option value="haste" data-i18n="buff-haste">Haste</option>
+							<option value="heroism" data-i18n="buff-heroism">Heroism</option>
+							<option value="inspirecourage" data-i18n="buff-inspire-courage">Inspire Courage</option>
+							<option value="inspiredrage" data-i18n="buff-inpsired-rage">Inspired Rage</option>
+							<option value="inspiregreatness" data-i18n="buff-inspire-greatness">Inspire Greatness</option>
+							<option value="magearmor" data-i18n="buff-mage-armor">Mage Armor</option>
+							<option value="magicvestment" data-i18n="buff-magic-vestment">Magic Vestment</option>
+							<option value="prayer" data-i18n="buff-prayer">Prayer</option>
+							<option value="prayerdebuff" data-i18n="buff-prayer-debuff">Prayer (Debuff)</option>
+							<option value="rage" data-i18n="buff-rage">Rage</option>
+							<option value="unchainedrage" data-i18n="buff-rage-unchained">Rage (Unchained)</option>
+							<option value="reduceperson" data-i18n="buff-reduce-person">Reduce Person</option>
+							<option value="shield" data-i18n="buff-shield">Shield</option>
+							<option value="shieldoffaith" data-i18n="buff-shield-of-faith">Shield of Faith</option>
+							<option value="slow" data-i18n="buff-slow">Slow</option>
+							<option value="stardust" data-i18n="buff-stardust">Stardust</option>
+							<option value="ward" data-i18n="buff-ward">Ward</option>
 						</select>
-						<span>Common Buff</span>
+						<span data-i18n="common-buff" data-i18n-title="common-buff-title" data-i18n-aria-label="common-buff-title">Common Buff</span>
 					</label>
 					<label class="sheet-small-label2">
 						<input type="checkbox" value="1" name="attr_add_common_buff" title="@{add_common_buff}" />
-						<span>Add</span>
+						<span data-i18n="add">Add</span>
 					</label>
 				</span>
 				<div class="sheet-cheat sheet-newbuff"></div>
@@ -313,7 +313,7 @@
 										<option value="class" data-i18n="class">Class</option>
 										<option value="item" data-i18n="item">Item</option>
 										<option value="aura" data-i18n="aura">Aura</option>
-										<option value="hex" data-i18n="hex">Hex</option>										
+										<option value="hex" data-i18n="hex">Hex</option>
 										<option value="permanent" data-i18n="permanent-abbrv">Perm</option>
 										<option value="temporary" data-i18n="temporary-abbrv">Temp</option>
 										<option value="other" data-i18n="other">Other</option>
