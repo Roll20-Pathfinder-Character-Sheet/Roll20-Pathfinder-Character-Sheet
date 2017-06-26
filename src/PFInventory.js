@@ -20,7 +20,8 @@ wornEquipmentRowRollsNew = _.map(wornEquipBaseRowsNew,function(row){return 'worn
 locationNames = ["Armor", "Belt", "Body", "Chest", "Eyes", "Feet", "Hands", "Head", "Headband", "Neck", "Ring1", "Ring2", "Shield", "Shoulders", "Wrist"],
 wornEquipmentRowsPlusCarried=["Carried","NotCarried"].concat(locationNames),
 locationMap = {'Carried':0,'NotCarried':1,'Armor':2,'Belt':3,'Body':4,'Chest':5,'Eyes':6,'Feet':7,'Hands':8,
-    'Head':9,'Headband':10,'Neck':11,'Ring1':12,'Ring2':13,'Shield':14,'Shoulders':15,'Wrist':16},
+    'Head':9,'Headband':10,'Neck':11,'Ring1':12,'Ring2':13,'Shield':14,'Shoulders':15,'Wrist':16,
+    'equipped':2},
 equipMap = {'noEquipType':0,'Weapon':1,'Armor':2,'Ammo':3,'Consumables':4,'OtherMagic':5,'Gear':6,'Other':7,'Charged':8,'Other2':9},
 groupMapForMenu = {0:'',1:'weapons',2:'armor-shield',3:'ammunition',4:'consumables',5:'other-magic-items',6:'gear-tool',7:'other-items',8:'charged-magics',9:'other-items-2'},
 wornEquipmentColumns = ["charges", "weight", "hp", "hp_max", "value"],
@@ -315,10 +316,15 @@ function migrateWornEquipment (callback) {
                     //wornEquipmentRowsPlusCarried.indexOf(row);
                     newRowAttrs["repeating_item_" + newRowId + "_location"] = newLocation;
                     newRowAttrs["repeating_item_" + newRowId + "_old_location"] = newLocation;
-                    if (newLocation>locationMap.NotCarried) {
-                        newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"]=locationMap.Carried;
+
+                    if (newLocation === locationMap.NotCarried){
+                        newRowAttrs["repeating_item_" + newRowId+'loctype-tab']=locationMap.NotCarried;
+                    } else if (newLocation === locationMap.Carried) {
+                        newRowAttrs["repeating_item_" + newRowId+'loctype-tab']=locationMap.Carried;
+                    } else if (newLocation > locationMap.NotCarried) {
+                        newRowAttrs["repeating_item_" + newRowId+'loctype-tab']=locationMap.equipped;
                     } else {
-                        newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"]=newLocation;
+                        newRowAttrs["repeating_item_" + newRowId+'loctype-tab']=-1;
                     }
                     
                     newEquipType = equipMap.OtherMagic;
@@ -417,7 +423,7 @@ function migrateWornEquipment (callback) {
                                 } else {
                                     locationAttrs["repeating_item_" + newRowId + "_location"] = locationMap.Armor;
                                 }
-                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = locationMap.Carried;
+                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = 2;
                                 newRowAttrs["armor3-roll"] = "@{repeating_item_" + newRowId + "_macro-text}";
                                 newRowAttrs["armor3"] = v[item];
                             } else {
@@ -427,7 +433,7 @@ function migrateWornEquipment (callback) {
                                 } else {
                                     locationAttrs["repeating_item_" + newRowId + "_location"] = locationMap.Shield;
                                 }
-                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = locationMap.Carried;
+                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = 2;
                                 newRowAttrs["shield3-roll"] = "@{repeating_item_" + newRowId + "_macro-text}";
                                 newRowAttrs["shield3"] = v[item];
                             }
@@ -1468,10 +1474,14 @@ export function setNewDefaults (callback, oldversion){
                                     m[prefix+'location']=currLoc;
                                 }
                                 m[prefix+'oldlocation']=currLoc;
-                                if (currLoc>locationMap.NotCarried) {
+                                if (currLoc === locationMap.NotCarried){
+                                     m[prefix+'loctype-tab']=locationMap.NotCarried;
+                                } else if (currLoc === locationMap.Carried) {
                                     m[prefix+'loctype-tab']=locationMap.Carried;
+                                } else if (currLoc > locationMap.NotCarried) {
+                                    m[prefix+'loctype-tab']=locationMap.equipped;
                                 } else {
-                                    m[prefix+'loctype-tab']=currLoc;
+                                     m[prefix+'loctype-tab']=-1;
                                 }
                                 maxQty=parseInt(v[prefix+'qty_max'],10);
                                 if (isNaN(maxQty)){

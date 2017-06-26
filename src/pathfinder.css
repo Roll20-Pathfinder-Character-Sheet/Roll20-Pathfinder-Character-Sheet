@@ -1588,6 +1588,18 @@ h2.sheet-clickheader {
     vertical-align:top;
     padding: 4px 0 0 0 !important;
 }
+.sheet-newbuff-button + span::before {
+    content: '☘';
+    margin-top: 5px;
+    vertical-align:top;	
+    padding: 3px 0 0 0 !important;
+}
+.sheet-newtemplate-button + span::before {
+    content: '+'; /*  '✚';*/
+    margin-top: 5px;
+    vertical-align:top;	
+    padding: 3px 0 0 0 !important;
+}
 
 .sheet-cssbutton-label {
     margin-left: -3em;
@@ -1597,6 +1609,10 @@ h2.sheet-clickheader {
     vertical-align: bottom;
     cursor: help;
 }
+.sheet-small-label2 .sheet-cssbutton-label {
+    margin-left:-.25em;
+}
+
 input.sheet-configbutton,
 input.sheet-readonly-show,
 input.sheet-refreshbutton {
