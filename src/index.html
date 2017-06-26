@@ -9878,6 +9878,8 @@
 					<input type="radio" class="sheet-tabinput sheet-tab99" name="attr_equipment_tab" value="99" data-i18n-aria-label="all" data-i18n-title="all" title="All" checked />
 					<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 					<div class="sheet-divider-db-lg"></div>
+					<input type="radio" class="sheet-tabinput sheet-tab9" name="attr_equipment_tab" value="12" data-i18n-aria-label="carried" data-i18n-title="carried" title="Carried" />
+					<label role="menuitem" class="sheet-tab sheet-tab9" data-i18n-title="carried" data-i18n-aria-label="carried" title="Carried" data-i18n="carried">Carried</label>
 					<input type="radio" class="sheet-tabinput sheet-tab9" name="attr_equipment_tab" value="10" data-i18n-aria-label="carried" data-i18n-title="carried" title="Carried" />
 					<label role="menuitem" class="sheet-tab sheet-tab9" data-i18n-title="carried" data-i18n-aria-label="carried" title="Carried" data-i18n="carried">Carried</label>
 					<input type="radio" class="sheet-tabinput sheet-tab10 sheet-wider-tab" name="attr_equipment_tab" value="11" data-i18n-aria-label="not-carried" data-i18n-title="not-carried" title="Not Carried" />
@@ -9911,6 +9913,7 @@
 							<input type="radio" name="attr_equiptype-tab" value="8" class="sheet-tabcopy sheet-custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_equiptype-tab" value="9" class="sheet-tabcopy sheet-custnavsection-8" role="presentation" />
 							<input type="radio" name="attr_loctype-tab" value="-1" class="sheet-noshow" role="presentation" />
+							<input type="radio" name="attr_loctype-tab" value="2" class="sheet-tabcopy sheet-custnavsection-11" role="presentation" />
 							<input type="radio" name="attr_loctype-tab" value="0" class="sheet-tabcopy sheet-custnavsection-9" role="presentation" checked />
 							<input type="radio" name="attr_loctype-tab" value="1" class="sheet-tabcopy sheet-custnavsection-10" role="presentation" />
 							<div class="sheet-nontable-repeating sheet-custrepeating-border compendium-drop-target Items">
@@ -14732,9 +14735,9 @@
 				</div>					
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
-						{{#allprops() spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note}}
+						{{#allprops() spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note buff_note}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note}}
+						{{/allprops() spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note buff_note}}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
