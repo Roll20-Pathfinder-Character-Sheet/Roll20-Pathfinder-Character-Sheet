@@ -938,13 +938,13 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='1';
 			setter[prefix+'b1_val']=1;
-			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2-show']=0;
 			setter[prefix+'b2_bonus']='will';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='1';
 			setter[prefix+'b2_val']=1;
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Will save includes +@{b2_val} morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
+			setter[prefix+'notes']='Bless: +@{b2_val} morale bonus on saving throws against fear effects. (Show buff 2 buff to calculate bonus automatically).';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'aid':
@@ -955,7 +955,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='1';
-			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2-show']=0;
 			setter[prefix+'b2_bonus']='will';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='2';
@@ -967,7 +967,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_val_error']=1;
 			setter[prefix+'b3_macro-text']='1d8 + casterlvl';
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Will save includes +@{b2_val} morale bonus on saving throws against fear effects. Uncheck buff when not saving vs fear.';
+			setter[prefix+'notes']='Aid:  +@{b2_val} morale bonus on saving throws against fear effects. (Show buff 2 buff to calculate bonus automatically).';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'haste':
@@ -1053,7 +1053,8 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonustype']='shield';
 			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
-			setter[prefix+'notes']='It negates magic missile attacks directed at you. This bonus applies against incorporeal touch attacks, since it is a force effect. The shield has no armor check penalty or arcane spell failure chance.';
+			setter[prefix+'add_note_to_roll']='defense';
+			setter[prefix+'notes']='Shield: Negates magic missile attacks directed at you. This bonus applies against incorporeal touch attacks, since it is a force effect.';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'magearmor':
@@ -1065,7 +1066,8 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonustype']='armor';
 			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
-			setter[prefix+'notes']='entails no armor check penalty, arcane spell failure chance, or speed reduction. Since mage armor is made of force, incorporeal creatures can\'t bypass it the way they do normal armor.';
+			setter[prefix+'add_note_to_roll']='defense';
+			setter[prefix+'notes']='Mage Armor: made of force, incorporeal creatures can\'t bypass it the way they do normal armor.';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'inspirecourage':
@@ -1088,7 +1090,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_macro-text']='1+floor((@{level}+1)/6)';
 			setter[prefix+'b2_val']=1;
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Will save includes +@{b2_val} morale bonus on saving throws against charm and fear effects. Uncheck buff when not saving vs charm or fear.';
+			setter[prefix+'notes']='Inspire Courage: +@{b2_val} morale bonus on saving throws against charm and fear effects. (Show buff 2 buff to calculate bonus automatically).';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'inspiregreatness':
@@ -1183,7 +1185,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_bonustype']='enhancement';
 			setter[prefix+'b4_macro-text']='30';
 			setter[prefix+'b4_val']=30;
-			setter[prefix+'notes']='Pick speed bonus, or Attack/AC/Reflex bonus, or other bonuses per round.';
+			setter[prefix+'notes']='Pick speed bonus by checking buff 4, or Attack/AC/Reflex bonus, or other bonuses per round.';
 			setter[prefix+'description-show']=1;
 			break;
 		case 'goodhope':
@@ -1248,8 +1250,9 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
+			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='until it successfully hits caster with an attack';
+			setter[prefix+'notes']='Archon\'s Aura: lasts until it successfully hits caster with an attack';
 			break;
 		case 'curse':
 			setter[prefix+'name']='Curse';
@@ -1295,7 +1298,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_val']=1;
 			setter[prefix+'add_note_to_roll']='save'
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='add +3 to save vs channel energy.'
+			setter[prefix+'notes']='add +3 to save vs channel energy. Double bonuses if alter present.'
 			break;
 		case 'consecrate':
 			setter[prefix+'name']='Consecrate (If Undead)';
@@ -1315,7 +1318,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_val']=-1;
 			setter[prefix+'add_note_to_roll']='save'
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Channel energy save DCs increase by 3 (equivalent to -3 penalty)'
+			setter[prefix+'notes']='Channel energy save DCs increase by 3 (equivalent to -3 penalty).  Double penalties if alter present.'
 			break;
 		case 'slow':
 			setter[prefix+'name']='Slow';
@@ -1369,13 +1372,13 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_macro-text']='-1';
 			setter[prefix+'b1_val']=-1;
-			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2-show']=0;
 			setter[prefix+'b2_bonus']='will';
 			setter[prefix+'b2_macro-text']='-1';
 			setter[prefix+'b2_val']=-1;
 			setter[prefix+'add_note_to_roll']='save';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Will save includes @{b2_val} to save vs fear, reverse if not saving vs fear';
+			setter[prefix+'notes']='Bane: @{b2_val} penalty on saving throws against fear effects. (Show buff 2 buff to calculate penalty automatically).';
 			break;
 		case 'deathknell':
 			setter[prefix+'name']='Death Knell';
@@ -1426,7 +1429,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_val']=2;
 			setter[prefix+'add_note_to_roll']='save';			
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='This ward lasts until the warded creature is hit or fails a saving throw';
+			setter[prefix+'notes']='Ward: This ward lasts until the warded creature is hit or fails a saving throw';
 			break;
 		case 'battlespirit':
 			setter[prefix+'name']='Battle Spirit';
@@ -1452,8 +1455,9 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonustype']='deflection';
 			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
 			setter[prefix+'b1_val']=3;
+			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
+			setter[prefix+'notes']='Battle Ward: The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
 			break;
 		case 'hamperinghex':
 			setter[prefix+'name']='hampering Hex';
@@ -1498,6 +1502,32 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50% miss chance.';
+			break;
+		case 'elementaloverflow':
+			setter[prefix+'name']='Elemental Overflow';
+			setter[prefix+'bufftype']='class';
+			setter[prefix+'tabcat']='class';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonustype']='untyped';
+			setter[prefix+'b1_macro-text']='min(min(1,@{customa4-mod})*(1+@{customa4-mod}),1+floor((@{level}-1)/3))';
+			setter[prefix+'b1_val']=0;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg_ranged';
+			setter[prefix+'b2_bonustype']='untyped';
+			setter[prefix+'b2_macro-text']='(2*min(min(1,@{customa4-mod})*(1+@{customa4-mod}),1+floor((@{level}-1)/3)))';
+			setter[prefix+'b2_val']=0;
+			setter[prefix+'b3-show']=1;
+			setter[prefix+'b3_bonus']='dex';
+			setter[prefix+'b3_bonustype']='size';
+			setter[prefix+'b3_macro-text']='min(3,max(0,@{customa4-mod}-2))*2';
+			setter[prefix+'b3_val']=0;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='con';
+			setter[prefix+'b4_bonustype']='size';
+			setter[prefix+'b4_macro-text']='min(3,max(0,@{customa4-mod}-2))*2';
+			setter[prefix+'description-show']='1';
+			setter[prefix+'notes']='This buff uses the customa4-mod field as your current burn. The customa4 field is on the upper left on the Custom page..';
 			break;
 	}
 	return setter;

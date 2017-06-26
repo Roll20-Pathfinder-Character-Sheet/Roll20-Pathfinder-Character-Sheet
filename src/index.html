@@ -228,6 +228,7 @@
 							<option value="deathknell" data-i18n="buff-death-knell">Death Knell</option>
 							<option value="descrate" data-i18n="buff-desecrate">Desecrate (if undead)</option>
 							<option value="divinefavor" data-i18n="buff-divine-favor">Divine Favor</option>
+							<option value="elementaloverflow" data-i18n="buff-elemental-overflow">Elemental Overflow</option>
 							<option value="enlargeperson" data-i18n="buff-enlarge-person">Enlarge Person</option>
 							<option value="goodhope" data-i18n="buff-good-hope">Good Hope</option>
 							<option value="hamperinghex" data-i18n="buff-hampering-hex">Hampering Hex</option>
@@ -252,8 +253,8 @@
 						<span data-i18n="common-buff" data-i18n-title="common-buff-title" data-i18n-aria-label="common-buff-title">Common Buff</span>
 					</label>
 					<label class="sheet-small-label2">
-						<input type="checkbox" value="1" name="attr_add_common_buff" title="@{add_common_buff}" />
-						<span data-i18n="add">Add</span>
+						<input type="checkbox" class="sheet-newbuff-button sheet-cssbutton"  value="1" name="attr_add_common_buff" title="@{add_common_buff}" /><span></span>
+						<span class="sheet-cssbutton-label" data-i18n="add">Add</span>
 					</label>
 				</span>
 				<div class="sheet-cheat sheet-newbuff"></div>
@@ -324,6 +325,7 @@
 									<select name="attr_add_note_to_roll" title="@{repeating_buff2_$X_add_note_to_roll}" class="sheet-select-small">
 										<option value="" data-i18n="not-applicable-abbrv-default" selected>N/A</option>
 										<option value="attack" data-i18n="attack">attack</option>
+										<option value="defense" data-i18n="defenses">defense</option>
 										<option value="save" data-i18n="save">save</option>
 										<option value="init" data-i18n="initiative-abbrv">Init</option>
 										<option value="skill" data-i18n="skill">Skill</option>
@@ -807,6 +809,7 @@
 
 					<input type="text" name="attr_buff_init_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_buff_save_notes" value="" class="sheet-noshow" />
+					<input type="text" name="attr_buff_defense_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_buff_attack_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_buff_skill_notes" value="" class="sheet-noshow" />
 				</div>
@@ -1128,7 +1131,7 @@
 				<button type="roll" name="roll_items" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv-caps}](~@{character_id}|Roll-for-initiative)}}" />
 				<input type="hidden" name="attr_defenses-macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defenses}}} {{buttons=[^{fortitude-abbrv}](~@{character_id}|Fort-Save) [^{reflex-abbrv}](~@{character_id}|Ref-Save) [^{willpower-abbrv}](~@{character_id}|Will-Save) [^{all-saves}](~@{character_id}|All-Saves) [^{defense-statistics-abbrv}](~@{character_id}|defense-stats)}}" />
-				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{var_save_notes} {{buff_note=@{buff_save_notes}}} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes}" />
+				<input type="hidden" name="attr_defense-stats-macro-text" value="&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{defense-statistics}}} {{showdefenses=1}} {{showsaves=1}} {{showspecialdefenses=1}} {{ac=@{ac}}} {{touch=@{touch}}} {{flat_footed=@{flat-footed}}} @{var_armor_notes} {{cmd=@{cmd}}} @{var_cmd_notes} {{fort=@{fort}}} {{ref=@{ref}}} {{will=@{will}}} {{spellfail=@{spell-fail}}} @{var_save_notes} {{buff_note=@{buff_save_notes}}} @{var_dr_notes} @{var_resistances_notes} @{var_immunities_notes} @{var_weaknesses_notes} @{var_sr0_notes} @{var_defensive-abilities_notes} @{var_armor_notes} @{var_defense_notes} {{buff_note=@{buff_defense_notes}}}" />
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
@@ -1219,7 +1222,7 @@
 			<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 			<div class="sheet-cheat"></div>
 			<div class="sheet-section1 sheet-section sheet-section-core" role="region" aria-label="Core" data-i18n-aria-label="core">
-			<h1 class="sheet-selected-tabtitle" data-i18n="core">Core</h1>				
+				<h1 class="sheet-selected-tabtitle" data-i18n="core">Core</h1>				
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_character-details-show" data-i18n-aria-label="char-h-exp" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Expand Character Details" data-i18n-title="char-h-exp" data-i18n-aria-label="char-h-exp" data-i18n="char">Character Details</label></h2>
 				<div class="sheet-h2-section sheet-nontable sheet-core-details sheet-wide-readonly">					
@@ -7069,12 +7072,12 @@
 				<div class="sheet-h2-section sheet-skill-notes">
 					<div class="sheet-table sheet-center sheet-notes-cell">
 						<span class="sheet-table-name sheet-show-readonly" data-i18n="skill-notes">Skill Notes</span>
+					</div>
 					<div class="sheet-table-row">
 						<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
 					</div>
 				</div>
 			</div>
-		</div>
 			<div class="sheet-section4 sheet-section sheet-section-abilities" role="region" aria-label="Abilities" data-i18n-aria-label="abilities">
 				<h1 class="sheet-selected-tabtitle" data-i18n="abilities">Abilities</h1>
 				<div class="sheet-col sheet-col1">
@@ -11086,7 +11089,7 @@
 										<input type="checkbox" name="attr_metamagic" value="1" class="sheet-nextitem-show" role="presentation" />
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-slot"><input title="@{repeating_spells_$X_slot}" type="number" value="" name="attr_slot" /><span data-i18n="slot">Slot</span></label>
 										<label class="sheet-small-label2 sheet-narrow-numbers"><input title="@{repeating_spells_$X_savedc}" type="number" value="0" name="attr_savedc" class="sheet-calc" readonly /><span data-i18n="difficulty-class-abbrv">DC</span></label>
-										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span><span name="attr_school" class="sheet-autoexpand"></span></label>										<label class="sheet-small-label2 sheet-entry-small">
+										<label class="sheet-small-label2 sheet-entry-12p-shrink sheet-autoexpand"><input title="@{repeating_spells_$X_school}" type="text" value="" name="attr_school" placeholder="Spell School [descriptor]" data-i18n-placeholder="spell-school-place" accept="School"><span data-i18n="school">School</span><span name="attr_school" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-small">	
 											<select title="@{repeating_spells_$X_sr}" name="attr_sr" accept="Spell Resistance" class="sheet-select-small">
 												<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
@@ -11193,10 +11196,10 @@
 												</label>											
 											</div>
 											<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
-											<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper}  &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+											<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
 											<div class="sheet-repeating-id">
-												<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
+												<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id"></span>
 											</div>
 										</div>
 									</div>
@@ -11756,7 +11759,7 @@
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="special-abilities" class="sheet-upper" >SPECIAL ABILITIES</label></h2>
 				<hr class="sheet-npc-hr sheet-npchead-bottom" />
 				<div class="sheet-h2-section sheet-abilities sheet-repeating-sect sheet-wide-readonly" role="region" aria-label="special-abilities">
-<!-- NPC -->
+
 					<div role="menubar" class="sheet-abilitiesnav sheet-tabs sheet-custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_npc-abilities_tab" value="class-features" data-i18n-title="original-class-features-list" data-i18n-aria-label="class-features" />
