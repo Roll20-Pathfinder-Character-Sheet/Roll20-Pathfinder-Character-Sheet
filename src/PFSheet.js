@@ -33,8 +33,6 @@ import * as PFConditions from './PFConditions';
 import * as PFNPCParser from './PFNPCParser';
 import * as PFHorror from './PFHorror';
 
-
-
 function expandAll  () {
 	getAttrs(["expandall"], function (v) {
 		var skilltab = "4",
@@ -871,8 +869,6 @@ function checkForUpdate () {
 	});
 }
 
-
-
 function applyTemplate(name){
 	if (name==='giant'){
 		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
@@ -1076,9 +1072,20 @@ function applyTemplate(name){
 			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
 		});
 	}
+	SWUtils.setWrapper({'template_to_add':'','add_template':0},PFConst.silentParams);
 }
 
 function registerEventHandlers () {
+	on("change:add_template",TAS.callback(function eventAddTemplate(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			getAttrs(['template_to_add','add_template'],function(v){
+				if(parseInt(v.add_template,10)&&v.template_to_add){
+					applyTemplate(v.template_to_add);
+				}
+			});
+		}
+	}));
 	on("sheet:opened", TAS.callback(function eventSheetOpened() {
 		//eventInfo has undefined values for this event.
 		checkForUpdate();
@@ -1105,15 +1112,6 @@ function registerEventHandlers () {
 			}
 		}));
 	});
-	/*_.each(PFConst.dropdowns, function (write, read) {
-		on("change:" + read, TAS.callback(function eventAutoCalcDropdown(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType==="sheetworker"|| eventInfo.sourceType==="api"){
-				//sheetworker changed the VALUE of autocalc
-				PFUtilsAsync.setDropdownValue(read, write);
-			}
-		}));
-	});	*/
 	//GENERIC EQUATIONS
 	_.each(PFConst.equationMacros, function (write, read) {
 		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {

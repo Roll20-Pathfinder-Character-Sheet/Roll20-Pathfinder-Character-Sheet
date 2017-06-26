@@ -10261,6 +10261,24 @@
 					<span class="sheet-table-cell"><input type="text" name="attr_npc-xp" accept="XP" title="@{npc-xp}" style="padding-top: .5em;  min-width: 4em;" /></span>
 				</div>
 				<div class="sheet-nontable sheet-npc-details sheet-h2-section" role="section" aria-label="npc details">
+					<label class="sheet-small-label2">
+						<select name="attr_template_to_add" class="sheet-select-small">
+							<option value="" data-i18n="select-one-default" selected>Select one</option>
+							<option value="giant" data-i18n="giant"></option>
+							<option value="young" data-i18n="young"></option>
+							<option value="advanced" data-i18n="advanced"></option>
+							<option value="degenerate" data-i18n="degenerate"></option>
+							<option value="celestial" data-i18n="celestial"></option>
+							<option value="fiendish" data-i18n="fiendish"></option>
+							<option value="entropic" data-i18n="entropic"></option>
+							<option value="resolute" data-i18n="resolute"></option>
+						</select>
+						<span data-i18n="template" data-i18n-title="add-template" data-i18n-aria-label="add-template">template</span>
+					</label>
+					<label class="sheet-small-label2" style="margin-top:0;">
+						<input type="checkbox" class="sheet-newtemplate-button sheet-cssbutton" value="1" name="attr_add_template" title="@{add_template}" /><span></span>
+						<span class="sheet-cssbutton-label" data-i18n="add">Add</span>
+					</label>
 					<label class="sheet-small-label2 sheet-autoexpand"><input title="@{alignment}" type="text" name="attr_alignment" placeholder="Alignment" data-i18n-placeholder="alignment"  /><span data-i18n="alignment-abbrv">Align</span><span class="sheet-autoexpand" name="attr_alignment"></span></label>
 					<label class="sheet-small-label2 sheet-entry-med" style="padding-left:.5em;">
 						<select title="@{default_char_size}" name="attr_default_char_size" >
