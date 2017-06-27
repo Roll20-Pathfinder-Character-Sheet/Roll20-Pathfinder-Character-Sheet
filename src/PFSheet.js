@@ -896,6 +896,33 @@ function applyTemplate(name){
 			setter = PFSize.updateSize(1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
 		});
+	} else 	if (name==='giantremove'){
+		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
+		'STR-base','STR','STR-mod','CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
+			var setter={},tempstr='',tempint=0;
+			tempstr = SWUtils.getTranslated('giant') + ' ';
+			if(v['npc-type']){
+				setter['npc-type'] = v['npc-type'].replace(tempstr,'');
+			}
+
+			setter = PFAbilityScores.modifyAbility('STR',-4,v,setter);
+			setter = PFAbilityScores.modifyAbility('DEX',2,v,setter);
+			if(!parseInt(v.is_undead,10)){
+				setter = PFAbilityScores.modifyAbility('CON',-4,v,setter);
+			} else {
+				setter = PFAbilityScores.modifyAbility('CHA',-4,v,setter);
+			}
+			tempint = parseInt(v['AC-natural'],10)||0;
+			tempint-=3;
+			setter['AC-natural']=tempint;
+
+			tempint = parseInt(v['npc-cr'],10)||0;
+			tempint--;
+			setter['npc-cr']=tempint;
+
+			setter = PFSize.updateSize(-1,v,null,setter);
+			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
+		});
 	} else if (name==='young') {
 		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
 		'STR-base','STR','STR-mod', 'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
@@ -922,6 +949,31 @@ function applyTemplate(name){
 			setter['npc-cr']=tempint;
 
 			setter = PFSize.updateSize(-1,v,null,setter);
+			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
+		});
+	} else if (name==='youngremove') {
+		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
+		'STR-base','STR','STR-mod', 'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
+			var setter={},tempstr='',tempint=0;
+			tempstr = SWUtils.getTranslated('young')+' ';
+			if (v['npc-type']){
+				setter['npc-type'] = v['npc-type'].replace(tempstr,'');
+			}
+			setter = PFAbilityScores.modifyAbility('STR',4,v,setter);
+			setter = PFAbilityScores.modifyAbility('DEX',-4,v,setter);
+			if(!parseInt(v.is_undead,10)){
+				setter = PFAbilityScores.modifyAbility('CON',4,v,setter);
+			} else {
+				setter = PFAbilityScores.modifyAbility('CHA',4,v,setter);
+			}
+
+			tempint = parseInt(v['AC-natural'],10)||0;
+			tempint += 2;
+			setter['AC-natural']=tempint;
+			tempint = parseInt(v['npc-cr'],10)||0;
+			tempint++;
+			setter['npc-cr']=tempint;
+			setter = PFSize.updateSize(1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
 		});
 	} else if (name==='advanced'){
@@ -959,7 +1011,6 @@ function applyTemplate(name){
 			var setter={},tempstr='',tempint=0;
 			tempstr = SWUtils.getTranslated('degenerate');
 			setter['npc-type'] = tempstr+' '+v['npc-type'];
-
 			setter = PFAbilityScores.modifyAbility('STR',-4,v,setter);
 			if(!parseInt(v.is_undead,10)){
 				setter = PFAbilityScores.modifyAbility('CON',-4,v,setter);
@@ -968,9 +1019,8 @@ function applyTemplate(name){
 			setter = PFAbilityScores.modifyAbility('INT',-4,v,setter);
 			setter = PFAbilityScores.modifyAbility('WIS',-4,v,setter);
 			setter = PFAbilityScores.modifyAbility('CHA',-4,v,setter);
-
 			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint+=2;
+			tempint-=2;
 			setter['AC-natural']=tempint;
 			tempint = parseInt(v['npc-cr'],10)||0;
 			tempint--;
@@ -1080,7 +1130,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			getAttrs(['template_to_add','add_template'],function(v){
-				if(parseInt(v.add_template,10)&&v.template_to_add){
+				if(parseInt(v.add_template,10)){
 					applyTemplate(v.template_to_add);
 				}
 			});

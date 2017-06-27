@@ -807,15 +807,24 @@ function reEvaluateCustomMacros(callback,silently){
 	});
 }
 
-function getCommonBuffEntries(name){
-	var id,prefix='',setter={};
+function getCommonBuffEntries(name,v){
+	var id,prefix='',setter={},
+	calc=0,conmod=0,speed=0,level=0,tempint=0;
 	if(!name){
 		return setter;
 	}
 	id = generateRowID();
 	prefix = 'repeating_buff2_'+id+'_';
 	setter[prefix+'enable_toggle']='1';
-	setter[prefix+'tabcat2']='1';//should be enabled by default?
+	setter[prefix+'tabcat2']='1';
+	if(v){
+		conmod=parseInt(v['CON-mod'],10);
+		speed=parseInt(v['speed-base'],10);
+		level=parseInt(v['level'],10);
+		if(! ( isNaN(conmod) || isNaN(speed) || isNaN(level))){
+			calc=1;
+		}
+	}
 	switch(name){
 		case 'rage':
 			setter[prefix+'name']='Rage (Ex)';
@@ -825,22 +834,34 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='4+(2*floor((@{level}-1)/10))';
-			setter[prefix+'b1_val']=4;
+			if(calc===1){
+				if(level<11){
+					tempint=4;
+				} else if (level===20){
+					tempint=8;
+				} else {
+					tempint=6;
+				}
+			} else {
+				tempint=4;
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='con';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='4+(2*floor((@{level}-1)/10))';
-			setter[prefix+'b2_val']=4;
+			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_bonustype']='untyped';
-			setter[prefix+'b3_macro-text']='-3';
-			setter[prefix+'b3_val']=-3;
+			setter[prefix+'b3_macro-text']='-2';
+			setter[prefix+'b3_val']=-2;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
-			setter[prefix+'b4_val']=2;
-			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'b4_macro-text']='2+floor((@{level}-1)/10)';
+			tempint = tempint / 2;
+			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'notes']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
 			setter[prefix+'description-show']=1;
@@ -853,28 +874,40 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='melee';
 			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='2+(floor((@{level}-1)/10))';
-			setter[prefix+'b1_val']=4;
+			if(calc===1){
+				if(level<11){
+					tempint=4;
+				} else if (level===20){
+					tempint=8;
+				} else {
+					tempint=6;
+				}
+			} else {
+				tempint=4;
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg_melee';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='2+(floor((@{level}-1)/10))';
-			setter[prefix+'b2_val']=4;
+			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_bonustype']='untyped';
-			setter[prefix+'b3_macro-text']='-3';
-			setter[prefix+'b3_val']=-3;
+			setter[prefix+'b3_macro-text']='-2';
+			setter[prefix+'b3_val']=-2;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
-			setter[prefix+'b4_macro-text']='2';
-			setter[prefix+'b4_val']=2;
+			setter[prefix+'b4_macro-text']='2+floor((@{level}-1)/10)';
+			tempint = tempint / 2;
+			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'b5-show']=1;
 			setter[prefix+'b5_bonus']='hptemp';
 			setter[prefix+'b5_hide']=1;
-			setter[prefix+'b5_macro-text']='2*@{level}';
-			setter[prefix+'b5_val']=2;
-			setter[prefix+'b5_val_error']=1;
+			setter[prefix+'b5_macro-text']='@{level}*(2+floor((@{level}-1)/10))';
+			tempint = tempint * level;
+			setter[prefix+'b5_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'notes']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
 			setter[prefix+'description-show']=1;
@@ -960,12 +993,17 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='2';
 			setter[prefix+'b2_val']=2;
-			setter[prefix+'b3_val']=1;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='hptemp';
 			setter[prefix+'b3_hide']=1;
 			setter[prefix+'b3_val_error']=1;
-			setter[prefix+'b3_macro-text']='1d8 + casterlvl';
+			setter[prefix+'b3_macro-text']='1d8 + @{level}';
+			if(calc){
+				tempint=4+level;
+			} else {
+				tempint=4;
+			}
+			setter[prefix+'b3_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';
 			setter[prefix+'notes']='Aid:  +@{b2_val} morale bonus on saving throws against fear effects. (Show buff 2 buff to calculate bonus automatically).';
 			setter[prefix+'description-show']=1;
@@ -993,7 +1031,13 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_bonus']='speed';
 			setter[prefix+'b4_bonustype']='enhancement';
 			setter[prefix+'b4_macro-text']='min(@{speed-base},30)';
-			setter[prefix+'b4_val']=30;
+			tempint=30;
+			if(calc){
+				if (speed<30){
+					tempint=speed;
+				}
+			}
+			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='attack';
 			setter[prefix+'notes']='When making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. All modes of movement increase.';
 			setter[prefix+'description-show']=1;
@@ -1027,12 +1071,22 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
 			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level}-1)/3))';
-			setter[prefix+'b1_val']=2;
+			tempint=1;
+			if(calc){
+				if(level<=3){
+					tempint=1;
+				} else if (level <=6){
+					tempint=2;
+				} else {
+					tempint=3;
+				}
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='luck';
 			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level}-1)/3))';
-			setter[prefix+'b2_val']=2;
+			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'shieldoffaith':
 			setter[prefix+'name']='Shield of Faith';
@@ -1042,7 +1096,19 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
 			setter[prefix+'b1_macro-text']='2+floor((@{level})/6)';
-			setter[prefix+'b1_val']=2;
+			tempint=2;
+			if(calc){
+				if(level<6){
+					tempint=2;
+				} else if (level <12){
+					tempint=3;
+				} else if (level < 18) {
+					tempint=4;
+				} else {
+					tempint=5;
+				}
+			}
+			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'shield':
 			setter[prefix+'name']='Shield';
@@ -1078,17 +1144,29 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='competence';
 			setter[prefix+'b1_macro-text']='1+floor((@{level}+1)/6)';
-			setter[prefix+'b1_val']=1;
+			tempint=1;
+			if(calc){
+				if(level<5){
+					tempint=1;
+				} else if (level <11){
+					tempint=2;
+				} else if (level < 16) {
+					tempint=3;
+				} else {
+					tempint=4;
+				}
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='dmg';
 			setter[prefix+'b3_bonustype']='competence';
 			setter[prefix+'b3_macro-text']='1+floor((@{level}+1)/6)';
-			setter[prefix+'b3_val']=1;
-			setter[prefix+'b2-show']=1;
+			setter[prefix+'b3_val']=tempint;
+			setter[prefix+'b2-show']=0;
 			setter[prefix+'b2_bonus']='will';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='1+floor((@{level}+1)/6)';
-			setter[prefix+'b2_val']=1;
+			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';
 			setter[prefix+'notes']='Inspire Courage: +@{b2_val} morale bonus on saving throws against charm and fear effects. (Show buff 2 buff to calculate bonus automatically).';
 			setter[prefix+'description-show']=1;
@@ -1111,7 +1189,32 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b3_bonus']='hptemp';
 			setter[prefix+'b3_hide']=1;
 			setter[prefix+'b3_macro-text']='2d10+(2*@{CON-mod})';
+			tempint=10;
+			if(calc){
+				tempint=10+(2*conmod);
+			}
+			setter[prefix+'b3_val']=tempint;
 			setter[prefix+'b3_val_error']=1;
+			setter[prefix+'b4-show']=1;
+			setter[prefix+'b4_bonus']='casterlevel';
+			setter[prefix+'b4_bonustype']='untyped';
+			setter[prefix+'b4_macro-text']='2';
+			setter[prefix+'b4_val']=2;
+			break;
+		case 'inspireheroics':
+			setter[prefix+'name']='Inspire Heroics';
+			setter[prefix+'bufftype']='song';
+			setter[prefix+'tabcat']='song';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='saves';
+			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_macro-text']='4';
+			setter[prefix+'b1_val']=4;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='ac';
+			setter[prefix+'b2_bonustype']='dodge';
+			setter[prefix+'b2_macro-text']='4';
+			setter[prefix+'b2_val']=4;
 			break;
 		case 'inspiredrage':
 			setter[prefix+'name']='Inspired Rage';
@@ -1120,13 +1223,23 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='2+(2*floor((@{level}+1)/8))';
-			setter[prefix+'b1_val']=2;
+			setter[prefix+'b1_macro-text']='2+(2*floor(@{level}/8))';
+			tempint=2;
+			if(calc){
+				if(level<8){
+					tempint=2;
+				} else if (level<16){
+					tempint=4;
+				} else {
+					tempint=6;
+				}
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='con';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='2+(2*floor((@{level}+1)/8))';
-			setter[prefix+'b2_val']=2;
+			setter[prefix+'b2_macro-text']='2+(2*floor(@{level}/8))';
+			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
 			setter[prefix+'b3_bonustype']='untyped';
@@ -1135,8 +1248,12 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
-			setter[prefix+'b4_macro-text']='1+floor((@{level}+1)/4)';
-			setter[prefix+'b4_val']=1;
+			setter[prefix+'b4_macro-text']='1+floor(@{level}/4)';
+			tempint=1;
+			if(calc){
+				tempint=1+Math.floor(level/4);
+			}
+			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'notes']='While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration';
 			setter[prefix+'description-show']=1;
@@ -1411,7 +1528,11 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='enhancement';
 			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
-			setter[prefix+'b1_val']=1;
+			tempint=1;
+			if(calc){
+				tempint = 1+ Math.floor(level/4);
+			}
+			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'ward':
 			setter[prefix+'name']='Ward';
@@ -1421,12 +1542,16 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
 			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
-			setter[prefix+'b1_val']=2;
+			tempint=2;
+			if(calc){
+				tempint = 2+ Math.floor(level/8);
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='saves';
 			setter[prefix+'b2_bonustype']='resistance';
 			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8)';
-			setter[prefix+'b2_val']=2;
+			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';			
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='Ward: This ward lasts until the warded creature is hit or fails a saving throw';
@@ -1439,12 +1564,16 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
 			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8)';
-			setter[prefix+'b1_val']=1;
+			tempint=1;
+			if(calc){
+				tempint = 1+ Math.floor(level/8);
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='morale';
 			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8)';
-			setter[prefix+'b2_val']=1;
+			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'battleward':
 			setter[prefix+'name']='Battle Ward';
@@ -1454,7 +1583,11 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
 			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
-			setter[prefix+'b1_val']=3;
+			tempint=3;
+			if(calc){
+				tempint = 3+ Math.floor(level/8);
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='Battle Ward: The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
@@ -1477,7 +1610,11 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
 			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
-			setter[prefix+'b1_val']=2;
+			tempint=2;
+			if(calc){
+				tempint = 2 +  Math.floor(level/8);
+			}
+			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'stardust':
 			setter[prefix+'name']='Stardust';
@@ -1485,8 +1622,12 @@ function getCommonBuffEntries(name){
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
-			setter[prefix+'b1_macro-text']='-1 - (floor(@{level}/4)';
-			setter[prefix+'b1_val']=-1;
+			setter[prefix+'b1_macro-text']='-1 - (floor(@{level}/4))';
+			tempint=-1;
+			if(calc){
+				tempint = -1 * ( 1 + Math.floor(level/4) );
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='Also apply @{b1_val} penalty to sight based perception checks';
@@ -1498,8 +1639,20 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='armor';
-			setter[prefix+'b1_macro-text']='4 + ((floor((@{level}-3)/4)';
-			setter[prefix+'b1_val']=4;
+			setter[prefix+'b1_macro-text']='4 + (2*(floor(max((@{level}-3),0)/4)';
+			tempint=4;
+			if(calc){
+				if(level < 7){
+					tempint = 4;
+				} else if (tempint < 11){
+					tempint = 6;
+				} else if (tempint < 15){
+					tempint = 8;
+				} else if (tempint < 19){
+					tempint = 10;
+				}
+			}
+			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50% miss chance.';
 			break;
@@ -1526,6 +1679,7 @@ function getCommonBuffEntries(name){
 			setter[prefix+'b4_bonus']='con';
 			setter[prefix+'b4_bonustype']='size';
 			setter[prefix+'b4_macro-text']='min(3,max(0,@{customa4-mod}-2))*2';
+			setter[prefix+'b4_val']=0;
 			setter[prefix+'description-show']='1';
 			setter[prefix+'notes']='This buff uses the customa4-mod field as your current burn. The customa4 field is on the upper left on the Custom page..';
 			break;
@@ -1539,19 +1693,17 @@ export function addCommonBuff(callback){
 			callback();
 		}
 	}, setter={}, fields;
-	fields = ['add_common_buff','common_buff_toadd'];
+	fields = ['add_common_buff','common_buff_toadd','CON-mod','level','speed-base'];
 	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
 			if(v['common_buff_toadd'] && v['common_buff_toadd']!='0'){
 				setter = getCommonBuffEntries(v['common_buff_toadd']);
 				setter.common_buff_toadd='';
-				switch(v['common_buff_toadd']){
-					case 'slow':
-						setter['condition-Staggered']=1;
-						break;
+				if(v['common_buff_toadd']==='slow'){
+					setter['condition-Staggered']=1;
 				}
-			} else if (v['common_buff_toadd']=='0'){
+			} else if (v['common_buff_toadd']==='0'){
 				setter.common_buff_toadd='';
 			}
 			setter.add_common_buff = 0;
