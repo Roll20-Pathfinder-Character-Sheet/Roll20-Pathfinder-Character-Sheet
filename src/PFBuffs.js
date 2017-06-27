@@ -19,12 +19,14 @@ import * as PFSkills from './PFSkills';
 import * as PFBuffsOld from './PFBuffsOld';
 
 var
+//values in the bonus dropdown
 buffColumns = [
 	'ac',	'armor',	'attack',	'casterlevel',	'cha',	'cha_skills',	'check',	'check_ability',	'check_skills',
 	'cmb',	'cmd',	'con',	'con_skills',		'dex',	'dex_skills',	'dmg',	'dmg_melee',	'dmg_ranged',
 	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
 	'will',	'wis',	'wis_skills'],
+//map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
 buffToTot = {
 	'ac':'AC',	'armor':'armor',	'attack':'attack',	'casterlevel':'CasterLevel',
 	'cha':'CHA',	'cha_skills':'CHA_skills',
@@ -37,26 +39,12 @@ buffToTot = {
 	'natural':'natural',	'ranged':'Ranged',	'ref':'Ref',	'saves':'saves',
 	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
 	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills'},
+//only the total fields (buff_XYZ-total only XYZ portion) (no penalty fields)
 totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort(),
-otherCharBonuses ={
-	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
-	'dex':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
-	'con':{'inherent':'CON-inherent','enhancement':'CON-enhance'},
-	'int':{'inherent':'INT-inherent','enhancement':'INT-enhance'},
-	'wis':{'inherent':'WIS-inherent','enhancement':'WIS-enhance'},
-	'cha':{'inherent':'CHA-inherent','enhancement':'CHA-enhance'},
-	'initiative':{'trait':'init-trait'},
-	'fort':{'resistance':'Fort-resist','trait':'Fort-trait'},
-	'ref':{'resistance':'Ref-resist','trait':'Ref-trait'},
-	'will':{'resistance':'Will-resist','trait':'Will-trait'},
-	'ac':{'natural':'AC-natural','deflection':'AC-deflect','armor':'armor3-acbonus','shield':'shield3-acbonus'},
-	'armor':{'enhancement':'armor3-enhance'},
-	'shield':{'enhancement':'shield3-enhance'}
-	},
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
 	'deflection','dodge','natural',	'shield','armor'],
-//ACCMD = ['untyped','circumstance','deflection','dodge','insight','luck','morale','profane','sacred'],
+//map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
 	'ac':['cmd','flatfooted'],
 	'attack':['melee','ranged','cmb'],
@@ -65,8 +53,7 @@ buffsAffectingOthers = {
 	'saves':['fort','ref','will'],
 	'check_skills':['str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills']
 },
-//this spreads buff out which works but might fill up space
-//another way would beto make it subtractThatFromThis
+//reverse map of buffsAffectingOthers, left is "child" buff, buff on right added to (and checked for stacking)
 affectedBuffs = {
 	'melee':['attack'],
 	'ranged':['attack'],
@@ -88,7 +75,7 @@ affectedBuffs = {
 	'wis_skills':['check_skills','check'],
 	'cha_skills':['check_skills','check']
 },
-//all total fields
+//all total fields plus "_exists", INCLUDING penalty fields
 buffTotFields = _.chain(totColumns).map(function(totstr){
 		var isAbility = (PFAbilityScores.abilities.indexOf(totstr) >= 0) && totstr.indexOf('skill')<1;
 		if (!isAbility){
@@ -97,19 +84,35 @@ buffTotFields = _.chain(totColumns).map(function(totstr){
 			return ['buff_'+totstr+'-total','buff_'+totstr+'_exists','buff_'+totstr+'-total_penalty', 'buff_'+totstr+'_penalty_exists'];
 		}
 	}).flatten().value(),
-//character bonus/buff fields elsewhere on the sheet that stack with buffs
+//map of buffs to another map of bonus type to other fields on sheet of same bonus and type
+otherCharBonuses ={
+	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
+	'dex':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
+	'con':{'inherent':'CON-inherent','enhancement':'CON-enhance'},
+	'int':{'inherent':'INT-inherent','enhancement':'INT-enhance'},
+	'wis':{'inherent':'WIS-inherent','enhancement':'WIS-enhance'},
+	'cha':{'inherent':'CHA-inherent','enhancement':'CHA-enhance'},
+	'initiative':{'trait':'init-trait'},
+	'fort':{'resistance':'Fort-resist','trait':'Fort-trait'},
+	'ref':{'resistance':'Ref-resist','trait':'Ref-trait'},
+	'will':{'resistance':'Will-resist','trait':'Will-trait'},
+	'ac':{'natural':'AC-natural','deflection':'AC-deflect','armor':'armor3-acbonus','shield':'shield3-acbonus'},
+	'armor':{'enhancement':'armor3-enhance'},
+	'shield':{'enhancement':'shield3-enhance'}
+	},
+//fields on sheet that affect buffs (all leaf nodes of otherCharBonuses)
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().value().sort(),
-
-//notes
+//note fields
 buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes','buff_defense_notes'],
-//the buff field prefixes on each row
+//the buff field prefixes for each row
 buffsPerRow=['b1','b2','b3','b4','b5','b6'],
-//these aways stack don't need to use max
+//bonus types that aways stack don't need to use max (penalty is fake type used internally)
 stackingTypes =['untyped','circumstance','dodge','penalty'],
-//these buff columns dont have bonus types they are technically bonus types to other fields (but size is special)
-bonusesWithNoTypes=['size','hptemp'],//rmeove dodge deflection for v2
-//these have only their own type (like bonusesWithNoTypes) or 'enhancement'
+//these buff columns dont have bonus types use this to hide the type dropdown
+bonusesWithNoTypes=['size','hptemp'],
+//these have only their own type, enhancement, or untyped
 selfTypeOrEnhance=['armor','shield','natural'],
+//all attributes on a buff row, to make getAttrs easier when totalling
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
 	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
 	'_b3-show','_b3_val','_b3_bonus','_b3_bonustype',
@@ -431,7 +434,7 @@ function addNoteAsync(id,eventInfo){
  * @param {function} callback 
  * @param {boolean} silently 
  */
-function clearBuffTotals (callback,silently){
+export function clearBuffTotals (callback,silently){
 	var done=function(){
 		if(typeof callback === "function"){
 			callback();
@@ -563,12 +566,13 @@ function updateBuffTotal (col,rows,v,setter){
 	columns=[col],
 	armorcols=['ac','touch','flatfooted','cmd'];
 	try {
+		TAS.debug("total sync for "+col,rows,v);
 		setter = setter || {};
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 		if (!isAbility && affectedBuffs[col]){
 			columns=columns.concat(affectedBuffs[col]);
 		}
-		//TAS.debug('updateBuffTotal2 for '+col+' columns are ',columns);
+		TAS.debug('updateBuffTotal2 for '+col+' columns are ',columns);
 		rows = rows.filter(function(row){
 			if(columns.indexOf(row.bonus)>=0){
 				return 1;
@@ -576,7 +580,7 @@ function updateBuffTotal (col,rows,v,setter){
 			return 0;
 		});
 		if (rows && _.size(rows)){
-			//TAS.debug("PFBUFFS ROWS NOW:",rows);
+			TAS.debug("PFBUFFS ROWS NOW:",rows);
 			if(col==='hptemp'){
 				//hptemp=alwaysstack
 				sums.sum = rows.filter(function(row){
@@ -596,6 +600,7 @@ function updateBuffTotal (col,rows,v,setter){
 					return m;
 				},sums);
 			} else {
+				//stack all rows
 				bonuses = rows.reduce(function(m,row){
 					if(row.bonus===col){
 						if (row.val<0){
@@ -608,10 +613,8 @@ function updateBuffTotal (col,rows,v,setter){
 					}
 					return m;
 				},{});
-				//TAS.debug("Bonuses",bonuses);
+				//subtract any nonstacking parent buffs affecting it:
 				if(_.size(columns)>1){
-					//TAS.debug("subtract other bonuses");
-					//rest added together so don't stack
 					bonuses = rows.reduce(function(m,row){
 						if (stackingTypes.indexOf(row.bonusType)<0 && 
 							affectedBuffs[col].indexOf(row.bonus)>=0 &&
@@ -624,11 +627,9 @@ function updateBuffTotal (col,rows,v,setter){
 						}
 						return m;
 					},bonuses);
-					//TAS.debug("PFBUFFS BONUSES before subtraacting  ",bonuses);
 				}
-				//look at bonuses on rest of sheet to see if they overlap and don't stack:
+				//subtract charsheet fields that overlap:
 				_.each(otherCharBonuses[col],function(charField,bonusType){
-					//TAS.debug('comparing to val of '+charField+', type is '+bonusType);
 					if(bonuses[bonusType]){
 						tempInt = parseInt(v[charField],10)||0;
 						if(bonuses[bonusType] <= tempInt){
@@ -638,14 +639,45 @@ function updateBuffTotal (col,rows,v,setter){
 						}
 					}
 				});
-				//TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
+				//NOW START SUMMING
+				TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
+				//if ability, penalty is applied seperately
+					if(isAbility &&  _.contains(bonuses,'penalty')){
+						sums.pen=bonuses.penalty;
+						bonuses.penalty=0;
+					}
+
+				//if ac,touch,cmd,flatfooted, copy dodge and deflection out
+				if(armorcols.indexOf(col)>=0){
+
+						if ( _.contains(bonuses,'dodge')){
+							if(col==='ac'){
+								totaldodge = bonuses.dodge;
+							}
+							bonuses.dodge=0;
+						}
+
+
+						if( _.contains(bonuses,'deflection')){
+							if (col==='ac'){
+								totaldeflection= bonuses.deflection;
+							}
+							bonuses.deflection=0;
+						}
+
+				}
+				sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
+					m+=bonus;
+					return m;
+				},0);
+				/*
 				if (isAbility){
 					try {
 						sums.pen = bonuses.penalty||0;
 					} catch (er2){}
 					bonuses.penalty=0;
-				}
-
+				}				
+				//if not armor just add them up
 				if(armorcols.indexOf(col)<0){
 					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
 						m+=bonus;
@@ -664,6 +696,7 @@ function updateBuffTotal (col,rows,v,setter){
 						return m;
 					},0);
 				}
+				*/
 			}
 		}
 
@@ -738,7 +771,7 @@ function updateBuffTotalAsync (col, callback,silently){
 		}
 	}),
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<0;
-
+	TAS.debug("totalling async vfor "+ col);
 	getSectionIDs('repeating_buff2',function(ids){
 		var fields,totfields,otherfields,totals=[],columnsToGet=[],columnsToUpdate=[];
 		if(ids && _.size(ids)){
@@ -754,7 +787,6 @@ function updateBuffTotalAsync (col, callback,silently){
 				if(affectedBuffs[col]){
 					columnsToGet = columnsToGet.concat(affectedBuffs[col]);
 				}
-
 				totals = columnsToUpdate.map(function(b){return buffToTot[b];});
 				if (col==='ac'){
 					totals.push('dodge')
@@ -784,22 +816,22 @@ function updateBuffTotalAsync (col, callback,silently){
 				done();
 				return;
 			}
-			//TAS.debug("updateBuffTotalAsync2 fields ",fields,'#######################################');
+			TAS.debug("updateBuffTotalAsync fields ",fields,'#######################################');
 			getAttrs(fields,function(v){
 				var rows,params={}, setter={};
 				try {
-					//TAS.debug("PFBuffs.totals for "+ col+" v is",v);
+					TAS.debug("PFBuffsasync got for "+ col+" v is",v);
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
 					ids = ids.filter(function(id){
 						return (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10)||0);
 					});
+					TAS.debug("PFBuffsasync there are " +_.size(ids)+" rows" );
 					if(_.size(ids)){
 						rows = assembleRows(ids,v,col);
 						setter = columnsToUpdate.reduce(function(m,c){
 							return updateBuffTotal(c,rows,v,m);
 						},setter);
 					} else {
-						//all have 0!
 						clearBuffTotals();
 					}
 				} catch (errou){
@@ -1011,6 +1043,7 @@ function getCommonBuffEntries(name,v){
 			calc=1;
 		}
 	}
+	TAS.debug("adding common buff for :"+name+" should calc is:"+calc,v);
 	switch(name){
 		case 'rage':
 			setter[prefix+'name']='Rage (Ex)';
@@ -1883,7 +1916,7 @@ export function addCommonBuff(callback){
 	getAttrs(fields,function(v){
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
-			if(parseInt(v['common_buff_toadd'],10)){
+			if(v['common_buff_toadd']){
 				setter = getCommonBuffEntries(v['common_buff_toadd'],v);
 				setter.common_buff_toadd='';
 				if(v['common_buff_toadd']==='slow'){
@@ -1970,7 +2003,7 @@ function registerEventHandlers () {
 				});
 			}
 		}));
-		on(prefix + "_val" , TAS.callback(function PFBuffs_updateBuffRowShowBuff(eventInfo) {
+		on(prefix + "_val" , TAS.callback(function updateBuffValue(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType ==="api") {
 				getAttrs(['repeating_buff2_'+b+'-show','repeating_buff2_'+b+'_bonus','repeating_buff2_enable_toggle'],function(v){

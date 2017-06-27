@@ -1241,8 +1241,8 @@ function registerEventHandlers () {
 							setter[eventInfo.sourceAttribute+'_btn']=0;
 							SWUtils.setWrapper(setter,{silent:true});
 							if ((/buff/i).test(eventInfo.sourceAttribute)){
-								PFBuffs.clearOldBuffTotals();
-							}		
+								PFBuffs.clearBuffTotals();
+							}
 						},section);
 				}
 			});
