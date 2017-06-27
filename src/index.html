@@ -1074,9 +1074,6 @@
 											<span title="Bonus to touch attack armor class." data-i18n-title="buff-touch-title" data-i18n-aria-label="buff-touch-title"><span data-i18n="touch-armor-class-abbrv">Touch AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Touch-show}" name="attr_buff-Touch-show" value="1" /></span>
 											<span title="Bonus to flat-footed." data-i18n-title="buff-flat-footed-title" data-i18n-aria-label="buff-flat-footed-title"><span data-i18n="flat-footed-abbrv">AC</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-flat-footed-show}" name="attr_buff-flat-footed-show" value="1" /></span>
 											<span title="Bonus to combat maneuver defense." data-i18n-title="buff-cmd-title" data-i18n-aria-label="buff-cmd-title"><span data-i18n="combat-maneuver-defense-abbrv">CMD</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMD-show}" name="attr_buff-CMD-show" value="1" /></span>
-											<span title="Bonus to armor." data-i18n-title="buff-armor-title" data-i18n-aria-label="buff-armor-title"><span data-i18n="armor">Armor</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-armor-show}" name="attr_buff-armor-show" value="1" /></span>
-											<span title="Bonus to shield." data-i18n-title="buff-shield-title" data-i18n-aria-label="buff-shield-title"><span data-i18n="shield">Shield</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-shield-show}" name="attr_buff-shield-show" value="1" /></span>
-											<span title="Bonus to natural." data-i18n-title="buff-natural-title" data-i18n-aria-label="buff-natural-title"><span data-i18n="natural-armor">Natural armor</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-natural-show}" name="attr_buff-natural-show" value="1" /></span>
 											<span title="Bonus to deflection." data-i18n-title="buff-deflection-title" data-i18n-aria-label="buff-deflection-title"><span data-i18n="deflection">Deflection</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-deflection-show}" name="attr_buff-deflection-show" value="1" /></span>
 											<span title="Bonus to dodge." data-i18n-title="buff-dodge-title" data-i18n-aria-label="buff-dodge-title"><span data-i18n="dodge">Dodge</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-dodge-show}" name="attr_buff-dodge-show" value="1" /></span>
 										</div>
@@ -12705,33 +12702,41 @@
 					</span>					
 					<span class="sheet-table-cell sheet-left">
 						<span data-i18n="heading-border-colors">Heading background and outlines:</span>
-						<select title="@{rolltemplate_color}" name="attr_rolltemplate_color" style="width:8em;display:inline-block;">
-							<option value="" data-i18n="black-default" selected>&#8226;Black</option>
-							<option value="white" data-i18n="white">White</option>
-							<option value="grey" data-i18n="grey">Grey</option>
-							<option value="darkgrey" data-i18n="dark-grey">DarkGrey</option>
-							<option value="pink" data-i18n="pink">Pink</option>
-							<option value="darkpink" data-i18n="dark-pink">DarkPink</option>
-							<option value="red" data-i18n="red">Red</option>
-							<option value="darkred" data-i18n="dark-red">DarkRed</option>
-							<option value="orange" data-i18n="orange">Orange</option>
-							<option value="darkorange" data-i18n="dark-orange">DarkOrange</option>
-							<option value="yellow" data-i18n="yellow">Yellow</option>
-							<option value="darkyellow" data-i18n="dark-yellow">DarkYellow</option>
-							<option value="green" data-i18n="green">Green</option>
-							<option value="darkgreen" data-i18n="dark-green">DarkGreen</option>
-							<option value="teal" data-i18n="teal">Teal</option>
-							<option value="darkteal" data-i18n="dark-teal">DarkTeal</option>
-							<option value="cyan" data-i18n="cyan">Cyan</option>
-							<option value="darkcyan" data-i18n="dark-cyan">DarkCyan</option>
-							<option value="azure" data-i18n="azure">Azure</option>
-							<option value="darkazure" data-i18n="dark-azure">DarkAzure</option>
-							<option value="blue" data-i18n="blue">Blue</option>
-							<option value="darkblue" data-i18n="dark-blue">DarkBlue</option>
-							<option value="purple" data-i18n="purple">Purple</option>
-							<option value="darkpurple" data-i18n="dark-purple">DarkPurple</option>
-							<option value="violet" data-i18n="violet">Violet</option>
-							<option value="darkviolet" data-i18n="dark-violet">DarkViolet</option>
+						<select title="@{rolltemplate_color}" class="sheet-colorpicker" name="attr_rolltemplate_color" style="width:8em;display:inline-block;">
+							<option value="" style="background-color: black ; color: white" data-i18n="black-default" selected="">&#8226;Black</option>
+							<option value="white" style="background-color: white" data-i18n="white">White</option>
+							<option value="grey" style="background-color:silver ;color: Black;" data-i18n="grey">Grey</option>
+							<option value="darkgrey" style="background-color: dimgray ; color: white" data-i18n="dark-grey">Dark Grey</option>
+							<option value="pink" style="background-color: LightPink;color: Black;" data-i18n="pink">Pink</option>
+							<option value="darkpink" style="background-color:DeepPink ;color: white; " data-i18n="dark-pink">Dark Pink</option>
+							<option value="red" style="background-color: crimson ; color: white" data-i18n="red">Red</option>
+							<option value="darkred" style="background-color: darkred ; color: white" data-i18n="dark-red">Dark Red</option>
+							<option value="orange" style="background-color: darkorange; color: white" data-i18n="orange">Orange</option>
+							<option value="darkorange" style="background-color: orangered ; color: white" data-i18n="dark-orange">Dark Orange</option>
+							<option value="chocolate" style="background-color: chocolate ; color: white" data-i18n="chocolate-brown">Chocolate Brown</option>
+							<option value="sandybrown" style="background-color: sandybrown; color: black" data-i18n="light-brown">Light Brown</option>
+							<option value="peru" style="background-color: peru ; color: white" data-i18n="brown">Brown</option>
+							<option value="saddlebrown" style="background-color: saddlebrown ; color: white" data-i18n="dark-brown">Dark Brown</option>
+							<option value="tan" style="background-color: tan; color: black" data-i18n="tan">Tan</option>
+							<option value="yellow" style="background-color: khaki; color: black" data-i18n="yellow">Yellow</option>
+							<option value="gold" style="background-color: Gold; color: black" data-i18n="gold">Gold</option>
+							<option value="darkyellow" style="background-color: darkgoldenrod; color: black" data-i18n="dark-yellow">Dark Yellow</option>
+							<option value="green" style="background-color: mediumseagreen; color: white" data-i18n="green">Green</option>
+							<option value="darkgreen" style="background-color: darkgreen ; color: white" data-i18n="dark-green">Dark Green</option>
+							<option value="olive" style="background-color: olive; color: white" data-i18n="olive">Olive</option>
+							<option value="darkolivegreen" style="background-color: darkolivegreen ; color: white" data-i18n="dark-olive">Dark Olive</option>
+							<option value="teal" style="background-color: lightseagreen; color: black" data-i18n="teal">Teal</option>
+							<option value="darkteal" style="background-color: teal; color: white" data-i18n="dark-teal">Dark teal</option>
+							<option value="cyan" style="background-color: turquoise; color: black" data-i18n="cyan">Cyan</option>
+							<option value="darkcyan" style="background-color: darkcyan; color: white" data-i18n="dark-cyan">Dark Cyan</option>
+							<option value="azure" style="background-color: lightskyblue; color: black" data-i18n="azure">Azure</option>
+							<option value="darkazure" style="background-color: deepskyblue; color: black" data-i18n="dark-azure">Dark Azure</option>
+							<option value="blue" style="background-color: blue ; color: white" data-i18n="blue">Blue</option>
+							<option value="darkblue" style="background-color: navy ; color: white" data-i18n="dark-blue">Dark Blue</option>
+							<option value="purple" style="background-color: mediumorchid; color: black" data-i18n="purple">Purple</option>
+							<option value="darkpurple" style="background-color:#663399  ; color: white" data-i18n="dark-purple">Dark Purple</option>
+							<option value="violet" style="background-color: violet; color: black" data-i18n="violet">Violet</option>
+							<option value="darkviolet" style="background-color: darkviolet ; color: white" data-i18n="dark-violet">Dark Violet</option>
 						</select>
 					</span>					
 				</div>

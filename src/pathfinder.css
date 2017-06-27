@@ -240,7 +240,7 @@ input.sheet-linked-cellfield{
 .sheet-currency .sheet-table {
     display: inline-block;
     vertical-align: top;
-    border: 1px solid DarkGrey;
+    border: 1px solid DarkGray;
     width: 50%;
 }
 
@@ -294,7 +294,7 @@ h1,h2,h3,h4,
     font-family: tahoma, arial black, sans-serif;
     font-stretch: ultra-expanded;
     font-weight: bold;
-    color: DimGrey;
+    color: DimGray;
     font-size: 1rem;
 }
 /* fonts */
@@ -699,7 +699,7 @@ also need 1 more level in selector or base css will override border */
 	cursor:default;
 }
 .sheet-table-config-row-name {
-	background-color: DarkGrey;
+	background-color: DarkGray;
 	padding:.125em;
 	border-bottom:1px solid White;
 	width:18%;
@@ -780,11 +780,11 @@ input[type="number"]:not(:hover)::-webkit-inner-spin-button {
 
 .sheet-table-cell.sheet-right-border,
 .sheet-table-header.sheet-right-border {
-	border-right:1px solid dimgrey;
+	border-right:1px solid DimGray;
 }
 .sheet-table-cell.sheet-left-border,
 .sheet-table-header.sheet-left-border {
-	border-left:1px solid dimgrey;
+	border-left:1px solid DimGray;
 }
 .sheet-table-header.sheet-header-expand {
 	white-space:nowrap;
@@ -1264,7 +1264,7 @@ h2 label {
     width: 1em;
     height: 1em;
     font-size: 1em;
-    color: DarkGrey;
+    color: DarkGray;
 }
 .sheet-showarrow.sheet-npc-details-show + .sheet-showsect::before {
 	color:White;
@@ -1767,7 +1767,7 @@ input.sheet-refreshbutton {
 
 /*selected text */
 .sheet-selectedlabel-check + b:not(.sheet-offCase) {
-    color: dimgrey;
+    color: DimGray;
     font-size: .75rem;
     line-height: 1.5em;
     padding: 1px .5em 1px .25em;
@@ -1803,7 +1803,7 @@ hr {
     margin: 5px 0;
 }
 hr.sheet-skinny {
-    border-color: DarkGrey;
+    border-color: DarkGray;
     height: 1px;
     margin: 0;
 }
@@ -2129,7 +2129,7 @@ input.sheet-highlight[readonly]
     font-style: italic;
     font-weight: bold;
     vertical-align: middle;
-    background-color: LightGrey;
+    background-color: LightGray;
     min-height: 1.25em;
     overflow: hidden;
 }
@@ -2261,7 +2261,7 @@ input[type="text"][name="attr_source-ability"]
     display: inline-block;
     min-height: 4em;
     min-width: 15em;
-    background-color: LightGrey;
+    background-color: LightGray;
 	margin-right:.125em;
 }
 .sheet-wound-threshold,
@@ -2819,7 +2819,7 @@ div.sheet-macro-text .sheet-small-label2,
 
 .sheet-textarea-gray:not(:checked) ~ .sheet-small-label2 textarea {
     background-color: silver;
-    color: dimgrey;
+    color: DimGray;
     pointer-events: none;
 }
 .sheet-textarea-gray:not(:checked) ~ .sheet-small-label2 {
@@ -3443,7 +3443,7 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_attack a,
 .sheet-rolltemplate-pf_spell a,
 .sheet-rolltemplate-pf_block a {
-    background-color: DimGrey;
+    background-color: DimGray;
     color: White;
 }
 .sheet-rolltemplate-pf_generic .sheet-roll-table,
@@ -3476,7 +3476,7 @@ input[type="text"].sheet-skill-conds {
     --sheet-pf-text: White;
     --sheet-pf-oddbg: WhiteSmoke;
     --sheet-pf-sec: SteelBlue;
-    --sheet-pf-ter: LightGrey;
+    --sheet-pf-ter: LightGray;
 }
 .sheet-rolltemplate-pf_generic .sheet-color-white,
 .sheet-rolltemplate-pf_ability .sheet-color-white,
@@ -3503,7 +3503,7 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_attack .sheet-color-darkgrey,
 .sheet-rolltemplate-pf_spell .sheet-color-darkgrey,
 .sheet-rolltemplate-pf_block .sheet-color-darkgrey {
-    --sheet-pf-bg: DimGrey;
+    --sheet-pf-bg: DimGray;
 }
 .sheet-rolltemplate-pf_generic .sheet-color-red,
 .sheet-rolltemplate-pf_ability .sheet-color-red,
@@ -3549,8 +3549,8 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_spell .sheet-color-yellow,
 .sheet-rolltemplate-pf_block .sheet-color-yellow {
     --sheet-pf-bg: khaki;
-    --sheet-pf-text: Black;
     --sheet-pf-oddbg: papayawhip;
+    --sheet-pf-text: Black;
 }
 .sheet-rolltemplate-pf_generic .sheet-color-darkyellow,
 .sheet-rolltemplate-pf_ability .sheet-color-darkyellow,
@@ -3560,6 +3560,16 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_block .sheet-color-darkyellow {
     --sheet-pf-bg: darkgoldenrod;
     --sheet-pf-oddbg: papayawhip;
+}
+.sheet-rolltemplate-pf_generic .sheet-color-gold,
+.sheet-rolltemplate-pf_ability .sheet-color-gold,
+.sheet-rolltemplate-pf_defense .sheet-color-gold,
+.sheet-rolltemplate-pf_attack .sheet-color-gold,
+.sheet-rolltemplate-pf_spell .sheet-color-gold,
+.sheet-rolltemplate-pf_block .sheet-color-gold {
+    --sheet-pf-bg: Gold;
+    --sheet-pf-oddbg: papayawhip;
+    --sheet-pf-text: Black;
 }
 .sheet-rolltemplate-pf_generic .sheet-color-green,
 .sheet-rolltemplate-pf_ability .sheet-color-green,
@@ -3708,6 +3718,78 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_block .sheet-color-darkviolet {
     --sheet-pf-bg: DarkViolet;
     --sheet-pf-oddbg: Thistle;
+}
+
+.sheet-rolltemplate-pf_generic .sheet-color-chocolate,
+.sheet-rolltemplate-pf_ability .sheet-color-chocolate,
+.sheet-rolltemplate-pf_defense .sheet-color-chocolate,
+.sheet-rolltemplate-pf_attack .sheet-color-chocolate,
+.sheet-rolltemplate-pf_spell .sheet-color-chocolate,
+.sheet-rolltemplate-pf_block .sheet-color-chocolate {
+    --sheet-pf-bg: Chocolate;
+    --sheet-pf-oddbg: BlanchedAlmond;
+    --sheet-pf-text: Black;    
+}
+
+.sheet-rolltemplate-pf_generic .sheet-color-peru,
+.sheet-rolltemplate-pf_ability .sheet-color-peru,
+.sheet-rolltemplate-pf_defense .sheet-color-peru,
+.sheet-rolltemplate-pf_attack .sheet-color-peru,
+.sheet-rolltemplate-pf_spell .sheet-color-peru,
+.sheet-rolltemplate-pf_block .sheet-color-peru {
+    --sheet-pf-bg: Peru;
+    --sheet-pf-oddbg: BlanchedAlmond;
+    --sheet-pf-text: Black;    
+}
+
+.sheet-rolltemplate-pf_generic .sheet-color-saddlebrown,
+.sheet-rolltemplate-pf_ability .sheet-color-saddlebrown,
+.sheet-rolltemplate-pf_defense .sheet-color-saddlebrown,
+.sheet-rolltemplate-pf_attack .sheet-color-saddlebrown,
+.sheet-rolltemplate-pf_spell .sheet-color-saddlebrown,
+.sheet-rolltemplate-pf_block .sheet-color-saddlebrown {
+    --sheet-pf-bg: saddlebrown;
+    --sheet-pf-oddbg: Wheat;
+}
+
+.sheet-rolltemplate-pf_generic .sheet-color-tan,
+.sheet-rolltemplate-pf_ability .sheet-color-tan,
+.sheet-rolltemplate-pf_defense .sheet-color-tan,
+.sheet-rolltemplate-pf_attack .sheet-color-tan,
+.sheet-rolltemplate-pf_spell .sheet-color-tan,
+.sheet-rolltemplate-pf_block .sheet-color-tan {
+    --sheet-pf-bg: tan;
+    --sheet-pf-oddbg: BlanchedAlmond;
+    --sheet-pf-text: Black;    
+}
+
+.sheet-rolltemplate-pf_generic .sheet-color-olive,
+.sheet-rolltemplate-pf_ability .sheet-color-olive,
+.sheet-rolltemplate-pf_defense .sheet-color-olive,
+.sheet-rolltemplate-pf_attack .sheet-color-olive,
+.sheet-rolltemplate-pf_spell .sheet-color-olive,
+.sheet-rolltemplate-pf_block .sheet-color-olive {
+    --sheet-pf-bg: olive;
+    --sheet-pf-oddbg: BlanchedAlmond;
+}
+.sheet-rolltemplate-pf_generic .sheet-color-darkolivegreen,
+.sheet-rolltemplate-pf_ability .sheet-color-darkolivegreen,
+.sheet-rolltemplate-pf_defense .sheet-color-darkolivegreen,
+.sheet-rolltemplate-pf_attack .sheet-color-darkolivegreen,
+.sheet-rolltemplate-pf_spell .sheet-color-darkolivegreen,
+.sheet-rolltemplate-pf_block .sheet-color-darkolivegreen {
+    --sheet-pf-bg: darkolivegreen;
+    --sheet-pf-oddbg: BlanchedAlmond;
+}
+.sheet-rolltemplate-pf_generic .sheet-color-sandybrown,
+.sheet-rolltemplate-pf_ability .sheet-color-sandybrown,
+.sheet-rolltemplate-pf_defense .sheet-color-sandybrown,
+.sheet-rolltemplate-pf_attack .sheet-color-sandybrown,
+.sheet-rolltemplate-pf_spell .sheet-color-sandybrown,
+.sheet-rolltemplate-pf_block .sheet-color-sandybrown {
+    --sheet-pf-bg: sandybrown;
+    --sheet-pf-oddbg: MistyRose;
+    --sheet-pf-text: Black;    
 }
 /************ set color *********/
 
