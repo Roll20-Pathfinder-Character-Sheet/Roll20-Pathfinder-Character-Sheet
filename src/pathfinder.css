@@ -3043,7 +3043,11 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
 	display:none;
 }
-.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
+/*
+.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-tabinput.sheet-tab9:not(:checked) ~ .sheet-tabinput.sheet-tab10:not(:checked) ~ .sheet-tabinput.sheet-tab11:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all
+
+*/
+.sheet-equipmentnav ~ .sheet-tab99:not(:checked) ~ .sheet-tab9:not(:checked) ~ .sheet-tab10:not(:checked) ~ .sheet-tab11:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
 	display:none;
 }
 

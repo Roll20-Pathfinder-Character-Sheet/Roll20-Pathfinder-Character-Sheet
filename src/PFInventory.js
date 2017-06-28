@@ -1727,12 +1727,22 @@ function registerEventHandlers  () {
     on("change:repeating_item:equip-type", TAS.callback(function eventItemEquipTypeChange(eventInfo){
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            getAttrs(['repeating_item_equip-type','repeating_item_equiptype-tab'],function(v){
+            getAttrs(['repeating_item_equip-type','repeating_item_equiptype-tab','equipment_tab'],function(v){
                 var newtype=parseInt(v['repeating_item_equip-type'],10)||0,
-                oldtype=parseInt(v['repeating_item_equiptype-tab'],10)||0;
+                oldtype=parseInt(v['repeating_item_equiptype-tab'],10),
+                equipTab=parseInt(v.equipment_tab,10)||0,
+                setter={};
                 //TAS.debug("################","At change:repeating_item:equip-type updating equiptype:"+newtype+", currtab:"+oldtype,v);
-                if (newtype !== oldtype){
-                    SWUtils.setWrapper({'repeating_item_equiptype-tab':newtype},PFConst.silentParams);
+                if (newtype !== oldtype || isNaN(oldtype)){
+                    setter['repeating_item_equiptype-tab']=newtype;
+                }
+                if(newtype>0 && newtype !== equipTab){
+                    if( equipTab < 9 ){
+                        setter['equipment_tab']=newtype;
+                    }
+                }
+                if(_.size(setter)){
+                    SWUtils.setWrapper(setter,PFConst.silentParams);
                 }
             });
         }
