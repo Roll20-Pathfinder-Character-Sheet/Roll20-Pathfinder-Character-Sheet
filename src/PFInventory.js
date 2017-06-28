@@ -423,7 +423,7 @@ function migrateWornEquipment (callback) {
                                 } else {
                                     locationAttrs["repeating_item_" + newRowId + "_location"] = locationMap.Armor;
                                 }
-                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = 2;
+                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = locationMap.equipped;
                                 newRowAttrs["armor3-roll"] = "@{repeating_item_" + newRowId + "_macro-text}";
                                 newRowAttrs["armor3"] = v[item];
                             } else {
@@ -433,7 +433,7 @@ function migrateWornEquipment (callback) {
                                 } else {
                                     locationAttrs["repeating_item_" + newRowId + "_location"] = locationMap.Shield;
                                 }
-                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = 2;
+                                newRowAttrs["repeating_item_" + newRowId + "_loctype-tab"] = locationMap.equipped;
                                 newRowAttrs["shield3-roll"] = "@{repeating_item_" + newRowId + "_macro-text}";
                                 newRowAttrs["shield3"] = v[item];
                             }
@@ -622,6 +622,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                 oldlocation = 0,
                 wornItemAttrs = {},
                 wornSlot = "",
+                loctab = -1,
                 itemName = "";
             //TAS.debug("updateEquipmentLocation: ", v);
             try {
@@ -631,10 +632,26 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                     location = locationMap.NotCarried;
                     wornItemAttrs[locationField]=location;
                 }
+                loctab =parseInt(v[locationTabField]);
+                if(isNaN(loctab)) {
+                    loctab=-2;
+                }
                 if (location>locationMap.NotCarried) {
-                    wornItemAttrs[locationTabField]=locationMap.Carried;
+                    if(loctab !== locationMap.equipped){
+                        wornItemAttrs[locationTabField]=locationMap.equipped;
+                    }
+                } else if (location===locationMap.Carried) {
+                    if(loctab!== location){
+                        wornItemAttrs[locationTabField]=locationMap.Carried;
+                    }
+                } else if (location===locationMap.NotCarried){
+                    if(loctab !==location ){
+                        wornItemAttrs[locationTabField]=locationMap.NotCarried;
+                    }
                 } else {
-                    wornItemAttrs[locationTabField]=location;
+                    if (loctab !== -1){
+                        wornItemAttrs[locationTabField]='-1';
+                    }
                 }
 
                 oldlocation = parseInt(v[oldLocationField], 10) ;
@@ -828,9 +845,9 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
     });
 }
 /**  calls updateEquipmentLocation for all items
-can be refactored to be faster to do all at once
+ * can be refactored to be faster to do all at once
  */
-function updateLocations (callback){
+export function updateLocations (callback){
     var done = _.once(function(){
         //TAS.debug("leaving PFInventory.updateLocations");
         if (typeof callback === "function"){
@@ -933,14 +950,12 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
             setter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
             setter["repeating_weapon_" + newRowId +'_link_type']=PFAttacks.linkedAttackType.equipment;
-
-            
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
         } finally {
             if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
-TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
+                //TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
                 SWUtils.setWrapper(setter, params, function(){
                     //can do these in parallel
                     PFAttackOptions.resetOption(newRowId);
