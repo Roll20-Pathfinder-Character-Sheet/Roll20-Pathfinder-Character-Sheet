@@ -657,7 +657,6 @@ function upgrade (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.63){
 				migrateDropdowns(function(){
-					PFSkills.migrate();
 					PFBuffs.migrate(null,oldversion);
 					PFSkills.migrate(function(){
 						PFSkills.recalculateSkills();
@@ -666,6 +665,8 @@ function upgrade (oldversion, callback, errorCallback) {
 			}
 			if (oldversion===1.63){
 				PFAbility.setRuleTabs();
+				PFInventory.updateLocations();
+				PFAttacks.adjustAllDamageDiceAsync();
 			}
 		}
 	} catch (err) {

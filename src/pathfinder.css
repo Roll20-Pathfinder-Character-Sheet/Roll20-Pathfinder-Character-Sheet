@@ -939,11 +939,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-tab.sheet-tab99 {
-    width: 6% !important;
+    width: 4% !important;
 }
 .sheet-tabinput.sheet-tab99 {
-    width: 6% !important;
-    margin-right: -6% !important;
+    width: 4% !important;
+    margin-right: -4% !important;
 }
 .sheet-mainnav ~ .sheet-tab,
 .sheet-mainnav ~ .sheet-tabinput {
@@ -1059,25 +1059,29 @@ input.sheet-tabinput {
     margin-right: -14%;
 }
 .sheet-equipmentnav ~ .sheet-tab {
-    width: 8.25%;
+    width: 8%;
+}
+.sheet-equipmentnav ~ .sheet-divider-db-lg {
+    width:.4em;
+    margin-left:-3px;
 }
 .sheet-equipmentnav ~ .sheet-tabinput {
-    width: 8.25%;
-    margin-right: -8.25%;
+    width: 8%;
+    margin-right: -8%;
 }
 .sheet-equipmentnav ~ .sheet-tab.sheet-wider-tab {
-    width: 11.25%;
+    width: 11%;
 }
 .sheet-equipmentnav ~ .sheet-tabinput.sheet-wider-tab {
-    width: 11.25%;
-    margin-right: -11.25%;
+    width: 11%;
+    margin-right: -11%;
 }
 .sheet-equipmentnav ~ .sheet-tab.sheet-narrow-tab {
-    width: 5.5%;
+    width: 5.75%;
 }
 .sheet-equipmentnav ~ .sheet-tabinput.sheet-narrow-tab {
-    width: 5.5%;
-    margin-right: -5.5%;
+    width: 5.75%;
+    margin-right: -5.75%;
 }
 /* make checked tab different color*/
 
@@ -3039,7 +3043,11 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle {
 	display:none;
 }
-.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
+/*
+.sheet-equipmentnav ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-tabinput.sheet-tab9:not(:checked) ~ .sheet-tabinput.sheet-tab10:not(:checked) ~ .sheet-tabinput.sheet-tab11:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all
+
+*/
+.sheet-equipmentnav ~ .sheet-tab99:not(:checked) ~ .sheet-tab9:not(:checked) ~ .sheet-tab10:not(:checked) ~ .sheet-tab11:not(:checked) ~ .sheet-equipment-onetime-show:not(:checked) ~ .sheet-repeating-fields .sheet-nontable-repeating .sheet-items-toggle-except-on-all {
 	display:none;
 }
 
