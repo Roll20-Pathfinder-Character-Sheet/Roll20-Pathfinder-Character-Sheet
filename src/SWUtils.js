@@ -163,8 +163,9 @@ function validateMatchingParens(str){
  *@param {function(Number)} callback a function taking one parameter - always Number, could be 0 but never null or undefined
  *@param {function} errcallback function called if it cannot evaluate to a number
  */
-export var evaluateExpression = TAS.callback( function callevaluateExpression (exprStr, callback, errcallback) {
+export function evaluateExpression (exprStr, callback, errcallback) {
 	var value;
+	TAS.debug("evaluateExpression: expstr:"+exprStr);
 	if (typeof callback !== "function") {
 		return;
 	}
@@ -174,17 +175,15 @@ export var evaluateExpression = TAS.callback( function callevaluateExpression (e
 	}
 	value = Number(exprStr);
 	if (!isNaN(value)) {
+		TAS.callback("the vlaue is "+value+" returning");
 		callback(value);
 		return;
 	}
-
-
 	if(!validateMatchingParens(exprStr)){
 		TAS.warn("evaluateExpression: Mismatched brackets, cannot evaluate:" + exprStr);
 		errcallback(null);
 		return;
 	}
-
 	findAndReplaceFields(exprStr, function (replacedStr) {
 		var evaluated;
 		TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
@@ -222,7 +221,7 @@ export var evaluateExpression = TAS.callback( function callevaluateExpression (e
 			errcallback(null);
 		}
 	});
-});
+}
 /** evaluateAndSetNumber
  * Examines the string in readField, and tests to see if it is a number
  * if it's a number immediately write it to writeField.
@@ -239,7 +238,7 @@ export var evaluateExpression = TAS.callback( function callevaluateExpression (e
  * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
-export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
+export function evaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
 	var done = function (a, b, c,currError) {
 		var donesetter={};
 		if (currError){
@@ -279,6 +278,7 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 			evaluateExpression(v[readField], function (value) {
 				var setter={};
 				//TAS.debug("evaluateExpression returned with number "+value);
+				//Use double equals not triple here! triple results in incorrect falsey readings
 				//changed to 2 equals and flip so value2 on left. 
 				if (isNaN(currVal) || value != currVal) {
 					setter[writeField] = value;
@@ -288,7 +288,7 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 				}
 			}, function(){
 				var setter={};
-				//TAS.debug("evaluateExpression returned with error");
+				//only double equals not triple! important!
 				if (isNaN(currVal) || trueDefault != currVal) {
 					setter[writeField] = trueDefault;
 					setWrapper(setter, params, function () { errordone(trueDefault, currVal, true,currError)});
@@ -301,7 +301,7 @@ export var evaluateAndSetNumber = TAS.callback( function callevaluateAndSetNumbe
 			errordone(0,0,0,0);
 		}
 	});
-});
+}
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
  * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
