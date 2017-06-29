@@ -1924,7 +1924,7 @@
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="resistance-abbrv">Resistance</span>
 							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+							<span class="sheet-table-header"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 							<span class="sheet-table-header sheet-divider"></span>
@@ -1957,7 +1957,10 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-resist}" type="number" name="attr_Fort-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Fort-misc}" type="number" name="attr_Fort-misc" value="0" /></span>
+								<span class="sheet-table-cell sheet-linked-tablecell">
+									<input title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield" />
+									<input title="@{Fort-misc-mod}" type="number" name="attr_Fort-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
@@ -1989,7 +1992,10 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-resist}" type="number" name="attr_Ref-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Ref-misc}" type="number" name="attr_Ref-misc" value="0" /></span>
+								<span class="sheet-table-cell sheet-linked-tablecell">
+									<input title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
+									<input title="@{Ref-misc-mod}" type="number" name="attr_Ref-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
@@ -2021,7 +2027,10 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-resist}" type="number" name="attr_Will-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Will-misc}" type="number" name="attr_Will-misc" value="0" /></span>
+								<span class="sheet-table-cell sheet-linked-tablecell">
+									<input title="@{Will-misc}" type="text" name="attr_Will-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield" />
+									<input title="@{Will-misc-mod}" type="number" name="attr_Will-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
@@ -8012,7 +8021,7 @@
 										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-										<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
 										<span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
@@ -8044,7 +8053,10 @@
 										</span>
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
-										<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{spellclass-0-level-misc}" type="number" name="attr_spellclass-0-level-misc" value="0" /></span>
+										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
+											<input type="text" name="attr_spellclass-0-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-0-level-misc}" data-i18n-placeholder="equation-macro-place" />
+											<input type="number" name="attr_spellclass-0-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-0-level-misc-mod}" readonly  />
+										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-divider">+</span>
@@ -8463,7 +8475,7 @@
 										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-										<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
 										<span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
@@ -8495,7 +8507,10 @@
 										</span>
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-1-level}" type="number" name="attr_spellclass-1-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
-										<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{spellclass-1-level-misc}" type="number" name="attr_spellclass-1-level-misc" value="0" /></span>
+										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
+											<input type="text" name="attr_spellclass-1-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-1-level-misc}" data-i18n-placeholder="equation-macro-place" />
+											<input type="number" name="attr_spellclass-1-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-1-level-misc-mod}" readonly  />
+										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-divider">+</span>
@@ -8914,12 +8929,12 @@
 										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-										<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
 										<span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
-								</div>
+									</div>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
@@ -8946,7 +8961,10 @@
 										</span>
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-2-level}" type="number" name="attr_spellclass-2-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
-										<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{spellclass-2-level-misc}" type="number" name="attr_spellclass-2-level-misc" value="0" /></span>
+										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
+											<input type="text" name="attr_spellclass-2-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-2-level-misc}" data-i18n-placeholder="equation-macro-place" />
+											<input type="number" name="attr_spellclass-2-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-2-level-misc-mod}" readonly  />
+										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-divider">+</span>
@@ -10366,15 +10384,15 @@
 						<div class="sheet-table-row">
 							<span class="sheet-table-cell" style="vertical-align:text-bottom;"><button style="font-size:.8125rem;white-space:nowrap;" title="%{selected|NPC-Fort-Save}" type="roll" name="roll_NPC-Fort-Save" value="@{NPC-whisper} @{fort-save-macro-text} {{name=^{npc} ^{fortitude}}}">&nbsp;<span style="color:#fff; vertical-align: text-bottom;" data-i18n="fortitude-abbrv">Fort</span>&nbsp;<span style="color:#fff; vertical-align: text-bottom;" name="attr_Fort"></span></button></span>
 							<span class="sheet-divider-lg">+<br>&nbsp;</span>
-							<span class="sheet-table-cell sheet-small-label"><input title="@{npc-Fort}" type="number" name="attr_npc-Fort" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-cell sheet-small-label"><input title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="" /><br><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-divider-lg">;<br>&nbsp;</span>
 							<span class="sheet-table-cell" style="vertical-align:text-bottom;"><button style="font-size:.8125rem;white-space:nowrap;" title="%{selected|NPC-Ref-Save}" type="roll" name="roll_NPC-Ref-Save" value="@{NPC-whisper} @{ref-save-macro-text} {{name=^{npc} ^{reflex}}}">&nbsp;<span style="color:#fff; vertical-align: text-bottom;" data-i18n="reflex-abbrv">Ref</span>&nbsp;<span style="color:#fff; vertical-align: text-bottom;" name="attr_Ref" value="0" ></span></button></span>
 							<span class="sheet-divider-lg">+<br>&nbsp;</span>
-							<span class="sheet-table-cell sheet-small-label"><input title="@{npc-Ref}" type="number" name="attr_npc-Ref" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-cell sheet-small-label"><input title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" /><br><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-divider-lg">;<br>&nbsp;</span>
 							<span class="sheet-table-cell" style="vertical-align:text-bottom;"><button style="font-size:.8125rem;white-space:nowrap;" title="%{selected|NPC-Will-Save}" type="roll" name="roll_NPC-Will-Save" value="@{NPC-whisper} @{will-save-macro-text} {{name=^{npc} ^{willpower}}}">&nbsp;<span style="color:#fff; vertical-align: text-bottom;" data-i18n="willpower-abbrv">Will</span>&nbsp;<span style="color:#fff; vertical-align: text-bottom;" name="attr_Will" ></span></button></span>
 							<span class="sheet-divider-lg">+<br>&nbsp;</span>
-							<span class="sheet-table-cell sheet-small-label"><input title="@{npc-Will}" type="number" name="attr_npc-Will" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-cell sheet-small-label"><input title="@{Will-misc}" type="text" name="attr_Will-misc" value="" /><br><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-table-cell sheet-small-label"><textarea class="sheet-inline-textarea sheet-both" title="@{save-notes}" name="attr_Save-notes" placeholder="Save Notes" data-i18n-placeholder="save-notes"></textarea><br><span><input type="checkbox" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}" style="font-size:inherit;" /><span data-i18n="save-notes">Save Notes</span></span></span>
 							<input type="checkbox" name="attr_SR_error" class="sheet-error-mshow" value="1" />
 							<span class="sheet-table-cell sheet-small-label sheet-highlight"><textarea class="sheet-inline-textarea" title="@{SR-macro-text}" name="attr_SR-macro-text" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></textarea><br/><span class="sheet-super sheet-note-a" data-i18n-title="spell-resistance-title" data-i18n-aria-label="spell-resistance-title" data-i18n="spell-resistance-abbrv2">Spell Resist</span></span>
@@ -10804,50 +10822,6 @@
 					<input class="sheet-showarrow sheet-h3arrow sheet-section-oldslas" type="checkbox" name="attr_npc-spell-like-abilities-show" data-i18n-aria-label="spell-like-abilities" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 					<h3 class="sheet-clickheader sheet-showsect sheet-section-oldslas"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n="spell-like-abilities">Spell Like Abilities</label></h3>
 					<div class="sheet-h3-section sheet-section-oldslas" role="region" aria-label="npc-spell-like-abilities">
-						<h4 data-i18n="spell-like-abilities-class-zero">Class and stat abilities based on</h4>
-						<div class="sheet-table">
-							<span class="sheet-table-name" data-i18n="spell-like-abilities-class-zero">Spell Like Abilities Class 0</span>
-							<div class="sheet-table-row">
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="total">Total</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="caster-level-abbrv">CL</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
-								<span class="sheet-table-header" data-i18n="concentration-check">Concentration Check</span>
-								<span class="sheet-table-header" data-i18n="total">Total</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="ability">Ability</span>
-								<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-0-CL-Check}" type="roll" name="roll_NPC-Spell-Class-0-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=CL Check}} {{Class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{Check=[[ 1d20 + @{spellclass-0-level} + @{spellclass-0-level-misc} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
-								<span class="sheet-table-cell"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">=</span>
-								<span class="sheet-table-cell"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
-								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{spellclass-0-level-misc}" type="number" name="attr_spellclass-0-level-misc" value="0" /></span>
-								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Concentration-Check-0}" type="roll" name="roll_NPC-Concentration-Check-0" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=Concentration Check}} {{Class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{Check=[[ 1d20 + @{Concentration-0} ]]}}">&nbsp;<span data-i18n="concentration-check-abbrv">Concentration</span></button></span>
-								<span class="sheet-table-cell"><input title="@{Concentration-0}" type="number" name="attr_Concentration-0" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">=</span>
-								<span class="sheet-table-cell">
-									<select title="@{Concentration-0-ability}" name="attr_Concentration-0-ability">
-										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-									</select>
-								</span>
-								<span class="sheet-table-cell"><input title="@{Concentration-0-mod}" type="number" name="attr_Concentration-0-mod" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" value="0" /></span>
-							</div>
-						</div>
 						<div class="sheet-repeating-sect sheet-section-oldslas">
 							<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" title="Minimize all rows." name="attr_npc-spell-like-abilities-min-show" value="1" /><span></span>
 							<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" title="Collapse or expand all rows." name="attr_npc-spell-like-abilities-expand-show" value="1" /><span></span>
@@ -10914,7 +10888,7 @@
 								<span class="sheet-table-header"></span>
 								<span class="sheet-table-header" data-i18n="caster-level-abbrv">CL</span>
 								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+								<span class="sheet-table-header"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-header" data-i18n="concentration-check">Concentration Check</span>
 								<span class="sheet-table-header" data-i18n="total">Total</span>
 								<span class="sheet-table-header"></span>
@@ -10924,12 +10898,12 @@
 								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
 							</div>
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-0-CL-Check}" type="roll" name="roll_NPC-Spell-Class-0-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{check=[[ 1d00 + @{spellclass-0-level} + @{spellclass-0-level-misc} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
+								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-0-CL-Check}" type="roll" name="roll_NPC-Spell-Class-0-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{check=[[ 1d00 + @{spellclass-0-level} + @{spellclass-0-level-misc-mod} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
 								<span class="sheet-table-cell"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>
 								<span class="sheet-table-cell"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{spellclass-0-level-misc}" type="number" name="attr_spellclass-0-level-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{spellclass-0-level-misc}" type="text" name="attr_spellclass-0-level-misc" value="" /></span>
 								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Concentration-Check-0}" type="roll" name="roll_NPC-Concentration-Check-0" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{check=[[ 1d00 + @{Concentration-0} ]]}}">&nbsp;<span data-i18n="concentration-check-abbrv">Concentration</span></button></span>
 								<span class="sheet-table-cell"><input title="@{Concentration-0}" type="number" name="attr_Concentration-0" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>
@@ -10957,7 +10931,7 @@
 								<span class="sheet-table-header"></span>
 								<span class="sheet-table-header" data-i18n="caster-level-abbrv">CL</span>
 								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+								<span class="sheet-table-header"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-header" data-i18n="concentration-check">Concentration Check</span>
 								<span class="sheet-table-header" data-i18n="total">Total</span>
 								<span class="sheet-table-header"></span>
@@ -10967,12 +10941,12 @@
 								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
 							</div>
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-1-CL-Check}" type="roll" name="roll_NPC-Spell-Class-1-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-1-name} @{spellclass-1-level}**}} {{check=[[ 1d20 + @{spellclass-1-level} + @{spellclass-1-level-misc} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
+								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-1-CL-Check}" type="roll" name="roll_NPC-Spell-Class-1-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-1-name} @{spellclass-1-level}**}} {{check=[[ 1d20 + @{spellclass-1-level} + @{spellclass-1-level-misc-mod} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
 								<span class="sheet-table-cell"><input title="@{spellclass-1-level-total}" type="number" name="attr_spellclass-1-level-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>
 								<span class="sheet-table-cell"><input title="@{spellclass-1-level}" type="number" name="attr_spellclass-1-level" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{spellclass-1-level-misc}" type="number" name="attr_spellclass-1-level-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{spellclass-1-level-misc}" type="text" name="attr_spellclass-1-level-misc" value="" /></span>
 								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Concentration-Check-1}" type="roll" name="roll_NPC-Concentration-Check-1" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-1-name} @{spellclass-1-level}**}} {{check=[[ 1d20 + @{Concentration-1} ]]}}">&nbsp;<span data-i18n="concentration-check-abbrv">Concentration</span></button></span>
 								<span class="sheet-table-cell"><input title="@{Concentration-1}" type="number" name="attr_Concentration-1" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>
@@ -11000,7 +10974,7 @@
 								<span class="sheet-table-header"></span>
 								<span class="sheet-table-header" data-i18n="caster-level-abbrv">CL</span>
 								<span class="sheet-table-header"></span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+								<span class="sheet-table-header"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-header" data-i18n="concentration-check">Concentration Check</span>
 								<span class="sheet-table-header" data-i18n="total">Total</span>
 								<span class="sheet-table-header"></span>
@@ -11010,12 +10984,12 @@
 								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
 							</div>
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-2-CL-Check}" type="roll" name="roll_NPC-Spell-Class-2-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-2-name} @{spellclass-2-level}**}} {{check=[[ 1d20 + @{spellclass-2-level} + @{spellclass-2-level-misc} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
+								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Spell-Class-2-CL-Check}" type="roll" name="roll_NPC-Spell-Class-2-CL-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{caster-level-check}}} {{class=**@{spellclass-2-name} @{spellclass-2-level}**}} {{check=[[ 1d20 + @{spellclass-2-level} + @{spellclass-2-level-misc-mod} ]]}}">&nbsp;<span data-i18n="caster-level-check-abbrv">CL Check</span></button></span>
 								<span class="sheet-table-cell"><input title="@{spellclass-2-level-total}" type="number" name="attr_spellclass-2-level-total" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>
 								<span class="sheet-table-cell"><input title="@{spellclass-2-level}" type="number" name="attr_spellclass-2-level" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{spellclass-2-level-misc}" type="number" name="attr_spellclass-2-level-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{spellclass-2-level-misc}" type="text" name="attr_spellclass-2-level-misc" value="" /></span>
 								<span class="sheet-table-cell"><button style="font-size:100%;" title="%{selected|NPC-Concentration-Check-2}" type="roll" name="roll_NPC-Concentration-Check-2" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-2-name} @{spellclass-2-level}**}} {{check=[[ 1d20 + @{Concentration-2} ]]}}">&nbsp;<span data-i18n="concentration-check-abbrv">Concentration</span></button></span>
 								<span class="sheet-table-cell"><input title="@{Concentration-2}" type="number" name="attr_Concentration-2" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">=</span>

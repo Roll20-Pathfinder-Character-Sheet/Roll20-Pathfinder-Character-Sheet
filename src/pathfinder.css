@@ -191,7 +191,7 @@ input[readonly], input[disabled] {
 .sheet-half {
     height: 3em;
 }
-/* keeps textarea and readonly number attribute to right inline with each other in one table cell */
+/* keeps textarea and readonly number attribute to riFght inline with each other in one table cell */
 .sheet-table-cell.sheet-linked-tablecell {
 	width:13em;
 }
