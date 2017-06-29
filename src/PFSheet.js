@@ -667,6 +667,8 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFAbility.setRuleTabs();
 				PFInventory.updateLocations();
 				PFAttacks.adjustAllDamageDiceAsync();
+				PFAttacks.updateDualWieldAttacks();
+				recalcExpressions();
 			}
 		}
 	} catch (err) {

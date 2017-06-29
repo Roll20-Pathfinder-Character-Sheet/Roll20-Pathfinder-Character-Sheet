@@ -95,7 +95,13 @@ export default {
 		"customa11": "customa11-mod",
 		"customa12": "customa12-mod",
 		"sanity_score_misc": "sanity_score_misc-mod",
-		"sanity_threshold_misc": "sanity_threshold_misc-mod"
+		"sanity_threshold_misc": "sanity_threshold_misc-mod",
+		"spellclass-0-level-misc": "spellclass-0-level-misc-mod",
+		"spellclass-1-level-misc": "spellclass-1-level-misc-mod",
+		"spellclass-2-level-misc": "spellclass-2-level-misc-mod",
+		"Ref-misc": "Ref-misc-mod",
+		"Fort-misc": "Fort-misc-mod",
+		"Will-misc": "Will-misc-mod"
 	},
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],

@@ -506,6 +506,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 			casterlevel = parseNum(classes[spellClassName]._casterlevel);
 			attrs["spellclass-"+spellClassIndex] = classIndex;
 			attrs["spellclass-"+spellClassIndex+"-level-misc"] = casterlevel - parseNum(classes[spellClassName]._level);
+			attrs["spellclass-"+spellClassIndex+"-level-misc-mod"] = casterlevel - parseNum(classes[spellClassName]._level);
 			attrs["spellclass-"+spellClassIndex+"-level"] = parseNum(classes[spellClassName]._level);
 			attrs["spellclass-"+spellClassIndex+"-level-total"] = casterlevel;
 			attrs["spellclass-"+spellClassIndex+"-name"] = classes[spellClassName]._name;

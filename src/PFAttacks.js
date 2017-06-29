@@ -1099,7 +1099,7 @@ export function setDualWieldVals (params,setter,id,updMode){
  * @param {function} callback 
  * @param {Map<string,string>} eventInfo 
  */
-function updateDualWieldAttacks (callback,eventInfo){
+export function updateDualWieldAttacks (callback,eventInfo){
 	var done = _.once(function(){
 		if(typeof callback === 'function'){
 			callback();

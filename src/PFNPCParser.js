@@ -2486,14 +2486,16 @@ function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 		} else {
 			setter["Fort-ability-mod"] = abilityScores.con.mod;
 		}
-		setter["npc-Fort"] = fortMisc;
+		setter["Fort-misc"] = fortMisc;
+		setter["Fort-misc-mod"] = fortMisc;
 		setter["Fort"] = baseSaves.baseFort;
 		tempNote = "";
 		tempstr = PFUtils.getNoteAfterNumber(v["fort_compendium"]);
 		if (tempstr) {
 			tempNote += ("Fortitude " + tempstr);
 		}
-		setter["npc-Ref"] = refMisc;
+		setter["Ref-misc"] = refMisc;
+		setter["Ref-misc-mod"] = refMisc;
 		setter["Ref"] = baseSaves.baseRef;
 		if (abilityScores.dex.mod !== 0) {
 			setter["Ref-ability-mod"] = abilityScores.dex.mod;
@@ -2502,7 +2504,8 @@ function createSaveEntries (setter, abilityScores, isUndead, baseSaves, v) {
 		if (tempstr) {
 			tempNote += ("Reflex " + tempstr);
 		}
-		setter["npc-Will"] = willMisc;
+		setter["Will-misc"] = willMisc;
+		setter["Will-misc-mod"] = willMisc;
 		setter["Will"] = baseSaves.baseWill;
 		if (abilityScores.wis.mod !== 0) {
 			setter["Will-ability-mod"] = abilityScores.wis.mod;
