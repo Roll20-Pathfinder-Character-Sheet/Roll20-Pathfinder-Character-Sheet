@@ -23,7 +23,8 @@ optionDefaults = {
     image: {
         melee: "@{header_image-pf_attack-melee}",
         ranged: "@{header_image-pf_attack-ranged}",
-        CMB: "@{header_image-pf_attack-cmb}"
+        CMB: "@{header_image-pf_attack-cmb}",
+        dual: "@{header_image-pf_attack-dual}"
     }
 },
 //not used since melee options field actually look at the text..
