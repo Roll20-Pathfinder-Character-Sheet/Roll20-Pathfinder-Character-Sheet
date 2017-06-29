@@ -161,8 +161,8 @@ events = {
 		"flat-footed": [PFDefense.updateDefenses],
 		"CMD": [PFDefense.updateDefenses],
 		"HP-temp": [PFHealth.updateTempMaxHP],
-		"Check": [PFInitiative.updateInitiative], // [PFSkills.applyConditions],
-		"check_ability": [PFInitiative.updateInitiative],//		"check_skills": [PFSkills.applyConditions],
+		"Check": [PFInitiative.updateInitiative], 
+		"check_ability": [PFInitiative.updateInitiative],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
 		"size": [PFSize.updateSizeAsync]

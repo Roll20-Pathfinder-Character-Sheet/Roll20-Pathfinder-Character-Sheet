@@ -786,11 +786,12 @@ function resetWeaponSizeAndDamage (id,currCharSize,v,setter,useSizeMod){
 	}
 	return setter;
 }
-/**
+/** Recalculates all other non macro fields on the repeating attacks
+ * calls getRecalculatedAttack and resetWeaponSizeAndDamage
  * @param {[string]} ids 
  * @param {function} callback 
  */
-function recalcOtherFields (ids,callback){
+function recalcRepeatingNonMacroFields (ids,callback){
 	var done = function(){
 		if(typeof callback ==="function"){
 			callback();
@@ -839,7 +840,12 @@ function recalcOtherFields (ids,callback){
 		}
 	});
 }
-function recalcEquationFields (ids,callback){
+/** Recalculates all attack and defense macro fields on the repeating attacks
+ * 
+ * @param {[string]} ids 
+ * @param {function} callback 
+ */
+function recalcRepeatingMacroFields (ids,callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
@@ -886,8 +892,8 @@ export function recalculateRepeatingWeapons (callback){
 		}
 	});
 	getSectionIDs("repeating_weapon", function (ids) {
-		recalcEquationFields(ids,function(){
-			recalcOtherFields(ids,done);
+		recalcRepeatingMacroFields(ids,function(){
+			recalcRepeatingNonMacroFields(ids,done);
 		});
 	});
 }
@@ -973,6 +979,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 	replaceMultStr ='- [[ ceil(@{repeating_weapon_REPLACEHAND_damage-ability}/2) ]] ',
 	tempInt=0,
 	mainPen= 0,
+	origMainPen = 0,
 	offhandCountdown=0,
 	offPen=0,
 	prefix='',
@@ -1039,6 +1046,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 		numAttacks= Math.floor(params.bab / 5)+1;
 		totAttacks = numAttacks + params.offhand_improved;
 		currAttack = 2;
+		origMainPen = mainPen;
 		while (currAttack <= totAttacks){
 			tempStr='';
 			//if odd attack or no more offhand then mainhand
@@ -1069,6 +1077,16 @@ export function setDualWieldVals (params,setter,id,updMode){
 			setter[prefix+'toggle_iterative_attack'+currAttack]="@{var_iterative_attack"+currAttack+"_macro}";
 			currAttack ++;
 		}
+		if (currAttack <=8){
+			//add one more in case of Haste
+			tempStr = macroIter.replace(/REPLACEHAND/g,params.mainhand_id);
+			tempInt = origMainPen + params.mainhand_penalty;
+			setter[prefix+'iterative_attack'+currAttack+'_name']='Extra full BAB MH attack';
+			setter[prefix+'iterative_attack'+currAttack+'_value']=tempInt;
+			setter[prefix+'var_iterative_attack'+currAttack+'_macro'] =tempStr;
+			//this one is off by default
+			//setter[prefix+'toggle_iterative_attack'+currAttack]="@{var_iterative_attack"+currAttack+"_macro}";
+		}
 	} catch (err){
 		TAS.error("PFAttacks.setDualWieldVals outererr",err);
 	} finally {
@@ -1076,7 +1094,11 @@ export function setDualWieldVals (params,setter,id,updMode){
 		return setter;
 	}
 }
-
+/** Updates all existing dual wield attacks.
+ * 
+ * @param {function} callback 
+ * @param {Map<string,string>} eventInfo 
+ */
 function updateDualWieldAttacks (callback,eventInfo){
 	var done = _.once(function(){
 		if(typeof callback === 'function'){
@@ -1137,7 +1159,10 @@ function updateDualWieldAttacks (callback,eventInfo){
 		});
 	});
 }
-
+/** Creates new dual wield attack
+ * 
+ * @param {function} callback 
+ */
 export function createDualWield (callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
@@ -1190,7 +1215,7 @@ export function createDualWield (callback){
 		}
 	});
 }
-function getNewDefaults (ids,v,setter){
+function setNewDefaults (ids,v,setter){
 	var localsetter,defaultSize;
 	try {
 		setter = setter || {};
@@ -1224,7 +1249,7 @@ function getNewDefaults (ids,v,setter){
 		return setter;
 	}
 }
-export function setNewDefaults (callback){
+export function setNewDefaultsAsync (callback){
 	var done = _.once(function(){
 		//TAS.debug("leaving PFAttacks.setNewDefaults");
 		if(typeof callback === "function"){
@@ -1251,7 +1276,7 @@ export function setNewDefaults (callback){
 			getAttrs(fields,function(v){
 				var setter={};
 				try {
-					setter = getNewDefaults(ids, v, setter);
+					setter = setNewDefaults(ids, v, setter);
 				} catch (errout){
 					TAS.error("PFAttacks.setNewDefaults errout ",errout);
 				} finally {
@@ -1356,7 +1381,7 @@ export function migrate (callback, oldversion){
 					return;
 				}
 				callSetDefaults = function(){
-					setNewDefaults(function(){
+					setNewDefaultsAsync(function(){
 						migrateLinkedAttacks(done);
 					});
 				};
