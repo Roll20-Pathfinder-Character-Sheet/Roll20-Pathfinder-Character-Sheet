@@ -1919,8 +1919,9 @@
 							<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="trait">Trait</span>
-							<span class="sheet-table-header sheet-divider"></span>
+<!--							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="enhancement-abbrv">Enhan</span>
+-->							
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="resistance-abbrv">Resistance</span>
 							<span class="sheet-table-header sheet-divider"></span>
@@ -1952,8 +1953,9 @@
 								<span class="sheet-table-cell"><input title="@{Fort-ability-mod}" type="number" name="attr_Fort-ability-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-trait}" type="number" name="attr_Fort-trait" value="0" /></span>
-								<span class="sheet-divider">+</span>
+<!--								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-enhance}" type="number" name="attr_Fort-enhance" value="0" /></span>
+-->
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-resist}" type="number" name="attr_Fort-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
@@ -1987,8 +1989,9 @@
 								<span class="sheet-table-cell"><input title="@{Ref-ability-mod}" type="number" name="attr_Ref-ability-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-trait}" type="number" name="attr_Ref-trait" value="0" /></span>
-								<span class="sheet-divider">+</span>
+<!--								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-enhance}" type="number" name="attr_Ref-enhance" value="0" /></span>
+-->								
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-resist}" type="number" name="attr_Ref-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
@@ -2022,8 +2025,9 @@
 								<span class="sheet-table-cell"><input title="@{Will-ability-mod}" type="number" name="attr_Will-ability-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-trait}" type="number" name="attr_Will-trait" value="0" /></span>
-								<span class="sheet-divider">+</span>
+<!--								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-enhance}" type="number" name="attr_Will-enhance" value="0" /></span>
+-->
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-resist}" type="number" name="attr_Will-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
@@ -2087,7 +2091,7 @@
 							<span class="sheet-table-header" data-i18n="dodge">Dodge</span>
 							<span class="sheet-table-header" data-i18n="natural">Natural</span>
 							<span class="sheet-table-header" data-i18n="deflect">Deflect</span>
-							<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+							<span class="sheet-table-header" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-table-header" data-i18n="buff">Buff</span>
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv" style="padding-right: 0.5em">Cond</span>
 						</div>
@@ -2117,7 +2121,10 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0"></span>
-								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0"></span>
+								<span class="sheet-table-cell sheet-linked-tablecell">
+									<input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
+									<input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								</span>
 								<span class="sheet-table-cell"><input title="@{buffsumac}" type="text" name="attr_buffsumac" value="(@{buff_AC-total}+@{buff_armor-total}+@{buff_shield-total}+@{buff_natural-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
@@ -2145,7 +2152,7 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0"></span>
+								<span class="sheet-table-cell sheet-right"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumtouch}" type="text" name="attr_buffsumtouch" value="(@{buff_Touch-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
@@ -2193,7 +2200,7 @@
 								</span>
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-table-cell"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0" /></span>
+								<span class="sheet-table-cell sheet-right"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumff}" type="number" name="attr_buffsumff" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly /></span>
 							</div>
@@ -2210,15 +2217,15 @@
 									<span class="sheet-sect-inverse" data-i18n="base-attack-bonus-abbrv">BAB</span>
 									<span class="sheet-sect" data-i18n="hit-dice-abbrv">HD</span>
 								</span>
-								<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
+								<span class="sheet-table-header sheet-ability-column" ><span data-i18n="ability">Ability</span> 1</span>
 								<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-								<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
+								<span class="sheet-table-header sheet-ability-column" ><span data-i18n="ability">Ability</span> 2</span>
 								<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
 								<span class="sheet-table-header" data-i18n="size">Size</span>
 								<span class="sheet-table-header" data-i18n="dodge">Dodge</span>
 								<span class="sheet-table-header" style="width:3.5em;min-width:2%;"></span>
 								<span class="sheet-table-header" data-i18n="deflect">Deflect</span>
-								<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
+								<span class="sheet-table-header" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-header" data-i18n="buff">Buff</span>
 								<span class="sheet-table-header" data-i18n="condition-abbrv" style="padding-right: 0.5em">Cond</span>
 							</div>
@@ -2275,7 +2282,10 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-calc" readonly ></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell"><input title="@{CMD-misc}" type="number" name="attr_CMD-misc" value="0"></span>
+								<span class="sheet-table-cell sheet-linked-tablecell">
+									<input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
+									<input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								</span>
 								<span class="sheet-table-cell"><input title="@{buffsumcmd}" type="text" name="attr_buffsumcmd" value="(@{buff_AC-total}+@{buff_CMD-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-table-cell"><input title="@{CMD-penalty}" type="number" name="attr_CMD-penalty" class="sheet-calc" readonly value="0" max="0"></span>
 							</div>
@@ -2337,7 +2347,7 @@
 								</span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell"><input title="@{CMD-misc}" type="number" name="attr_CMD-misc" value="0"></span>
+								<span class="sheet-table-cell sheet-right"><input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumffcmd}" type="number" name="attr_buffsumffcmd" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"><input title="@{CMD-penalty}" type="number" name="attr_CMD-penalty" class="sheet-calc" readonly value="0"></span>
 							</div>
@@ -10353,7 +10363,7 @@
 							<span class="sheet-table-cell sheet-small-label sheet-highlight"><input title="@{AC-ability-mod}" type="number" name="attr_AC-ability-display" value="0" class="sheet-calc" readonly /><br/><span data-i18n="dexterity-abbrv">Dex</span></span>
 							<span class="sheet-table-cell sheet-small-label sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" /><br><span data-i18n="dodge">Dodge</span></span>
 							<span class="sheet-table-cell sheet-small-label"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" /><br><span data-i18n="natural">Natural</span></span>
-							<span class="sheet-table-cell sheet-small-label"><input title="@{AC-misc}" type="number" name="attr_AC-misc" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-cell sheet-small-label"><input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span style="display:none;" class="sheet-table-cell sheet-small-label"><input title="@{buff_AC-total}" name="attr_buff_AC-total" type="number" value="0" class="sheet-calc" readonly /><br><span data-i18n="buff">Buff</span></span>
 							<span style="display:none;" class="sheet-table-cell sheet-small-label"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" max="0" class="sheet-calc" readonly><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
 							<span class="sheet-divider-lg" style="text-align:left;">)<br>&nbsp;</span>
@@ -11237,7 +11247,7 @@
 								<span class="sheet-table-cell sheet-small-label sheet-number"><input title="@{attk-CMB-misc}" type="number" name="attr_attk-CMB-misc" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-cell sheet-divider"></span>
 								<span class="sheet-table-cell sheet-small-label sheet-number"><input title="@{CMD}" type="number" name="attr_CMD" value="10" class="sheet-calc" readonly /><br><span data-i18n="combat-maneuver-defense-abbrv">CMD</span></span>
-								<span class="sheet-table-cell sheet-small-label sheet-number"><input title="@{CMD-misc}" type="number" name="attr_CMD-misc" value="0" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
+								<span class="sheet-table-cell sheet-small-label sheet-number"><input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" /><br><span data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-cell sheet-small-label" style="width:15%;"><input title="@{cmd-notes}" type="text" name="attr_CMD-notes" placeholder="Put notes about context-sensitive CMD bonuses here." data-i18n-placeholder="combat-maneuver-defense-notes-place"><br><span data-i18n="combat-maneuver-defense-notes">CMD Notes</span></span>
 							</div>
 						</div>

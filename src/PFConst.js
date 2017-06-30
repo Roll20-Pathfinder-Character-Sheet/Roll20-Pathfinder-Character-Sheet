@@ -101,7 +101,9 @@ export default {
 		"spellclass-2-level-misc": "spellclass-2-level-misc-mod",
 		"Ref-misc": "Ref-misc-mod",
 		"Fort-misc": "Fort-misc-mod",
-		"Will-misc": "Will-misc-mod"
+		"Will-misc": "Will-misc-mod",
+		"AC-misc": "AC-misc-mod",
+		"CMD-misc": "CMD-misc-mod"
 	},
 	//the 3 spell classes at top of spells page
 	spellClassIndexes: ["0", "1", "2"],

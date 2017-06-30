@@ -29,8 +29,8 @@ defenseArmorShieldColumns = ["equipped", "acbonus", "enhance", "max-dex", "acp",
 defenseFieldTotals = ["acp", "max-dex", "AC-armor", "AC-shield", "spell-fail", "acp-attack-mod", "max-dex-source", "current-load"],
 defenseArmorFields = SWUtils.cartesianAppend(defenseArmorShieldRows, ['-'], defenseArmorShieldColumns).concat(defenseFieldTotals),
 events = {
-    defenseEventsAuto: "change:bab change:ac-penalty change:cmd-penalty change:size change:ac-shield change:ac-armor change:ac-ability-mod change:ff-dex change:cmd-dex change:ff-cmd-dex change:cmd-str change:max-dex",
-    defenseEventsPlayer: "change:ff-dex change:ac-penalty change:cmd-penalty change:size change:ac-dodge change:ac-natural change:ac-deflect change:ac-misc change:cmd-misc",
+    defenseEventsAuto: "change:bab change:ac-penalty change:cmd-penalty change:size change:ac-shield change:ac-armor change:ac-ability-mod change:ff-dex change:cmd-dex change:ff-cmd-dex change:cmd-str change:max-dex change:ac-misc-mod change:cmd-misc-mod",
+    defenseEventsPlayer: "change:ff-dex change:ac-penalty change:cmd-penalty change:size change:ac-dodge change:ac-natural change:ac-deflect",
     defenseEventsEither: "change:size change:AC-ability change:FF-ability change:CMD-ability1 change:CMD-ability2 change:CMD-ability"
 };
 
@@ -49,8 +49,8 @@ export function updateDefenses ( callback, silently, eventInfo) {
         }
     });
     getAttrs(["AC-ability-mod", "FF-DEX", "AC-penalty", "CMD-penalty", "size", "max-dex", "AC-dodge", 
-    "AC-natural", "AC-deflect", "AC-misc", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
-    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
+    "AC-natural", "AC-deflect", "AC-misc-mod", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
+    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc-mod", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
     "AC-ability", "FF-ability", "CMD-ability", "CMD-ability1", "CMD-ability2", "AC-armor", "AC-shield", 
     "condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained", 
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
@@ -61,7 +61,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
         deflect = parseInt(v["AC-deflect"], 10) || 0,
-        miscAC = parseInt(v["AC-misc"], 10) || 0,
+        miscAC = parseInt(v["AC-misc-mod"], 10) || 0,
         condPenalty = parseInt(v["AC-penalty"], 10) || 0,
         buffs = parseInt(v["buff_AC-total"], 10) || 0,
         buffsTouch = parseInt(v["buff_Touch-total"], 10) || 0,
@@ -70,7 +70,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         shield = parseInt(v["AC-shield"], 10) || 0,
         natural = parseInt(v["AC-natural"], 10) || 0,
         bab = parseInt(v["bab"], 10) || 0,
-        miscCMD = parseInt(v["CMD-misc"], 10) || 0,
+        miscCMD = parseInt(v["CMD-misc-mod"], 10) || 0,
         maxDex = parseInt(v["max-dex"], 10),
         cmdPenalty = parseInt(v["CMD-penalty"], 10) || 0,
         blinded = (parseInt(v["condition-Blinded"], 10) || 0) ? 1 : 0,
