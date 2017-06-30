@@ -4600,41 +4600,26 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     display: none;
 }
 
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(7),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(8),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(9),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(10),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(11),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(14),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(15),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(12),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(13),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(7),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(8),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(9),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(10),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(11),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(14),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(15) {
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(12),
+.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(13) {
     display:none;
 }
-/*
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(7),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(8),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(7),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(8),
-*/
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(3),
+
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(4),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(5),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(7),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(8),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(9),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(10),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(n+12),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(3),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(4),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(5),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(7),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(8),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(9),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(10),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-row :nth-child(n+12) {
     display: none;
 }
