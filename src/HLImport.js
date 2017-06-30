@@ -1000,6 +1000,7 @@ export function importPenalties (attrs,penalties)
 
 export function importAC (attrs,acObj)
 {
+	var tempacmisc=0;
 	attrs["AC-natural"] = parseNum(acObj._fromnatural);
 	attrs["AC-deflect"] = parseNum(acObj._fromdeflect);
 	attrs["AC-dodge"] = parseNum(acObj._fromdodge);
@@ -1009,16 +1010,24 @@ export function importAC (attrs,acObj)
 	{
 		if (acObj._fromcharisma !== "")
 		{
+			tempacmisc=parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 			attrs["AC-ability"] = "CHA-mod";
-			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
+			attrs["AC-misc"] = tempacmisc;
+			attrs["AC-misc-mod"] = tempacmisc;
 		}
 		else if (acObj._fromwisdom !== "")
 		{
+			tempacmisc = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 			attrs["AC-ability"] = "WIS-mod";
-			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
+			attrs["AC-misc"] = tempacmisc;
+			attrs["AC-misc-mod"] = tempacmisc;
 		}
 		else
-			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
+		{
+			tempacmisc = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
+			attrs["AC-misc"] = tempacmisc;
+			attrs["AC-misc-mod"] = tempacmisc;
+		}
 	}
 }
 

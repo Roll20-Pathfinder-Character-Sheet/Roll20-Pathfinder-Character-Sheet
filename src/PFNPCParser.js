@@ -2206,6 +2206,7 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 			} else {
 				setter["CMD"] = acMap.cmd;
 				setter["CMD-misc"] = (acMap.cmd - calcCMD);
+				setter["CMD-misc-mod"] = (acMap.cmd - calcCMD);
 			}
 		} catch (err2){
 			TAS.error("createACEntries error trying to calculate CMD",err2);
@@ -2216,7 +2217,8 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		setter["Flat-Footed"] = acMap.ff;
 		setter["AC-deflect"] = acMap.deflect;
 		setter["AC-dodge"] = acMap.dodge;
-		setter["AC-misc"] = acMap.misc+(acMap.acbuff||0);
+		setter["AC-misc"] = acMap.misc;
+		setter["AC-misc-mod"] = acMap.misc;
 		setter["AC-natural"] = acMap.natural;
 		if (acMap.armor) {
 			setter["armor3-equipped"] = "1";
@@ -2236,9 +2238,6 @@ function createACEntries (setter, acMap, abilityScores, importantFeats, hpMap, b
 		if (acMap.cmdnotes){
 			setter['cmd-notes']=acMap.cmdnotes;
 		}
-		//if (acMap.acbuff) {
-		//	setter = PFBuffs.createTotalBuffEntry("AC adjustment from import", "AC", acMap.acbuff, acMap.acbuff, setter);
-		//}
 	} catch (err) { } finally {
 		return setter;
 	}
