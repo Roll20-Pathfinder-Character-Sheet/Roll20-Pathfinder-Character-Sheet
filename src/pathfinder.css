@@ -1052,11 +1052,11 @@ input.sheet-tabinput {
     margin-right: -4%;
 }
 .sheet-skillsnav ~ .sheet-tab {
-    width: 14%;
+    width: 14% !important;
 }
 .sheet-skillsnav ~ .sheet-tabinput {
-    width: 14%;
-    margin-right: -14%;
+    width: 14% !important;
+    margin-right: -14% !important;
 }
 .sheet-equipmentnav ~ .sheet-tab {
     width: 8%;
