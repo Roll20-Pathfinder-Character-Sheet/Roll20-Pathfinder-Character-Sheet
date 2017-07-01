@@ -13,6 +13,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-melee",
         "buff": "buff_Melee-total",
+        "pen": "condition-Prone",
         "abilityMod": "melee-ability-mod",
         "misc": "attk-melee-misc",
         "crit": "attk_melee_crit_conf",
@@ -23,6 +24,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-melee2",
         "buff": "buff_Melee-total",
+        "pen": "condition-Prone",
         "abilityMod": "melee2-ability-mod",
         "misc": "attk-melee2-misc",
         "crit": "attk_melee2_crit_conf",
@@ -33,6 +35,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-ranged",
         "buff": "buff_Ranged-total",
+        "pen": "",
         "abilityMod": "ranged-ability-mod",
         "misc": "attk-ranged-misc",
         "crit": "attk_ranged_crit_conf",
@@ -43,6 +46,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-ranged2",
         "buff": "buff_Ranged-total",
+        "pen": "",
         "abilityMod": "ranged2-ability-mod",
         "misc": "attk-ranged2-misc",
         "crit": "attk_ranged2_crit_conf",
@@ -53,6 +57,7 @@ export var attackGridFields = {
         "size": "CMD-size",
         "atk": "CMB",
         "buff": "buff_CMB-total",
+        "pen": "",
         "abilityMod": "CMB-ability-mod",
         "misc": "attk-CMB-misc",
         "crit": "attk_cmb_crit_conf",
@@ -63,6 +68,7 @@ export var attackGridFields = {
         "size": "CMD-size",
         "atk": "CMB2",
         "buff": "buff_CMB-total",
+        "pen": "",
         "abilityMod": "CMB2-ability-mod",
         "misc": "attk-CMB2-misc",
         "crit": "attk_cmb2_crit_conf",
@@ -70,8 +76,8 @@ export var attackGridFields = {
         "damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
     }
 };
-var attkpenaltyAddToFields = ["condition-Invisible", "acp-attack-mod", "condition-Drained"],
-attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Prone", "condition-Sickened", "condition-Wounds"],
+var attkpenaltyAddToFields = [ "acp-attack-mod", "condition-Drained"],
+attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Sickened", "condition-Wounds"],
 attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
 groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
@@ -88,8 +94,28 @@ export function applyConditions  (callback, silently, eventInfo) {
         if (typeof callback === "function") {
             callback();
         }
-    });
+    }),
+    fields=[];
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
+    getAttrs(['condition-Entangled','condition-Fatigued'],function(v){
+        var attackNote='',setter={};
+        if(parseInt(v['condition-Entangled'],10)) {
+            attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
+            attackNote+=SWUtils.getTranslated('condition-nocharge-title')||'Cannot charge\r\n';
+        } else if( parseInt(v['condition-Fatigued'],10)){
+            attackNote+='**'+SWUtils.getTranslated('Fatigued')+'**: ';
+            attackNote+=SWUtils.getTranslated('condition-nocharge-title')||'Cannot charge\r\n';
+        }
+        if(parseInt(v['condition-Invisible'],10)){
+            attackNote+='**'+SWUtils.getTranslated('invisible')+'**: ';
+            attackNote+=SWUtils.getTranslated('condition-invisible-title')||"+2 bonus on attack rolls against sighted opponents, and ignores opponents' Dexterity bonuses to AC (if any)";
+        }
+        if(attackNote){
+            setter['condition_attack_notes'] = attackNote;
+            SWUtils.setWrapper(setter,PFConst.silentParams);
+        }
+    });
+    
 }
 /** updateAttack - updates one row of attack grid (left most column in grid)
  * Updates the attack type totals at top of attack page for one row of grid
@@ -104,16 +130,21 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
             callback();
         }
     }),
-    fields;
+    fields,
+    negfields=[];
     if (attackGridFields[attype]) {
         fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
             attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff, 
             'buff_attack-total'];
+        
+        if (attackGridFields[attype].pen){
+            negfields.push(attackGridFields[attype].pen);
+        }
         //if do this then have to stack buffs in 
         //if (attype==='CMB'){
         //    fields.push('buff_Melee-total');
         //}
-        SWUtils.updateRowTotal(fields, 0, [], false, done, silently);
+        SWUtils.updateRowTotal(fields, 0, negfields, false, done, silently);
     } else {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
         done();
@@ -141,6 +172,10 @@ export function updateAttackGrid(buffType,eventInfo){
             updateAttack('CMB2', eventInfo);
             break;
     }
+}
+export function recalculateMelee(dummy1,dummy2,eventInfo){
+    updateAttack('melee', eventInfo);
+    updateAttack('melee2', eventInfo);    
 }
 
 function getTopMacros(setter,v){

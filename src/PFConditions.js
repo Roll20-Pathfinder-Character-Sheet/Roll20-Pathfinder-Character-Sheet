@@ -14,6 +14,7 @@ import * as PFDefense from './PFDefense';
 import * as PFHealth from  './PFHealth';
 import * as PFChecks from './PFChecks';
 import * as PFAttacks from './PFAttacks';
+import * as PFEncumbrance from './PFEncumbrance';
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
 function updateGrapple () {
@@ -83,20 +84,22 @@ var events = {
 		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
 	},
 	conditionEventsPlayer: {
-		"change:condition-Sickened": [PFAttacks.updateRepeatingWeaponDamages, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-sickened": [PFAttacks.updateRepeatingWeaponDamages, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
 		"change:condition-stunned": [PFDefense.updateDefenses, PFDefense.applyConditions],
-		"change:condition-Flat-Footed": [PFDefense.updateDefenses],
-		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions],
-		"change:condition-fatigued": [PFAbilityScores.applyConditions],
-		"change:condition-entangled": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions],
+		"change:condition-flat-footed": [PFDefense.updateDefenses],
+		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions, PFChecks.applyConditions],
+		"change:condition-fascinated": [PFChecks.applyConditions],
+		"change:condition-fatigued": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions, PFEncumbrance.updateModifiedSpeed],
+		"change:condition-entangled": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions, PFEncumbrance.updateModifiedSpeed],
 		"change:condition-drained": [updateDrainCheckbox, PFHealth.updateMaxHPLookup, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions],
 		"change:condition-fear": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
 		"change:condition-blinded": [PFChecks.applyConditions, PFDefense.applyConditions],
 		"change:condition-cowering": [PFDefense.applyConditions],
-		"change:condition-invisible": [PFDefense.updateDefenses, PFDefense.applyConditions, PFAttackGrid.applyConditions],
-		"change:condition-dazzled": [PFAttackGrid.applyConditions],
-		"change:condition-prone": [PFAttackGrid.applyConditions],
-		"change:condition-Helpless": [PFAbilityScores.applyConditions]
+		"change:condition-invisible": [PFDefense.updateDefenses, PFAttackGrid.applyConditions,PFChecks.applyConditions],
+		"change:condition-dazzled": [PFAttackGrid.applyConditions, PFChecks.applyConditions],
+		"change:condition-prone": [ PFDefense.applyConditions, PFAttackGrid.recalculateMelee],
+		"change:condition-paralyzed": [PFAbilityScores.applyConditions,PFDefense.applyConditions],
+		"change:condition-helpless": [PFAbilityScores.applyConditions,PFDefense.applyConditions]
 	}
 };
 

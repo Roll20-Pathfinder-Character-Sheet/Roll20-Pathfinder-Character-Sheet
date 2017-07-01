@@ -518,7 +518,9 @@ export function applyConditions (callback, silently,eventInfo) {
             callback();
         }
     });
-    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode"], function (v) {
+    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", 
+    "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode",
+    "condition-Paralyzed","condition-Helpless","condition-Prone","condition_defense_notes"], function (v) {
         var subTotPenalty = 0,
         drained = 0,
         woundLevel = 0,
@@ -528,9 +530,16 @@ export function applyConditions (callback, silently,eventInfo) {
         woundPenalty = 0,
         hasEndurance = 0,
         grittyMode = 0,
+        defenseNote='',
+        msgs={
+            "Paralyzed": "Can only take purely mental actions",  
+            "Helpless": "+4 circumstance bonus to melee attacks against a helpless target", 
+            "Prone": "+4 circumstance bonus to AC against ranged attacks, –4 penalty to AC against melee attacks"
+        },
         setter = {},
         params = {};
         try {
+
             drained = parseInt(v["condition-Drained"], 10) || 0;
             woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
             AC = parseInt(v["AC-penalty"], 10) || 0;
@@ -547,6 +556,23 @@ export function applyConditions (callback, silently,eventInfo) {
             if (CMD !== newCMD) {
                 setter["CMD-penalty"] = newCMD;
             }
+
+			if(parseInt(v['condition-Paralyzed'],10)){
+                defenseNote+='**'+ SWUtils.getTranslated('paralyzed')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-paralyzed-title')||msgs.Paralyzed + '\r\n';
+			}
+			if(parseInt(v['condition-Prone'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('prone')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-prone-title')||msgs.Prone + '\r\n';
+			}
+			if(parseInt(v['condition-Helpless'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('helpless')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-helpless-title')||msgs.Helpless + '\r\n';
+			}
+			if(defenseNote!==v.condition_defense_notes){
+				setter['condition_defense_notes'] = defenseNote;				
+			}
+            
         } catch (err) {
             TAS.error("PFDefense.applyConditions:", err);
         } finally {
