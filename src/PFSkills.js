@@ -885,6 +885,8 @@ export function resetCommandMacro (eventInfo, callback) {
 	});
 }
 
+
+
 /** migrate skills
  * @param {function} callback callback when done
  * @param {number} oldversion old version , -1 if hit recalc

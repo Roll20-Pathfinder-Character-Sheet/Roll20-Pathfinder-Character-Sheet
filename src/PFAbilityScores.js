@@ -10,7 +10,7 @@ export var abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 export var abilitymods = ["STR-mod", "DEX-mod", "CON-mod", "INT-mod", "WIS-mod", "CHA-mod"];
 var columnMods = [ "-base",  "-enhance",  "-inherent",  "-misc",  "-damage",  "-penalty",  "-drain",  "-mod",  "-cond",  "-modded"],
 columnBuffMods = [  "-total",  "-total_penalty"],
-columnModHelpers=[ "condition-Helpless"],
+columnModHelpers=[ "condition-Helpless", "condition-Paralyzed"],
 /** map of event types to event string for 'on' function to look for */
 events = {
     abilityEventsAuto: "change:REPLACE-cond", //buffs events handled in PFBuffs
@@ -135,6 +135,7 @@ function getAbilityScore (ability, values, setter) {
     rawPen = 0,
     dmgAndPen = 0,
     rawCond = 0,
+    paralyzed = 0,
     helpless = 0,
     penalized = 0,
     rawDmgAndPen = 0,
@@ -158,7 +159,12 @@ function getAbilityScore (ability, values, setter) {
             penalized = 0;
         } else {
             helpless = parseInt(values["condition-Helpless"], 10) || 0;
-            if (ability === "DEX" && helpless) {
+            paralyzed = parseInt(values["condition-Paralyzed"],10)||0;
+            if (ability === "DEX" && (helpless || paralyzed) ) {
+                newVal = 0;
+                mod = -5;
+                penalized = 1;
+            } else if (ability==="STR" && paralyzed){
                 newVal = 0;
                 mod = -5;
                 penalized = 1;
@@ -261,22 +267,41 @@ export function updateAbilityScores (callback, silently) {
     });
 }
 
+export function applyParalyzedHelpless(eventInfo){
+    if((/paralyzed/i).test(eventInfo.sourceAttribute)){
+        updateAbilityScore('DEX');
+        updateAbilityScore('STR');
+    } else if ( (/helpless/i).test(eventInfo.sourceAttribute)){
+        updateAbilityScore('DEX');
+    }
+}
+
 /** Sets ability penalties, not "ability check" penalties 
  * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled  
  *@param {function} callback to call when done.
  *@param {boolean} silently if true update with PFConst.silentParams
  */
-export function applyConditions (callback, silently) {
+export function applyConditions (callback, silently, eventInfo) {
     var done = function () {
         //TAS.debug("leaving PFAbilityScores.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
     };
-    getAttrs(["STR-cond", "DEX-cond", "condition-Fatigued", "condition-Entangled", "condition-Grappled", "condition-Helpless"], function (v) {
+    if(eventInfo){
+        if((/paralyzed/i).test(eventInfo.sourceAttribute)){
+            updateAbilityScore('DEX');
+            updateAbilityScore('STR');
+            return;
+        }
+        if ( (/helpless/i).test(eventInfo.sourceAttribute)){
+            updateAbilityScore('DEX');
+            return;
+        }
+    }
+    getAttrs(["STR-cond", "DEX-cond", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {},
         params = {},
-        helpless = parseInt(v["condition-Helpless"], 10) || 0,
         strMod = parseInt(v["condition-Fatigued"], 10) || 0,
         dexMod = 0,
         dexAbMod = 0,
