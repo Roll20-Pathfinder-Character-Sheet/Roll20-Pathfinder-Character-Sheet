@@ -664,11 +664,13 @@ function upgrade (oldversion, callback, errorCallback) {
 				});
 			}
 			if (oldversion===1.63){
-				PFAbility.setRuleTabs();
-				PFInventory.updateLocations();
-				PFAttacks.adjustAllDamageDiceAsync();
-				PFAttacks.updateDualWieldAttacks();
-				recalcExpressions();
+				recalcExpressions(function(){
+					PFAbility.setRuleTabs();
+					PFInventory.updateLocations();
+					PFAttacks.adjustAllDamageDiceAsync();
+					PFAttacks.updateDualWieldAttacks();
+					PFAttacks.recalculateRepeatingWeapons();
+				});
 			}
 		}
 	} catch (err) {

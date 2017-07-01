@@ -51,23 +51,26 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
     var 
     attackType = PFUtils.findAbilityInString(rowValues[prefix + "attack-type"]),
     damageAbility = PFUtils.findAbilityInString(rowValues[prefix + "damage-ability"]),
-    optionText = "";
+    optionText = "{{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}";
     if (!(attackType || rowValues[prefix + "attack"] )) {
-        optionText += "{{no_attack_roll=1}}";
+        optionText += " {{no_attack_roll=1}}";
     } else if (attackType){
         attackType = attackType.replace('attk-','').replace('2', '')||"";
         if(toggleValues['show'+attackType.toLowerCase()]){
+            optionText += " ";
             optionText += optionTemplates[attackType + "_notes"].replace("REPLACE", optionDefaults.notes[attackType])||"";
         }
     }
     if (toggleValues.showheader_image) {
+            optionText += " ";
         optionText += optionTemplates.header_image.replace("REPLACE", optionDefaults.image[attackType||'melee'])||"";
     }
     if (!(damageAbility || rowValues[prefix + "damage"] || 
         (parseInt(rowValues[prefix + "damage-dice-num"], 10) && parseInt(rowValues[prefix + "damage-die"], 10)))) {
-        optionText += "{{no_damage=1}}";
+        optionText += " {{no_damage=1}}";
     }
     if (toggleValues.showattack) {
+        optionText += " ";
         optionText += optionTemplates.attack_notes.replace("REPLACE", optionDefaults.notes.attack)||"";
     }
     return optionText;
@@ -97,7 +100,7 @@ export function resetOption (id, eventInfo, callback) {
         optionText = "",
         setter = {};
         optionText = getOptionText(prefix, toggleValues, v)||"";
-        if (typeof optionText !== "undefined" && optionText !== null && optionText !== v[prefix + "macro_options"]) {
+        if ( optionText && optionText !== v[prefix + "macro_options"]) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
