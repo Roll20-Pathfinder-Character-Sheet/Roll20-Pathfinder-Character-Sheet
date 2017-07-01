@@ -4687,7 +4687,6 @@
 							<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{Intimidate-macro}" name="attr_Intimidate-macro">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intimidate}}} {{Check=[[ @{skill-query} + [[ @{Intimidate} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ]]}} @{Intimidate-ut} @{skill_options} @{Intimidate-cond-notes} {{generic_note=@{Intimidate-note}}}</textarea></span>
 						</div>
 						<span class="sheet-table-cell sheet-adventure sheet-bg">&nbsp;</span>
-						<span class="sheet-table-cell sheet-adventure sheet-bg">&nbsp;</span>
 						<input class="sheet-showarrow sheet-knowledge-show sheet-adventure sheet-bg" type="checkbox" name="attr_knowledge-show" data-i18n-aria-label="knowledge" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 						<label class="sheet-showsect sheet-skill-minishow sheet-adventure sheet-bg" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="knowledge">Knowledge</label>
 						<span class="sheet-adventure sheet-bg"></span>
@@ -6311,7 +6310,6 @@
 							<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{Use-Magic-Device-macro}" name="attr_Use-Magic-Device-macro">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{use-magic-device}}} {{Check=[[ @{skill-query} + [[ @{Use-Magic-Device} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ]]}} @{Use-Magic-Device-ut} @{skill_options} @{Use-Magic-Device-cond-notes} {{generic_note=@{Use-Magic-Device-note}}}</textarea></span>
 						</div>
 						<span class="sheet-misc-skill-2 sheet-table-cell sheet-adventure sheet-bg">&nbsp;</span>
-						<span class="sheet-misc-skill-2 sheet-table-cell sheet-adventure sheet-bg">&nbsp;</span>
 						<input class="sheet-misc-skill-2 sheet-showarrow sheet-misc-show sheet-adventure sheet-bg" type="checkbox" name="attr_misc-show" data-i18n-aria-label="miscellaneous-abbrv" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 						<label class="sheet-misc-skill-2 sheet-showsect sheet-skill-minishow sheet-adventure sheet-bg" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="miscellaneous-abbrv">Misc</label>
 						<span class="sheet-misc-skill-2 sheet-adventure sheet-bg"></span>
@@ -7087,10 +7085,10 @@
 				<div class="sheet-h2-section sheet-skill-notes">
 					<div class="sheet-table sheet-center sheet-notes-cell">
 						<span class="sheet-table-name sheet-show-readonly" data-i18n="skill-notes">Skill Notes</span>
-					</div>
-					<div class="sheet-table-row">
+						<div class="sheet-table-row">
 						<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
 					</div>
+					</div>					
 				</div>
 			</div>
 			<div class="sheet-section4 sheet-section sheet-section-abilities" role="region" aria-label="Abilities" data-i18n-aria-label="abilities">
