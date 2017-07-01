@@ -559,15 +559,15 @@ export function applyConditions (callback, silently,eventInfo) {
 
 			if(parseInt(v['condition-Paralyzed'],10)){
                 defenseNote+='**'+ SWUtils.getTranslated('paralyzed')+'**: ';
-				defenseNote+=SWUtils.getTranslated('condition-paralyzed-title')||msgs.Paralyzed + '\r\n';
+				defenseNote+=SWUtils.getTranslated('condition-paralyzed-note') + '\r\n';
 			}
 			if(parseInt(v['condition-Prone'],10)){
                 defenseNote+= '**'+SWUtils.getTranslated('prone')+'**: ';
-				defenseNote+=SWUtils.getTranslated('condition-prone-title')||msgs.Prone + '\r\n';
+				defenseNote+=SWUtils.getTranslated('condition-prone-note') + '\r\n';
 			}
 			if(parseInt(v['condition-Helpless'],10)){
                 defenseNote+= '**'+SWUtils.getTranslated('helpless')+'**: ';
-				defenseNote+=SWUtils.getTranslated('condition-helpless-title')||msgs.Helpless + '\r\n';
+				defenseNote+=SWUtils.getTranslated('condition-helpless-note') + '\r\n';
 			}
 			if(defenseNote!==v.condition_defense_notes){
 				setter['condition_defense_notes'] = defenseNote;				

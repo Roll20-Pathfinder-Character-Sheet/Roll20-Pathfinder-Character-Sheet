@@ -101,14 +101,14 @@ export function applyConditions  (callback, silently, eventInfo) {
         var attackNote='',setter={};
         if(parseInt(v['condition-Entangled'],10)) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
-            attackNote+=SWUtils.getTranslated('condition-nocharge-title')||'Cannot charge\r\n';
+            attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if( parseInt(v['condition-Fatigued'],10)){
             attackNote+='**'+SWUtils.getTranslated('Fatigued')+'**: ';
-            attackNote+=SWUtils.getTranslated('condition-nocharge-title')||'Cannot charge\r\n';
+            attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         }
         if(parseInt(v['condition-Invisible'],10)){
             attackNote+='**'+SWUtils.getTranslated('invisible')+'**: ';
-            attackNote+=SWUtils.getTranslated('condition-invisible-title')||"+2 bonus on attack rolls against sighted opponents, and ignores opponents' Dexterity bonuses to AC (if any)";
+            attackNote+=SWUtils.getTranslated('condition-invisible-title');
         }
         if(attackNote){
             setter['condition_attack_notes'] = attackNote;

@@ -67,21 +67,21 @@ export function applyConditions (callback, silently) {
 			}
 			if(blindedMod){
 				skillNote+= '**'+SWUtils.getTranslated('blinded')+'**: ';
-				skillNote+= SWUtils.getTranslated('condition-blinded-title')||msgs.Blinded + '\r\n';
+				skillNote+= SWUtils.getTranslated('condition-blinded-note') + '\r\n';
 				initNote+= SWUtils.getTranslated('blinded')+': ';
-				initNote+= SWUtils.getTranslated('condition-blinded-speed')||msgs.Blinded_speed + '\r\n';
+				initNote+= SWUtils.getTranslated('condition-blinded-speed') + '\r\n';
 			}
 			if(parseInt(v['condition-Dazzled'],10)){
 				skillNote+= '**'+SWUtils.getTranslated('dazzled')+'**: ';
-				skillNote+=SWUtils.getTranslated('condition-dazzled-title')||msgs.Dazzled + '\r\n';
+				skillNote+=SWUtils.getTranslated('condition-dazzled-note') + '\r\n';
 			}
 			if(parseInt(v['condition-Deafened'],10)){
 				skillNote+= '**'+SWUtils.getTranslated('deafened')+'**: ';
-				skillNote+=SWUtils.getTranslated('condition-deafened-title')||msgs.Deafened + '\r\n';
+				skillNote+=SWUtils.getTranslated('condition-deafened-note') + '\r\n';
 			}
 			if(parseInt(v['condition-Fascinated'],10)){
 				skillNote+= '**'+SWUtils.getTranslated('fascinated')+'**: ';
-				skillNote+=SWUtils.getTranslated('condition-fascinated-title')||msgs.Fascinated + '\r\n';
+				skillNote+=SWUtils.getTranslated('condition-fascinated-title') + '\r\n';
 			}
 
 	
