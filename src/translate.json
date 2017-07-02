@@ -1,4 +1,4 @@
-{
+{	
 	"condition-nocharge-note": "Cannot run or charge",
 	"condition-blinded-speed": "Blind creatures must make a DC 10 Acrobatics skill check to move faster than half speed.",
 	"condition-blinded-title": "-2 penalty to Armor Class, loses its Dexterity bonus to AC (if any), and takes a –4 penalty on most Strength- and Dexterity-based skill checks and on opposed Perception skill checks. All checks and activities that rely on vision (such as reading and Perception checks based on sight) automatically fail.",
@@ -78,7 +78,8 @@
 	"buff-ward": "Ward",
 	"common-buff": "Common Buff",
 	"common-buff-title": "Quickly add common buff/debuff.",
-	"acp-verysmall-abbrv": "A",
+	"acp-may-apply-title": "Armor Check Penalty may apply.",
+	"acp-verysmall-abbrv": "ACP",
 	"add": "Add",
 	"add-note-to-roll": "Add note to roll",
 	"add-template": "Quickly update character with template",

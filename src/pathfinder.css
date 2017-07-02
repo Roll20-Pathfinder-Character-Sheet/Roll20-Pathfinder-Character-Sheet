@@ -838,6 +838,11 @@ span.sheet-entry-custom-header {
 .sheet-note-d::after {
     content: '⒟';
 }
+.sheet-text-tight {
+    font-size: .65em;
+    font-weight: bold;
+    letter-spacing: -.07em;
+    }
 
 /******************************* API COMMAND BUTTONS *************************************/
 
