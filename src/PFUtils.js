@@ -59,6 +59,9 @@ export function findAbilityInString  (stringToSearch) {
     if (/cmb/i.test(stringToSearch)) {
         return "CMB";
     }
+    if(/dual/i.test(stringToSearch)){
+        return "dual";
+    }
     if (/str/i.test(stringToSearch)) {
         return "STR";
     }

@@ -26,14 +26,19 @@ export function setDropdownValue (readField, writeFields, callback, silently) {
  * @param {string} id optional- the id of this row, blank if in context of the current row 
  * @param {string} from the attribute name of the dropdown , string after "repeating_section_id_"
  * @param {string} to the attribute to write to, string after "repeating_section_id_"
+ * @param {string} useFindAbility true if @{} around value 
  * @param {function(new,old,changed)} callback - the function passed to setDropdownValue as its callback, that function calls it
  * @param {boolean} silently if quiet or not
  */
-export function setRepeatingDropdownValue (section, id, from, to, callback,silently) {
+export function setRepeatingDropdownValue (section, id, from, to, callback,silently,useFindAbility) {
     var idStr = SWUtils.getRepeatingIDStr(id),
-    prefix = "repeating_" + section + "_" + idStr;
+    prefix = "repeating_" + section + "_" + idStr,
+    functionToPass = null;
+    if(useFindAbility){
+        functionToPass=PFUtils.findAbilityInString;
+    }
     //setDropdownValue(prefix + from, prefix + to, callback,silently);
-    SWUtils.setDropdownValue(prefix + from,  prefix + to, PFUtils.findAbilityInString, callback, silently);    
+    SWUtils.setDropdownValue(prefix + from,  prefix + to, functionToPass, callback, silently);
 }
 /** setRowIds
  * sets the ID fields and new_flag fields for all rows in the section

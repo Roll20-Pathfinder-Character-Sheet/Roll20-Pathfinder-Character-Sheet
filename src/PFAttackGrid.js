@@ -97,7 +97,7 @@ export function applyConditions  (callback, silently, eventInfo) {
     }),
     fields=[];
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
-    getAttrs(['condition-Entangled','condition-Fatigued'],function(v){
+    getAttrs(['condition-Entangled','condition-Fatigued','condition-Invisible','condition_attack_notes'],function(v){
         var attackNote='',setter={};
         if(parseInt(v['condition-Entangled'],10)) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
@@ -110,7 +110,7 @@ export function applyConditions  (callback, silently, eventInfo) {
             attackNote+='**'+SWUtils.getTranslated('invisible')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-invisible-title');
         }
-        if(attackNote){
+        if(attackNote!==v.condition_attack_notes){
             setter['condition_attack_notes'] = attackNote;
             SWUtils.setWrapper(setter,PFConst.silentParams);
         }

@@ -976,7 +976,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 	macroText='',
 	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro}  ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
 	macroIterOffhand = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value}  + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
-	replaceMultStr ='- [[ ceil(@{repeating_weapon_REPLACEHAND_damage-ability}/2) ]] ',
+	replaceMultStr ='- [[ ceil(@{repeating_weapon_REPLACEHAND_damage-ability-mod}/2) ]] ',
 	tempInt=0,
 	mainPen= 0,
 	origMainPen = 0,
@@ -1020,7 +1020,11 @@ export function setDualWieldVals (params,setter,id,updMode){
 		setter[prefix+'attack-type-mod']=0;
 		setter[prefix+'damage-ability']="dual";
 		setter[prefix+'damage-ability-mod']=0;
+		setter[prefix+'damage']="0";
+		setter[prefix+'damage-mod']=0;
 		currAttack = 1;
+		setter[prefix+'damage']="0";
+		setter[prefix+'damage-mod']=0;
 		//macroText
 		//mainhand attack:
 		macroText=
@@ -1080,6 +1084,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 		if (currAttack <=8){
 			//add one more in case of Haste
 			tempStr = macroIter.replace(/REPLACEHAND/g,params.mainhand_id);
+			tempStr = tempStr.replace(/REPLACEITER/g,currAttack);
 			tempInt = origMainPen + params.mainhand_penalty;
 			setter[prefix+'iterative_attack'+currAttack+'_name']='Extra full BAB MH attack';
 			setter[prefix+'iterative_attack'+currAttack+'_value']=tempInt;
