@@ -1,4 +1,5 @@
-{	
+{
+	"race-hd-only": "HD Only",	
 	"condition-nocharge-note": "Cannot run or charge",
 	"condition-blinded-speed": "Blind creatures must make a DC 10 Acrobatics skill check to move faster than half speed.",
 	"condition-blinded-title": "-2 penalty to Armor Class, loses its Dexterity bonus to AC (if any), and takes a –4 penalty on most Strength- and Dexterity-based skill checks and on opposed Perception skill checks. All checks and activities that rely on vision (such as reading and Perception checks based on sight) automatically fail.",
@@ -257,6 +258,12 @@
 	"4-ordinal-class": "4th Class",
 	"5-ordinal-class": "5th Class",
 	"6-ordinal-class": "6th Class",
+	"1-ordinal-class-level": "1st Class Lvl",
+	"2-ordinal-class-level": "2nd Class Lvl",
+	"3-ordinal-class-level": "3rd Class Lvl",
+	"4-ordinal-class-level": "4th Class Lvl",
+	"5-ordinal-class-level": "5th Class Lvl",
+	"6-ordinal-class-level": "6th Class Lvl",
 	"1-ordinal-spellclass": "1st Spellcasting Class",
 	"2-ordinal-spellclass": "2nd Spellcasting Class",
 	"3-ordinal-spellclass": "3rd Spellcasting Class",

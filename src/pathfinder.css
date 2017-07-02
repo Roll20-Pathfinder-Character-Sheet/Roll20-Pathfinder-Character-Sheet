@@ -195,6 +195,9 @@ input[readonly], input[disabled] {
 .sheet-table-cell.sheet-linked-tablecell {
 	width:13em;
 }
+.sheet-table-cell.sheet-linked-tablecell-short {
+    width: 7em;
+}
 .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
 }

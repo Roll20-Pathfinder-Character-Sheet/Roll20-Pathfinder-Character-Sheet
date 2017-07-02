@@ -2647,7 +2647,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee}" type="number" name="attr_attk-melee" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_melee_bab" class="sheet-select-small" title="@{melee-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{melee_bab-mod}" type="number" name="attr_melee_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell sheet-ability-column">
 								<select title="@{melee-ability}" name="attr_melee-ability" class="sheet-select-small">
@@ -2682,7 +2695,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_melee2_bab" class="sheet-select-small" title="@{melee2-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{melee2_bab-mod}" type="number" name="attr_melee2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell">
 								<select title="@{melee2-ability}" name="attr_melee2-ability" class="sheet-select-small">
@@ -2716,7 +2742,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged}" type="number" name="attr_attk-ranged" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_ranged_bab" class="sheet-select-small" title="@{ranged-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{ranged_bab-mod}" type="number" name="attr_ranged_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell sheet-ability-column">
 								<select title="@{ranged-ability}" name="attr_ranged-ability" class="sheet-select-small">
@@ -2751,7 +2790,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{attk-ranged2}" type="number" name="attr_attk-ranged2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_ranged2_bab" class="sheet-select-small" title="@{ranged2-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{ranged2_bab-mod}" type="number" name="attr_ranged2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell sheet-ability-column">
 								<select title="@{ranged2-ability}" name="attr_ranged2-ability" class="sheet-select-small">
@@ -2785,7 +2837,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{CMB}" type="number" name="attr_CMB" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_cmb_bab" class="sheet-select-small" title="@{cmb-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{cmb_bab-mod}" type="number" name="attr_cmb_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell sheet-ability-column">
 								<select title="@{CMB-ability}" name="attr_CMB-ability" class="sheet-select-small">
@@ -2820,7 +2885,20 @@
 							</span>
 							<span class="sheet-table-cell"><input title="@{CMB2}" type="number" name="attr_CMB2" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+							<span class="sheet-table-cell sheet-linked-tablecell-short">
+								<select name="attr_cmb2_bab" class="sheet-select-small" title="@{cmb2-bab}" >
+									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+								</select>
+								<input title="@{cmb2_bab-mod}" type="number" name="attr_cmb2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers sheet-linked-cellfield" readonly />
+							</span>
 							<span class="sheet-divider">+</span>
 							<span class="sheet-table-cell sheet-ability-column">
 								<select title="@{CMB2-ability}" name="attr_CMB2-ability" class="sheet-select-small">
@@ -7406,10 +7484,10 @@
 									</select>
 									<span data-i18n-title="rule-category" data-i18n-aria-label="rule-category" data-i18n="rule">Rule</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-vshort sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
 										<option value="0" data-i18n="not-applicable" >N/A</option>
-										<option value="@{level}" data-i18n="character-level" selected>Character Level</option>
+										<option value="@{level}" data-i18n="full-caster-level-abbrv" selected>Level/HD</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
 										<option value="@{class-1-level}" data-i18n="2-ordinal-class">2nd Class</option>
 										<option value="@{class-2-level}" data-i18n="3-ordinal-class">3rd Class</option>
