@@ -1021,6 +1021,8 @@ export function setDualWieldVals (params,setter,id,updMode){
 		setter[prefix+'damage-ability']="dual";
 		setter[prefix+'damage-ability-mod']=0;
 		currAttack = 1;
+		setter[prefix+'damage']="0";
+		setter[prefix+'damage-mod']=0;
 		//macroText
 		//mainhand attack:
 		macroText=
