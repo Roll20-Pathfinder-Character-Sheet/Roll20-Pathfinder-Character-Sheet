@@ -905,7 +905,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 						doneOne();
 					});
 				});
-			});
+			},true,true);
 		};
 		_.each(ids,function(id){
 			calllevel(id);

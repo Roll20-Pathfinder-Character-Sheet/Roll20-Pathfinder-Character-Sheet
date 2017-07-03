@@ -505,7 +505,11 @@ function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 		} else if (!fieldToFind ) {
 			callback("");
 		} else {
-			foundField = synchrousFindAttributeFunc(fieldToFind);
+			if(synchrousFindAttributeFunc){
+				foundField = synchrousFindAttributeFunc(fieldToFind);
+			} else {
+				foundField = fieldToFind;
+			}
 			callback(foundField);
 		}
 	});
