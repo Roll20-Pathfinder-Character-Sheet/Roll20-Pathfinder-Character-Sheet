@@ -196,14 +196,25 @@ input[readonly], input[disabled] {
 	width:13em;
 }
 .sheet-table-cell.sheet-linked-tablecell-short {
-    width: 7em;
+    width: 7.7em;
 }
-.sheet-inline-textarea.sheet-linked-cellfield {
+.sheet-linked-tablecell select.sheet-linked-cellfield,
+.sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
+    max-width:calc(100% - 3.5em);
 }
+.sheet-linked-tablecell-short select.sheet-linked-cellfield,
+.sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
+	width:calc(100% - 2.8em);
+    max-width:calc(100% - 2.8em);
+}
+
+/**
+select.sheet-linked-cellfield,
+select.sheet-linked-cellfield + input,
 input.sheet-linked-cellfield{
 	display:inline;
-}
+}*/
 
 /* like br */
 .sheet-cheat {
@@ -493,11 +504,23 @@ input.sheet-number {
 	width: calc(100% - 2px);
 }
 
+/* min width must come before narrow-numbers */
+.sheet-calc,
+input.sheet-calc,
+input:disabled {
+    min-width: 2.85em;
+}
+
 input[type=number].sheet-narrow-numbers,
 .sheet-narrow-numbers input[type=number],
 .sheet-narrow-numbers input[type="text"].sheet-number,
 .sheet-narrow-numbers .sheet-number{
+    min-width: 2.5em;
     width: 2.5em;
+}
+.sheet-calc.sheet-narrow-numbers {
+    padding-left:0;
+    margin-left:0;
 }
 
 .sheet-number,
@@ -764,7 +787,6 @@ input:disabled {
     border-width: 0;
     color: #222;
     padding-left: 4px;
-    min-width: 2.85em;
 }
 input.sheet-calc {
     border-bottom-color: transparent;
@@ -2843,10 +2865,12 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-insertmacrocell .sheet-small-label2 {
     display: inline;
 }
-.sheet-ability-column{
-    max-width: 6em;
-    min-width: 4em;
-	width:4.92em;
+.sheet-ability-column select,
+.sheet-ability-column select.sheet-select-small,
+.sheet-ability-column {
+    max-width: 5em;
+    min-width: 3.75em;
+	width:4.5em;
 }
 .sheet-section-ability-list .sheet-small-label2 span:not(.sheet-autoexpand) {
 	font-size:.6rem;

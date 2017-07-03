@@ -18,8 +18,12 @@ import * as PFUtils  from './PFUtils';
  * @param {function(new,old,changed)} callback - the function passed to setDropdownValue as its callback, that function calls it
  * @param {boolean} silently if quiet or not
  */
-export function setDropdownValue (readField, writeFields, callback, silently) {
-    SWUtils.setDropdownValue(readField, writeFields, PFUtils.findAbilityInString, callback, silently);
+export function setDropdownValue (readField, writeFields, callback, silently,useFindAbility) {
+    var functionToPass = null;
+    if(useFindAbility){
+        functionToPass=PFUtils.findAbilityInString;
+    }
+    SWUtils.setDropdownValue(readField, writeFields, functionToPass, callback, silently);
 }
 /** calls setDropdownValue for a dropdown in a repeating section
  * @param {string} section the string between "repeating_" and "_<id>"

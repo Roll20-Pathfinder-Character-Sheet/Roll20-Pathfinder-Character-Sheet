@@ -1,5 +1,6 @@
 {
 	"race-hd-only": "HD Only",	
+	"attack-bonus-dropdowns": " Attack bonus dropdowns",
 	"condition-nocharge-note": "Cannot run or charge",
 	"condition-blinded-speed": "Blind creatures must make a DC 10 Acrobatics skill check to move faster than half speed.",
 	"condition-blinded-title": "-2 penalty to Armor Class, loses its Dexterity bonus to AC (if any), and takes a –4 penalty on most Strength- and Dexterity-based skill checks and on opposed Perception skill checks. All checks and activities that rely on vision (such as reading and Perception checks based on sight) automatically fail.",
@@ -105,7 +106,7 @@
 	"2-sizes-smaller": "2 sz smaller",
 	"3-sizes-larger": "3 sz larger",
 	"3-sizes-smaller": "3 sz smaller",
-	"ability-attack-dropdowns": "Ability and Attack Type Dropdowns",
+	"ability-attack-dropdowns": " Ability and Attack Type Dropdowns",
 	"ability-checks-abbrv": "Abil chk",
 	"ability-checks-calculation-abbrv": "Ability check calc",
 	"ability-skill-checks": "Ability &amp; Skill Checks",
