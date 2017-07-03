@@ -35,6 +35,9 @@ export default {
         'CMD-ability2':	'CMD-DEX',
 		'selected-ability-psionic-power': 'ability-psionic-power'
 	},
+	levelPlusBABManualDropdowns:[
+		'melee_bab','melee2_bab','ranged_bab','ranged2_bab','cmb_bab','cmb2_bab'
+	],
 	manualDropdownDefaults: {
 		"HP-ability": "CON-mod",
 		"init-ability": "DEX-mod",

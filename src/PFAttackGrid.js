@@ -163,6 +163,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         done();
     }
 }
+
 /** wrapper for updateAttack
  * 
  * @param {string} buffType buff column without 'buff_' or '-total'
@@ -254,6 +255,52 @@ export function resetCommandMacro (callback){
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
 
+function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
+    var fieldUpdated = '',fields;
+    if(!eventInfo){
+        return;
+    }
+    fieldUpdated =eventInfo.sourceAttribute;
+    fields=[fieldUpdated,'ranged_2_show','cmb_2_show'];
+    fields = Object.keys(attackGridFields).reduce(function(m,a){
+        m.push(a);
+        m.push(attackGridFields[a].babdd);
+        m.push(attackGridFields[a].bab);
+        return m;
+    },fields);
+    getAttrs(fields,function(v){
+        var newVal=0,setter={},silentSetter={},ranged2=0,cmb2=0;
+        TAS.debug("updateAttackBABDropdownDiffs values", v);
+
+        newVal=parseInt(v[fieldUpdated],10)||0;
+        ranged2=parseInt(v.ranged_2_show,10)||0;
+        cmb2= parseInt(v.cmb_2_show,10)||0;
+        Object.keys(attackGridFields).filter(function(a){
+            return ((a!=='ranged2'||ranged2) &&  (a!=='CMB2'||cmb2));
+        }).filter(function(a){
+            TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
+            return ( (v[attackGridFields[a].babdd]||'').toLowerCase()===fieldUpdated.toLowerCase());
+        }).forEach(function(a){
+            var currVal=0,diff=0;
+            currVal=parseInt(v[attackGridFields[a].bab],10)||0;
+            diff=newVal-currVal;
+            if(diff ){
+                //update dropdown mod field
+                silentSetter[attackGridFields[a].bab]=newVal;
+                //update the attack type
+                setter[a]=( (parseInt(v[a],10)||0)+diff   );
+            }
+        });
+        if(_.size(silentSetter)){
+            SWUtils.setWrapper(silentSetter,PFConst.silentParams);
+        }
+        if(_.size(setter)){
+            SWUtils.setWrapper(setter,{},callback);
+        } else if (typeof callback === "function") {
+            callback();
+        }
+    });
+}
 
 export function updateAttacks(callback,silently){
     var doneAttack=_.after(6,callback);
@@ -288,6 +335,7 @@ export var recalculate = TAS.callback(function callrecalculate (callback, silent
     setTopMacros();
 });
 function registerEventHandlers () {
+    var tempString='';
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:" + attackFields.misc, TAS.callback(function eventAttackMisc(eventInfo) {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -326,6 +374,19 @@ function registerEventHandlers () {
             setTopMacros();
         }
     }));
+    tempString="change:class-0-level change:class-1-level change:class-2-level change:class-3-level change:class-4-level change:class-5-level";
+    on(tempString, TAS.callback(function classLevelUpdateDropdowns(eventInfo){
+        if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+            updateAttackBABDropdownDiffs(null,null,eventInfo);
+        }
+    }));
+    on("change:bab", TAS.callback(function classBABDropdowns(eventInfo){
+        if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType==="api"){
+            updateAttackBABDropdownDiffs(null,null,eventInfo);
+        }
+    }));
+
+    
 }
 registerEventHandlers();
 //PFConsole.log('   PFAttackGrid module loaded     ');
