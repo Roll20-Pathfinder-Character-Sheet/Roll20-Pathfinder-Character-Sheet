@@ -1224,6 +1224,31 @@ export function migrateWhisperDropdowns (callback){
     });
 }
 
+export function migrateAttackDropdowns (callback,oldversion){
+    getAttrs(['migrated_attack_bab_dropdowns','bab'],function(v){
+        var setter={},bab=0;
+        if(!parseInt(v.migrated_attack_bab_dropdowns,10)){
+            bab=parseInt(v.bab,10)||0;
+            setter.melee_bab='bab';
+            setter['melee_bab-mod']=bab;
+            setter.melee2_bab='bab';
+            setter['melee2_bab-mod']=bab;
+            setter.ranged_bab='bab';
+            setter['ranged_bab-mod']=bab;
+            setter.ranged2_bab='bab';
+            setter['ranged2_bab-mod']=bab;
+            setter.cmb_bab='bab';
+            setter['cmb_bab-mod']=bab;
+            setter.cmb2_bab='bab';
+            setter['cmb2_bab-mod']=bab;
+            setter.migrated_attack_bab_dropdowns = 1;
+            SWUtils.setWrapper(setter,PFConst.silentParams,callback);
+        } else if (typeof callback === "function"){
+            callback();
+        }
+    });
+}
+
 export function migrateConfigFlags (callback,oldversion){
     var done = _.once(function(){ 
         //TAS.debug("leaving PFMigrate migrateConfigFlags");
