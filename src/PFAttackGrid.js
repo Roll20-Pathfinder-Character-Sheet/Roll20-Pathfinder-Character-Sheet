@@ -5,6 +5,7 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
+import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
 import * as PFMenus from './PFMenus';
 
@@ -18,7 +19,9 @@ export var attackGridFields = {
         "misc": "attk-melee-misc",
         "crit": "attk_melee_crit_conf",
         "attackmacro": "@{toggle_global_melee_macro_insert}",
-        "damagemacro": "@{toggle_global_melee_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
+        "babdd": "melee_bab",
+        "bab": "melee_bab-mod"        
     },
     "melee2": {
         "size": "size",
@@ -29,7 +32,9 @@ export var attackGridFields = {
         "misc": "attk-melee2-misc",
         "crit": "attk_melee2_crit_conf",
         "attackmacro": "@{toggle_global_melee_macro_insert}",
-        "damagemacro": "@{toggle_global_melee_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
+        "babdd": "melee2_bab",
+        "bab": "melee2_bab-mod"
     },
     "ranged": {
         "size": "size",
@@ -40,7 +45,9 @@ export var attackGridFields = {
         "misc": "attk-ranged-misc",
         "crit": "attk_ranged_crit_conf",
         "attackmacro": "@{toggle_global_ranged_macro_insert}",
-        "damagemacro": "@{toggle_global_ranged_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_ranged_damage_macro_insert}",
+        "babdd": "ranged_bab",
+        "bab": "ranged_bab-mod"
     },
     "ranged2": {
         "size": "size",
@@ -51,7 +58,9 @@ export var attackGridFields = {
         "misc": "attk-ranged2-misc",
         "crit": "attk_ranged2_crit_conf",
         "attackmacro": "@{toggle_global_ranged_macro_insert}",
-        "damagemacro": "@{toggle_global_ranged_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_ranged_damage_macro_insert}",
+        "babdd": "ranged2_bab",
+        "bab": "ranged2_bab-mod"
     },
     "CMB": {
         "size": "CMD-size",
@@ -62,7 +71,9 @@ export var attackGridFields = {
         "misc": "attk-CMB-misc",
         "crit": "attk_cmb_crit_conf",
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
-        "damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_cmb_damage_macro_insert}",
+        "babdd": "cmb_bab",
+        "bab": "cmb_bab-mod"
     },
     "CMB2": {
         "size": "CMD-size",
@@ -73,7 +84,9 @@ export var attackGridFields = {
         "misc": "attk-CMB2-misc",
         "crit": "attk_cmb2_crit_conf",
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
-        "damagemacro": "@{toggle_global_cmb_damage_macro_insert}"
+        "damagemacro": "@{toggle_global_cmb_damage_macro_insert}",
+        "babdd": "cmb2_bab",
+        "bab": "cmb2_bab-mod"
     }
 };
 var attkpenaltyAddToFields = [ "acp-attack-mod", "condition-Drained"],
@@ -133,7 +146,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
     fields,
     negfields=[];
     if (attackGridFields[attype]) {
-        fields=[attackGridFields[attype].atk, "bab", "attk-penalty", attackGridFields[attype].abilityMod,
+        fields=[attackGridFields[attype].atk, attackGridFields[attype].bab, "attk-penalty", attackGridFields[attype].abilityMod,
             attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff, 
             'buff_attack-total'];
         
@@ -150,6 +163,7 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         done();
     }
 }
+
 /** wrapper for updateAttack
  * 
  * @param {string} buffType buff column without 'buff_' or '-total'
@@ -241,6 +255,52 @@ export function resetCommandMacro (callback){
     PFMenus.resetOneCommandMacro('attacks',true,done," @{NPC-attacks_header_macro}",groupMapForMenu);
 }
 
+function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
+    var fieldUpdated = '',fields;
+    if(!eventInfo){
+        return;
+    }
+    fieldUpdated =eventInfo.sourceAttribute;
+    fields=[fieldUpdated,'ranged_2_show','cmb_2_show'];
+    fields = Object.keys(attackGridFields).reduce(function(m,a){
+        m.push(a);
+        m.push(attackGridFields[a].babdd);
+        m.push(attackGridFields[a].bab);
+        return m;
+    },fields);
+    getAttrs(fields,function(v){
+        var newVal=0,setter={},silentSetter={},ranged2=0,cmb2=0;
+        TAS.debug("updateAttackBABDropdownDiffs values", v);
+
+        newVal=parseInt(v[fieldUpdated],10)||0;
+        ranged2=parseInt(v.ranged_2_show,10)||0;
+        cmb2= parseInt(v.cmb_2_show,10)||0;
+        Object.keys(attackGridFields).filter(function(a){
+            return ((a!=='ranged2'||ranged2) &&  (a!=='CMB2'||cmb2));
+        }).filter(function(a){
+            TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
+            return ( (v[attackGridFields[a].babdd]||'').toLowerCase()===fieldUpdated.toLowerCase());
+        }).forEach(function(a){
+            var currVal=0,diff=0;
+            currVal=parseInt(v[attackGridFields[a].bab],10)||0;
+            diff=newVal-currVal;
+            if(diff ){
+                //update dropdown mod field
+                silentSetter[attackGridFields[a].bab]=newVal;
+                //update the attack type
+                setter[a]=( (parseInt(v[a],10)||0)+diff   );
+            }
+        });
+        if(_.size(silentSetter)){
+            SWUtils.setWrapper(silentSetter,PFConst.silentParams);
+        }
+        if(_.size(setter)){
+            SWUtils.setWrapper(setter,{},callback);
+        } else if (typeof callback === "function") {
+            callback();
+        }
+    });
+}
 
 export function updateAttacks(callback,silently){
     var doneAttack=_.after(6,callback);
@@ -249,14 +309,8 @@ export function updateAttacks(callback,silently){
     });
 }
 export function migrate (callback, oldversion){
-    var done = function () {
-        //TAS.debug("leaving PFAttackGrid.migrate");
-        if (typeof callback === "function") {
-            callback();
-        }
-    };
     PFMigrate.migrateAltAttackGridrowFlags();
-    done();
+    PFMigrate.migrateAttackDropdowns(callback);
 }
 /** recalculates all write-to fields in module 
  * @param {function} callback optional call when done
@@ -281,6 +335,7 @@ export var recalculate = TAS.callback(function callrecalculate (callback, silent
     setTopMacros();
 });
 function registerEventHandlers () {
+    var tempString='';
     _.each(attackGridFields, function (attackFields, attack) {
         on("change:" + attackFields.misc, TAS.callback(function eventAttackMisc(eventInfo) {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -288,7 +343,14 @@ function registerEventHandlers () {
                 updateAttack(attack);
             }
         }));
-        on("change:bab change:attk-penalty change:" + attackFields.abilityMod , TAS.callback(function eventAttackPenalty(eventInfo) {
+        on("change:"+attackFields.babdd, TAS.callback(function eventAttackGridType(eventInfo) {
+            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                TAS.debug("calling set dropdown from "+attackFields.babdd +" to "+attackFields.bab);
+                PFUtilsAsync.setDropdownValue(attackFields.babdd,attackFields.bab);
+            }
+        }));
+        on("change:" + attackFields.bab +  " change:" + attackFields.abilityMod , TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
@@ -296,6 +358,12 @@ function registerEventHandlers () {
         }));
     });
 
+    on("change:attk-penalty", TAS.callback(function eventAttackPenalty(eventInfo) {
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateAttacks();
+        }
+    }));
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         applyConditions();
@@ -306,6 +374,19 @@ function registerEventHandlers () {
             setTopMacros();
         }
     }));
+    tempString="change:class-0-level change:class-1-level change:class-2-level change:class-3-level change:class-4-level change:class-5-level";
+    on(tempString, TAS.callback(function classLevelUpdateDropdowns(eventInfo){
+        if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+            updateAttackBABDropdownDiffs(null,null,eventInfo);
+        }
+    }));
+    on("change:bab", TAS.callback(function classBABDropdowns(eventInfo){
+        if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType==="api"){
+            updateAttackBABDropdownDiffs(null,null,eventInfo);
+        }
+    }));
+
+    
 }
 registerEventHandlers();
 //PFConsole.log('   PFAttackGrid module loaded     ');

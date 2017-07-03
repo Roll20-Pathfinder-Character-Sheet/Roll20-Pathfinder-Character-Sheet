@@ -1152,8 +1152,8 @@ function recalcRepeatingMacroFields (ids,callback){
 				} else {
 					SWUtils.evaluateAndSetNumber(prefix + "attack", prefix + "attack-mod",0,doneWithField,true);
 				}
-				SWUtils.setDropdownValue(prefix + "attack-type",prefix +"attack-type-mod",PFUtils.findAbilityInString,doneWithField,true);
-				SWUtils.setDropdownValue(prefix + "damage-ability",prefix +"damage-ability-mod",PFUtils.findAbilityInString,doneWithField,true);
+				SWUtils.setDropdownValue(prefix + "attack-type",prefix +"attack-type-mod",null,doneWithField,true);
+				SWUtils.setDropdownValue(prefix + "damage-ability",prefix +"damage-ability-mod",null,doneWithField,true);
 			});
 		} catch(err) {
 			TAS.error("recalcEquationFields",err);

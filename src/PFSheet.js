@@ -313,12 +313,15 @@ function recalcExpressions (callback, silently, oldversion) {
 }
 function recalcDropdowns (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.abilityScoreManualDropdowns),
+	countDD2 = _.size(PFConst.levelPlusBABManualDropdowns),
 	done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
-	doneOne = _.after(countEqs, done);
+	donetwo = _.after(2,done),
+	doneOne = _.after(countEqs, donetwo),
+	doneOther = _.after(countDD2,donetwo);
 	try {
 		_.each(PFConst.abilityScoreManualDropdowns, function (writeField, readField) {
 			try {
@@ -327,6 +330,14 @@ function recalcDropdowns (callback, silently, oldversion) {
 				TAS.error("PFSheet.recalcDropdowns", err);
 				doneOne();
 			}
+		});
+		_.each(PFConst.levelPlusBABManualDropdowns,function(readField){
+			try {
+				PFUtilsAsync.setDropdownValue(readField, readField+'-mod', doneOther, silently);
+			} catch (err) {
+				TAS.error("PFSheet.recalcDropdowns", err);
+				doneOther();
+			}			
 		});
 	} catch (err2) {
 		TAS.error("PFSheet.recalcDropdowns OUTER wtf how did this happen?", err2);
@@ -1131,6 +1142,7 @@ function applyTemplate(name){
 }
 
 function registerEventHandlers () {
+	var eventToWatch='';
 	on("change:add_template",TAS.callback(function eventAddTemplate(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -1167,6 +1179,7 @@ function registerEventHandlers () {
 			}
 		}));
 	});
+
 	//GENERIC EQUATIONS
 	_.each(PFConst.equationMacros, function (write, read) {
 		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {

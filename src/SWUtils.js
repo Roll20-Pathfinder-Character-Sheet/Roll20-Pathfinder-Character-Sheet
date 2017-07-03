@@ -493,12 +493,13 @@ export function evaluateAndSetNumberold (readField, writeField, defaultVal, call
  *   exceptions: if readField is not found pass in "", if readField is 0 or starts with 0 pass in 0.
  */
 function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
-	if (!readField || (callback && typeof callback !== "function") || typeof synchrousFindAttributeFunc !== "function") {
+	if (!readField || (callback && typeof callback !== "function") || (synchrousFindAttributeFunc && typeof synchrousFindAttributeFunc !== "function")) {
 		return;
 	}
 	getAttrs([readField], function (values) {
 		var fieldToFind = values[readField],
 		foundField = "";
+		//TAS.debug("finding dropdown values are ",values);
 		if ( fieldToFind === "0" || fieldToFind === 0 || fieldToFind === "dual" || (fieldToFind && fieldToFind["0"] === 0)) {
 			//select = none
 			callback(0);
@@ -508,6 +509,7 @@ function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 			if(synchrousFindAttributeFunc){
 				foundField = synchrousFindAttributeFunc(fieldToFind);
 			} else {
+				//TAS.debug("function is null so set field to "+fieldToFind);
 				foundField = fieldToFind;
 			}
 			callback(foundField);
@@ -545,7 +547,9 @@ export function setDropdownValue (readField, writeFields, synchrousFindAttribute
 			//TAS.debug("SWUtils.setDropdownValue getting ",fields);
 			getAttrs(fields, function (v) {
 				var currValue = 0, valueOf=0, setter = {};
-				//TAS.debug("SWUtils.setDropdownValue returned with ",v);
+				if(!synchrousFindAttributeFunc){
+					TAS.debug("SWUtils.setDropdownValue returned with to set to "+writeFields,v);
+				}
 				if(foundField){
 					valueOf = parseInt(v[foundField], 10) || 0;
 				} else {
