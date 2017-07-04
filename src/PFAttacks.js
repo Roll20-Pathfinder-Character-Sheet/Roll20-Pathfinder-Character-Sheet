@@ -820,6 +820,8 @@ export function setDualWieldVals (params,setter,id,updMode){
 	macroIterOffhand = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value}  + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
 	replaceMultStr ='- [[ ceil(@{repeating_weapon_REPLACEHAND_damage-ability-mod}/2) ]] ',
 	tempInt=0,
+	currMacro='',
+	tempMacroArray=[],
 	mainPen= 0,
 	origMainPen = 0,
 	offhandCountdown=0,
@@ -829,19 +831,30 @@ export function setDualWieldVals (params,setter,id,updMode){
 	tempStr2='';
 
 	try {
-		//TAS.debug("PFAttacks.setDualWieldVals",params);
+		TAS.debug("PFAttacks.setDualWieldVals",params);
 		setter=setter||{};
 		if (!id){
 			id = generateRowID();
 			//TAS.debug("the new id is "+id);
 		}
-		offhandCountdown=params.offhand_improved;
 		prefix='repeating_weapon_'+id+'_';
-		try{
-			tempStr=getTranslationByKey('dual-wield');
-		} catch (er2){
-			TAS.error("PFAttacks.setDualWieldVals er2:",er2);
+		//TAS.debug("prefix is "+prefix);
+		if(updMode) {
+			currMacro = params['macro-text'];
+			TAS.debug("currmacro is ",currMacro);
+			if(currMacro){
+				TAS.debug("about to call gettracking");
+				tempMacroArray=PFMacros.getTracking(currMacro);
+				if(_.size(tempMacroArray)===0){
+					currMacro=params['NPC-macro-text'];
+					if(currMacro){
+						tempMacroArray=PFMacros.getTracking(currMacro);
+					}
+				}
+			}
 		}
+		offhandCountdown=params.offhand_improved;
+		tempStr=SWUtils.getTranslated('dual-wield');
 		if (!tempStr){tempStr = "Dual Wield";}
 		setter[prefix+'dualwield']=1;
 		setter[prefix+'source-main']=params.mainhand_id;
@@ -882,9 +895,13 @@ export function setDualWieldVals (params,setter,id,updMode){
 			'{{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} ' +
 			'{{dual_precision_dmg=@{precision_dmg_macro}}} {{dual_precision_dmg_type=@{precision_dmg_type}}} ' +
 			'@{iterative_attacks} @{macro_options} {{attack1name=@{iterative_attack1_name}}}'   ;
+
+		if (_.size(tempMacroArray)){
+			currMacro=" "+tempMacroArray.join(" ");
+			macroText+=currMacro;
+		}
 		setter[prefix+'macro-text']=macroText;
 		setter[prefix+'NPC-macro-text']=macroText;
-		
 		setter[prefix+'attack']=params.mainhand_penalty;
 		setter[prefix+'attack-mod']=params.mainhand_penalty;
 		setter[prefix+'total-attack']=params.mainhand_penalty;
@@ -971,7 +988,7 @@ export function updateDualWieldAttacks (callback,eventInfo){
 			ohatks=parseInt(vout.offhand_improved,10)||0;
 			babt=parseInt(vout.bab,10)||0;
 			mult=parseFloat(vout.offhand_str_mult)||0.5;			
-			fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-main','_source-off','_link_type','_source-main-name','_source-off-name']);
+			fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-main','_source-off','_link_type','_source-main-name','_source-off-name','_macro-text','_NPC-macro-text']);
 			//TAS.debug("PFAttacks.migrateLinkedAttacks FIELDS are ",fields);
 			getAttrs(fields,function(v){
 				var setter={};
@@ -989,7 +1006,9 @@ export function updateDualWieldAttacks (callback,eventInfo){
 							params.bab = babt;
 							params.mainhand_name = v[prefix+'source-main-name'];
 							params.offhand_name = v[prefix+'source-off-name'];
-							params.offhand_mult = mult ;
+							params.offhand_mult = mult;
+							params['macro-text'] = v[prefix+'macro-text'];
+							params['NPC-macro-text'] = v[prefix+'NPC-macro-text'];
 							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setDualWieldVals(params,setter,id,true);
 						}
@@ -1031,8 +1050,8 @@ export function createDualWield (callback){
 							params.offhand_penalty = parseInt(v.offhand_penalty,10)||0;
 							params.offhand_improved = parseInt(v.offhand_improved,10)||0;
 							params.bab = parseInt(v.bab,10)||0;
-							params.mainhand_name = w['repeating_weapon_'+v.mainhand_id+'_name'];
-							params.offhand_name = w['repeating_weapon_'+v.offhand_id+'_name'];
+							params.mainhand_name = v['repeating_weapon_'+v.mainhand_id+'_name'];
+							params.offhand_name = v['repeating_weapon_'+v.offhand_id+'_name'];
 							params.offhand_mult =parseFloat(v.offhand_str_mult)||0.5;
 							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
 							setter=setDualWieldVals(params,setter);
