@@ -299,27 +299,37 @@ export function applyConditions (callback, silently, eventInfo) {
             return;
         }
     }
-    getAttrs(["STR-cond", "DEX-cond", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
+    getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed",  "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {},
         params = {},
-        strMod = parseInt(v["condition-Fatigued"], 10) || 0,
+        strMod = 0,
         dexMod = 0,
+        helpless = 0,
+        paralyzed = 0,
         dexAbMod = 0,
         strAbMod = 0;
         try {
-            dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
-            dexAbMod = dexMod * -2;
-            strAbMod = strMod * -2;
-            if (!helpless) {
+            helpless = parseInt(v.helpless,10)||0;
+            paralyzed = parseInt(v.paralyzed,10)||0;
+            if (paralyzed){
+                setter["DEX"] = 0;
+                setter["DEX-mod"] = -5;
+                setter["STR"] = 0;
+                setter["STR-mod"] = -5;
+            } else if (helpless){
+                setter["DEX"] = 0;
+                setter["DEX-mod"] = -5;
+            } else {
+                strMod = parseInt(v["condition-Fatigued"], 10) || 0;
+                dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
+                dexAbMod = dexMod * -2;
+                strAbMod = strMod * -2;
                 if (dexAbMod !== (parseInt(v["DEX-cond"], 10) || 0)) {
                     setter["DEX-cond"] = dexAbMod;
                 }
                 if (strAbMod !== (parseInt(v["STR-cond"], 10) || 0)) {
                     setter["STR-cond"] = strAbMod;
                 }
-            } else {
-                setter["DEX"] = 0;
-                setter["DEX-mod"] = -5;
             }
         } catch (err) {
             TAS.error("PFAbilityScores.applyConditions", err);
