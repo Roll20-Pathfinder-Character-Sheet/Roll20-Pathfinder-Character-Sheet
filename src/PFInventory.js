@@ -928,7 +928,9 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
                 }
             });
             if ( (/melee/i).test(v[item_entry + "item-attack_type"])) {
-                setter["repeating_weapon_" + newRowId + "_damage-ability"] = "@{STR-mod}";
+                setter["repeating_weapon_" + newRowId + "_damage-ability"] = "STR-mod";
+            } else if ( (/ranged/i).test(v[item_entry + "item-attack_type"])) {
+                setter["repeating_weapon_" + newRowId + "_isranged"] = 1;
             }
             enhance = parseInt(v[item_entry + "item-wpenhance"],10)||0;
             if(enhance){
@@ -950,7 +952,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
             setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
             setter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
-            setter["repeating_weapon_" + newRowId +'_link_type']=PFAttacks.linkedAttackType.equipment;
+            setter["repeating_weapon_" + newRowId +"_link_type"]=PFAttacks.linkedAttackType.equipment;
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
         } finally {

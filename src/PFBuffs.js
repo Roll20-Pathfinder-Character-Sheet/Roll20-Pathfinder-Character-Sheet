@@ -590,7 +590,7 @@ function updateBuffTotal (col,rows,v,setter){
 					return m;
 				},0);
 			} else if (col==='size' ){
-				//size=neverstack
+				//size=neverstack , negative is not a penalty
 				sums = rows.reduce(function(m,row){
 					if(row.val>0){
 						m.sum = Math.max(m.sum,row.val);
@@ -599,6 +599,7 @@ function updateBuffTotal (col,rows,v,setter){
 					}
 					return m;
 				},sums);
+				sums.sum += sums.pen;
 			} else {
 				//stack all rows
 				bonuses = rows.reduce(function(m,row){
@@ -640,63 +641,32 @@ function updateBuffTotal (col,rows,v,setter){
 					}
 				});
 				//NOW START SUMMING
-				TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
+				//TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
 				//if ability, penalty is applied seperately
-					if(isAbility &&  _.contains(bonuses,'penalty')){
-						sums.pen=bonuses.penalty;
-						bonuses.penalty=0;
-					}
+				if(isAbility &&  _.contains(bonuses,'penalty')){
+					sums.pen=bonuses.penalty;
+					bonuses.penalty=0;
+				}
 
 				//if ac,touch,cmd,flatfooted, copy dodge and deflection out
 				if(armorcols.indexOf(col)>=0){
-
-						if ( _.contains(bonuses,'dodge')){
-							if(col==='ac'){
-								totaldodge = bonuses.dodge;
-							}
-							bonuses.dodge=0;
+					if ( _.contains(bonuses,'dodge')){
+						if(col==='ac'){
+							totaldodge = bonuses.dodge;
 						}
-
-
-						if( _.contains(bonuses,'deflection')){
-							if (col==='ac'){
-								totaldeflection= bonuses.deflection;
-							}
-							bonuses.deflection=0;
+						bonuses.dodge=0;
+					}
+					if( _.contains(bonuses,'deflection')){
+						if (col==='ac'){
+							totaldeflection= bonuses.deflection;
 						}
-
+						bonuses.deflection=0;
+					}
 				}
 				sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
 					m+=bonus;
 					return m;
 				},0);
-				/*
-				if (isAbility){
-					try {
-						sums.pen = bonuses.penalty||0;
-					} catch (er2){}
-					bonuses.penalty=0;
-				}				
-				//if not armor just add them up
-				if(armorcols.indexOf(col)<0){
-					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-						m+=bonus;
-						return m;
-					},0);
-				} else {
-					//is an armor type, break out dodge and deflection
-					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-						if(bonusType==='dodge'){
-							totaldodge = bonus;
-						} else if (bonusType==='deflection'){
-							totaldeflection=bonus;
-						} else {
-							m+=bonus;
-						}
-						return m;
-					},0);
-				}
-				*/
 			}
 		}
 
@@ -727,29 +697,29 @@ function updateBuffTotal (col,rows,v,setter){
 		}
 
 		totalcol=buffToTot[col];
-		if(!totalcol){
-			TAS.error("######################", "cannot find total column corresponding to "+col);
-			return setter;
-		}
-		if ( parseInt(v['buff_'+totalcol+'-total'],10)!==sums.sum){
-			setter['buff_'+totalcol+'-total']=sums.sum;
-		}
-		tempInt = parseInt(v['buff_'+totalcol+'_exists'],10)||0;
-		if (sums.sum !== 0 && tempInt===0){
-			setter['buff_'+totalcol+'_exists']=1;
-		} else if (sums.sum===0 && tempInt===1){
-			setter['buff_'+totalcol+'_exists']=0;
-		}
-		if (isAbility){
-			if ( parseInt(v['buff_'+totalcol+'-total_penalty'],10)!==sums.pen){
-				setter['buff_'+totalcol+'-total_penalty']=sums.pen;
+		if(totalcol){
+			if ( parseInt(v['buff_'+totalcol+'-total'],10)!==sums.sum){
+				setter['buff_'+totalcol+'-total']=sums.sum;
 			}
-			tempInt = parseInt(v['buff_'+totalcol+'_penalty_exists'],10)||0;
-			if (sums.pen!==0 && tempInt===0){
-				setter['buff_'+totalcol+'_penalty_exists']=1;
-			} else if (sums.pen===0 && tempInt === 1){
-				setter['buff_'+totalcol+'_penalty_exists']=0;
+			tempInt = parseInt(v['buff_'+totalcol+'_exists'],10)||0;
+			if (sums.sum !== 0 && tempInt===0){
+				setter['buff_'+totalcol+'_exists']=1;
+			} else if (sums.sum===0 && tempInt===1){
+				setter['buff_'+totalcol+'_exists']=0;
 			}
+			if (isAbility){
+				if ( parseInt(v['buff_'+totalcol+'-total_penalty'],10)!==sums.pen){
+					setter['buff_'+totalcol+'-total_penalty']=sums.pen;
+				}
+				tempInt = parseInt(v['buff_'+totalcol+'_penalty_exists'],10)||0;
+				if (sums.pen!==0 && tempInt===0){
+					setter['buff_'+totalcol+'_penalty_exists']=1;
+				} else if (sums.pen===0 && tempInt === 1){
+					setter['buff_'+totalcol+'_penalty_exists']=0;
+				}
+			}
+		} else {
+			TAS.error("PFBuffs.updateBuffTotal cannot find total column corresponding to "+col);
 		}
 	} catch(err){
 		TAS.error("PFBuffs.updateBuffTotal",err);
