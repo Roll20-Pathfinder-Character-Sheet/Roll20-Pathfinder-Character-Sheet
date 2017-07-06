@@ -37,7 +37,7 @@ export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 });
 
 export function getTranslated (str){
-	var tempstr;
+	var tempstr='';
 	try{
 		if(str){
 			tempstr=getTranslationByKey(str)||(str[0].toUpperCase()+str.slice(1));

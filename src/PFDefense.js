@@ -531,11 +531,6 @@ export function applyConditions (callback, silently,eventInfo) {
         hasEndurance = 0,
         grittyMode = 0,
         defenseNote='',
-        msgs={
-            "Paralyzed": "Can only take purely mental actions",  
-            "Helpless": "+4 circumstance bonus to melee attacks against a helpless target", 
-            "Prone": "+4 circumstance bonus to AC against ranged attacks, –4 penalty to AC against melee attacks"
-        },
         setter = {},
         params = {};
         try {
