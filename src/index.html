@@ -863,6 +863,7 @@
 					<input type="text" name="attr_condition_defense_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_condition_attack_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_condition_skill_notes" value="" class="sheet-noshow" />
+					<input type="text" name="attr_condition_spell_notes" value="" class="sheet-noshow" />
 						
 				</div>
 				<div class="sheet-sect-buff sheet-oldbuff sheet-repeating-fields">
@@ -1164,6 +1165,8 @@
 				<input type="checkbox" name="attr_spellclass-0-exists" class="sheet-spellclass0-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-1-exists" class="sheet-spellclass1-show sheet-noshow" value="1" />
 				<input type="checkbox" name="attr_spellclass-2-exists" class="sheet-spellclass2-show sheet-noshow" value="1" />
+				<button type="roll" name="roll__allmenus" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{all_menus_macro}" ><span data-i18n="all">All</span></button>
+				<input type="hidden" name="attr_all_menus_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row02=[^{ability-checks}](~@{character_id}|ability_checks) }} {{row03=[^{initiative}](~@{character_id}|Roll-for-initiative) }} {{row04=[^{defenses}](~@{character_id}|defenses) }} {{row05=[^{attacks}](~@{character_id}|attacks) }} {{row06=[^{skills}](~@{character_id}|skills) }} {{row07=[^{items}](~@{character_id}|items) }} {{row08=[^{skills}](~@{character_id}|skills) }}" />
 				<button type="roll" name="roll_ability_checks" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{ability_checks_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-ability_checks}}" title="%{selected|ability_checks}" data-i18n="ability-checks">Ability Checks</button>
 				<button type="roll" name="roll_Roll-for-initiative" class="sheet-command-button" value="@{PC-whisper} @{init-macro-text}" title="%{selected|Roll-for-initiative}" data-i18n="initiative-abbrv-caps">Init</button>
 				<button type="roll" name="roll_defenses" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{defenses-macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-defenses}} " title="%{selected|defenses}" data-i18n="defenses">Defenses</button>
@@ -9685,7 +9688,7 @@
 									<input type="text" value="" name="attr_effect_from_compendium" accept="Effect" />
 									<input type="text" value="" name="attr_compendium_category" accept="Category" />
 								</div>
-								<input type="hidden" name="attr_spell_options" value="" />
+								<input type="hidden" name="attr_spell_options" value="{{condition_note=@{condition_spell_notes}}}" />
 								<div class="sheet-sect sheet-expand">
 									<input type="checkbox" class="sheet-showarrow sheet-misc-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
 									<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>

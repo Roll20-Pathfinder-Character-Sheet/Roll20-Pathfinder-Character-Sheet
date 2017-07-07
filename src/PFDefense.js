@@ -520,6 +520,7 @@ export function applyConditions (callback, silently,eventInfo) {
     });
     getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", 
     "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode",
+    "condition-Grappled", "condition-Invisible",
     "condition-Paralyzed","condition-Helpless","condition-Prone","condition_defense_notes"], function (v) {
         var subTotPenalty = 0,
         drained = 0,
@@ -534,24 +535,25 @@ export function applyConditions (callback, silently,eventInfo) {
         setter = {},
         params = {};
         try {
-
-            drained = parseInt(v["condition-Drained"], 10) || 0;
-            woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
-            AC = parseInt(v["AC-penalty"], 10) || 0;
-            CMD = parseInt(v["CMD-penalty"], 10) || 0;
-            hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
-            grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
-            woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
-            subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Pinned"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
-            subTotPenalty += woundPenalty;
-            newCMD = drained + subTotPenalty;
-            if (AC !== subTotPenalty) {
-                setter["AC-penalty"] = subTotPenalty;
+            //if user pressed Grappled or invisible, just skip to notes
+            if (!eventInfo || !(/grappled|invisible/i).test(eventInfo.sourceAttribute)){ 
+                drained = parseInt(v["condition-Drained"], 10) || 0;
+                woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
+                AC = parseInt(v["AC-penalty"], 10) || 0;
+                CMD = parseInt(v["CMD-penalty"], 10) || 0;
+                hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
+                grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
+                woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
+                subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Pinned"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
+                subTotPenalty += woundPenalty;
+                newCMD = drained + subTotPenalty;
+                if (AC !== subTotPenalty) {
+                    setter["AC-penalty"] = subTotPenalty;
+                }
+                if (CMD !== newCMD) {
+                    setter["CMD-penalty"] = newCMD;
+                }
             }
-            if (CMD !== newCMD) {
-                setter["CMD-penalty"] = newCMD;
-            }
-
 			if(parseInt(v['condition-Paralyzed'],10)){
                 defenseNote+='**'+ SWUtils.getTranslated('paralyzed')+'**: ';
 				defenseNote+=SWUtils.getTranslated('condition-paralyzed-note') + '\r\n';
@@ -564,6 +566,11 @@ export function applyConditions (callback, silently,eventInfo) {
                 defenseNote+= '**'+SWUtils.getTranslated('helpless')+'**: ';
 				defenseNote+=SWUtils.getTranslated('condition-helpless-note') + '\r\n';
 			}
+			if(parseInt(v['condition-Grappled'],10) && parseInt(v['condition-Invisible'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('grappled')+' + ' +SWUtils.getTranslated('invisible') + '**: ';
+				defenseNote+=SWUtils.getTranslated('condition-grappled-invisible-note') + '\r\n';
+			}
+
 			if(defenseNote!==v.condition_defense_notes){
 				setter['condition_defense_notes'] = defenseNote;				
 			}
