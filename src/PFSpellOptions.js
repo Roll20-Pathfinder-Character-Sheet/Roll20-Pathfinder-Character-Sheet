@@ -171,12 +171,12 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     levelForConcentrate = (isNaN(spellSlot) || spellSlot === spellLevel) ? spellLevel : spellSlot,
     defDC = 15 + (levelForConcentrate * 2),
     defMod = parseInt(rowValues["Concentration-" + classNum + "-def"], 10) || 0,
-    optionText = "",
+    optionText = "{{condition_note=@{condition_spell_notes}}}",
     newValue = "";
     //TAS.debug("getOptionText, defMod: " + defMod);
     if (isNaN(classNum) || isNaN(spellLevel)) {
         TAS.warn("cannot set options for spell! id:" + id + "  class or level are not numbers");
-        return "";
+        return "{{condition_note=@{condition_spell_notes}}}";
     }
     if (toggleValues.showschool) {
         optionText += optionTemplates.school.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "school"]))||"";
@@ -285,7 +285,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
 *@param {jsobj} eventInfo NOT USED
 */
 export function resetOption (id, eventInfo) {
-    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
+    var prefix = "repeating_spells_" + SWUtils.getRepeatingfIDStr(id),
     allFields;
     allFields = _.map(repeatingOptionAttrsToGet, function (field) {
         return prefix + field;
@@ -301,7 +301,7 @@ export function resetOption (id, eventInfo) {
         }).value(),
         optionText = "",
         setter = {};
-        optionText = getOptionText(id, eventInfo, toggleValues, v)||"";
+        optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";
         //TAS.debug("resetOption","About to set",setter);
         setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
         SWUtils.setWrapper(setter, {
@@ -347,7 +347,7 @@ export function resetOptions (callback, eventInfo) {
                     _.each(ids, function (id) {
                         var optionText ='';
                         try {
-                            optionText= getOptionText(id, eventInfo, toggleValues, v)||"";
+                            optionText= getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";
                             //TAS.debug("setting option text for "+id+" to "+optionText);
                             setter["repeating_spells_" + id + "_spell_options"] = optionText;
                         } catch (innererr){

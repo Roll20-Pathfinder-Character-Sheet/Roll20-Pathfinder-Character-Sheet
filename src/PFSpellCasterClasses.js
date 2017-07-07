@@ -276,30 +276,24 @@ export function applyConditions (callback, silently) {
         }
     });
     //TAS.debug("at PFSpellCasterClasses.applyConditions");
-    getAttrs(["condition-Deafened", "SpellFailureNote"], function (v) {
-        var setter = {},
-        params = {};
-        try {
-            if (parseInt(v["condition-Deafened"],10) === 4) {
-                if (!v["SpellFailureNote"]) {
-                    setter["SpellFailureNote"] = "Yes";
-                }
-            } else {
-                if (v["SpellFailureNote"]) {
-                    setter["SpellFailureNote"] = "";
-                }
-            }
-        } catch (err) {
-            TAS.error("PFSpellCasterClasses.applyConditions", err);
-        } finally {
-            if (_.size(setter) > 0) {
-                if (silently) {
-                    params = PFConst.silentParams;
-                }
-                SWUtils.setWrapper(setter, params, done);
-            } else {
-                done();
-            }
+    getAttrs(["condition_spell_notes", "condition-Deafened", "condition-Grappled", "condition-Pinned"], function (v) {
+        var setter = {}, spellNote='';
+        if (parseInt(v["condition-Deafened"],10)) {
+            spellNote+='**'+SWUtils.getTranslated('deafened')+'**: ';
+            spellNote+=SWUtils.getTranslated('condition-deafened-spellonly')+'\r\n';
+        }
+        if (parseInt(v["condition-Grappled"],10)) {
+            spellNote+='**'+SWUtils.getTranslated('grappled')+'**: ';
+            spellNote+=SWUtils.getTranslated('condition-grappled-spell-note')+'\r\n';
+        }
+        if (parseInt(v["condition-Pinned"],10)){
+            spellNote+='**'+SWUtils.getTranslated('pinned')+'**: ';
+            spellNote+=SWUtils.getTranslated('condition-pinned-spell-note')+' ';
+            spellNote+=SWUtils.getTranslated('condition-grappled-spell-note')+'\r\n';
+        }
+        if(spellNote!==v.condition_spell_notes){
+            setter['condition_spell_notes'] = spellNote;
+            SWUtils.setWrapper(setter,PFConst.silentParams);
         }
     });
 }

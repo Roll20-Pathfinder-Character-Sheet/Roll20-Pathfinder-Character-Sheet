@@ -110,7 +110,7 @@ export function applyConditions  (callback, silently, eventInfo) {
     }),
     fields=[];
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
-    getAttrs(['condition-Entangled','condition-Fatigued','condition-Invisible','condition_attack_notes'],function(v){
+    getAttrs(['condition-Entangled','condition-Fatigued','condition-Invisible','condition_attack_notes','condition-Grappled','condition-Pinned'],function(v){
         var attackNote='',setter={};
         if(parseInt(v['condition-Entangled'],10)) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
@@ -121,7 +121,11 @@ export function applyConditions  (callback, silently, eventInfo) {
         }
         if(parseInt(v['condition-Invisible'],10)){
             attackNote+='**'+SWUtils.getTranslated('invisible')+'**: ';
-            attackNote+=SWUtils.getTranslated('condition-invisible-title');
+            attackNote+=SWUtils.getTranslated('condition-invisible-title')+'\r\n';
+        }
+        if(parseInt(v['condition-Grappled'],10)){
+            attackNote+='**'+SWUtils.getTranslated('grappled')+'**: ';
+            attackNote+=SWUtils.getTranslated('condition-grappled-cmb-note')+'\r\n';
         }
         if(attackNote!==v.condition_attack_notes){
             setter['condition_attack_notes'] = attackNote;

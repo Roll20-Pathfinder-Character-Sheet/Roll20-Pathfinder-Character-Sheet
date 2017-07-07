@@ -79,8 +79,8 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 
 var events = {
 	conditionEventsEither: {
-		"change:condition-grappled": [updateGrapple, PFAttackGrid.applyConditions],
-		"change:condition-pinned": [updatePin, PFDefense.applyConditions],
+		"change:condition-grappled": [updateGrapple, PFAttackGrid.applyConditions, PFSpellCasterClasses.applyConditions,PFDefense.applyConditions],
+		"change:condition-pinned": [updatePin, PFDefense.applyConditions, PFSpellCasterClasses.applyConditions],
 		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
 	},
 	conditionEventsPlayer: {
@@ -95,11 +95,11 @@ var events = {
 		"change:condition-fear": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
 		"change:condition-blinded": [PFChecks.applyConditions, PFDefense.applyConditions],
 		"change:condition-cowering": [PFDefense.applyConditions],
-		"change:condition-invisible": [PFDefense.updateDefenses, PFAttackGrid.applyConditions,PFChecks.applyConditions],
+		"change:condition-invisible": [PFDefense.updateDefenses, PFAttackGrid.applyConditions,PFChecks.applyConditions,PFDefense.applyConditions],
 		"change:condition-dazzled": [PFAttackGrid.applyConditions, PFChecks.applyConditions],
 		"change:condition-prone": [ PFDefense.applyConditions, PFAttackGrid.recalculateMelee],
-		"change:condition-paralyzed": [PFAbilityScores.applyConditions,PFDefense.applyConditions],
-		"change:condition-helpless": [PFAbilityScores.applyConditions,PFDefense.applyConditions]
+		"change:condition-paralyzed": [PFAbilityScores.applyConditions, PFDefense.applyConditions],
+		"change:condition-helpless": [PFAbilityScores.applyConditions, PFDefense.applyConditions]
 	}
 };
 
