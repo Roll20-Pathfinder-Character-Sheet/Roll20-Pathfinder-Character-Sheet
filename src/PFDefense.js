@@ -553,6 +553,8 @@ export function applyConditions (callback, silently,eventInfo) {
                 if (CMD !== newCMD) {
                     setter["CMD-penalty"] = newCMD;
                 }
+            } else {
+                silently=true;
             }
 			if(parseInt(v['condition-Paralyzed'],10)){
                 defenseNote+='**'+ SWUtils.getTranslated('paralyzed')+'**: ';

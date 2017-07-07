@@ -295,6 +295,7 @@ export function applyConditions (callback, silently) {
             setter['condition_spell_notes'] = spellNote;
             SWUtils.setWrapper(setter,PFConst.silentParams);
         }
+        done();
     });
 }
 function recalcOneClass (spellClassIdx, callback, silently) {

@@ -131,6 +131,7 @@ export function applyConditions  (callback, silently, eventInfo) {
             setter['condition_attack_notes'] = attackNote;
             SWUtils.setWrapper(setter,PFConst.silentParams);
         }
+        //done is already called at end of updateRowTotal
     });
     
 }
