@@ -10316,8 +10316,32 @@
 			</div>
 			<div class="sheet-section8 sheet-section sheet-section-npc sheet-npc-only" role="region" aria-label="NPC" data-i18n-aria-label="npc">
 				<h1 class="sheet-selected-tabtitle sheet-offscreen" data-i18n="npc">NPC</h1>
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_npc-compimport-show" data-i18n-aria-label="quick-stats" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="npc-statblock-header">Compendium statblock fields for parsing</label></h2>
+					<span class="sheet-small-label2 sheet-hide-readonly" style="float: right;">				
+						<label class="sheet-small-label2">
+							<select name="attr_template_to_add" class="sheet-select-small">
+								<option value="" data-i18n="select-one-default" selected="">•Select One</option>
+								<option value="giant" data-i18n="giant">Giant</option>
+								<option value="giantremove" data-i18n="remove-giant">Remove Giant</option>
+								<option value="young" data-i18n="young">Young</option>
+								<option value="youngremove" data-i18n="remove-young">Remove Young</option>
+								<option value="advanced" data-i18n="advanced">Advanced</option>
+								<option value="degenerate" data-i18n="degenerate">Degenerate</option>
+								<option value="celestial" data-i18n="celestial">Celestial</option>
+								<option value="fiendish" data-i18n="fiendish">Fiendish</option>
+								<option value="entropic" data-i18n="entropic">Entropic</option>
+								<option value="resolute" data-i18n="resolute">Resolute</option>
+							</select>
+							<span data-i18n="template" data-i18n-title="add-template" data-i18n-aria-label="add-template" title="Quickly update character with template" aria-label="Quickly update character with template">Template</span>
+						</label>
+						<label class="sheet-small-label2" style="margin-top: 0">
+							<input type="checkbox" class="sheet-newtemplate-button sheet-cssbutton" value="1" name="attr_add_template" title="@{add_template}"><span></span>
+							<span class="sheet-cssbutton-label" data-i18n="add">Add</span>
+						</label>
+					</span>
+
+					<h1 class="sheet-selected-tabtitle sheet-offscreen" data-i18n="npc">NPC</h1>
+						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_npc-compimport-show" data-i18n-aria-label="quick-stats" title="Click to expand" data-i18n-title="showsect-cmd" value="1" aria-label="QUICK STATS" style="margin-top:2em;">	    
+					<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="npc-statblock-header" aria-label="Click to expand">Monster statblock input section</label></h2>
 				<div class="sheet-h2-section sheet-hide-readonly" role="section" data-i18n-aria-label="npc-statblock-header" style="border-width:2px;border-style:solid;border-color:black;padding:.75em;">
 					<div class="compendium-drop-target Beastiary">
 						<span class="sheet-nontable-name sheet-show-readonly" data-i18n="npc-statblock-import" >Statblock Import</span>
@@ -10411,26 +10435,6 @@
 					<span class="sheet-table-cell"><input type="text" name="attr_npc-xp" accept="XP" title="@{npc-xp}" style="padding-top: .5em;  min-width: 4em;" /></span>
 				</div>
 				<div class="sheet-nontable sheet-npc-details sheet-h2-section" role="section" aria-label="npc details">
-					<label class="sheet-small-label2">
-						<select name="attr_template_to_add" class="sheet-select-small">
-							<option value="" data-i18n="select-one-default" selected>Select one</option>
-							<option value="giant" data-i18n="giant"></option>
-							<option value="giantremove" data-i18n="remove-giant">Remove Giant</option>
-							<option value="young" data-i18n="young"></option>
-							<option value="youngremove" data-i18n="remove-young">Remove Young</option>
-							<option value="advanced" data-i18n="advanced"></option>
-							<option value="degenerate" data-i18n="degenerate"></option>
-							<option value="celestial" data-i18n="celestial"></option>
-							<option value="fiendish" data-i18n="fiendish"></option>
-							<option value="entropic" data-i18n="entropic"></option>
-							<option value="resolute" data-i18n="resolute"></option>
-						</select>
-						<span data-i18n="template" data-i18n-title="add-template" data-i18n-aria-label="add-template">template</span>
-					</label>
-					<label class="sheet-small-label2" style="margin-top:0;">
-						<input type="checkbox" class="sheet-newtemplate-button sheet-cssbutton" value="1" name="attr_add_template" title="@{add_template}" /><span></span>
-						<span class="sheet-cssbutton-label" data-i18n="add">Add</span>
-					</label>
 					<label class="sheet-small-label2 sheet-autoexpand"><input title="@{alignment}" type="text" name="attr_alignment" placeholder="Alignment" data-i18n-placeholder="alignment"  /><span data-i18n="alignment-abbrv">Align</span><span class="sheet-autoexpand" name="attr_alignment"></span></label>
 					<label class="sheet-small-label2 sheet-entry-med" style="padding-left:.5em;">
 						<select title="@{default_char_size}" name="attr_default_char_size" >
