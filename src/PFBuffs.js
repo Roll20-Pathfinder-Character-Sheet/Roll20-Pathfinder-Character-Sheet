@@ -18,14 +18,16 @@ import * as PFSize from './PFSize';
 import * as PFSkills from './PFSkills';
 import * as PFBuffsOld from './PFBuffsOld';
 
-var
+export var
 //values in the bonus dropdown
 buffColumns = [
 	'ac',	'armor',	'attack',	'casterlevel',	'cha',	'cha_skills',	'check',	'check_ability',	'check_skills',
 	'cmb',	'cmd',	'con',	'con_skills',		'dex',	'dex_skills',	'dmg',	'dmg_melee',	'dmg_ranged',
 	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
-	'will',	'wis',	'wis_skills'],
+	'will',	'wis',	'wis_skills',
+	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
+	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
 buffToTot = {
 	'ac':'AC',	'armor':'armor',	'attack':'attack',	'casterlevel':'CasterLevel',
@@ -38,12 +40,16 @@ buffToTot = {
 	'int':'INT',	'int_skills':'INT_skills',	'melee':'Melee',
 	'natural':'natural',	'ranged':'Ranged',	'ref':'Ref',	'saves':'saves',
 	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
-	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills'},
+	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills',
+	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
+	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
+	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
 //only the total fields (buff_XYZ-total only XYZ portion) (no penalty fields)
 totColumns = _.values(buffToTot).concat(['dodge','deflection']).sort(),
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
-	'deflection','dodge','natural',	'shield','armor'],
+	'deflection','dodge','natural',	'shield','armor'];
+var
 //map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
 	'ac':['cmd','flatfooted'],
@@ -1926,6 +1932,9 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 	});
 });
 function registerEventHandlers () {
+	var custombuffs=['customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
+	'customa10','customa11','customa12'	];
+
 	on("change:add_common_buff",TAS.callback(function eventAddCommonBuff(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + ", event: " + eventInfo.sourceType);
@@ -2093,6 +2102,16 @@ function registerEventHandlers () {
 		}
 		
 	}));
+
+	custombuffs.forEach(function(buff){
+		on('change:buff_'+buff+'-total',TAS.callback(function customBuffTotal(eventInfo){
+			if(eventInfo.sourceType==='sheetworker'||eventInfo.sourceType==='api'){
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
+				SWUtils.evaluateAndAddAsync(null,null,buff,PFConst.customEquationMacros[buff],'buff_'+buff+'-total');		
+			}
+		}));
+	});
+
 }
 registerEventHandlers();
 //PFConsole.log('   PFBuffs module loaded          ');

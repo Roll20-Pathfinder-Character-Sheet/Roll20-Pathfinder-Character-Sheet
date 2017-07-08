@@ -287,6 +287,34 @@ function setupNewSheet (callback){
 		});
 	});
 }
+
+function recalcCustomExpressions (callback, silently, oldversion) {
+	var countEqs = _.size(PFConst.customEquationMacros),
+	fields,
+	done = _.once(function () {
+		//TAS.debug("leaving PFSheet.recalcExpressions");
+		if (typeof callback === "function") {
+			callback();
+		}
+	}),
+	doneOne = _.after(countEqs, done);
+	try {
+		fields = _.reduce(PFConst.customEquationMacros,function(m,writeField,readField){
+			m = m.concat( [readField,writeField,'buff_'+PFBuffs.buffToTot[readField]+'-total'] );
+			return m;
+		},[]);
+		getAttrs(fields,function(v){
+			_.each(PFConst.customEquationMacros, function (writeField, readField) {
+				SWUtils.evaluateAndAdd(doneOne,silently,v[readField],writeField,v[writeField],v['buff_'+PFBuffs.buffToTot[readField]+'-total']);
+			});
+		});
+	} catch (err2) {
+		TAS.error("PFSheet.recalcCustomExpressions OUTER wtf how did this happen?", err2);
+	} finally {
+		done();
+	}
+}
+
 function recalcExpressions (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.equationMacros),
 	done = _.once(function () {
@@ -775,8 +803,11 @@ function recalculateCore (callback, silently, oldversion) {
 	mythicOnce = _.once(function(){
 		PFMythic.recalculate(npcOnce, silently, oldversion);
 	}),
+	customExpressionsOnce = _.once(function () {
+		recalcCustomExpressions(mythicOnce, silently, oldversion);
+	}),
 	expressionsOnce = _.once(function () {
-		recalcExpressions(mythicOnce, silently, oldversion);
+		recalcExpressions(customExpressionsOnce, silently, oldversion);
 	}),
 	dropdownsOnce = _.once(function () {
 		recalcDropdowns(expressionsOnce, silently, oldversion);
@@ -1187,6 +1218,14 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber(read, write);
 		}));
 	});
+
+	_.each(PFConst.customEquationMacros,function(writeField,custField){
+		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
+			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
+		}));
+	});
+
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

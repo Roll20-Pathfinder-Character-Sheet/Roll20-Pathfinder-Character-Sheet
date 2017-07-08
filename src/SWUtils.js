@@ -302,6 +302,82 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 		}
 	});
 }
+/** Evaluates expression in exprStr, and adds addVal to it, then sets to writeField.
+ * 
+ * @param {function} callback  when done
+ * @param {boolean} silently if call setAttrs with silent:true
+ * @param {string} exprStr  string to evaluate
+ * @param {string} writeField field to write with evaluated result
+ * @param {string} currVal current value of expression
+ * @param {string} addVal value to add
+ */
+export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addVal){
+	var done = function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	};
+	evaluateExpression(exprStr,function(newVal){
+		var curr = parseInt(currVal,10)||0,
+		addn = parseInt(addVal,10)||0,
+		params={}, setter={};
+		newVal+=addn;
+		if(newVal !== curr){
+			setter[writeField]=newVal;
+			if(silently){
+				params={silent:true};
+			}
+			setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	},function(){
+		TAS.warn("SWUtils.evaluateAndAdd error returend evaluating "+exprStr);
+		done();
+	});
+}
+export function evaluateAndAddAsync(callback,silently,readField,writeField,addField){
+	getAttrs([readField,writeField,addField],function(v){
+		evaluateAndAdd(callback,silently,v[readField],writeField,v[writeField],v[addField]);
+	});
+}
+/** Evaluates expression in exprStr, if different than current, add to the tot field
+ * use to evaluate misc mod and quickly update what they apply to or not
+ * 
+ * @param {function} callback  when done
+ * @param {boolean} silently if call setAttrs with silent:true
+ * @param {string} exprStr  string to evaluate
+ * @param {string} writeField field to write with evaluated result
+ * @param {string} currVal current value of expression
+ * @param {string} totField total field to apply difference to
+ * @param {string} totVal current total value
+ */
+export function evaluateAndAddToTot(callback,silently,exprStr,writeField,currVal,totField,totVal){
+	var done = function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	};
+	evaluateExpression(exprStr,function(newVal){
+		var curr = parseInt(currVal,10)||0,
+		params={},
+		setter={};
+		if(newVal !== currVal ){
+			setter[writeField]=newVal;
+			totVal=parseInt(totVal,10)||0;
+			totVal += (newVal - currVal);
+			setter[totField] = totVal;
+			if(silently){
+				params={silent:true};
+			}
+			setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	},done);
+}
+
+
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
  * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
