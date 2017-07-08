@@ -13,10 +13,10 @@ import * as PFSpells from './PFSpells';
 //the 3 spell classes at top of spells page
 
 /**  returns whether a base spell level is filled in or not
-*@param {int} spellclassidx 0,1,2 sellcasting class
-*@param {function} callback - to call if exists
-*@param {function} noExistCallback - to call if not exists
-*/
+ *@param {int} spellclassidx 0,1,2 sellcasting class
+ *@param {function} callback - to call if exists
+ *@param {function} noExistCallback - to call if not exists
+ */
 export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
     getAttrs(["use_spells","spellclass-" + spellclassidx + "-exists"], function (v) {
         try {
@@ -68,6 +68,35 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
         }
     });
 }
+
+function udpateAllSpellMenu (callback, eventInfo){
+    getAttrs(['spellclass-0-exists','spellclass-1-exists','spellclass-2-exists',
+        'spellclass-0-name','spellclass-1-name','spellclass-2-name','allspells_macro','NPC-allspells_macro'],function(v){
+        var macroStr='',npcMacroStr='',tempStr='';
+        if(parseInt(v['spellclass-0-exists'],10)){
+            tempStr = "{{row10=[" + SWUtils.escapeForChatLinkButton(v['spellclass-0-name']) + " ^{spellbook}](~@{character_id}|";
+            macroStr += tempStr + "spellbook-0) }} ";
+            npcMacroStr += tempStr + "NPC-spellbook-0) }} ";
+        }
+        if(parseInt(v['spellclass-1-exists'],10)){
+            tempStr = "{{row11=[" + SWUtils.escapeForChatLinkButton(v['spellclass-1-name']) + " ^{spellbook}](~@{character_id}|";
+            macroStr += tempStr + "spellbook-1) }} ";
+            npcMacroStr += tempStr + "NPC-spellbook-1) }} ";
+        }
+        if(parseInt(v['spellclass-2-exists'],10)){
+            tempStr = "{{row12=[" + SWUtils.escapeForChatLinkButton(v['spellclass-2-name']) + " ^{spellbook}](~@{character_id}|";
+            macroStr += tempStr + "spellbook-2) }} ";
+            npcMacroStr += tempStr + "NPC-spellbook-2) }} ";
+        }
+        if(macroStr !== v.allspells_macro){
+            SWUtils.setWrapper({'allspells_macro':macroStr,'NPC-allspells_macro':npcMacroStr},PFConst.silentParams,callback);
+        } else if (typeof callback === "function") {
+			callback();
+		}
+    });
+}
+
+
 /** updates the ranges at the top for this spellcasting class
  *@param {int} spellclassidx 0,1,2 the spell casting tab
  *@param {eventinfo} eventInfo unused eventinfo from 'on' method
@@ -295,6 +324,7 @@ export function applyConditions (callback, silently) {
             setter['condition_spell_notes'] = spellNote;
             SWUtils.setWrapper(setter,PFConst.silentParams);
         }
+        done();
     });
 }
 function recalcOneClass (spellClassIdx, callback, silently) {
@@ -544,7 +574,9 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
                 callback();
             }
         }),
-        doneOne = _.after(3, done);
+        doneOne = _.after(3, function(){ 
+            udpateAllSpellMenu(callback);
+        });
         //TAS.debug("at PFSpellCasterClasses.recalculate.recalcTopSection");
         _.each(PFConst.spellClassIndexes, function (spellClassIdx) {
             try {
@@ -653,6 +685,13 @@ function registerEventHandlers () {
                 });
             }));
         });
+        on("change:spellclass-0-exists change:spellclass-1-exists change:spellclass-2-exists",TAS.callback(function eventSpellClassExists(eventInfo){
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                udpateAllSpellMenu(null,eventInfo);
+            }
+        }));
+        
     }); //end of spell classes
 }
 registerEventHandlers();

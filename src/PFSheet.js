@@ -287,6 +287,85 @@ function setupNewSheet (callback){
 		});
 	});
 }
+
+function updateAllCustomMenu (callback, eventInfo){
+    getAttrs(['customd1','customd2','customd3','customd4','customd5','customd6',
+        	'customd1-name','customd2-name','customd3-name','customd4-name','customd5-name','customd6-name',
+			'allcustom_macro','NPC-allcustom_macro'],function(v){
+        var macroStr='',npcMacroStr='',tempStr='';
+
+        if(v['customd1'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd1-name'])||'customd1') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd1_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd1_roll) ";
+        }
+        if(v['customd2'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd2-name'])||'customd2') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd2_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd2_roll) ";
+        }
+        if(v['customd3'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd3-name'])||'customd3') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd3_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd3_roll) ";
+        }
+        if(v['customd4'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd4-name'])||'customd4') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd4_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd4_roll) ";
+        }
+        if(v['customd5'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd5-name'])||'customd5') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd5_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd5_roll) ";
+        }
+        if(v['customd6'] ){
+            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd6-name'])||'customd6') + "](~@{character_id}|";
+			macroStr+=tempStr + "customd6_roll) ";
+			npcMacroStr+=tempStr + "NPC-customd6_roll) ";
+        }
+		if(macroStr || npcMacroStr){
+			macroStr = "{{roll20=^{custom}}} {{roll21="+macroStr+" }}";
+			npcMacroStr = "{{roll20=^{custom}}} {{roll21="+npcMacroStr+" }}";
+		}
+        if(macroStr !== v.allcustom_macro || npcMacroStr !== v['NPC-allcustom_macro']){
+            SWUtils.setWrapper({'allcustom_macro':macroStr,
+				'NPC-allcustom_macro':npcMacroStr},PFConst.silentParams,callback);
+        } else if (typeof callback === "function") {
+			callback();
+		}
+    });
+}
+
+
+
+function recalcCustomExpressions (callback, silently, oldversion) {
+	var countEqs = _.size(PFConst.customEquationMacros),
+	fields,
+	done = _.once(function () {
+		//TAS.debug("leaving PFSheet.recalcExpressions");
+		if (typeof callback === "function") {
+			callback();
+		}
+	}),
+	doneOne = _.after(countEqs, done);
+	try {
+		fields = _.reduce(PFConst.customEquationMacros,function(m,writeField,readField){
+			m = m.concat( [readField,writeField,'buff_'+PFBuffs.buffToTot[readField]+'-total'] );
+			return m;
+		},[]);
+		getAttrs(fields,function(v){
+			_.each(PFConst.customEquationMacros, function (writeField, readField) {
+				SWUtils.evaluateAndAdd(doneOne,silently,v[readField],writeField,v[writeField],v['buff_'+PFBuffs.buffToTot[readField]+'-total']);
+			});
+		});
+	} catch (err2) {
+		TAS.error("PFSheet.recalcCustomExpressions OUTER wtf how did this happen?", err2);
+	} finally {
+		done();
+	}
+}
+
 function recalcExpressions (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.equationMacros),
 	done = _.once(function () {
@@ -775,8 +854,11 @@ function recalculateCore (callback, silently, oldversion) {
 	mythicOnce = _.once(function(){
 		PFMythic.recalculate(npcOnce, silently, oldversion);
 	}),
+	customExpressionsOnce = _.once(function () {
+		recalcCustomExpressions(mythicOnce, silently, oldversion);
+	}),
 	expressionsOnce = _.once(function () {
-		recalcExpressions(mythicOnce, silently, oldversion);
+		recalcExpressions(customExpressionsOnce, silently, oldversion);
 	}),
 	dropdownsOnce = _.once(function () {
 		recalcDropdowns(expressionsOnce, silently, oldversion);
@@ -809,6 +891,7 @@ function recalculateCore (callback, silently, oldversion) {
  */
 export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
 	var done = function () {
+		updateAllCustomMenu();
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
 			callback();
@@ -1187,6 +1270,14 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndSetNumber(read, write);
 		}));
 	});
+
+	_.each(PFConst.customEquationMacros,function(writeField,custField){
+		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
+			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
+		}));
+	});
+
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1266,7 +1357,13 @@ function registerEventHandlers () {
 			});
 		}
 	}));
-
+	on("change:customd1 change:customd2 change:customd3 change:customd4 change:customd5 change:customd6 change:customd1-name change:customd2-name change:customd3-name change:customd4-name change:customd5-name change:customd6-name",
+		TAS.callback(function customRollUpdate(eventInfo){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			if(eventInfo.sourceType==='player'){
+				updateAllCustomMenu(eventInfo);
+			}
+	}));
 }
 registerEventHandlers();
 
