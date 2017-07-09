@@ -1,4 +1,6 @@
 {	
+	"init-speed-info-abbrv": "Init & Speed Info",
+	"NPC-all": "NPC-All",
 	"url-link": "URL will appear in chat",
 	"location0": "Item is Carried",
 	"location1": "Item is not Carried",
