@@ -194,9 +194,11 @@ input[readonly], input[disabled] {
 /* keeps textarea and readonly number attribute to riFght inline with each other in one table cell */
 .sheet-table-cell.sheet-linked-tablecell {
 	width:13em;
+    min-width:9em;
 }
 .sheet-table-cell.sheet-linked-tablecell-short {
     width: 7.7em;
+    min-width:6em;
 }
 .sheet-linked-tablecell select.sheet-linked-cellfield,
 .sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {

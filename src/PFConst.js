@@ -34,7 +34,7 @@ export default {
         'CMD-ability1': 'CMD-STR',
         'CMD-ability2':	'CMD-DEX',
 		'selected-ability-psionic-power': 'ability-psionic-power'
-	},
+		},
 	levelPlusBABManualDropdowns:[
 		'melee_bab','melee2_bab','ranged_bab','ranged2_bab','cmb_bab','cmb2_bab'
 	],
@@ -98,7 +98,13 @@ export default {
 		"Fort-misc": "Fort-misc-mod",
 		"Will-misc": "Will-misc-mod",
 		"AC-misc": "AC-misc-mod",
-		"CMD-misc": "CMD-misc-mod"
+		"CMD-misc": "CMD-misc-mod",
+		"attk-melee-misc": "attk-melee-misc-mod",
+		"attk-ranged-misc": "attk-ranged-misc-mod",
+		"attk-CMB-misc": "attk-CMB-misc-mod",
+		"attk-melee2-misc": "attk-melee2-misc-mod",
+		"attk-ranged2-misc": "attk-ranged2-misc-mod",
+		"attk-CMB2-misc": "attk-CMB2-misc-mod"		
 	},
 	customEquationMacros: {
 		"customa1": "customa1-mod",

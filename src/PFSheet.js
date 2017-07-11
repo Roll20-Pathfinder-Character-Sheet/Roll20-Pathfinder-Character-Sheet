@@ -337,8 +337,6 @@ function updateAllCustomMenu (callback, eventInfo){
     });
 }
 
-
-
 function recalcCustomExpressions (callback, silently, oldversion) {
 	var countEqs = _.size(PFConst.customEquationMacros),
 	fields,
