@@ -1971,6 +1971,10 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				basebonus = 0;
 				memo[prefix + "attack-type-mod"] = 0;
 				memo[prefix + "total-attack"] = 0;
+				if (attack.basename === 'trample'){
+					dmgAbilityStr=true;
+					dmgMult = 1.5;
+				}
 			} else {
 				dmgAbilityStr=true;
 				//melee
