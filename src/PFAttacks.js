@@ -74,7 +74,7 @@ defaultIterativeRepeatingMacroMap = {
 },
 defaultIterativeDeletedMacroAttrs=null,
 defaultIterativeAttrName='var_iterative_attackREPLACE_macro',
-defaultIterativeReplaceArray=['2','3','4','5','6','7','8'];
+defaultIterativeReplaceArray=['2','3','4','5','6','7','8','9'];
 
 function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 	if (!(macro === "" || macro === "0" || macro === undefined || macro === null || toggle === "" || toggle === "0" || toggle === undefined || toggle === null)) {

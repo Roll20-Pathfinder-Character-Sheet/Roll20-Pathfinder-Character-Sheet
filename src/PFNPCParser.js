@@ -688,6 +688,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			}
 			atkstr = atkstr.slice(tempidx + matches[0].length);
 		}
+		TAS.debug("PFNPCParse atkstr is now "+atkstr);
 		if (atkstr) {
 			//after name split rest by parenthesis
 			// format: name   attack bonus ( damage ) plus additional
@@ -708,8 +709,10 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			//damage between parens
 			if (beforeBetweenAfterParens[1]) {
 				attackdescs = beforeBetweenAfterParens[1].split(/,\s*/);
+				TAS.debug("pfattackparse split on commas: ",attackdescs);
 				//split on commas and strip out non damage, put damage in tempstr
 				tempstr = _.reduce(attackdescs, function (memo, subattack) {
+					TAS.debug("current comma is "+subattack);
 					if ((/ft\./i).test(subattack)) {
 						retobj.range = subattack;
 					} else if (/D[Cc]\s\d+/.test(subattack)) {
@@ -730,17 +733,21 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					}
 					return memo;
 				}, "");
-				//TAS.debug"now left with :"+tempstr);
 				// find damage
 				//damage dice and die
+				tempstr = SWUtils.trimBoth(tempstr);
 				var dice = PFUtils.getDiceDieFromString(tempstr,true,true);
+				//if (retobj.basename==='trample'){
+					TAS.debug("PFNPCParse "+ retobj.basename+" if trample dice SHOULD BE FILLED IN :"+tempstr+":",dice);
+				//}
 				if(dice.dice!==0){
 					retobj.dmgdice=dice.dice;
 					retobj.dmgdie=dice.die;
 					retobj.dmgbonus=dice.plus;
-					tempstr = tempstr.slice(dice.spaces);
+					tempstr = tempstr.slice(dice.spaces+1);
 				}
 				bonus = SWUtils.trimBoth(tempstr);
+				TAS.debug("PFNPCParse.ParseAttack now left with :"+tempstr);
 
 				//any text after damage is 'plus' or damage type
 				if (bonus) {
@@ -771,7 +778,8 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					//if (matches) {
 					//	countspaces = matches.length - 1;
 					//}
-					if (retobj.dmgbonus === 0) {
+					//if (retobj.dmgbonus === 0) {
+					if (bonus){
 						matches = bonus.match(/\s|\//g);
 						if (matches) {
 							countspaces = matches.length - 1;
@@ -1116,7 +1124,7 @@ function parseSpecialAttack (setter,sastr) {
 					sastr = PFUtils.removeUptoFirstComma(sastr, true);
 					sastr = 'web ' + sastr;
 					atktyp = 'ranged';
-				}
+				} 
 				isAttack = true;
 			} else if (PFDB.spAttackAttacks.test(names.basename)) {
 				isAttack = true;
@@ -1971,6 +1979,11 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 				basebonus = 0;
 				memo[prefix + "attack-type-mod"] = 0;
 				memo[prefix + "total-attack"] = 0;
+				if (attack.basename === 'trample'){
+					dmgAbilityStr=true;
+					dmgMult = 1.5;
+					TAS.debug("CREATEATTACKS trample the attack is : ", attack);
+				}
 			} else {
 				dmgAbilityStr=true;
 				//melee
