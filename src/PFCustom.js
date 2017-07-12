@@ -10,51 +10,55 @@ import * as PFBuffs from './PFBuffs';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFSkills from './PFSkills';
 
-export function updateAllCustomMenu (callback, eventInfo){
+export function resetCommandMacro (callback, eventInfo){
     getAttrs(['customd1','customd2','customd3','customd4','customd5','customd6',
         	'customd1-name','customd2-name','customd3-name','customd4-name','customd5-name','customd6-name',
 			'allcustom_macro','NPC-allcustom_macro'],function(v){
         var macroStr='',npcMacroStr='',tempStr='';
-
-        if(v['customd1'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd1-name'])||'customd1') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd1_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd1_roll) ";
-        }
-        if(v['customd2'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd2-name'])||'customd2') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd2_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd2_roll) ";
-        }
-        if(v['customd3'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd3-name'])||'customd3') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd3_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd3_roll) ";
-        }
-        if(v['customd4'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd4-name'])||'customd4') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd4_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd4_roll) ";
-        }
-        if(v['customd5'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd5-name'])||'customd5') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd5_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd5_roll) ";
-        }
-        if(v['customd6'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd6-name'])||'customd6') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd6_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd6_roll) ";
-        }
-		if(macroStr || npcMacroStr){
-			macroStr = "{{roll20=^{custom}}} {{roll21="+macroStr+" }}";
-			npcMacroStr = "{{roll20=^{custom}}} {{roll21="+npcMacroStr+" }}";
-		}
-        if(macroStr !== v.allcustom_macro || npcMacroStr !== v['NPC-allcustom_macro']){
-            SWUtils.setWrapper({'allcustom_macro':macroStr,
-				'NPC-allcustom_macro':npcMacroStr},PFConst.silentParams,callback);
-        } else if (typeof callback === "function") {
-			callback();
+		try {
+			if(v['customd1'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd1-name'])||'customd1') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd1_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd1_roll) ";
+			}
+			if(v['customd2'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd2-name'])||'customd2') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd2_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd2_roll) ";
+			}
+			if(v['customd3'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd3-name'])||'customd3') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd3_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd3_roll) ";
+			}
+			if(v['customd4'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd4-name'])||'customd4') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd4_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd4_roll) ";
+			}
+			if(v['customd5'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd5-name'])||'customd5') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd5_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd5_roll) ";
+			}
+			if(v['customd6'] ){
+				tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd6-name'])||'customd6') + "](~@{character_id}|";
+				macroStr+=tempStr + "customd6_roll) ";
+				npcMacroStr+=tempStr + "NPC-customd6_roll) ";
+			}
+			if(macroStr || npcMacroStr){
+				macroStr = "{{roll20=^{custom}}} {{roll21="+macroStr+" }}";
+				npcMacroStr = "{{roll20=^{custom}}} {{roll21="+npcMacroStr+" }}";
+			}
+		} catch (err){
+			TAS.error("PFCustom.resetCommandMacro ",err);
+		} finally {
+			if(macroStr !== v.allcustom_macro || npcMacroStr !== v['NPC-allcustom_macro']){
+				SWUtils.setWrapper({'allcustom_macro':macroStr,
+					'NPC-allcustom_macro':npcMacroStr},PFConst.silentParams,callback);
+			} else if (typeof callback === "function") {
+				callback();
+			}
 		}
     });
 }
@@ -369,8 +373,8 @@ export function migrate(callback,oldversion){
 				}
 			}
         });
-    };
-	if (oldversion===1.63){
+	};
+	if (oldversion===1.63||PFConst.version===1.63){
 		showMiscFields();
 	}    
     getAttrs(['migrated_ability_dropdowns2'],function(v){
@@ -387,15 +391,17 @@ export function migrate(callback,oldversion){
     });
 }
 
-export function recalculate(callback,silently,oldversion){
+export var recalculate = TAS.callback(function PFCustomRecalculate(callback,silently,oldversion){
     migrate(function(){
         recalcDropdowns(function(){
             recalcExpressions(function(){
-                recalcCustomExpressions(callback,silently,oldversion);
+                recalcCustomExpressions(function(){
+					resetCommandMacro(callback);
+				},silently,oldversion);
             },silently,oldversion);
         },silently,oldversion);
     },oldversion);
-}
+});
 
 function registerEventHandlers () {
 	//custom page
@@ -403,7 +409,7 @@ function registerEventHandlers () {
 		TAS.callback(function customRollUpdate(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if(eventInfo.sourceType==='player'){
-				updateAllCustomMenu(eventInfo);
+				resetCommandMacro(eventInfo);
 			}
     }));
 	//show / hide extra fields

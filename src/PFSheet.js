@@ -415,7 +415,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFDefense.updateDefenses();
 			}
 			if (oldversion < 1.63){
-				PFCustom.migrateDropdowns(function(){
+				PFCustom.migrate(function(){
 					PFBuffs.migrate(null,oldversion);
 					PFSkills.migrate(function(){
 						PFSkills.recalculateSkills();
@@ -567,7 +567,6 @@ export function migrate (callback,oldversion){
  */
 export function recalculate (oldversion, callback, silently) {
 	var done = function () {
-		PFCustom.updateAllCustomMenu();
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
 			callback();
