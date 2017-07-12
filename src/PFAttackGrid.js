@@ -16,7 +16,8 @@ export var attackGridFields = {
         "buff": "buff_Melee-total",
         "pen": "condition-Prone",
         "abilityMod": "melee-ability-mod",
-        "misc": "attk-melee-misc",
+        "miscmacro": "attk-melee-misc",
+        "misc": "attk-melee-misc-mod",
         "crit": "attk_melee_crit_conf",
         "attackmacro": "@{toggle_global_melee_macro_insert}",
         "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
@@ -29,7 +30,8 @@ export var attackGridFields = {
         "buff": "buff_Melee-total",
         "pen": "condition-Prone",
         "abilityMod": "melee2-ability-mod",
-        "misc": "attk-melee2-misc",
+        "miscmacro": "attk-melee2-misc",
+        "misc": "attk-melee2-misc-mod",
         "crit": "attk_melee2_crit_conf",
         "attackmacro": "@{toggle_global_melee_macro_insert}",
         "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
@@ -42,7 +44,8 @@ export var attackGridFields = {
         "buff": "buff_Ranged-total",
         "pen": "",
         "abilityMod": "ranged-ability-mod",
-        "misc": "attk-ranged-misc",
+        "miscmacro": "attk-ranged-misc",
+        "misc": "attk-ranged-misc-mod",
         "crit": "attk_ranged_crit_conf",
         "attackmacro": "@{toggle_global_ranged_macro_insert}",
         "damagemacro": "@{toggle_global_ranged_damage_macro_insert}",
@@ -55,7 +58,8 @@ export var attackGridFields = {
         "buff": "buff_Ranged-total",
         "pen": "",
         "abilityMod": "ranged2-ability-mod",
-        "misc": "attk-ranged2-misc",
+        "miscmacro": "attk-ranged2-misc",
+        "misc": "attk-ranged2-misc-mod",
         "crit": "attk_ranged2_crit_conf",
         "attackmacro": "@{toggle_global_ranged_macro_insert}",
         "damagemacro": "@{toggle_global_ranged_damage_macro_insert}",
@@ -68,7 +72,8 @@ export var attackGridFields = {
         "buff": "buff_CMB-total",
         "pen": "",
         "abilityMod": "CMB-ability-mod",
-        "misc": "attk-CMB-misc",
+        "miscmacro": "attk-CMB-misc",
+        "misc": "attk-CMB-misc-mod",
         "crit": "attk_cmb_crit_conf",
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
         "damagemacro": "@{toggle_global_cmb_damage_macro_insert}",
@@ -81,7 +86,8 @@ export var attackGridFields = {
         "buff": "buff_CMB-total",
         "pen": "",
         "abilityMod": "CMB2-ability-mod",
-        "misc": "attk-CMB2-misc",
+        "miscmacro": "attk-CMB2-misc",
+        "misc": "attk-CMB2-misc-mod",
         "crit": "attk_cmb2_crit_conf",
         "attackmacro": "@{toggle_global_cmb_macro_insert}",
         "damagemacro": "@{toggle_global_cmb_damage_macro_insert}",
@@ -342,11 +348,9 @@ export var recalculate = TAS.callback(function callrecalculate (callback, silent
 function registerEventHandlers () {
     var tempString='';
     _.each(attackGridFields, function (attackFields, attack) {
-        on("change:" + attackFields.misc, TAS.callback(function eventAttackMisc(eventInfo) {
-            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-                updateAttack(attack);
-            }
+        on("change:" + attackFields.miscmacro, TAS.callback(function eventAttackMisc(eventInfo) {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            SWUtils.evaluateAndAddToTotAsync(null,null,attackFields.miscmacro,attackFields.misc,attackFields.atk);
         }));
         on("change:"+attackFields.babdd, TAS.callback(function eventAttackGridType(eventInfo) {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -355,7 +359,7 @@ function registerEventHandlers () {
                 PFUtilsAsync.setDropdownValue(attackFields.babdd,attackFields.bab);
             }
         }));
-        on("change:" + attackFields.bab +  " change:" + attackFields.abilityMod , TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
+        on("change:" + attackFields.bab + " change:" + attackFields.abilityMod + " change:" + attackFields.misc, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttack(attack);
