@@ -2741,376 +2741,379 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attack-bonuses-show" data-i18n-aria-label="attack-and-combat-maneuver-bonuses" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-attack-grid"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="attack-and-combat-maneuver-bonuses">Attack and Combat Maneuver Bonuses</label></h2>
 				<div class="sheet-cheat"></div>
-				<input type="checkbox" value="1" name="attr_extra_fields_attacks_show" title="@{extra_fields_attacks_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
-				<div class="sheet-h2-section sheet-table sheet-attack-grid sheet-hasexpandrows sheet-narrow-numbers">
-					<span class="sheet-table-name" data-i18n="attack-and-combat-maneuver-bonuses">Attack and Combat Maneuver Bonuses</span>
-					<div class="sheet-table-group-head">
-						<span class="sheet-table-header" style="width:11em;" data-i18n="attack-type">Attack Type</span>
-						<span class="sheet-table-header" data-i18n="total">Total</span>
-						<span class="sheet-table-header sheet-divider">&nbsp;</span>
-						<span class="sheet-table-header" data-i18n="base-attack-bonus-abbrv">BAB</span>
-						<span class="sheet-table-header sheet-divider">&nbsp;</span>
-						<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
-						<span class="sheet-table-header" style="width:2.8em;" data-i18n="modifier-abbrv">&nbsp;Mod</span>
-						<span class="sheet-table-header sheet-divider">&nbsp;</span>
-						<span class="sheet-table-header" data-i18n="size" data-i18n-title="size-modifier-attack" data-i18n-aria-label="size-modifier-attack">Size</span>
-						<span class="sheet-table-header sheet-divider sheet-extra-sect">&nbsp;</span>
-						<span class="sheet-table-header sheet-extra-sect" data-i18n="miscellaneous-abbrv">Misc</span>
-						<span class="sheet-table-header sheet-divider">&nbsp;</span>
-						<span class="sheet-table-header" data-i18n="buff">Buff</span>
-						<span class="sheet-table-header sheet-divider">&nbsp;</span>
-						<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
-						<span class="sheet-table-header sheet-left-border" data-i18n="confirm-critical-bonus-abbrv" data-i18n-title="crit-confirmation-bonus" data-i18n-aria-label="crit-confirmation-bonus">Crit Conf</span>
-						<span class="sheet-table-header sheet-hide-readonly" style="width:15%" data-i18n="description">Description</span>
-						<span class="sheet-table-header sheet-hide-readonly sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
-					</div>
-					<div class="sheet-table-group">
-						<div class="sheet-table-row">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee-Attack-Roll}" name="roll_Melee-Attack-Roll" value="@{PC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee-Attack-Roll}" name="roll_npc-Melee-Attack-Roll" value="@{NPC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>								
-							</span>
-							<span class="sheet-table-cell"><input title="@{attk-melee}" type="number" name="attr_attk-melee" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_melee_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{melee-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{melee_bab-mod}" type="number" name="attr_melee_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{melee-ability}" name="attr_melee-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none">None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{melee-ability-mod}" type="number" name="attr_melee-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-melee-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-melee-misc}" type="number" name="attr_attk-melee-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-melee-misc-mod" title="@{attk-melee-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee_desc} : condition" type="text" name="attr_attk_melee_desc" value="" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}}</textarea></span>
+				<div class="sheet-h2-section sheet-attack-grid sheet-hasexpandrows sheet-narrow-numbers">
+					<input type="checkbox" value="1" name="attr_extra_fields_attacks_show" title="@{extra_fields_attacks_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+					<div class="sheet-cheat"></div>				
+					<div class="sheet-table">
+						<span class="sheet-table-name" data-i18n="attack-and-combat-maneuver-bonuses">Attack and Combat Maneuver Bonuses</span>
+						<div class="sheet-table-group-head">
+							<span class="sheet-table-header" style="width:11em;" data-i18n="attack-type">Attack Type</span>
+							<span class="sheet-table-header" data-i18n="total">Total</span>
+							<span class="sheet-table-header sheet-divider">&nbsp;</span>
+							<span class="sheet-table-header" data-i18n="base-attack-bonus-abbrv">BAB</span>
+							<span class="sheet-table-header sheet-divider">&nbsp;</span>
+							<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
+							<span class="sheet-table-header" style="width:2.8em;" data-i18n="modifier-abbrv">&nbsp;Mod</span>
+							<span class="sheet-table-header sheet-divider">&nbsp;</span>
+							<span class="sheet-table-header" data-i18n="size" data-i18n-title="size-modifier-attack" data-i18n-aria-label="size-modifier-attack">Size</span>
+							<span class="sheet-table-header sheet-divider sheet-extra-sect">&nbsp;</span>
+							<span class="sheet-table-header sheet-extra-sect" data-i18n="miscellaneous-abbrv">Misc</span>
+							<span class="sheet-table-header sheet-divider">&nbsp;</span>
+							<span class="sheet-table-header" data-i18n="buff">Buff</span>
+							<span class="sheet-table-header sheet-divider">&nbsp;</span>
+							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
+							<span class="sheet-table-header sheet-left-border" data-i18n="confirm-critical-bonus-abbrv" data-i18n-title="crit-confirmation-bonus" data-i18n-aria-label="crit-confirmation-bonus">Crit Conf</span>
+							<span class="sheet-table-header sheet-hide-readonly" style="width:15%" data-i18n="description">Description</span>
+							<span class="sheet-table-header sheet-hide-readonly sheet-entry-10p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 						</div>
-						<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_atkm2_show" value="1" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
-						<div class="sheet-table-row sheet-sect">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
-							</span>
-							<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_melee2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{melee2-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{melee2_bab-mod}" type="number" name="attr_melee2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{melee2-ability}" name="attr_melee2-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none-default">&#8226;None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv" selected>STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv" selected>DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{melee2-ability-mod}" type="number" name="attr_melee2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-melee2-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-melee2-misc}" type="number" name="attr_attk-melee2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-melee2-misc-mod" title="@{attk-melee2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-Placeholder="alternate-ability-melee-desc" Placeholder="Alternate ability melee attack" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}}</textarea></span>
-						</div>
-						<div class="sheet-table-row">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged-Attack-Roll}" name="roll_Ranged-Attack-Roll" value="@{PC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged-Attack-Roll}" name="roll_npc-Ranged-Attack-Roll" value="@{NPC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>								
-							</span>
-							<span class="sheet-table-cell"><input title="@{attk-ranged}" type="number" name="attr_attk-ranged" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_ranged_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{ranged-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{ranged_bab-mod}" type="number" name="attr_ranged_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{ranged-ability}" name="attr_ranged-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none">None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{ranged-ability-mod}" type="number" name="attr_ranged-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-ranged-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-ranged-misc}" type="number" name="attr_attk-ranged-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-ranged-misc-mod" title="@{attk-ranged-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged_crit_conf}" type="number" name="attr_attk_ranged_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}</textarea></span>
-						</div>
-						<input type="checkbox" class="sheet-nextitem-show" name="attr_ranged_2_show" value="1" role="placeholder" />
-						<div class="sheet-table-row sheet-ranged2">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged2-Attack-Roll}" name="roll_Ranged2-Attack-Roll" value="@{PC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged2-Attack-Roll}" name="roll_npc-Ranged2-Attack-Roll" value="@{NPC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>								
-							</span>
-							<span class="sheet-table-cell"><input title="@{attk-ranged2}" type="number" name="attr_attk-ranged2" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_ranged2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{ranged2-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{ranged2_bab-mod}" type="number" name="attr_ranged2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{ranged2-ability}" name="attr_ranged2-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{ranged2-ability-mod}" type="number" name="attr_ranged2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-ranged2-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-ranged2-misc}" type="number" name="attr_attk-ranged2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-ranged2-misc-mod" title="@{attk-ranged2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged2_crit_conf}" type="number" name="attr_attk_ranged2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged2_desc}" type="text" name="attr_attk_ranged2_desc" value="" data-i18n-Placeholder="alternate-ability-ranged-desc" Placeholder="Alternate ability ranged attack" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged2-Attack-macro" title="@{Ranged2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}}</textarea></span>
-						</div>
-						<div class="sheet-table-row">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB-Check}" name="roll_CMB-Check" value="@{PC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB-Check}" name="roll_npc-CMB-Check" value="@{NPC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>								
-							</span>
-							<span class="sheet-table-cell"><input title="@{CMB}" type="number" name="attr_CMB" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_cmb_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{cmb-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{cmb_bab-mod}" type="number" name="attr_cmb_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{CMB-ability}" name="attr_CMB-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none">None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{CMB-ability-mod}" type="number" name="attr_CMB-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{CMD-size}" type="number" name="attr_CMD-size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-CMB-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-CMB-misc}" type="number" name="attr_attk-CMB-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-CMB-misc-mod" title="@{attk-CMB-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb_crit_conf}" type="number" name="attr_attk_cmb_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}</textarea></span>
-						</div>
-						<input type="checkbox" class="sheet-nextitem-show" name="attr_cmb_2_show" value="1" role="placeholder" />
-						<div class="sheet-table-row sheet-cmb2">
-							<span class="sheet-table-cell">
-								<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
-								<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB2-Check}" name="roll_CMB2-Check" value="@{PC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>
-								<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB2-Check}" name="roll_npc-CMB2-Check" value="@{NPC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>								
-							</span>
-							<span class="sheet-table-cell"><input title="@{CMB2}" type="number" name="attr_CMB2" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_cmb2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{cmb2-bab}" >
-									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
-									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
-									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
-									<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
-									<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
-									<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
-									<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
-									<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
-									<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
-								</select>
-								<input title="@{cmb2_bab-mod}" type="number" name="attr_cmb2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell sheet-ability-column">
-								<select title="@{CMB2-ability}" name="attr_CMB2-ability" class="sheet-select-small">
-									<option value="0" data-i18n="none-default" selected>&#8226;None</option>
-									<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-									<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-									<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-									<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-									<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-									<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-								</select>
-							</span>
-							<span class="sheet-table-cell sheet-left"><input title="@{CMB2-ability-mod}" type="number" name="attr_CMB2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{CMD-size}" type="number" name="attr_CMD-size" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider sheet-extra-sect">+</span>
-							<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
-								<input type="checkbox" name="attr_attk-CMB2-misc-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea title="@{attk-CMB2-misc}" type="number" name="attr_attk-CMB2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
-								<input type="number" name="attr_attk-CMB2-misc-mod" title="@{attk-CMB2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-							</span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb2_crit_conf}" type="number" name="attr_attk_cmb2_crit_conf" value="0" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-Placeholder="alternate-ability-cmb-desc" Placeholder="Alternate ability combat maneuver" /></span>
-							<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}</textarea></span>
-						</div>
-						<div class="sheet-table-row">
-							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage">Damage</span></span></span>
-							<span class="sheet-table-cell"><input type="text" title="@{DMG_melee-mod}" name="attr_DMG_melee-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-divider"></span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-table-divider sheet-extra-sect"></span>
-							<span class="sheet-table-cell sheet-extra-sect"></span>
-							<span class="sheet-table-divider"></span>
-							<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">-</span>
-							<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
-							<span class="sheet-table-cell sheet-left-border"></span>
-							<span class="sheet-table-cell"></span>
-						</div>
-						<div class="sheet-table-row">
-							<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage-ranged-abbrv">Ranged dmg</span></span></span>
-							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_dmg_ranged-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
-							<span class="sheet-divider">=</span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-divider"></span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-table-cell"></span>
-							<span class="sheet-table-divider sheet-extra-sect"></span>
-							<span class="sheet-table-cell sheet-extra-sect"></span>
-							<span class="sheet-table-divider"></span>
-							<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">+</span>
-							<span class="sheet-table-cell"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
-							<span class="sheet-divider">-</span>
-							<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
-							<span class="sheet-table-cell sheet-left-border"></span>
-							<span class="sheet-table-cell"></span>
+						<div class="sheet-table-group">
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee-Attack-Roll}" name="roll_Melee-Attack-Roll" value="@{PC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee-Attack-Roll}" name="roll_npc-Melee-Attack-Roll" value="@{NPC-whisper} @{Melee-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="melee">Melee</span></button>								
+								</span>
+								<span class="sheet-table-cell"><input title="@{attk-melee}" type="number" name="attr_attk-melee" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_melee_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{melee-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{melee_bab-mod}" type="number" name="attr_melee_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{melee-ability}" name="attr_melee-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none">None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{melee-ability-mod}" type="number" name="attr_melee-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-melee-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-melee-misc}" type="number" name="attr_attk-melee-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-melee-misc-mod" title="@{attk-melee-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee_desc} : condition" type="text" name="attr_attk_melee_desc" value="" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}}</textarea></span>
+							</div>
+							<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_atkm2_show" value="1" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
+							<div class="sheet-table-row sheet-sect">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_Melee2-Attack-Roll" value="@{PC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Melee2-Attack-Roll} Alternate ability melee attack, for example: Weapon Finesse based attacks" name="roll_npc-Melee2-Attack-Roll" value="@{NPC-whisper} @{Melee2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" value="@{attk_melee2_note}" data-i18n="melee2">Melee2</span></button>
+								</span>
+								<span class="sheet-table-cell"><input title="@{attk-melee2}" type="number" name="attr_attk-melee2" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_melee2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{melee2-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{melee2_bab-mod}" type="number" name="attr_melee2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{melee2-ability}" name="attr_melee2-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none-default">&#8226;None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv" selected>STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv" selected>DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{melee2-ability-mod}" type="number" name="attr_melee2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-melee2-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-melee2-misc}" type="number" name="attr_attk-melee2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-melee2-misc-mod" title="@{attk-melee2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-Placeholder="alternate-ability-melee-desc" Placeholder="Alternate ability melee attack" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}}</textarea></span>
+							</div>
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged-Attack-Roll}" name="roll_Ranged-Attack-Roll" value="@{PC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged-Attack-Roll}" name="roll_npc-Ranged-Attack-Roll" value="@{NPC-whisper} @{Ranged-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged">Ranged</span></button>								
+								</span>
+								<span class="sheet-table-cell"><input title="@{attk-ranged}" type="number" name="attr_attk-ranged" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_ranged_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{ranged-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{ranged_bab-mod}" type="number" name="attr_ranged_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{ranged-ability}" name="attr_ranged-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none">None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv-default" selected>&#8226;DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{ranged-ability-mod}" type="number" name="attr_ranged-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-ranged-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-ranged-misc}" type="number" name="attr_attk-ranged-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-ranged-misc-mod" title="@{attk-ranged-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged_crit_conf}" type="number" name="attr_attk_ranged_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}</textarea></span>
+							</div>
+							<input type="checkbox" class="sheet-nextitem-show" name="attr_ranged_2_show" value="1" role="placeholder" />
+							<div class="sheet-table-row sheet-ranged2">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged2-Attack-Roll}" name="roll_Ranged2-Attack-Roll" value="@{PC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-Ranged2-Attack-Roll}" name="roll_npc-Ranged2-Attack-Roll" value="@{NPC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>								
+								</span>
+								<span class="sheet-table-cell"><input title="@{attk-ranged2}" type="number" name="attr_attk-ranged2" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_ranged2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{ranged2-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{ranged2_bab-mod}" type="number" name="attr_ranged2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{ranged2-ability}" name="attr_ranged2-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{ranged2-ability-mod}" type="number" name="attr_ranged2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-ranged2-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-ranged2-misc}" type="number" name="attr_attk-ranged2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-ranged2-misc-mod" title="@{attk-ranged2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{ranged_buffs}" name="attr_ranged_buffs" type="text" value="(@{buff_Ranged-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged2_crit_conf}" type="number" name="attr_attk_ranged2_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged2_desc}" type="text" name="attr_attk_ranged2_desc" value="" data-i18n-Placeholder="alternate-ability-ranged-desc" Placeholder="Alternate ability ranged attack" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged2-Attack-macro" title="@{Ranged2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}}</textarea></span>
+							</div>
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB-Check}" name="roll_CMB-Check" value="@{PC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB-Check}" name="roll_npc-CMB-Check" value="@{NPC-whisper} @{CMB-Check-macro}">&nbsp;<span  style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></button>								
+								</span>
+								<span class="sheet-table-cell"><input title="@{CMB}" type="number" name="attr_CMB" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_cmb_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{cmb-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{cmb_bab-mod}" type="number" name="attr_cmb_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{CMB-ability}" name="attr_CMB-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none">None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv-default" selected>&#8226;STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{CMB-ability-mod}" type="number" name="attr_CMB-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{CMD-size}" type="number" name="attr_CMD-size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-CMB-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-CMB-misc}" type="number" name="attr_attk-CMB-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-CMB-misc-mod" title="@{attk-CMB-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb_crit_conf}" type="number" name="attr_attk_cmb_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}</textarea></span>
+							</div>
+							<input type="checkbox" class="sheet-nextitem-show" name="attr_cmb_2_show" value="1" role="placeholder" />
+							<div class="sheet-table-row sheet-cmb2">
+								<span class="sheet-table-cell">
+									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
+									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB2-Check}" name="roll_CMB2-Check" value="@{PC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>
+									<button class="sheet-text-button sheet-sect" type="roll" title="%{selected|npc-CMB2-Check}" name="roll_npc-CMB2-Check" value="@{NPC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus-abbrv2">Alt CMB</span></button>								
+								</span>
+								<span class="sheet-table-cell"><input title="@{CMB2}" type="number" name="attr_CMB2" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-linked-tablecell-short">
+									<select name="attr_cmb2_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{cmb2-bab}" >
+										<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
+										<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
+										<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>
+										<option value="class-1-level" data-i18n="2-ordinal-class-level">2nd Class Lvl</option>
+										<option value="class-2-level" data-i18n="3-ordinal-class-level">3rd Class Lvl</option>
+										<option value="class-3-level" data-i18n="4-ordinal-class-level">4th Class Lvl</option>
+										<option value="class-4-level" data-i18n="5-ordinal-class-level">5th Class Lvl</option>
+										<option value="class-5-level" data-i18n="6-ordinal-class-level">6th Class Lvl</option>
+										<option value="npc-hd-num" data-i18n="race-hd-only">HD only</option>
+									</select>
+									<input title="@{cmb2_bab-mod}" type="number" name="attr_cmb2_bab-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell sheet-ability-column">
+									<select title="@{CMB2-ability}" name="attr_CMB2-ability" class="sheet-select-small">
+										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
+										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+										<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+										<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+										<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+									</select>
+								</span>
+								<span class="sheet-table-cell sheet-left"><input title="@{CMB2-ability-mod}" type="number" name="attr_CMB2-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{CMD-size}" type="number" name="attr_CMD-size" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider sheet-extra-sect">+</span>
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_attk-CMB2-misc-mod_error" class="sheet-error-mshow" value="1" />
+									<textarea title="@{attk-CMB2-misc}" type="number" name="attr_attk-CMB2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+									<input type="number" name="attr_attk-CMB2-misc-mod" title="@{attk-CMB2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+								</span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{cmb_buffs}" name="attr_cmb_buffs" type="text" value="(@{buff_CMB-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb2_crit_conf}" type="number" name="attr_attk_cmb2_crit_conf" value="0" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-Placeholder="alternate-ability-cmb-desc" Placeholder="Alternate ability combat maneuver" /></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}</textarea></span>
+							</div>
+							<div class="sheet-table-row">
+								<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage">Damage</span></span></span>
+								<span class="sheet-table-cell"><input type="text" title="@{DMG_melee-mod}" name="attr_DMG_melee-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-divider"></span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-divider sheet-extra-sect"></span>
+								<span class="sheet-table-cell sheet-extra-sect"></span>
+								<span class="sheet-table-divider"></span>
+								<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">-</span>
+								<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
+								<span class="sheet-table-cell sheet-left-border"></span>
+								<span class="sheet-table-cell"></span>
+							</div>
+							<div class="sheet-table-row">
+								<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage-ranged-abbrv">Ranged dmg</span></span></span>
+								<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_dmg_ranged-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-divider"></span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-divider sheet-extra-sect"></span>
+								<span class="sheet-table-cell sheet-extra-sect"></span>
+								<span class="sheet-table-divider"></span>
+								<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">+</span>
+								<span class="sheet-table-cell"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">-</span>
+								<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
+								<span class="sheet-table-cell sheet-left-border"></span>
+								<span class="sheet-table-cell"></span>
+							</div>
 						</div>
 					</div>
 				</div>

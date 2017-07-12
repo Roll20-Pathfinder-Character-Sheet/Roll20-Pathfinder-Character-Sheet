@@ -1025,59 +1025,110 @@ export function updateDualWieldAttacks (callback,eventInfo){
 		});
 	});
 }
+
+function createDualWield(v){
+	var params={},setter={};
+	try {
+		TAS.debug("at createDualWield:",v);
+		params.mainhand_id = v.mainhand_id;
+		params.offhand_id = v.offhand_id;
+		params.mainhand_penalty = parseInt(v.mainhand_penalty,10)||0;
+		params.offhand_penalty = parseInt(v.offhand_penalty,10)||0;
+		params.offhand_improved = parseInt(v.offhand_improved,10)||0;
+		params.bab = parseInt(v.bab,10)||0;
+		params.mainhand_name = v.mainhand_name;
+		params.offhand_name = v.offhand_name;
+		params.offhand_mult =parseFloat(v.offhand_str_mult)||0.5;
+		//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+		setter=setDualWieldVals(params,setter);
+	} catch (outererr){
+		TAS.error("PFAttacks.createDualWield outererr",outererr);
+	} finally {
+		return setter;
+	}
+}
+
 /** Creates new dual wield attack
  * 
  * @param {function} callback 
  */
-export function createDualWield (callback){
+export function createDualWieldAsync (callback){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
 			callback();
 		}
-	});
-	getAttrs(['create_twoweapon_attack','mainhand_id','mainhand_penalty','offhand_id','offhand_penalty','offhand_improved','bab','offhand_str_mult'],function(v){
-		var params={},id,setter={};
-		if(parseInt(v.create_twoweapon_attack,10)===1){
-			getSectionIDs('repeating_weapon',function(ids){
-				//TAS.debug("at PFAttacks.createDualWield values are ",v,ids);
-				if(_.contains(ids,v.mainhand_id) && _.contains(ids,v.offhand_id)){
-					//TAS.debug("they are there!");
-					getAttrs(['repeating_weapon_'+v.mainhand_id+'_name','repeating_weapon_'+v.offhand_id+'_name'],function(w){
-						try {
-							params.mainhand_id = v.mainhand_id;
-							params.offhand_id = v.offhand_id;
-							params.mainhand_penalty = parseInt(v.mainhand_penalty,10)||0;
-							params.offhand_penalty = parseInt(v.offhand_penalty,10)||0;
-							params.offhand_improved = parseInt(v.offhand_improved,10)||0;
-							params.bab = parseInt(v.bab,10)||0;
-							params.mainhand_name = v['repeating_weapon_'+v.mainhand_id+'_name'];
-							params.offhand_name = v['repeating_weapon_'+v.offhand_id+'_name'];
-							params.offhand_mult =parseFloat(v.offhand_str_mult)||0.5;
-							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
-							setter=setDualWieldVals(params,setter);
-						} catch (outererr){
-							TAS.error("PFAttacks.createDualWield outererr",outererr);
-						} finally {
-							if(_.size(setter)){
-								setter.create_twoweapon_attack = 0;
-								setter.mainhand_id='';
-								setter.offhand_id='';
-								SWUtils.setWrapper(setter,PFConst.silentParams,function(){
-									PFAttackGrid.resetCommandMacro();
-									done();
-								});
-							} else {
-								setter.create_twoweapon_attack = 0;
-								SWUtils.setWrapper(setter,PFConst.silentParams,done);
-							}
-						}
-					});
-				} else {
-					//TAS.debug("they are not there1");
-					setter.create_twoweapon_attack = 0;
-					SWUtils.setWrapper(setter,PFConst.silentParams,done);
-				}
+	}),
+	setDualWield = function (setter){
+		//TAS.debug("back at set Dual WIeld",setter);
+		if(setter && _.size(setter)){
+			setter.create_twoweapon_attack = 0;
+			setter.mainhand_id='';
+			setter.offhand_id='';
+			SWUtils.setWrapper(setter,PFConst.silentParams,function(){
+				PFAttackGrid.resetCommandMacro();
+				done();
 			});
+		} else {
+			SWUtils.setWrapper({'create_twoweapon_attack':0},PFConst.silentParams,done);
+		}		
+	};
+	getAttrs(['create_twoweapon_attack','mainhand_id','mainhand_penalty','offhand_id','offhand_penalty','offhand_improved','bab','offhand_str_mult'],function(v){
+		try {
+			if(parseInt(v.create_twoweapon_attack,10)===1){
+				getSectionIDs('repeating_weapon',function(ids){
+					var fields=[],setter={};
+					try {
+						if (!ids || _.size(ids)===0){
+							setDualWield();
+							return;
+						}
+						//TAS.debug("PFAttacks.createDualWield ids are ",ids);
+						if(_.contains(ids,v.mainhand_id) && _.contains(ids,v.offhand_id)){
+							//TAS.debug("the ids contain the two variables");
+							getAttrs(['repeating_weapon_'+v.mainhand_id+'_name','repeating_weapon_'+v.offhand_id+'_name'],function(w){
+								v.mainhand_name=w['repeating_weapon_'+v.mainhand_id+'_name'];
+								v.offhand_name=w['repeating_weapon_'+v.offhand_id+'_name'];
+								TAS.debug("they are there! calling with ",v,w);
+								setter = createDualWield(v);
+								setDualWield(setter);
+							});
+						} else {
+							//TAS.debug("ids do not contain variables, check the names");
+							fields = ids.map(function(id){
+								return 'repeating_weapon_'+id+'_name';
+							});
+							//TAS.debug("getting ",fields);
+							getAttrs(fields,function(w){
+								var mainhandid='',offhandid='';
+								//TAS.debug("the names are ",w);
+								_.each(w,function(val,key){
+									TAS.debug("comparing "+v.mainhand_id+" to "+ val + " of row "+key)
+									if(val===v.mainhand_id){
+										mainhandid=SWUtils.getRowId(key);
+										v.mainhand_name=val;
+										v.mainhand_id=mainhandid;
+									} else if (val===v.offhand_id){
+										offhandid=SWUtils.getRowId(key)
+										v.offhand_name=val;
+										v.offhand_id=offhandid;
+									}
+								});
+								if(mainhandid && offhandid){
+									TAS.debug("calling createDualWield with :",v);
+									setter=createDualWield(v);
+								}
+								setDualWield(setter);
+							});
+						}
+					} catch (ierr){
+						TAS.error("PFAttacks.createDualWieldAsync ierr",ierr);
+						setDualWield();
+					}
+				});
+			}
+		} catch (err){
+			TAS.error("PFAttack.createDualWieldAsync outererror",err);
+			setDualWield();
 		}
 	});
 }
@@ -1595,7 +1646,7 @@ function registerEventHandlers () {
 	on("change:create_twoweapon_attack", TAS.callback(function eventCreateTwoWeaponAttack(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			createDualWield();
+			createDualWieldAsync();
 		}
 	}));
 	on("change:update_twoweapon_attack", TAS.callback(function eventUpdateDualWield(eventInfo) {
