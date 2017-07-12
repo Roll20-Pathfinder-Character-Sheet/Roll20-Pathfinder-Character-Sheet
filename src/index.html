@@ -2044,7 +2044,7 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_saves-show" data-i18n-aria-label="saving-throws" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="saving-throws">Saving Throws</label></h2>
 				<div class="sheet-h2-section sheet-saves">
-					<input type="checkbox" value="1" name="attr_extra_fields_saves_show" title="@{extra_fields_saves_show}" class="sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
+					<input type="checkbox" value="1" name="attr_extra_fields_saves_show" title="@{extra_fields_saves_show}" class="sheet-extra-show sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
 					<div class="sheet-cheat"></div>
 					<div class="sheet-table sheet-saves-table">
 						<span class="sheet-table-name" data-i18n="saving-throws">Saving Throws</span>
@@ -2058,13 +2058,10 @@
 							<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="trait">Trait</span>
-<!--							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header" data-i18n="enhancement-abbrv">Enhan</span>
--->							
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="resistance-abbrv">Resistance</span>
 							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-header sheet-extra-sect"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 							<span class="sheet-table-header sheet-divider"></span>
@@ -2092,15 +2089,13 @@
 								<span class="sheet-table-cell"><input title="@{Fort-ability-mod}" type="number" name="attr_Fort-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-trait}" type="number" name="attr_Fort-trait" value="0" /></span>
-<!--								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Fort-enhance}" type="number" name="attr_Fort-enhance" value="0" /></span>
--->
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Fort-resist}" type="number" name="attr_Fort-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell sheet-linked-tablecell">
-									<input title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield" />
-									<input title="@{Fort-misc-mod}" type="number" name="attr_Fort-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_Fort-misc-mod_error" value="1" class="sheet-error-mshow" />
+									<input title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" />
+									<input title="@{Fort-misc-mod}" type="number" name="attr_Fort-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc sheet-highlight" readonly />
 								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
@@ -2128,15 +2123,13 @@
 								<span class="sheet-table-cell"><input title="@{Ref-ability-mod}" type="number" name="attr_Ref-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-trait}" type="number" name="attr_Ref-trait" value="0" /></span>
-<!--								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Ref-enhance}" type="number" name="attr_Ref-enhance" value="0" /></span>
--->								
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Ref-resist}" type="number" name="attr_Ref-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell sheet-linked-tablecell">
-									<input title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
-									<input title="@{Ref-misc-mod}" type="number" name="attr_Ref-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_Ref-misc-mod_error" value="1" class="sheet-error-mshow" />
+									<input title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" />
+									<input title="@{Ref-misc-mod}" type="number" name="attr_Ref-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc sheet-highlight" readonly />
 								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
@@ -2164,15 +2157,13 @@
 								<span class="sheet-table-cell"><input title="@{Will-ability-mod}" type="number" name="attr_Will-ability-mod" value="0" class="sheet-calc sheet-narrow-numbers" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-trait}" type="number" name="attr_Will-trait" value="0" /></span>
-<!--								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Will-enhance}" type="number" name="attr_Will-enhance" value="0" /></span>
--->
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{Will-resist}" type="number" name="attr_Will-resist" value="0" /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell sheet-linked-tablecell">
-									<input title="@{Will-misc}" type="text" name="attr_Will-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield" />
-									<input title="@{Will-misc-mod}" type="number" name="attr_Will-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input type="checkbox" name="attr_Will-misc-mod_error" value="1" class="sheet-error-mshow" />
+									<input title="@{Will-misc}" type="text" name="attr_Will-misc" value="0" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" />
+									<input title="@{Will-misc-mod}" type="number" name="attr_Will-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc sheet-highlight" readonly />
 								</span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
@@ -2215,22 +2206,24 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_defense-values-show" data-i18n-aria-label="defense-values-grid" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="defense-values-grid">Defense Values</label></h2>
 				<div class="sheet-h2-section sheet-defense-grid">
-					<div class="sheet-table sheet-defense-table sheet-medium-numbers">
+					<input type="checkbox" value="1" name="attr_extra_fields_defense_show" title="@{extra_fields_defense_show}" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
+					<input type="checkbox" value="1" name="attr_uncanny_dodge" title="@{uncanny_dodge}" class="sheet-selectedlabel-check"/><b data-i18n-title="uncanny-dodge-title" data-i18n-aria-label="uncanny-dodge-title" data-i18n="uncanny-dodge-desc">Do not lose DEX when Flat footed</b>
+					<div class="sheet-table sheet-defense-table sheet-narrow-numbers">
 						<span class="sheet-table-name" data-i18n="defense-values-grid">Defense Values</span>
 						<div class="sheet-table-group-head">
 							<span class="sheet-table-header" style="width:10%;"></span>
 							<span class="sheet-table-header" data-i18n="total">Total</span>
 							<span class="sheet-table-header" style="width:3.25em;min-width:3.25em;">&nbsp;</span>
 							<span class="sheet-table-header" data-i18n="armor">Armor</span>
-							<span class="sheet-table-header sheet-ability-column" data-i18n="shield">Shield</span>
-							<span class="sheet-table-header" style="width:54px;"></span>
+							<span class="sheet-table-header sheet-ability-column"></span>
+							<span class="sheet-table-header" data-i18n="shield">Shield</span>
 							<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
 							<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
 							<span class="sheet-table-header" data-i18n="size">Size</span>
 							<span class="sheet-table-header" data-i18n="dodge">Dodge</span>
 							<span class="sheet-table-header" data-i18n="natural">Natural</span>
 							<span class="sheet-table-header" data-i18n="deflect">Deflect</span>
-							<span class="sheet-table-header" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+							<span class="sheet-table-header sheet-extra-sect" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 							<span class="sheet-table-header" data-i18n="buff">Buff</span>
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv" style="padding-right: 0.5em">Cond</span>
 						</div>
@@ -2240,8 +2233,8 @@
 								<span class="sheet-table-cell"><input title="@{AC}" type="number" name="attr_AC" value="10" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell sheet-ability-column sheet-right"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-cell sheet-ability-column"></span>
+								<span class="sheet-table-cell"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<select title="@{AC-ability}" name="attr_AC-ability" class="sheet-select-small">
 										<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
@@ -2260,9 +2253,10 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0"></span>
-								<span class="sheet-table-cell sheet-linked-tablecell">
-									<input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
-									<input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input name="attr_AC-misc-mod_error" value="1" class="sheet-error-mshow" />
+									<input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" />
+									<input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc sheet-highlight" readonly />
 								</span>
 								<span class="sheet-table-cell"><input title="@{buffsumac}" type="text" name="attr_buffsumac" value="(@{buff_AC-total}+@{buff_armor-total}+@{buff_shield-total}+@{buff_natural-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
@@ -2291,7 +2285,7 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell sheet-right"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-right sheet-extra-sect"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumtouch}" type="text" name="attr_buffsumtouch" value="(@{buff_Touch-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
@@ -2300,8 +2294,8 @@
 								<span class="sheet-table-cell"><input title="@{Flat-Footed}" type="number" name="attr_Flat-Footed" value="10" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell sheet-ability-column sheet-right"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell"></span>
+								<span class="sheet-table-cell sheet-ability-column"></span>
+								<span class="sheet-table-cell"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-ability-column">
 									<input type="checkbox" value="1" name="attr_unlock_def_ability" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" />
 									<input type="checkbox" value="1" name="attr_uncanny_dodge" class="sheet-nextitem-show sheet-noshow" />
@@ -2335,17 +2329,17 @@
 								<span class="sheet-table-cell"><input title="@{size}" type="number" name="attr_size" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-highlight">
 									<input name="attr_uncanny_dodge" type="checkbox" value="1" class="sheet-nextitem-show sheet-noshow" />
-									<input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-nextitem" class="sheet-calc" readonly />
+									<input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-nextitem sheet-calc" readonly />
 								</span>
 								<span class="sheet-table-cell"><input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-table-cell sheet-right"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-right sheet-extra-sect"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumff}" type="number" name="attr_buffsumff" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly /></span>
 							</div>
 						</div>
 					</div>
-					<div class="sheet-table sheet-defense-table sheet-medium-numbers">
+					<div class="sheet-table sheet-defense-table sheet-narrow-numbers">
 						<div class="sheet-table-group-head">
 							<div class="sheet-table-row">
 								<span class="sheet-table-header" style="width:10%;" data-i18n="combat-maneuver-defense-abbrv">CMD</span>
@@ -2362,9 +2356,9 @@
 								<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
 								<span class="sheet-table-header" data-i18n="size">Size</span>
 								<span class="sheet-table-header" data-i18n="dodge">Dodge</span>
-								<span class="sheet-table-header" style="width:3.5em;min-width:2%;"></span>
+								<span class="sheet-table-header" style="width:4em;"></span>
 								<span class="sheet-table-header" data-i18n="deflect">Deflect</span>
-								<span class="sheet-table-header" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+								<span class="sheet-table-header sheet-extra-sect" ><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 								<span class="sheet-table-header" data-i18n="buff">Buff</span>
 								<span class="sheet-table-header" data-i18n="condition-abbrv" style="padding-right: 0.5em">Cond</span>
 							</div>
@@ -2421,7 +2415,8 @@
 								<span class="sheet-table-cell sheet-highlight"><input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-calc" readonly ></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell sheet-linked-tablecell">
+								<span class="sheet-table-cell sheet-linked-tablecell sheet-extra-sect">
+									<input name="attr_CMD-misc-mod_error" value="1" class="sheet-error-mshow" />
 									<input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
 									<input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
 								</span>
@@ -2480,13 +2475,13 @@
 								</span>
 								<span class="sheet-table-cell"><input title="@{CMD-size}" type="number" name="attr_CMD-size" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-highlight">
-									<input name="attr_uncanny_cmd_dodge" type="checkbox" value="1" class="sheet-sect-show sheet-noshow" style="display:none;" />
-									<input name="attr_uncanny_dodge" type="checkbox" value="1" class="sheet-sect-show sheet-noshow" style="display:none;" />
-									<input class="sheet-sect" title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-calc" readonly />
+									<input name="attr_uncanny_cmd_dodge" type="checkbox" value="1" class="sheet-or-A-show sheet-noshow" style="display:none;" />
+									<input name="attr_uncanny_dodge" type="checkbox" value="1" class="sheet-or-B-show sheet-noshow" style="display:none;" />
+									<input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" class="sheet-either-or-sect sheet-calc" readonly />
 								</span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
-								<span class="sheet-table-cell sheet-right"><input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-right sheet-extra-sect"><input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{buffsumffcmd}" type="number" name="attr_buffsumffcmd" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell"><input title="@{CMD-penalty}" type="number" name="attr_CMD-penalty" class="sheet-calc" readonly value="0"></span>
 							</div>
@@ -2774,7 +2769,7 @@
 							<span class="sheet-table-cell"><input title="@{attk-melee}" type="number" name="attr_attk-melee" value="0" class="sheet-calc" readonly /></span>
 							<span class="sheet-divider">=</span>
 							<span class="sheet-table-cell sheet-linked-tablecell-short">
-								<select name="attr_melee_bab" class="sheet-linked-cellfield" title="@{melee-bab}" >
+								<select name="attr_melee_bab" class="sheet-linked-cellfield sheet-extra-sect" title="@{melee-bab}" >
 									<option value="bab" selected data-i18n="base-attack-bonus-abbrv">BAB</option>
 									<option value="level" data-i18n="full-caster-level-abbrv">Lvl/HD</option>
 									<option value="class-0-level" data-i18n="1-ordinal-class-level">1st Class Lvl</option>

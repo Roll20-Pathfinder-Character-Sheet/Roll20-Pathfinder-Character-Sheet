@@ -4605,12 +4605,6 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-ability-scores .sheet-divider-lg {
     display: none;
 }
-/*
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-header:nth-child(4),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-cell:nth-child(4),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-header:nth-child(n+7),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-cell:nth-child(n+7)
-*/
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-header:nth-child(6),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-cell:nth-child(6),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-header:nth-child(8),
@@ -4619,7 +4613,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-cell:nth-child(9),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-header:nth-child(10),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-core .sheet-class-grid .sheet-table-cell:nth-child(10){
-	display:none;
+	display: none;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-defense-grid .sheet-defense-table .sheet-table-header:nth-child(3),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-defenses .sheet-defense-grid .sheet-defense-table .sheet-table-cell:nth-of-type(3),
@@ -4634,17 +4628,15 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     display: none;
 }
 
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(7),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(8),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(9),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(12),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-group-head :nth-child(13),
-.sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(7),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(8),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(9),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(12),
 .sheet-extra-saves-show:not(:checked) ~ .sheet-saves-table .sheet-table-row :nth-child(13) {
-    display:none;
+    display: none;
 }
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-saves .sheet-saves-table .sheet-table-group-head :nth-child(4),
@@ -4696,14 +4688,6 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills-key {
     display: none;
 }
-/*
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(6),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(6),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(8),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(8) {
-    display: table-cell;
-}
-*/
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skill-totals .sheet-table-header:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skill-totals .sheet-table-cell:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skill-totals .sheet-divider,
@@ -4716,29 +4700,27 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section > .sheet-nontable-name.sheet-show-readonly {
-	width:49%;
-	float:left;
-	display:block;
-/*	display:inline-block; */
+	width: 49%;
+	float: left;
+	display: block;
 }
 /* npc / spells overrides all above,no config in readonly if not checked */
-
 .sheet-show-spell-tab:not(:checked) ~ .sheet-main .sheet-spelltab,
 .sheet-show-spell-tab:not(:checked) ~ .sheet-main .sheet-section-spells {
     display: none;
 }
 .sheet-table-rightcell {
-	width:90%;
-	max-width:90%;
+	width: 90%;
+	max-width: 90%;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-nowrap-readonly {
-	white-space:nowrap !important;
+	white-space: nowrap !important;
 }
 .sheet-small-label2.sheet-autoexpand {
-	padding-top:2em;
-	width:auto;
-	min-width:3.5em;
-	max-width:99%;
+	padding-top: 2em;
+	width: auto;
+	min-width: 3.5em;
+	max-width: 99%;
     max-height: 1em;
 }
 .sheet-small-label2.sheet-autoexpand input {

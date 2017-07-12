@@ -201,7 +201,13 @@ function expandAll  () {
 				'npc-abilities-column-show':0,
 				'npc-special-abilities-min-show':0,
 				'npc-special-abilities-expand-show':0,
-				'npc-special-abilities-column-show':0
+				'npc-special-abilities-column-show':0,
+				'extra_fields_san_show':1,
+				'extra_fields_attacks_show':1,
+				'extra_fields_skills_show':1,
+				'extra_fields_saves_show':1,
+				'extra_fields_spells_show':1,
+				'extra_fields_caster_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -260,6 +266,29 @@ function expandAll  () {
 		}
 	});
 }
+
+function showMiscFields () {
+	TAS.debug("##############33333333 PFSheet showMiscFields!!!!!!!!!!!!!!");
+	SWUtils.setWrapper({
+		'extra_fields_attacks_show':1,
+		'extra_fields_skills_show':1,
+		'extra_fields_saves_show':1,
+		'extra_fields_spells_show':1,
+		'extra_fields_defense_show':1,
+		'extra_fields_caster_show':1
+	},PFConst.silentParams);
+}
+function hideMiscFields () {
+	SWUtils.setWrapper({
+		'extra_fields_attacks_show':0,
+		'extra_fields_skills_show':0,
+		'extra_fields_saves_show':0,
+		'extra_fields_spells_show':0,
+		'extra_fields_defense_show':0,
+		'extra_fields_caster_show':0
+	},PFConst.silentParams);
+}
+
 
 /** Sets any values if sheet created brand new. Makes sure all migrations up to date.
  * makes sure NPC value set. 
@@ -752,6 +781,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				});
 			}
 			if (oldversion===1.63){
+				showMiscFields();
 				recalcExpressions(function(){
 					PFAbility.setRuleTabs();
 					PFInventory.updateLocations();
@@ -1361,6 +1391,18 @@ function registerEventHandlers () {
 			if(eventInfo.sourceType==='player'){
 				updateAllCustomMenu(eventInfo);
 			}
+	}));
+	on("change:use_advanced_options", TAS.callback(function eventShowMisc(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if(eventInfo.sourceType==='player'||eventInfo.sourceType==='api'){
+			getAttrs(['use_advanced_options'],function(v){
+				if(parseInt(v.use_advanced_options,10)){
+					showMiscFields();
+				} else {
+					hideMiscFields();
+				}
+			});
+		}
 	}));
 }
 registerEventHandlers();
