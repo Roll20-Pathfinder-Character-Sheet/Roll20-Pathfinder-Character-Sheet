@@ -52,99 +52,99 @@ function expandAll  () {
 				spells_tab: "99",
 				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-				'sheet-conditions-show':0,
-				'buffstop-show':0,
-				'command-buttons-show':0,
-				'NPC-command-buttons-show':0,
-				'character-details-show':0,
-				'ability-scores-show':0,
-				'class-info-show':0,
-				'class1_show':0,
-				'class2_show':0,
-				'class3_show':0,
-				'health-and-wounds-show':0,
-				'initiative-show':0,
-				'macro-text-show':0,
-				'notes-show':0,
-				'saves-show':0,
-				'defense-values-show':0,
-				'armor-shield-show':0,
-				'sanity-show':0,
-				'defense-notes-show':0,
-				'attack-bonuses-show':0,
-				'atkm2_show':0,
-				'attack-notes-show':0,
-				'attack-options-show':0,
-				'two-weapon-show':0,
-				'attacks-show':0,
-				'skill-ranks-show':0,
-				'skill_options-show':0,
-				'skills-show':0,
-				'artistry-show':0,
-				'craft-show':0,
-				'knowledge-show':0,
-				'lore-show':0,
-				'perform-show':0,
-				'profession-show':0,
-				'misc-show':0,
-				'skill-notes-show':0,
-				'ability-command-buttons-show':0,
-				'NPC-ability-command-buttons-show':0,
-				'feats-show':0,
-				'mythic-info-show':0,
-				'psionic-info-show':0,
-				'abilities-show':0,
-				'spellclasses-show':0,
-				'spellclass-0-show':0,
-				'spellclass-0-spellpoints-show':0,
-				'spellclass-0-spells-notes-show':0,
-				'spellclass-0-perday-show':0,
-				'spellclass-0-domains-show':0,
-				'domain02_show':0,
-				'domain03_show':0,
-				'spellclass-1-show':0,
-				'spellclass-1-spellpoints-show':0,
-				'spellclass-1-spells-notes-show':0,
-				'spellclass-1-perday-show':0,
-				'spellclass-1-domains-show':0,
-				'spellclass-2-show':0,
-				'spellclass-2-spellpoints-show':0,
-				'spellclass-2-spells-notes-show':0,
-				'spellclass-2-perday-show':0,
-				'spellclass-2-domains-show':0,
-				'spelloptions-show':0,
-				'spell-lists-show':0,
-				'currency-show':0,
-				'carried-weight-show':0,
-				'loads-show':0,
-				'worn-items-show':0,
-				'other-items-show':0,
-				'equipment-show':0,
-				'npc-compimport-show':0,
-				'npc-details-show':0,
-				'npc-defense-show':0,
-				'npc-offense-show':0,
-				'npc-speed-show':0,
-				'npc-repeating-weapons-show':0,
-				'npc-spell-like-abilities-show':0,
-				'npc-tactics-show':0,
-				'npc-statistics-show':0,
-				'npc-feats-show':0,
-				'npc-mythic-feats-show':0,
-				'npc-skills-show':0,
-				'npc-ecology-show':0,
-				'npc-special-abilities-show':0,
-				'custom-attr-sect-a-show':0,
-				'custom-attr-sect-c-show':0,
-				'custom-attr-sect-b-show':0,
-				'custom-attr-sect-d-show':0,
-				'custom-attr-sect-n-show':0,
-				'header-image-show':0,
-				'sheet-import-show':0,
+		'sheet-conditions-show':1,
+				'buffstop-show':1,
+				'command-buttons-show':1,
+				'NPC-command-buttons-show':1,
+				'character-details-show':1,
+				'ability-scores-show':1,
+				'class-info-show':1,
+				'class1_show':1,
+				'class2_show':1,
+				'class3_show':1,
+				'health-and-wounds-show':1,
+				'initiative-show':1,
+				'macro-text-show':1,
+				'notes-show':1,
+				'saves-show':1,
+				'defense-values-show':1,
+				'armor-shield-show':1,
+				'sanity-show':1,
+				'defense-notes-show':1,
+				'attack-bonuses-show':1,
+				'atkm2_show':1,
+				'attack-notes-show':1,
+				'attack-options-show':1,
+				'two-weapon-show':1,
+				'attacks-show':1,
+				'skill-ranks-show':1,
+				'skill_options-show':1,
+				'skills-show':1,
+				'artistry-show':1,
+				'craft-show':1,
+				'knowledge-show':1,
+				'lore-show':1,
+				'perform-show':1,
+				'profession-show':1,
+				'misc-show':1,
+				'skill-notes-show':1,
+				'ability-command-buttons-show':1,
+				'NPC-ability-command-buttons-show':1,
+				'feats-show':1,
+				'mythic-info-show':1,
+				'psionic-info-show':1,
+				'abilities-show':1,
+				'spellclasses-show':1,
+				'spellclass-0-show':1,
+				'spellclass-0-spellpoints-show':1,
+				'spellclass-0-spells-notes-show':1,
+				'spellclass-0-perday-show':1,
+				'spellclass-0-domains-show':1,
+				'domain02_show':1,
+				'domain03_show':1,
+				'spellclass-1-show':1,
+				'spellclass-1-spellpoints-show':1,
+				'spellclass-1-spells-notes-show':1,
+				'spellclass-1-perday-show':1,
+				'spellclass-1-domains-show':1,
+				'spellclass-2-show':1,
+				'spellclass-2-spellpoints-show':1,
+				'spellclass-2-spells-notes-show':1,
+				'spellclass-2-perday-show':1,
+				'spellclass-2-domains-show':1,
+				'spelloptions-show':1,
+				'spell-lists-show':1,
+				'currency-show':1,
+				'carried-weight-show':1,
+				'loads-show':1,
+				'worn-items-show':1,
+				'other-items-show':1,
+				'equipment-show':1,
+				'npc-compimport-show':1,
+				'npc-details-show':1,
+				'npc-defense-show':1,
+				'npc-offense-show':1,
+				'npc-speed-show':1,
+				'npc-repeating-weapons-show':1,
+				'npc-spell-like-abilities-show':1,
+				'npc-tactics-show':1,
+				'npc-statistics-show':1,
+				'npc-feats-show':1,
+				'npc-mythic-feats-show':1,
+				'npc-skills-show':1,
+				'npc-ecology-show':1,
+				'npc-special-abilities-show':1,
+				'custom-attr-sect-a-show':1,
+				'custom-attr-sect-c-show':1,
+				'custom-attr-sect-b-show':1,
+				'custom-attr-sect-d-show':1,
+				'custom-attr-sect-n-show':1,
+				'header-image-show':1,
+				'sheet-import-show':1,
 				'roll-template-info-show':1,
 				'macros-show':1,
-				'migrations-show':0,
-				'cleanup-show':0,
+				'migrations-show':1,
+				'cleanup-show':1,				
 				'buff-min-show':0,
 				'buff-expand-show':0,
 				'buff-column-show':0,
@@ -205,9 +205,10 @@ function expandAll  () {
 				'extra_fields_saves_show':1,
 				'extra_fields_spells_show':1,
 				'extra_fields_caster_show':1,
-				'extra_fields_abilities_show':11,
+				'extra_fields_abilities_show':1,
 				'extra_fields_init_show':1,
-				'extra_fields_speeds_show':1
+				'extra_fields_speeds_show':1,
+				'extra_fields_defense_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -217,17 +218,22 @@ function expandAll  () {
 						var prefix = rsection + "_" + id + "_";
 						switch (section) {
 							case 'weapon':
-								memo[prefix + "add-damage-show"] = 0;
-								memo[prefix + "iterative-attacks-show"] = 0;
-								memo[prefix + "advmacro-text-show"] = 0;
+								memo[prefix + "add-damage-show"] = 1;
+								memo[prefix + "iterative-attacks-show"] = 1;
+								memo[prefix + "advmacro-text-show"] = 1;
 								break;
 							case 'buff':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								break;
+							case 'buff2':
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'spells':
-								memo[prefix + "spell-misc-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "attack-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'class-ability':
 							case 'feat':
@@ -235,26 +241,28 @@ function expandAll  () {
 							case 'trait':
 							case 'mythic-ability':
 							case 'mythic-feat':
+								memo[prefix + "description-show"] = 1;
+								break;
 							case 'item':
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "armor-attributes-show"] = 0;
-								memo[prefix + "weapon-attributes-show"] = 0;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "armor-attributes-show"] = 1;
+								memo[prefix + "weapon-attributes-show"] = 1;
 								break;
 							case 'npc-spell-like-abilities':
-								memo[prefix + "attack-show"] = 0;
+								memo[prefix + "attack-show"] = 1;
 								break;
 							case 'ability':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "misc-show"] = 0;
-								memo[prefix + "showextrafields"] = 0;
-								memo[prefix + "range-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "showextrafields"] = 1;
+								memo[prefix + "range-show"] = 1;
 								break;
 						}
 						memo[prefix + "row-show"] = 0;
-						memo[prefix + "ids-show"] = 0;
-						if (section !== 'buff'){
-							memo[prefix + "macro-text-show"] = 0;
+						memo[prefix + "ids-show"] = 1;
+						if (section !== 'buff' && section!=='buff2'){
+							memo[prefix + "macro-text-show"] = 1;
 						}
 						return memo;
 					}, {});
