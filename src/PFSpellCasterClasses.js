@@ -614,15 +614,15 @@ var events = {
     spellcastingClassEventsAuto: {
         "change:concentration-REPLACE-mod": [updateBonusSpells, updateSaveDCs, updateConcentration, PFSpells.updateSpellsCasterAbilityRelated],
         "change:spellclass-REPLACE-level-total": [updateConcentration, updateCasterRanges, PFSpells.updateSpellsCasterLevelRelated],
-        "change:spellclass-REPLACE-SP-mod": [PFSpells.updateSpellsCasterLevelRelated]
+        "change:concentration-REPLACE-misc-mod": [updateConcentration, PFSpells.updateSpellsCasterLevelRelated],
+        "change:spellclass-REPLACE-SP-mod": [PFSpells.updateSpellsCasterLevelRelated],
+        "change:spellclass-REPLACE-level-misc-mod": [updateCasterLevel]
     },
     spellcastingClassEventsPlayer: {
-        "change:concentration-REPLACE-misc": [updateConcentration, PFSpells.updateSpellsCasterLevelRelated],
         "change:concentration-REPLACE-def": [PFSpells.updateSpellsCasterLevelRelated]
     },
     // events for updates to top of class page even if no spellcasting class exists
     spellcastingClassEventsIgnoreLevel: {
-        "change:spellclass-REPLACE-level-misc-mod": [updateCasterLevel],
         "change:spellclass-REPLACE": [setCasterClassFromDropdown],
         "change:spellclass-REPLACE-level": [updateCasterLevel, updateMultiClassedCasterFlag],
         "change:buff_CasterLevel-total change:condition-Drained change:CasterLevel-Penalty": [updateCasterLevels]
