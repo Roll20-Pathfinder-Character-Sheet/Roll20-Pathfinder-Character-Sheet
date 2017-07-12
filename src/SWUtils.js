@@ -367,9 +367,9 @@ export function evaluateAndAddToTot(callback,silently,exprStr,writeField,currVal
 		}
 	};
 	evaluateExpression(exprStr,function(newVal){
-		var curr = parseInt(currVal,10)||0,
-		params={},silentSetter={},
+		var params={},silentSetter={},
 		setter={};
+		currVal = parseInt(currVal,10)||0;
 		if(newVal !== currVal ){
 			if(!silently){
 				silentSetter[writeField]=newVal;

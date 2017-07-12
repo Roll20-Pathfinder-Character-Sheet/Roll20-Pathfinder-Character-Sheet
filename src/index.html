@@ -8316,8 +8316,9 @@
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
-											<input type="text" name="attr_spellclass-0-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-0-level-misc}" data-i18n-placeholder="equation-macro-place" />
-											<input type="number" name="attr_spellclass-0-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-0-level-misc-mod}" readonly  />
+											<input type="checkbox" value="1" name="spellclass-0-level-misc-mod_error" class="sheet-error-mshow" />
+											<textarea name="attr_spellclass-0-level-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-0-level-misc}" data-i18n-placeholder="equation-macro-place"></textarea>
+											<input type="number" name="attr_spellclass-0-level-misc-mod" class="sheet-narrow-numbers sheet-calc sheet-highlight" value="0" title="@{spellclass-0-level-misc-mod}" readonly  />
 										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
@@ -8362,7 +8363,7 @@
 									<span class="sheet-divider sheet-table-header"></span>
 									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 									<span class="sheet-table-header sheet-table-rightcell" aria-label="empty spacer cell" role="presentation"></span>
 								</div>
 								<div class="sheet-table-row">
@@ -8384,7 +8385,11 @@
 									<span class="sheet-divider">+</span>
 									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
 									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" value="0" /></span>
+									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+										<input type="checkbox" name="attr_Concentration-0-misc-mod_error" class="sheet-error-mshow" value="1" />
+										<textarea title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+										<input type="number" name="attr_Concentration-0-misc-mod" title="@{Concentration-0-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+									</span>
 									<span class="sheet-table-cell"></span>
 								</div>
 							</div>
@@ -8742,7 +8747,7 @@
 										<span class="sheet-table-header" data-i18n="buff">Buff</span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
-								</div>
+									</div>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
@@ -8770,8 +8775,9 @@
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-1-level}" type="number" name="attr_spellclass-1-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
-											<input type="text" name="attr_spellclass-1-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-1-level-misc}" data-i18n-placeholder="equation-macro-place" />
-											<input type="number" name="attr_spellclass-1-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-1-level-misc-mod}" readonly  />
+											<input type="checkbox" value="1" name="spellclass-1-level-misc-mod_error" class="sheet-error-mshow" />
+											<textarea name="attr_spellclass-1-level-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-1-level-misc}" data-i18n-placeholder="equation-macro-place"></textarea>
+											<input type="number" name="attr_spellclass-1-level-misc-mod" class="sheet-narrow-numbers sheet-calc sheet-highlight" value="0" title="@{spellclass-1-level-misc-mod}" readonly  />
 										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
@@ -8816,7 +8822,7 @@
 									<span class="sheet-divider sheet-table-header"></span>
 									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 									<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
 								</div>
 								<div class="sheet-table-row">
@@ -8838,7 +8844,11 @@
 									<span class="sheet-divider">+</span>
 									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-1-level-total}" type="number" name="attr_spellclass-1-level-total" value="0" class="sheet-calc" readonly /></span>
 									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{Concentration-1-misc}" type="number" name="attr_Concentration-1-misc" value="0" /></span>
+									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+										<input type="checkbox" name="attr_Concentration-1-misc-mod_error" class="sheet-error-mshow" value="1" />
+										<textarea title="@{Concentration-1-misc}" type="number" name="attr_Concentration-1-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+										<input type="number" name="attr_Concentration-1-misc-mod" title="@{Concentration-1-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+									</span>
 									<span class="sheet-table-cell"></span>
 								</div>
 							</div>
@@ -9224,8 +9234,9 @@
 										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-2-level}" type="number" name="attr_spellclass-2-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
-											<input type="text" name="attr_spellclass-2-level-misc" class="sheet-inline-textarea sheet-linked-cellfield" value="" title="@{spellclass-2-level-misc}" data-i18n-placeholder="equation-macro-place" />
-											<input type="number" name="attr_spellclass-2-level-misc-mod" class="sheet-narrow-numbers sheet-calc" value="0" title="@{spellclass-2-level-misc-mod}" readonly  />
+											<input type="checkbox" value="1" name="spellclass-2-level-misc-mod_error" class="sheet-error-mshow" />
+											<textarea name="attr_spellclass-2-level-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-2-level-misc}" data-i18n-placeholder="equation-macro-place"></textarea>
+											<input type="number" name="attr_spellclass-2-level-misc-mod" class="sheet-narrow-numbers sheet-calc sheet-highlight" value="0" title="@{spellclass-2-level-misc-mod}" readonly  />
 										</span>
 										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell sheet-number"><input title="@{buff_CasterLevel-total}" name="attr_buff_CasterLevel-total" type="number" value="0" class="sheet-calc" readonly /></span>
@@ -9270,7 +9281,7 @@
 									<span class="sheet-divider sheet-table-header"></span>
 									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option" data-i18n="miscellaneous-abbrv">Misc</span>
+									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 									<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
 								</div>
 								<div class="sheet-table-row">
@@ -9292,7 +9303,11 @@
 									<span class="sheet-divider">+</span>
 									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-2-level-total}" type="number" name="attr_spellclass-2-level-total" value="0" class="sheet-calc" readonly /></span>
 									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-advanced-spell-option sheet-number"><input title="@{Concentration-2-misc}" type="number" name="attr_Concentration-2-misc" value="0" /></span>
+									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+										<input type="checkbox" name="attr_Concentration-2-misc-mod_error" class="sheet-error-mshow" value="1" />
+										<textarea title="@{Concentration-2-misc}" type="number" name="attr_Concentration-2-misc" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" ></textarea>
+										<input type="number" name="attr_Concentration-2-misc-mod" title="@{Concentration-2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+									</span>
 									<span class="sheet-table-cell"></span>
 								</div>
 							</div>
@@ -11204,7 +11219,7 @@
 								</span>
 								<span class="sheet-table-cell"><input title="@{Concentration-0-mod}" type="number" name="attr_Concentration-0-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{Concentration-0-misc}" type="text" name="attr_Concentration-0-misc" value="" /></span>
 							</div>
 						</div>
 						<div class="sheet-section1 sheet-section-spellclass-1 sheet-table">
@@ -11247,7 +11262,7 @@
 								</span>
 								<span class="sheet-table-cell"><input title="@{Concentration-1-mod}" type="number" name="attr_Concentration-1-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Concentration-1-misc}" type="number" name="attr_Concentration-1-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{Concentration-1-misc}" type="text" name="attr_Concentration-1-misc" value="" /></span>
 							</div>
 						</div>
 						<div class="sheet-section2 sheet-section-spellclass-2 sheet-table">
@@ -11290,7 +11305,7 @@
 								</span>
 								<span class="sheet-table-cell"><input title="@{Concentration-2-mod}" type="number" name="attr_Concentration-2-mod" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{Concentration-2-misc}" type="number" name="attr_Concentration-2-misc" value="0" /></span>
+								<span class="sheet-table-cell"><input title="@{Concentration-2-misc}" type="text" name="attr_Concentration-2-misc" value="" /></span>
 							</div>
 						</div>
 						<div class="sheet-repeating-sect sheet-custbordernav">

@@ -463,28 +463,6 @@ function setSkillValByDiff(skill,diff,v,setter){
 	setter[skill]=tot;
 	return setter;
 }
-/** Updates skill-misc-mod field and skill field, when skill-misc changes.
- * @param {string} skill the name of skill field
- */
-function updateMiscAndSkillValAsync (skill){
-	getAttrs([skill,skill + "-misc", skill + "-misc-mod"],function(v){
-		//TAS.debug("PFSkills.updateMiscFieldAndTot for skill "+skill,v);
-		SWUtils.evaluateExpression(v[skill+'-misc'],function(newval){
-			var currval=0,tot=0,diff=0,setter={};
-			currval=parseInt(v[skill+'-misc-mod'],10)||0;
-			diff=newval-currval;
-			//TAS.debug("PFSkills.updateMiscFieldAndTot new misc is "+newval+" and diff is "+ diff);
-			if(diff!==0){
-				setter[skill+'-misc-mod']=newval;
-				setSkillValByDiff(skill,diff,v,setter);
-				SWUtils.setWrapper(setter);
-			}
-		},function(){
-			TAS.warn("misc fields was invalid");
-			//error just ignore
-		});
-	});
-}
 /** when user checks class skill, +3 or -3 depending on if ranks > 0, if ranks 0 no change 
  * @param {string} skill - from allTheSkills
  */
@@ -885,8 +863,6 @@ export function resetCommandMacro (eventInfo, callback) {
 	});
 }
 
-
-
 /** migrate skills
  * @param {function} callback callback when done
  * @param {number} oldversion old version , -1 if hit recalc
@@ -1079,7 +1055,9 @@ function registerEventHandlers () {
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMiscFieldUpdate(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateMiscAndSkillValAsync(skill);
+			//updateMiscAndSkillValAsync(skill);
+			TAS.debug("calling evalute for "+skill);
+			SWUtils.evaluateAndAddToTotAsync(null,null,skill+'-misc',skill+'-misc-mod',skill);
 		}));
 		on("change:" + skill + "-cs", TAS.callback(function eventClassSkillCheckbox(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
