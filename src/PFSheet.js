@@ -5,6 +5,7 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
+import * as PFCustom from './PFCustom';
 import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFSize from './PFSize';
@@ -52,99 +53,99 @@ function expandAll  () {
 				spells_tab: "99",
 				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-				'sheet-conditions-show':0,
-				'buffstop-show':0,
-				'command-buttons-show':0,
-				'NPC-command-buttons-show':0,
-				'character-details-show':0,
-				'ability-scores-show':0,
-				'class-info-show':0,
-				'class1_show':0,
-				'class2_show':0,
-				'class3_show':0,
-				'health-and-wounds-show':0,
-				'initiative-show':0,
-				'macro-text-show':0,
-				'notes-show':0,
-				'saves-show':0,
-				'defense-values-show':0,
-				'armor-shield-show':0,
-				'sanity-show':0,
-				'defense-notes-show':0,
-				'attack-bonuses-show':0,
-				'atkm2_show':0,
-				'attack-notes-show':0,
-				'attack-options-show':0,
-				'two-weapon-show':0,
-				'attacks-show':0,
-				'skill-ranks-show':0,
-				'skill_options-show':0,
-				'skills-show':0,
-				'artistry-show':0,
-				'craft-show':0,
-				'knowledge-show':0,
-				'lore-show':0,
-				'perform-show':0,
-				'profession-show':0,
-				'misc-show':0,
-				'skill-notes-show':0,
-				'ability-command-buttons-show':0,
-				'NPC-ability-command-buttons-show':0,
-				'feats-show':0,
-				'mythic-info-show':0,
-				'psionic-info-show':0,
-				'abilities-show':0,
-				'spellclasses-show':0,
-				'spellclass-0-show':0,
-				'spellclass-0-spellpoints-show':0,
-				'spellclass-0-spells-notes-show':0,
-				'spellclass-0-perday-show':0,
-				'spellclass-0-domains-show':0,
-				'domain02_show':0,
-				'domain03_show':0,
-				'spellclass-1-show':0,
-				'spellclass-1-spellpoints-show':0,
-				'spellclass-1-spells-notes-show':0,
-				'spellclass-1-perday-show':0,
-				'spellclass-1-domains-show':0,
-				'spellclass-2-show':0,
-				'spellclass-2-spellpoints-show':0,
-				'spellclass-2-spells-notes-show':0,
-				'spellclass-2-perday-show':0,
-				'spellclass-2-domains-show':0,
-				'spelloptions-show':0,
-				'spell-lists-show':0,
-				'currency-show':0,
-				'carried-weight-show':0,
-				'loads-show':0,
-				'worn-items-show':0,
-				'other-items-show':0,
-				'equipment-show':0,
-				'npc-compimport-show':0,
-				'npc-details-show':0,
-				'npc-defense-show':0,
-				'npc-offense-show':0,
-				'npc-speed-show':0,
-				'npc-repeating-weapons-show':0,
-				'npc-spell-like-abilities-show':0,
-				'npc-tactics-show':0,
-				'npc-statistics-show':0,
-				'npc-feats-show':0,
-				'npc-mythic-feats-show':0,
-				'npc-skills-show':0,
-				'npc-ecology-show':0,
-				'npc-special-abilities-show':0,
-				'custom-attr-sect-a-show':0,
-				'custom-attr-sect-c-show':0,
-				'custom-attr-sect-b-show':0,
-				'custom-attr-sect-d-show':0,
-				'custom-attr-sect-n-show':0,
-				'header-image-show':0,
-				'sheet-import-show':0,
+		'sheet-conditions-show':1,
+				'buffstop-show':1,
+				'command-buttons-show':1,
+				'NPC-command-buttons-show':1,
+				'character-details-show':1,
+				'ability-scores-show':1,
+				'class-info-show':1,
+				'class1_show':1,
+				'class2_show':1,
+				'class3_show':1,
+				'health-and-wounds-show':1,
+				'initiative-show':1,
+				'macro-text-show':1,
+				'notes-show':1,
+				'saves-show':1,
+				'defense-values-show':1,
+				'armor-shield-show':1,
+				'sanity-show':1,
+				'defense-notes-show':1,
+				'attack-bonuses-show':1,
+				'atkm2_show':1,
+				'attack-notes-show':1,
+				'attack-options-show':1,
+				'two-weapon-show':1,
+				'attacks-show':1,
+				'skill-ranks-show':1,
+				'skill_options-show':1,
+				'skills-show':1,
+				'artistry-show':1,
+				'craft-show':1,
+				'knowledge-show':1,
+				'lore-show':1,
+				'perform-show':1,
+				'profession-show':1,
+				'misc-show':1,
+				'skill-notes-show':1,
+				'ability-command-buttons-show':1,
+				'NPC-ability-command-buttons-show':1,
+				'feats-show':1,
+				'mythic-info-show':1,
+				'psionic-info-show':1,
+				'abilities-show':1,
+				'spellclasses-show':1,
+				'spellclass-0-show':1,
+				'spellclass-0-spellpoints-show':1,
+				'spellclass-0-spells-notes-show':1,
+				'spellclass-0-perday-show':1,
+				'spellclass-0-domains-show':1,
+				'domain02_show':1,
+				'domain03_show':1,
+				'spellclass-1-show':1,
+				'spellclass-1-spellpoints-show':1,
+				'spellclass-1-spells-notes-show':1,
+				'spellclass-1-perday-show':1,
+				'spellclass-1-domains-show':1,
+				'spellclass-2-show':1,
+				'spellclass-2-spellpoints-show':1,
+				'spellclass-2-spells-notes-show':1,
+				'spellclass-2-perday-show':1,
+				'spellclass-2-domains-show':1,
+				'spelloptions-show':1,
+				'spell-lists-show':1,
+				'currency-show':1,
+				'carried-weight-show':1,
+				'loads-show':1,
+				'worn-items-show':1,
+				'other-items-show':1,
+				'equipment-show':1,
+				'npc-compimport-show':1,
+				'npc-details-show':1,
+				'npc-defense-show':1,
+				'npc-offense-show':1,
+				'npc-speed-show':1,
+				'npc-repeating-weapons-show':1,
+				'npc-spell-like-abilities-show':1,
+				'npc-tactics-show':1,
+				'npc-statistics-show':1,
+				'npc-feats-show':1,
+				'npc-mythic-feats-show':1,
+				'npc-skills-show':1,
+				'npc-ecology-show':1,
+				'npc-special-abilities-show':1,
+				'custom-attr-sect-a-show':1,
+				'custom-attr-sect-c-show':1,
+				'custom-attr-sect-b-show':1,
+				'custom-attr-sect-d-show':1,
+				'custom-attr-sect-n-show':1,
+				'header-image-show':1,
+				'sheet-import-show':1,
 				'roll-template-info-show':1,
 				'macros-show':1,
-				'migrations-show':0,
-				'cleanup-show':0,
+				'migrations-show':1,
+				'cleanup-show':1,				
 				'buff-min-show':0,
 				'buff-expand-show':0,
 				'buff-column-show':0,
@@ -205,9 +206,10 @@ function expandAll  () {
 				'extra_fields_saves_show':1,
 				'extra_fields_spells_show':1,
 				'extra_fields_caster_show':1,
-				'extra_fields_abilities_show':11,
+				'extra_fields_abilities_show':1,
 				'extra_fields_init_show':1,
-				'extra_fields_speeds_show':1
+				'extra_fields_speeds_show':1,
+				'extra_fields_defense_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -217,17 +219,22 @@ function expandAll  () {
 						var prefix = rsection + "_" + id + "_";
 						switch (section) {
 							case 'weapon':
-								memo[prefix + "add-damage-show"] = 0;
-								memo[prefix + "iterative-attacks-show"] = 0;
-								memo[prefix + "advmacro-text-show"] = 0;
+								memo[prefix + "add-damage-show"] = 1;
+								memo[prefix + "iterative-attacks-show"] = 1;
+								memo[prefix + "advmacro-text-show"] = 1;
 								break;
 							case 'buff':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								break;
+							case 'buff2':
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'spells':
-								memo[prefix + "spell-misc-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "attack-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'class-ability':
 							case 'feat':
@@ -235,26 +242,28 @@ function expandAll  () {
 							case 'trait':
 							case 'mythic-ability':
 							case 'mythic-feat':
+								memo[prefix + "description-show"] = 1;
+								break;
 							case 'item':
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "armor-attributes-show"] = 0;
-								memo[prefix + "weapon-attributes-show"] = 0;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "armor-attributes-show"] = 1;
+								memo[prefix + "weapon-attributes-show"] = 1;
 								break;
 							case 'npc-spell-like-abilities':
-								memo[prefix + "attack-show"] = 0;
+								memo[prefix + "attack-show"] = 1;
 								break;
 							case 'ability':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "misc-show"] = 0;
-								memo[prefix + "showextrafields"] = 0;
-								memo[prefix + "range-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "showextrafields"] = 1;
+								memo[prefix + "range-show"] = 1;
 								break;
 						}
 						memo[prefix + "row-show"] = 0;
-						memo[prefix + "ids-show"] = 0;
-						if (section !== 'buff'){
-							memo[prefix + "macro-text-show"] = 0;
+						memo[prefix + "ids-show"] = 1;
+						if (section !== 'buff' && section!=='buff2'){
+							memo[prefix + "macro-text-show"] = 1;
 						}
 						return memo;
 					}, {});
@@ -267,40 +276,13 @@ function expandAll  () {
 	});
 }
 
-function showMiscFields () {
-	SWUtils.setWrapper({
-		'extra_fields_attacks_show':1,
-		'extra_fields_skills_show':1,
-		'extra_fields_saves_show':1,
-		'extra_fields_spells_show':1,
-		'extra_fields_defense_show':1,
-		'extra_fields_caster_show':1,
-		'extra_fields_abilities_show':1,
-		'extra_fields_init_show':1,
-		'extra_fields_speeds_show':1
-	},PFConst.silentParams);
-}
-function hideMiscFields () {
-	SWUtils.setWrapper({
-		'extra_fields_attacks_show':0,
-		'extra_fields_skills_show':0,
-		'extra_fields_saves_show':0,
-		'extra_fields_spells_show':0,
-		'extra_fields_defense_show':0,
-		'extra_fields_caster_show':0,
-		'extra_fields_abilities_show':0,
-		'extra_fields_init_show':0,
-		'extra_fields_speeds_show':0
-	},PFConst.silentParams);
-}
-
-
 /** Sets any values if sheet created brand new. Makes sure all migrations up to date.
  * makes sure NPC value set. 
  */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
+			 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
 			'attentionv161-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
@@ -322,356 +304,11 @@ function setupNewSheet (callback){
 	});
 }
 
-function updateAllCustomMenu (callback, eventInfo){
-    getAttrs(['customd1','customd2','customd3','customd4','customd5','customd6',
-        	'customd1-name','customd2-name','customd3-name','customd4-name','customd5-name','customd6-name',
-			'allcustom_macro','NPC-allcustom_macro'],function(v){
-        var macroStr='',npcMacroStr='',tempStr='';
-
-        if(v['customd1'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd1-name'])||'customd1') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd1_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd1_roll) ";
-        }
-        if(v['customd2'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd2-name'])||'customd2') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd2_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd2_roll) ";
-        }
-        if(v['customd3'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd3-name'])||'customd3') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd3_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd3_roll) ";
-        }
-        if(v['customd4'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd4-name'])||'customd4') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd4_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd4_roll) ";
-        }
-        if(v['customd5'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd5-name'])||'customd5') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd5_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd5_roll) ";
-        }
-        if(v['customd6'] ){
-            tempStr = "[" + (SWUtils.escapeForChatLinkButton(v['customd6-name'])||'customd6') + "](~@{character_id}|";
-			macroStr+=tempStr + "customd6_roll) ";
-			npcMacroStr+=tempStr + "NPC-customd6_roll) ";
-        }
-		if(macroStr || npcMacroStr){
-			macroStr = "{{roll20=^{custom}}} {{roll21="+macroStr+" }}";
-			npcMacroStr = "{{roll20=^{custom}}} {{roll21="+npcMacroStr+" }}";
-		}
-        if(macroStr !== v.allcustom_macro || npcMacroStr !== v['NPC-allcustom_macro']){
-            SWUtils.setWrapper({'allcustom_macro':macroStr,
-				'NPC-allcustom_macro':npcMacroStr},PFConst.silentParams,callback);
-        } else if (typeof callback === "function") {
-			callback();
-		}
-    });
-}
-
-function recalcCustomExpressions (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.customEquationMacros),
-	fields,
-	done = _.once(function () {
-		//TAS.debug("leaving PFSheet.recalcExpressions");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(countEqs, done);
-	try {
-		fields = _.reduce(PFConst.customEquationMacros,function(m,writeField,readField){
-			m = m.concat( [readField,writeField,'buff_'+PFBuffs.buffToTot[readField]+'-total'] );
-			return m;
-		},[]);
-		getAttrs(fields,function(v){
-			_.each(PFConst.customEquationMacros, function (writeField, readField) {
-				SWUtils.evaluateAndAdd(doneOne,silently,v[readField],writeField,v[writeField],v['buff_'+PFBuffs.buffToTot[readField]+'-total']);
-			});
-		});
-	} catch (err2) {
-		TAS.error("PFSheet.recalcCustomExpressions OUTER wtf how did this happen?", err2);
-	} finally {
-		done();
-	}
-}
-
-function recalcExpressions (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.equationMacros),
-	done = _.once(function () {
-		//TAS.debug("leaving PFSheet.recalcExpressions");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(countEqs, done);
-	try {
-		_.each(PFConst.equationMacros, function (writeField, readField) {
-			try {
-				SWUtils.evaluateAndSetNumber(readField, writeField, 0, doneOne, silently);
-			} catch (err) {
-				TAS.error("PFSheet.recalcExpressions", err);
-				doneOne();
-			}
-		});
-	} catch (err2) {
-		TAS.error("PFSheet.recalcExpressions OUTER wtf how did this happen?", err2);
-	} finally {
-		done();
-	}
-}
-function recalcDropdowns (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.abilityScoreManualDropdowns),
-	countDD2 = _.size(PFConst.levelPlusBABManualDropdowns),
-	done = _.once(function () {
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	donetwo = _.after(2,done),
-	doneOne = _.after(countEqs, donetwo),
-	doneOther = _.after(countDD2,donetwo);
-	try {
-		_.each(PFConst.abilityScoreManualDropdowns, function (writeField, readField) {
-			try {
-				PFUtilsAsync.setDropdownValue(readField, writeField, doneOne, silently);
-			} catch (err) {
-				TAS.error("PFSheet.recalcDropdowns", err);
-				doneOne();
-			}
-		});
-		_.each(PFConst.levelPlusBABManualDropdowns,function(readField){
-			try {
-				PFUtilsAsync.setDropdownValue(readField, readField+'-mod', doneOther, silently);
-			} catch (err) {
-				TAS.error("PFSheet.recalcDropdowns", err);
-				doneOther();
-			}			
-		});
-	} catch (err2) {
-		TAS.error("PFSheet.recalcDropdowns OUTER wtf how did this happen?", err2);
-	} finally {
-		done();
-	}
-}
-
-var migrateDropdowns = TAS.callback(function callmigrateAbilityDropdownsToManual(callback,oldversion){
-    var done = _.once(function(){
-        if (typeof callback === "function"){
-            callback();
-        }
-    }),
-    updatedGroup = _.after(4,function(){
-        setAttrs({'migrated_ability_dropdowns2':1},PFConst.silentParams,done);
-    }),
-	updateRepeatingAttackTypes = function(){
-		var sections,doneOneSection;
-		sections  = Object.keys(PFConst.repeatingAttackTypeManualDropdowns);
-		if(!_.size(sections)){
-			updatedGroup();
-			return;
-		}
-		doneOneSection = _.after(_.size(sections),updatedGroup);
-		//TAS.debug("the sections are ",sections);
-		sections.forEach(function(section){
-			getSectionIDs('repeating_'+section,function(ids){
-				var fields, attr='';
-				if(!ids || _.size(ids)===0){
-					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for "+ section);
-					doneOneSection();
-					return;
-				}
-				attr='_'+PFConst.repeatingAttackTypeManualDropdowns[section];
-				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
-				getAttrs(fields,function(v){
-					var setter, tempstr='';
-					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
-					setter = Object.keys(v).reduce(function(m,a){
-						try{
-							if (v[a] && v[a][0]!=="0"){
-								tempstr=v[a].replace('@{','').replace('}','');
-								if (tempstr!==v[a]){
-									m[a]=tempstr;
-								}
-							}
-						} catch (err){
-							TAS.error("PFSheet.migrate repeating attacktype dropdowns for: "+section,err);
-						} finally {
-							return m;
-						}
-					},{});
-					if (_.size(setter)>0){
-						TAS.debug("Migrate attack dropdowns setting:",setter);
-						setAttrs(setter,PFConst.silentParams,doneOneSection);
-					} else {
-						doneOneSection();
-					}
-				});
-			});
-		});
-	},
-    updateRepeating= function(){
-        getSectionIDs("repeating_weapon",function(ids){
-            var fields;
-            if (!ids || _.size(ids)===0){
-                updatedGroup();
-                return;
-            }
-            fields =SWUtils.cartesianAppend(['repeating_weapon_'],ids,['damage-ability']);
-            getAttrs(fields,function(v){
-                var setter;
-				try {
-					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
-					setter = Object.keys(v).reduce(function(m,a){
-						var tempstr='';
-						if (v[a] && v[a]!=="0"){
-							tempstr=v[a].replace('@{','').replace('}','');
-							if (tempstr!==v[a]){
-								m[a]=tempstr;
-							}
-						}
-						return m;
-					},{});
-				} catch (err){
-					TAS.error("PFSheet.migrate repeating ability dropdowns ",err);
-				} finally {
-					if (_.size(setter)){
-						TAS.debug("Migrate repeatingweapon ability dropdowns setting:",setter);
-						setAttrs(setter,PFConst.silentParams,updatedGroup);
-					} else {
-						updatedGroup();
-					}
-				}
-            });
-        });
-    },
-    updateNonRepeating = function(){
-        var fields = Object.keys(PFConst.abilityScoreManualDropdowns);
-        getAttrs(fields,function(v){
-            var setter={};
-			try{
-				//TAS.debug("migrateAbilityDropdowns getting:",v);
-				setter =fields.reduce(function(m,a){
-					var tempstr='';
-					if (v[a]){
-						switch(a){
-							case 'concentration-0-ability':
-							case 'concentration-1-ability':
-							case 'concentration-2-ability':
-							case 'FF-ability':
-							case 'CMD-ability':
-							case 'sanity-ability':
-							case 'selected-ability-psionic-power':
-							case 'melee2-ability':
-							case 'ranged2-ability':
-							case 'cmb2-ability':
-								tempstr=PFUtils.findAbilityInString(v[a])||"0";
-								break;
-							default:
-								tempstr=PFUtils.findAbilityInString(v[a]);
-								break;
-						}
-					}
-					if (!tempstr && PFConst.manualDropdownDefaults[a]){
-						tempstr=PFConst.manualDropdownDefaults[a];
-					}
-					if (tempstr && tempstr!==v[a]){
-						m[a]=tempstr;
-					}
-					return m;
-				},{});
-			} catch (err){
-				TAS.error("PFSheet.migrate AbilityModDropdowns ",err);
-			} finally {
-				if (_.size(setter)){
-					TAS.debug("Migrate ability dropdowns setting:",setter);
-					setAttrs(setter,PFConst.silentParams,updatedGroup);
-				} else {
-					updatedGroup();
-				}
-			}
-        });
-    },
-    updateSkills = function(){
-        var fields = PFSkills.allTheSkills.map(function(s){return s+"-ability";});
-        getAttrs(fields,function(v){
-            var setter={};
-			try{
-				//TAS.debug("updateSkills getting:",fields,v);
-				setter = fields.reduce(function(m,a){
-					var tempstr='',tempskill='',matches,tempmatch='';
-					try {
-						if (v[a] && v[a].indexOf('@{')>=0){
-							tempstr=v[a].replace('@{','').replace('}','');
-						} else if ( !(/misc/i).test(a) && ( !v[a] ||  PFAbilityScores.abilitymods.indexOf(v[a])<0)){
-							matches = a.match(/Perform|Profession|Craft|Lore|Artistry|Knowledge/i);
-							if(matches){
-								switch(matches[0]){
-									case 'Perform':
-										tempstr='CHA-mod';
-										break;
-									case 'Craft':
-									case 'Knowledge':
-									case 'Profession':
-									case 'Artistry':
-									case 'Lore':
-										tempstr='INT-mod';
-										break;
-								}
-							}
-							if (!tempstr){
-								tempskill=a.slice(0,-8);
-								tempstr=PFSkills.coreSkillAbilityDefaults[tempskill];
-								if (!tempstr) {
-									tempstr = PFSkills.consolidatedSkillAbilityDefaults[tempskill];
-								}
-								if(tempstr){
-									tempstr=tempstr.toUpperCase()+'-mod';
-								}
-							}
-						}
-						if (tempstr && tempstr!==v[a]){
-							m[a]=tempstr;
-						}
-					} catch (skillerri) {
-						TAS.error("Migrate Skill dropdowns error skillerri on "+a,skillerri);
-					} finally {
-						return m;
-					}
-				},{});
-			} catch (err){
-				TAS.error("PFSheet.migrate Skills dropdowns ",err);
-			} finally {
-				if (_.size(setter)){
-					TAS.debug("Migrate skill dropdowns setting:",setter);
-					setAttrs(setter,PFConst.silentParams,updatedGroup);
-				} else {
-					TAS.error("Migrate skill dropdowns, there was nothing to set!");
-					updatedGroup();
-				}
-			}
-        });
-    };
-    getAttrs(['migrated_ability_dropdowns2'],function(v){
-        var setter={};
-		//TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
-        if(!parseInt(v.migrated_ability_dropdowns2,10)){
-            updateRepeating();
-            updateNonRepeating();
-			updateRepeatingAttackTypes();
-			updateSkills();
-        } else {
-            done();
-        }
-    });
-});
-
-export var migrate = TAS.callback(function callSheetMigrate(callback,oldversion){
-	migrateDropdowns(callback,oldversion);
-});
-
+/** Only updates things between versions, normally things that are not part of migrate()
+ *@param {number} oldversion the current version attribute
+ *@param {function} callback when done if no errors
+ *@param {function} errorCallback  call this if we get an error
+ */
 function upgrade (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFSheet.migrate");
@@ -778,7 +415,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFDefense.updateDefenses();
 			}
 			if (oldversion < 1.63){
-				migrateDropdowns(function(){
+				PFCustom.migrate(function(){
 					PFBuffs.migrate(null,oldversion);
 					PFSkills.migrate(function(){
 						PFSkills.recalculateSkills();
@@ -786,8 +423,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				});
 			}
 			if (oldversion===1.63){
-				showMiscFields();
-				recalcExpressions(function(){
+				PFCustom.recalculate(function(){
 					PFAbility.setRuleTabs();
 					PFInventory.updateLocations();
 					PFAttacks.adjustAllDamageDiceAsync();
@@ -887,17 +523,11 @@ function recalculateCore (callback, silently, oldversion) {
 	mythicOnce = _.once(function(){
 		PFMythic.recalculate(npcOnce, silently, oldversion);
 	}),
-	customExpressionsOnce = _.once(function () {
-		recalcCustomExpressions(mythicOnce, silently, oldversion);
-	}),
-	expressionsOnce = _.once(function () {
-		recalcExpressions(customExpressionsOnce, silently, oldversion);
-	}),
-	dropdownsOnce = _.once(function () {
-		recalcDropdowns(expressionsOnce, silently, oldversion);
+	customOnce = _.once(function () {
+		PFCustom.recalculate(mythicOnce, silently, oldversion);
 	}),
 	conditioncheckOnce = _.once(function () {
-		PFChecks.applyConditions(dropdownsOnce, silently, oldversion);
+		PFChecks.applyConditions(customOnce, silently, oldversion);
 	}),
 	classOnce = _.once(function () {
 		PFClassRaceGrid.recalculate(conditioncheckOnce, silently, oldversion);
@@ -917,14 +547,26 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
+/** migrates sheet specific things not part of other modules
+ * @param {number} oldversion the current version attribute
+ * @param {function} callback when done if no errors
+ * 
+ * @param {} callback 
+ * @param {*} oldversion 
+ */
+export function migrate (callback,oldversion){
+	if (typeof callback === "function"){
+		callback();
+	}
+}
+
 /** recalculate - all pages in sheet!  
  *@param {number} oldversion the current version attribute
  *@param {function} callback when done if no errors
  *@param {function} errorCallback  call this if we get an error
  */
-export var recalculate = TAS.callback(function callrecalculate(oldversion, callback, silently) {
+export function recalculate (oldversion, callback, silently) {
 	var done = function () {
-		updateAllCustomMenu();
 		TAS.info("leaving PFSheet.recalculate");
 		if (typeof callback === "function") {
 			callback();
@@ -941,7 +583,7 @@ export var recalculate = TAS.callback(function callrecalculate(oldversion, callb
 	});
 	silently=true;
 	migrate(callRecalcCore,oldversion);
-});
+}
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
  *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
  * */
@@ -1001,274 +643,9 @@ function checkForUpdate () {
 	});
 }
 
-function applyTemplate(name){
-	if (name==='giant'){
-		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
-		'STR-base','STR','STR-mod','CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('giant');
-			setter['npc-type'] = tempstr+' '+v['npc-type'];
-
-			setter = PFAbilityScores.modifyAbility('STR',4,v,setter);
-			setter = PFAbilityScores.modifyAbility('DEX',-2,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',4,v,setter);
-			} else {
-				setter = PFAbilityScores.modifyAbility('CHA',4,v,setter);
-			}
-
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint+=3;
-			setter['AC-natural']=tempint;
-
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint++;
-			setter['npc-cr']=tempint;
-
-			setter = PFSize.updateSize(1,v,null,setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else 	if (name==='giantremove'){
-		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
-		'STR-base','STR','STR-mod','CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('giant') + ' ';
-			if(v['npc-type']){
-				setter['npc-type'] = v['npc-type'].replace(tempstr,'');
-			}
-
-			setter = PFAbilityScores.modifyAbility('STR',-4,v,setter);
-			setter = PFAbilityScores.modifyAbility('DEX',2,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',-4,v,setter);
-			} else {
-				setter = PFAbilityScores.modifyAbility('CHA',-4,v,setter);
-			}
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint-=3;
-			setter['AC-natural']=tempint;
-
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint--;
-			setter['npc-cr']=tempint;
-
-			setter = PFSize.updateSize(-1,v,null,setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else if (name==='young') {
-		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
-		'STR-base','STR','STR-mod', 'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('young');
-			setter['npc-type'] = tempstr+' '+v['npc-type'];
-
-			setter = PFAbilityScores.modifyAbility('STR',-4,v,setter);
-			setter = PFAbilityScores.modifyAbility('DEX',4,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',-4,v,setter);
-			} else {
-				setter = PFAbilityScores.modifyAbility('CHA',-4,v,setter);
-			}
-
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint = Math.max(0, (tempint-2));
-			setter['AC-natural']=tempint;
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint--;
-			if(tempint<=0){
-				tempint='.5';
-			}
-			setter['npc-cr']=tempint;
-
-			setter = PFSize.updateSize(-1,v,null,setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else if (name==='youngremove') {
-		getAttrs(['npc-type','size','AC-natural','is_undead','npc-cr',
-		'STR-base','STR','STR-mod', 'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('young')+' ';
-			if (v['npc-type']){
-				setter['npc-type'] = v['npc-type'].replace(tempstr,'');
-			}
-			setter = PFAbilityScores.modifyAbility('STR',4,v,setter);
-			setter = PFAbilityScores.modifyAbility('DEX',-4,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',4,v,setter);
-			} else {
-				setter = PFAbilityScores.modifyAbility('CHA',4,v,setter);
-			}
-
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint += 2;
-			setter['AC-natural']=tempint;
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint++;
-			setter['npc-cr']=tempint;
-			setter = PFSize.updateSize(1,v,null,setter);
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else if (name==='advanced'){
-		getAttrs(['npc-type','size','is_undead','AC-natural','npc-cr',
-		'STR-base','STR','STR-mod',	'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod',
-		'INT-base','INT','INT-mod',	'WIS-base','WIS','WIS-mod','CHA-base','CHA','CHA-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('advanced');
-			setter['npc-type'] = tempstr+' '+v['npc-type'];
-
-			setter = PFAbilityScores.modifyAbility('STR',4,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',4,v,setter);
-			}
-			setter = PFAbilityScores.modifyAbility('DEX',4,v,setter);
-			if(parseInt(v['INT-base'])>2){
-				setter = PFAbilityScores.modifyAbility('INT',4,v,setter);
-			}
-			setter = PFAbilityScores.modifyAbility('WIS',4,v,setter);
-			setter = PFAbilityScores.modifyAbility('CHA',4,v,setter);
-
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint+=2;
-			setter['AC-natural']=tempint;
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint++;
-			setter['npc-cr']=tempint;
-
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else if (name==='degenerate'){
-		getAttrs(['npc-type','size','is_undead','AC-natural','npc-cr',
-		'STR-base','STR','STR-mod',	'CON-base','CON','CON-mod','DEX-base','DEX','DEX-mod',
-		'INT-base','INT','INT-mod',	'WIS-base','WIS','WIS-mod','CHA-base','CHA','CHA-mod'],function(v){
-			var setter={},tempstr='',tempint=0;
-			tempstr = SWUtils.getTranslated('degenerate');
-			setter['npc-type'] = tempstr+' '+v['npc-type'];
-			setter = PFAbilityScores.modifyAbility('STR',-4,v,setter);
-			if(!parseInt(v.is_undead,10)){
-				setter = PFAbilityScores.modifyAbility('CON',-4,v,setter);
-			}
-			setter = PFAbilityScores.modifyAbility('DEX',-4,v,setter);
-			setter = PFAbilityScores.modifyAbility('INT',-4,v,setter);
-			setter = PFAbilityScores.modifyAbility('WIS',-4,v,setter);
-			setter = PFAbilityScores.modifyAbility('CHA',-4,v,setter);
-			tempint = parseInt(v['AC-natural'],10)||0;
-			tempint-=2;
-			setter['AC-natural']=tempint;
-			tempint = parseInt(v['npc-cr'],10)||0;
-			tempint--;
-			if(tempint<=0){
-				tempint='.5';
-			}
-			setter['npc-cr']=tempint;
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	} else if (name==='celestial'||name==='fiendish'||name==='entropic'||name==='resolute' ){
-		getAttrs(['npc-type','npc-cr','npc-hd','DR','SR-macro-text','SR','resistances','vision','CHA-mod'],function(v){
-			var setter={},tempstr='',samestr='',opstr='',tempcr=0,temphd=0,tempint=0,newId='',prefix='';
-
-			tempstr = SWUtils.getTranslated(name);
-			setter['npc-type'] = tempstr+' '+v['npc-type'];
-
-			temphd=parseInt(v['npc-hd'],10)||0;
-			if(!(/darkvision/i).test(v.vision)){
-				tempstr = SWUtils.getTranslated('darkvision');
-				tempstr = tempstr+' 60' + getTranslationByKey('feet-abbrv');
-				if(v.vision){
-					tempstr = tempstr + ' ' + v.vision;
-				}
-				setter.vision=tempstr;
-			}
-
-			if(name==='celestial'){
-				opstr='Evil';
-				samestr='good';
-				tempstr='Resist Cold, Acid, Electricity ';
-			} else if (name==='fiendish'){
-				opstr='Good';
-				samestr='evil';
-				tempstr='Resist Cold and Fire ';
-			} else if (name==='entropic'){
-				opstr='Lawful';
-				samestr='chaos';
-				tempstr='Resist Acid and Fire ';
-			} else if (name==='resolute'){
-				opstr='chaotic';
-				samestr='law';
-				tempstr='Resist Acid, Cold, and Fire ';
-			}
-			
-			if(temphd<5){
-				tempstr+=' 5;';
-			} else if (temphd >=5 && temphd <=10){
-				tempstr+=' 10;';
-			} else {
-				tempstr+=' 15;';
-			}
-			setter.resistances= tempstr + (v.resistances||'');
-
-			tempstr='';
-			if(temphd >=5 && temphd <=10){
-				tempstr='5/'+opstr+';';
-			} else if (temphd > 10){
-				tempstr='10/'+opstr+';';
-			}
-			if(tempstr){
-				setter.DR = tempstr+(v.DR||'');
-			}
-			tempcr = parseInt(v['npc-cr'],10)||0;
-			if(temphd>=5){
-				tempcr++;
-				setter['npc-cr']=tempint;
-			}
-			tempint = parseInt(v.SR,10)||0;
-			if(tempint < (tempcr+5)){
-				tempstr=(v['SR-macro-text']||'')+'+5';
-				setter['SR-macro-text']= '@{npc-cr}+5';
-				setter.SR= (tempcr+5);
-			}
-			newId=generateRowID();
-			prefix='repeating_ability_'+newId+'_';
-			setter[prefix+'name']='Smite '+opstr;
-			setter[prefix + "ability_type"] = 'Su';
-			setter[prefix + "rule_category"] = 'monster-rule';
-			setter[prefix + 'showinmenu'] = '1';
-			setter[prefix + 'description']='smite '+opstr+' 1/day as a swift action (adds Cha bonus to attack rolls and damage bonus equal to HD against '+opstr+' foes; smite persists until target is dead or the celestial creature rests).';
-			setter[prefix + 'short-description']='Enable in buff list against 1 evil creature';
-			setter[prefix + 'frequency']='perday';
-			setter[prefix + 'max-calculation']='1';
-			setter[prefix + 'used_max']=1;
-
-			newId=generateRowID();
-			prefix='repeating_buff2_'+newId+'_';
-			setter[prefix+'name']='Smite '+opstr+' (Su) 1/day';
-			setter[prefix+'b1_bonus']='attack';
-			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='@{CHA-mod}';
-			setter[prefix+'b1_val']=parseInt(v['CHA-mod'],10);
-			setter[prefix+'b2_bonus']='attack';
-			setter[prefix+'b2_bonustype']='untyped';
-			setter[prefix+'b2_macro-text']='@{npc-hd}';
-			setter[prefix+'b2_val']=parseInt(v['npc-hd'],10);
-			setter[prefix+'notes'] = 'vs one '+opstr+' creature';
-			
-			SWUtils.setWrapper(setter,PFConst.silentParams,recalculate);
-		});
-	}
-	SWUtils.setWrapper({'template_to_add':'','add_template':0},PFConst.silentParams);
-}
-
 function registerEventHandlers () {
 	var eventToWatch='';
-	on("change:add_template",TAS.callback(function eventAddTemplate(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			getAttrs(['template_to_add','add_template'],function(v){
-				if(parseInt(v.add_template,10)){
-					applyTemplate(v.template_to_add);
-				}
-			});
-		}
-	}));
+
 	on("sheet:opened", TAS.callback(function eventSheetOpened() {
 		//eventInfo has undefined values for this event.
 		checkForUpdate();
@@ -1284,31 +661,6 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			expandAll();
 		}
-	});
-	//GENERIC DROPDOWNS
-	_.each(PFConst.abilityScoreManualDropdowns, function (write, read) {
-		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
-				//user changed the SELECTION
-				PFUtilsAsync.setDropdownValue(read, write);
-			}
-		}));
-	});
-
-	//GENERIC EQUATIONS
-	_.each(PFConst.equationMacros, function (write, read) {
-		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndSetNumber(read, write);
-		}));
-	});
-
-	_.each(PFConst.customEquationMacros,function(writeField,custField){
-		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
-			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
-		}));
 	});
 
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
@@ -1367,6 +719,7 @@ function registerEventHandlers () {
 			});
 		}
 	}));
+	//delete a list
 	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_buff2 change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
 	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1390,25 +743,7 @@ function registerEventHandlers () {
 			});
 		}
 	}));
-	on("change:customd1 change:customd2 change:customd3 change:customd4 change:customd5 change:customd6 change:customd1-name change:customd2-name change:customd3-name change:customd4-name change:customd5-name change:customd6-name",
-		TAS.callback(function customRollUpdate(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if(eventInfo.sourceType==='player'){
-				updateAllCustomMenu(eventInfo);
-			}
-	}));
-	on("change:use_advanced_options", TAS.callback(function eventShowMisc(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if(eventInfo.sourceType==='player'||eventInfo.sourceType==='api'){
-			getAttrs(['use_advanced_options'],function(v){
-				if(parseInt(v.use_advanced_options,10)){
-					showMiscFields();
-				} else {
-					hideMiscFields();
-				}
-			});
-		}
-	}));
+
 }
 registerEventHandlers();
 

@@ -145,9 +145,9 @@ function setTypeTab(callback,silently,id,eventInfo){
 	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
 		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
 		var setter={},params=PFConst.silentParams;
-		TAS.debug("############ PFAbility setTypeTab",v);
+		//TAS.debug("############ PFAbility setTypeTab",v);
 		setter[prefix + 'tabcat2']=v[prefix + 'ability_type']||'-1';
-		TAS.notice("############","Ability setting ",setter);
+		//TAS.notice("############","Ability setting ",setter);
 		SWUtils.setWrapper(setter,params);
 	});
 }
@@ -156,7 +156,7 @@ function setRuleTab (callback,silently,id,eventInfo){
 	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
 		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
 		var setter={}, ruleForTab='', params=PFConst.silentParams;
-		TAS.debug("############ PFAbility setRuleTab",v);
+		//TAS.debug("############ PFAbility setRuleTab",v);
 		switch(v[prefix + 'rule_category']){
 			case 'racial-trait':
 				ruleForTab='trait';
@@ -199,7 +199,7 @@ function setRuleTab (callback,silently,id,eventInfo){
 			setter[prefix + 'frequency']="not-applicable";
 		}
 		if(_.size(setter)){
-			TAS.notice("############","Ability setting ",setter);
+			//TAS.notice("############","Ability setting ",setter);
 			SWUtils.setWrapper(setter,params,setClassName);
 		}
 	});
