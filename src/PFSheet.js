@@ -300,7 +300,8 @@ function hideMiscFields () {
  */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
+		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
+			 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
 			'attentionv161-show':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
@@ -1367,6 +1368,7 @@ function registerEventHandlers () {
 			});
 		}
 	}));
+	//delete a list
 	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_buff2 change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
 	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1390,6 +1392,7 @@ function registerEventHandlers () {
 			});
 		}
 	}));
+	//custom page
 	on("change:customd1 change:customd2 change:customd3 change:customd4 change:customd5 change:customd6 change:customd1-name change:customd2-name change:customd3-name change:customd4-name change:customd5-name change:customd6-name",
 		TAS.callback(function customRollUpdate(eventInfo){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1397,6 +1400,7 @@ function registerEventHandlers () {
 				updateAllCustomMenu(eventInfo);
 			}
 	}));
+	//show / hide extra fields
 	on("change:use_advanced_options", TAS.callback(function eventShowMisc(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if(eventInfo.sourceType==='player'||eventInfo.sourceType==='api'){
