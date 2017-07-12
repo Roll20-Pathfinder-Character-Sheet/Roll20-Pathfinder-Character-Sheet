@@ -67,9 +67,6 @@ function expandAll  () {
 				'macro-text-show':0,
 				'notes-show':0,
 				'saves-show':0,
-				'extra_fields_saves_show':1,
-				'extra_fields_spells_show':1,
-				'extra_fields_caster_show':1,
 				'defense-values-show':0,
 				'armor-shield-show':0,
 				'sanity-show':0,
@@ -207,7 +204,10 @@ function expandAll  () {
 				'extra_fields_skills_show':1,
 				'extra_fields_saves_show':1,
 				'extra_fields_spells_show':1,
-				'extra_fields_caster_show':1
+				'extra_fields_caster_show':1,
+				'extra_fields_abilities_show':11,
+				'extra_fields_init_show':1,
+				'extra_fields_speeds_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -268,14 +268,16 @@ function expandAll  () {
 }
 
 function showMiscFields () {
-	TAS.debug("##############33333333 PFSheet showMiscFields!!!!!!!!!!!!!!");
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':1,
 		'extra_fields_skills_show':1,
 		'extra_fields_saves_show':1,
 		'extra_fields_spells_show':1,
 		'extra_fields_defense_show':1,
-		'extra_fields_caster_show':1
+		'extra_fields_caster_show':1,
+		'extra_fields_abilities_show':1,
+		'extra_fields_init_show':1,
+		'extra_fields_speeds_show':1
 	},PFConst.silentParams);
 }
 function hideMiscFields () {
@@ -285,7 +287,10 @@ function hideMiscFields () {
 		'extra_fields_saves_show':0,
 		'extra_fields_spells_show':0,
 		'extra_fields_defense_show':0,
-		'extra_fields_caster_show':0
+		'extra_fields_caster_show':0,
+		'extra_fields_abilities_show':0,
+		'extra_fields_init_show':0,
+		'extra_fields_speeds_show':0
 	},PFConst.silentParams);
 }
 

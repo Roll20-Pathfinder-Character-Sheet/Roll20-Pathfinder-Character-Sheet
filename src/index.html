@@ -1431,7 +1431,8 @@
 						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_ability-scores-show" data-i18n-aria-label="ability-scores" value="1" checked />
 						<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="ability-scores">Ability Scores</label></h2>
 						<div class="sheet-h2-section sheet-ability-scores">
-							<br style="display:none;" class="sheet-hide-readonly" />
+							<input type="checkbox" value="1" name="attr_extra_fields_abilities_show" title="@{extra_fields_abilities_show}" class="sheet-extra-show sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
+							<div class="sheet-cheat"></div>
 							<div class="sheet-table sheet-narrow-numbers-readonly">
 								<span class="sheet-table-name sheet-secondary-table-name" data-i18n="ability-scores">Ability Scores</span>
 								<div class="sheet-table-group-head">
@@ -1439,12 +1440,12 @@
 									<span class="sheet-table-header" data-i18n-title="ability-score" data-i18n="total">Total</span>
 									<span class="sheet-table-header sheet-right-border" data-i18n="modifier-abbrv">Mod</span>
 									<span class="sheet-table-header sheet-emphasize-field" data-i18n="base-value">Base</span>
-									<span class="sheet-table-header" data-i18n-title="inherent-bonus" data-i18n-aria-label="inherent-bonus" data-i18n="inherent-abbrv">Inher</span>
+									<span class="sheet-table-header sheet-extra-sect" data-i18n-title="inherent-bonus" data-i18n-aria-label="inherent-bonus" data-i18n="inherent-abbrv">Inher</span>
 									<span class="sheet-table-header" data-i18n-title="enhancement-bonus" data-i18n="enhancement-abbrv">Enhan</span>
 									<span class="sheet-table-header" data-i18n-title="miscellaneous-bonus" data-i18n="miscellaneous-abbrv">Misc</span>
 									<span class="sheet-table-header" data-i18n="buffs">Buffs</span>
 									<span class="sheet-table-header" data-i18n-title="ability-damage-desc" data-i18n="damage">Damage</span>
-									<span class="sheet-table-header" data-i18n-title="ability-penalty-desc" data-i18n="penalty">Penalty</span>
+									<span class="sheet-table-header sheet-extra-sect" data-i18n-title="ability-penalty-desc" data-i18n="penalty">Penalty</span>
 									<span class="sheet-table-header" data-i18n-title="ability-drain-desc" data-i18n="drain">Drain</span>
 									<span class="sheet-table-header" data-i18n-title="debuff-title" data-i18n="debuff">Debuff</span>
 									<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
@@ -1456,12 +1457,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{STR}" type="text" name="attr_STR" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_STR-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{STR-mod}" type="number" name="attr_STR-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{STR-base}" type="text" name="attr_STR-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{STR-inherent}" type="number" name="attr_STR-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{STR-inherent}" type="number" name="attr_STR-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{STR-enhance}" type="number" name="attr_STR-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{STR-misc}" type="number" name="attr_STR-misc" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input title="@{buff_STR-total}" type="number" name="attr_buff_STR-total" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input title="@{STR-damage}" type="number" name="attr_STR-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{STR-penalty}" type="number" name="attr_STR-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{STR-penalty}" type="number" name="attr_STR-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{STR-drain}" type="number" name="attr_STR-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_STR-total_penalty}" name="attr_buff_STR-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input title="@{STR-cond}" type="number" name="attr_STR-cond" value="0" class="sheet-calc" readonly /></span>
@@ -1472,12 +1473,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{DEX}" type="text" name="attr_DEX" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_DEX-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{DEX-mod}" type="number" name="attr_DEX-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{DEX-base}" type="text" name="attr_DEX-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{DEX-inherent}" type="number" name="attr_DEX-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{DEX-inherent}" type="number" name="attr_DEX-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-enhance}" type="number" name="attr_DEX-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-misc}" type="number" name="attr_DEX-misc" value="0" min="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input class="sheet-calc" readonly title="@{buff_DEX-total}" type="number" name="attr_buff_DEX-total" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-damage}" type="number" name="attr_DEX-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{DEX-penalty}" type="number" name="attr_DEX-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{DEX-penalty}" type="number" name="attr_DEX-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{DEX-drain}" type="number" name="attr_DEX-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_DEX-total_penalty}" name="attr_buff_DEX-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{DEX-cond}" type="number" name="attr_DEX-cond" value="0" max="0" /></span>
@@ -1488,12 +1489,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CON}" type="text" name="attr_CON" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CON-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CON-mod}" type="number" name="attr_CON-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CON-base}" type="text" name="attr_CON-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{CON-inherent}" type="number" name="attr_CON-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{CON-inherent}" type="number" name="attr_CON-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-enhance}" type="number" name="attr_CON-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-misc}" type="number" name="attr_CON-misc" value="0" min="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input class="sheet-calc" readonly title="@{buff_CON-total}" type="number" name="attr_buff_CON-total" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-damage}" type="number" name="attr_CON-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{CON-penalty}" type="number" name="attr_CON-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{CON-penalty}" type="number" name="attr_CON-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CON-drain}" type="number" name="attr_CON-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_CON-total_penalty}" name="attr_buff_CON-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{CON-cond}" type="number" name="attr_CON-cond" value="0" max="0" /></span>
@@ -1504,12 +1505,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{INT}" type="text" name="attr_INT" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_INT-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{INT-mod}" type="number" name="attr_INT-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{INT-base}" type="text" name="attr_INT-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{INT-inherent}" type="number" name="attr_INT-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{INT-inherent}" type="number" name="attr_INT-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-enhance}" type="number" name="attr_INT-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-misc}" type="number" name="attr_INT-misc" value="0" min="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input class="sheet-calc" readonly title="@{buff_INT-total}" type="number" name="attr_buff_INT-total" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-damage}" type="number" name="attr_INT-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{INT-penalty}" type="number" name="attr_INT-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{INT-penalty}" type="number" name="attr_INT-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{INT-drain}" type="number" name="attr_INT-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_INT-total_penalty}" name="attr_buff_INT-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{INT-cond}" type="number" name="attr_INT-cond" value="0" max="0" /></span>
@@ -1520,12 +1521,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{WIS}" type="text" name="attr_WIS" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_WIS-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{WIS-mod}" type="number" name="attr_WIS-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{WIS-base}" type="text" name="attr_WIS-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{WIS-inherent}" type="number" name="attr_WIS-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{WIS-inherent}" type="number" name="attr_WIS-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-enhance}" type="number" name="attr_WIS-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-misc}" type="number" name="attr_WIS-misc" value="0" min="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input class="sheet-calc" readonly title="@{buff_WIS-total}" type="number" name="attr_buff_WIS-total" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-damage}" type="number" name="attr_WIS-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{WIS-penalty}" type="number" name="attr_WIS-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{WIS-penalty}" type="number" name="attr_WIS-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{WIS-drain}" type="number" name="attr_WIS-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_WIS-total_penalty}" name="attr_buff_WIS-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{WIS-cond}" type="number" name="attr_WIS-cond" value="0" max="0" /></span>
@@ -1536,12 +1537,12 @@
 										<span class="sheet-table-cell sheet-number"><input class="sheet-calc sheet-number" readonly title="@{CHA}" type="text" name="attr_CHA" value="10" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input type="checkbox" class="sheet-warn-show" name="attr_CHA-modded" value="1"/><input class="sheet-calc sheet-highlight" readonly title="@{CHA-mod}" type="number" name="attr_CHA-mod" value="0" /></span>
 										<span class="sheet-table-cell sheet-right-border sheet-emphasize-field"><input class="sheet-number" title="@{CHA-base}" type="text" name="attr_CHA-base" value="10"/></span>
-										<span class="sheet-table-cell"><input title="@{CHA-inherent}" type="number" name="attr_CHA-inherent" value="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{CHA-inherent}" type="number" name="attr_CHA-inherent" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-enhance}" type="number" name="attr_CHA-enhance" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-misc}" type="number" name="attr_CHA-misc" value="0" min="0" /></span>
 										<span class="sheet-table-cell sheet-right-border"><input class="sheet-calc" readonly title="@{buff_CHA-total}" type="number" name="attr_buff_CHA-total" value="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-damage}" type="number" name="attr_CHA-damage" value="0" max="0" /></span>
-										<span class="sheet-table-cell"><input title="@{CHA-penalty}" type="number" name="attr_CHA-penalty" value="0" max="0" /></span>
+										<span class="sheet-table-cell sheet-extra-sect"><input title="@{CHA-penalty}" type="number" name="attr_CHA-penalty" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{CHA-drain}" type="number" name="attr_CHA-drain" value="0" max="0" /></span>
 										<span class="sheet-table-cell"><input title="@{buff_CHA-total_penalty}" name="attr_buff_CHA-total_penalty" type="number" value="0" class="sheet-calc" readonly /></span>
 										<span class="sheet-table-cell"><input class="sheet-calc" readonly title="@{CHA-cond}" type="number" name="attr_CHA-cond" value="0" max="0" /></span>
@@ -1890,6 +1891,8 @@
 						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_initiative-show" data-i18n-aria-label="initiative" value="1" checked />
 						<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="initiative-and-speeds">Initiative and Speed</label></h2>
 						<div class="sheet-h2-section sheet-initiative">
+							<input type="checkbox" value="1" name="attr_extra_fields_init_show" title="@{extra_fields_init_show}" class="sheet-extra-show sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
+							<div class="sheet-cheat"></div>
 							<div class="sheet-table sheet-narrow-numbers-readonly" style="margin-bottom:.5em;">
 								<span class="sheet-table-name" data-i18n="initiative">Initiative</span>
 								<div class="sheet-table sheet-init-group">
@@ -1902,9 +1905,9 @@
 										<span class="sheet-table-header"></span>
 										<span class="sheet-table-header" data-i18n="trait">Trait</span>
 										<span class="sheet-table-header"></span>
-										<span class="sheet-table-header sheet-super sheet-note-a" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
-										<span class="sheet-table-header"></span>
-										<span class="sheet-table-header"></span>
+										<span class="sheet-table-header sheet-extra-sect sheet-super sheet-note-a" style="width:6em;" data-i18n="miscellaneous-abbrv">Misc</span>
+										<span class="sheet-table-header sheet-extra-sect"></span>
+										<span class="sheet-table-header sheet-extra-sect"></span>
 										<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
                                         <span class="sheet-table-header"></span>
                                         <span class="sheet-table-header" data-i18n="buff">Buff</span>
@@ -1941,9 +1944,9 @@
 										<span class="sheet-table-cell sheet-hide-readonly"><input type="number" title="@{init-trait}" name="attr_init-trait" value="0"></span>
 										<span class="sheet-divider sheet-hide-readonly">+</span>
 										<input type="checkbox" name="attr_init-misc-mod_error" class="sheet-error-mshow" value="1" />
-										<span class="sheet-table-cell sheet-hide-readonly sheet-entry-20p-shrink sheet-highlight"><input class="sheet-macro-text-inline" type="text" title="@{init-misc}" name="attr_init-misc" value="" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></span>
-										<span class="sheet-table-cell sheet-hide-readonly sheet-highlight"><input type="number" title="@{init-misc-mod}" name="attr_init-misc-mod" value="0" class="sheet-calc" readonly></span>
-										<span class="sheet-divider sheet-hide-readonly">+</span>
+										<span class="sheet-table-cell sheet-extra-sect sheet-hide-readonly sheet-entry-20p-shrink sheet-highlight"><input class="sheet-macro-text-inline" type="text" title="@{init-misc}" name="attr_init-misc" value="" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place"></span>
+										<span class="sheet-table-cell sheet-extra-sect sheet-hide-readonly sheet-highlight"><input type="number" title="@{init-misc-mod}" name="attr_init-misc-mod" value="0" class="sheet-calc" readonly></span>
+										<span class="sheet-divider sheet-hide-readonly sheet-extra-sect">+</span>
 										<span class="sheet-table-cell">
 											<input type="text" title="@{init_mods}" name="attr_init_mods" value="(@{checks-cond}-@{condition-Deafened})" class="sheet-number" disabled />
 											<span class="sheet-show-readonly sheet-inverse-readonly"><br><span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span></span>
@@ -1987,7 +1990,9 @@
 						</div>
 					</div>
 					<input class="sheet-nextitem-show sheet-noshow" type="checkbox" name="attr_initiative-show" value="1" checked role="presentation" />
-					<div class="sheet-h2-section sheet-speeds" style="text-align:center;">
+					<div class="sheet-h2-section sheet-speeds">
+						<input type="checkbox" value="1" name="attr_extra_fields_speeds_show" title="@{extra_fields_speeds_show}" class="sheet-extra-show sheet-extra-saves-show sheet-selectedlabel-check sheet-hide-readonly" /><b class="sheet-hide-readonly" data-i18n="show-more-fields">Show More Fields</b>
+						<div class="sheet-cheat"></div>
 						<div class="sheet-table sheet-narrow-numbers-readonly">
 							<span class="sheet-secondary-table-name" data-i18n="speeds">Speeds</span>
 							<div class="sheet-table-group-head">
@@ -2002,9 +2007,9 @@
 									<span class="sheet-table-header sheet-left-border" data-i18n="fly">Fly</span>
 									<span class="sheet-table-header" data-i18n="swim">Swim</span>
 									<span class="sheet-table-header" data-i18n="climb">Climb</span>
-									<span class="sheet-table-header" data-i18n="burrow-speed">Burrow</span>
-									<span class="sheet-table-header sheet-entry-short sheet-entry-custom-header"><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_speed-misc-name" title="@{speed-misc-name}"  /></span>
-									<span class="sheet-table-header sheet-entry-short sheet-right-border sheet-entry-custom-header"><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_speed-misc2-name" title="@{speed-misc2-name}" /></span>
+									<span class="sheet-table-header sheet-extra-sect" data-i18n="burrow-speed">Burrow</span>
+									<span class="sheet-table-header sheet-extra-sect sheet-entry-short sheet-entry-custom-header"><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_speed-misc-name" title="@{speed-misc-name}"  /></span>
+									<span class="sheet-table-header sheet-extra-sect sheet-entry-short sheet-right-border sheet-entry-custom-header"><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined" placeholder="User Defined" name="attr_speed-misc2-name" title="@{speed-misc2-name}" /></span>
 									<span class="sheet-table-header sheet-hide-readonly" title="Run Multiplier" data-i18n-title="speed-multiplier-title" data-i18n-aria-label="speed-multiplier-title" data-i18n="run-multiplier-abbrv">Run Mult</span>
 									<span class="sheet-table-header" title="The maximum distance that the character can run in a straight line during your turn" data-i18n-title="speed-run-title" data-i18n-aria-label="speed-run-title" data-i18n="run">Run</span>
 								</div>
@@ -2017,15 +2022,15 @@
 									<span class="sheet-table-cell sheet-left-border"><input title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="5"></span>
 									<span class="sheet-table-cell"><input title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5"></span>
 									<span class="sheet-table-cell"><input title="@{speed-climb}" type="number" name="attr_speed-climb" value="0" step="5"></span>
-									<span class="sheet-table-cell"><input title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" /></span>
-									<span class="sheet-table-cell"><input title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5"></span>
-									<span class="sheet-table-cell sheet-right-border"><input title="@{speed-misc2}" type="number" name="attr_speed-misc2" value="0" step="5"></span>
+									<span class="sheet-table-cell sheet-extra-sect"><input title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" /></span>
+									<span class="sheet-table-cell sheet-extra-sect"><input title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5"></span>
+									<span class="sheet-table-cell sheet-extra-sect sheet-right-border"><input title="@{speed-misc2}" type="number" name="attr_speed-misc2" value="0" step="5"></span>
 									<span class="sheet-table-cell sheet-hide-readonly"><input title="@{run-mult}" type="number" name="attr_run-mult" value="4" step="1"></span>
 									<span class="sheet-table-cell"><input title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="sheet-calc" readonly></span>
 								</div>
 							</div>
 						</div>
-						<div class="sheet-hide-readonly" style="width: 100%;margin-top: .25em;">
+						<div class="sheet-hide-readonly" style="width: 100%;margin-top: .25em;text-align: center;">
 							<textarea class="sheet-inline-textarea" name="attr_speed-notes" title="@{speed-notes}" placeholder="Speed Notes" data-i18n-placeholder="speed-notes" style="margin-top: 0; margin-bottom: 0; height: 28px;"></textarea>
 							<label class="sheet-center sheet-small-label"><span data-i18n="speed-notes">Speed Notes</span></label>
 						</div>
