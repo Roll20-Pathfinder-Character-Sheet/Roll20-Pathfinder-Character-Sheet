@@ -100,7 +100,12 @@ export default {
 		"attk-CMB-misc": "attk-CMB-misc-mod",
 		"attk-melee2-misc": "attk-melee2-misc-mod",
 		"attk-ranged2-misc": "attk-ranged2-misc-mod",
-		"attk-CMB2-misc": "attk-CMB2-misc-mod"		
+		"attk-CMB2-misc": "attk-CMB2-misc-mod",
+		"kineticistburn_macro_text": "kineticistburn_max",
+		"internalbuffer_macro_text": "internalbuffer_max",
+		"spellclass-0-spell-points-misc": "spellclass-0-spell-points-misc-mod",
+		"spellclass-1-spell-points-misc": "spellclass-1-spell-points-misc-mod",
+		"spellclass-2-spell-points-misc": "spellclass-2-spell-points-misc-mod"		
 	},
 	customEquationMacros: {
 		"customa1": "customa1-mod",
