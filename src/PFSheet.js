@@ -416,21 +416,22 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.57){
 				PFDefense.updateDefenses();
 			}
-			if (oldversion < 1.63){
+			if (oldversion <= 1.63){
 				PFCustom.migrate(function(){
-					PFBuffs.migrate(null,oldversion);
-					PFSkills.migrate(function(){
-						PFSkills.recalculateSkills();
-					});
-				});
-			}
-			if (oldversion===1.63){
-				PFCustom.recalculate(function(){
-					PFAbility.setRuleTabs();
-					PFInventory.updateLocations();
-					PFAttacks.adjustAllDamageDiceAsync();
-					PFAttacks.updateDualWieldAttacks();
-					PFAttacks.recalculateRepeatingWeapons();
+					PFBuffs.migrate(function(){
+						PFBuffs.recalculate(function(){
+							PFCustom.recalculate(function(){
+								PFSkills.migrate(function(){
+									PFSkills.recalculateSkills();
+								});
+								PFAbility.setRuleTabs();
+								PFInventory.updateLocations();
+								PFAttacks.adjustAllDamageDiceAsync();
+								PFAttacks.updateDualWieldAttacks();
+								PFAttacks.recalculateRepeatingWeapons();
+							});
+						});
+					},oldversion);
 				});
 			}
 		}

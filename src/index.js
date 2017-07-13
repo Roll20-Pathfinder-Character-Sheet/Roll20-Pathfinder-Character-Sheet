@@ -26,7 +26,6 @@ PFConsole.log('      | ##       athfinder        ');
 PFConsole.log('   #  | ##    sheet version       ');
 PFConsole.log('    ### /           ' + ("0000" + PFConst.version.toFixed(2)).slice(-5) + '         ');
 PFConsole.log('                                  ');
-PFConsole.log('   PFSheet module loaded          ');
 //PFLog.modulecount++;
 //if (PFLog.modulecount === 35) {
 //	PFConsole.log('   All ' + PFLog.modulecount + ' Modules Loaded          ');
