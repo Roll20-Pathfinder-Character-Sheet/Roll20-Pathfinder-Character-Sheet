@@ -61,7 +61,6 @@
 	<label class="sheet-small-label2 sheet-npc-only sheet-narrow-numbers"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /><span data-i18n="hit-dice-abbrv">HD</span></label>
 	<label class="sheet-small-label2 sheet-pc-only sheet-narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="sheet-calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
 	<div class="sheet-cheat"></div>
-	<input type="checkbox" name="attr_use_horror_adventures" value="1" class="sheet-horror-show sheet-noshow" />
 	<div class="sheet-pfsheet">
 		<input type="checkbox" name="attr_readonly_show" value="1" class="sheet-readonly-show sheet-noshow" role="presentation" checked />
 		<input type="checkbox" name="attr_is_undead" value="1" class="sheet-noshow" role="presentation" />
@@ -2583,13 +2582,13 @@
 				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-horror-show" type="checkbox" name="attr_use_horror_adventures" value="1" />
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_san-show" data-i18n-aria-label="saving-throws" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+				<input class="sheet-showarrow sheet-h2arrow sheet-horror-sect" type="checkbox" name="attr_san-show" data-i18n-aria-label="saving-throws" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect sheet-horror-sect"><label class="sheet-horror-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="sanity">Sanity (BETA)</label></h2>
-				<div class="sheet-h2-section sheet-nontable sheet-medium-numbers sheet-horror-sect" role="section" data-i18n-aria-label="sanity" >
-					<span class="sheet-nontable-name sheet-horror-sect" data-i18n="sanity">Sanity</span>
+				<div class="sheet-h2-section sheet-nontable sheet-horror-sect" role="section" data-i18n-aria-label="sanity" >
+					<span class="sheet-nontable-name" data-i18n="sanity">Sanity</span>
 					<input type="checkbox" value="1" name="attr_extra_fields_san_show" title="@{extra_fields_san_show}" class="sheet-extra-show sheet-selectedlabel-check" /><b data-i18n="show-more-fields">Show More Fields</b>
 					<div class="sheet-cheat"></div>
-					<div class="sheet-table">
+					<div class="sheet-table  sheet-medium-numbers">
 						<div class="sheet-table-row">
 							<div class="sheet-table-cell sheet-small-label">
 								<button class="sheet-text-button sheet-pc-only sheet-entry-short" title="%{selected|SAN-Save} (will save)" type="roll" name="roll_SAN-Save" value="@{PC-whisper} @{san-save-macro-text}">&nbsp;<span style="vertical-align: middle;" data-i18n="sanity-abbrv">SAN</span></button>
@@ -2674,7 +2673,7 @@
 						<textarea name="attr_madnesses" class="sheet-inline-textarea sheet-half" data-i18n-placeholder="madnesses-and-effects" placeholder="Madnesses and effects" ></textarea>
 					</div>
 				</div>
-				<div class="sheet-cheat"></div>
+				<div class="sheet-cheat sheet-horror-sect"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_defense-notes-show" data-i18n-aria-label="defense-notes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="special-defense-notes">Special Defenses and Notes</label></h2>
 				<span class="sheet-nontable-name" data-i18n="special-defense-notes">Special Defenses and Notes </span>
@@ -7571,6 +7570,29 @@
 					</div>
 				</div>
 				<div class="sheet-cheat"></div>
+				<input class="sheet-burn-show" type="checkbox" name="attr_use_burn" value="1" />
+				<input class="sheet-showarrow sheet-h2arrow sheet-burn-sect" type="checkbox" name="attr_burn-show"  title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+				<h2 class="sheet-clickheader sheet-showsect sheet-burn-sect"><label class="sheet-burn-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">burn</label></h2>
+				<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
+					<div class="sheet-linked-custom">
+						<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
+						<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">3+@{CON-mod}</textarea>
+						<input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
+						<input type="hidden" name="attr_oldkineticistburn" value="0"  />
+						<div class="sheet-divider-db-lg">/</div>
+						<input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="sheet-calc sheet-highlight" readonly />
+						<span data-i18n="burn" >Burn </span>
+					</div>
+					<div class="sheet-linked-custom">
+						<input type="checkbox" name="attr_internalbuffer_max_error" class="sheet-error-mshow" value="1" />
+						<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">floor((@{class-0-level}-1)/5)</textarea>
+						<input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
+						<div class="sheet-divider-db-lg">/</div>
+						<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
+						<span data-i18n="internal-buffer" >Internal Buffer </span>
+					</div>
+				</div>			
+				<div class="sheet-cheat sheet-burn-sect"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_abilities-show" data-i18n-aria-label="abilities" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked  />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n="abilities">Abilities</label></h2>
 				<div class="sheet-h2-section sheet-abilities sheet-repeating-sect sheet-wide-readonly">
@@ -8419,24 +8441,34 @@
 							<div class="sheet-h3-section sheet-spellpoints sheet-table sheet-spellpoints-sect">
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
-										<span class="sheet-table-header" data-i18n="spell-points">Spell Points</span>
+										<span class="sheet-table-header sheet-entry-custom-header" style="min-width:8em;"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-0-spell-points_name" title="@{spellclass-0-spell-points_name}" type="text" value="Spell Points" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="points-per-day">Points/Day</span>
+										<span class="sheet-table-header" style="min-width:8em;" data-i18n="points-per-day">Points/Day</span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="base-points-per-day">Base points/day</span>
-										<span class="sheet-table-header" data-i18n="bonus-points">Ability Bonus</span>
-										<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">misc</span>
+										<span class="sheet-table-header" data-i18n="calculation">Calculation</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="base">Base</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="Ability">Ability</span>
+										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-per-day}" type="number" name="attr_spellclass-0-spell-points-per-day" value="0" /></span>
 										<span class="sheet-divider">/</span>
-										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-0-spell-points-per-day_max" value="(@{spellclass-0-spell-points-class} + [[ @{spellclass-0-spell-points-bonus} ]] + [[ @{spellclass-0-spell-points-misc} ]])" disabled /></span>
+										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-0-spell-points-per-day_max" value="(@{spellclass-0-spell-points-class} + @{spellclass-0-spell-points-bonus} + @{spellclass-0-spell-points-misc-mod})" disabled /></span>
 										<span class="sheet-divider">=</span>
+										<span class="sheet-table-cell sheet-linked-tablecell">
+											<input type="checkbox" value="1" name="attr_spellclass-0-spell-points-misc-mod_error" class="sheet-error-mshow" />
+											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-0-spell-points-misc}" name="attr_spellclass-0-spell-points-misc" data-i18n-placeholder="equation-macro-place" ></textarea>
+											<input type="number" value="0" name="attr_spellclass-0-spell-points-misc-mod" title="@{spellclass-0-spell-points-misc-mod}" class="sheet-calc sheet-narrow-numbers sheet-highlight"  readonly />
+										</span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-class}" type="number" name="attr_spellclass-0-spell-points-class" value="0" /></span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-bonus}" type="number" name="attr_spellclass-0-spell-points-bonus" value="0" /></span>
-										<span class="sheet-table-cell"><input title="@{spellclass-0-spell-points-misc}" type="number" name="attr_spellclass-0-spell-points-misc" value="0" /></span>
+										<span class="sheet-table-rightcell"></span>
 									</div>
 								</div>
 							</div>
@@ -8878,24 +8910,34 @@
 							<div class="sheet-h3-section sheet-spellpoints sheet-table sheet-spellpoints-sect">
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
-										<span class="sheet-table-header" data-i18n="spell-points">Spell Points</span>
+										<span class="sheet-table-header sheet-entry-custom-header" style="min-width:8em;"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-1-spell-points_name" title="@{spellclass-1-spell-points_name}" type="text" value="Spell Points" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="points-per-day">Points/Day</span>
+										<span class="sheet-table-header" style="min-width:8em;" data-i18n="points-per-day">Points/Day</span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="base-points-per-day">Base points per day</span>
-										<span class="sheet-table-header" data-i18n="bonus-points">Ability Bonus</span>
-										<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">misc</span>
+										<span class="sheet-table-header" data-i18n="calculation">Calculation</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="base">Base</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="Ability">Ability</span>
+										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-per-day}" type="number" name="attr_spellclass-1-spell-points-per-day" value="0" /></span>
 										<span class="sheet-divider">/</span>
-										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-1-spell-points-per-day_max" value="(@{spellclass-1-spell-points-class} + [[ @{spellclass-1-spell-points-bonus} ]] + [[ @{spellclass-1-spell-points-misc} ]])" disabled /></span>
+										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-1-spell-points-per-day_max" value="(@{spellclass-1-spell-points-class} + @{spellclass-1-spell-points-bonus} + @{spellclass-1-spell-points-misc})" disabled /></span>
 										<span class="sheet-divider">=</span>
+										<span class="sheet-table-cell sheet-linked-tablecell">
+											<input type="checkbox" value="1" name="attr_spellclass-1-spell-points-misc-mod_error" class="sheet-error-mshow" />
+											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-1-spell-points-misc}" name="attr_spellclass-1-spell-points-misc" data-i18n-placeholder="equation-macro-place" ></textarea>
+											<input type="number" value="0" name="attr_spellclass-1-spell-points-misc-mod" title="@{spellclass-1-spell-points-misc-mod}" class="sheet-calc sheet-narrow-numbers sheet-highlight"  readonly />
+										</span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-class}" type="number" name="attr_spellclass-1-spell-points-class" value="0" /></span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-bonus}" type="number" name="attr_spellclass-1-spell-points-bonus" value="0" /></span>
-										<span class="sheet-table-cell"><input title="@{spellclass-1-spell-points-misc}" type="number" name="attr_spellclass-1-spell-points-misc" value="0" /></span>
+										<span class="sheet-table-rightcell"></span>
 									</div>
 								</div>
 							</div>
@@ -9337,24 +9379,34 @@
 							<div class="sheet-h3-section sheet-spellpoints sheet-table sheet-spellpoints-sect">
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
-										<span class="sheet-table-header" data-i18n="spell-points">Spell Points</span>
+										<span class="sheet-table-header sheet-entry-custom-header" style="min-width:8em;"><input class="sheet-entry-custom-header sheet-entry-med" name="attr_spellclass-2-spell-points_name" title="@{spellclass-2-spell-points_name}" type="text" value="Spell Points" data-i18n-placeholder="user-defined" placeholder="User Defined" /></span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="points-per-day">Points/Day</span>
+										<span class="sheet-table-header" style="min-width:8em;" data-i18n="points-per-day">Points/Day</span>
 										<span class="sheet-table-header sheet-divider"></span>
-										<span class="sheet-table-header" data-i18n="base-points-per-day">Base points per day</span>
-										<span class="sheet-table-header" data-i18n="bonus-points">Ability Bonus</span>
-										<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">misc</span>
+										<span class="sheet-table-header" data-i18n="calculation">Calculation</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="base">Base</span>
+										<span class="sheet-table-header sheet-divider"></span>
+										<span class="sheet-table-header" style="min-width:6em;" data-i18n="Ability">Ability</span>
+										<span class="sheet-table-header sheet-table-rightcell"></span>
 									</div>
 								</div>
 								<div class="sheet-table-group">
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-per-day}" type="number" name="attr_spellclass-2-spell-points-per-day" value="0" /></span>
 										<span class="sheet-divider">/</span>
-										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-2-spell-points-per-day_max" value="(@{spellclass-2-spell-points-class} + [[ @{spellclass-2-spell-points-bonus} ]] + [[ @{spellclass-2-spell-points-misc} ]])" disabled /></span>
+										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-per-day|max}" type="text" class="sheet-number" name="attr_spellclass-2-spell-points-per-day_max" value="(@{spellclass-2-spell-points-class} + @{spellclass-2-spell-points-bonus} + @{spellclass-2-spell-points-misc-mod} )" disabled /></span>
 										<span class="sheet-divider">=</span>
+										<span class="sheet-table-cell sheet-linked-tablecell">
+											<input type="checkbox" value="1" name="attr_spellclass-2-spell-points-misc-mod_error" class="sheet-error-mshow" />
+											<textarea class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" title="@{spellclass-2-spell-points-misc}" name="attr_spellclass-2-spell-points-misc" data-i18n-placeholder="equation-macro-place" ></textarea>
+											<input type="number" value="0" name="attr_spellclass-2-spell-points-misc-mod" title="@{spellclass-2-spell-points-misc-mod}" class="sheet-calc sheet-narrow-numbers sheet-highlight"  readonly />
+										</span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-class}" type="number" name="attr_spellclass-2-spell-points-class" value="0" /></span>
+										<span class="sheet-divider">+</span>
 										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-bonus}" type="number" name="attr_spellclass-2-spell-points-bonus" value="0" /></span>
-										<span class="sheet-table-cell"><input title="@{spellclass-2-spell-points-misc}" type="number" name="attr_spellclass-2-spell-points-misc" value="0" /></span>
+										<span class="sheet-table-rightcell"></span>
 									</div>
 								</div>
 							</div>
@@ -13064,6 +13116,20 @@
 					<span class="sheet-table-config-row-name" data-i18n="pathfinder-psionics">Pathfinder Psionics</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{psionics-show}" name="attr_psionics-show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="toggle-psionics">Display/Enable Psionics Character Sheet Items</span></b>
+					</span>
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" data-i18n="advanced-class-guide">Advanced Class Guide</span>
+					<span class="sheet-table-cell sheet-left">
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-arcane-reservoir-title" /><b data-i18n-title="show-arcane-reservoir-title" data-i18n="show-phrenic-pool"> Show arcane reservoir</b>
+					</span>
+				</div>
+				<div class="sheet-table-row">
+					<span class="sheet-table-config-row-name" data-i18n="occult-adventures">Occult Adventures</span>
+					<span class="sheet-table-cell sheet-left">
+						<input type="checkbox" title="@{use_burn}" name="attr_use_burn" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="use-kineticist-burn" /><b><span data-i18n-title="use-kineticist-burn" data-i18n="use-kineticist-burn"> Use Kinticist Burn</span></b>
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-phrenic-pool-title" /><b data-i18n-title="show-phrenic-pool-title" data-i18n="show-phrenic-pool"> Show Phrenic Pool</b>
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-mesmerist-tricks-title" /><b data-i18n-title="show-mesmerist-tricks-title" data-i18n="show-mesmerist-tricks"> Show Memserist Tricks</b>
 					</span>
 				</div>
 				<div class="sheet-table-row">

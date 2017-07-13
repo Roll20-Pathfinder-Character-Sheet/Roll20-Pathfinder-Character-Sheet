@@ -33,6 +33,7 @@ import * as PFClassRaceGrid from './PFClassRaceGrid';
 import * as PFConditions from './PFConditions';
 import * as PFNPCParser from './PFNPCParser';
 import * as PFHorror from './PFHorror';
+import * as PFOccult from './PFOccult';
 
 function expandAll  () {
 	getAttrs(["expandall"], function (v) {

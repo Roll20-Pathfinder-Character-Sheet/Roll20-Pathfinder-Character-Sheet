@@ -688,7 +688,7 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom > span {
 	display:block;
 	clear:both;
-	width:100%;
+	width:calc(100% - 1em);
 	background-color:transparent;
 }
 .sheet-linked-custom-notes > span,
@@ -3026,8 +3026,6 @@ input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-g
 .sheet-iterations-show:not(:checked) ~ .sheet-iterative_attack_section,
 .sheet-armor-attributes-show:not(:checked)~.sheet-armor-attributes,
 .sheet-weapon-attributes-show:not(:checked)~.sheet-weapon-attributes,
-.sheet-horror-show:not(:checked)~.sheet-pfsheet .sheet-horror-sect, 
-.sheet-dual-wield-show:not(:checked)~.sheet-dual-wield-sect,
 /* skills */
 .sheet-custom-skill-2-show:not(:checked) ~ .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-2,
 .sheet-custom-skill-3-show:not(:checked) ~ .sheet-custom-skill-6-show:not(:checked) ~ .sheet-custom-skill-10-show:not(:checked) ~ .sheet-custom-skill-3,
@@ -4769,6 +4767,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-config-show:checked ~ .sheet-pfsheet,
 .sheet-config-show:not(:checked) ~ .sheet-section-config,
 /* config page toggles override all others: */
+.sheet-burn-show:not(:checked) ~ .sheet-burn-sect, 
+.sheet-horror-show:not(:checked) ~ .sheet-horror-sect, 
+.sheet-dual-wield-show:not(:checked)~.sheet-dual-wield-sect,
+
 .sheet-spellpoints-show:not(:checked) ~ .sheet-section-spellclass .sheet-spellpoints-sect,
 .sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-manual-column-show:not(:checked) ~ div .sheet-spell-userdef-column,
 .sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-advanced-spell-option,

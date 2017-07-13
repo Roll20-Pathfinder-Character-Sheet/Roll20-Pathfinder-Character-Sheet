@@ -100,7 +100,17 @@ function registerEventHandlers () {
 		if(eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
             setSanityThreshold();
 		}
-	}));
+    }));
+    on("change:use_horror_adventures",TAS.callback(function eventUseBurn(eventInfo){
+    getAttrs(['use_horror_adventures'],function(v){
+        if(parseInt(v.use_horror_adventures,10)){
+            setSanityScore();
+            setSanityThreshold();
+        }
+    });
+}));
+
+
 }
 registerEventHandlers();
 //PFConsole.log('   PFHorror module loaded         ');
