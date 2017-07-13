@@ -3076,44 +3076,6 @@
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-Placeholder="alternate-ability-cmb-desc" Placeholder="Alternate ability combat maneuver" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}</textarea></span>
 							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage">Damage</span></span></span>
-								<span class="sheet-table-cell"><input type="text" title="@{DMG_melee-mod}" name="attr_DMG_melee-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
-								<span class="sheet-divider">=</span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-divider"></span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-table-divider sheet-extra-sect"></span>
-								<span class="sheet-table-cell sheet-extra-sect"></span>
-								<span class="sheet-table-divider"></span>
-								<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">-</span>
-								<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
-								<span class="sheet-table-cell sheet-left-border"></span>
-								<span class="sheet-table-cell"></span>
-							</div>
-							<div class="sheet-table-row">
-								<span class="sheet-table-row-name sheet-center"><span class="sheet-rowname-button" style="font-size:1.3em;font-weight:normal;">+<span data-i18n="damage-ranged-abbrv">Ranged dmg</span></span></span>
-								<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_dmg_ranged-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
-								<span class="sheet-divider">=</span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-divider"></span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-table-cell"></span>
-								<span class="sheet-table-divider sheet-extra-sect"></span>
-								<span class="sheet-table-cell sheet-extra-sect"></span>
-								<span class="sheet-table-divider"></span>
-								<span class="sheet-table-cell sheet-right"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-divider">-</span>
-								<span class="sheet-table-cell"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></span>
-								<span class="sheet-table-cell sheet-left-border"></span>
-								<span class="sheet-table-cell"></span>
-							</div>
 						</div>
 					</div>
 				</div>
