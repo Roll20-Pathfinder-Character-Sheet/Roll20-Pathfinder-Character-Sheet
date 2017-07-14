@@ -34,7 +34,7 @@ buffTotFields = _.chain(buffColumns).map(function(buff){
 		} else {
 			return ['buff_'+buff+'-total','buff_'+buff+'_exists','buff_'+buff+'-total_penalty', 'buff_'+buff+'_penalty_exists'];
 		}
-	}).flatten().value()
+	}).flatten().value().concat(['buff_check_ability-total','buff_dmg_melee-total'])
 ;
 
 function clearBuffTotals (callback,silently){
@@ -175,52 +175,55 @@ function updateBuffTotal (col,ids,v,setter){
 		setter = setter || {};
 		if(buffToTotExceptions[col]){
 			totcol=buffToTotExceptions[col];
-		}		
+		}
+		TAS.notice("Updating "+col+" the total is "+totcol,buffToTotExceptions,v);
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 		ids = ids.filter(function(id){
 				var prefix = 'repeating_buff_'+id+'_buff-';
 				return  ((parseInt(v[prefix + col + '-show'],10)||0)!==0) && ((parseInt(v[prefix+col],10)||0)!==0);
 			});
-		
+		TAS.debug("updating "+ col+" there are "+_.size(ids)+" rows");
 		if(_.size(ids)>0){
 			rows = ids.map(function(id){
-				var vals={val:0};
-				vals.val = parseInt(v['repeating_buff_'+id+'_buff-'+col],10)||0;
-				return vals;
+				return (parseInt(v['repeating_buff_'+id+'_buff-'+col],10)||0);
 			});
 
 			TAS.debug("PFBuffsOld ROWS NOW:",rows);
 			if(col==='HP-temp'){
 				sums.sum = rows.filter(function(row){
-					return row.val>0;
+					return row>0;
 				}).reduce(function(m,row){
-					m+=row.val;
+					m+=row;
 					return m;
 				},0);
 			} else if (col==='size' ){
 				sums = rows.reduce(function(m,row){
-					if(row.val>0){
-						m.sum = Math.max(m.sum,row.val);
-					}  else if (row.val<0){
-						m.pen = Math.min(m.pen,row.val);
+					if(row>0){
+						m.sum = Math.max(m.sum,row);
+					}  else if (row<0){
+						m.pen = Math.min(m.pen,row);
 					}
 					return m;
 				},sums);
+				sums.sum += sums.pen;
+				sums.pen =0;
 			} else if (isAbility) {
 				sums = rows.reduce(function(m,row){
-					if (row.val<0){
-						m.pen += row.val;
-					} else{
-						m.sum += row.val;
+					if (row<0){
+						m.pen += row;
+					} else if (row > 0){
+						m.sum += row;
 					}
 					return m;
 				},sums);
 			} else {
+				TAS.debug("now calculating sum for "+ col);
 				sums.sum = rows.reduce(function(m,row){
-					TAS.debug("ADDING "+row.val+" to m for "+col,row);
-					m += row.val;
+					TAS.debug("ADDING "+row+" to m for "+col +" is "+ row);
+					m += row;
 					return m;
 				},0);
+				TAS.debug("calcuatling "+ col+" sum is "+sums.sum);
 			}
 		}
 		//TAS.debug("PFBuffsOldNOW totals are: ",sums);
