@@ -23,6 +23,9 @@ export var buffColumns = ['Ranged', 'Melee','CMB', 'DMG', 'DMG_ranged',
 	"HP-temp", "Fort", "Will", "Ref", "Check", "CasterLevel",
 	'STR','DEX','CON','INT','WIS','CHA',
 	'STR_skills','DEX_skills','CON_skills','INT_skills','WIS_skills','CHA_skills'],
+buffToTotExceptions = {
+	'Check':'check_ability','DMG':'dmg_melee',
+},
 //all total fields
 buffTotFields = _.chain(buffColumns).map(function(buff){
 		var isAbility = (PFAbilityScores.abilities.indexOf(buff) >= 0) && buff.indexOf('skill')<1;
@@ -31,7 +34,7 @@ buffTotFields = _.chain(buffColumns).map(function(buff){
 		} else {
 			return ['buff_'+buff+'-total','buff_'+buff+'_exists','buff_'+buff+'-total_penalty', 'buff_'+buff+'_penalty_exists'];
 		}
-	}).flatten().value()
+	}).flatten().value().concat(['buff_check_ability-total','buff_dmg_melee-total'])
 ;
 
 function clearBuffTotals (callback,silently){
@@ -166,71 +169,80 @@ function updateBuffTotal (col,ids,v,setter){
 	var isAbility=0,
 	sums={'sum':0,'pen':0},
 	tempInt=0,
+	totcol=col,
 	rows=[];
 	try {
 		setter = setter || {};
+		if(buffToTotExceptions[col]){
+			totcol=buffToTotExceptions[col];
+		}
+		TAS.notice("Updating "+col+" the total is "+totcol,buffToTotExceptions,v);
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 		ids = ids.filter(function(id){
 				var prefix = 'repeating_buff_'+id+'_buff-';
-				return  (parseInt(v[prefix + col + '-show'],10)||0) && (parseInt(v[prefix+col],10)||0);
+				return  ((parseInt(v[prefix + col + '-show'],10)||0)!==0) && ((parseInt(v[prefix+col],10)||0)!==0);
 			});
+		TAS.debug("updating "+ col+" there are "+_.size(ids)+" rows");
 		if(_.size(ids)>0){
 			rows = ids.map(function(id){
-				var vals={val:0};
-				vals.val = parseInt(v['repeating_buff_'+id+'_buff-'+col],10)||0;
-				return vals;
+				return (parseInt(v['repeating_buff_'+id+'_buff-'+col],10)||0);
 			});
 
-			//TAS.debug("PFBUFFS ROWS NOW:",rows);
+			TAS.debug("PFBuffsOld ROWS NOW:",rows);
 			if(col==='HP-temp'){
 				sums.sum = rows.filter(function(row){
-					return row.val>0;
+					return row>0;
 				}).reduce(function(m,row){
-					m+=row.val;
+					m+=row;
 					return m;
 				},0);
 			} else if (col==='size' ){
 				sums = rows.reduce(function(m,row){
-					if(row.val>0){
-						m.sum = Math.max(m.sum,row.val);
-					}  else if (row.val<0){
-						m.pen = Math.min(m.pen,row.val);
+					if(row>0){
+						m.sum = Math.max(m.sum,row);
+					}  else if (row<0){
+						m.pen = Math.min(m.pen,row);
 					}
 					return m;
 				},sums);
+				sums.sum += sums.pen;
+				sums.pen =0;
 			} else if (isAbility) {
 				sums = rows.reduce(function(m,row){
-					if (row.val<0){
-						m.pen += row.val;
-					} else{
-						m.sum += row.val;
+					if (row<0){
+						m.pen += row;
+					} else if (row > 0){
+						m.sum += row;
 					}
 					return m;
 				},sums);
 			} else {
+				TAS.debug("now calculating sum for "+ col);
 				sums.sum = rows.reduce(function(m,row){
-					m += row.val;
+					TAS.debug("ADDING "+row+" to m for "+col +" is "+ row);
+					m += row;
 					return m;
 				},0);
+				TAS.debug("calcuatling "+ col+" sum is "+sums.sum);
 			}
 		}
-		//TAS.debug("PFBUFFS NOW totals are: ",sums);
-		if ( (parseInt(v['buff_'+col+'-total'],10)||0)!==sums.sum){
-			setter['buff_'+col+'-total']=sums.sum;
+		//TAS.debug("PFBuffsOldNOW totals are: ",sums);
+		if ( (parseInt(v['buff_'+totcol+'-total'],10)||0)!==sums.sum){
+			setter['buff_'+totcol+'-total']=sums.sum;
 		}
-		if (sums.sum > 0){
-			setter['buff_'+col+'_exists']=1;
-		} else if ((parseInt(v['buff_'+col+'_exists'],10)||0)===1){
-			setter['buff_'+col+'_exists']=0;
+		if (sums.sum ){
+			setter['buff_'+totcol+'_exists']=1;
+		} else if ((parseInt(v['buff_'+totcol+'_exists'],10)||0)===1){
+			setter['buff_'+totcol+'_exists']=0;
 		}
 		if (isAbility){
-			if ( (parseInt(v['buff_'+col+'-total_penalty'],10)||0)!==sums.pen){
-				setter['buff_'+col+'-total_penalty']=sums.pen;
+			if ( (parseInt(v['buff_'+totcol+'-total_penalty'],10)||0)!==sums.pen){
+				setter['buff_'+totcol+'-total_penalty']=sums.pen;
 			}
 			if (sums.pen){
-				setter['buff_'+col+'_penalty_exists']=1;
-			} else if ((parseInt(v['buff_'+col+'_penalty_exists'],10)||0)===1){
-				setter['buff_'+col+'_penalty_exists']=0;
+				setter['buff_'+totcol+'_penalty_exists']=1;
+			} else if ((parseInt(v['buff_'+totcol+'_penalty_exists'],10)||0)===1){
+				setter['buff_'+totcol+'_penalty_exists']=0;
 			}
 		}
 	} catch(err){
@@ -250,12 +262,15 @@ function updateBuffTotalAsync (col, callback,silently){
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 
 	getSectionIDs('repeating_buff',function(ids){
-		var fields,totfields,otherfields;
+		var fields,totfields,otherfields,totcol=col;
 		if(ids){
+			if(buffToTotExceptions[col]){
+				totcol=buffToTotExceptions[col];
+			}
 			fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'+col,'_buff-'+col+'-show','_buff-enable_toggle']);
-			totfields = ['buff_'+col+'-total', 'buff_'+col+'_exists'];
+			totfields = ['buff_'+totcol+'-total', 'buff_'+totcol+'_exists'];
 			if (isAbility){
-				totfields = totfields.concat(['buff_'+col+'-total_penalty', 'buff_'+col+'_penalty_exists']);
+				totfields = totfields.concat(['buff_'+totcol+'-total_penalty', 'buff_'+totcol+'_penalty_exists']);
 			}
 			fields = fields.concat(totfields);
 			getAttrs(fields,function(v){
@@ -269,11 +284,18 @@ function updateBuffTotalAsync (col, callback,silently){
 						return  (parseInt(v[prefix+'enable_toggle'],10)||0);
 					});
 					setter = updateBuffTotal(col,ids,v,setter);
+					//reset old buffs.
+					if(buffToTotExceptions[col]){
+						setter['buff_'+col+'-total']=0;
+						setter['buff_'+col+'_exists']=0;
+						setter['buff_'+col+'-total_penalty']=0;
+						setter['buff_'+col+'_penalty_exists']=0;
+					}
 				} catch (errou){
 					TAS.error("PFBuffsOld.updateBuffTotalAsync errrou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
-						//TAS.debug("######################","PFBuffs setting ",setter);
+						TAS.debug("######################","PFBuffsOld setting ",setter);
 						if (silently){
 							params = PFConst.silentParams;
 						}
@@ -332,7 +354,7 @@ function updateAllBuffTotalsAsync (callback,silently){
 				TAS.error("PFBuffsOld.updateAllBuffTotalsAsync errrou on col ",errou);
 			} finally {
 				if (_.size(setter)){
-					TAS.debug("######################","PFBuffs setting ",setter);
+					TAS.debug("######################","PFBuffsOldsetting ",setter);
 					if (silently){
 						params = PFConst.silentParams;
 					}
@@ -511,7 +533,7 @@ export function migrate (outerCallback) {
 								TAS.error("PFBuffsOld.migrateDmgAbility",err);
 							}finally {
 								if (_.size(setter)){
-									//TAS.debug("###########","PFBuffs migrate setting ",setter);
+									//TAS.debug("###########","PFBuffsOldmigrate setting ",setter);
 									SWUtils.setWrapper(setter,PFConst.silentParams,migrated);
 									if(resetconditions){
 										PFChecks.applyConditions();
@@ -622,5 +644,5 @@ function registerEventHandlers () {
 	//======== END OF OLD BUFFS ==================================================
 }
 registerEventHandlers();
-//PFConsole.log('   PFBuffs module loaded          ');
+//PFConsole.log('   PFBuffsOldmodule loaded          ');
 //PFLog.modulecount++;

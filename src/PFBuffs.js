@@ -1000,8 +1000,14 @@ function reEvaluateCustomMacros(callback,silently){
 		}
 	});
 }
-
-function getCommonBuffEntries(name,v){
+/**
+ * 
+ * @param {string} name name of buff from dropdown
+ * @param {Map<string,string>} v attributes for con, speed, level
+ * @param {boolean} onByDefault 1 or 0, 1 means enable buff on creation
+ * @returns {Map<string,string>} to pass to setAttrs
+ */
+function getCommonBuffEntries(name,v,onByDefault){
 	var id,prefix='',setter={},
 	calc=0,conmod=0,speed=0,level=0,tempint=0;
 	if(!name){
@@ -1009,7 +1015,7 @@ function getCommonBuffEntries(name,v){
 	}
 	id = generateRowID();
 	prefix = 'repeating_buff2_'+id+'_';
-	setter[prefix+'enable_toggle']='1';
+	setter[prefix+'enable_toggle']=onByDefault?1:0;
 	setter[prefix+'tabcat2']='1';
 	if(v){
 		conmod=parseInt(v['CON-mod'],10);
@@ -1879,8 +1885,12 @@ function getCommonBuffEntries(name,v){
 	}
 	return setter;
 }
-
-export function addCommonBuff(callback){
+/** Creates buff entries
+ * 
+ * @param {function} callback 
+ * @param {Map} eventInfo 
+ */
+export function addCommonBuff(callback,eventInfo){
 	var done=function(){
 		if (typeof callback === "function"){
 			callback();
@@ -1888,10 +1898,14 @@ export function addCommonBuff(callback){
 	}, setter={}, fields;
 	fields = ['add_common_buff','common_buff_toadd','CON-mod','level','speed-base'];
 	getAttrs(fields,function(v){
+		var onByDefault=0;
 		TAS.debug("adding common buff:",v);
 		if(parseInt(v.add_common_buff,10)){
 			if(v['common_buff_toadd']){
-				setter = getCommonBuffEntries(v['common_buff_toadd'],v);
+				if (eventInfo && eventInfo.sourceType==='player'){
+					onByDefault=1;
+				}
+				setter = getCommonBuffEntries(v['common_buff_toadd'],v,onByDefault);
 				setter.common_buff_toadd='';
 				if(v['common_buff_toadd']==='slow'){
 					setter['condition-Staggered']=1;
@@ -1936,7 +1950,7 @@ function registerEventHandlers () {
 	on("change:add_common_buff",TAS.callback(function eventAddCommonBuff(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + ", event: " + eventInfo.sourceType);
-			addCommonBuff();
+			addCommonBuff(null,eventInfo);
 		}
 	}));
 

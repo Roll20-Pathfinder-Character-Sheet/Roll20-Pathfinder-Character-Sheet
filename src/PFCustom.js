@@ -239,7 +239,7 @@ export function migrate(callback,oldversion){
                 updatedGroup();
                 return;
             }
-            fields =SWUtils.cartesianAppend(['repeating_weapon_'],ids,['damage-ability']);
+            fields =SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_damage-ability']);
             getAttrs(fields,function(v){
                 var setter;
 				try {
