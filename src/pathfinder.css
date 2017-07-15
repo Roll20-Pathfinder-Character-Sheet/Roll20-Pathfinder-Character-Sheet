@@ -2979,8 +2979,6 @@ input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-l,
 input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-h,
 input[value="Tower Shield"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-t,
 
-input[name$="ranged_2_show"].sheet-nextitem-show:not(:checked) ~ .sheet-ranged2,
-input[name$="cmb_2_show"].sheet-nextitem-show:not(:checked) ~ .sheet-cmb2,
 input[name$="ammo"].sheet-nextitem-show:not(:checked) ~ .sheet-ammo,
 input[name$="frequency"].sheet-nextitem-show:not(:checked) ~ .sheet-freq-rounds,
 input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-casting-ability,
@@ -4114,17 +4112,45 @@ input[type="text"].sheet-skill-conds {
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-class-table.sheet-hasexpandrows  .sheet-expand3 + span {
 	top:9.25em;
 }
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1 + span {
+	top:5.5em;
+}
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2 + span {
+	top:8em;
+}
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2 + span {
+	top:10em;
+}
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2:not(:checked) ~ .sheet-expand3,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2:not(:checked) ~ .sheet-expand3 + span {
+    top:10.25em;
+}
+
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2:checked ~ .sheet-expand3,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:not(:checked) ~ .sheet-expand2:checked ~ .sheet-expand3 + span,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:not(:checked) ~ .sheet-expand3,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:not(:checked) ~ .sheet-expand3 + span {
+	top:12.5em;
+}
+
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:checked ~ .sheet-expand3,
+.sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:checked ~ .sheet-expand3 + span {
+	top:14.5em;
+}
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1 + span {
-	top:3.5em;
+	top:5.5em;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand2,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand2 + span {
-	top:5.5em;
+	top:10em;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand3,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand3 + span {
-	top:7.5em;
+	top:15em;
 }
 
 /* repeating sections take up half on "all" view 

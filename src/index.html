@@ -2970,8 +2970,8 @@
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}</textarea></span>
 							</div>
-							<input type="checkbox" class="sheet-nextitem-show" name="attr_ranged_2_show" value="1" role="placeholder" />
-							<div class="sheet-table-row sheet-ranged2">
+							<input type="checkbox" class="sheet-showarrow sheet-sect2-show sheet-expand-arrow sheet-expand2" name="attr_ranged_2_show" value="1" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
+							<div class="sheet-table-row sheet-sect2">
 								<span class="sheet-table-cell">
 									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|Ranged2-Attack-Roll}" name="roll_Ranged2-Attack-Roll" value="@{PC-whisper} @{Ranged2-Attack-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="ranged2">Ranged2</span></button>
@@ -3073,8 +3073,8 @@
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}</textarea></span>
 							</div>
-							<input type="checkbox" class="sheet-nextitem-show" name="attr_cmb_2_show" value="1" role="placeholder" />
-							<div class="sheet-table-row sheet-cmb2">
+							<input type="checkbox" class="sheet-showarrow sheet-sect3-show sheet-expand-arrow sheet-expand3" name="attr_cmb_2_show" value="1" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
+							<div class="sheet-table-row sheet-sect3">
 								<span class="sheet-table-cell">
 									<input type="checkbox" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 									<button class="sheet-text-button sheet-sect-inverse" type="roll" title="%{selected|CMB2-Check}" name="roll_CMB2-Check" value="@{PC-whisper} @{CMB2-Check-macro}">&nbsp;<span style="vertical-align: middle;" data-i18n="combat-maneuver-bonus2-abbrv">Alt CMB</span></button>
@@ -12906,16 +12906,7 @@
 					</span>
 				</div>		
 				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name" style="border-bottom: none;" data-i18n="attacks">Attacks</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" title="@{ranged_2_show}" name="attr_ranged_2_show" value="1" class="sheet-selectedlabel-check" /><b><span data-i18n="display-ranged-2">Display Alt Ranged attack type</span></b>
-				</span>
-					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" title="@{cmb_2_show}" name="attr_cmb_2_show" value="1" class="sheet-selectedlabel-check"/><b><span data-i18n="display-cmb-2">Display Alt CMB attack type</span></b>
-					</span>					
-				</div>
-				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name" ></span>
+					<span class="sheet-table-config-row-name" data-i18n="attacks">Attacks</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{modify_dmg_by_size}" name="attr_modify_dmg_by_size" value="1" class="sheet-selectedlabel-check"  /><b><span data-i18n="adjust-damage-by-size"> Adjust damage based on size</span></b>
 					</span>
