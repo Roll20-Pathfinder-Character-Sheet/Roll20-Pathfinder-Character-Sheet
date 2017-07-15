@@ -4137,7 +4137,7 @@ input[type="text"].sheet-skill-conds {
 }
 .sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:checked ~ .sheet-expand3,
 .sheet-readonly-show:checked ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1:checked ~ .sheet-expand2:checked ~ .sheet-expand3 + span {
-	top:14.25em;
+	top:14em;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-attack-grid.sheet-hasexpandrows  .sheet-expand1 + span {

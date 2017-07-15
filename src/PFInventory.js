@@ -61,7 +61,7 @@ export function migrateRepeatingMacros(callback){
     };
     getAttrs(['migrated_item_macrosv1'],function(v){
         if((parseInt(v.migrated_item_macros,10)||0)!==1){
-            PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);		
+            PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
         } else {
             done();
         }
@@ -1555,14 +1555,28 @@ export function setNewDefaults (callback, oldversion){
 export function migrate  (callback, oldversion) {
     var done = _.once(function(){
         //TAS.debug("leaving PFInventory.migrate");
+        SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
         if (typeof callback === "function"){
             callback();
         }
-    });
+    }),
+    migrateMacroAddNewAttrs=function(){
+        getAttrs(['migrated_itemlist_newfields'],function(v){
+            try{
+                if(!parseInt(v.migrated_itemlist_newfields,10)){
+                    PFMacros.migrateRepeatingMacros(done,'item','macro-text',
+                        defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
+                }
+            }catch (err){
+                TAS.error("PFInventory.migrate.migrateMacroAddNewAttrs",err);
+                done();
+            }
+        });
+    };
     //TAS.debug("At PFInventory.migrate");
     PFMigrate.migrateRepeatingItemAttributes(TAS.callback(function callPFInventorySetNewDefaults(){
         setNewDefaults(TAS.callback( function callPFInventoryMigrateWornEquipment(){
-            migrateWornEquipment(done);
+            migrateWornEquipment(migrateMacroAddNewAttrs);
             migrateRepeatingMacros();
         }));
     }));
