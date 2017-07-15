@@ -26,6 +26,7 @@ buffColumns = [
 	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
 	'will',	'wis',	'wis_skills',  'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
+	'kineticblast','dmg_kineticblast',
 	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
 	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
@@ -42,6 +43,7 @@ buffToTot = {
 	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
 	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills',
 	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
+	'kineticblast':'kineticblast','dmg_kineticblast':'dmg_kineticblast',
 	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
 	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
 	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
@@ -1875,25 +1877,33 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='attack';
+			setter[prefix+'b1_bonus']='kineticblast';
 			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='min(min(1,@{kineticistburn})*(1+@{kineticistburn}),1+floor((@{level}-1)/3))';
+			setter[prefix+'b1_macro-text']='min(@{kineticistburn},max(0,floor(@{class-0-level}/3)))';
 			setter[prefix+'b1_val']=0;
 			setter[prefix+'b2-show']=1;
-			setter[prefix+'b2_bonus']='dmg_ranged';
+			setter[prefix+'b2_bonus']='dmg_kineticblast';
 			setter[prefix+'b2_bonustype']='untyped';
-			setter[prefix+'b2_macro-text']='(2*min(min(1,@{kineticistburn})*(1+@{kineticistburn}),1+floor((@{level}-1)/3)))';
+			setter[prefix+'b2_macro-text']='2*min(@{kineticistburn},max(0,floor(@{class-0-level}/3)))';
 			setter[prefix+'b2_val']=0;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='dex';
 			setter[prefix+'b3_bonustype']='size';
-			setter[prefix+'b3_macro-text']='min(3,max(0,@{kineticistburn}-2))*2';
+			setter[prefix+'b3_macro-text']='min(3,max(0,floor((@{kineticistburn}-1)/2)),floor((@{class-0-level}-1)/5))*2';
 			setter[prefix+'b3_val']=0;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='con';
 			setter[prefix+'b4_bonustype']='size';
-			setter[prefix+'b4_macro-text']='min(3,max(0,@{kineticistburn}-2))*2';
+			setter[prefix+'b4_macro-text']='min(2,max(0,floor((@{kineticistburn}+1)/4)),floor((@{class-0-level}+4)/10))*2';
 			setter[prefix+'b4_val']=0;
+			setter[prefix+'b5-show']=1;
+			setter[prefix+'b5_bonus']='str';
+			setter[prefix+'b5_bonustype']='size';
+			setter[prefix+'b5_macro-text']='min(1,max(0,floor(@{kineticistburn}/5)),floor(@{class-0-level}/11))*2';
+			setter[prefix+'b5_val']=0;
+			setter[prefix+'description-show']='1';
+			setter[prefix+'add_note_to_roll']='defense';
+			setter[prefix+'notes']='Has a [[({1d1,{1d0,(@{class-0-level}-2)d1}kh1}kl1)*5*@{kineticistburn}]] chance to ignore the effects of a critical hit or sneak attack';
 			break;
 	}
 		

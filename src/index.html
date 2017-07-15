@@ -189,6 +189,8 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_customa7_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" ><input title="@{buff_customa7-total}" name="attr_buff_customa7-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" >customa7|max</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_customa8_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" ><input title="@{buff_customa8-total}" name="attr_buff_customa8-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" >customa8|max</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_customa9_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" ><input title="@{buff_customa9-total}" name="attr_buff_customa9-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" >customa9|max</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_kineticblast_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-kinetic-blast-title"><input title="@{buff_kineticblast-total}" name="attr_buff_kineticblast-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-kinetic-blast-title" data-i18n="blast">blast</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_kineticblast_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-kinetic-blast-damage-title"><input title="@{buff_dmg_kineticblast-total}" name="attr_buff_dmg_kineticblast-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-kinetic-blast-damage-title" data-i18n="blast-damage-abbrv">Blast Dmg</span></label>
 					<span class="sheet-panel-name" data-i18n="current-buffs">Current Buffs</span>
 				</div>
 			</div>
@@ -396,15 +398,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>
@@ -488,15 +492,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>
@@ -580,15 +586,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>
@@ -672,15 +680,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>
@@ -764,15 +774,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>
@@ -855,15 +867,17 @@
 											<option value="" data-i18n="select-one-default">select one</option>
 											<option value="attack" class="sheet-option-header" data-i18n="attack">attack</option>
 											<option value="melee" class="sheet-option-header" data-i18n="melee-attack">melee attack</option>
-											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
 											<option value="ranged" class="sheet-option-header" data-i18n="ranged-attack">ranged attack</option>
-											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb" class="sheet-option-header" data-i18n="combat-maneuver-bonus-abbrv">cmb</option>
+											<option value="kineticblast" class="sheet-option-header" data-i18n="kinetic-blast">Kinetic Blast</option>
+											<option value="melee2" class="sheet-option-header" data-i18n="melee2-attack">alt melee attack</option>
+											<option value="ranged2" class="sheet-option-header" data-i18n="ranged2-attack">alt ranged attack</option>
 											<option value="cmb2" class="sheet-option-header" data-i18n="combat-maneuver-bonus2-abbrv">alt cmb</option>
 											<option value="dmg" data-i18n="damage">damage</option>
 											<option value="dmg_melee" data-i18n="melee-damage">melee damage</option>
-											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged" data-i18n="ranged-damage">rng damage</option>
+											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
+											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
 											<option value="ac" class="sheet-option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="touch" class="sheet-option-header" data-i18n="touch">touch</option>

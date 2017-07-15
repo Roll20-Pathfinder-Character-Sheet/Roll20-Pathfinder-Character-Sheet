@@ -1,4 +1,10 @@
 {
+	"kinetic-blast": "Kinetic Blast",
+	"kinetic-blast-damage-abbrv": "Kinetic Blast Dmg",
+	"blast": "Blast",
+	"blast-damage-abbrv": "Blast Dmg",
+	"buff-kinetic-blast-title": "Bonus to kinetic blast attack",
+	"buff-kinetic-blast-damage-title": "Bonus to kinetic blast damage",
 	"melee2-damage-abbrv": "Alt Melee dmg",
 	"ranged2-damage-abbrv": "Alt Ranged dmg",
 	"calculation": "Calculation",
