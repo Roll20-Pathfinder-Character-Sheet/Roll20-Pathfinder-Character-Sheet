@@ -14,6 +14,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-melee",
         "buff": "buff_Melee-total",
+        "buff2":"",
         "pen": "condition-Prone",
         "abilityMod": "melee-ability-mod",
         "miscmacro": "attk-melee-misc",
@@ -28,6 +29,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-melee2",
         "buff": "buff_Melee-total",
+        "buff2": "buff_melee2-total",
         "pen": "condition-Prone",
         "abilityMod": "melee2-ability-mod",
         "miscmacro": "attk-melee2-misc",
@@ -42,6 +44,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-ranged",
         "buff": "buff_Ranged-total",
+        "buff2":"",
         "pen": "",
         "abilityMod": "ranged-ability-mod",
         "miscmacro": "attk-ranged-misc",
@@ -56,6 +59,7 @@ export var attackGridFields = {
         "size": "size",
         "atk": "attk-ranged2",
         "buff": "buff_Ranged-total",
+        "buff2": "buff_ranged2-total",
         "pen": "",
         "abilityMod": "ranged2-ability-mod",
         "miscmacro": "attk-ranged2-misc",
@@ -70,6 +74,7 @@ export var attackGridFields = {
         "size": "CMD-size",
         "atk": "CMB",
         "buff": "buff_CMB-total",
+        "buff2":"",
         "pen": "",
         "abilityMod": "CMB-ability-mod",
         "miscmacro": "attk-CMB-misc",
@@ -84,6 +89,7 @@ export var attackGridFields = {
         "size": "CMD-size",
         "atk": "CMB2",
         "buff": "buff_CMB-total",
+        "buff2": "buff_cmb2-total",
         "pen": "",
         "abilityMod": "CMB2-ability-mod",
         "miscmacro": "attk-CMB2-misc",
@@ -164,10 +170,10 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
         if (attackGridFields[attype].pen){
             negfields.push(attackGridFields[attype].pen);
         }
-        //if do this then have to stack buffs in 
-        //if (attype==='CMB'){
-        //    fields.push('buff_Melee-total');
-        //}
+        if (attackGridFields[attype].buff2){
+            fields.push(attackGridFields[attype].buff2);
+        }
+
         SWUtils.updateRowTotal(fields, 0, negfields, false, done, silently);
     } else {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
@@ -194,6 +200,15 @@ export function updateAttackGrid(buffType,eventInfo){
             break;
         case 'cmb':
             updateAttack('CMB', eventInfo);
+            updateAttack('CMB2', eventInfo);
+            break;
+        case 'melee2':
+            updateAttack('melee2', eventInfo);
+            break;        
+        case 'ranged2':
+            updateAttack('ranged2', eventInfo);
+            break;
+        case 'cmb2':
             updateAttack('CMB2', eventInfo);
             break;
     }

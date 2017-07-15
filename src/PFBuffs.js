@@ -25,7 +25,7 @@ buffColumns = [
 	'cmb',	'cmd',	'con',	'con_skills',		'dex',	'dex_skills',	'dmg',	'dmg_melee',	'dmg_ranged',
 	'flatfooted',	'fort',	'hptemp',	'initiative',	'int',	'int_skills',	'melee',	'natural',
 	'ranged',	'ref',	'saves',	'shield',	'size',	'speed',	'str',	'str_skills',	'touch',
-	'will',	'wis',	'wis_skills',
+	'will',	'wis',	'wis_skills',  'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
 	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
 	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
@@ -41,6 +41,7 @@ buffToTot = {
 	'natural':'natural',	'ranged':'Ranged',	'ref':'Ref',	'saves':'saves',
 	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
 	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills',
+	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
 	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
 	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
 	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
@@ -53,27 +54,34 @@ var
 //map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
 	'ac':['cmd','flatfooted'],
-	'attack':['melee','ranged','cmb'],
+	'attack':['melee','ranged','cmb','melee2','ranged2','cmb2'],
 	'check':['initiative','check_skills','check_ability','str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills'],
-	'dmg':['dmg_melee','dmg_ranged'],
+	'dmg':['dmg_melee','dmg_ranged','dmg_melee2','dmg_ranged2'],
+	'dmg_melee':['dmg_melee2'],
+	'dmg_ranged':['dmg_ranged2'],
 	'saves':['fort','ref','will'],
 	'check_skills':['str_skills','dex_skills','con_skills','int_skills','wis_skills','cha_skills']
 },
 //reverse map of buffsAffectingOthers, left is "child" buff, buff on right added to (and checked for stacking)
 affectedBuffs = {
 	'melee':['attack'],
+	'melee2':['melee','attack'],
 	'ranged':['attack'],
+	'ranged2':['ranged','attack'],
 	'cmb':['attack'],
+	'cmb2':['cmb','attack'],
 	'dmg_melee':['dmg'],
+	'dmg_melee2':['dmg_melee','dmg'],
 	'dmg_ranged':['dmg'],
+	'dmg_ranged2':['dmg_ranged','dmg'],
 	'cmd':['ac'],
 	'flatfooted':['ac'],
 	'fort':['saves'],
-	'initiative':['check_ability','check'],
 	'ref':['saves'],
 	'will':['saves'],
 	'check_skills':['check'],
 	'check_ability':['check'],
+	'initiative':['check_ability','check'],
 	'str_skills':['check_skills','check'],
 	'dex_skills':['check_skills','check'],
 	'con_skills':['check_skills','check'],
@@ -140,7 +148,10 @@ events = {
 		"CHA_skills":[PFSkills.recalculateAbilityBasedSkills],
 		"Melee": [PFAttackGrid.updateAttackGrid],
 		"Ranged": [PFAttackGrid.updateAttackGrid],
-		"CMB": [PFAttackGrid.updateAttackGrid]
+		"CMB": [PFAttackGrid.updateAttackGrid],
+		"melee2": [PFAttackGrid.updateAttackGrid],
+		"ranged2": [PFAttackGrid.updateAttackGrid],
+		"cmb2": [PFAttackGrid.updateAttackGrid]
 	},
 	buffTotalAbilityEvents: {
 		"STR": [PFAbilityScores.updateAbilityScore],
@@ -155,6 +166,8 @@ events = {
 		"DMG": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_ranged": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_melee": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_ranged2": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_melee2": [PFAttacks.updateRepeatingWeaponDamages],
 		"saves": [PFSaves.updateSaves],
 		"attack": [PFAttackGrid.updateAttacks],
 		"AC": [PFDefense.updateDefenses],
@@ -1883,6 +1896,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=0;
 			break;
 	}
+		
 	return setter;
 }
 /** Creates buff entries
