@@ -52,7 +52,7 @@ function getAbilityModUpdates(abilityModName,newval,v,setter){
  * @param {string|Array} attr string name of attribute, or array of attributes abilitymods, if null then abilitymods
  * @param {int} oldval 
  */
-function propagateAbilityMods(callback,silently,attr,newval){
+function propagateAbilityModsAsync(callback,silently,attr,newval){
     var attrs, fields, done = _.once(function(){
         if (typeof callback === "function"){
             callback();
