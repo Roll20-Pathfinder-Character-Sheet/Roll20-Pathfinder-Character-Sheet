@@ -147,6 +147,32 @@ export function applyConditions  (callback, silently, eventInfo) {
     });
     
 }
+
+export function updateAttack(attype,v,setter){
+    var currtot=0,newtot=0;
+    try {
+        setter=setter||{};
+        currtot=v[attackGridFields[attype].atk];
+        newtot = v[attackGridFields[attype].bab]+v["attk-penalty"]+v[attackGridFields[attype].abilityMod]+
+        v[attackGridFields[attype].misc]+v[attackGridFields[attype].size]+v[attackGridFields[attype].buff]+
+        v['buff_attack-total'];
+        if (attackGridFields[attype].pen){
+            newtot -= v[attackGridFields[attype].pen];
+        }
+        if (attackGridFields[attype].buff2){
+             newtot += v[attackGridFields[attype].buff2];
+        }
+        if (newtot !== currtot){
+            setter[attackGridFields[attype].atk]=newtot;
+        }
+    } catch (err){
+        TAS.error("PFAttackGrid.updateAttack",err);
+    } finally {
+        return setter;
+    }
+}
+
+
 /** updateAttack - updates one row of attack grid (left most column in grid)
  * Updates the attack type totals at top of attack page for one row of grid
  * @param {string} attype = key for attackGridFields to indicate which row from attack grid
@@ -154,7 +180,7 @@ export function applyConditions  (callback, silently, eventInfo) {
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  */
-export function updateAttack  (attype, eventInfo, callback, silently) {
+export function updateAttackAsync  (attype, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -189,33 +215,33 @@ export function updateAttack  (attype, eventInfo, callback, silently) {
 export function updateAttackGrid(buffType,eventInfo){
     switch(buffType.toLowerCase()){
         case 'melee':
-            updateAttack('melee', eventInfo);
-            updateAttack('melee2', eventInfo);
-            updateAttack('CMB', eventInfo);
-            updateAttack('CMB2', eventInfo);
+            updateAttackAsync('melee', eventInfo);
+            updateAttackAsync('melee2', eventInfo);
+            updateAttackAsync('CMB', eventInfo);
+            updateAttackAsync('CMB2', eventInfo);
             break;
         case 'ranged':
-            updateAttack('ranged', eventInfo);
-            updateAttack('ranged2', eventInfo);
+            updateAttackAsync('ranged', eventInfo);
+            updateAttackAsync('ranged2', eventInfo);
             break;
         case 'cmb':
-            updateAttack('CMB', eventInfo);
-            updateAttack('CMB2', eventInfo);
+            updateAttackAsync('CMB', eventInfo);
+            updateAttackAsync('CMB2', eventInfo);
             break;
         case 'melee2':
-            updateAttack('melee2', eventInfo);
+            updateAttackAsync('melee2', eventInfo);
             break;        
         case 'ranged2':
-            updateAttack('ranged2', eventInfo);
+            updateAttackAsync('ranged2', eventInfo);
             break;
         case 'cmb2':
-            updateAttack('CMB2', eventInfo);
+            updateAttackAsync('CMB2', eventInfo);
             break;
     }
 }
 export function recalculateMelee(dummy1,dummy2,eventInfo){
-    updateAttack('melee', eventInfo);
-    updateAttack('melee2', eventInfo);    
+    updateAttackAsync('melee', eventInfo);
+    updateAttackAsync('melee2', eventInfo);    
 }
 
 function getTopMacros(setter,v){
@@ -329,13 +355,50 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
 }
 
 export function updateAttacks(callback,silently){
-    var doneAttack=_.after(6,callback);
-    _.each(attackGridFields, function (attrMap, attack) {
-        updateAttack(attack,null,doneAttack,silently);
+    var fields;
+    try {
+        fields= _.chain(attackGridFields).values().map(function(m){return _.values(m);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
+        fields.push('attk-penalty');
+        fields.push('buff_attack-total');
+      //  TAS.debug("PFAttackGrid.updateAttacks. Fields are:",fields);
+    } catch(err1){
+        TAS.error("PFAttackGrid.updateAttacks error creating list of fields:",err1);
+        if(typeof callback === "function"){
+            callback();
+        }
+    }
+    getAttrs(fields,function(vout){
+        var v={},setter={},params={};
+        try{
+            v=_.reduce(vout,function(m,val,key){
+                m[key]=parseInt(val,10)||0;
+                return m;
+            },{});
+            setter=_.reduce(Object.keys(attackGridFields),function(m,key){
+                m = updateAttack(key,v,m);
+                return m;
+            },{});
+        } catch(err) {
+            TAS.error("PFAttackGrid.updateAttacks ",err);
+        } finally {
+            if(_.size(setter)){
+                if(silently){
+                    params = PFConst.silentParams;
+                }
+                SWUtils.setWrapper(setter,params,callback);
+            } else {
+                if(typeof(callback)==="function"){
+                    callback();
+                }
+            }
+        }
     });
+
+    //_.each(attackGridFields, function (attrMap, attack) {
+    //    updateAttackAsync(attack,null,doneAttack,silently);
+    //});
 }
 export function migrate (callback, oldversion){
-    PFMigrate.migrateAltAttackGridrowFlags();
     PFMigrate.migrateAttackDropdowns(callback);
 }
 /** recalculates all write-to fields in module 
@@ -343,7 +406,7 @@ export function migrate (callback, oldversion){
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion the version upgrading from 
  */
-export var recalculate = TAS.callback(function callrecalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
         //TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
@@ -377,7 +440,7 @@ function registerEventHandlers () {
         on("change:" + attackFields.bab + " change:" + attackFields.abilityMod + " change:" + attackFields.misc, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-                updateAttack(attack);
+                updateAttackAsync(attack);
             }
         }));
     });

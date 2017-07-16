@@ -1579,7 +1579,6 @@ export function migrateRepeatingMacros (callback){
         resetCommandMacro();
         SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
     });
-    //TAS.debug("at PFSpells.migrateRepeatingMacros");
     getAttrs(['migrated_spells_macrosv1'],function(v){
         if (parseInt(v.migrated_spells_macrosv1,10)!==1){
             PFMacros.migrateRepeatingMacros(migrated,'spells','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
@@ -1590,30 +1589,21 @@ export function migrateRepeatingMacros (callback){
     });
 }
 export function migrate (callback) {
-    PFMigrate.migrateSpells(function () {
-        PFMigrate.migrateSpellRanges(function () {
-            migrateRepeatingMacros (function() {
-                if (typeof callback === "function") {
-                    callback();
-                }
-            });
-        });
+    PFMigrate.migrateSpellRanges(function () {
+        migrateRepeatingMacros (callback);
     });
 }
 
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFSpells.recalculate");
         if (typeof callback === "function") {
             callback();
         }
     }),
     recalcTotals = _.once(function () {
-        //TAS.debug("at PFSpells.recalculate.recalcTotals");
         resetSpellsPrepared();
         resetSpellsTotals(null, null, null, silently);
         resetCommandMacro();
-        //do not call because updateSpells already calls update options
         done();
     }),
     callUpdateSpells = _.once(function(){

@@ -367,7 +367,7 @@ export function resetOptions (callback, eventInfo) {
         }
     });
  }
-export var recalculate = TAS.callback(function callrecalculate(callback) {
+export var recalculate = TAS.callback(function PFSpellOptionsRecalculate(callback) {
     resetOptions(callback);
 });
 

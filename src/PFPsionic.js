@@ -53,7 +53,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFPsionicRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFPsionic.recalculate");
 		if (typeof callback === "function") {

@@ -98,7 +98,7 @@ export function getAllRowAttrs(callback){
 	
 }
 
-/**Sets 1 or 0 for buffexists in status panel - only called by updateBuffTotalAsync. 
+/**Sets 1 or 0 for buff_*_exists in status panel - only called by updateBuffTotalAsync. 
  * @param {function} callback 
  */
 function resetStatuspanel (callback) {
@@ -163,7 +163,6 @@ function resetStatuspanel (callback) {
 		}
 	});
 }
-
 
 function updateBuffTotal (col,ids,v,setter){
 	var isAbility=0,
@@ -251,7 +250,6 @@ function updateBuffTotal (col,ids,v,setter){
 		return setter;
 	}
 }
-
 function updateBuffTotalAsync (col, callback,silently){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffsOld.updateBuffTotalAsync for "+col);
@@ -310,7 +308,6 @@ function updateBuffTotalAsync (col, callback,silently){
 		}
 	});	
 }
-
 function updateAllBuffTotalsAsync (callback,silently){
 	var done = _.once(function () {
 		//TAS.debug("leaving PFBuffsOld.updateBuffTotalAsync for "+col);
@@ -368,7 +365,6 @@ function updateAllBuffTotalsAsync (callback,silently){
 	});		
 }
 
-
 function setBuff (id, col, callback, silently) {
 	var done = function () {
 		if (typeof callback === "function") {
@@ -390,7 +386,6 @@ function setBuff (id, col, callback, silently) {
 			}
 		},true,done);
 }
-
 
 export function reEvaluateCustomMacros(callback,silently){
 	var done = _.once(function () {
@@ -555,23 +550,6 @@ export function migrate (outerCallback) {
 		});
 	};
 	migrateMeleeAndAbilityChecks(done);
-	getAttrs(["migrated_buffs", "migrated_effects"], function (v) {
-		var setter = {};
-		try {
-			if (parseInt(v.migrated_buffs,10)!==1) {
-				setter.migrated_buffs = 1;
-			}
-			if (parseInt(v.migrated_effects,10)!==1) {
-				setter.migrated_effects = 1;
-			}
-		} catch (err) {
-			TAS.error("PFBuffsOld.migrate", err);
-		} finally {
-			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, PFConst.silentParams);
-			}
-		}
-	});
 }
 
 export var recalculate = TAS.callback(function recalculateBuffs(callback, silently, oldversion) {

@@ -999,7 +999,7 @@ export function migrate (callback, oldversion) {
 	
 }
 /* recalculate - updates ALL skills  - calls PFUtilsAsync.setDropdownValue for ability then updateSkill */
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFSkillsRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFSkills.recalculate");
 		resetCommandMacro();

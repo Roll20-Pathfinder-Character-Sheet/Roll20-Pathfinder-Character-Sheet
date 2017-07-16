@@ -29,7 +29,7 @@ export function setToNPC (callback,eventInfo){
 export function migrate (callback){
 	PFMigrate.migrateNPC(callback);
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFNPCRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFNPC.recalculate");
 		if (typeof callback === "function") { callback(); }

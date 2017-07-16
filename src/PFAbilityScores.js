@@ -37,13 +37,11 @@ export function getAllAttributes (){
 }
 
 function getAbilityModUpdates(abilityModName,newval,v,setter){
-    //TAS.debug("getAbilityModUpdates, attr:"+abilityModName+", oldval:"+newval+", v:",v);
     setter = setter||{};
     return Object.keys(PFConst.abilityScoreManualDropdowns).filter(function(a){
         return v[a]===abilityModName;
     }).reduce(function(m,a){
         var oldval = parseInt(v[PFConst.abilityScoreManualDropdowns[a]],10)||0;
-        //TAS.debug("getAbilityMods in reduce:"+a+", old val:"+oldval+", newval:"+newval);
         if(newval !== oldval){
             m[PFConst.abilityScoreManualDropdowns[a]]=newval;
         }
@@ -51,12 +49,10 @@ function getAbilityModUpdates(abilityModName,newval,v,setter){
     },setter);
 }
 /** Looks at the ability-mod changed and then updates rest of sheet. For non repeating
- * @param {function} callback when done
- * @param {boolean} silently if set silent val
  * @param {string|Array} attr string name of attribute, or array of attributes abilitymods, if null then abilitymods
  * @param {int} oldval 
  */
-export var propagateAbilityModsAsync = TAS.callback(function callPropagateAbilityMods(callback,silently,attr,newval){
+function propagateAbilityModsAsync(callback,silently,attr,newval){
     var attrs, fields, done = _.once(function(){
         if (typeof callback === "function"){
             callback();
@@ -93,7 +89,7 @@ export var propagateAbilityModsAsync = TAS.callback(function callPropagateAbilit
             done();
         }
     });
-});
+}
 
 /** modifies ability-base by val (even #s) and adds the new vals to setter.
  * 
@@ -215,9 +211,6 @@ function getAbilityScore (ability, values, setter) {
 /** updateAbilityScore - Updates the final ability score, ability modifier, condition column based on entries in ability grid plus conditions and buffs.
  * Note: Ability value is not affected by damage and penalties, instead only modifier is affected.
  * @param {string} ability 3 letter abbreviation for one of the 6 ability scores, member of PFAbilityScores.abilities
- * @param {eventInfo} eventInfo unused eventinfo from 'on' method
- * @param {function} callback when done
- * @param {boolean} silently if silent:true or not
  */
 export function updateAbilityScore (ability,eventInfo,callback,silently){
     var done = _.once(function () {
@@ -239,10 +232,7 @@ export function updateAbilityScore (ability,eventInfo,callback,silently){
         }
     });
 }
-/** calls getAbilityScore for all abilities
- * @param {function} callback when done
- * @param {boolean} silently if silent:true or not
- */
+/** calls getAbilityScore for all abilities */
 export function updateAbilityScores (callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -277,9 +267,7 @@ export function applyParalyzedHelpless(eventInfo){
 }
 
 /** Sets ability penalties, not "ability check" penalties 
- * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled  
- *@param {function} callback to call when done.
- *@param {boolean} silently if true update with PFConst.silentParams
+ * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled 
  */
 export function applyConditions (callback, silently, eventInfo) {
     var done = function () {
@@ -347,24 +335,14 @@ export function applyConditions (callback, silently, eventInfo) {
     });
 }
 
-/** migrate (currently empty just calls callback
- * @param {function} callback when done
- * @param {Number} oldversion
- */
+/** migrate (currently empty just calls callback*/
 export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,oldversion){
-    var done = function(){
-        if (typeof callback === "function"){
-            callback();
-        }
-    };
-    callback();
+    if (typeof callback === "function"){
+        callback();
+    }
 });
-/** recalculates all attributes written to by this module.
- *@param {function()} callback to call when done.
- *@param {boolean} silently if true update with PFConst.silentParams
- *@param {float} oldversion the current @{PFVersion} in the attributes
- */
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+/** recalculates all attributes written to by this module. */
+export var recalculate = TAS.callback(function callPFAbilityScoresRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         //TAS.debug("leaving PFAbilityScores.recalculate");
         if (typeof callback === "function") {
@@ -416,5 +394,3 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-//PFConsole.log('   PFAbilityScores module loaded  ');
-//PFLog.modulecount++;

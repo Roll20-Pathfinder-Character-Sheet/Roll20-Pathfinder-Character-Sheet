@@ -163,7 +163,7 @@ export function migrate (callback){
         callback();
     }
 }
-export var recalculate = TAS.callback(function callrecalculate (callback) {
+export var recalculate = TAS.callback(function callPFAttackOptionsRecalculate (callback) {
     resetOptions(callback);
 });
 function registerEventHandlers () {

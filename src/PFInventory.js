@@ -61,7 +61,7 @@ export function migrateRepeatingMacros(callback){
     };
     getAttrs(['migrated_item_macrosv1'],function(v){
         if((parseInt(v.migrated_item_macros,10)||0)!==1){
-            PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);		
+            PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
         } else {
             done();
         }
@@ -243,7 +243,7 @@ function updateCarriedTotal (callback, silently) {
  */
 function migrateWornEquipment (callback) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.migrateWornEquipment");
+        TAS.debug("leaving PFInventory.migrateWornEquipment");
         if (typeof callback === "function") {
             callback();
         }
@@ -1554,35 +1554,54 @@ export function setNewDefaults (callback, oldversion){
 }
 export function migrate  (callback, oldversion) {
     var done = _.once(function(){
-        //TAS.debug("leaving PFInventory.migrate");
+        TAS.debug("leaving PFInventory.migrate");
         if (typeof callback === "function"){
             callback();
         }
-    });
+    }),
+    migrateMacroAddNewAttrs=function(){
+        getAttrs(['migrated_itemlist_newfields'],function(v){
+            try{
+                if(!parseInt(v.migrated_itemlist_newfields,10)){
+                    PFMacros.migrateRepeatingMacros(done,'item','macro-text',
+                        defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
+                    SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
+                } else{
+                    done();
+                }
+            }catch (err){
+                TAS.error("PFInventory.migrate.migrateMacroAddNewAttrs",err);
+                done();
+            }
+        });
+    };
     //TAS.debug("At PFInventory.migrate");
     PFMigrate.migrateRepeatingItemAttributes(TAS.callback(function callPFInventorySetNewDefaults(){
         setNewDefaults(TAS.callback( function callPFInventoryMigrateWornEquipment(){
-            migrateWornEquipment(done);
-            migrateRepeatingMacros();
+            migrateWornEquipment(function(){
+                migrateMacroAddNewAttrs();
+                migrateRepeatingMacros();
+                done();
+            });
         }));
     }));
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFInventoryRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.recalculate");
+        TAS.debug("leaving PFInventory.recalculate");
         if (typeof callback === "function") {
             callback();
         }
     }),
     setTotals = _.after(2, function () {
-        //TAS.debug("PFInventory.recalculate at setTotals");
-        updateLocations(TAS.callback(updateUses));
+        TAS.debug("PFInventory.recalculate at setTotals");
+        updateLocations(updateUses);
         resetCommandMacro();
         deleteOrphanWornRows();
         updateCarriedTotal(done);
     });
     try {
-        //TAS.debug("at PFInventory.recalculate");
+        TAS.debug("at PFInventory.recalculate");
         migrate(function(){
             updateCarriedCurrency(setTotals, silently);
             updateRepeatingItems(setTotals, silently);

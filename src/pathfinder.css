@@ -4384,7 +4384,14 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     min-width: 24em;
 	min-height:13em;
 }
-
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-attack-grid .sheet-linked-tablecell-short {
+    width:4em;
+    max-width:4em;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-attack-grid .sheet-linked-tablecell-short select.sheet-linked-cellfield {
+    width:100%;
+    max-width:100%;
+}
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section > .sheet-h2-section.sheet-spellcasting-classes.sheet-wide-readonly {
 	margin: 2px 0 2px 4px;
 	width: 100%;

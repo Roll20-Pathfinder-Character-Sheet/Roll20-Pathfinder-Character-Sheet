@@ -66,7 +66,7 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 		}
 	});
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFConditionsRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFConditions.recalculate");
 		if (typeof callback === "function") {

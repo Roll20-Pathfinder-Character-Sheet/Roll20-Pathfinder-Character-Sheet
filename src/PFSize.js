@@ -288,7 +288,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFSizeRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFSize.recalculate");
 		if (typeof callback === "function") {

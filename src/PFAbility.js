@@ -156,7 +156,6 @@ function setRuleTab (callback,silently,id,eventInfo){
 	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
 		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
 		var setter={}, ruleForTab='', params=PFConst.silentParams;
-		//TAS.debug("############ PFAbility setRuleTab",v);
 		switch(v[prefix + 'rule_category']){
 			case 'racial-trait':
 				ruleForTab='trait';
@@ -341,10 +340,7 @@ export function copyToAbilities(callback,abilities) {
 	}
 }
 
-
-/** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus)
- *@param {function} callback call when done	
- */
+/** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus) */
 function getTopOfMenu (callback,isNPC){
 	var done = function (str) {
 		//TAS.debug("leaving PFAbility.getTopOfMenu");
@@ -582,9 +578,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 }
 /**Triggered from a button in repeating spells 
  *@param {string} id the row id or null
- *@param {function} callback when done
- *@param {boolean} silently setattrs silent:true
- *@param {object} eventInfo if id is null get id from here.
+ *@param {string} weaponId if updating existing row
  */
 export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
@@ -891,17 +885,12 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 			done();
 			return;
 		}
-		//TAS.debug("there are "+ numids+" rows to recalc");
 		doneOne	= _.after(numids,done);
 		//refactor to do all rows at once
 		calllevel= function(id){
 			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
-				//TAS.debug("PFAbility.recalcAbilities calling updateCharLevel for "+id);
 				updateCharLevel(id,function(){
-					//TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
 					updateAbilityRange(id,function(){
-					//	TAS.debug("PFAbility.recalcAbilities calling updateAssociatedAttack for "+id);
-					//	updateAssociatedAttack(id,null,false,null);
 						doneOne();
 					});
 				});
@@ -939,7 +928,6 @@ export function migrateRepeatingMacros (callback){
 					done();
 					return;
 				}
-				//TAS.debug("PFAbility.migrateRepeatingMacros about to call PFMacros",defaultMacro);
 				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
 			} else {
 				done();
@@ -959,7 +947,7 @@ export function migrate (callback){
 	};
 	migrateRepeatingMacros(done);
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {
@@ -967,7 +955,6 @@ export var recalculate = TAS.callback(function callrecalculate(callback, silentl
 		}
 	}),
 	doneWithList = function(){
-		//TAS.debug("now calling resetcommandmacro");
 		resetCommandMacro();
 		done();
 	},
@@ -1083,6 +1070,3 @@ function registerEventHandlers () {
 
 }
 registerEventHandlers();
-//PFConsole.log('   PFAbility module loaded        ' );
-//PFLog.modulecount++;
-

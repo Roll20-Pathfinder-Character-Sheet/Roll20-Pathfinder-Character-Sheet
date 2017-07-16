@@ -32,7 +32,7 @@ export function migrate (callback,oldversion){
 		done();
 	}
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFInitiativeRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFInitiative.recalculate");
 		if (typeof callback === "function") {
