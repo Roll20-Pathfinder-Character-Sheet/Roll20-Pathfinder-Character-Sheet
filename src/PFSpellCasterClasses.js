@@ -557,8 +557,9 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
     });
 }
 export function migrate (callback, oldversion){
-    //TAS.debug("At PFSpellCasterClasses.migrate");
-    PFMigrate.migrateUsesSpellFlag(callback);
+    if (typeof callback==="function"){
+        callback();
+    }
 }
 export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
     var done = _.once(function () {

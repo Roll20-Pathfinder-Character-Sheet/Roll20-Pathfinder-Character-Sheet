@@ -335,7 +335,6 @@ export function updateAttacks(callback,silently){
     });
 }
 export function migrate (callback, oldversion){
-    PFMigrate.migrateAltAttackGridrowFlags();
     PFMigrate.migrateAttackDropdowns(callback);
 }
 /** recalculates all write-to fields in module 

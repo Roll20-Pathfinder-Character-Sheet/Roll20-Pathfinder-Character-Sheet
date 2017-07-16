@@ -990,7 +990,6 @@
 					<input type="text" name="attr_condition_attack_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_condition_skill_notes" value="" class="sheet-noshow" />
 					<input type="text" name="attr_condition_spell_notes" value="" class="sheet-noshow" />
-						
 				</div>
 				<div class="sheet-sect-buff sheet-oldbuff sheet-repeating-fields">
 					<fieldset class="repeating_buff">
@@ -13447,40 +13446,33 @@
 				<span class="sheet-table-name" data-i18n-title="do-not-touch" data-i18n-aria-label="do-not-touch"><span data-i18n="migrations-completed">Migrations Completed</span>:&nbsp;<span data-i18n="do-not-touch"></span></span>
 				<label><input type="checkbox" class="sheet-selectedlabel-check" name="attr_is_v1" value="1" title="@{is_v1}" /><b data-i18n-aria-label="sheet-created-after-v1" title="Sheet created at version 1.00 or later" data-i18n-title="sheet-created-after-v1" data-i18n="is-v1">Is V1 sheet</b></label>
 				<div class="sheet-table sheet-migrations">
-					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" data-i18n="pre-v1" style="width:5em;border-bottom:none;">Pre 1.0</span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_buffs" title="@{migrated_buffs}" value="1" checked /><span data-i18n-title="buffs-migrated-title" data-i18n-aria-label="buffs-migrated-title" data-i18n="buffs-migrated">Buffs</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_effects" title="@{migrated_effects}" value="1" /><span data-i18n-title="combat-effects-migrated-title" data-i18n-aria-label="combat-effects-migrated-title" data-i18n="combat-effects-migrated">Combat Effects</span></label></span>
+					<div class="sheet-table-row">
+						<span class="sheet-table-config-row-name" data-i18n="pre-v1" >Pre 1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_classSkillsMigrated" title="@{classSkillsMigrated}" value="1" /><span data-i18n-title="class-skills-migrated" data-i18n-aria-label="class-skills-migrated" data-i18n="class-skills-migrated">Class skill checkboxes</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_damage-multiplier" title="@{migrated_damage-multiplier}" value="1" /><span data-i18n-title="attacks-dmg-migrated-title" data-i18n-aria-label="attacks-dmg-migrated-title" title="Repeating Attack damage multiplier migrated." data-i18n="attacks-dmg-migrated">Dmg Multiplier</span></label></span>
-					</div>
-					<div  class="sheet-table-row">
-						<span class="sheet-table-config-row-name" >&nbsp;</span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_spells" title="@{migrated_spells}" value="1" checked /><span data-i18n-title="spells-migrated-title" data-i18n-aria-label="spells-migrated-title" data-i18n="spells-migrated">Spells</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_spellranges_migrated" title="@{spellranges_migrated}" value="1" /><span data-i18n="spellranges-migrated">Spell Ranges</span></label></span>
-						<span class="sheet-table-cell sheet-left"></span>
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" style="background-color:#eeeeee;">
 						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="post-v1">V 1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_npc" title="@{migrated_npc}" value="1"/><span data-i18n="npc-migrated">NPC Values Migrated</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_experience" title="@{migrated_experience}" value="1" /><span data-i18n-title="experience-migrated" data-i18n-aria-label="experience-migrated" data-i18n="experience-migrated">Fame and Hero </span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_spellflag" title="@{migrated_spellflag}" value="1" /><span data-i18n="uses-spells-migrated">Uses Spells Flag</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migratedAttack2row" title="@{migratedAttack2row}" value="1"/><span data-i18n="attack-grid-rows-migrated">Attack grid extra rows</span></label></span>
-					</div>
-					<div class="sheet-table-row">
-						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >&nbsp;</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_repeating_item_attributes" title="@{migrated_repeating_item_attributes}" value="1"><span data-i18n="copy-duplicate-attrs" >Copy duplicate fields</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_worn_equipment" title="@{migrated_worn_equipment}" value="1" /><span data-i18n-title="worn-equipment-migrated" data-i18n-aria-label="worn-equipment-migrated" data-i18n="worn-equipment-migrated">Worn Equipment </span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_hp_misc" title="@{migrated_hp_misc}" value="1"/><span data-i18n="hit-point-misc-migrated">Misc hp field</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_maxskill_misc" title="@{migrated_maxskill_misc}" value="1"/><span data-i18n="misc-skill-point-field" >Misc skill point field</span></label></span>
 					</div>
-					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" >&nbsp;</span>
+					<div class="sheet-table-row">
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >&nbsp;</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_maxskill_misc" title="@{migrated_maxskill_misc}" value="1"/><span data-i18n="misc-skill-point-field" >Misc skill point field</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_abilityflags109" title="@{migrated_abilityflags109}" value="1"  /><span data-i18n="ability-lists-flags">Ability lists Flags</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_defaults" title="@{migrated_itemlist_defaults}" value="1"/><span data-i18n="item-list-default-values" >Items default values</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_featurelists_defaults" title="@{migrated_featurelists_defaults}" value="1"/><span data-i18n="feature-list-default-values" >Features default values</span></label></span>
+					</div>
+					<div class="sheet-table-row" style="background-color:#eeeeee;">
+						<span class="sheet-table-config-row-name" >&nbsp;</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attacklist_defaults111" title="@{migrated_attacklist_defaults111}" value="1" /><span data-i18n="attack-list-default-values">Attacks default values</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" >
 						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="v1">Post V 1.0</span>
@@ -13499,7 +13491,6 @@
 				</div>
 			</div>
 		</div>
-		<input type="checkbox" name="attr_migrated_ability_dropdowns" style="display:none;" value="1">		
 		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_cleanup-show" data-i18n-aria-label="spell-migration" title="Click to expand" data-i18n-title="showsect-cmd" value="1" />
 		<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spell-migration">Spell Migration</label></h2>
