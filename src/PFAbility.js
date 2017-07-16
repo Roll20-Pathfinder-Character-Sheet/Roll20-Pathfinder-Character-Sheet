@@ -947,7 +947,7 @@ export function migrate (callback){
 	};
 	migrateRepeatingMacros(done);
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {

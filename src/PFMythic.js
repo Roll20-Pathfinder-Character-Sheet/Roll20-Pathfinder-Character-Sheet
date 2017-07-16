@@ -79,7 +79,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFMythicRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		//TAS.debug("leaving PFMythic.recalculate");
 		if (typeof callback === "function") {

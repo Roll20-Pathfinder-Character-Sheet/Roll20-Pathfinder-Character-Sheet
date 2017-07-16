@@ -75,7 +75,7 @@ function validNumericStr (preeval) {
  * @param {string} stringToSearch = string containing one or more @{fieldname}
  * @param {function(string)} callback when done passes resultant string to callback
  */
-export var findAndReplaceFields = TAS.callback(function callfindAndReplaceFields(stringToSearch, callback) {
+export function findAndReplaceFields(stringToSearch, callback) {
 	var fieldnames ;
 	if (typeof callback !== "function") {
 		return;
@@ -122,7 +122,7 @@ export var findAndReplaceFields = TAS.callback(function callfindAndReplaceFields
 		TAS.error("SWUtils.findAndReplaceFields", err);
 		callback(null);
 	}
-});
+}
 /** Replaces kl1 and kh1 with min and max
  * example: replaces {x,y}kh1 with min(x,y)
  * @param {string} str the string to search

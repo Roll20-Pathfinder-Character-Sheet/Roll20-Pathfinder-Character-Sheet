@@ -1418,7 +1418,7 @@ export function migrateRepeatingMacro (callback){
 		}
 	}),
 	migratedIteratives = function(){
-		SWUtils.setWrapper({'migrated_attack_macrosv1':1},PFConst.silentParams,done);
+		SWUtils.setWrapper({'migrated_attack_macrosv1':1},PFConst.silentParams,callback);
 	},
 	migrated = _.after(2,function(){
 		PFMacros.migrateRepeatingMacrosMult(migratedIteratives,'weapon',defaultIterativeAttrName,defaultIterativeRepeatingMacro,defaultIterativeRepeatingMacroMap,defaultIterativeDeletedMacroAttrs,defaultIterativeReplaceArray);
@@ -1523,7 +1523,7 @@ export function migrate (callback, oldversion){
 		});
 	});
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAttacksRecalculate(callback, silently, oldversion) {
 	var done = function () {
 		TAS.info("leaving PFAttacks.recalculate");
 		if (typeof callback === "function") {

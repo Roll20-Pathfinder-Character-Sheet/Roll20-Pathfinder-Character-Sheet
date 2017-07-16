@@ -342,7 +342,7 @@ export function migrate (callback, oldversion){
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion the version upgrading from 
  */
-export var recalculate = TAS.callback(function callrecalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
         //TAS.debug("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {

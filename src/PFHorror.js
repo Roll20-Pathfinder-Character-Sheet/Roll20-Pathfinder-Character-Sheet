@@ -72,7 +72,7 @@ function setSanityScore (callback){
     });
 }
 
-export var recalculate = TAS.callback(function callrecalculate(callback){
+export var recalculate = TAS.callback(function PFHorrorRecalculate(callback){
     setSanityScore();
     setSanityThreshold();
     if (typeof callback === "function"){
