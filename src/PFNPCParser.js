@@ -722,7 +722,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 						if (isUndead && retobj.DCability === 'CON'){
 							retobj.DCability='CHA';
 						}
-						retobj.dcequation = PFUtils.getDCString(retobj.DCability, 'npc-hd-num', isUndead);
+						retobj.DCEquation = PFUtils.getDCString(retobj.DCability, 'npc-hd-num', isUndead);
 					} else if ((/freq|day|constant|at.will/i).test(subattack)) {
 						retobj.frequency = subattack;
 					} else if ((/AC|hp/).test(subattack) || !(/\d|plus/).test(subattack)) {
@@ -2146,8 +2146,9 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			if (attack.group) {
 				memo[prefix + "group"] = attack.group;
 			}
-			if (attack.dc) {
-				memo[prefix + "notes"] = memo[prefix + "notes"] + " " + attack.dc + attack.dcequation ? (" " + attack.dcequation) : '';
+			if (attack.DC) {
+				TAS.debug("PFNPCParser has attack dc",attack);
+				memo[prefix + "notes"] = memo[prefix + "notes"] + " " + attack.DC + attack.DCEquation ? (" " + attack.DCEquation) : '';
 			}
 		} catch (err) {
 			TAS.error("createattacks error on:", attack, err);
