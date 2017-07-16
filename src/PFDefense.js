@@ -638,7 +638,7 @@ export function migrate (callback,oldversion){
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion 
  */
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         //TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {

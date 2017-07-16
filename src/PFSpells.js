@@ -1590,15 +1590,11 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback) {
     PFMigrate.migrateSpellRanges(function () {
-        migrateRepeatingMacros (function() {
-            if (typeof callback === "function") {
-                callback();
-            }
-        });
+        migrateRepeatingMacros (callback);
     });
 }
 
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();

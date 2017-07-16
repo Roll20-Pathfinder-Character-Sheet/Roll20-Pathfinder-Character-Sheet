@@ -243,7 +243,7 @@ function updateCarriedTotal (callback, silently) {
  */
 function migrateWornEquipment (callback) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.migrateWornEquipment");
+        TAS.debug("leaving PFInventory.migrateWornEquipment");
         if (typeof callback === "function") {
             callback();
         }
@@ -1554,8 +1554,7 @@ export function setNewDefaults (callback, oldversion){
 }
 export function migrate  (callback, oldversion) {
     var done = _.once(function(){
-        //TAS.debug("leaving PFInventory.migrate");
-        SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
+        TAS.debug("leaving PFInventory.migrate");
         if (typeof callback === "function"){
             callback();
         }
@@ -1566,6 +1565,9 @@ export function migrate  (callback, oldversion) {
                 if(!parseInt(v.migrated_itemlist_newfields,10)){
                     PFMacros.migrateRepeatingMacros(done,'item','macro-text',
                         defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
+                    SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
+                } else{
+                    done();
                 }
             }catch (err){
                 TAS.error("PFInventory.migrate.migrateMacroAddNewAttrs",err);
@@ -1576,27 +1578,30 @@ export function migrate  (callback, oldversion) {
     //TAS.debug("At PFInventory.migrate");
     PFMigrate.migrateRepeatingItemAttributes(TAS.callback(function callPFInventorySetNewDefaults(){
         setNewDefaults(TAS.callback( function callPFInventoryMigrateWornEquipment(){
-            migrateWornEquipment(migrateMacroAddNewAttrs);
-            migrateRepeatingMacros();
+            migrateWornEquipment(function(){
+                migrateMacroAddNewAttrs();
+                migrateRepeatingMacros();
+                done();
+            });
         }));
     }));
 }
-export var recalculate = TAS.callback(function callrecalculate(callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFInventoryRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.recalculate");
+        TAS.debug("leaving PFInventory.recalculate");
         if (typeof callback === "function") {
             callback();
         }
     }),
     setTotals = _.after(2, function () {
-        //TAS.debug("PFInventory.recalculate at setTotals");
-        updateLocations(TAS.callback(updateUses));
+        TAS.debug("PFInventory.recalculate at setTotals");
+        updateLocations(updateUses);
         resetCommandMacro();
         deleteOrphanWornRows();
         updateCarriedTotal(done);
     });
     try {
-        //TAS.debug("at PFInventory.recalculate");
+        TAS.debug("at PFInventory.recalculate");
         migrate(function(){
             updateCarriedCurrency(setTotals, silently);
             updateRepeatingItems(setTotals, silently);
