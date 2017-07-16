@@ -360,7 +360,7 @@ export function updateAttacks(callback,silently){
         fields= _.chain(attackGridFields).values().map(function(m){return _.values(m);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
         fields.push('attk-penalty');
         fields.push('buff_attack-total');
-        TAS.debug("PFAttackGrid.updateAttacks. Fields are:",fields);
+      //  TAS.debug("PFAttackGrid.updateAttacks. Fields are:",fields);
     } catch(err1){
         TAS.error("PFAttackGrid.updateAttacks error creating list of fields:",err1);
         if(typeof callback === "function"){
