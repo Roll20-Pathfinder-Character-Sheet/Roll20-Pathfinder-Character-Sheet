@@ -31,7 +31,6 @@ import * as PFPsionic from './PFPsionic';
 import * as PFMythic from './PFMythic';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
 import * as PFConditions from './PFConditions';
-import * as PFNPCParser from './PFNPCParser';
 import * as PFHorror from './PFHorror';
 import * as PFOccult from './PFOccult';
 
@@ -590,7 +589,7 @@ export function recalculate (oldversion, callback, silently) {
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
  *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
  * */
-function checkForUpdate () {
+export function checkForUpdate () {
 	var done = function () {
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
@@ -705,23 +704,6 @@ function registerEventHandlers () {
 		}
 	}));
 	
-	// PARSE CREATE NPC MONSTER
-	on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			getAttrs(['npc_import_now'], function (v) {
-				if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
-					PFNPCParser.importFromCompendium(eventInfo, function(){
-						//instead of just calling recalculate set recalc button and call checkforupdate
-						//so users sees something is happening.
-						SWUtils.setWrapper({recalc1:1},PFConst.silentParams,function(){
-							checkForUpdate();
-						});
-					});
-				}
-			});
-		}
-	}));
 	//delete a list
 	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_buff2 change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
 	TAS.callback(function eventDeleteOldList(eventInfo){

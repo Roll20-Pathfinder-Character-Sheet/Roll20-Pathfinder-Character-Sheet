@@ -4,6 +4,7 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
+import * as PFSheet from './PFSheet';
 import PFDB from './PFDB';
 import * as PFMigrate from './PFMigrate';
 import * as PFUtils  from './PFUtils';
@@ -3211,6 +3212,24 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		}
 	});
 }
+
+	// PARSE CREATE NPC MONSTER
+	on("change:npc_import_now change:npc_compendium_category", TAS.callback(function eventParseMonsterImport(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			getAttrs(['npc_import_now'], function (v) {
+				if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
+					importFromCompendium(eventInfo, function(){
+						//instead of just calling recalculate set recalc button and call checkforupdate
+						//so users sees something is happening.
+						SWUtils.setWrapper({recalc1:1},PFConst.silentParams,function(){
+							PFSheet.checkForUpdate();
+						});
+					});
+				}
+			});
+		}
+	}));
 
 //PFConsole.log('   NPCParser module loaded        ');
 //PFLog.modulecount++;
