@@ -4,6 +4,7 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
+import * as PFSheet from './PFSheet';
 import PFDB from './PFDB';
 import * as PFMigrate from './PFMigrate';
 import * as PFUtils  from './PFUtils';
@@ -716,13 +717,33 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					if ((/ft\./i).test(subattack)) {
 						retobj.range = subattack;
 					} else if (/D[Cc]\s\d+/.test(subattack)) {
+
 						matches = subattack.match(/(D[Cc]\s\d+)/);
 						retobj.DC = matches[1].toUpperCase();
 						retobj.DCability= PFDB.specialAttackDCAbilityBase[retobj.basename]||'CON';
 						if (isUndead && retobj.DCability === 'CON'){
 							retobj.DCability='CHA';
 						}
-						retobj.dcequation = PFUtils.getDCString(retobj.DCability, 'npc-hd-num', isUndead);
+						retobj.DCEquation = PFUtils.getDCString(retobj.DCability, 'npc-hd-num', isUndead);
+						TAS.debug("PFNPCParser.parseAttack looking for dc save:"+subattack);
+						matches = subattack.match(/(Will|Fort|Ref|Fortitude|Reflex)\s*D[Cc]\s*\d+([^),.])/i);
+						if (matches){
+							if(matches[1]){
+								tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
+								retobj.save=tempstr;
+							}
+							if (matches[2]){
+								retobj.save += ' '+matches[2];
+							}
+						} else {
+							matches = subattack.match(/(Will|Fort|Ref|Fortitude|Reflex)/i);
+							if (matches){
+								if(matches[1]){
+									tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
+									retobj.save=tempstr;
+								}
+							}
+						}
 					} else if ((/freq|day|constant|at.will/i).test(subattack)) {
 						retobj.frequency = subattack;
 					} else if ((/AC|hp/).test(subattack) || !(/\d|plus/).test(subattack)) {
@@ -2146,8 +2167,9 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			if (attack.group) {
 				memo[prefix + "group"] = attack.group;
 			}
-			if (attack.dc) {
-				memo[prefix + "notes"] = memo[prefix + "notes"] + " " + attack.dc + attack.dcequation ? (" " + attack.dcequation) : '';
+			if (attack.DC) {
+				TAS.debug("PFNPCParser has attack dc",attack);
+				memo[prefix + "notes"] = memo[prefix + "notes"] + " "+ (attack.save||'')+ " " + attack.DC + attack.DCEquation ? (" " + attack.DCEquation) : '';
 			}
 		} catch (err) {
 			TAS.error("createattacks error on:", attack, err);
@@ -3177,6 +3199,8 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (_.size(setter) > 0) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
+				setter['modify_dmg_by_size']=1;
+				setter['use_buff_bonuses']=1;
 				//TAS.info("##############################################","END OF importFromCompendium");
 				//TAS.debug("setting",setter);
 				SWUtils.setWrapper(setter, PFConst.silentParams, done);
@@ -3188,6 +3212,24 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		}
 	});
 }
+
+	// PARSE CREATE NPC MONSTER
+	on("change:npc_import_now change:npc_compendium_category", TAS.callback(function eventParseMonsterImport(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			getAttrs(['npc_import_now'], function (v) {
+				if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
+					importFromCompendium(eventInfo, function(){
+						//instead of just calling recalculate set recalc button and call checkforupdate
+						//so users sees something is happening.
+						SWUtils.setWrapper({recalc1:1},PFConst.silentParams,function(){
+							PFSheet.checkForUpdate();
+						});
+					});
+				}
+			});
+		}
+	}));
 
 //PFConsole.log('   NPCParser module loaded        ');
 //PFLog.modulecount++;
