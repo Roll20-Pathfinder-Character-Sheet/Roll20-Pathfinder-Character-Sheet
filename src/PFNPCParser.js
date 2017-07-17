@@ -716,6 +716,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					if ((/ft\./i).test(subattack)) {
 						retobj.range = subattack;
 					} else if (/D[Cc]\s\d+/.test(subattack)) {
+
 						matches = subattack.match(/(D[Cc]\s\d+)/);
 						retobj.DC = matches[1].toUpperCase();
 						retobj.DCability= PFDB.specialAttackDCAbilityBase[retobj.basename]||'CON';
@@ -723,6 +724,25 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 							retobj.DCability='CHA';
 						}
 						retobj.DCEquation = PFUtils.getDCString(retobj.DCability, 'npc-hd-num', isUndead);
+						TAS.debug("PFNPCParser.parseAttack looking for dc save:"+subattack);
+						matches = subattack.match(/(Will|Fort|Ref|Fortitude|Reflex)\s*D[Cc]\s*\d+([^),.])/i);
+						if (matches){
+							if(matches[1]){
+								tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
+								retobj.save=tempstr;
+							}
+							if (matches[2]){
+								retobj.save += ' '+matches[2];
+							}
+						} else {
+							matches = subattack.match(/(Will|Fort|Ref|Fortitude|Reflex)/i);
+							if (matches){
+								if(matches[1]){
+									tempstr=matches[1][0].toUpperCase()+ matches[1].slice(1).toLowerCase();
+									retobj.save=tempstr;
+								}
+							}
+						}
 					} else if ((/freq|day|constant|at.will/i).test(subattack)) {
 						retobj.frequency = subattack;
 					} else if ((/AC|hp/).test(subattack) || !(/\d|plus/).test(subattack)) {
@@ -2148,7 +2168,7 @@ function createAttacks (attacklist, setter, attackGrid, abilityScores, important
 			}
 			if (attack.DC) {
 				TAS.debug("PFNPCParser has attack dc",attack);
-				memo[prefix + "notes"] = memo[prefix + "notes"] + " " + attack.DC + attack.DCEquation ? (" " + attack.DCEquation) : '';
+				memo[prefix + "notes"] = memo[prefix + "notes"] + " "+ (attack.save||'')+ " " + attack.DC + attack.DCEquation ? (" " + attack.DCEquation) : '';
 			}
 		} catch (err) {
 			TAS.error("createattacks error on:", attack, err);

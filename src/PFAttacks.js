@@ -256,7 +256,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		rangedUpdate=true;
 	}
 	getAttrs([maxname, modname, "buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total","condition-Sickened",rangedField, totalDamageField, 
-		enhanceField, miscDmgField, abilityMultField], function (v) {
+		attacktypeField, enhanceField, miscDmgField, abilityMultField], function (v) {
 		var maxA , ability,abilityMult,abilityTot,damageBuffs,currTotalDmg,dmgConditions,genDmgBuff=0,
 		miscDmg,enhance,totalDamage,rangedAttack,setter = {};
 		rangedAttack =  parseInt(v[rangedField],10)||0;
@@ -270,12 +270,12 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			TAS.debug('PFAttacks update damage values are :',v);
 			if (rangedAttack){
 				damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
-				if(v[attacktypeField].indexOf(2)>=0){
+				if(v[attacktypeField] && v[attacktypeField].indexOf(2)>=0){
 					damageBuffs+=(parseInt(v["buff_dmg_ranged2-total"],10)||0);
 				}
 			} else {
 				damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
-				if(v[attacktypeField].indexOf(2)>=0){
+				if(v[attacktypeField] && v[attacktypeField].indexOf(2)>=0){
 					damageBuffs+=(parseInt(v["buff_dmg_melee2-total"],10)||0);
 				}
 			}
@@ -283,9 +283,6 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			damageBuffs+=genDmgBuff;
 
 			abilityMult=getDamageMult(v[abilityMultField]);
-
-
-			
 			damageBuffs -=dmgConditions;
 			maxA = parseInt(v[maxname], 10);
 			if(!rangedAttack || isNaN(maxA)) {
