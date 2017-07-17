@@ -1537,11 +1537,11 @@ function parseSpells (spellstr) {
 					matches = line.match(/([\w\s]*)spells\s(?:known|prepared)/i);
 					if (matches && matches[1]) {
 						omemo.classname = matches[1].replace(/^\s|\s$/g, '');
-						omemo.classname = omemo.classname[0].toUpperCase() + omemo.classname.slice(1).toLowerCase();
+						omemo.classname = omemo.classname.toLowerCase();
 					} else if ((/spells\sprepared/i).test(line)){
-						omemo.classname ='Cleric'; //if prep caster then not a sorcerer
+						omemo.classname ='cleric'; //if prep caster then not a sorcerer
 					} else {
-						omemo.classname = 'Sorcerer'; //default
+						omemo.classname = 'sorcerer'; //default
 					}
 				}
 			} else if( (/opposition schools|domains/i).test(line)) {
@@ -1652,10 +1652,13 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 			caster.ability = 'CHA';
 			caster.abilityMod = abilityScores.cha.mod;
 		} else {
-			caster.classname = spellObj.classname;
+			caster.classname = spellObj.classname[0].toUppercase() + spellObj.slice(1).toLowerCase();
 			if (PFDB.casterDefaultAbility[spellObj.classname] && abilityScores[PFDB.casterDefaultAbility[spellObj.classname]]) {
 				caster.ability = PFDB.casterDefaultAbility[spellObj.classname].toUpperCase();
 				caster.abilityMod = abilityScores[PFDB.casterDefaultAbility[spellObj.classname]].mod;
+			} else {
+				caster.ability = 'CHA';
+				caster.abilityMod = abilityScores.cha.mod;
 			}
 		}
 		if (spellObj.classLevel) {
