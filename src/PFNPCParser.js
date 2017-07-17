@@ -3198,6 +3198,8 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (_.size(setter) > 0) {
 				setter["npc_import_now"]=0;
 				setter['npc-compimport-show']=0;
+				setter['modify_dmg_by_size']=1;
+				setter['use_buff_bonuses']=1;
 				//TAS.info("##############################################","END OF importFromCompendium");
 				//TAS.debug("setting",setter);
 				SWUtils.setWrapper(setter, PFConst.silentParams, done);

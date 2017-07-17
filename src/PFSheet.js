@@ -285,7 +285,7 @@ function setupNewSheet (callback){
 	var done = _.once(function(){
 		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
 			 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
-			'attentionv161-show':1 },PFConst.silentParams,function(){
+			'attentionv161-show':1,'modify_dmg_by_size':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
