@@ -172,15 +172,40 @@ export function updateAttack(attype,v,setter){
     }
 }
 
-
+/**
+ * 
+ * @param {string} attype 
+ * @returns {[string]} for getAttrs
+ */
+function getOneSetAttackFields (attype){
+    var fields=[];
+    if (attackGridFields[attype]) {
+        fields= _.chain(attackGridFields[attype]).values().flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
+    }
+    fields.push('attk-penalty');
+    fields.push('buff_attack-total');
+    TAS.debug("PFAttackGrid.getOneSetAttackFields returning fields for "+attype,fields);
+    return fields;
+}
+/**
+ * 
+ * @param {[string]} attypes 
+ * @returns {[string]} for getAttrs
+ */
+function getAttackFields (attypes){
+    var fields=[],validtypes=[];
+    validtypes = _.intersection( Object.keys(attackGridFields),attypes);
+    fields= _.chain(validtypes).map(function(key){return _.values(attackGridFields[key]);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
+    fields.push('attk-penalty');
+    fields.push('buff_attack-total');
+    TAS.debug("PFAttackGrid.getAttackFields returning fields for ",attypes,fields);
+    return fields;
+}
 /** updateAttack - updates one row of attack grid (left most column in grid)
  * Updates the attack type totals at top of attack page for one row of grid
  * @param {string} attype = key for attackGridFields to indicate which row from attack grid
- * @param {eventInfo } eventInfo unused
- * @param {function} callback optional call when done
- * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  */
-export function updateAttackAsync  (attype, eventInfo, callback, silently) {
+export function updateAttackAsync  (attype, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
             callback();
@@ -189,22 +214,84 @@ export function updateAttackAsync  (attype, eventInfo, callback, silently) {
     fields,
     negfields=[];
     if (attackGridFields[attype]) {
-        fields=[attackGridFields[attype].atk, attackGridFields[attype].bab, "attk-penalty", attackGridFields[attype].abilityMod,
-            attackGridFields[attype].misc, attackGridFields[attype].size, attackGridFields[attype].buff, 
-            'buff_attack-total'];
-        
-        if (attackGridFields[attype].pen){
-            negfields.push(attackGridFields[attype].pen);
-        }
-        if (attackGridFields[attype].buff2){
-            fields.push(attackGridFields[attype].buff2);
-        }
-
-        SWUtils.updateRowTotal(fields, 0, negfields, false, done, silently);
+        fields=getOneSetAttackFields(attype);
+        fields.push('attk-penalty');
+        fields.push('buff_attack-total');
+        getAttrs(fields,function(vout){
+            var v={},setter={},params={};
+            try{
+                v=_.reduce(vout,function(m,val,key){
+                    m[key]=parseInt(val,10)||0;
+                    return m;
+                },{});
+                setter=updateAttack(attype,v);
+            } catch(err) {
+                TAS.error("PFAttackGrid.updateAttack for "+attype,err);
+            } finally {
+                if(_.size(setter)){
+                    if(silently){
+                        params = PFConst.silentParams;
+                    }
+                    SWUtils.setWrapper(setter,params,callback);
+                } else {
+                    if(typeof(callback)==="function"){
+                        callback();
+                    }
+                }
+            }
+        });
     } else {
         TAS.error("PFAttackGrid.updateAttack attack grid fields do not exist for: " + attype);
         done();
     }
+}
+
+export function updateAttacks(callback,silently,attypes){
+    var fields,validtypes;
+    try {
+        if (!attypes){ 
+            attypes = Object.keys(attackGridFields);
+            validtypes = attypes;
+        } else {
+            validtypes =  _.intersection( Object.keys(attackGridFields),attypes);
+            if(_.size(validtypes)!==_.size(attypes)){
+                TAS.warn("Error in parameters, some of these are not valid attacks:",attypes);
+            }
+        }
+        fields = getAttackFields(attypes);
+      //  TAS.debug("PFAttackGrid.updateAttacks. Fields are:",fields);
+    } catch(err1){
+        TAS.error("PFAttackGrid.updateAttacks error creating list of fields for ",attypes,err1);
+        if(typeof callback === "function"){
+            callback();
+        }
+    }
+    getAttrs(fields,function(vout){
+        var v={},setter={},params={};
+        try{
+            v=_.reduce(vout,function(m,val,key){
+                m[key]=parseInt(val,10)||0;
+                return m;
+            },{});
+            setter=_.reduce(validtypes,function(m,key){
+                m = updateAttack(key,v,m);
+                return m;
+            },{});
+        } catch(err) {
+            TAS.error("PFAttackGrid.updateAttacks ",err);
+        } finally {
+            if(_.size(setter)){
+                if(silently){
+                    params = PFConst.silentParams;
+                }
+                SWUtils.setWrapper(setter,params,callback);
+            } else {
+                if(typeof(callback)==="function"){
+                    callback();
+                }
+            }
+        }
+    });
 }
 
 /** wrapper for updateAttack
@@ -215,33 +302,27 @@ export function updateAttackAsync  (attype, eventInfo, callback, silently) {
 export function updateAttackGrid(buffType,eventInfo){
     switch(buffType.toLowerCase()){
         case 'melee':
-            updateAttackAsync('melee', eventInfo);
-            updateAttackAsync('melee2', eventInfo);
-            updateAttackAsync('CMB', eventInfo);
-            updateAttackAsync('CMB2', eventInfo);
+            updateAttacks(null, ['melee','melee2']);
             break;
         case 'ranged':
-            updateAttackAsync('ranged', eventInfo);
-            updateAttackAsync('ranged2', eventInfo);
+            updateAttacks(null, ['ranged','ranged2']);
             break;
         case 'cmb':
-            updateAttackAsync('CMB', eventInfo);
-            updateAttackAsync('CMB2', eventInfo);
+            updateAttacks(null, ['CMB','CMB2']);
             break;
         case 'melee2':
-            updateAttackAsync('melee2', eventInfo);
+            updateAttackAsync('melee2');
             break;        
         case 'ranged2':
-            updateAttackAsync('ranged2', eventInfo);
+            updateAttackAsync('ranged2');
             break;
         case 'cmb2':
-            updateAttackAsync('CMB2', eventInfo);
+            updateAttackAsync('CMB2');
             break;
     }
 }
 export function recalculateMelee(dummy1,dummy2,eventInfo){
-    updateAttackAsync('melee', eventInfo);
-    updateAttackAsync('melee2', eventInfo);    
+    updateAttacks(null, ['melee','melee2','CMB','CMB2']);
 }
 
 function getTopMacros(setter,v){
@@ -353,51 +434,6 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
         }
     });
 }
-
-export function updateAttacks(callback,silently){
-    var fields;
-    try {
-        fields= _.chain(attackGridFields).values().map(function(m){return _.values(m);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
-        fields.push('attk-penalty');
-        fields.push('buff_attack-total');
-      //  TAS.debug("PFAttackGrid.updateAttacks. Fields are:",fields);
-    } catch(err1){
-        TAS.error("PFAttackGrid.updateAttacks error creating list of fields:",err1);
-        if(typeof callback === "function"){
-            callback();
-        }
-    }
-    getAttrs(fields,function(vout){
-        var v={},setter={},params={};
-        try{
-            v=_.reduce(vout,function(m,val,key){
-                m[key]=parseInt(val,10)||0;
-                return m;
-            },{});
-            setter=_.reduce(Object.keys(attackGridFields),function(m,key){
-                m = updateAttack(key,v,m);
-                return m;
-            },{});
-        } catch(err) {
-            TAS.error("PFAttackGrid.updateAttacks ",err);
-        } finally {
-            if(_.size(setter)){
-                if(silently){
-                    params = PFConst.silentParams;
-                }
-                SWUtils.setWrapper(setter,params,callback);
-            } else {
-                if(typeof(callback)==="function"){
-                    callback();
-                }
-            }
-        }
-    });
-
-    //_.each(attackGridFields, function (attrMap, attack) {
-    //    updateAttackAsync(attack,null,doneAttack,silently);
-    //});
-}
 export function migrate (callback, oldversion){
     PFMigrate.migrateAttackDropdowns(callback);
 }
@@ -430,11 +466,10 @@ function registerEventHandlers () {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             SWUtils.evaluateAndAddToTotAsync(null,null,attackFields.miscmacro,attackFields.misc,attackFields.atk);
         }));
-        on("change:"+attackFields.babdd, TAS.callback(function eventAttackGridType(eventInfo) {
+        on("change:"+attackFields.babdd, TAS.callback(function eventAttackGridUpdateBABorLevel(eventInfo) {
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-                TAS.debug("calling set dropdown from "+attackFields.babdd +" to "+attackFields.bab);
-                PFUtilsAsync.setDropdownValue(attackFields.babdd,attackFields.bab);
+                SWUtils.setDropdownAndAddToTotAsync(attackFields.babdd,attackFields.bab,attackFields.atk);
             }
         }));
         on("change:" + attackFields.bab + " change:" + attackFields.abilityMod + " change:" + attackFields.misc, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {

@@ -50,42 +50,96 @@ function getNPCInit (initstring) {
 	}
 	return numberInit;
 }
-/**getAbilityAndMod- returns the number and mod for an ability
- * @param {string} numberAsString the ability score -a number in string form
- * @returns {base: number or '-', mod:number}
- */
-function getAbilityAndMod (numberAsString) {
-	var base = parseInt(numberAsString, 10),
-	mod = 0;
-	if (!isNaN(base)) {
-		mod = Math.floor((base - 10) / 2);
-		return {
-			"base": base,
-			"mod": mod
-		};
-	}
-	if (  PFConst.minusreg.test(numberAsString) ) {
-		return {
-			"base": "-",
-			"mod": 0
-		};
-	}
-	return {
-		"base": 10,
-		"mod": 0
-	};
-}
-/** Splits string into array, based on commas (ignoring commas between parenthesis) 
- * @param {string} featstring 
- * @returns {[string]} feats
- */
-function parseFeats (featstring) {
-	if (featstring.slice(0,5).toLowerCase()==='feats'){
-		featstring = featstring.slice(5);
-	}
-	return SWUtils.splitByCommaIgnoreParens(featstring);
-}
 
+/*buildImportantFeatObj - saves feats that require updates to the sheet in an object, no spaces and all lowercase.
+ * returns sub objects for feats that only apply to certain attacks, and a criticaldamage subobject.
+ * for instance:::  obj.weaponfinesse=1 obj.criticaldamage.bleedingcritical:1 obj.longsword.weaponfocus:1
+ * @returns object of feats   as  {featname:1,feat2name:1, attacks:{attack1name:{featname:1}}, criticaldamage:{featname:1}}
+ */
+function buildImportantFeatObj (featlist) {
+	return _.chain(featlist)
+	.filter( function(feat){if (!feat) {return false;} return true;})
+	.filter( function (feat) {
+		return PFDB.importantFeatRegExp.test(feat);
+	})
+	.map(function(feat){
+		//TAS.debug("checking <" + feat + "> for ending letter");
+		//if there is an "endnote" letter indicator at the end then remove it
+		//some end with B for instance
+		feat = SWUtils.trimBoth(feat);
+		if ((/\b[A-Z]$/i).test(feat)) {
+			feat = feat.slice(0,-2);
+			feat=SWUtils.trimBoth(feat);
+		}
+		return feat;
+	})
+	.reduce(function (memo, feat) {
+		var origfeat = feat,
+		atktype = "",
+		matches,
+		attacks = {},
+		attack = {},
+		crits = {},
+		skills = {},
+		skill = "";
+		try {
+			if (feat.indexOf('(') >= 0) {
+				matches = /(.*?)\((.*)\)/.exec(feat);
+				feat = matches[1];
+				atktype = matches[2];
+				feat = SWUtils.trimBoth(feat);
+				atktype = SWUtils.trimBoth(atktype);
+			}
+			feat = feat.replace(/\s/g, '').toLowerCase();
+			if (feat === 'improvedcritical' || feat === 'criticalmastery') {
+				return memo;
+			}
+			if (feat.indexOf('critical') > 0) {
+				atktype = feat;
+				feat = "criticaldamage";
+			} else if (feat.indexOf('skillfocus') >= 0) {
+				skill = atktype.replace(' ', '-');
+				skill = skill[0].toUpperCase() + skill.slice(1);
+			}
+			memo[feat] = 1;
+			switch (feat) {
+				case 'weaponfinesse':
+				case 'improvedcritical':
+					if (memo.attacks) {
+						attacks = memo.attacks;
+					}
+					if (attacks[atktype]) {
+						attack = attacks[atktype];
+					}
+					attack[feat] = 1;
+					attacks[atktype] = attack;
+					memo.attacks = attacks;
+					break;
+				case 'criticaldamage':
+					if (memo.criticaldamage) {
+						crits = memo.criticaldamage;
+					}
+					crits[atktype] = 1; //or put sickening?
+					memo.criticaldamage = crits;
+					break;
+				case 'skillfocus':
+					if (memo.skillfocuses) {
+						skills = memo.skillfocuses;
+					}
+					if (skill) {
+						skills[skill] = 1;
+						memo.skillfocuses = skills;
+					} 
+					break;
+			}
+		} catch (err) {
+			TAS.error("buildImportantFeatObj error:", err);
+			memo[feat] = 1;
+		} finally {
+			return memo;
+		}
+	}, {}).value();
+}
 /** parseNPChp - parses statblock hp string such as 203 (14d10+126)
  * @param {string} hpstring - string format: "15 (3d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
  * @param {int} abilityMod: number representing ability score mod (normally CON-mod)
@@ -485,95 +539,6 @@ function assignPrimarySecondary (attacks) {
 		}
 	}
 	return attacks;
-}
-/*buildImportantFeatObj - saves feats that require updates to the sheet in an object, no spaces and all lowercase.
- * returns sub objects for feats that only apply to certain attacks, and a criticaldamage subobject.
- * for instance:::  obj.weaponfinesse=1 obj.criticaldamage.bleedingcritical:1 obj.longsword.weaponfocus:1
- * @returns object of feats   as  {featname:1,feat2name:1, attacks:{attack1name:{featname:1}}, criticaldamage:{featname:1}}
- */
-function buildImportantFeatObj (featlist) {
-	return _.chain(featlist)
-	.filter( function(feat){if (!feat) {return false;} return true;})
-	.filter( function (feat) {
-		return PFDB.importantFeatRegExp.test(feat);
-	})
-	.map(function(feat){
-		//TAS.debug("checking <" + feat + "> for ending letter");
-		//if there is an "endnote" letter indicator at the end then remove it
-		//some end with B for instance
-		feat = SWUtils.trimBoth(feat);
-		if ((/\b[A-Z]$/i).test(feat)) {
-			feat = feat.slice(0,-2);
-			feat=SWUtils.trimBoth(feat);
-		}
-		return feat;
-	})
-	.reduce(function (memo, feat) {
-		var origfeat = feat,
-		atktype = "",
-		matches,
-		attacks = {},
-		attack = {},
-		crits = {},
-		skills = {},
-		skill = "";
-		try {
-			if (feat.indexOf('(') >= 0) {
-				matches = /(.*?)\((.*)\)/.exec(feat);
-				feat = matches[1];
-				atktype = matches[2];
-				feat = SWUtils.trimBoth(feat);
-				atktype = SWUtils.trimBoth(atktype);
-			}
-			feat = feat.replace(/\s/g, '').toLowerCase();
-			if (feat === 'improvedcritical' || feat === 'criticalmastery') {
-				return memo;
-			}
-			if (feat.indexOf('critical') > 0) {
-				atktype = feat;
-				feat = "criticaldamage";
-			} else if (feat.indexOf('skillfocus') >= 0) {
-				skill = atktype.replace(' ', '-');
-				skill = skill[0].toUpperCase() + skill.slice(1);
-			}
-			memo[feat] = 1;
-			switch (feat) {
-				case 'weaponfinesse':
-				case 'improvedcritical':
-					if (memo.attacks) {
-						attacks = memo.attacks;
-					}
-					if (attacks[atktype]) {
-						attack = attacks[atktype];
-					}
-					attack[feat] = 1;
-					attacks[atktype] = attack;
-					memo.attacks = attacks;
-					break;
-				case 'criticaldamage':
-					if (memo.criticaldamage) {
-						crits = memo.criticaldamage;
-					}
-					crits[atktype] = 1; //or put sickening?
-					memo.criticaldamage = crits;
-					break;
-				case 'skillfocus':
-					if (memo.skillfocuses) {
-						skills = memo.skillfocuses;
-					}
-					if (skill) {
-						skills[skill] = 1;
-						memo.skillfocuses = skills;
-					} 
-					break;
-			}
-		} catch (err) {
-			TAS.error("buildImportantFeatObj error:", err);
-			memo[feat] = 1;
-		} finally {
-			return memo;
-		}
-	}, {}).value();
 }
 function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 	var matches, currpos = 0, name = "", iteratives, i = 0, tempInt = 0,
@@ -1118,12 +1083,12 @@ function parseSkills (skillstr) {
 }
 function parseAbilityScores (v) {
 	var aS = {};
-	aS.str = getAbilityAndMod(v["str_compendium"]);
-	aS.dex = getAbilityAndMod(v["dex_compendium"]);
-	aS.con = getAbilityAndMod(v["con_compendium"]);
-	aS.wis = getAbilityAndMod(v["wis_compendium"]);
-	aS['int'] = getAbilityAndMod(v["int_compendium"]);
-	aS.cha = getAbilityAndMod(v["cha_compendium"]);
+	aS.str = PFAbilityScores.getAbilityAndMod(v.str_compendium);
+	aS.dex = PFAbilityScores.getAbilityAndMod(v.dex_compendium);
+	aS.con = PFAbilityScores.getAbilityAndMod(v.con_compendium);
+	aS.wis = PFAbilityScores.getAbilityAndMod(v.wis_compendium);
+	aS['int'] = PFAbilityScores.getAbilityAndMod(v.int_compendium);
+	aS.cha = PFAbilityScores.getAbilityAndMod(v.cha_compendium);
 	return aS;
 }
 function parseSpecialAttack (setter,sastr) {
@@ -2738,6 +2703,33 @@ function createFeatEntries (setter, featlist) {
 		return memo;
 	}, setter);
 }
+
+function parseAndCreateFeats(featstring,setter){
+	var parseFeats = function (featstring2) {
+		if (featstring2.slice(0,5).toLowerCase()==='feats'){
+			featstring2 = featstring.slice(5);
+		}
+		return SWUtils.splitByCommaIgnoreParens(featstring2);
+	},
+	featlist=[],importantFeats={};
+	try {
+		if (featstring) {
+			featlist = parseFeats(featstring);
+			if (featlist && _.size(featlist) > 0) {
+				createFeatEntries(setter, featlist);
+				importantFeats = buildImportantFeatObj(featlist);
+			}
+		}
+	} catch (featerr) {
+		TAS.error("error parsing feats", featerr);
+		if (!importantFeats) {
+			importantFeats = {};
+		}
+	} finally {
+		return importantFeats;
+	}
+}
+
 function createFeatureEntries (setter, abilitylist, abilityScoreMap) {
 	var attrs = {}, creatureRace = "", tempint=0,dc=0,abilityMod=0,charlevel=0,calcDC=0;
 	try {
@@ -3007,7 +2999,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			isUndead = ((/undead/i).test(v.type_compendium)||(/undead/i).test(v.character_name));
 			if (isUndead) {
 				setter["is_undead"] = "1";
-				TAS.warn("is undead! ");
 			}
 			if (v.character_name){
 				setter["race"] = v["character_name"];
@@ -3017,19 +3008,20 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (v.class_compendium) {
 				setter["add_class"]=1;
 				tempInt=0;
-				matches = v.class_compendium.split(/\s*,\s*/g);
+				matches = v.class_compendium.split(',');
 				_.each(matches,function(classstr){
-					var  lvl=0, localmatch = classstr.match(/\d+/),
-						newclassstr=classstr;
-						tempInt++;
-					if (match){
-						lvl = parseInt(match[0],10)||0;
-						newclassstr = classstr.slice(0,match.index);
-						if(( match.index+match[0].length) <= classstr.length){
-							newclassstr += classstr.slice(match.index+match[0].length);
+					var  lvl=0, newclassstr='',localmatch;
+					try {
+						localmatch = classstr.match(/\d+/);
+						if (localmatch){
+							lvl = parseInt(localmatch[0],10)||0;
+							newclassstr = SWUtils.trimBoth(classstr.replace(/\s*\d+\s*/,' '));
 						}
+						setter = createClassEntries (setter,{'classname':newclassstr,'CL':lvl});
+						tempInt++;
+					} catch (cerr){
+						TAS.error("PFNPCparser error trying to parse class"+ v.class_compendium);
 					}
-					setter = createClassEntries (setter,{'classname':classstr,'CL':lvl});
 				});
 				if(tempInt>1){
 					setter["multiclassed"]=1;
@@ -3039,40 +3031,12 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			}
 			// Ability Scores *****************************************************************
 			abilityScores = parseAbilityScores(v);
-			setter = createAbilityScoreEntries(setter, abilityScores, isUndead);
+			createAbilityScoreEntries(setter, abilityScores, isUndead);
 			// Size **********************************************************************
-			sizeMap = PFSize.getSizeFromText(v.size_compendium);
-			if (sizeMap && sizeMap.size !== 0) {
-				setter.size = sizeMap.size;
-				setter['default_char_size']=sizeMap.size;
-				setter.size_skill = sizeMap.skillSize;
-				setter["CMD-size"] = (sizeMap.size * -1);
-				setter.size_skill_double = (sizeMap.skillSize * 2);
-			} else {
-				setter['size']=0;
-				setter['default_char_size']=0;
-				setter.size_skill = 0;
-				setter["CMD-size"] = 0;
-				setter.size_skill_double =0;
-				if (!sizeMap){
-					sizeMap = {'size':0,'skillSize':0};
-				}
-			}
+			sizeMap = PFSize.setSize(v.size_compendium,setter);
+
 			// Feats *********************************************************************
-			if (v["npc-feats-text"]) {
-				try {
-					featlist = parseFeats(v["npc-feats-text"]);
-					if (featlist && _.size(featlist) > 0) {
-						setter = createFeatEntries(setter, featlist);
-						importantFeats = buildImportantFeatObj(featlist);
-					}
-				} catch (featerr) {
-					TAS.error("error parsing feats", featerr);
-					if (!importantFeats) {
-						importantFeats = {};
-					}
-				}
-			}
+			importantFeats = parseAndCreateFeats(v["npc-feats-text"],setter);
 			// Initiative *****************************************************************
 			baseInit = getNPCInit(v.init_compendium);
 			createInitEntries(setter, baseInit, abilityScores, importantFeats);

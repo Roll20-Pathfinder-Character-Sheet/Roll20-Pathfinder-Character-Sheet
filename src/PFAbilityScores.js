@@ -17,7 +17,31 @@ events = {
     abilityEventsPlayer: "change:REPLACE-base change:REPLACE-enhance change:REPLACE-inherent change:REPLACE-misc change:REPLACE-temp change:REPLACE-damage change:REPLACE-penalty change:REPLACE-drain"
 };
 
-
+/**getAbilityAndMod- returns the number and mod for an ability
+ * @param {string} numberAsString the ability score -a number in string form
+ * @returns {{base: number or '-', mod:number}}
+ */
+export function getAbilityAndMod (numberAsString) {
+	var base = parseInt(numberAsString, 10),
+	mod = 0;
+	if (!isNaN(base)) {
+		mod = Math.floor((base - 10) / 2);
+		return {
+			"base": base,
+			"mod": mod
+		};
+	}
+	if (  PFConst.minusreg.test(numberAsString) ) {
+		return {
+			"base": "-",
+			"mod": 0
+		};
+	}
+	return {
+		"base": 10,
+		"mod": 0
+	};
+}
 export function getAttributes (ability){
     var fields = _.map(columnMods,function(col){return ability+col;});
     fields.push(ability);
