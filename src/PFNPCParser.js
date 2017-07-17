@@ -1643,7 +1643,7 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 	var caster = {};
 	if (!spellObj || !abilityScores || !healthObj) { return null; }
 	try {
-		//TAS.debug"getCasterObj spellObj,abilities,health are:", spellObj, abilityScores, healthObj);
+		TAS.debug("getCasterObj spellObj,abilities,health are:", spellObj, abilityScores, healthObj);
 		caster.abilityMod = 0;
 		caster.CL = 0;
 		caster.concentrationBonus = 0;
@@ -1652,7 +1652,7 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 			caster.ability = 'CHA';
 			caster.abilityMod = abilityScores.cha.mod;
 		} else {
-			caster.classname = spellObj.classname[0].toUppercase() + spellObj.slice(1).toLowerCase();
+			caster.classname = spellObj.classname[0].toUpperCase() + spellObj.classname.slice(1).toLowerCase();
 			if (PFDB.casterDefaultAbility[spellObj.classname] && abilityScores[PFDB.casterDefaultAbility[spellObj.classname]]) {
 				caster.ability = PFDB.casterDefaultAbility[spellObj.classname].toUpperCase();
 				caster.abilityMod = abilityScores[PFDB.casterDefaultAbility[spellObj.classname]].mod;
@@ -1750,7 +1750,7 @@ function setCasterFields (setter, casterObj, classidx) {
 			}
 		}
 	} catch (err) {
-		TAS.error("setSLACasterFields", err);
+		TAS.error("setCasterFields", err);
 	} finally {
 		return setter;
 	}
