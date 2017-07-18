@@ -8284,6 +8284,8 @@
 				<h1 class="sheet-selected-tabtitle" data-i18n="spells">Spells</h1>
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
 				<input type="checkbox" class="sheet-spell-multiclassed-show sheet-firsttab-inverse-show" name="attr_spellclasses_multiclassed" title="True if more than one spellcasting class" value="1" role="presentation" /><span data-i18n="multiple-spellclasses"> Has multiple spellcasting classes</span>
+				<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_caster_show" title="@{extra_fields_caster_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>
+				<div class="sheet-cheat"></div>
 				<!-- Spell Classes 0,1,2 -->
 				<div class="sheet-cheat sheet-show-readonly"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_spellclasses-show" data-i18n-aria-label="spellcasting-classes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -8301,8 +8303,6 @@
 					<input type="checkbox" class="sheet-noshow sheet-spellpoints-show" name="attr_use_spell_points" value="1" />
 					<!-- Spell Class 0 -->
 					<h2 class="sheet-section0 sheet-nontable-name"><span name="attr_spellclass-0-name"></span></h2>
-					<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_caster_show" title="@{extra_fields_caster_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>					
-					<div class="sheet-cheat"></div>
 					<div class="sheet-section0 sheet-section-spellclass sheet-spellclass-0">
 						<div class="sheet-col sheet-col1">
 							<input class="sheet-showarrow sheet-h3arrow" type="checkbox" name="attr_spellclass-0-show" data-i18n-aria-label="spellclass-level-base" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
@@ -8316,8 +8316,8 @@
 										<span class="sheet-table-header" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 										<span class="sheet-table-header sheet-divider"></span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="class-number-explanation" data-i18n-aria-label="class-number-explanation" data-i18n="synchronize-class">Sync Class</span>
-										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
-										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
+										<span class="sheet-table-header sheet-entry-20p-shrink" data-i18n="class-name">Class Name</span>
+										<span class="sheet-table-header" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
 										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
@@ -8346,10 +8346,10 @@
 												<option value="6" data-i18n="race-hd">Race (use HD for level)</option>
 											</select>
 										</span>
-										<span class="sheet-table-cell sheet-entry_long">
+										<span class="sheet-table-cell">
 											<input class="sheet-calc-advanced-spell-option" title="@{spellclass-0-name}" type="text" name="attr_spellclass-0-name" placeholder="Class Name" data-i18n-placeholder="class-name">
 										</span>
-										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{spellclass-0-level}" type="number" name="attr_spellclass-0-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
 											<input type="checkbox" value="1" name="spellclass-0-level-misc-mod_error" class="sheet-error-mshow" />
@@ -8787,8 +8787,8 @@
 										<span class="sheet-table-header" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 										<span class="sheet-table-header sheet-divider"></span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="class-number-explanation" data-i18n-aria-label="class-number-explanation" data-i18n="synchronize-class">Sync Class</span>
-										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
-										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
+										<span class="sheet-table-header sheet-entry-20p-shrink" data-i18n="class-name">Class Name</span>
+										<span class="sheet-table-header" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
 										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
@@ -8817,10 +8817,10 @@
 												<option value="6" data-i18n="race-hd">Race (use HD for level)</option>
 											</select>
 										</span>
-										<span class="sheet-table-cell sheet-entry_long">
+										<span class="sheet-table-cell">
 											<input class="sheet-calc-advanced-spell-option" title="@{spellclass-1-name}" type="text" name="attr_spellclass-1-name" placeholder="Class Name" data-i18n-placeholder="class-name">
 										</span>
-										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-1-level}" type="number" name="attr_spellclass-1-level" value="0" /></span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{spellclass-1-level}" type="number" name="attr_spellclass-1-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
 											<input type="checkbox" value="1" name="spellclass-1-level-misc-mod_error" class="sheet-error-mshow" />
@@ -9258,8 +9258,8 @@
 										<span class="sheet-table-header" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
 										<span class="sheet-table-header sheet-divider"></span>
 										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="class-number-explanation" data-i18n-aria-label="class-number-explanation" data-i18n="synchronize-class">Sync Class</span>
-										<span class="sheet-table-header sheet-entry-long" style="min-width:10em;" data-i18n="class-name">Class Name</span>
-										<span class="sheet-table-header sheet-hide-readonly" data-i18n="base-level">Base Level</span>
+										<span class="sheet-table-header sheet-entry-20p-shrink" data-i18n="class-name">Class Name</span>
+										<span class="sheet-table-header" data-i18n="base-level">Base Level</span>
 										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
 										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
 										<span class="sheet-divider sheet-table-header sheet-hide-readonly"></span>
@@ -9288,10 +9288,10 @@
 												<option value="6" data-i18n="race-hd">Race (use HD for level)</option>
 											</select>
 										</span>
-										<span class="sheet-table-cell sheet-entry_long">
+										<span class="sheet-table-cell">
 											<input class="sheet-calc-advanced-spell-option" title="@{spellclass-2-name}" type="text" name="attr_spellclass-2-name" placeholder="Class Name" data-i18n-placeholder="class-name">
 										</span>
-										<span class="sheet-table-cell sheet-hide-readonly sheet-number sheet-left"><input title="@{spellclass-2-level}" type="number" name="attr_spellclass-2-level" value="0" /></span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{spellclass-2-level}" type="number" name="attr_spellclass-2-level" value="0" /></span>
 										<span class="sheet-divider sheet-advanced-spell-option">+</span>
 										<span class="sheet-table-cell sheet-advanced-spell-option sheet-linked-tablecell">
 											<input type="checkbox" value="1" name="spellclass-2-level-misc-mod_error" class="sheet-error-mshow" />
@@ -9756,7 +9756,7 @@
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_spell-lists-show" data-i18n-aria-label="spell-lists" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="spell-lists">Spell Lists</label></h2>
-				<div class="sheet-h2-section sheet-repeating-sect sheet-spells sheet-wide-readonly">
+				<div class="sheet-h2-section sheet-repeating-sect sheet-spells-h2section sheet-wide-readonly">
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_newspells-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_newspells-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_newspells-column-show" value="1" /><span></span>

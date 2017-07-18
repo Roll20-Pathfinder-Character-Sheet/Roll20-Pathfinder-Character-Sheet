@@ -4821,8 +4821,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-dual-wield-show:not(:checked)~.sheet-dual-wield-sect,
 
 .sheet-spellpoints-show:not(:checked) ~ .sheet-section-spellclass .sheet-spellpoints-sect,
-.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-manual-column-show:not(:checked) ~ div .sheet-spell-userdef-column,
-.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-section-spellclass .sheet-advanced-spell-option,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-section-spellclass .sheet-manual-column-show:not(:checked) ~ div .sheet-spell-userdef-column,
+.sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-section-spellclass .sheet-advanced-spell-option,
 .sheet-advanced-spell-option-show:not(:checked) ~ .sheet-spells .sheet-advanced-spell-option,
 .sheet-advanced-spell-option-show:not(:checked) ~ .sheet-npc-spells .sheet-advanced-spell-option,
 .sheet-spell-multiclassed-show:not(:checked) ~ .sheet-spellcasting-classes .sheet-spell-multiclassed,
