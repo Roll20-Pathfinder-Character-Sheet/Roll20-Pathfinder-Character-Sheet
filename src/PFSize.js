@@ -180,14 +180,14 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 					currSize++;
 					sizediff--;
 					if (currow>=20){
-						TAS.warn("PFSize.updateDamageDice increased off top of grid to row "+currrow);
+						TAS.warn("PFSize.updateDamageDice increased off top of grid to row "+currow);
 						break;
 					}
 				} else {
 					currSize--;
 					sizediff++;
 					if (currow<=1) {
-						TAS.warn("PFSize.updateDamageDice decreased under bottom of grid to row "+currrow);
+						TAS.warn("PFSize.updateDamageDice decreased under bottom of grid to row "+currow);
 						break;
 					}
 				}
@@ -200,6 +200,33 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 	}
 }
 
+export function setSize(str,setter){
+	var tempstr='',sizeMap={};
+	try {
+		sizeMap = getSizeFromText(str);
+		if (sizeMap && sizeMap.size !== 0) {
+			setter.size = sizeMap.size;
+			setter['default_char_size']=sizeMap.size;
+			setter.size_skill = sizeMap.skillSize;
+			setter["CMD-size"] = (sizeMap.size * -1);
+			setter.size_skill_double = (sizeMap.skillSize * 2);
+		} else {
+			setter['size']=0;
+			setter['default_char_size']=0;
+			setter.size_skill = 0;
+			setter["CMD-size"] = 0;
+			setter.size_skill_double =0;
+			if (!sizeMap){
+				sizeMap = {'size':0,'skillSize':0};
+			}
+		}
+		tempstr=reverseSizeNameMap[String(sizeMap.size)];
+		setter['size_display']=SWUtils.getTranslated(tempstr);
+	} finally {
+		return sizeMap
+	}
+}
+
 export function updateSize (levelChange,v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
 		 skillSize = 0, tempstr='',sizeDisplay='';
@@ -207,7 +234,6 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
 		size = parseInt(v['size'], 10) || 0;
-//		levelChange=parseInt(v['buff_size-total'],10)||0;
 		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+levelChange;
@@ -222,14 +248,8 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 				size = defaultSize;
 			}
 		}
-		try {
-			tempstr=reverseSizeNameMap[String(size)];
-			if (tempstr){
-				sizeDisplay = getTranslationByKey(sizeDisplay);
-			}
-		} catch (err3){
-			sizeDisplay = tempstr;
-		}
+		tempstr=reverseSizeNameMap[String(size)];
+		sizeDisplay=SWUtils.getTranslated(tempstr);
 		if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
 			setter.size_display=sizeDisplay;
 		}

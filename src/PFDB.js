@@ -3,7 +3,7 @@ export default {
 	unarmedAttacksRegExp : /unarmed|strike|punch|palm|flurry|blow|touch/i,
 	combatManeuversRegExp : /bull\s*rush|trip|disarm|dirty\s*trick|drag|grapple|overrun|reposition|steal|sunder|trip/i,
 	primaryNaturalAttacksRegExp : /bite|claw|gore|slam|sting|talon/i,
-	importantFeatRegExp : /Weapon Fine|^Run$|Enduran|Defensive Combat Train|Agile Maneuv|Arcane Arm|Combat Cast|Critical Focus|Skill Focus|Critical|Intimidating Prow/i,
+	importantFeatRegExp : /Weapon Fine|^Run$|Enduran|Defensive Combat Train|Agile Maneuv|Arcane Arm|Combat Cast|Critical Focus|Skill Focus|Critical|Intimidating Prow|great fortitude|iron will|lightning reflexes/i,
 	spAttackAttacks : /blooddrain|touch|energydrain|bleed|burn|constrict|trample|engulf|heat|powerfulcharge|swallowwhole|constrict/i,
 	spAttackAttacksPreProcess : /rake|rend|web/i,
 	abilitySrch : /str|dex|con|int|wis|cha/i,

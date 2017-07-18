@@ -17,6 +17,7 @@ import PFConst from './PFConst';
 import * as PFSheet from './PFSheet';
 import * as HLImport from './HLImport';
 import * as PFNPCParser from './PFNPCParser';
+import * as PFTemplate from './PFTemplate';
 
 PFConsole.log('       ,## /##                    ');
 PFConsole.log('      /#/ /  ##                   ');
