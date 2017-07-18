@@ -3907,19 +3907,19 @@
 						<input type="checkbox" name="attr_misc_skill_num_show" class="sheet-misc-skill-10-show sheet-noshow" value="10" />
 						<div class="sheet-table-row">
 							<span class="sheet-table-header"></span>
-							<span class="sheet-table-header sheet-entry-vlong" data-i18n="skill">Skill</span>
+							<span class="sheet-table-header sheet-entry-25p-shrink" data-i18n="skill">Skill</span>
 							<span class="sheet-table-header" data-i18n="total">Total</span>
 							<span class="sheet-table-header" data-i18n="ranks">Ranks</span>
 							<span class="sheet-table-header" style="width:2em;min-width:2em;" data-i18n-title="class-skill" data-i18n="class-skill-abbrv">CS</span>
 							<span class="sheet-table-header sheet-ability-column" data-i18n="ability">Ability</span>
-							<span class="sheet-table-header" style="width:1em;max-width:1em;"></span>
+							<span class="sheet-table-header"  data-i18n-title="armor-check-penalty" data-i18n-aria-label="armor-check-penalty-abbrv" ></span>
 							<span class="sheet-table-header" data-i18n="race">Race</span>
 							<span class="sheet-table-header" data-i18n="trait">Trait</span>
 							<span class="sheet-table-header" data-i18n="feat">Feat</span>
 							<span class="sheet-table-header" data-i18n="item">Item</span>
-							<span class="sheet-table-header sheet-entry-15p sheet-super sheet-note-a" data-i18n="miscellaneous-macro-abbrv">Misc Macro</span>
+							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-a" data-i18n="miscellaneous-macro-abbrv">Misc Macro</span>
 							<span class="sheet-table-header" data-i18n="miscellaneous-abbrv">Misc</span>
-							<span class="sheet-table-header" style="width:2em;" title="Requires Training" data-i18n="requires-training-abbrv">RT</span>
+							<span class="sheet-table-header" style="width:1.25em;" title="Requires Training" data-i18n="requires-training-abbrv">RT</span>
 							<span class="sheet-table-header sheet-entry-15p-shrink" data-i18n="notes">Notes</span>
 							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 						</div>
@@ -7351,17 +7351,17 @@
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-notes">Skill Notes</label></h2>
 				<div class="sheet-h2-section sheet-skill-notes">
 					<div class="sheet-table sheet-center sheet-notes-cell">
-						<span class="sheet-table-name sheet-show-readonly" data-i18n="skill-notes">Skill Notes</span>
+						<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name" data-i18n="skill-notes">Skill Notes</span>
 						<div class="sheet-table-row">
-						<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
-					</div>
+							<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
+						</div>
 					</div>					
 				</div>
 			</div>
 			<div class="sheet-section4 sheet-section sheet-section-abilities" role="region" aria-label="Abilities" data-i18n-aria-label="abilities">
 				<h1 class="sheet-selected-tabtitle" data-i18n="abilities">Abilities</h1>
 				<div class="sheet-col sheet-col1">
-					<div class="sheet-h2-section sheet-inline sheet-ability-buttons">
+					<div class="sheet-h2-section sheet-inline sheet-ability-buttons sheet-hide-readonly">
 						<input type="checkbox" class="sheet-npc-show sheet-noshow" name="attr_is_npc" value="1" role="presentation" />
 						<div role="contentinfo" aria-label="Command buttons for chat -displays ability buttons in chat to press there" class="sheet-top-buttons sheet-inline sheet-pc-only">
 							<input class="sheet-showarrow sheet-h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_ability-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
@@ -7446,7 +7446,7 @@
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="class-bonus">Class Bonus</span>
 							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header" data-i18n="miscellaneous-bonus">Misc Bonus</span>
+							<span class="sheet-table-header" data-i18n="miscellaneous-bonus-abbrv">Misc Bonus</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="total-feats">Total Feats</span>
 							<span class="sheet-table-header sheet-table-rightcell"></span>
@@ -7578,31 +7578,32 @@
 							<span class="sheet-table-cell sheet-nowrap"><label ><input type="checkbox" title="@{psionic-focus}" name="attr_psionic-focus" value="1" /><b data-i18n-title="psionic-focus-title" data-i18n-aria-label="psionic-focus-title" title="Is maintaining psionic focus."><span data-i18n="psionic-focus"> Psionic Focus</span></b></label></span>
 						</div>
 					</div>
+					<input class="sheet-burn-show sheet-noshow" type="checkbox" name="attr_use_burn" value="1" />
+					<div class="sheet-cheat sheet-burn-sect"></div>
+					<input class="sheet-showarrow sheet-h2arrow sheet-burn-sect" type="checkbox" name="attr_burn-show"  title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect sheet-half-readonly sheet-burn-sect"><label class="sheet-burn-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">burn</label></h2>
+					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
+						<span class="sheet-nontable-name sheet-show-readonly" data-i18n="kineticist-burn">Kineticist Burn</span>
+						<div class="sheet-linked-custom">
+							<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">3+@{CON-mod}</textarea>
+							<input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
+							<input type="hidden" name="attr_oldkineticistburn" value="0"  />
+							<div class="sheet-divider-db-lg">/</div>
+							<input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="sheet-calc sheet-highlight" readonly />
+							<span data-i18n="burn" >Burn </span>
+						</div>
+						<div class="sheet-linked-custom">
+							<input type="checkbox" name="attr_internalbuffer_max_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">floor((@{class-0-level}-1)/5)</textarea>
+							<input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
+							<div class="sheet-divider-db-lg">/</div>
+							<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
+							<span data-i18n="internal-buffer" >Internal Buffer </span>
+						</div>
+					</div>			
 				</div>
 				<div class="sheet-cheat"></div>
-				<input class="sheet-burn-show sheet-noshow" type="checkbox" name="attr_use_burn" value="1" />
-				<input class="sheet-showarrow sheet-h2arrow sheet-burn-sect" type="checkbox" name="attr_burn-show"  title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect sheet-burn-sect"><label class="sheet-burn-sect" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">burn</label></h2>
-				<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
-					<div class="sheet-linked-custom">
-						<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
-						<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">3+@{CON-mod}</textarea>
-						<input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
-						<input type="hidden" name="attr_oldkineticistburn" value="0"  />
-						<div class="sheet-divider-db-lg">/</div>
-						<input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="sheet-calc sheet-highlight" readonly />
-						<span data-i18n="burn" >Burn </span>
-					</div>
-					<div class="sheet-linked-custom">
-						<input type="checkbox" name="attr_internalbuffer_max_error" class="sheet-error-mshow" value="1" />
-						<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">floor((@{class-0-level}-1)/5)</textarea>
-						<input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
-						<div class="sheet-divider-db-lg">/</div>
-						<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
-						<span data-i18n="internal-buffer" >Internal Buffer </span>
-					</div>
-				</div>			
-				<div class="sheet-cheat sheet-burn-sect"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_abilities-show" data-i18n-aria-label="abilities" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked  />
 				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n="abilities">Abilities</label></h2>
 				<div class="sheet-h2-section sheet-abilities sheet-repeating-sect sheet-wide-readonly">

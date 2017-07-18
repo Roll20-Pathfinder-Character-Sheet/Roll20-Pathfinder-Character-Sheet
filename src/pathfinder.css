@@ -640,6 +640,9 @@ also need 1 more level in selector or base css will override border */
 	border: 1px solid #808080;
 	border-radius: 5px;
 }
+.sheet-burn-sect .sheet-linked-custom {
+    width: calc(50% - 3px);
+}
 .sheet-linked-custom-notes,
 .sheet-linked-custom-roll {
 	width:100%;
@@ -3099,21 +3102,7 @@ input[type="text"].sheet-skill-conds {
 .sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(10) {
 	display: none;
 }
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(6), 
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(6),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(6), 
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(6) {
-	width:12em;
-	max-width:12em;
-}
 
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-header:nth-child(2), 
-.sheet-section-skills .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(2),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-cell:nth-child(2),
-.sheet-skilllist .sheet-skill-onetime-show:not(:checked) ~ .sheet-skills .sheet-table-row .sheet-table-header:nth-child(2) {
-	width:14em;
-    min-width:14em;
-}
 
 /********************************************** Roll Templates ***************************************************************************/
 .sheet-rolltemplate-pf_generic,
@@ -4810,6 +4799,22 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     background-color: lightgrey;
 }
 
+.sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7) {
+    cursor: help;
+}
+.sheet-skills .sheet-table-row .sheet-table-header:nth-of-type(7),
+.sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7) {
+    width:2em;
+    max-width:1em;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-skills .sheet-table-row .sheet-table-header:nth-of-type(7),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7) {
+    width:.5em;
+    max-width:.5em;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7) {
+    transform: rotate(90deg);
+}
 /*skill too crowded*/
 .sheet-skills .sheet-divider,
 /* turn config page on /off */
