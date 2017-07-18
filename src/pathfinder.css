@@ -4706,13 +4706,13 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(10),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(12),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(13),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(15),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-header:nth-child(n+15),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(8),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(9),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(10),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(12),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(13),
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(15),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skilllist .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(n+15),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-skills-key {
     display: none;
 }

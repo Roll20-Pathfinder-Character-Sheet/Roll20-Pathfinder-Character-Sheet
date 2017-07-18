@@ -3722,156 +3722,169 @@
 					<input type="hidden" name="attr_NPC-profession_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{profession} ^{skills} }} {{ ^{no-skills-available} }}" />
 					<input type="hidden" name="attr_NPC-misc-skill_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} ^{misc-skill} ^{skills} }} {{ ^{no-skills-available} }}" />
 				</div>
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill-ranks-show" data-i18n-aria-label="skill-rank-totals" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-rank-totals">Skill Rank Totals</label></h2>
-				<div class="sheet-h2-section sheet-table sheet-skill-totals">
-					<input type="text" style="display:none;" name="attr_Core-Skill-Ranks" value="(abs(@{unchained_skills-show}-1) * (@{Acrobatics-ranks} + @{Bluff-ranks} + @{Climb-ranks} + @{Diplomacy-ranks} + @{Disable-Device-ranks} + @{Disguise-ranks} + @{Escape-Artist-ranks} + @{Fly-ranks} + @{Heal-ranks} + @{Intimidate-ranks} + @{Knowledge-Arcana-ranks} + @{Knowledge-Dungeoneering-ranks} + @{Knowledge-Local-ranks} + @{Knowledge-Nature-ranks} + @{Knowledge-Planes-ranks} + @{Knowledge-Religion-ranks} + @{Perception-ranks} + @{Ride-ranks} + @{Sense-Motive-ranks} + @{Spellcraft-ranks} + @{Stealth-ranks} + @{Survival-ranks} + @{Swim-ranks} + @{Use-Magic-Device-ranks} + @{Appraise-ranks} + @{Handle-Animal-ranks} + @{Knowledge-Engineering-ranks} + @{Knowledge-Geography-ranks} + @{Knowledge-History-ranks} + @{Knowledge-Nobility-ranks} + @{Linguistics-ranks} + @{Sleight-of-Hand-ranks} + @{Misc-Adventure-Ranks} + @{Misc-BG-Ranks} + @{Craft-BG-Ranks} + @{Perform-BG-Ranks} + @{Profession-BG-Ranks}  ))" disabled />
-					<input type="text" style="display:none;" name="attr_Adventure-Skill-Ranks" value="(@{unchained_skills-show} * @{BG-Skill-Use}*(@{Acrobatics-ranks} + @{Bluff-ranks} + @{Climb-ranks} + @{Diplomacy-ranks} + @{Disable-Device-ranks} + @{Disguise-ranks} + @{Escape-Artist-ranks} + @{Fly-ranks} + @{Heal-ranks} + @{Intimidate-ranks} + @{Knowledge-Arcana-ranks} + @{Knowledge-Dungeoneering-ranks} + @{Knowledge-Local-ranks} + @{Knowledge-Nature-ranks} + @{Knowledge-Planes-ranks} + @{Knowledge-Religion-ranks} + @{Perception-ranks} + @{Ride-ranks} + @{Sense-Motive-ranks} + @{Spellcraft-ranks} + @{Stealth-ranks} + @{Survival-ranks} + @{Swim-ranks} + @{Use-Magic-Device-ranks} + @{Misc-Adventure-Ranks} ))" disabled />
-					<input type="text" style="display:none;" name="attr_Consolidated-Skill-Ranks" value="(@{unchained_skills-show} * abs(@{BG-Skill-Use}-1) * (  @{CS-Acrobatics-ranks} + @{CS-Athletics-ranks} + @{CS-Finesse-ranks} + @{CS-Influence-ranks} + @{CS-Nature-ranks} + @{CS-Perception-ranks} + @{CS-Performance-ranks} + @{CS-Religion-ranks} + @{CS-Society-ranks} + @{CS-Spellcraft-ranks} + @{CS-Stealth-ranks} + @{CS-Survival-ranks} ))" disabled />
-					<input type="text" style="display:none;" name="attr_Misc-Adventure-Ranks" value="(@{Misc-Skill-0-ranks} + @{Misc-Skill-1-ranks} + @{Misc-Skill-2-ranks} + @{Misc-Skill-3-ranks} + @{Misc-Skill-4-ranks} )" disabled />
-					<input type="text" style="display:none;" name="attr_Misc-BG-Ranks" value="(@{Misc-Skill-5-ranks} + @{Misc-Skill-6-ranks} + @{Misc-Skill-7-ranks} + @{Misc-Skill-8-ranks} + @{Misc-Skill-9-ranks})" disabled />
-					<input type="text" style="display:none;" name="attr_Profession-BG-Ranks" value="(@{Profession-ranks} + @{Profession2-ranks} + @{Profession3-ranks} + @{Profession4-ranks} + @{Profession5-ranks} + @{Profession6-ranks} + @{Profession7-ranks} + @{Profession8-ranks} + @{Profession9-ranks} + @{Profession10-ranks})" disabled />
-					<input type="text" style="display:none;" name="attr_Perform-BG-Ranks" value="(@{Perform-ranks} + @{Perform2-ranks} + @{Perform3-ranks} + @{Perform4-ranks} + @{Perform5-ranks} + @{Perform6-ranks} + @{Perform7-ranks} + @{Perform8-ranks} + @{Perform9-ranks} + @{Perform10-ranks})" disabled />
-					<input type="text" style="display:none;" name="attr_Craft-BG-Ranks" value="(@{Craft-ranks} + @{Craft2-ranks} + @{Craft3-ranks} + @{Craft4-ranks} + @{Craft5-ranks} + @{Craft6-ranks} + @{Craft7-ranks} + @{Craft8-ranks} + @{Craft9-ranks} + @{Craft10-ranks})" disabled />
-					<input type="text" style="display:none;" name="attr_Artistry-BG-Ranks" value="(@{Artistry-ranks} + @{Artistry2-ranks} + @{Artistry3-ranks} + @{Artistry4-ranks} + @{Artistry5-ranks} + @{Artistry6-ranks} + @{Artistry7-ranks} + @{Artistry8-ranks} + @{Artistry9-ranks} + @{Artistry10-ranks})" disabled />
-					<input type="text" style="display:none;" name="attr_Lore-BG-Ranks" value="(@{Lore-ranks} + @{Lore2-ranks} + @{Lore3-ranks} + @{Lore4-ranks} + @{Lore5-ranks} + @{Lore6-ranks} + @{Lore7-ranks} + @{Lore8-ranks} + @{Lore9-ranks} + @{Lore10-ranks})" disabled />
-					<input type="checkbox" name="attr_unchained_skills-show" class="sheet-unchained-show" value="1" role="presentation" />
-					<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-consolidated-show" value="0" role="presentation" />
-					<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-bg-show" value="1" role="presentation" checked />
-					<span class="sheet-table-name" data-i18n="skill-ranks">Skill Ranks</span>
-					<div class="sheet-table">
-						<div class="sheet-table-row">
-							<span class="sheet-table-header" style="position: relative;vertical-align: bottom;">
-								<span style="position:absolute;display:block;clear:both;top: 0;text-align:left;" data-i18n="extra-ranks">Extra ranks:</span><br>
-								<span class="sheet-super sheet-note-a" style="display:block;clear:both;" data-i18n="skill-miscellaneous">Skill Misc</span>
-							</span>
-							<span class="sheet-table-header sheet-right-border" data-i18n="modifier-abbrv">Mod</span>
-							<span class="sheet-table-header sheet-divider"></span>
-							<span class="sheet-table-header sheet-show-readonly">
-								<span data-i18n="maximum-abbrv">Max</span>
-								<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="skill-ranks">Skill Ranks</span>
-							</span>
-							<span class="sheet-table-header"></span>
-							<span class="sheet-table-header sheet-show-readonly">
-								<span data-i18n="total">Total</span>
-								<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="skill-ranks">Skill Ranks</span>
-							</span>
-							<span class="sheet-table-header"></span>
-							<span class="sheet-table-header sheet-show-readonly">
-								<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="ranks-remaining">Ranks Remaining</span>
-							</span>
-							<span class="sheet-table-header sheet-bg"></span>
-							<span class="sheet-table-header sheet-bg" title="Any number of adventure skill ranks can be traded for an equal number of background skill ranks, but not vice versa." data-i18n="move-adventure-to-background">Move Adventure to Background</span>
-							<span class="sheet-table-header sheet-bg"></span>
-							<span class="sheet-table-header sheet-bg sheet-show-readonly" title="Optional: used for PF Unchained." data-i18n="background-ranks-remaining">Background Ranks Remaining</span>
-							<span class="sheet-table-header sheet-bg" data-i18n="total-background-skill-ranks">Total Background Skill Ranks</span>
-						</div>
-					<div class="sheet-table-row">
-						<input type="checkbox" name="attr_Max-Skill-Ranks-mod_error" class="sheet-error-mshow" value="1" />
-						<span class="sheet-table-cell sheet-highlight" style="width:10%"><input type="text" title="@{Max-Skill-Ranks-Misc}" name="attr_Max-Skill-Ranks-Misc" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" /></span>
-						<span class="sheet-table-cell sheet-highlight sheet-right-border"><input type="number" title="@{Max-Skill-Ranks-mod}" name="attr_Max-Skill-Ranks-mod" value="0" class="sheet-calc" readonly style="width:4em;" /></span>
-						<span class="sheet-divider"></span>
-						<span class="sheet-table-cell sheet-show-readonly"><input type="number" title="@{Max-Skill-Ranks}" name="attr_Max-Skill-Ranks" value="0" class="sheet-calc" readonly /></span>
-						<span class="sheet-divider">-</span>
-						<span class="sheet-table-cell sheet-show-readonly">
-							<input type="text" title="@{Total-Skill-Ranks}" name="attr_Total-Skill-Ranks" value="(@{Core-Skill-Ranks}+@{Adventure-Skill-Ranks}+@{Consolidated-Skill-Ranks})" class="sheet-number" disabled />
-						</span>
-						<span class="sheet-divider">=</span>
-						<span class="sheet-table-cell sheet-show-readonly">
-							<input type="text" title="@{Skill-Ranks-Remaining}" name="attr_Skill-Ranks-Remaining" value="(@{Max-Skill-Ranks} - @{Total-Skill-Ranks} - @{adventure-skills-traded} )" class="sheet-number" disabled />
-						</span>
-						<span class="sheet-divider sheet-bg">&rarr;</span>
-						<span class="sheet-table-cell sheet-bg"><input type="text" class="sheet-number sheet-calc" title="@{adventure-skills-traded}" name="attr_adventure-skills-traded" value="(@{unchained_skills-show} * @{BG-Skill-Use}* -1*floor(((@{level} * 2)-@{Total-BG-Skill-Ranks}+0.1)/(abs((@{level} * 2)-@{Total-BG-Skill-Ranks}+0.1)+0.001))*(( @{Total-BG-Skill-Ranks} - (@{level} * 2)) ) )" style="width:2.85em" disabled /></span>
-						<span class="sheet-divider sheet-bg" title="Use up to Adventure Ranks Remaining as ranks in Background Skills">&rarr;</span>
-						<span class="sheet-table-cell sheet-bg sheet-show-readonly"><input type="text" title="@{BG-Skill-Ranks-Remaining}" name="attr_BG-Skill-Ranks-Remaining" value="( ((@{level} * 2) - @{Total-BG-Skill-Ranks} + @{adventure-skills-traded}))" class="sheet-number sheet-calc" disabled /></span>
-						<span class="sheet-table-cell sheet-bg">(&nbsp;<input type="text" class="sheet-number sheet-calc" title="@{Total-BG-Skill-Ranks}" name="attr_Total-BG-Skill-Ranks" value="(@{unchained_skills-show} * @{BG-Skill-Use}*(@{Appraise-ranks} + @{Handle-Animal-ranks} + @{Knowledge-Engineering-ranks} + @{Knowledge-Geography-ranks} + @{Knowledge-History-ranks} + @{Knowledge-Nobility-ranks} + @{Linguistics-ranks} + @{Sleight-of-Hand-ranks} + @{Misc-BG-Ranks} + @{Craft-BG-Ranks} + @{Perform-BG-Ranks} + @{Profession-BG-Ranks} + @{Artistry-BG-Ranks} + @{Lore-BG-Ranks} ))" disabled />&nbsp;)</span>
-					</div>
-				</div>
-				</div>
-				<div class="sheet-cheat"></div>
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill_options-show" data-i18n-aria-label="skill-options" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-options">Skill Options</label></h2>
-				<div class="sheet-h2-section sheet-skill-options">
-					<div class="sheet-table sheet-config-table sheet-options sheet-named">
-						<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
-						<input type="checkbox" value="1" name="attr_extra_fields_skills_show" title="@{extra_fields_skills_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
-						<div class="sheet-cheat"></div>
+				<div class="sheet-col">
+					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill-ranks-show" data-i18n-aria-label="skill-rank-totals" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-rank-totals">Skill Rank Totals</label></h2>
+					<div class="sheet-h2-section sheet-table sheet-skill-totals">
+						<input type="text" style="display:none;" name="attr_Core-Skill-Ranks" value="(abs(@{unchained_skills-show}-1) * (@{Acrobatics-ranks} + @{Bluff-ranks} + @{Climb-ranks} + @{Diplomacy-ranks} + @{Disable-Device-ranks} + @{Disguise-ranks} + @{Escape-Artist-ranks} + @{Fly-ranks} + @{Heal-ranks} + @{Intimidate-ranks} + @{Knowledge-Arcana-ranks} + @{Knowledge-Dungeoneering-ranks} + @{Knowledge-Local-ranks} + @{Knowledge-Nature-ranks} + @{Knowledge-Planes-ranks} + @{Knowledge-Religion-ranks} + @{Perception-ranks} + @{Ride-ranks} + @{Sense-Motive-ranks} + @{Spellcraft-ranks} + @{Stealth-ranks} + @{Survival-ranks} + @{Swim-ranks} + @{Use-Magic-Device-ranks} + @{Appraise-ranks} + @{Handle-Animal-ranks} + @{Knowledge-Engineering-ranks} + @{Knowledge-Geography-ranks} + @{Knowledge-History-ranks} + @{Knowledge-Nobility-ranks} + @{Linguistics-ranks} + @{Sleight-of-Hand-ranks} + @{Misc-Adventure-Ranks} + @{Misc-BG-Ranks} + @{Craft-BG-Ranks} + @{Perform-BG-Ranks} + @{Profession-BG-Ranks}  ))" disabled />
+						<input type="text" style="display:none;" name="attr_Adventure-Skill-Ranks" value="(@{unchained_skills-show} * @{BG-Skill-Use}*(@{Acrobatics-ranks} + @{Bluff-ranks} + @{Climb-ranks} + @{Diplomacy-ranks} + @{Disable-Device-ranks} + @{Disguise-ranks} + @{Escape-Artist-ranks} + @{Fly-ranks} + @{Heal-ranks} + @{Intimidate-ranks} + @{Knowledge-Arcana-ranks} + @{Knowledge-Dungeoneering-ranks} + @{Knowledge-Local-ranks} + @{Knowledge-Nature-ranks} + @{Knowledge-Planes-ranks} + @{Knowledge-Religion-ranks} + @{Perception-ranks} + @{Ride-ranks} + @{Sense-Motive-ranks} + @{Spellcraft-ranks} + @{Stealth-ranks} + @{Survival-ranks} + @{Swim-ranks} + @{Use-Magic-Device-ranks} + @{Misc-Adventure-Ranks} ))" disabled />
+						<input type="text" style="display:none;" name="attr_Consolidated-Skill-Ranks" value="(@{unchained_skills-show} * abs(@{BG-Skill-Use}-1) * (  @{CS-Acrobatics-ranks} + @{CS-Athletics-ranks} + @{CS-Finesse-ranks} + @{CS-Influence-ranks} + @{CS-Nature-ranks} + @{CS-Perception-ranks} + @{CS-Performance-ranks} + @{CS-Religion-ranks} + @{CS-Society-ranks} + @{CS-Spellcraft-ranks} + @{CS-Stealth-ranks} + @{CS-Survival-ranks} ))" disabled />
+						<input type="text" style="display:none;" name="attr_Misc-Adventure-Ranks" value="(@{Misc-Skill-0-ranks} + @{Misc-Skill-1-ranks} + @{Misc-Skill-2-ranks} + @{Misc-Skill-3-ranks} + @{Misc-Skill-4-ranks} )" disabled />
+						<input type="text" style="display:none;" name="attr_Misc-BG-Ranks" value="(@{Misc-Skill-5-ranks} + @{Misc-Skill-6-ranks} + @{Misc-Skill-7-ranks} + @{Misc-Skill-8-ranks} + @{Misc-Skill-9-ranks})" disabled />
+						<input type="text" style="display:none;" name="attr_Profession-BG-Ranks" value="(@{Profession-ranks} + @{Profession2-ranks} + @{Profession3-ranks} + @{Profession4-ranks} + @{Profession5-ranks} + @{Profession6-ranks} + @{Profession7-ranks} + @{Profession8-ranks} + @{Profession9-ranks} + @{Profession10-ranks})" disabled />
+						<input type="text" style="display:none;" name="attr_Perform-BG-Ranks" value="(@{Perform-ranks} + @{Perform2-ranks} + @{Perform3-ranks} + @{Perform4-ranks} + @{Perform5-ranks} + @{Perform6-ranks} + @{Perform7-ranks} + @{Perform8-ranks} + @{Perform9-ranks} + @{Perform10-ranks})" disabled />
+						<input type="text" style="display:none;" name="attr_Craft-BG-Ranks" value="(@{Craft-ranks} + @{Craft2-ranks} + @{Craft3-ranks} + @{Craft4-ranks} + @{Craft5-ranks} + @{Craft6-ranks} + @{Craft7-ranks} + @{Craft8-ranks} + @{Craft9-ranks} + @{Craft10-ranks})" disabled />
+						<input type="text" style="display:none;" name="attr_Artistry-BG-Ranks" value="(@{Artistry-ranks} + @{Artistry2-ranks} + @{Artistry3-ranks} + @{Artistry4-ranks} + @{Artistry5-ranks} + @{Artistry6-ranks} + @{Artistry7-ranks} + @{Artistry8-ranks} + @{Artistry9-ranks} + @{Artistry10-ranks})" disabled />
+						<input type="text" style="display:none;" name="attr_Lore-BG-Ranks" value="(@{Lore-ranks} + @{Lore2-ranks} + @{Lore3-ranks} + @{Lore4-ranks} + @{Lore5-ranks} + @{Lore6-ranks} + @{Lore7-ranks} + @{Lore8-ranks} + @{Lore9-ranks} + @{Lore10-ranks})" disabled />
+						<input type="checkbox" name="attr_unchained_skills-show" class="sheet-unchained-show" value="1" role="presentation" />
+						<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-consolidated-show" value="0" role="presentation" />
+						<input type="checkbox" name="attr_BG-Skill-Use" class="sheet-bg-show" value="1" role="presentation" checked />
+						<span class="sheet-table-name" data-i18n="skill-ranks">Skill Ranks</span>
 						<div class="sheet-table">
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
-									<label class="sheet-nowrap">
-										<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" /><b title="Only affects skillbook buttons" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
-									</label>
-									<br>
-									<label>
-										<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
-										<input type="hidden" name="attr_skill_options" value="@{buff_skill_notes} @{toggle_skill-notes}" disabled >
-										<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
-									</label>
-									<br>
-									<label>
-										<input type="checkbox" class="sheet-boldlabel-check" name="attr_include_skill_totals" value="1" checked><b title="Only affects skillbook buttons" data-i18n="include-skill-totals">Include Skill Totals?</b>
-									</label>
+								<span class="sheet-table-header" style="position: relative;vertical-align: bottom;">
+									<span style="position:absolute;display:block;clear:both;top: 0;text-align:left;" data-i18n="extra-ranks">Extra ranks:</span><br>
+									<span class="sheet-super sheet-note-a" style="display:block;clear:both;" data-i18n="skill-miscellaneous">Skill Misc</span>
 								</span>
-								<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
-									<span data-i18n="number-fill-in-skills-show">Number of craft, perform, profession to show:</span>
-									<br>
-									<select name="attr_custom_skill_num_show" title="@{custom_skill_num_show}">
-									  <option name="attr_custom_skill_num_show" value="1" selected>•1</option>
-									  <option name="attr_custom_skill_num_show" value="2">&nbsp;2</option>
-									  <option name="attr_custom_skill_num_show" value="3">&nbsp;3</option>
-									  <option name="attr_custom_skill_num_show" value="6">&nbsp;6</option>
-									  <option name="attr_custom_skill_num_show" value="10">10</option>
-									</select>
+								<span class="sheet-table-header sheet-right-border" data-i18n="modifier-abbrv">Mod</span>
+								<span class="sheet-table-header sheet-divider"></span>
+								<span class="sheet-table-header sheet-show-readonly">
+									<span data-i18n="maximum-abbrv">Max</span>
+									<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="skill-ranks">Skill Ranks</span>
 								</span>
-								<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
-									<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>									
-									<br>
-									<select name="attr_misc_skill_num_show" title="@{misc_skill_num_show}">
-									  <option name="attr_misc_skill_num_show" value="1" selected >&nbsp;1</option>
-									  <option name="attr_misc_skill_num_show" value="2">&nbsp;2</option>
-									  <option name="attr_misc_skill_num_show" value="3" >&nbsp;3</option>
-									  <option name="attr_misc_skill_num_show" value="6">&nbsp;6</option>
-									  <option name="attr_misc_skill_num_show" value="10">10</option>
-								  </select>
+								<span class="sheet-table-header"></span>
+								<span class="sheet-table-header sheet-show-readonly">
+									<span data-i18n="total">Total</span>
+									<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="skill-ranks">Skill Ranks</span>
 								</span>
+								<span class="sheet-table-header"></span>
+								<span class="sheet-table-header sheet-show-readonly">
+									<span class="sheet-bg" data-i18n="adventure">Adventure </span><span data-i18n="ranks-remaining">Ranks Remaining</span>
+								</span>
+								<span class="sheet-table-header sheet-bg"></span>
+								<span class="sheet-table-header sheet-bg" title="Any number of adventure skill ranks can be traded for an equal number of background skill ranks, but not vice versa." data-i18n="move-adventure-to-background">Move Adventure to Background</span>
+								<span class="sheet-table-header sheet-bg"></span>
+								<span class="sheet-table-header sheet-bg sheet-show-readonly" title="Optional: used for PF Unchained." data-i18n="background-ranks-remaining">Background Ranks Remaining</span>
+								<span class="sheet-table-header sheet-bg" data-i18n="total-background-skill-ranks">Total Background Skill Ranks</span>
 							</div>
-						</div>
-						<div class="sheet-table sheet-hide-readonly">
 							<div class="sheet-table-row">
-								<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em; width: 30%;">
-									<span data-i18n="enable-take-10-or-20-options" data-i18n-title="enable-skill-check-query-title" data-i18n-aria-label="enable-skill-check-query-title" title="Skill Checks will include an option to Roll, Take 10, or Take 20.">Enable Take 10 or 20 options?</span>
-									<br>
-									<select name="attr_skill-query" title="@{skill-query}" style="width: 7.25em;margin-top: 1px;height: 2.125em;">
-										<option value="1d20+@{skill-invest-query}" data-i18n="no" selected>No</option>
-										<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}" data-i18n="yes">Yes</option>
-										<option value="@{skill-invest-query}+@{custom_dice}" data-i18n="custom-roll">Custom Roll</option>
-									</select>
+								<input type="checkbox" name="attr_Max-Skill-Ranks-mod_error" class="sheet-error-mshow" value="1" />
+								<span class="sheet-table-cell sheet-highlight" style="width:10%"><input type="text" title="@{Max-Skill-Ranks-Misc}" name="attr_Max-Skill-Ranks-Misc" placeholder="#/Equation" data-i18n-placeholder="equation-macro-place" /></span>
+								<span class="sheet-table-cell sheet-highlight sheet-right-border"><input type="number" title="@{Max-Skill-Ranks-mod}" name="attr_Max-Skill-Ranks-mod" value="0" class="sheet-calc" readonly style="width:4em;" /></span>
+								<span class="sheet-divider"></span>
+								<span class="sheet-table-cell sheet-show-readonly"><input type="number" title="@{Max-Skill-Ranks}" name="attr_Max-Skill-Ranks" value="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-divider">-</span>
+								<span class="sheet-table-cell sheet-show-readonly">
+									<input type="text" title="@{Total-Skill-Ranks}" name="attr_Total-Skill-Ranks" value="(@{Core-Skill-Ranks}+@{Adventure-Skill-Ranks}+@{Consolidated-Skill-Ranks})" class="sheet-number" disabled />
 								</span>
-								<input type="checkbox" class="sheet-nextitem-show" name="attr_skill-query" value="@{skill-invest-query}+@{custom_dice}" role="presentation" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
-									<span class="sheet-super sheet-note-c" data-i18n="custom-roll"  >Custom Roll</span>
-									<br>
-									<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
+								<span class="sheet-divider">=</span>
+								<span class="sheet-table-cell sheet-show-readonly">
+									<input type="text" title="@{Skill-Ranks-Remaining}" name="attr_Skill-Ranks-Remaining" value="(@{Max-Skill-Ranks} - @{Total-Skill-Ranks} - @{adventure-skills-traded} )" class="sheet-number" disabled />
 								</span>
-								<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
-									<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
-									<br>
-									<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
-										<option value="0" data-i18n="no-default" selected>No</option>
-										<option value="@{investigator_dice}" data-i18n="yes">Yes</option>
-									</select>
-								</span>
-								<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
-								<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
-									<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
-									<br>
-									<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">1d6 [custom bonus]</textarea>
-								</span>
-								<span class="sheet-table-rightcell"></span>
+								<span class="sheet-divider sheet-bg">&rarr;</span>
+								<span class="sheet-table-cell sheet-bg"><input type="text" class="sheet-number sheet-calc" title="@{adventure-skills-traded}" name="attr_adventure-skills-traded" value="(@{unchained_skills-show} * @{BG-Skill-Use}* -1*floor(((@{level} * 2)-@{Total-BG-Skill-Ranks}+0.1)/(abs((@{level} * 2)-@{Total-BG-Skill-Ranks}+0.1)+0.001))*(( @{Total-BG-Skill-Ranks} - (@{level} * 2)) ) )" style="width:2.85em" disabled /></span>
+								<span class="sheet-divider sheet-bg" title="Use up to Adventure Ranks Remaining as ranks in Background Skills">&rarr;</span>
+								<span class="sheet-table-cell sheet-bg sheet-show-readonly"><input type="text" title="@{BG-Skill-Ranks-Remaining}" name="attr_BG-Skill-Ranks-Remaining" value="( ((@{level} * 2) - @{Total-BG-Skill-Ranks} + @{adventure-skills-traded}))" class="sheet-number sheet-calc" disabled /></span>
+								<span class="sheet-table-cell sheet-bg">(&nbsp;<input type="text" class="sheet-number sheet-calc" title="@{Total-BG-Skill-Ranks}" name="attr_Total-BG-Skill-Ranks" value="(@{unchained_skills-show} * @{BG-Skill-Use}*(@{Appraise-ranks} + @{Handle-Animal-ranks} + @{Knowledge-Engineering-ranks} + @{Knowledge-Geography-ranks} + @{Knowledge-History-ranks} + @{Knowledge-Nobility-ranks} + @{Linguistics-ranks} + @{Sleight-of-Hand-ranks} + @{Misc-BG-Ranks} + @{Craft-BG-Ranks} + @{Perform-BG-Ranks} + @{Profession-BG-Ranks} + @{Artistry-BG-Ranks} + @{Lore-BG-Ranks} ))" disabled />&nbsp;)</span>
 							</div>
 						</div>
+					</div>
+					<div class="sheet-cheat"></div>
+					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill_options-show" data-i18n-aria-label="skill-options" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-options">Skill Options</label></h2>
+					<div class="sheet-h2-section sheet-skill-options">
+						<div class="sheet-table sheet-config-table sheet-options sheet-named">
+							<div class="sheet-table-name" data-i18n="skill-options">Skill Options</div>
+							<input type="checkbox" value="1" name="attr_extra_fields_skills_show" title="@{extra_fields_skills_show}" class="sheet-extra-show sheet-selectedlabel-check" checked="checked"><b data-i18n="show-more-fields">Show more fields</b>
+							<div class="sheet-cheat"></div>
+							<div class="sheet-table">
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em;">
+										<label class="sheet-nowrap">
+											<input type="checkbox" class="sheet-boldlabel-check" name="attr_enforce_requires_training" value="1" /><b title="Only affects skillbook buttons" data-i18n="enforce-requires-training">Enforce Requires Training?</b>
+										</label>
+										<br>
+										<label>
+											<input type="hidden" name="attr_var_skill-notes" value="{{description=@{Skill-notes}}}" disabled >
+											<input type="hidden" name="attr_skill_options" value="@{buff_skill_notes} @{toggle_skill-notes}" disabled >
+											<input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_skill-notes" value="@{var_skill-notes}" title="@{toggle_skill-notes}" checked><b title="Include Skill notes with roll?" data-i18n-title="include-skill-notes" data-i18n-aria-label="include-skill-notes" data-i18n="skill-notes">Skill notes?</b>
+										</label>
+										<br>
+										<label>
+											<input type="checkbox" class="sheet-boldlabel-check" name="attr_include_skill_totals" value="1" checked><b title="Only affects skillbook buttons" data-i18n="include-skill-totals">Include Skill Totals?</b>
+										</label>
+									</span>
+									<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
+										<span data-i18n="number-fill-in-skills-show">Number of craft, perform, profession to show:</span>
+										<br>
+										<select name="attr_custom_skill_num_show" title="@{custom_skill_num_show}">
+										<option name="attr_custom_skill_num_show" value="1" selected>•1</option>
+										<option name="attr_custom_skill_num_show" value="2">&nbsp;2</option>
+										<option name="attr_custom_skill_num_show" value="3">&nbsp;3</option>
+										<option name="attr_custom_skill_num_show" value="6">&nbsp;6</option>
+										<option name="attr_custom_skill_num_show" value="10">10</option>
+										</select>
+									</span>
+									<span class="sheet-table-cell sheet-left sheet-small-label" style="vertical-align: middle;">
+										<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>									
+										<br>
+										<select name="attr_misc_skill_num_show" title="@{misc_skill_num_show}">
+										<option name="attr_misc_skill_num_show" value="1" selected >&nbsp;1</option>
+										<option name="attr_misc_skill_num_show" value="2">&nbsp;2</option>
+										<option name="attr_misc_skill_num_show" value="3" >&nbsp;3</option>
+										<option name="attr_misc_skill_num_show" value="6">&nbsp;6</option>
+										<option name="attr_misc_skill_num_show" value="10">10</option>
+									</select>
+									</span>
+								</div>
+							</div>
+							<div class="sheet-table sheet-hide-readonly">
+								<div class="sheet-table-row">
+									<span class="sheet-table-cell sheet-left sheet-small-label" style="padding-left: .25em; width: 30%;">
+										<span data-i18n="enable-take-10-or-20-options" data-i18n-title="enable-skill-check-query-title" data-i18n-aria-label="enable-skill-check-query-title" title="Skill Checks will include an option to Roll, Take 10, or Take 20.">Enable Take 10 or 20 options?</span>
+										<br>
+										<select name="attr_skill-query" title="@{skill-query}" style="width: 7.25em;margin-top: 1px;height: 2.125em;">
+											<option value="1d20+@{skill-invest-query}" data-i18n="no" selected>No</option>
+											<option value="?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}" data-i18n="yes">Yes</option>
+											<option value="@{skill-invest-query}+@{custom_dice}" data-i18n="custom-roll">Custom Roll</option>
+										</select>
+									</span>
+									<input type="checkbox" class="sheet-nextitem-show" name="attr_skill-query" value="@{skill-invest-query}+@{custom_dice}" role="presentation" />
+									<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label" style="width:20%;">
+										<span class="sheet-super sheet-note-c" data-i18n="custom-roll"  >Custom Roll</span>
+										<br>
+										<textarea title="@{custom_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_custom_dice" data-i18n-placeholder="full-macro-place">[[ 1d20 ]]</textarea>
+									</span>
+									<input type="checkbox" class="sheet-nextitem-show" name="attr_adv_macro_show" value="1" role="presentation" />
+									<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
+										<span data-i18n="add-skill-bonus-macro">Add Skill Bonus Macro?</span>
+										<br>
+										<select name="attr_skill-invest-query" title="@{skill-invest-query}" style="width:4.5em; margin-top: 1px;height: 2.125em;">
+											<option value="0" data-i18n="no-default" selected>No</option>
+											<option value="@{investigator_dice}" data-i18n="yes">Yes</option>
+										</select>
+									</span>
+									<input type="checkbox" name="attr_skill-invest-query" class="sheet-nextitem-show sheet-noshow" value="@{investigator_dice}" />
+									<span class="sheet-table-cell sheet-left sheet-nextitem sheet-small-label sheet-extra-sect" style="width:20%;">
+										<span class="sheet-super sheet-note-c" data-i18n="skill-bonus-macro" data-i18n-title="additional-modifier-or-macro" data-i18n-aria-label="additional-modifier-or-macro" title="Additional modifier or macro with brackets, e.g. [[ 1d6 ]], [[ 2d20k1 ]] etc">Skill Bonus Macro</span>
+										<br>
+										<textarea title="@{investigator_dice}" class="sheet-inline-textarea sheet-both" type="text" name="attr_investigator_dice" data-i18n-placeholder="full-macro-place">1d6 [custom bonus]</textarea>
+									</span>
+									<span class="sheet-table-rightcell"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="sheet-cheat"></div>
+					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill-notes-show" data-i18n-aria-label="skill-notes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-notes">Skill Notes</label></h2>
+					<div class="sheet-h2-section sheet-skill-notes">
+						<div class="sheet-table sheet-center sheet-notes-cell">
+							<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name" data-i18n="skill-notes">Skill Notes</span>
+							<div class="sheet-table-row">
+								<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
+							</div>
+						</div>					
 					</div>
 				</div>
 				<div class="sheet-cheat"></div>
@@ -7345,17 +7358,6 @@
 					<input name="attr_CS-Acrobatics-cond-notes" type="hidden" value="" /><input name="attr_CS-Athletics-cond-notes" type="hidden" value="" /><input name="attr_CS-Finesse-cond-notes" type="hidden" value="" />
 					<input name="attr_CS-Influence-cond-notes" type="hidden" value="" /><input name="attr_CS-Nature-cond-notes" type="hidden" value="" /><input name="attr_CS-Perception-cond-notes" type="hidden" value="" /><input name="attr_CS-Performance-cond-notes" type="hidden" value="" /><input name="attr_CS-Religion-cond-notes" type="hidden" value="" /><input name="attr_CS-Society-cond-notes" type="hidden" value="" /><input name="attr_CS-Spellcraft-cond-notes" type="hidden" value="" />
 					<input name="attr_CS-Stealth-cond-notes" type="hidden" value="" /><input name="attr_CS-Survival-cond-notes" type="hidden" value="" />
-				</div>
-				<div class="sheet-cheat"></div>
-				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_skill-notes-show" data-i18n-aria-label="skill-notes" title="Click to expand" data-i18n-title="showsect-cmd" value="1" checked />
-				<h2 class="sheet-clickheader sheet-showsect"><label title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-notes">Skill Notes</label></h2>
-				<div class="sheet-h2-section sheet-skill-notes">
-					<div class="sheet-table sheet-center sheet-notes-cell">
-						<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name" data-i18n="skill-notes">Skill Notes</span>
-						<div class="sheet-table-row">
-							<span class="sheet-table-cell sheet-left"><textarea class="sheet-notes" title="@{Skill-notes}" name="attr_Skill-notes" placeholder="Put notes about context-sensitive Skill bonuses here." data-i18n-placeholder="skill-notes-place"></textarea></span>
-						</div>
-					</div>					
 				</div>
 			</div>
 			<div class="sheet-section4 sheet-section sheet-section-abilities" role="region" aria-label="Abilities" data-i18n-aria-label="abilities">
