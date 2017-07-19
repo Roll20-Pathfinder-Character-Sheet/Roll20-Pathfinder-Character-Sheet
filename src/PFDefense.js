@@ -127,7 +127,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         try {
             //TAS.debug("PFDefense.updateDefenses:",v);
             buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
-            bufftouch=buffsTouch+dodgebuff+deflectbuff;
+            bufftouch=buffs+buffsTouch+dodgebuff+deflectbuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
             buffcmd = buffs+buffsCMD+dodgebuff+deflectbuff;
             buffffcmd = buffs+buffsCMD+flatfootedbuff+deflectbuff;
