@@ -2558,12 +2558,6 @@ span.sheet-entry-wide textarea {
 .sheet-nontable-repeating .sheet-divider-db-lg {
     vertical-align: middle;
 }
-.sheet-entry-ultimate {
-    width: 15em;
-}
-.sheet-entry-vlong {
-    width: 12em;
-}
 .sheet-entry-long {
     width: 10em;
 }
@@ -2571,10 +2565,7 @@ span.sheet-entry-wide textarea {
     width: 8em;
 }
 .sheet-entry-short {
-    width: 6em;
-}
-.sheet-entry-small {
-    width: 5em;
+    width: 5.5em;
 }
 .sheet-entry-vshort {
     width: 4em;
@@ -2644,10 +2635,6 @@ input[type="number"].sheet-entry-wide {
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-30p,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-30p-shrink {
     width: 40%;
-}
-.sheet-entry-28p,
-.sheet-entry-28p-shrink {
-    width: 28%;
 }
 .sheet-entry-25p,
 .sheet-entry-25p-shrink  {
@@ -2744,15 +2731,10 @@ input[type="number"].sheet-entry-wide {
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-entry-rowname {
     width: 65%;
 }
-.sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
-.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
-.sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-vlong {
-    width: 10em;
-}
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
 .sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-long {
-    width: 8.75em;
+    width: 9em;
 }
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-med,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-med,
@@ -2762,12 +2744,7 @@ input[type="number"].sheet-entry-wide {
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-short,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-short,
 .sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-short {
-    width: 5em;
-}
-.sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-small,
-.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-small,
-.sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-small {
-    width: 4em;
+    width: 4.5em;
 }
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-vshort,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-vshort,
@@ -4586,10 +4563,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-skills .sheet-skilllist {
     width: 100%;
 }
+/*
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-skills .sheet-skilllist {
     margin: 2px;
 	width: calc(50% - 4px);
-}
+}*/
 
 /**************** tabs expand */
 
@@ -4600,6 +4578,19 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: 28%;
     margin-right: -28%;
 }
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-h2-section.sheet-skill-totals,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-h2-section.sheet-skill-notes,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-skills .sheet-h2-section.sheet-skill-totals,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-skills .sheet-h2-section.sheet-skill-notes {
+    float: left;
+    width: calc(40% - 4px);
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-skills .sheet-h2-section.sheet-skill-options,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-skills .sheet-h2-section.sheet-skill-options {
+    float: right;
+    width: calc(60% - 4px);
+}
+
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-spells .sheet-spellclassnav ~ .sheet-tab:not(.sheet-tab99) {
     width: 25%;
 }
