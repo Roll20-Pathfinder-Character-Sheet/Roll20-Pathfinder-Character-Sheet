@@ -122,13 +122,16 @@ export function applyConditions  (callback, silently, eventInfo) {
     }),
     fields=[];
     SWUtils.updateRowTotal(attkpenaltySumRow, 0, attkpenaltySubtractFromFields, false, done, silently);
-    getAttrs(['condition-Entangled','condition-Fatigued','condition-Invisible','condition_attack_notes','condition-Grappled','condition-Pinned'],function(v){
+    getAttrs(['condition-Entangled','condition-Fatigued','condition-Exhausted','condition-Invisible','condition_attack_notes','condition-Grappled','condition-Pinned'],function(v){
         var attackNote='',setter={};
         if(parseInt(v['condition-Entangled'],10)) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if( parseInt(v['condition-Fatigued'],10)){
             attackNote+='**'+SWUtils.getTranslated('Fatigued')+'**: ';
+            attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
+        } else if (parseInt(v["condition-Exhausted"], 10)){
+            attackNote+='**'+SWUtils.getTranslated('Exhausted')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         }
         if(parseInt(v['condition-Invisible'],10)){

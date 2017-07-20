@@ -1827,9 +1827,7 @@ input.sheet-refreshbutton {
 .sheet-conditions .sheet-table-row {
     height: 1.85em;
 }
-.sheet-conditions .sheet-table-row:last-child {
-    background-color: lightgray;
-}
+
 .sheet-conditions .sheet-table-cell {
     font-size: .75rem;
     padding: 0 .25em 0 .25em;

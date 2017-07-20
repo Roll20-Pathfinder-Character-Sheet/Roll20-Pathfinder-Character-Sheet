@@ -311,7 +311,7 @@ export function applyConditions (callback, silently, eventInfo) {
             return;
         }
     }
-    getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed",  "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
+    getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {},
         params = {},
         strMod = 0,
@@ -332,7 +332,7 @@ export function applyConditions (callback, silently, eventInfo) {
                 setter["DEX"] = 0;
                 setter["DEX-mod"] = -5;
             } else {
-                strMod = parseInt(v["condition-Fatigued"], 10) || 0;
+                strMod = (parseInt(v["condition-Fatigued"], 10) || 0) + (parseInt(v["condition-Exhausted"], 10) || 0);
                 dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
                 dexAbMod = dexMod * -2;
                 strAbMod = strMod * -2;
