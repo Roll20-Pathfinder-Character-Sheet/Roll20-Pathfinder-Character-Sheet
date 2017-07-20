@@ -290,16 +290,46 @@ export function applyParalyzedHelpless(eventInfo){
     }
 }
 
+export function applyFatiguedExhaustedDiff(callback,silently,v){
+    var newModDiff =0, condDiff=0,silentSetter={},setter={};
+    try{
+        newModDiff = (v['condition-Fatigued']||0)+(v['condition-Exhausted']||0);
+        newModDiff = -1 * newModDiff;
+        setter['STR-mod']=  (v['STR-mod']||0)+newModDiff;
+        setter['DEX-mod']= (v['DEX-mod']||0)+newModDiff;
+        newModDiff = 2 * newModDiff;
+        silentSetter['STR-cond']= (v['STR-cond']||0)+newModDiff;
+        silentSetter['DEX-cond']= (v['DEX-cond']||0)+newModDiff;
+        if (v['condition-Fatigued']||v['condition-Exhausted']){
+            silentSetter['STR-modded']=1;
+            silentSetter['DEX-modded']=1;
+        } else {
+            if (Math.floor(((v.STR||0) - 10) / 2) === setter['STR-mod'] ){
+                silentSetter['STR-modded']=0;
+            }
+            if (Math.floor(((v.DEX||0) - 10) / 2) === setter['DEX-mod'] ){
+                silentSetter['DEX-modded']=0;
+            }
+        }
+    } catch (err){
+        TAS.error('PFAbilityScores.applyFatiguedExhaustedDiff',err);
+    } finally {
+        TAS.info("PFAbilityScores.applyFatiguedExhaustedDiff setting (first is silent)",silentSetter,setter);
+        if(silently){
+            _.extend(silentSetter,setter);
+            SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
+        } else {
+            SWUtils.setWrapper(silentSetter,PFConst.silentParams,function(){
+                TAS.info("DONE SETTING SILENT :",PFConst.silentParams,silentSetter);
+                 SWUtils.setWrapper(setter,{},callback);
+            });
+        }
+    }
+}
 /** Sets ability penalties, not "ability check" penalties 
  * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled 
  */
 export function applyConditions (callback, silently, eventInfo) {
-    var done = function () {
-        //TAS.debug("leaving PFAbilityScores.applyConditions");
-        if (typeof callback === "function") {
-            callback();
-        }
-    };
     if(eventInfo){
         if((/paralyzed/i).test(eventInfo.sourceAttribute)){
             updateAbilityScore('DEX');
@@ -313,7 +343,9 @@ export function applyConditions (callback, silently, eventInfo) {
     }
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {},
+        silentSetter={},
         params = {},
+        tempInt=0,
         strMod = 0,
         dexMod = 0,
         helpless = 0,
@@ -324,12 +356,15 @@ export function applyConditions (callback, silently, eventInfo) {
             helpless = parseInt(v.helpless,10)||0;
             paralyzed = parseInt(v.paralyzed,10)||0;
             if (paralyzed){
-                setter["DEX"] = 0;
+                silentSetter["DEX"] = 0;
+                silentSetter["DEX-modded"]=1;
                 setter["DEX-mod"] = -5;
-                setter["STR"] = 0;
+                silentSetter["STR"] = 0;
+                silentSetter["STR-modded"]=1;
                 setter["STR-mod"] = -5;
             } else if (helpless){
-                setter["DEX"] = 0;
+                silentSetter["DEX"] = 0;
+                silentSetter["DEX-modded"]=1;
                 setter["DEX-mod"] = -5;
             } else {
                 strMod = (parseInt(v["condition-Fatigued"], 10) || 0) + (parseInt(v["condition-Exhausted"], 10) || 0);
@@ -346,14 +381,21 @@ export function applyConditions (callback, silently, eventInfo) {
         } catch (err) {
             TAS.error("PFAbilityScores.applyConditions", err);
         } finally {
+            if(_.size(silentSetter)){
+                if(silently){
+                    _.extend(setter,silentSetter);
+                } else {
+                    SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
+                }
+            }
             if (_.size(setter) > 0) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
                 //TAS.notice("#######################","PFAbilities apply conditions setting",setter);
-                SWUtils.setWrapper(setter, params, done);
-            } else {
-                done();
+                SWUtils.setWrapper(setter, params, callback);
+            } else if (typeof callback === "function") {
+                callback();
             }
         }
     });

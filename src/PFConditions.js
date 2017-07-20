@@ -48,33 +48,49 @@ function togglePinnedState () {
 	});
 }
 
-function setFatiguedExhausted(){
+function setFatiguedExhausted(v){
+	TAS.debug("PFConditions setFatiguedExhausted",v);
+	//PFAbilityScores.applyFatiguedExhaustedDiff(null,null,v);
+	//these 2 just set messages
 	PFAttackGrid.applyConditions();
 	PFEncumbrance.updateModifiedSpeed();		
 	PFAbilityScores.applyConditions();
 }
 
-/* updateGrapple Ensures Grapple and Pin are mutually exclusive */
 function toggleFatiguedState () {
-	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
-		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted",'STR-mod','STR-cond','DEX-mod','DEX-cond','STR','DEX','STR-modded','DEX-modded'], function (v) {
+		v = _.mapObject(v,function(val,key){
+			return parseInt(val,10)||0;
+		});
+		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
+			v['condition-Exhausted']=-3;
 			SWUtils.setWrapper({
 				"condition-Exhausted": "0"
-			},PFConst.silentParams,setFatiguedExhausted);
+			},PFConst.silentParams,function(){setFatiguedExhausted(v);});
 		} else {
-			setFatiguedExhausted();
+			if(v['condition-Fatigued']===0){
+				v['condition-Fatigued']=-1;
+			}
+			setFatiguedExhausted(v);
 		}
 	});
 }
-/* updatePin Ensures Grapple and Pin are mutually exclusive */
+
 function toggleExhaustedState () {
-	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
-		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted",'STR-mod','STR-cond','DEX-mod','DEX-cond','STR','DEX','STR-modded','DEX-modded'], function (v) {
+		v = _.mapObject(v,function(val,key){
+			return parseInt(val,10)||0;
+		});
+		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
+			v['condition-Fatigued']=-1;
 			SWUtils.setWrapper({
 				"condition-Fatigued": "0"
-			},PFConst.silentParams,setFatiguedExhausted);
+			},PFConst.silentParams,function(){setFatiguedExhausted(v);});
 		} else {
-			setFatiguedExhausted();
+			if(v['condition-Exhausted']===0){
+				v['condition-Exhausted']=-3;
+			}
+			setFatiguedExhausted(v);
 		}
 	});
 }
