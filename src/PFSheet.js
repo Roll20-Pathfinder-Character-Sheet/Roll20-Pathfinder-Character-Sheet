@@ -418,20 +418,22 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion <= 1.63){
 				PFCustom.migrate(function(){
 					PFBuffs.migrate(function(){
-						PFBuffs.recalculate(function(){
-							PFCustom.recalculate(function(){
-								PFSkills.migrate(function(){
-									PFSkills.recalculateSkills();
+						PFConditions.migrate(function(){
+							PFBuffs.recalculate(function(){
+								PFCustom.recalculate(function(){
+									PFSkills.migrate(function(){
+										PFSkills.recalculateSkills();
+									},oldversion);
+									PFAbility.setRuleTabs();
+									PFInventory.updateLocations();
+									PFAttacks.adjustAllDamageDiceAsync();
+									PFAttacks.updateDualWieldAttacks();
+									PFAttacks.recalculateRepeatingWeapons();
 								});
-								PFAbility.setRuleTabs();
-								PFInventory.updateLocations();
-								PFAttacks.adjustAllDamageDiceAsync();
-								PFAttacks.updateDualWieldAttacks();
-								PFAttacks.recalculateRepeatingWeapons();
 							});
-						});
+						},oldversion);
 					},oldversion);
-				});
+				},oldversion);
 			}
 		}
 	} catch (err) {

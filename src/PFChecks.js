@@ -4,25 +4,6 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as PFUtils from './PFUtils';
 import * as SWUtils from './SWUtils';
-export var msgs={
-	"Blinded": "Takes a –4 penalty on opposed Perception skill checks. All checks and activities that rely on vision (such as reading and Perception checks based on sight) automatically fail.",
-	"Blinded_speed" : "Blind creatures must make a DC 10 Acrobatics skill check to move faster than half speed.",
-	"Dazzled": "-1 penalty on sight-based Perception checks",
-	"Deafened": "-4 penalty on opposed Perception checks, automatically fails Perception checks based on sound",
-	"Fascinated": "–4 penalty on skill checks made as reactions, such as Perception checks"
-
-//	"Fatigued": "Cannot charge",
-//	"condition-entangled": "Moves at half speed, cannot run or charge", //for init  
-	//"condition-exhausted": "Moves at half speed, cannot run or charge", //for init
-	//"condition-fatigued": "Cannot run or charge", //for init
-	//"condition-grappled": "Cannot move",//init
-	//"condition-pinned": "Cannot move",//init
-
-
-	//"Deafened_spellonly": "Has a 20% chance of spell failure when casting spells with verbal components"
-	
-}
-
 /** PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
  * Reads in condition that affect Ability and Skill checks and updates condition fields.
  * checks-cond, Phys-skills-cond, Perception-cond.

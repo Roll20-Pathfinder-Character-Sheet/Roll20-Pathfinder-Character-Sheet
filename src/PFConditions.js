@@ -16,29 +16,65 @@ import * as PFChecks from './PFChecks';
 import * as PFAttacks from './PFAttacks';
 import * as PFEncumbrance from './PFEncumbrance';
 
+
+function setPinnedGrappled(){
+	PFAttackGrid.applyConditions();
+	PFDefense.applyConditions();
+	PFSpellCasterClasses.applyConditions();
+}
+
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function updateGrapple () {
+function toggleGrappleState () {
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
-		if (values["condition-Pinned"] !== "0" && values["condition-Grappled"] !== "0") {
+		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Pinned": "0"
-			});
+			},PFConst.silentParams,setPinnedGrappled);
 		} else {
-			//user hit either pinned and it undid grapple, or hit grapple first time.
-			PFAbilityScores.applyConditions();
+			setPinnedGrappled();
 		}
 	});
 }
 /* updatePin Ensures Grapple and Pin are mutually exclusive */
-function updatePin () {
+function togglePinnedState () {
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
-		if (values["condition-Pinned"] !== "0" && values["condition-Grappled"] !== "0") {
+		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Grappled": "0"
-			});
+			},PFConst.silentParams,setPinnedGrappled);
 		} else {
-			//user hit grapple and it  undid pinned, or hit pinned first time.
-			PFAbilityScores.applyConditions();
+			setPinnedGrappled();
+		}
+	});
+}
+
+function setFatiguedExhausted(){
+	PFAttackGrid.applyConditions();
+	PFEncumbrance.updateModifiedSpeed();		
+	PFAbilityScores.applyConditions();
+}
+
+/* updateGrapple Ensures Grapple and Pin are mutually exclusive */
+function toggleFatiguedState () {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
+		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+			SWUtils.setWrapper({
+				"condition-Exhausted": "0"
+			},PFConst.silentParams,setFatiguedExhausted);
+		} else {
+			setFatiguedExhausted();
+		}
+	});
+}
+/* updatePin Ensures Grapple and Pin are mutually exclusive */
+function toggleExhaustedState () {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
+		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+			SWUtils.setWrapper({
+				"condition-Fatigued": "0"
+			},PFConst.silentParams,setFatiguedExhausted);
+		} else {
+			setFatiguedExhausted();
 		}
 	});
 }
@@ -66,30 +102,42 @@ function updateDrainCheckbox (callback,silently,eventInfo) {
 		}
 	});
 }
-export var recalculate = TAS.callback(function PFConditionsRecalculate(callback, silently, oldversion) {
-	var done = _.once(function () {
-		//TAS.debug("leaving PFConditions.recalculate");
-		if (typeof callback === "function") {
+export function migrate (callback, oldversion){
+	getAttrs(['migrated_fatigue_conditions','condition-Fatigued'],function(v){
+		var setter={};
+		if(!parseInt(v.migrate_fatigued_conditions,10)){
+			if(parseInt(v['condition-Fatigued'],10)===3){
+				setter['condition-Fatigued']=0;
+				setter['condition-Exhausted']=3;
+			}
+			setter.migrate_fatigued_conditions=1;
+			SWUtils.setWrapper(setter,PFConst.silentParams,callback);
+		} else if (typeof callback === "function"){
 			callback();
 		}
 	});
-	updateDrainCheckbox(done);
-	//PFAbilityScores.applyConditions(done);
+}
+
+export var recalculate = TAS.callback(function PFConditionsRecalculate(callback, silently, oldversion) {
+	migrate(function(){
+		updateDrainCheckbox(callback);
+	});
 });
 
 var events = {
 	conditionEventsEither: {
-		"change:condition-grappled": [updateGrapple, PFAttackGrid.applyConditions, PFSpellCasterClasses.applyConditions,PFDefense.applyConditions],
-		"change:condition-pinned": [updatePin, PFDefense.applyConditions, PFSpellCasterClasses.applyConditions],
 		"change:condition-wounds change:has_endurance_feat change:wounds_gritty_mode": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions]
 	},
 	conditionEventsPlayer: {
+		"change:condition-grappled": [toggleGrappleState],
+		"change:condition-pinned": [togglePinnedState],
+		"change:condition-Fatigued": [toggleFatiguedState],
+		"change:condition-Exhausted": [toggleExhaustedState],
 		"change:condition-sickened": [PFAttacks.updateRepeatingWeaponDamages, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],
 		"change:condition-stunned": [PFDefense.updateDefenses, PFDefense.applyConditions],
 		"change:condition-flat-footed": [PFDefense.updateDefenses],
 		"change:condition-deafened": [PFInitiative.updateInitiative, PFSpellCasterClasses.applyConditions, PFChecks.applyConditions],
 		"change:condition-fascinated": [PFChecks.applyConditions],
-		"change:condition-fatigued": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions, PFEncumbrance.updateModifiedSpeed],
 		"change:condition-entangled": [PFAbilityScores.applyConditions, PFAttackGrid.applyConditions, PFEncumbrance.updateModifiedSpeed],
 		"change:condition-drained": [updateDrainCheckbox, PFHealth.updateMaxHPLookup, PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions, PFDefense.applyConditions],
 		"change:condition-fear": [PFChecks.applyConditions, PFSaves.applyConditions, PFAttackGrid.applyConditions],

@@ -439,7 +439,7 @@ export function updateModifiedSpeed  (callback) {
     }),
     attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
         "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total",
-    	"condition-Entangled", "condition-Fatigued" ];    
+    	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -467,7 +467,7 @@ export function updateModifiedSpeed  (callback) {
         try {
             base = base + buff;
             newSpeed = newSpeed + buff ;
-            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Fatigued']===3)){
+            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Exhausted']===3)){
                 halfSpeed=1;
                 base = Math.floor(base/10)*5; //we actually modify old base due to calcs below
                 newSpeed = base;
@@ -475,9 +475,6 @@ export function updateModifiedSpeed  (callback) {
             } else if (parseInt(v['condition-Fatigued'],10)===1 ){
                 cannotRun=1;
             }
-            // else if (  parseInt(v['condition-Grappled'],10)===2|| parseInt(v['condition-Pinned'],10)===4 ){
-                //cannot move bother with this? no they know
-            //}
 
              //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
             // #0: Armor, Shield & Load
