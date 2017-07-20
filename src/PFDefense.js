@@ -64,8 +64,8 @@ export function updateDefenses ( callback, silently, eventInfo) {
         miscAC = parseInt(v["AC-misc-mod"], 10) || 0,
         condPenalty = parseInt(v["AC-penalty"], 10) || 0,
         buffs = parseInt(v["buff_AC-total"], 10) || 0,
-        buffsTouch = parseInt(v["buff_Touch-total"], 10) || 0,
-        buffsCMD = parseInt(v["buff_CMD-total"], 10) || 0,
+        buffsTouchOnly = parseInt(v["buff_Touch-total"], 10) || 0,
+        buffsCMDOnly = parseInt(v["buff_CMD-total"], 10) || 0,
         armor = parseInt(v["AC-armor"], 10) || 0,
         shield = parseInt(v["AC-shield"], 10) || 0,
         natural = parseInt(v["AC-natural"], 10) || 0,
@@ -115,7 +115,6 @@ export function updateDefenses ( callback, silently, eventInfo) {
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
         flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
         dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
-        deflectbuff=parseInt(v['buff_deflection-total'],10)||0,
         buffac = 0,
         bufftouch = 0,
         buffff = 0,
@@ -125,15 +124,16 @@ export function updateDefenses ( callback, silently, eventInfo) {
         setter = {},
         params = {};
         try {
-            //TAS.debug("PFDefense.updateDefenses:",v);
-            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff+deflectbuff;
-            bufftouch=buffsTouch+dodgebuff+deflectbuff;
-            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff+deflectbuff;
-            buffcmd = buffs+buffsCMD+dodgebuff+deflectbuff;
-            buffffcmd = buffs+buffsCMD+flatfootedbuff+deflectbuff;
+            TAS.debug("PFDefense.updateDefenses: buffs "+buffs,v);
+            
+            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
+            bufftouch=buffs+buffsTouchOnly+dodgebuff;
+            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
+            buffcmd = buffs+buffsCMDOnly+dodgebuff;
+            buffffcmd = buffs+buffsCMDOnly+flatfootedbuff;
 
             dodge += dodgebuff;
-            deflect += deflectbuff;
+            //deflect ;
             armor += armorbuff;
             shield += shieldbuff;
             natural += naturalbuff;
@@ -244,10 +244,10 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 bab = parseInt(v.level,10)||0;
             }
             ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
-            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouch;
+            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + bufftouch;
             ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
-            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
-            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
+            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
 
 
             if(parseInt(v.buffsumff,10)!==buffff){
