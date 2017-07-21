@@ -2302,7 +2302,7 @@
 									<input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield sheet-highlight" />
 									<input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc sheet-highlight" readonly />
 								</span>
-								<span class="sheet-table-cell"><input title="@{buffsumac}" type="text" name="attr_buffsumac" value="(@{buff_AC-total}+@{buff_armor-total}+@{buff_shield-total}+@{buff_natural-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-table-cell"><input title="@{buffsumac}" type="number" name="attr_buffsumac" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
 							<div class="sheet-table-row">
@@ -2330,7 +2330,7 @@
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"><input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" class="sheet-calc" readonly ></span>
 								<span class="sheet-table-cell sheet-right sheet-extra-sect"><input title="@{AC-misc-mod}" type="number" name="attr_AC-misc-mod" value="0" class="sheet-calc" readonly /></span>
-								<span class="sheet-table-cell"><input title="@{buffsumtouch}" type="text" name="attr_buffsumtouch" value="(@{buff_Touch-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-table-cell"><input title="@{buffsumtouch}" type="number" name="attr_buffsumtouch" value="0" class="sheet-number" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" class="sheet-calc" readonly></span>
 							</div>
 							<div class="sheet-table-row">
@@ -2464,7 +2464,7 @@
 									<input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" class="sheet-inline-textarea sheet-linked-cellfield" />
 									<input title="@{CMD-misc-mod}" type="number" name="attr_CMD-misc-mod" value="0" class="sheet-narrow-numbers sheet-calc" readonly />
 								</span>
-								<span class="sheet-table-cell"><input title="@{buffsumcmd}" type="text" name="attr_buffsumcmd" value="(@{buff_AC-total}+@{buff_CMD-total}+@{buff_dodge-total}+@{buff_deflection-total})" class="sheet-number" disabled /></span>
+								<span class="sheet-table-cell"><input title="@{buffsumcmd}" type="number" name="attr_buffsumcmd" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell"><input title="@{CMD-penalty}" type="number" name="attr_CMD-penalty" class="sheet-calc" readonly value="0" max="0"></span>
 							</div>
 							<div class="sheet-table-row">
