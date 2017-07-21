@@ -284,18 +284,10 @@ export function updateAbilityScores (callback, silently) {
 
 export function applyConditions (callback, silently, eventInfo) {
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
-        var setter = {},
-        silentSetter={},
-        params = {},
-        tempInt=0,
-        strMod = 0,
-        dexMod = 0,
-        helpless = 0,
-        paralyzed = 0,
-        dexAbMod = 0,
-        strAbMod = 0;
+        var setter = {}, silentSetter={}, params = {}, tempInt=0,
+        strMod = 0, dexMod = 0, helpless = 0, paralyzed = 0, dexAbMod = 0, strAbMod = 0;
         try {
-            TAS.debug("PFAbilityScores.applyconditions: ",v);
+            //TAS.debug("PFAbilityScores.applyconditions: ",v);
             helpless = parseInt(v.helpless,10)||0;
             paralyzed = parseInt(v.paralyzed,10)||0;
             if (paralyzed){
@@ -326,17 +318,17 @@ export function applyConditions (callback, silently, eventInfo) {
         } finally {
             if(silently){
                 _.extend(silentSetter,setter);
-                TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
-                setAttrs(silentSetter,PFConst.silentParams,callback);
+                if(_.size(silentSetter)){
+                    setAttrs(silentSetter,PFConst.silentParams,callback);
+                } else if (typeof callback === "function") {
+                    callback();
+                }
             } else if(_.size(setter)){
                 if(_.size(silentSetter)){
-                    TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
                     setAttrs(silentSetter,PFConst.silentParams);
-                }
-                TAS.info("PFAbilityScores.applyConditions setting LOUDLY ",setter);                
+                }          
                 setAttrs(setter,{},callback);
             } else if(_.size(silentSetter)){
-                TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
                 setAttrs(silentSetter,PFConst.silentParams,callback);
             } else if (typeof callback === "function") {
                 callback();
