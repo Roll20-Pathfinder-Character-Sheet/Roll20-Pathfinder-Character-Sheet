@@ -281,66 +281,8 @@ export function updateAbilityScores (callback, silently) {
     });
 }
 
-export function applyParalyzedHelpless(eventInfo){
-    if((/paralyzed/i).test(eventInfo.sourceAttribute)){
-        updateAbilityScore('DEX');
-        updateAbilityScore('STR');
-    } else if ( (/helpless/i).test(eventInfo.sourceAttribute)){
-        updateAbilityScore('DEX');
-    }
-}
 
-export function applyFatiguedExhaustedDiff(callback,silently,v){
-    var newModDiff =0, condDiff=0,silentSetter={},setter={};
-    try{
-        newModDiff = (v['condition-Fatigued']||0)+(v['condition-Exhausted']||0);
-        newModDiff = -1 * newModDiff;
-        setter['STR-mod']=  (v['STR-mod']||0)+newModDiff;
-        setter['DEX-mod']= (v['DEX-mod']||0)+newModDiff;
-        newModDiff = 2 * newModDiff;
-        silentSetter['STR-cond']= (v['STR-cond']||0)+newModDiff;
-        silentSetter['DEX-cond']= (v['DEX-cond']||0)+newModDiff;
-        if (v['condition-Fatigued']||v['condition-Exhausted']){
-            silentSetter['STR-modded']=1;
-            silentSetter['DEX-modded']=1;
-        } else {
-            if (Math.floor(((v.STR||0) - 10) / 2) === setter['STR-mod'] ){
-                silentSetter['STR-modded']=0;
-            }
-            if (Math.floor(((v.DEX||0) - 10) / 2) === setter['DEX-mod'] ){
-                silentSetter['DEX-modded']=0;
-            }
-        }
-    } catch (err){
-        TAS.error('PFAbilityScores.applyFatiguedExhaustedDiff',err);
-    } finally {
-        TAS.info("PFAbilityScores.applyFatiguedExhaustedDiff setting (first is silent)",silentSetter,setter);
-        if(silently){
-            _.extend(silentSetter,setter);
-            SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
-        } else {
-            SWUtils.setWrapper(silentSetter,PFConst.silentParams,function(){
-                TAS.info("DONE SETTING SILENT :",PFConst.silentParams,silentSetter);
-                 SWUtils.setWrapper(setter,{},callback);
-            });
-        }
-    }
-}
-/** Sets ability penalties, not "ability check" penalties 
- * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled 
- */
 export function applyConditions (callback, silently, eventInfo) {
-    if(eventInfo){
-        if((/paralyzed/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            updateAbilityScore('STR');
-            return;
-        }
-        if ( (/helpless/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            return;
-        }
-    }
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {},
         silentSetter={},
@@ -353,6 +295,7 @@ export function applyConditions (callback, silently, eventInfo) {
         dexAbMod = 0,
         strAbMod = 0;
         try {
+            TAS.debug("PFAbilityScores.applyconditions: ",v);
             helpless = parseInt(v.helpless,10)||0;
             paralyzed = parseInt(v.paralyzed,10)||0;
             if (paralyzed){
@@ -381,25 +324,27 @@ export function applyConditions (callback, silently, eventInfo) {
         } catch (err) {
             TAS.error("PFAbilityScores.applyConditions", err);
         } finally {
-            if(_.size(silentSetter)){
-                if(silently){
-                    _.extend(setter,silentSetter);
-                } else {
-                    SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
+            if(silently){
+                _.extend(silentSetter,setter);
+                TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
+                setAttrs(silentSetter,PFConst.silentParams,callback);
+            } else if(_.size(setter)){
+                if(_.size(silentSetter)){
+                    TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
+                    setAttrs(silentSetter,PFConst.silentParams);
                 }
-            }
-            if (_.size(setter) > 0) {
-                if (silently) {
-                    params = PFConst.silentParams;
-                }
-                //TAS.notice("#######################","PFAbilities apply conditions setting",setter);
-                SWUtils.setWrapper(setter, params, callback);
+                TAS.info("PFAbilityScores.applyConditions setting LOUDLY ",setter);                
+                setAttrs(setter,{},callback);
+            } else if(_.size(silentSetter)){
+                TAS.info("PFAbilityScores.applyConditions setting SILENTLY ",silentSetter);
+                setAttrs(silentSetter,PFConst.silentParams,callback);
             } else if (typeof callback === "function") {
                 callback();
             }
         }
     });
 }
+
 
 /** migrate (currently empty just calls callback*/
 export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,oldversion){
@@ -431,21 +376,21 @@ function registerEventHandlers () {
     //register event handlers **********************************************
     _.each(abilities, function (ability) {
         on((events.abilityEventsAuto.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbility(eventInfo) {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAbilityScore(ability, eventInfo);
             }
         }));
         on((events.abilityEventsPlayer.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbilityPlayerUpdated(eventInfo) {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAbilityScore(ability, eventInfo);
             }
         }));
     });
     on("change:condition-Helpless", TAS.callback(function eventUpdateAbilityHelpless(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             updateAbilityScore("DEX", eventInfo);
         }
     }));

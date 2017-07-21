@@ -16,81 +16,86 @@ import * as PFChecks from './PFChecks';
 import * as PFAttacks from './PFAttacks';
 import * as PFEncumbrance from './PFEncumbrance';
 
+export function setParalyzed(dummy,dummy2,eventInfo){
+	PFAbilityScores.updateAbilityScore('DEX');
+	PFAbilityScores.updateAbilityScore('STR');
+	PFDefense.applyConditions(null,null,eventInfo);
+}
 
-function setPinnedGrappled(){
-	PFAttackGrid.applyConditions();
-	PFDefense.applyConditions();
+export function setHelpless(dummy,dummy2,eventInfo){
+    PFAbilityScores.updateAbilityScore('DEX');
+	PFDefense.applyConditions(null,null,eventInfo);
+}
+
+function setPinnedGrappled(dummy,dummy2,eventInfo){
+	//TAS.info("AT pfconditions setPinnedGrappled",eventInfo);
+	PFAbilityScores.applyConditions(function(){
+		PFAttackGrid.applyConditions();
+		PFDefense.applyConditions();
+	},null,eventInfo);
 	PFSpellCasterClasses.applyConditions();
 }
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function toggleGrappleState () {
+function toggleGrappleState (dummy,dummy2,eventInfo) {
+	//TAS.debug("at toggle grapple state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Pinned": "0"
-			},PFConst.silentParams,setPinnedGrappled);
+			},PFConst.silentParams,function(){setPinnedGrappled(eventInfo);});
 		} else {
-			setPinnedGrappled();
+			setPinnedGrappled(eventInfo);
 		}
 	});
 }
 /* updatePin Ensures Grapple and Pin are mutually exclusive */
-function togglePinnedState () {
+function togglePinnedState (dummy,dummy2,eventInfo) {
+	//TAS.debug("at toggle pinned state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Grappled": "0"
-			},PFConst.silentParams,setPinnedGrappled);
+			},PFConst.silentParams,function(){setPinnedGrappled(eventInfo);});
 		} else {
-			setPinnedGrappled();
+			setPinnedGrappled(eventInfo);
 		}
 	});
 }
 
-function setFatiguedExhausted(v){
-	TAS.debug("PFConditions setFatiguedExhausted",v);
-	//PFAbilityScores.applyFatiguedExhaustedDiff(null,null,v);
-	//these 2 just set messages
-	PFAttackGrid.applyConditions();
+function setFatiguedExhausted(eventInfo){
+	//TAS.debug("PFConditions setFatiguedExhausted",v);
+	PFAbilityScores.applyConditions(null,null,eventInfo);
+	PFAttackGrid.applyConditions(null,null,eventInfo);
 	PFEncumbrance.updateModifiedSpeed();		
-	PFAbilityScores.applyConditions();
 }
 
-function toggleFatiguedState () {
-	getAttrs(["condition-Fatigued", "condition-Exhausted",'STR-mod','STR-cond','DEX-mod','DEX-cond','STR','DEX','STR-modded','DEX-modded'], function (v) {
+function toggleFatiguedState (dummy,dummy2,eventInfo) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (v) {
 		v = _.mapObject(v,function(val,key){
 			return parseInt(val,10)||0;
 		});
 		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
-			v['condition-Exhausted']=-3;
 			SWUtils.setWrapper({
 				"condition-Exhausted": "0"
-			},PFConst.silentParams,function(){setFatiguedExhausted(v);});
+			},PFConst.silentParams,function(){setFatiguedExhausted(eventInfo);});
 		} else {
-			if(v['condition-Fatigued']===0){
-				v['condition-Fatigued']=-1;
-			}
-			setFatiguedExhausted(v);
+			setFatiguedExhausted(eventInfo);
 		}
 	});
 }
 
-function toggleExhaustedState () {
-	getAttrs(["condition-Fatigued", "condition-Exhausted",'STR-mod','STR-cond','DEX-mod','DEX-cond','STR','DEX','STR-modded','DEX-modded'], function (v) {
+function toggleExhaustedState (dummy,dummy2,eventInfo) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (v) {
 		v = _.mapObject(v,function(val,key){
 			return parseInt(val,10)||0;
 		});
 		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
-			v['condition-Fatigued']=-1;
 			SWUtils.setWrapper({
 				"condition-Fatigued": "0"
-			},PFConst.silentParams,function(){setFatiguedExhausted(v);});
+			},PFConst.silentParams,function(){setFatiguedExhausted(eventInfo);});
 		} else {
-			if(v['condition-Exhausted']===0){
-				v['condition-Exhausted']=-3;
-			}
-			setFatiguedExhausted(v);
+			setFatiguedExhausted(eventInfo);
 		}
 	});
 }
@@ -162,8 +167,8 @@ var events = {
 		"change:condition-invisible": [PFDefense.updateDefenses, PFAttackGrid.applyConditions,PFChecks.applyConditions,PFDefense.applyConditions],
 		"change:condition-dazzled": [PFAttackGrid.applyConditions, PFChecks.applyConditions],
 		"change:condition-prone": [ PFDefense.applyConditions, PFAttackGrid.recalculateMelee],
-		"change:condition-paralyzed": [PFAbilityScores.applyConditions, PFDefense.applyConditions],
-		"change:condition-helpless": [PFAbilityScores.applyConditions, PFDefense.applyConditions]
+		"change:condition-paralyzed": [setParalyzed],
+		"change:condition-helpless": [setHelpless]
 	}
 };
 
@@ -171,8 +176,8 @@ function registerEventHandlers () {
 	_.each(events.conditionEventsPlayer, function (functions, eventToWatch) {
 		_.each(functions, function (methodToCall) {
 			on(eventToWatch, TAS.callback(function eventConditionEventsPlayer(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 					methodToCall(null,null,eventInfo);
 				}
 			}));
