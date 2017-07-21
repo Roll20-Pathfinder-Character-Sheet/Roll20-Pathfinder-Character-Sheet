@@ -290,9 +290,86 @@ export function applyParalyzedHelpless(eventInfo){
     }
 }
 
+
+export function applyConditions (callback, silently, eventInfo) {
+    if(eventInfo){
+        if((/paralyzed/i).test(eventInfo.sourceAttribute)){
+            updateAbilityScore('DEX');
+            updateAbilityScore('STR');
+            return;
+        }
+        if ( (/helpless/i).test(eventInfo.sourceAttribute)){
+            updateAbilityScore('DEX');
+            return;
+        }
+    }
+    getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
+        var setter = {},
+        silentSetter={},
+        params = {},
+        tempInt=0,
+        strMod = 0,
+        dexMod = 0,
+        helpless = 0,
+        paralyzed = 0,
+        dexAbMod = 0,
+        strAbMod = 0;
+        try {
+            TAS.debug("PFAbilityScores.applyconditions: ",v);
+            helpless = parseInt(v.helpless,10)||0;
+            paralyzed = parseInt(v.paralyzed,10)||0;
+            if (paralyzed){
+                silentSetter["DEX"] = 0;
+                silentSetter["DEX-modded"]=1;
+                setter["DEX-mod"] = -5;
+                silentSetter["STR"] = 0;
+                silentSetter["STR-modded"]=1;
+                setter["STR-mod"] = -5;
+            } else if (helpless){
+                silentSetter["DEX"] = 0;
+                silentSetter["DEX-modded"]=1;
+                setter["DEX-mod"] = -5;
+            } else {
+                strMod = (parseInt(v["condition-Fatigued"], 10) || 0) + (parseInt(v["condition-Exhausted"], 10) || 0);
+                dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
+                dexAbMod = dexMod * -2;
+                strAbMod = strMod * -2;
+                if (dexAbMod !== (parseInt(v["DEX-cond"], 10) || 0)) {
+                    setter["DEX-cond"] = dexAbMod;
+                }
+                if (strAbMod !== (parseInt(v["STR-cond"], 10) || 0)) {
+                    setter["STR-cond"] = strAbMod;
+                }
+            }
+        } catch (err) {
+            TAS.error("PFAbilityScores.applyConditions", err);
+        } finally {
+            TAS.notice("#######################","PFAbilities apply conditions setting",silentSetter,setter);
+            if(_.size(silentSetter)){
+                if(silently){
+                    _.extend(setter,silentSetter);
+                } else {
+                    SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
+                }
+            }
+            if (_.size(setter) > 0) {
+                if (silently) {
+                    params = PFConst.silentParams;
+                }
+                SWUtils.setWrapper(setter, params, callback);
+            } else if (typeof callback === "function") {
+                callback();
+            }
+        }
+    });
+}
+
+
+
+
 /** Sets ability penalties, not "ability check" penalties 
  * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled 
- */
+ *
 export function applyConditions (callback, silently, eventInfo) {
     var done = function () {
         //TAS.debug("leaving PFAbilityScores.applyConditions");
@@ -358,7 +435,7 @@ export function applyConditions (callback, silently, eventInfo) {
         }
     });
 }
-
+*/
 /** migrate (currently empty just calls callback*/
 export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,oldversion){
     if (typeof callback === "function"){

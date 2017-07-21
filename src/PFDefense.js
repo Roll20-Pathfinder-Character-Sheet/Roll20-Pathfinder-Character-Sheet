@@ -256,6 +256,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
                 setter.buffsumffcmd = buffffcmd;
             }
+            if(parseInt(v.buffsumtouch,10)!==bufftouch){
+                setter.buffsumtouch = bufftouch;
+            }
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }
