@@ -128,10 +128,10 @@ export function applyConditions  (callback, silently, eventInfo) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if( parseInt(v['condition-Fatigued'],10)){
-            attackNote+='**'+SWUtils.getTranslated('Fatigued')+'**: ';
+            attackNote+='**'+SWUtils.getTranslated('fatigued')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if (parseInt(v["condition-Exhausted"], 10)){
-            attackNote+='**'+SWUtils.getTranslated('Exhausted')+'**: ';
+            attackNote+='**'+SWUtils.getTranslated('exhausted')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         }
         if(parseInt(v['condition-Invisible'],10)){
