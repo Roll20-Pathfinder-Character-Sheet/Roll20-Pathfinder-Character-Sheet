@@ -17,64 +17,69 @@ import * as PFAttacks from './PFAttacks';
 import * as PFEncumbrance from './PFEncumbrance';
 
 
-function setPinnedGrappled(){
-	PFAttackGrid.applyConditions();
-	PFDefense.applyConditions();
+function setPinnedGrappled(eventInfo){
+	TAS.info("AT pfconditions setPinnedGrappled",eventInfo);
+	PFAbilityScores.applyConditions(function(){
+		PFAttackGrid.applyConditions();
+		PFDefense.applyConditions();
+	},null,eventInfo);
 	PFSpellCasterClasses.applyConditions();
 }
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function toggleGrappleState () {
+function toggleGrappleState (eventInfo) {
+	TAS.debug("at toggle grapple state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Pinned": "0"
-			},PFConst.silentParams,setPinnedGrappled);
+			},PFConst.silentParams,function(){setPinnedGrappled(eventInfo);});
 		} else {
-			setPinnedGrappled();
+			setPinnedGrappled(eventInfo);
 		}
 	});
 }
 /* updatePin Ensures Grapple and Pin are mutually exclusive */
-function togglePinnedState () {
+function togglePinnedState (eventInfo) {
+	TAS.debug("at toggle pinned state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
 				"condition-Grappled": "0"
-			},PFConst.silentParams,setPinnedGrappled);
+			},PFConst.silentParams,function(){setPinnedGrappled(eventInfo);});
 		} else {
-			setPinnedGrappled();
+			setPinnedGrappled(eventInfo);
 		}
 	});
 }
 
-function setFatiguedExhausted(){
-	PFAttackGrid.applyConditions();
-	PFEncumbrance.updateModifiedSpeed();		
+function setFatiguedExhausted(eventInfo){
 	PFAbilityScores.applyConditions();
+	PFAttackGrid.applyConditions();
+	PFEncumbrance.updateModifiedSpeed(null,null,eventInfo);		
 }
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function toggleFatiguedState () {
+function toggleFatiguedState (callback,silently,eventInfo) {
 	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
 		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
 			SWUtils.setWrapper({
 				"condition-Exhausted": "0"
 			},PFConst.silentParams,setFatiguedExhausted);
 		} else {
-			setFatiguedExhausted();
+			setFatiguedExhausted(eventInfo);
 		}
 	});
 }
 /* updatePin Ensures Grapple and Pin are mutually exclusive */
-function toggleExhaustedState () {
+function toggleExhaustedState (callback,silently,eventInfo) {
 	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
 		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
 			SWUtils.setWrapper({
 				"condition-Fatigued": "0"
 			},PFConst.silentParams,setFatiguedExhausted);
 		} else {
-			setFatiguedExhausted();
+			setFatiguedExhausted(eventInfo);
 		}
 	});
 }
@@ -155,8 +160,8 @@ function registerEventHandlers () {
 	_.each(events.conditionEventsPlayer, function (functions, eventToWatch) {
 		_.each(functions, function (methodToCall) {
 			on(eventToWatch, TAS.callback(function eventConditionEventsPlayer(eventInfo) {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+					TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 					methodToCall(null,null,eventInfo);
 				}
 			}));
