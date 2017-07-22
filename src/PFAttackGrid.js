@@ -128,10 +128,10 @@ export function applyConditions  (callback, silently, eventInfo) {
             attackNote+='**'+SWUtils.getTranslated('entangled')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if( parseInt(v['condition-Fatigued'],10)){
-            attackNote+='**'+SWUtils.getTranslated('Fatigued')+'**: ';
+            attackNote+='**'+SWUtils.getTranslated('fatigued')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         } else if (parseInt(v["condition-Exhausted"], 10)){
-            attackNote+='**'+SWUtils.getTranslated('Exhausted')+'**: ';
+            attackNote+='**'+SWUtils.getTranslated('exhausted')+'**: ';
             attackNote+=SWUtils.getTranslated('condition-nocharge-note')+'\r\n';
         }
         if(parseInt(v['condition-Invisible'],10)){
@@ -328,57 +328,6 @@ export function recalculateMelee(dummy1,dummy2,eventInfo){
     updateAttacks(null, ['melee','melee2','CMB','CMB2']);
 }
 
-function getTopMacros(setter,v){
-    var header="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll)",
-        npcHeader="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|NPC-Melee-Attack-Roll) [^{ranged}](~@{character_id}|NPC-Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|NPC-CMB-Check) [^{melee2}](~@{character_id}|NPC-Melee2-Attack-Roll)",
-        extraattacks="",
-        npcextraattacks="",
-        ranged2BaseAttacks = " [^{ranged2}](~@{character_id}|Ranged2-Attack-Roll)",
-        cmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|CMB2-Check)",
-        npcranged2BaseAttacks = " [^{ranged2}](~@{character_id}|npc-Ranged2-Attack-Roll)",
-        npccmb2BaseAttacks = " [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|npc-CMB2-Check)";
-    try {
-        //TAS.debug("at PFAttackGrid.getTopMacros",v);
-        setter = setter||{};
-        if (parseInt(v.ranged_2_show, 10)) {
-            extraattacks+=ranged2BaseAttacks;
-            npcextraattacks+=npcranged2BaseAttacks;
-        }
-        if (parseInt(v.cmb_2_show, 10)) {
-            extraattacks+=cmb2BaseAttacks;
-            npcextraattacks+=npccmb2BaseAttacks;
-        }
-        header += extraattacks + " }}";
-        npcHeader += npcextraattacks + " }}";
-        //TAS.debug("PFAtackGrid.getTopMenus new macros are: ", header, npcHeader);
-        if (v.attacks_header_macro !== header || v["NPC-attacks_header_macro"] !== npcHeader ){
-            setter.attacks_header_macro = header;
-            setter["NPC-attacks_header_macro"] = npcHeader;
-        }
-    } catch (err){
-        TAS.error("PFAttackGrid.getTopMacros",err);
-    } finally {
-        return setter;
-    }
-}
-export function setTopMacros (callback){
-    var done = _.once(function(){
-        if (typeof callback === "function"){
-            callback();
-        }
-    });
-    //TAS.debug("at PFAttackGrid.setTopMacros");
-    getAttrs(["attacks_header_macro","NPC-attacks_header_macro", "ranged_2_show", "cmb_2_show"],function(v){
-        var setter = {};
-        getTopMacros(setter,v);
-        if (_.size(setter) && (v.attacks_header_macro !== setter.attacks_header_macro || 
-                v["NPC-attacks_header_macro"] !== setter["NPC-attacks_header_macro"] ) ) {
-            SWUtils.setWrapper(setter,PFConst.silentParams,done);
-        } else {
-            done();
-        }
-    });
-}
 
 export function resetCommandMacro (callback){
     var done = _.after(2,function(){
@@ -460,7 +409,6 @@ export var recalculate = TAS.callback(function callPFAttackGridRecalculate (call
     });
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
-    setTopMacros();
 });
 function registerEventHandlers () {
     var tempString='';
@@ -493,12 +441,7 @@ function registerEventHandlers () {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         applyConditions();
     }));
-    on("change:cmb_2_show change:ranged_2_show", TAS.callback(function displayRangedOrCMB2(eventInfo){
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType==="player" || eventInfo.sourceType === "api"){
-            setTopMacros();
-        }
-    }));
+
     tempString="change:class-0-level change:class-1-level change:class-2-level change:class-3-level change:class-4-level change:class-5-level";
     on(tempString, TAS.callback(function classLevelUpdateDropdowns(eventInfo){
         if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){

@@ -16,9 +16,19 @@ import * as PFChecks from './PFChecks';
 import * as PFAttacks from './PFAttacks';
 import * as PFEncumbrance from './PFEncumbrance';
 
+export function setParalyzed(dummy,dummy2,eventInfo){
+	PFAbilityScores.updateAbilityScore('DEX');
+	PFAbilityScores.updateAbilityScore('STR');
+	PFDefense.applyConditions(null,null,eventInfo);
+}
 
-function setPinnedGrappled(eventInfo){
-	TAS.info("AT pfconditions setPinnedGrappled",eventInfo);
+export function setHelpless(dummy,dummy2,eventInfo){
+    PFAbilityScores.updateAbilityScore('DEX');
+	PFDefense.applyConditions(null,null,eventInfo);
+}
+
+function setPinnedGrappled(dummy,dummy2,eventInfo){
+	//TAS.info("AT pfconditions setPinnedGrappled",eventInfo);
 	PFAbilityScores.applyConditions(function(){
 		PFAttackGrid.applyConditions();
 		PFDefense.applyConditions();
@@ -27,8 +37,8 @@ function setPinnedGrappled(eventInfo){
 }
 
 /* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function toggleGrappleState (eventInfo) {
-	TAS.debug("at toggle grapple state");
+function toggleGrappleState (dummy,dummy2,eventInfo) {
+	//TAS.debug("at toggle grapple state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
@@ -40,8 +50,8 @@ function toggleGrappleState (eventInfo) {
 	});
 }
 /* updatePin Ensures Grapple and Pin are mutually exclusive */
-function togglePinnedState (eventInfo) {
-	TAS.debug("at toggle pinned state");
+function togglePinnedState (dummy,dummy2,eventInfo) {
+	//TAS.debug("at toggle pinned state");
 	getAttrs(["condition-Pinned", "condition-Grappled"], function (values) {
 		if (parseInt(values["condition-Pinned"],10) && parseInt(values["condition-Grappled"],10)) {
 			SWUtils.setWrapper({
@@ -54,30 +64,36 @@ function togglePinnedState (eventInfo) {
 }
 
 function setFatiguedExhausted(eventInfo){
-	PFAbilityScores.applyConditions();
-	PFAttackGrid.applyConditions();
-	PFEncumbrance.updateModifiedSpeed(null,null,eventInfo);		
+	//TAS.debug("PFConditions setFatiguedExhausted",v);
+	PFAbilityScores.applyConditions(null,null,eventInfo);
+	PFAttackGrid.applyConditions(null,null,eventInfo);
+	PFEncumbrance.updateModifiedSpeed();		
 }
 
-/* updateGrapple Ensures Grapple and Pin are mutually exclusive */
-function toggleFatiguedState (callback,silently,eventInfo) {
-	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
-		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+function toggleFatiguedState (dummy,dummy2,eventInfo) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (v) {
+		v = _.mapObject(v,function(val,key){
+			return parseInt(val,10)||0;
+		});
+		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
 			SWUtils.setWrapper({
 				"condition-Exhausted": "0"
-			},PFConst.silentParams,setFatiguedExhausted);
+			},PFConst.silentParams,function(){setFatiguedExhausted(eventInfo);});
 		} else {
 			setFatiguedExhausted(eventInfo);
 		}
 	});
 }
-/* updatePin Ensures Grapple and Pin are mutually exclusive */
-function toggleExhaustedState (callback,silently,eventInfo) {
-	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (values) {
-		if (parseInt(values["condition-Exhausted"],10) && parseInt(values["condition-Fatigued"],10)) {
+
+function toggleExhaustedState (dummy,dummy2,eventInfo) {
+	getAttrs(["condition-Fatigued", "condition-Exhausted"], function (v) {
+		v = _.mapObject(v,function(val,key){
+			return parseInt(val,10)||0;
+		});
+		if (v['condition-Fatigued'] && v['condition-Exhausted']) {
 			SWUtils.setWrapper({
 				"condition-Fatigued": "0"
-			},PFConst.silentParams,setFatiguedExhausted);
+			},PFConst.silentParams,function(){setFatiguedExhausted(eventInfo);});
 		} else {
 			setFatiguedExhausted(eventInfo);
 		}
@@ -151,8 +167,8 @@ var events = {
 		"change:condition-invisible": [PFDefense.updateDefenses, PFAttackGrid.applyConditions,PFChecks.applyConditions,PFDefense.applyConditions],
 		"change:condition-dazzled": [PFAttackGrid.applyConditions, PFChecks.applyConditions],
 		"change:condition-prone": [ PFDefense.applyConditions, PFAttackGrid.recalculateMelee],
-		"change:condition-paralyzed": [PFAbilityScores.applyConditions, PFDefense.applyConditions],
-		"change:condition-helpless": [PFAbilityScores.applyConditions, PFDefense.applyConditions]
+		"change:condition-paralyzed": [setParalyzed],
+		"change:condition-helpless": [setHelpless]
 	}
 };
 

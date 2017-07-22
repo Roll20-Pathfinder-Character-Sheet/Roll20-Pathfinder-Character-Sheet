@@ -371,9 +371,6 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
-			if (oldversion < 1.19){
-				PFAttackGrid.setTopMacros();
-			}
 			if (oldversion < 1.20){
 				PFHealth.recalculate();
 			}

@@ -438,7 +438,7 @@ export function updateModifiedSpeed  (callback) {
         }
     }),
     attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
-        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total",
+        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","speed_cond_applied","run_cond_applied",
     	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
@@ -467,7 +467,7 @@ export function updateModifiedSpeed  (callback) {
         try {
             base = base + buff;
             newSpeed = newSpeed + buff ;
-            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Exhausted']===3)){
+            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Exhausted'],10)===3){
                 halfSpeed=1;
                 base = Math.floor(base/10)*5; //we actually modify old base due to calcs below
                 newSpeed = base;
@@ -533,11 +533,17 @@ export function updateModifiedSpeed  (callback) {
             if (currRun !== newRun) {
                 setter["speed-run"] = newRun;
             }
+            if (halfSpeed !== (parseInt(v.speed_cond_applied,10)||0)   ){
+                setter.speed_cond_applied=halfSpeed;
+            }
+            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)   ){
+                setter.run_cond_applied=cannotRun;
+            }
         } catch (err) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, {}, done);
+                SWUtils.setWrapper(setter, PFConst.silentParams, done);
             } else {
                 done();
             }

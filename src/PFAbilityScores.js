@@ -281,41 +281,13 @@ export function updateAbilityScores (callback, silently) {
     });
 }
 
-export function applyParalyzedHelpless(eventInfo){
-    if((/paralyzed/i).test(eventInfo.sourceAttribute)){
-        updateAbilityScore('DEX');
-        updateAbilityScore('STR');
-    } else if ( (/helpless/i).test(eventInfo.sourceAttribute)){
-        updateAbilityScore('DEX');
-    }
-}
-
 
 export function applyConditions (callback, silently, eventInfo) {
-    if(eventInfo){
-        if((/paralyzed/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            updateAbilityScore('STR');
-            return;
-        }
-        if ( (/helpless/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            return;
-        }
-    }
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
-        var setter = {},
-        silentSetter={},
-        params = {},
-        tempInt=0,
-        strMod = 0,
-        dexMod = 0,
-        helpless = 0,
-        paralyzed = 0,
-        dexAbMod = 0,
-        strAbMod = 0;
+        var setter = {}, silentSetter={}, params = {}, tempInt=0,
+        strMod = 0, dexMod = 0, helpless = 0, paralyzed = 0, dexAbMod = 0, strAbMod = 0;
         try {
-            TAS.debug("PFAbilityScores.applyconditions: ",v);
+            //TAS.debug("PFAbilityScores.applyconditions: ",v);
             helpless = parseInt(v.helpless,10)||0;
             paralyzed = parseInt(v.paralyzed,10)||0;
             if (paralyzed){
@@ -344,19 +316,20 @@ export function applyConditions (callback, silently, eventInfo) {
         } catch (err) {
             TAS.error("PFAbilityScores.applyConditions", err);
         } finally {
-            TAS.notice("#######################","PFAbilities apply conditions setting",silentSetter,setter);
-            if(_.size(silentSetter)){
-                if(silently){
-                    _.extend(setter,silentSetter);
-                } else {
-                    SWUtils.setWrapper(silentSetter,PFConst.silentParams,callback);
+            if(silently){
+                _.extend(silentSetter,setter);
+                if(_.size(silentSetter)){
+                    setAttrs(silentSetter,PFConst.silentParams,callback);
+                } else if (typeof callback === "function") {
+                    callback();
                 }
-            }
-            if (_.size(setter) > 0) {
-                if (silently) {
-                    params = PFConst.silentParams;
-                }
-                SWUtils.setWrapper(setter, params, callback);
+            } else if(_.size(setter)){
+                if(_.size(silentSetter)){
+                    setAttrs(silentSetter,PFConst.silentParams);
+                }          
+                setAttrs(setter,{},callback);
+            } else if(_.size(silentSetter)){
+                setAttrs(silentSetter,PFConst.silentParams,callback);
             } else if (typeof callback === "function") {
                 callback();
             }
@@ -365,77 +338,6 @@ export function applyConditions (callback, silently, eventInfo) {
 }
 
 
-
-
-/** Sets ability penalties, not "ability check" penalties 
- * Sets DEX-cond and STR-cond for fatigued, entangled, and grappled 
- *
-export function applyConditions (callback, silently, eventInfo) {
-    var done = function () {
-        //TAS.debug("leaving PFAbilityScores.applyConditions");
-        if (typeof callback === "function") {
-            callback();
-        }
-    };
-    if(eventInfo){
-        if((/paralyzed/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            updateAbilityScore('STR');
-            return;
-        }
-        if ( (/helpless/i).test(eventInfo.sourceAttribute)){
-            updateAbilityScore('DEX');
-            return;
-        }
-    }
-    getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
-        var setter = {},
-        params = {},
-        strMod = 0,
-        dexMod = 0,
-        helpless = 0,
-        paralyzed = 0,
-        dexAbMod = 0,
-        strAbMod = 0;
-        try {
-            helpless = parseInt(v.helpless,10)||0;
-            paralyzed = parseInt(v.paralyzed,10)||0;
-            if (paralyzed){
-                setter["DEX"] = 0;
-                setter["DEX-mod"] = -5;
-                setter["STR"] = 0;
-                setter["STR-mod"] = -5;
-            } else if (helpless){
-                setter["DEX"] = 0;
-                setter["DEX-mod"] = -5;
-            } else {
-                strMod = (parseInt(v["condition-Fatigued"], 10) || 0) + (parseInt(v["condition-Exhausted"], 10) || 0);
-                dexMod = strMod + (parseInt(v["condition-Entangled"], 10) || 0) + (parseInt(v["condition-Grappled"], 10) || 0);
-                dexAbMod = dexMod * -2;
-                strAbMod = strMod * -2;
-                if (dexAbMod !== (parseInt(v["DEX-cond"], 10) || 0)) {
-                    setter["DEX-cond"] = dexAbMod;
-                }
-                if (strAbMod !== (parseInt(v["STR-cond"], 10) || 0)) {
-                    setter["STR-cond"] = strAbMod;
-                }
-            }
-        } catch (err) {
-            TAS.error("PFAbilityScores.applyConditions", err);
-        } finally {
-            if (_.size(setter) > 0) {
-                if (silently) {
-                    params = PFConst.silentParams;
-                }
-                //TAS.notice("#######################","PFAbilities apply conditions setting",setter);
-                SWUtils.setWrapper(setter, params, done);
-            } else {
-                done();
-            }
-        }
-    });
-}
-*/
 /** migrate (currently empty just calls callback*/
 export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,oldversion){
     if (typeof callback === "function"){
@@ -466,21 +368,21 @@ function registerEventHandlers () {
     //register event handlers **********************************************
     _.each(abilities, function (ability) {
         on((events.abilityEventsAuto.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbility(eventInfo) {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAbilityScore(ability, eventInfo);
             }
         }));
         on((events.abilityEventsPlayer.replace(/REPLACE/g, ability)), TAS.callback(function eventUpdateAbilityPlayerUpdated(eventInfo) {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAbilityScore(ability, eventInfo);
             }
         }));
     });
     on("change:condition-Helpless", TAS.callback(function eventUpdateAbilityHelpless(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             updateAbilityScore("DEX", eventInfo);
         }
     }));
