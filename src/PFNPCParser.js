@@ -20,8 +20,8 @@ var npcCompendiumAttributesPlayer = [ "npc-spellike-ability-text","npc-spells-kn
 	"space_compendium","reach_compendium","npc-melee-attacks-text","npc-ranged-attacks-text","npc-special-attacks",
 	"str_compendium","dex_compendium","con_compendium","int_compendium","wis_compendium","cha_compendium",
 	"bab_compendium","cmb_compendium","cmd_compendium","class_compendium","npc-feats-text",
-	"skills_compendium","racial_mods_compendium","environment",
-	"organization","other_items_treasure","languages","SQ_compendium","content_compendium"];
+	"skills_compendium","racial_mods_compendium","environment","organization","other_items_treasure","languages",
+	"SQ_compendium","content_compendium","npc-spells-prepared_compendium"];
 
 /* ******************************** PARSING ******************************** */
 
@@ -1472,7 +1472,7 @@ function parseSLAs (spLAstr) {
 }
 /** parseSpells - parses spell string from compendium and returns js object
  *@param {string} spellstr the block of spells known text ex: "Sorcerer Spells Known (CL 8th)\r\n3rd (3/day)-Fireball (DC12)," etc
- *@returns {{classname:string,classLevel:number,concentration:number,domains:[string],oppositionschools:string, spellsByLevel:[{spelllevel:number,perDay:number,spells:[{name:string,DC:number,isdomain:number}]}]}
+ *@returns {{classname:string,classLevel:number,concentration:number,domains:[string],oppositionschools:string, spellsByLevel:[{spelllevel:number,perDay:number,spells:[{name:string,DC:number,isDomain:number}]}]}
  */
 function parseSpells (spellstr) {
 	var lines, spells = {};
@@ -1553,8 +1553,11 @@ function parseSpells (spellstr) {
 								}
 							}
 							if(thisspell.name.slice(-1)==='D'){
-								thisspell.name=thisspell.name.slice(0,-1);
+								thisspell.name= SWUtils.trimBoth( thisspell.name.slice(0,-1));
 								thisspell.isDomain=1;
+								if(!omemo.classname || omemo.classname!=='cleric'){
+									omemo.classname='cleric';
+								}
 							}
 							memo.push(thisspell);
 						} catch (errinner) {
@@ -1604,7 +1607,7 @@ function parseSpace (spaceStr) {
  * @param {boolean} isSLA if spell-like-ability then 1 else 0
  * @returns {{'classname':string,'ability':string,'abilityMod':number,'CL':number,'concentrationBonus':number,'oppositionschools':string,'domains':[string],'spellnotes':string}}
  */
-function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
+function getCasterObj (spellObj, abilityScores, healthObj, isSLA, forceCleric) {
 	var caster = {};
 	if (!spellObj || !abilityScores || !healthObj) { return null; }
 	try {
@@ -1612,7 +1615,11 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA) {
 		caster.abilityMod = 0;
 		caster.CL = 0;
 		caster.concentrationBonus = 0;
-		if (isSLA || !spellObj.classname) {
+		if (forceCleric){
+			caster.classname='Cleric';
+			caster.ability = 'WIS';
+			caster.abilityMod = abilityScores.wis.mod;
+		} else if (isSLA || !spellObj.classname) {
 			caster.classname = isSLA?"Spell-like abilities":"Sorcerer";
 			caster.ability = 'CHA';
 			caster.abilityMod = abilityScores.cha.mod;
@@ -1757,8 +1764,10 @@ function createSpellEntries (setter, spellObj, casterObj, section) {
 			try {
 				setter[prefix + "name"] = (spell.name[0].toUpperCase() + spell.name.slice(1));
 				setter[prefix + "classnumber"] = casterObj.pageClassIdx;
+				setter[prefix + "spell_class_r"] = casterObj.pageClassIdx;
 				setter[prefix + "spellclass"] = casterObj.classname;
 				setter[prefix + "spell_level"] = thisSpellLevel;
+				setter[prefix + "spell_level_r"] = thisSpellLevel;
 				if (spell.DC) {
 					thisDC = parseInt(spell.DC, 10) || 0;
 					if (thisDC !== baseDC) {
@@ -1769,7 +1778,7 @@ function createSpellEntries (setter, spellObj, casterObj, section) {
 				if (casterObj.concentration) {
 					setter[prefix + "Concentration-mod"] = casterObj.concentration;
 				}
-				if(spell.isdomain){
+				if(spell.isDomain){
 					setter[prefix+"isDomain"]=1;
 				}
 			} catch (err) {
@@ -2965,7 +2974,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		baseWill = parseInt(v.will_compendium, 10) || 0,
 		bab = parseInt(v["bab_compendium"], 10) || 0,
 		reachExceptions = [],
-		isUndead = false, specAbilObj = {}, npcdesc = '',
+		isUndead = false, forceCleric=false, specAbilObj = {}, npcdesc = '', spellStr='',
 		tempNote = "", tempstr = "",
 		tempInt = 0, tempFloat = 0.0, tempobj=null, baseInit = 0, initMisc = 0, spellcastingclass = -1,
 		cr, featlist, attacklist, hpMod, tempArray, spellObj, casterObj,
@@ -3090,16 +3099,24 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			}
 			//spells***************************************************
 			//TAS.debug("checking for spells");
-			if (v["npc-spells-known-text"]) {
+			
+			if(v['npc-spells-prepared_compendium']){
+				spellStr = v['npc-spells-prepared_compendium'];
+				forceCleric=true;
+			} else if (v["npc-spells-known-text"]) {
+				spellStr = v["npc-spells-known-text"];
+			}
+			if (spellStr){
 				//advance index
 				spellcastingclass = 0;
 				setter['use_spells']=1;
 				//TAS.debug("has some spells");
-				spellObj = parseSpells(v["npc-spells-known-text"]);
-				//TAS.debug("the spells are:",spellObj);
+				spellObj = parseSpells(spellStr);
+				TAS.info("the spells are:",spellObj);
 				if (spellObj) {
 					setter['use_spells']=1;
-					casterObj = getCasterObj(spellObj, abilityScores, hpMap);
+					casterObj = getCasterObj(spellObj, abilityScores, hpMap, false, forceCleric);
+					TAS.info("the caster object is",casterObj);
 					//do not add caster levels to hit dice or it gets screwed up
 					//setter = createClassEntries (setter,casterObj);
 					setter = setCasterFields(setter, casterObj, spellcastingclass);
