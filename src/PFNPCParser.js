@@ -2601,64 +2601,107 @@ function createAbilityScoreEntries (abilityScores, setter) {
 		return setter;
 	}
 }
-function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, cmb_compendium, setter){
+function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, level, cmb_compendium, setter){
 	var matches,
 	tempstr='',
 	tempCMB,
+	tempBab=0,
 	attackGrid = {},
 	miscCMB=0,
 	calcCMB=0;
 	try {
 		setter=setter||{};
+		attackGrid.melee = abilityScores.str.mod + bab + sizeMap.size;
 		setter["bab"] = bab;
 		setter["npc-bab"] = bab;
 		setter["melee-ability-mod"] = abilityScores.str.mod;
-		setter["attk-melee"] = abilityScores.str.mod + bab + sizeMap.size;
-		attackGrid.melee = abilityScores.str.mod + bab + sizeMap.size;
-		setter["ranged-ability-mod"] = abilityScores.dex.mod;
-		setter["attk-ranged"] = abilityScores.dex.mod + bab + sizeMap.size;
+		setter["attk-melee"] = attackGrid.melee;
+		setter["melee-ability"] = "STR-mod";
+		setter["melee-ability-mod"] = abilityScores.str.mod;
+		setter['melee_bab']='bab';
+		setter['melee_bab-mod']=bab;
+
+		attackGrid.melee2 = abilityScores.dex.mod + bab + sizeMap.size;
+		setter["melee2-ability"] = "DEX-mod";
+		setter["melee2-ability-mod"] = abilityScores.dex.mod;
+		setter["attk-melee2"] = attackGrid.melee2;
+		setter["attk_melee2_note"] = 'Weapon Finesse';
+		setter['melee2_bab']='bab';
+		setter['melee2_bab-mod']=bab;
+
 		attackGrid.ranged = abilityScores.dex.mod + bab + sizeMap.size;
+		attackGrid.ranged2 = attackGrid.ranged;
+		setter["ranged-ability"] = "DEX-mod";
+		setter["ranged-ability-mod"] = abilityScores.dex.mod;
+		setter["attk-ranged"] = attackGrid.ranged;
+		setter['ranged_bab']='bab';
+		setter['ranged_bab-mod']=bab;
+		setter["ranged2-ability"] = "DEX-mod";
+		setter["ranged2-ability-mod"] = abilityScores.dex.mod;
+		setter["attk-ranged2"] = attackGrid.ranged;
+		setter['ranged2_bab']='bab';
+		setter['ranged2_bab-mod']=bab;
+
+		
+		if(importantFeats.defensivecombattraining){
+			setter['cmb_bab']='level';
+			setter['cmb_bab-mod']=level;
+			setter['cmb2_bab']='level';
+			setter['cmb2_bab-mod']=level;
+			tempBab=level;
+		} else {
+			setter['cmb_bab']='bab';
+			setter['cmb_bab-mod']=bab;
+			setter['cmb2_bab']='bab';
+			setter['cmb2_bab-mod']=bab;
+			tempBab=bab;
+		}
+
+		if (importantFeats.agilemaneuvers) {
+			setter["CMB-ability"] = "DEX-mod";
+			setter["CMB-ability-mod"] = abilityScores.dex.mod;
+			setter["CMB2-ability"] = "DEX-mod";
+			setter["CMB2-ability-mod"] = abilityScores.dex.mod;
+			calcCMB=abilityScores.dex.mod + tempBab - sizeMap.size;
+			setter["cmb_desc"] = 'Agile Maneuvers';
+		} else {
+			setter["CMB-ability"] = "STR-mod";
+			setter["CMB-ability-mod"] = abilityScores.str.mod;
+			setter["CMB2-ability"] = "STR-mod";
+			setter["CMB2-ability-mod"] = abilityScores.str.mod;
+			calcCMB=abilityScores.str.mod + tempBab - sizeMap.size;
+		}
+		tempCMB = calcCMB;
+		if(cmb_compendium){
+			matches = cmb_compendium.match(/\d+/);
+			if (matches){
+				tempCMB = parseInt(matches[0],10);
+				tempstr = cmb_compendium.slice(matches.index+matches[0].length);
+				if(tempstr){
+					attackGrid.cmbnotes=tempstr;
+					setter["CMB-notes"]=tempstr;
+				}
+			}
+		}
+		setter["CMB"] = tempCMB;
+		attackGrid.cmb = tempCMB;
+		setter["CMB2"] = tempCMB;
+		attackGrid.cmb2 = tempCMB;
+		miscCMB = tempCMB - calcCMB;
+		if(miscCMB){
+			setter["attk-CMB-misc"] = miscCMB;
+			setter["attk-CMB-misc-mod"] = miscCMB;
+			setter["attk-CMB2-misc"] = miscCMB;
+			setter["attk-CMB2-misc-mod"] = miscCMB;
+		}
+
 		if (importantFeats.criticalfocus) {
 			setter["cmb_crit_conf"] = 4;
 			setter["ranged_crit_conf"] = 4;
 			setter["melee_crit_conf"] = 4;
-		}
-		if (importantFeats.weaponfinesse) {
-			setter["melee2-ability"] = "DEX-mod";
-			setter["melee2-ability-mod"] = abilityScores.dex.mod;
-			setter["attk-melee2"] = abilityScores.dex.mod + bab + sizeMap.size;
-			attackGrid.melee2 = abilityScores.dex.mod + bab + sizeMap.size;
-			setter["attk_melee2_note"] = 'Weapon Finesse';
-			if (importantFeats.criticalfocus) {
-				setter["melee2_crit_conf"] = 4;
-			}
-		}
-		if (importantFeats.agilemaneuvers) {
-			setter["CMB-ability"] = "DEX-mod";
-			setter["CMB-ability-mod"] = abilityScores.dex.mod;
-			calcCMB=abilityScores.dex.mod + bab - sizeMap.size;
-			setter["cmb_desc"] = 'Agile Maneuvers';
-		} else {
-			setter["CMB-ability-mod"] = abilityScores.str.mod;
-			calcCMB=abilityScores.str.mod + bab - sizeMap.size;
-		}
-		matches = cmb_compendium.match(/\d+/);
-		if (matches){
-			tempCMB = parseInt(matches[0],10);
-			miscCMB = tempCMB - calcCMB;
-			setter["CMB"] = tempCMB;
-			attackGrid.cmb = tempCMB;
-			if(miscCMB){
-				setter["attk-CMB-misc"] = miscCMB;
-			}
-			tempstr = cmb_compendium.slice(matches.index+matches[0].length);
-			if(tempstr){
-				attackGrid.cmbnotes=tempstr;
-				setter["CMB-notes"]=tempstr;
-			}
-		} else {
-			setter["CMB"] = calcCMB;
-			attackGrid.cmb = calcCMB;
+			setter["cmb2_crit_conf"] = 4;
+			setter["ranged2_crit_conf"] = 4;
+			setter["melee2_crit_conf"] = 4;
 		}
 	} catch (errC) {
 		TAS.error("parseAndCreateAttackGrid error creating CMB attack types", errC);
@@ -3103,7 +3146,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				reachObj.reachExceptions = [];
 			}
 			// Attacks *********************************************************
-			attackGrid=parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, v.cmb_compendium, setter);
+			attackGrid=parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, level, v.cmb_compendium, setter);
 			//TAS.debug("PFNPCParser attack Grid is: ",attackGrid);
 			//#######set non list fields
 			_.extend(allSoFar,setter);
@@ -3279,14 +3322,18 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 // PARSE CREATE NPC MONSTER
 // change:npc_compendium_category
 on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventInfo) {
-	TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 	if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		getAttrs(['npc_import_now'], function (v) {
-			if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
+			if (parseInt(v.npc_import_now, 10) === 1) {
 				importFromCompendium(eventInfo, function(){
 					//instead of just calling recalculate set recalc button and call checkforupdate
 					//so users sees something is happening.
-					//SWUtils.setWrapper({'recalc1':1},PFConst.silentParams,PFSheet.checkForUpdate);
+					getAttrs(['npc_parse_no_recalc'],function(vin){
+						if (!parseInt(vin.npc_parse_no_recalc,10)){
+							SWUtils.setWrapper({'recalc1':1});
+						}
+					});
 				});
 			}
 		});

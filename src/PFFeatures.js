@@ -645,10 +645,11 @@ function registerEventHandlers () {
 			m+= singleEvent + a + " ";
 			return m;
 		},macroEvent);
-		on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
+		on (macroEvent, TAS.callback(function eventRepeatingOldListsCommandMacroUpdate(eventInfo){
 			var attr;
 			attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && attr==='used_max')) {
+			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker"  && attr==='used_max')) {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				attr='repeating_'+section+'_showinmenu';
 				getAttrs([attr,'is_npc'],function(v){
 					var isNPC=parseInt(v.is_npc,10)||0;

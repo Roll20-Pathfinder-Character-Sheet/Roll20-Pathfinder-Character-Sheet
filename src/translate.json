@@ -1,4 +1,6 @@
 {
+	"manual-recalc-after-parse": "Manual ↻ Recalc after Parse",
+	"manual-recalc-for-high-cr": "Check to manually hit recalc after parse is complete (Recommended for high CR creatures with many abilities)",
 	"npc-spells-prepared-place": "Cleric Spells prepared",
 	"fatigued-conditions": " Fatigued Conditions",
 	"kinetic-blast": "Kinetic Blast",
