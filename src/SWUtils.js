@@ -14,8 +14,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export function setWrapper(a,b,c){
-	setAttrs(a,b,c);
-	/*
+	//setAttrs(a,b,c);
+	
 	var bad=false;
 	//TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
@@ -27,7 +27,7 @@ export function setWrapper(a,b,c){
 	if (bad){
 		TAS.callstack();
 	}
-	*/
+	setAttrs(a,b,c);
 }
 
 export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
