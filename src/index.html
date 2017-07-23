@@ -10560,7 +10560,8 @@
 							<span data-i18n="npc-statblock-parse-instructions">Drag a monster from the compendium here, or type in the statblock values below. Then hit the parse button. The parser will populate the sheet with the underlying stats and attacks.</span>
 							<span data-i18n="npc-statblock-textarea-instructions">For multiline textareas, paste in exactly as appears in source. Keep newlines in input.</span> 
 							<br/>
- 							<input class="sheet-csstextbutton sheet-progress-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
+							<input class="sheet-csstextbutton sheet-progress-show" type="checkbox" title="@{npc_import_now}" name="attr_npc_import_now" value="1" /><span data-i18n="parse">Parse</span>
+							<input type="checkbox" class="sheet-selectedlabel-check" name="attr_npc_parse_no_recalc" title="@{npc_parse_no_recalc}" value="1" data-i18n-aria-label="manual-recalc-for-high-cr" /><b data-i18n-title="manual-recalc-for-high-cr" data-i18n="manual-recalc-after-parse"> Manually recalc after parsing</b>							 
 							<span class="sheet-progress-icon"><img src="http://i.imgur.com/XKktDjC.gif" style="vertical-align:top;" />&nbsp;<span data-i18n="loading">Loading...</span></span>
 							<span class="sheet-compendium-note sheet-hide-readonly" >
 								<span class="sheet-compendium-icon">i</span>
@@ -11397,7 +11398,7 @@
 								<span class="sheet-drag-icon">&#9111;</span>
 							</span>					
 							<div class="sheet-cheat"></div>
-							<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_spells_show" title="@{extra_fields_spells_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>					
+							<input type="checkbox" class="sheet-selectedlabel-check sheet-advanced-spell-option-show" name="attr_extra_fields_spells_show" title="@{extra_fields_spells_show}" value="1" /><b data-i18n="show-more-fields">Show more fields</b>
 							<div class="sheet-cheat"></div>
 							<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 							<div class="sheet-npc-spells sheet-repeating-fields sheet-hiderepborder">

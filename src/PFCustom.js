@@ -379,7 +379,7 @@ export function migrate(callback,oldversion){
 	}    
     getAttrs(['migrated_ability_dropdowns2'],function(v){
         var setter={};
-		//TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
+		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
         if(!parseInt(v.migrated_ability_dropdowns2,10)){
             updateRepeating();
             updateNonRepeating();
@@ -407,15 +407,15 @@ function registerEventHandlers () {
 	//custom page
 	on("change:customd1 change:customd2 change:customd3 change:customd4 change:customd5 change:customd6 change:customd1-name change:customd2-name change:customd3-name change:customd4-name change:customd5-name change:customd6-name",
 		TAS.callback(function customRollUpdate(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if(eventInfo.sourceType==='player'){
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				resetCommandMacro(eventInfo);
 			}
     }));
 	//show / hide extra fields
 	on("change:use_advanced_options", TAS.callback(function eventShowMisc(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if(eventInfo.sourceType==='player'||eventInfo.sourceType==='api'){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			getAttrs(['use_advanced_options'],function(v){
 				if(parseInt(v.use_advanced_options,10)){
 					showMiscFields();
@@ -428,8 +428,8 @@ function registerEventHandlers () {
 	//GENERIC DROPDOWNS
 	_.each(PFConst.abilityScoreManualDropdowns, function (write, read) {
 		on("change:" + read, TAS.callback(function eventManualDropdown(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				//user changed the SELECTION
 				PFUtilsAsync.setDropdownValue(read, write);
 			}

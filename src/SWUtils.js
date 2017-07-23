@@ -14,8 +14,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export function setWrapper(a,b,c){
-	setAttrs(a,b,c);
-	/*
+	//setAttrs(a,b,c);
+	
 	var bad=false;
 	//TAS.debug("setting "+_.size(a)+" values:",a);
 	_.each(a,function(v,k){
@@ -27,7 +27,7 @@ export function setWrapper(a,b,c){
 	if (bad){
 		TAS.callstack();
 	}
-	*/
+	setAttrs(a,b,c);
 }
 
 export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
@@ -165,7 +165,7 @@ function validateMatchingParens(str){
  */
 export function evaluateExpression (exprStr, callback, errcallback) {
 	var value;
-	TAS.debug("evaluateExpression: expstr:"+exprStr);
+	//TAS.debug("evaluateExpression: expstr:"+exprStr);
 	if (typeof callback !== "function") {
 		return;
 	}
@@ -227,8 +227,6 @@ export function evaluateExpression (exprStr, callback, errcallback) {
  * if it's a number immediately write it to writeField.
  * if not, then replace any @{field} references with numbers, and then evaluate it
  * as a mathematical expression till we find a number.
- *
- * note this is NOT recursive, you can't point one field of
  *
  * @param {string} readField= field to read containing string to parse
  * @param {string} writeField= field to write to
@@ -795,7 +793,7 @@ export function splitByCommaIgnoreParens(str){
 	if (!str) {return [];}
 	ret = str.match(/((?:[^(),]|\([^()]*\))+)/g);
 	ret = trimBoth(ret);
-	return ret;
+	return _.uniq(ret);
 }
 export function deleteRepeating(callback,section){
 	var done = _.once(function(){

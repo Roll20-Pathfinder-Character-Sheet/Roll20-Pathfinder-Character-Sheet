@@ -108,7 +108,7 @@ function setClassName (id,callback,eventInfo){
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix="repeating_ability_"+idStr,
 	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis',prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+	getAttrs([prefix+'CL-basis', prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
 		var clBase='',setter={},match;
 		try {
 			if (v[clbasisField]){
@@ -275,8 +275,8 @@ function getNewAbilityAttrs (ability){
 		 setter[prefix+'row_id']=id;
 		 setter[prefix+'showinmenu']=ability['showinmenu']||0;
 		 setter[prefix+'name']=ability.name||'';
-		 setter[prefix+'used']=ability['used']||'';
-		 setter[prefix+'used_max']=ability['used_max']||'';
+		 setter[prefix+'used']=ability['used']||0;
+		 setter[prefix+'used_max']=ability['used_max']||0;
 		 setter[prefix+'max-calculation']=ability['max-calculation']||'';
 		 setter[prefix+'short-description']=ability['short-description']||'';
 		 setter[prefix+'description']=ability['description']||'';
@@ -731,7 +731,7 @@ function updateCharLevel (id,callback,eventInfo){
 			TAS.error("PFAbility.updateCharLevel",err);
 		} finally {
 			if (_.size(setter)){
-				SWUtils.setWrapper(setter,{},done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -985,11 +985,9 @@ function registerEventHandlers () {
 		m+= singleEvent + a + " ";
 		return m;
 	},macroEvent);
-	on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
-		var attr;
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && attr==='used_max')) {
+	on (macroEvent, TAS.callback(function eventRepeatingAbilityCommandMacroUpdate(eventInfo){
+		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFFeatures.resetTopCommandMacro(null,eventInfo);
 			resetCommandMacro();
 		}
@@ -1006,10 +1004,10 @@ function registerEventHandlers () {
 		return m;
 	},"");
 	on(eventToWatch,	TAS.callback(function eventChangeAbilityTypeFrequencyOrRange(eventInfo){
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ||  (/range/i).test(eventInfo.sourceAttribute) ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || eventInfo.sourceAttribute.indexOf('range')>0 ) {
-				resetOptionAsync();
-			}
+			resetOptionAsync();
+		}
 	}));
 	on("change:repeating_ability:CL-misc change:repeating_ability:spell_level-misc", 
 		TAS.callback(function eventSLAEquationMacro(eventInfo){
@@ -1031,7 +1029,7 @@ function registerEventHandlers () {
 		}
 	}));
 	on("change:repeating_ability:compendium_category", TAS.callback(function eventAbilityCompendium(eventInfo){
-		if (eventInfo.sourceAttribute !== "sheetworker"){
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType==="api"){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			importFromCompendium(null,eventInfo);
 		}
@@ -1056,8 +1054,10 @@ function registerEventHandlers () {
 		return memo;
 	},"");
 	on(eventToWatch, TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		updateAssociatedAttack(null,null,null,eventInfo);
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType==="api" || (/range_numeric/i).test(eventInfo.sourceAttribute) ){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			updateAssociatedAttack(null,null,null,eventInfo);
+		}
 	}));
 	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

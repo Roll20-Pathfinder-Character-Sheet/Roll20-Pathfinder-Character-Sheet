@@ -986,7 +986,11 @@ export function updateDualWieldAttacks (callback,eventInfo){
 		}
 	}), 
 	finished = _.once(function(){
-		SWUtils.setWrapper({'update_twoweapon_attack':0},PFConst.silentParams,done);
+		if(eventInfo){
+			SWUtils.setWrapper({'update_twoweapon_attack':0},PFConst.silentParams,done);
+		} else {
+			done();
+		}
 	});
 	getAttrs(['update_twoweapon_attack','mainhand_penalty','offhand_penalty','offhand_improved','bab','offhand_str_mult'],function(vout){
 		if(eventInfo && !parseInt(vout.update_twoweapon_attack,10)){
@@ -1013,27 +1017,30 @@ export function updateDualWieldAttacks (callback,eventInfo){
 						var prefix = 'repeating_weapon_'+id+'_',
 							linktype=parseInt(v[prefix+'link_type'],10),
 							params={};
-						if(linktype===linkedAttackType.weapon){
-							params.mainhand_id = v[prefix+'source-main'];
-							params.offhand_id = v[prefix+'source-off'];
-							params.mainhand_penalty = mhpen;
-							params.offhand_penalty = ohpen;
-							params.offhand_improved = ohatks ;
-							params.bab = babt;
-							params.mainhand_name = v[prefix+'source-main-name'];
-							params.offhand_name = v[prefix+'source-off-name'];
-							params.offhand_mult = mult;
-							params['macro-text'] = v[prefix+'macro-text'];
-							params['NPC-macro-text'] = v[prefix+'NPC-macro-text'];
-							//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
-							setDualWieldVals(params,setter,id,true);
+						try {
+							if(linktype===linkedAttackType.weapon){
+								params.mainhand_id = v[prefix+'source-main'];
+								params.offhand_id = v[prefix+'source-off'];
+								params.mainhand_penalty = mhpen;
+								params.offhand_penalty = ohpen;
+								params.offhand_improved = ohatks ;
+								params.bab = babt;
+								params.mainhand_name = v[prefix+'source-main-name'];
+								params.offhand_name = v[prefix+'source-off-name'];
+								params.offhand_mult = mult;
+								params['macro-text'] = v[prefix+'macro-text'];
+								params['NPC-macro-text'] = v[prefix+'NPC-macro-text'];
+								//TAS.debug("PFAttacks.createDualWield calling setDualWieldVals with ",params);
+								setDualWieldVals(params,setter,id,true);
+							}
+						} catch (erri){
+							
 						}
 					});
 				}
 				if(_.size(setter)){
-					setter['update_twoweapon_attack']=0;
 					//TAS.debug("after updating now set with ",setter);
-					SWUtils.setWrapper(setter,PFConst.silentParams,done);
+					SWUtils.setWrapper(setter,PFConst.silentParams,finished);
 				}else{
 					finished();
 				}

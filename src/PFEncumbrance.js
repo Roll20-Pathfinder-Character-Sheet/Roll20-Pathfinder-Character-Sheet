@@ -611,8 +611,8 @@ function registerEventHandlers  () {
         }
     }));
     on("change:size-multiplier change:legs change:load-str-bonus change:load-multiplier change:load-misc", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api"){
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             updateLoadsAndLift();
         }
     }));

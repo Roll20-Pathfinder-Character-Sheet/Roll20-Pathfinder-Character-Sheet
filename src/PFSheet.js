@@ -488,7 +488,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 }
 function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
+		//TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -588,7 +588,7 @@ export function recalculate (oldversion, callback, silently) {
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
  *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
  * */
-export function checkForUpdate () {
+export function checkForUpdate (forceRecalc) {
 	var done = function () {
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
@@ -614,17 +614,21 @@ export function checkForUpdate () {
 			});
 		};
 		TAS.notice("Attributes at version: " + currVer);
-		if (parseInt(v["recalc1"],10) ){
-			//HIT RECALC
-			recalc = true;
-		} 
-		if (parseInt(v["migrate1"],10)) {
-			migrateSheet =true;
-		}
-		if  ( parseInt(v["is_newsheet"],10) || (currVer === 0 &&  (parseInt(v.is_v1,10) || (  !(parseInt(v.hp, 10) || parseInt(v.hp_max, 10) || parseInt(v['npc-hd'], 10) || parseInt(v['npc-hd-num'], 10) ||
-			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
-			//NEW SHEET:
-			newSheet=true;
+		if (forceRecalc){
+			recalc=true;
+		} else {
+			if (parseInt(v["recalc1"],10) ){
+				//HIT RECALC
+				recalc = true;
+			} 
+			if (parseInt(v["migrate1"],10)) {
+				migrateSheet =true;
+			}
+			if  ( parseInt(v["is_newsheet"],10) || (currVer === 0 &&  (parseInt(v.is_v1,10) || (  !(parseInt(v.hp, 10) || parseInt(v.hp_max, 10) || parseInt(v['npc-hd'], 10) || parseInt(v['npc-hd-num'], 10) ||
+				v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
+				//NEW SHEET:
+				newSheet=true;
+			}
 		}
 		//force this on sheet open, not sure wtf is wrong
 		if (currVer !== PFConst.version) {

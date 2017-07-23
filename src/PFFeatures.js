@@ -302,17 +302,27 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 			callback();
 		}
 	});
-	getSectionIDs("repeating_" + section, function (ids) {
-		var totrows = _.size(ids),
-		rowdone = _.after(totrows, done);
-		if (totrows > 0) {
-			_.each(ids, function (id, index) {
-				var prefix = "repeating_" + section + "_" + id;
-				SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, silently);
-			});
-		} else {
+	getAttrs(['is_newsheet'],function(vout){
+		//new sheets have nothing
+		if(parseInt(vout.is_newsheet,10)){
 			done();
+			return;
 		}
+		getSectionIDs("repeating_" + section, function (ids) {
+			var totrows = _.size(ids),
+			rowdone = _.after(totrows, done);
+			if (totrows > 0) {
+				if(section ==='ability'){
+					TAS.notice("checking max used for ability silent is:"+silently);
+				}
+				_.each(ids, function (id, index) {
+					var prefix = "repeating_" + section + "_" + id;
+					SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, true);
+				});
+			} else {
+				done();
+			}
+		});
 	});
 }
 export function convertNameToLevel (name){
@@ -601,10 +611,10 @@ export var recalculate = TAS.callback(function PFFeaturesRecalculate(callback, s
 		});
 		calculateMaxUses = function(){
 			_.each(PFConst.repeatingMaxUseSections, function (section) {
-				recalculateRepeatingMaxUsed(section, TAS.callback(doneWithList), silently);
+				recalculateRepeatingMaxUsed(section, doneWithList, silently);
 			});
 		};
-		migrate(TAS.callback(calculateMaxUses),oldversion);
+		migrate(calculateMaxUses,oldversion);
 	} catch (err) {
 		TAS.error("PFFeatures.recalculate, ", err);
 		done();
@@ -645,10 +655,11 @@ function registerEventHandlers () {
 			m+= singleEvent + a + " ";
 			return m;
 		},macroEvent);
-		on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
+		on (macroEvent, TAS.callback(function eventRepeatingOldListsCommandMacroUpdate(eventInfo){
 			var attr;
 			attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && attr==='used_max')) {
+			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker"  && attr==='used_max')) {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				attr='repeating_'+section+'_showinmenu';
 				getAttrs([attr,'is_npc'],function(v){
 					var isNPC=parseInt(v.is_npc,10)||0;
