@@ -2489,7 +2489,7 @@ function createSpeedEntries (speedMap, importantFeats,setter) {
 					setter["speed-swim"] = speed;
 					break;
 				case 'flyability':
-					tempstr += "Fly (" + speed + ")";
+					setter['speed-fly-maneuverability']= speed ;
 					break;
 				default:
 					setter["speed-misc"] = speed;
