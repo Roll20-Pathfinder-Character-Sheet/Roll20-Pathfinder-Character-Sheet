@@ -531,7 +531,7 @@ function assignPrimarySecondary (attacks) {
 	}
 }
 function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
-	var matches, currpos = 0, name = "", iteratives, i = 0, tempInt = 0,
+	var matches, currpos = 0, name = "", iteratives, i = 0, tempInt = 0, dice,
 		beforeBetweenAfterParens, bonus = "", origStr = atkstr, countspaces = 0, specCMB = 0,
 		abilityBaseName = '', tempstr = "", tempidx = 0, names, attackdescs,
 	retobj = {
@@ -645,7 +645,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			}
 			atkstr = atkstr.slice(tempidx + matches[0].length);
 		}
-		TAS.debug("PFNPCParse atkstr is now "+atkstr);
+		//TAS.debug("PFNPCParse atkstr is now "+atkstr);
 		if (atkstr) {
 			//after name split rest by parenthesis
 			// format: name   attack bonus ( damage ) plus additional
@@ -712,16 +712,14 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 				// find damage
 				//damage dice and die
 				tempstr = SWUtils.trimBoth(tempstr);
-				TAS.debug(" left is "+tempstr);
-				var dice = PFUtils.getDiceDieFromString(tempstr,true,true);
-				if(dice.dice!==0){
+				dice = PFUtils.getDiceDieFromString(tempstr,true,true);
+				if(dice && dice.dice){
 					retobj.dmgdice=dice.dice;
 					retobj.dmgdie=dice.die;
 					retobj.dmgbonus=dice.plus;
-					tempstr = tempstr.slice(dice.spaces+1);
+					bonus = tempstr.slice(dice.spaces);//no plus 1 why?
 				}
-				bonus = SWUtils.trimBoth(tempstr);
-				//TAS.debug("PFNPCParse.ParseAttack now left with :"+bonus);
+				bonus = SWUtils.trimBoth(bonus);
 
 				//any text after damage is 'plus' or damage type
 				if (bonus) {
@@ -738,7 +736,6 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					if (matches) {
 						tempstr = SWUtils.trimBoth(matches[1]);
 						bonus = SWUtils.trimBoth(bonus.slice(0, matches.index));
-						TAS.debug("parseAttack plus is "+tempstr+", rest is:"+bonus);
 						if (/\d+d\d+/i.test(tempstr)) {
 							matches = tempstr.match(/(\d+d\d+)\s*([\w\s]*)/);
 							retobj.plusamount = matches[1];
@@ -752,10 +749,10 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 					//TAS.debug("PFParseAttack e3:"+bonus);
 					if (bonus){
 						matches = bonus.match(/\s|\//g);
-						//TAS.debug("PFParseAttack e3:"+bonus+", matches:",matches);
 						if (matches) {
 							countspaces = matches.length - 1;
 						}
+						//TAS.debug("PFParseAttack e4:"+bonus+", matches:",matches);
 						//--does not find dash in crit check for different types of minus
 						matches = bonus.match(/(x\d+)|(\/\d+\-??20)|([+\-]??\d+)/ig);
 						_.each(matches, function (match, index) {
@@ -781,6 +778,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 						retobj.dmgtype += bonus;
 					}
 				}
+				//TAS.debug("Parse e5 retobj:",retobj);
 				if (retobj.atktype !== 'cmb' && !retobj.iter[0] && retobj.dmgtype && retobj.dmgdice && retobj.dmgdie && !retobj.plusamount && !retobj.plustype && (!(/bludg|slash|pierc/i).test(retobj.dmgtype))) {
 					retobj.plustype = retobj.dmgtype;
 					tempstr = String(retobj.dmgdice) + "d" + String(retobj.dmgdie);
@@ -855,9 +853,10 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 			addgroups = true;
 		}
 		attacksouter = _.reduce(atkarrayout, function (memoout, atkstrout, groupidx) {
-			var atkarray = atkstrout.split(/,\s*(?![^\(\)]*\))/),
+			var atkarray ,
 			attacks;
 			try {
+				atkarray= SWUtils.splitByCommaIgnoreParens(atkstrout);//.split(/,\s*(?![^\(\)]*\))/),
 				if (atkarray.length > 1) {
 					addgroups = true;
 				}
@@ -867,7 +866,7 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 					try {
 					//TAS.debug('parseattacks: ' + atkstr);
 						retobj = parseAttack(atkstr, atktypestr, addgroups, groupidx, cmbval);
-						TAS.debug("parseAttacks return for this attack: ",retobj);				
+						//TAS.debug("parseAttacks return for this attack: ",retobj);				
 						if (retobj) {
 							memo.push(retobj);
 						}
@@ -1172,7 +1171,7 @@ function parseSpecialAttacks (setter,saString,cmb) {
 	if (!saString) {
 		return {};
 	}
-	retarray = saString.split(/,\s*(?![^\(\)]*\))/);
+	retarray = SWUtils.splitByCommaIgnoreParens(saString);//.split(/,\s*(?![^\(\)]*\))/);
 	return _.reduce(retarray, function (memo, sa) {
 		var retobj,
 		tempstr,
@@ -1302,7 +1301,7 @@ function parseSpecialQualities (str){
 		if (matches){
 			str = str.slice(matches[0].length);
 		}
-		rawAbilities = str.split(/,\s*/);
+		rawAbilities =  SWUtils.splitByCommaIgnoreParens(str);
 		//TAS.debug("found the following:", rawAbilities);
 		_.each(rawAbilities,function(ability){
 			var saAb={},type="";
@@ -1388,7 +1387,8 @@ function parseSLAs (spLAstr) {
 						}
 					}
 					//TAS.debug"the frequency is " + slatype + " and are " + numPerDay + " per that");
-					slasOfType = slaofTypeStr.split(/,\s*(?![^\(\)]*\))/);
+					slasOfType = SWUtils.splitByCommaIgnoreParens(slaofTypeStr);
+					//slaofTypeStr.split(/,\s*(?![^\(\)]*\))/);
 					SLAArray = _.reduce(slasOfType, function (memo, sla) {
 						var thissla = {}, dcstr = '';
 						try {
@@ -1896,6 +1896,14 @@ function createSLAEntries (slaObj, casterObj, race,level,setter) {
 							sdstr = "Frequency per :"+slaObj.otherPer;
 						}
 						break;
+					default:
+						memo[prefix + "frequency"] = "not-applicable";
+						memo[prefix + "used"] = 0;
+						memo[prefix + "used_max"] = 0;
+						memo[prefix + "max-calculation"]="";
+						memo[prefix + "hasfrequency"] = '';
+						memo[prefix + "hasuses"] = '';
+						break;
 				}
 				if (SLA.save){
 					memo[prefix + "save"] = SLA.save;
@@ -2091,6 +2099,7 @@ function createAttacks (attacklist, attackGrid, abilityScores, importantFeats, d
 			if (!memo[prefix + "total-attack"]) {
 				memo[prefix + "total-attack"] = 0;
 			}
+			TAS.debug("Create attack e6 "+attack.name+", enhance:"+attack.enh+" dmg from attack:"+ attack.dmgbonus+", from str:"+dmgMod);
 			memo[prefix + "damage-dice-num"] = attack.dmgdice;
 			memo[prefix + "default_damage-dice-num"] = attack.dmgdice;
 			memo[prefix + "damage-die"] = attack.dmgdie;
@@ -2828,18 +2837,30 @@ function createFeatureEntries (abilitylist, abilityScoreMap, race, level, setter
 					if(ability.frequency&& ability.frequency==='everyrounds'){
 						memo[prefix+"frequency"] = ability.frequency;
 						memo[prefix+'rounds_between']=ability.used;
+						memo[prefix + "hasfrequency"] = '1';
+						memo[prefix + "used"] = 0;
+						memo[prefix + "used_max"] = 0;
+						memo[prefix + "max-calculation"]="";
 					} else {
 						if(ability.frequency){
 							memo[prefix + "frequency"] = ability.frequency;
+							memo[prefix + "hasfrequency"] = ability.frequency;
 						} else {
 							memo[prefix + "frequency"] = 'perday';
+							memo[prefix + "hasfrequency"] = 'perday';
 						}
+						memo[prefix + "hasuses"] = '1';
 						memo[prefix + 'used'] = ability.used;
 						memo[prefix + 'used_max'] = ability.used;
 						memo[prefix + 'max-calculation'] = ability.used;
 					}
 				} else {
 					memo[prefix + "frequency"] = 'not-applicable';//'not-applicable';
+					memo[prefix + "used"] = 0;
+					memo[prefix + "used_max"] = 0;
+					memo[prefix + "max-calculation"]="";
+					memo[prefix + "hasfrequency"] = '';
+					memo[prefix + "hasuses"] = '';
 				}
 				if (ability.dmgtype) {
 					memo[prefix+"damage-type"]= ability.dmgtype;
@@ -3014,9 +3035,11 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			bab = parseInt(v["bab_compendium"], 10) || 0;
 			//some basics ***************************************************
 			setter['level']=0;
+			setter['is_newsheet']=1;
 			setter["is_npc"] = "1";
 			setter['is_v1'] = "1";
 			setter['PFSheet_Version'] =String((PFConst.version.toFixed(2)));
+			setter['max-dex-source']=3;
 			setter=PFMigrate.getAllMigrateFlags(setter);
 			if (v.xp_compendium) {
 				setter["npc-xp"] = v.xp_compendium;
@@ -3331,7 +3354,7 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 					//so users sees something is happening.
 					getAttrs(['npc_parse_no_recalc'],function(vin){
 						if (!parseInt(vin.npc_parse_no_recalc,10)){
-							SWUtils.setWrapper({'recalc1':1});
+							SWUtils.setWrapper({'recalc1':1},PFConst.silentParams,PFSheet.checkForUpdate);
 						}
 					});
 				});

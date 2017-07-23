@@ -488,7 +488,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 }
 function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
+		//TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
 		if (typeof callback === "function") {
 			callback();
 		}

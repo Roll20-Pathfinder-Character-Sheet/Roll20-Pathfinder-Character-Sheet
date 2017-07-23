@@ -302,17 +302,27 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 			callback();
 		}
 	});
-	getSectionIDs("repeating_" + section, function (ids) {
-		var totrows = _.size(ids),
-		rowdone = _.after(totrows, done);
-		if (totrows > 0) {
-			_.each(ids, function (id, index) {
-				var prefix = "repeating_" + section + "_" + id;
-				SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, silently);
-			});
-		} else {
+	getAttrs(['is_newsheet'],function(vout){
+		//new sheets have nothing
+		if(parseInt(vout.is_newsheet,10)){
 			done();
+			return;
 		}
+		getSectionIDs("repeating_" + section, function (ids) {
+			var totrows = _.size(ids),
+			rowdone = _.after(totrows, done);
+			if (totrows > 0) {
+				if(section ==='ability'){
+					TAS.notice("checking max used for ability silent is:"+silently);
+				}
+				_.each(ids, function (id, index) {
+					var prefix = "repeating_" + section + "_" + id;
+					SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, true);
+				});
+			} else {
+				done();
+			}
+		});
 	});
 }
 export function convertNameToLevel (name){
@@ -601,10 +611,10 @@ export var recalculate = TAS.callback(function PFFeaturesRecalculate(callback, s
 		});
 		calculateMaxUses = function(){
 			_.each(PFConst.repeatingMaxUseSections, function (section) {
-				recalculateRepeatingMaxUsed(section, TAS.callback(doneWithList), silently);
+				recalculateRepeatingMaxUsed(section, doneWithList, silently);
 			});
 		};
-		migrate(TAS.callback(calculateMaxUses),oldversion);
+		migrate(calculateMaxUses,oldversion);
 	} catch (err) {
 		TAS.error("PFFeatures.recalculate, ", err);
 		done();

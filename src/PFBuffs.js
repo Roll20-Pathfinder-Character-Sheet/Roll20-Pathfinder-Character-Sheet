@@ -1943,7 +1943,12 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 		}
 	});
 	migrate(function(){
-		getAttrs(['use_buff_bonuses'],function(v){
+		getAttrs(['is_newsheet','use_buff_bonuses'],function(v){
+			//new sheets have nothing
+			if(parseInt(v.is_newsheet,10)){
+				done();
+				return;
+			}
 			if(parseInt(v.use_buff_bonuses,10)===1){
 				reEvaluateCustomMacros(function(){
 					updateAllBuffTotalsAsync(function(){

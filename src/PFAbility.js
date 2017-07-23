@@ -108,7 +108,7 @@ function setClassName (id,callback,eventInfo){
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix="repeating_ability_"+idStr,
 	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis',prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+	getAttrs([prefix+'CL-basis', prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
 		var clBase='',setter={},match;
 		try {
 			if (v[clbasisField]){
@@ -275,8 +275,8 @@ function getNewAbilityAttrs (ability){
 		 setter[prefix+'row_id']=id;
 		 setter[prefix+'showinmenu']=ability['showinmenu']||0;
 		 setter[prefix+'name']=ability.name||'';
-		 setter[prefix+'used']=ability['used']||'';
-		 setter[prefix+'used_max']=ability['used_max']||'';
+		 setter[prefix+'used']=ability['used']||0;
+		 setter[prefix+'used_max']=ability['used_max']||0;
 		 setter[prefix+'max-calculation']=ability['max-calculation']||'';
 		 setter[prefix+'short-description']=ability['short-description']||'';
 		 setter[prefix+'description']=ability['description']||'';
@@ -731,7 +731,7 @@ function updateCharLevel (id,callback,eventInfo){
 			TAS.error("PFAbility.updateCharLevel",err);
 		} finally {
 			if (_.size(setter)){
-				SWUtils.setWrapper(setter,{},done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
