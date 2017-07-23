@@ -3354,7 +3354,9 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 					//so users sees something is happening.
 					getAttrs(['npc_parse_no_recalc'],function(vin){
 						if (!parseInt(vin.npc_parse_no_recalc,10)){
-							SWUtils.setWrapper({'recalc1':1},PFConst.silentParams,PFSheet.checkForUpdate);
+							SWUtils.setWrapper({'recalc1':1},PFConst.silentParams,function(){
+								PFSheet.checkForUpdate(true);
+							});
 						}
 					});
 				});
