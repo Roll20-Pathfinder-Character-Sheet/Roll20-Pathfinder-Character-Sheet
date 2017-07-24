@@ -390,13 +390,21 @@ function setSkillVal (skill, v, setter){
 			buffs += parseInt(v['buff_'+abilityName+'_skills-total'],10)||0;
 		}
 
-		skillSize = sizeSkills[skill];
+		if(skill==='Stealth'||skill==='CS-Stealth'){
+			skillSize=2;
+		}else if (skill==='Fly'){
+			skillSize=1;
+		} else {
+			skillSize=0;
+		}
+		//skillSize = sizeSkills[skill];
 		if (skillSize) {
 			if (skillSize === 1) {
 				adj = parseInt(v["size_skill"], 10) || 0;
 				skillTot += adj;
 			} else if (skillSize === 2) {
 				adj = parseInt(v["size_skill_double"], 10) || 0;
+				if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
 				skillTot += adj;
 			}
 		} 
@@ -512,7 +520,7 @@ function recalcSkillTotals (skills,callback,silently){
 	getAttrs(fields,function(v){
 		var setter={};
 		setter=_.reduce(skills,function(m,skill){
-			try {m = setSkillVal(skill,v,m);} catch (e){} finally {
+			try {setSkillVal(skill,v,m);} catch (e){} finally {
 				return m;
 			}
 		},{});

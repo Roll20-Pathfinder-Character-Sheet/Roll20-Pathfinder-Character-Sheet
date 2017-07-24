@@ -57,8 +57,8 @@ function getNPCInit (initstring) {
  * @returns object of feats   as  {featname:1,feat2name:1, attacks:{attack1name:{featname:1}}, criticaldamage:{featname:1}}
  */
 function buildImportantFeatObj (featlist) {
-	//TAS.debug("buildImportantFeatObj is ",featlist);
-	return _.chain(featlist)
+	TAS.debug("buildImportantFeatObj is ",featlist);
+	var importantFeats= _.chain(featlist)
 	.filter( function(feat){if (!feat) {return false;} return true;})
 	.filter( function (feat) {
 		return PFDB.importantFeatRegExp.test(feat);
@@ -81,11 +81,12 @@ function buildImportantFeatObj (featlist) {
 		attacks = {},
 		attack = {},
 		crits = {},
-		skills = {},
+		skills = [],
 		skill = "";
 		try {
 			if (feat.indexOf('(') >= 0) {
 				matches = /(.*?)\((.*)\)/.exec(feat);
+				TAS.debug("looking at "+feat+", split into ",matches);
 				feat = matches[1];
 				atktype = matches[2];
 				feat = SWUtils.trimBoth(feat);
@@ -106,8 +107,8 @@ function buildImportantFeatObj (featlist) {
 				skill = atktype.replace(' ', '-');
 				if (skill) {
 					skill = skill[0].toUpperCase() + skill.slice(1);
-					skills = memo.skillfocuses||{};
-					skills[skill] = 1;
+					skills = memo.skillfocuses||[];
+					skills.push(skill);
 					memo.skillfocuses = skills;
 				} 
 			} else if (feat==='weaponfinesse' || feat==='improvedcritical'){
@@ -124,6 +125,8 @@ function buildImportantFeatObj (featlist) {
 			return memo;
 		}
 	}, {}).value();
+	TAS.debug("returning important feats:",importantFeats);
+	return importantFeats;
 }
 /** parseNPChp - parses statblock hp string such as 203 (14d10+126)
  * @param {string} hpstring - string format: "15 (3d8 + 4) Fast Healing 5"  can have multiple xdy, and any string left after ) is considered healing note.
@@ -2286,27 +2289,36 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 	var npcSkillsWithFillInNames = ["Craft", "Perform", "Profession"],
 	craftLevel = -1, performLevel = -1, professionLevel = -1, runningTot = 0, counter = 0,
 	tempAbilities = PFSkills.coreSkillAbilityDefaults,
-	tempstr = "",
-	skillfeats = /skillfocus|intimidatingprowess/i;
+	tempstr = "";
 	try {
 		setter=setter||{};
-		//TAS.debug("PFNPC createSkillEntries sizemap is: ", sizeMap, "skills ", skills , "racial", racial);
+		TAS.info("PFNPC createSkillEntries sizemap is: ", skills , racial,abilityScores,importantFeats,classSkills,sizeMap,isUndead);
 		if (racial) {
 			if (racial.abilitymods && _.size(racial.abilitymods) > 0) {
 				//set default ability for skill and substitute adjustments, make sure to use copy not original
 				tempAbilities = _.extend({}, PFSkills.coreSkillAbilityDefaults, racial.abilitymods);
-				setter = _.reduce(racial.abilitymods, function (memo, ability, skill) {
+				/*setter = _.reduce(racial.abilitymods, function (memo, ability, skill) {
 					//CBTEST 20170601
 					///memo[skill + "-ability"] =  + ability.toUpperCase() ; //can we do without setting this? 
+					memo[skill + "-ability"] = ability+'-mod';
 					memo[skill + "-ability-mod"] = abilityScores[ability].mod;
 					return memo;
-				}, setter);
+				}, setter);*/
 			}
 			if (racial.skillmods && _.size(racial.skillmods) > 0) {
-				setter = _.reduce(racial.skillmods, function (memo, mod, skill) {
-					memo[skill + "-racial"] = mod;
-					return memo;
-				}, setter);
+				_.each(racial.skillmods, function ( mod, skill) {
+					if (skill === "Knowledge") {
+						_.each(PFSkills.knowledgeSkills, function (kSkill) {
+							setter[kSkill + "-racial"] = mod;
+						});
+					} else if (_.contains(PFSkills.coreSkillsWithFillInNames, skill)) {
+						_.each(PFSkills.allFillInSkillInstances[skill], function (subskill) {
+							setter[subskill + '-racial'] = mod;
+						});
+					} else {
+						setter[skill + "-racial"] = mod;
+					}
+				});
 			}
 			if (racial.skillnotes && racial.skillnotes.length > 0) {
 				tempstr = "";
@@ -2320,54 +2332,65 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 			}
 		}
 		if (importantFeats && _.size(importantFeats) > 0) {
-			setter = _.reduce(importantFeats, function (memo, val, feat) {
-				if (/intimidatingprowess/i.test(feat)) {
-					memo["Intimidate-misc"] = '@{STR-mod}';
-					memo["Intimidate-misc-mod"] = abilityScores.str.mod;
-				} else if (/skillfocus/i.test(feat)) {
-					_.each(val, function (val2, skill) {
-						memo[skill + "-feat"] = 3;
-					});
-				}
-				return memo;
-			}, setter);
-		}
-		if (classSkills && _.size(classSkills) > 0) {
-			setter = _.reduce(classSkills, function (memo, skill) {
-				try {
+			if(importantFeats.intimidatingprowess){
+				setter["Intimidate-feat"]=abilityScores.str.mod;
+				//setter["Intimidate-misc"] = '@{STR-mod}';
+				//setter["Intimidate-misc-mod"] = abilityScores.str.mod;
+			}
+			if(importantFeats.skillfocuses){
+				_.each(importantFeats.skillfocuses,function(skill){
 					if (skill === "Knowledge") {
 						_.each(PFSkills.knowledgeSkills, function (kSkill) {
-							memo[kSkill + "-cs"] = 3;
+							setter[kSkill + "-feat"] = 3;
 						});
 					} else if (_.contains(PFSkills.coreSkillsWithFillInNames, skill)) {
 						_.each(PFSkills.allFillInSkillInstances[skill], function (subskill) {
-							memo[subskill + '-cs'] = 3;
+							setter[subskill + '-feat'] = 3;
 						});
 					} else {
-						memo[skill + "-cs"] = 3;
+						setter[skill + "-feat"] = 3;
+					}
+				});
+			}
+		}
+		if (classSkills && _.size(classSkills) > 0) {
+			_.each(classSkills, function ( skill) {
+				try {
+					if (skill === "Knowledge") {
+						_.each(PFSkills.knowledgeSkills, function (kSkill) {
+							setter[kSkill + "-cs"] = 3;
+						});
+					} else if (_.contains(PFSkills.coreSkillsWithFillInNames, skill)) {
+						_.each(PFSkills.allFillInSkillInstances[skill], function (subskill) {
+							setter[subskill + '-cs'] = 3;
+						});
+					} else {
+						setter[skill + "-cs"] = 3;
 					}
 				} catch (err) {
 					TAS.error("createSkillEntries", err);
-				} finally {
-					return memo;
-				}
-			}, setter);
+				} 
+			});
 		}
-		setter = _.reduce(skills, function (memo, tot, skill) {
+		_.each(skills, function ( tot, skill) {
 			var ability = "", tempint = 0, abilitymod = 0, ranks = 0;
 			try {
 				tot = parseInt(tot, 10)||0;
 				if (tempAbilities[skill]) {
 					ability = tempAbilities[skill];
 					abilitymod = abilityScores[ability] ? abilityScores[ability].mod : 0;
-					//TAS.debug("now setting " + skill + ", total:" + tot +", size:",sizeMap);
-					memo[skill] = tot;
+					setter[skill + "-ability"] = ability.toUpperCase()+'-mod';
+					setter[skill + "-ability-mod"] = abilitymod;
+					setter[skill] = tot;
 					ranks = tot;
+					if(skill==='Stealth'){TAS.debug("skilltot 1:"+ranks);}
 					ranks -= abilitymod;
+					if(skill==='Stealth'){TAS.debug("skilltot 2 minus  "+abilitymod+" =:"+ranks);}
 					if (skill==='Stealth'){
 						if (sizeMap.skillSize!==0){
 							ranks -= (2*sizeMap.skillSize);
 						}
+						TAS.debug("skilltot 3 minus  "+(2*sizeMap.skillSize)+" =:"+ranks);
 					} else if (skill === 'Fly'){
 						if (sizeMap.skillSize!==0){
 							ranks -= sizeMap.skillSize;
@@ -2375,31 +2398,38 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 					}
 					if (racial && racial.skillmods && racial.skillmods[skill]) {
 						ranks -= (parseInt(racial.skillmods[skill], 10)||0);
+						if(skill==='Stealth'){TAS.debug("skilltot 4 minus  "+(parseInt(racial.skillmods[skill], 10)||0)+" =:"+ranks);}
 					}
-					if (parseInt(memo[skill + "-feat"], 10) > 0) {
-						ranks -= (parseInt(memo[skill + "-feat"], 10)||0);
-					}
-					if (parseInt(memo[skill + "-cs"], 10) > 0) {
+//					if(importantFeats && importantFeats.skillfocuses && _.contains(importantFeats.skillfocuses,skill)){
+					if (parseInt(setter[skill + "-feat"], 10) > 0) {
 						ranks -= 3;
+						//ranks -= (parseInt(memo[skill + "-feat"], 10)||0);
+						if(skill==='Stealth'){TAS.debug("skilltot 5 minus 3 =:"+ranks);}
 					}
-					memo[skill + "-ranks"] = ranks;
-					memo[skill + "-ability-mod"] = abilitymod;
+					if(ranks>0){
+						if (parseInt(setter[skill + "-cs"], 10) > 0) {
+							ranks -= 3;
+							if(skill==='Stealth'){TAS.debug("skilltot 6 minus 3 =:"+ranks);}
+						}
+					}
+					if(skill==='Stealth'){TAS.debug("skilltot 7 final ranks are :"+ranks);}
+					setter[skill + "-ranks"] = ranks;
 					if (ranks < 0){
-						memo[skill+"-note"]="Ranks less than 0, possible parse error or error in statblock";
+						setter[skill+"-note"]="Ranks less than 0, possible parse error or error in statblock";
 					}
 					runningTot++;
 				} else {
 					TAS.warn("createSkillEntries, skill " + skill + " not found");
+					setter[skill+"-note"]= (setter[skill+"-note"]||'')+", "+skill+":"+tot;
 				}
 			} catch (err) {
 				TAS.error("createSkillEntries inner reduce", err);
-			} finally {
-				return memo;
-			}
-		}, setter);
+			} 
+		});
 	} catch (errouter) {
 		TAS.error("at createskillEntries OUTER error", errouter);
 	} finally {
+		TAS.info("leaving creaeskills:",setter);
 		return setter;
 	}
 }
@@ -3040,7 +3070,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			setter['is_v1'] = "1";
 			setter['PFSheet_Version'] =String((PFConst.version.toFixed(2)));
 			setter['max-dex-source']=3;
-			setter=PFMigrate.getAllMigrateFlags(setter);
+			PFMigrate.getAllMigrateFlags(setter);
 			if (v.xp_compendium) {
 				setter["npc-xp"] = v.xp_compendium;
 			}
@@ -3096,8 +3126,8 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 
 			// Feats *********************************************************************
 			featlist = parseFeats (v["npc-feats-text"]);
-			TAS.debug("parseNPC featlist is ",featlist);
-			buildImportantFeatObj(featlist);
+			//TAS.debug("parseNPC featlist is ",featlist);
+			importantFeats=buildImportantFeatObj(featlist);
 
 
 			// Initiative *****************************************************************

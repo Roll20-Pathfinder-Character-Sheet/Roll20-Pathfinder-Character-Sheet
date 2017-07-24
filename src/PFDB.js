@@ -31,7 +31,7 @@ export default {
 		fey: ['Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disguise', 'Escape-Artist', 'Fly', 'Knowledge-Geography', 'Knowledge-Local', 'Knowledge-Nature', 'Perception', 'Perform', 'Sense-Motive', 'Sleight-of-Hand', 'Stealth', 'Swim', 'Use-Magic-Device'],
 		monstrous: ['Climb', 'Craft', 'Fly', 'Intimidate', 'Perception', 'Ride', 'Stealth', 'Survival', 'Swim'],
 		humanoid: ['Climb', 'Craft', 'Handle-Animal', 'Heal', 'Profession', 'Ride', 'Survival'],
-		magicalbeast: ['Acrobatics', 'Climb', 'Fly', 'Perception', 'Steatlh', 'Swim'],
+		magicalbeast: ['Acrobatics', 'Climb', 'Fly', 'Perception', 'Stealth', 'Swim'],
 		outsider: ['Bluff', 'Craft', 'Knowledge-Planes', 'Perception', 'Sense-Motive', 'Stealth'],
 		plant: ['Perception', 'Stealth'],
 		undead: ['Climb', 'Disguise', 'Fly', 'Intimidate', 'Knowledge-Arcana', 'Knowledge-Religion', 'Perception', 'Sense-Motive', 'Spellcraft', 'Stealth']
