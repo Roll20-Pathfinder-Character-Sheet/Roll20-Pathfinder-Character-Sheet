@@ -220,8 +220,8 @@ export function setSize(str,setter){
 				sizeMap = {'size':0,'skillSize':0};
 			}
 		}
-		tempstr=reverseSizeNameMap[String(sizeMap.size)];
-		setter['size_display']=SWUtils.getTranslated(tempstr);
+		//tempstr=reverseSizeNameMap[String(sizeMap.size)];
+		setter['size_display']=SWUtils.getTranslated(str.toLowerCase());
 	} finally {
 		return sizeMap
 	}
