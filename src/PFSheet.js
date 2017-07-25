@@ -284,7 +284,7 @@ function setupNewSheet (callback){
 	var done = _.once(function(){
 		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
 			 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
-			'attentionv161-show':1,'modify_dmg_by_size':1 },PFConst.silentParams,function(){
+			'attentionv165-show':1,'modify_dmg_by_size':1 },PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -412,7 +412,7 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion < 1.57){
 				PFDefense.updateDefenses();
 			}
-			if (oldversion <= 1.63){
+			if (oldversion <= 1.65){
 				PFCustom.migrate(function(){
 					PFBuffs.migrate(function(){
 						PFConditions.migrate(function(){
