@@ -30,16 +30,16 @@ var webpackConfig = {
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      sourceMap: false
-    }),    
+ //   new webpack.optimize.UglifyJsPlugin({
+ //     comments: false,
+  //    sourceMap: false
+  //  }),    
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
       inlineSource: '.js$',
       minify: {
-        collapseWhitespace: true,
-        removeComments: true,
+  //      collapseWhitespace: true,
+   //     removeComments: true,
         removeRedundantAttributes: false,
         removeScriptTypeAttributes: false,
         removeStyleLinkTypeAttributes: false
