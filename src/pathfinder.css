@@ -2902,7 +2902,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-misc-show:not(:checked)~.sheet-misc,
 .sheet-id-show:not(:checked) ~ .sheet-repeating-id,
 .sheet-range-show:not(:checked) ~ .sheet-range,
-.sheet-extra-show:not(:checked) ~ .sheet-section-extra,
 .sheet-sp-show:not(:checked) ~ .sheet-sect-sp,
 .sheet-sp-show:checked ~ .sheet-sect-sp-inverse,
 /* pc vs npc */
@@ -2940,9 +2939,8 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
 .sheet-nextitem2-hide:checked + .sheet-nextitem2,
-
+/*
 input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
-
 input[name$="class-info-show"].sheet-nextitem-show:not(:checked) ~ .sheet-experience,
 input[name$="prestige_fame"].sheet-nextitem-show:not(:checked) ~ .sheet-faction-notes,
 input[name$="initiative-show"].sheet-nextitem-show:not(:checked) ~ .sheet-speeds,
@@ -2964,7 +2962,7 @@ input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-ability-s
 input[name$="metamagic"].sheet-nextitem-show:not(:checked) ~ .sheet-slot,
 input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-endurance-feat,
 input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-gritty-mode,
-
+*/
 /* logic section */
 .sheet-xor-A-show:not(:checked)~.sheet-xor-B-show:not(:checked)~.sheet-xor-sect,
 .sheet-xor-A-show:checked~.sheet-xor-B-show:checked~.sheet-xor-sect,
