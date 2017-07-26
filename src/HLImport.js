@@ -3,6 +3,7 @@ import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog, PFConsole} from './PFLog';
 import * as PFSheet from './PFSheet';
+import * as PFHealth from  './PFHealth';
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -60,8 +61,10 @@ export function arrayify (stuff)
 
 export function importInit (attrs,initObj)
 {
+	attrs["init"] = parseNum(initObj._total);
 	attrs["init-misc"] = parseNum(initObj._total)-parseNum(initObj._attrtext);
 	attrs["init-ability"] = initObj._attrname.substr(0,3).toUpperCase()+"-mod";
+	attrs["init-ability-mod"] = parseNum(initObj._attrtext);
 	attrs["init_notes"] = initObj.situationalmodifiers._text;
 }
 
@@ -72,11 +75,19 @@ export function importAbilityScores (attrs,attributes)
 		var base = parseNum(abScore.attrvalue._base);
 		var modifier = parseNum(abScore.attrvalue._modified) - base;  // Modifier is the total difference between what HL is reporting as the character's base ability score and the final modified ability score
 		attrs[abName+"-base"] = base;
+		attrs[abName] = parseNum(abScore.attrvalue._modified);
+		attrs[abName+"-mod"] = parseNum(abScore.attrbonus._modified);
 		// If the modifier is positive, assume it's an enhancement bonus; otherwise, assume it's a penalty
 		if (modifier > 0)
+		{
 			attrs[abName+"-enhance"] = modifier;
+			attrs[abName] = parseNum(abScore.attrvalue._modified);
+		}
 		else
+		{
 			attrs[abName+"-penalty"] = modifier;
+			attrs[abName] = base;
+		}
 	});
 }
 
@@ -90,9 +101,11 @@ export function importSaves (attrs,saves)
 		var save = saves.save[i];
 		var abbr = save._abbr;
 		
-		attrs["class-0-"+abbr] = parseNum(save._base);
+		attrs[abbr] = parseNum(save._save);
+		attrs["class-0-"+abbr] = attrs["total-"+abbr] = parseNum(save._base);
 		attrs[abbr+"-resist"] = parseNum(save._fromresist);
 		attrs[abbr+"-misc"] = parseNum(save._save)-parseNum(save._base)-parseNum(save._fromresist)-parseNum(save._fromattr);
+		attrs[abbr+"-ability-mod"] = parseNum(save._fromattr);
 		
 		if (save.situationalmodifiers._text !== "" && saveNotes.indexOf(save.situationalmodifiers._text) === -1)
 			saveNotes = saveNotes + "\n**"+abbr+":** " + save.situationalmodifiers._text;
@@ -229,9 +242,9 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 {
 	var repeatPrefix = "repeating_item";
 	getSectionIDs(repeatPrefix, function(idarray) {
-		var itemNameAttrs = _.union(_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_name"; 		}),["shield3-acp","shield3-spell-fail"]);
+		var itemNameAttrs = _.union(_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_name"; }),["shield3-acp","shield3-spell-fail"]);
 		getAttrs(itemNameAttrs, function(names) {
-		
+			console.log("importItems");
 			// Pull out the shield attributes before we build the ID list
 			var shieldACP = parseNum(names["shield3-acp"]);
 			var shieldASF = parseNum(names["shield3-spell-fail"]);
@@ -249,7 +262,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 			var weaponNames = _.map(weapons, function(obj) { return obj._name; });
 			
 			// List of words that indicate an item is masterwork
-			var masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"]
+			var masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"];
 			_.each(items,function(item)
 			{
 				var row = getOrMakeItemRowID(itemIDList,item._name);
@@ -289,37 +302,40 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				if (_.contains(weaponNames, weaponCompareName))
 				{
 					var weaponObj = weapons[_.indexOf(weaponNames,weaponCompareName)];
-					attrs[repeatPrefix+"_item-wpenhance"] = parseNum(weaponObj._name.match(/\+\d+/));
-					
-					if (!_.isUndefined(weaponObj._typetext))
-						attrs[repeatPrefix+"_item-dmg-type"] = weaponObj._typetext;
-					
-					// Check to see if item name includes any words that indicate this is a masterwork item
-					if ((weaponCompareName.toLowerCase().indexOf("masterwork") !== -1) || _.intersection(masterworkWords,item._name.toLowerCase().split(" ")).length > 0)
-						attrs[repeatPrefix+"_item-masterwork"] = 1;
+					if (weaponObj._damage != "As Spell")
+					{
+						attrs[repeatPrefix+"_item-wpenhance"] = parseNum(weaponObj._name.match(/\+\d+/));
 						
-					if (!_.isUndefined(weaponObj._damage))
-					{
-						var weaponDice = weaponObj._damage.match(/\d+d\d+/);
-						if (weaponDice.length > 0)
+						if (!_.isUndefined(weaponObj._typetext))
+							attrs[repeatPrefix+"_item-dmg-type"] = weaponObj._typetext;
+						
+						// Check to see if item name includes any words that indicate this is a masterwork item
+						if ((weaponCompareName.toLowerCase().indexOf("masterwork") !== -1) || _.intersection(masterworkWords,item._name.toLowerCase().split(" ")).length > 0)
+							attrs[repeatPrefix+"_item-masterwork"] = 1;
+							
+						if (!_.isUndefined(weaponObj._damage))
 						{
-							attrs[repeatPrefix+"_item-damage-dice-num"] = parseNum(weaponDice[0].split("d")[0]);
-							attrs[repeatPrefix+"_item-damage-die"] = parseNum(weaponDice[0].split("d")[1]);
+							var weaponDice = weaponObj._damage.match(/\d+d\d+/);
+							if (weaponDice.length > 0)
+							{
+								attrs[repeatPrefix+"_item-damage-dice-num"] = parseNum(weaponDice[0].split("d")[0]);
+								attrs[repeatPrefix+"_item-damage-die"] = parseNum(weaponDice[0].split("d")[1]);
+							}
 						}
+						
+						if (!_.isUndefined(weaponObj._crit))
+						{
+							var critArray = weaponObj._crit.split("/");
+							if (critArray.length > 1)
+								attrs[repeatPrefix+"_item-crit-target"] = parseNum(critArray[0].match(/\d+/)[0]);
+							else
+								attrs[repeatPrefix+"_item-crit-target"] = 20;
+							attrs[repeatPrefix+"_item-crit-multiplier"] = parseNum(critArray[critArray.length-1].replace(/\D/g,""));
+						}
+						
+						if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue))
+							attrs[repeatPrefix+"_item-range"] = parseNum(weaponObj.rangedattack._rangeincvalue);
 					}
-					
-					if (!_.isUndefined(weaponObj._crit))
-					{
-						var critArray = weaponObj._crit.split("/");
-						if (critArray.length > 1)
-							attrs[repeatPrefix+"_item-crit-target"] = parseNum(critArray[0].match(/\d+/)[0]);
-						else
-							attrs[repeatPrefix+"_item-crit-target"] = 20;
-						attrs[repeatPrefix+"_item-crit-multiplier"] = parseNum(critArray[critArray.length-1].replace(/\D/g,""));
-					}
-					
-					if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue))
-						attrs[repeatPrefix+"_item-range"] = parseNum(weaponObj.rangedattack._rangeincvalue);
 				}
 
 				// check if this is armor
@@ -370,7 +386,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 					}
 				}
 			});
-			setAttrs(attrs);
+			setAttrs(attrs,{silent: true});
 		});
 	});
 }
@@ -456,10 +472,11 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 	});
 }
 
-export function importClasses (attrs, classes)
+export function importClasses (attrs, classes,hitdice)
 {
 	var classList = new Object();
-	
+	var diceList = _.without(_.map(hitdice.split(";")[hitdice.split(";").length-1].trim().split(/[\+\-]/), function(hitdie) { var splitDie = hitdie.split("d"); if (splitDie.length < 2) return null; return { dice: splitDie[0], die: splitDie[1]}; }),null);
+
 	var i = 0;
 	var classObj;
 	while (i < classes.length)
@@ -469,12 +486,26 @@ export function importClasses (attrs, classes)
 		// We can only handle 5 classes
 		if (i >= 5)
 			return;
+
+		if (i > 0)
+			attrs["class"+i+"_show"] = 1;
+
 		classList[classObj._name.replace(/\(([^\)]+)\)/g,"").replace("(","").replace(")","").trim()] = classObj;
 		attrs["class-"+i+"-name"] = classObj._name;
 		attrs["class-"+i+"-level"] = classObj._level;
-		
+
+		var hitDie = _.find(diceList, function(dieObj) { return (dieObj.dice == classObj._level); });
+		if (!_.isUndefined(hitDie))
+		{
+			attrs["class-"+i+"-hd"] = hitDie.die;
+			diceList = _.without(diceList,hitDie);
+		}
 		i++;
 	}
+
+	// Assign any remaining hit dice to racial
+	if (diceList.length > 0)
+		attrs["npc-hd"] = diceList[0].die;
 
 	return classList;
 }
@@ -506,11 +537,15 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 			casterlevel = parseNum(classes[spellClassName]._casterlevel);
 			attrs["spellclass-"+spellClassIndex] = classIndex;
 			attrs["spellclass-"+spellClassIndex+"-level-misc"] = casterlevel - parseNum(classes[spellClassName]._level);
-			attrs["spellclass-"+spellClassIndex+"-level-misc-mod"] = casterlevel - parseNum(classes[spellClassName]._level);
 			attrs["spellclass-"+spellClassIndex+"-level"] = parseNum(classes[spellClassName]._level);
 			attrs["spellclass-"+spellClassIndex+"-level-total"] = casterlevel;
-			attrs["spellclass-"+spellClassIndex+"-name"] = classes[spellClassName]._name;
+			attrs["spellclass-"+spellClassIndex+"-name"] = classes[spellClassName]._name.replace(/\(.*\)/g,"").trim();
+			attrs["spellclass-"+spellClassIndex+"-exists"] = 1;
 			
+			attrs["spellclass-"+spellClassIndex+"-close"] = 25 + (5 * Math.floor(casterlevel/2));
+			attrs["spellclass-"+spellClassIndex+"-medium"] = 100 + (10 * casterlevel);
+			attrs["spellclass-"+spellClassIndex+"-long"] = 400 + (40 * casterlevel);
+
 			if (!_.isUndefined(classes[spellClassName].arcanespellfailure))
 				attrs["armor3-spell-fail"] = parseNum(classes[spellClassName].arcanespellfailure._value);
 				
@@ -525,8 +560,8 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
 						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
-						setAttrs(attr);
+						attr["Concentration-"+spellClassIndex+"-ability"] = "@{"+abScores[j]._name.substr(0,3).toUpperCase()+"-mod}";
+						setAttrs(attr,{silent: true});
 						break;
 					}
 				}
@@ -553,11 +588,14 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 				// Populate spells / day; Hero Lab includes bonus slots, so remove those
 				if (!_.isUndefined(spellclasses[i].spelllevel))
 				{
+					// Initialize spells/day
+					for (j = 0; j < 10; j++) attrs["spellclass-"+spellClassIndex+"-level-"+j+"-spells-per-day_max"] = 0;
 					spellclasses[i].spelllevel = arrayify(spellclasses[i].spelllevel);
 					for (j = 0; j < spellclasses[i].spelllevel.length; j++)
 					{
 						spellslots = parseNum(spellclasses[i].spelllevel[j]._maxcasts);
 						spelllevel = parseNum(spellclasses[i].spelllevel[j]._level);
+						attrs["spellclass-"+spellClassIndex+"-level-"+spelllevel+"-spells-per-day_max"] = spellslots;
 						if (spelllevel > 0)
 							spellslots = spellslots - bonusSpellSlots(abMod,spelllevel);
 						if (spellslots < 0)
@@ -590,6 +628,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 export function importSpells (spells,spellclasses)
 {
 	console.log("Import spells");
+	var wizNames = ["Abjurer","Conjurer","Diviner","Enchanter","Evoker","Illusionist","Necromancer","Transmuter"];
 	var repeatPrefix = "repeating_spells";
 	getSectionIDs(repeatPrefix, function(idarray) {
 		var spellNameAttrs = _.union(_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_name"; 		}),_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_spellclass_number"; 		}));
@@ -617,13 +656,21 @@ export function importSpells (spells,spellclasses)
 			var spellClassesKeys = Object.keys(spellclasses);
 			var attrs = {};
 			_.each(spells, function(spell) {
-				var rowID, spellClass, spellName, school, level;
+				var rowID, spellClass, spellClassName, spellName, school, level;
 
 				// Search for a repeating spell with the same name and spellclass; if not found, make new row
 				level = parseNum(spell._level);
 				repeatPrefix = "repeating_spells_";
-				spellClass = _.indexOf(spellClassesKeys,spell._class);
 				spellName = spell._name.replace(/\(x\d+\)/,"").trim();
+				spellClassName = spell._class;
+				spellClass = _.indexOf(spellClassesKeys,spellClassName);
+
+				if (spellClass == -1)
+				{
+					spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
+					spellClass = _.indexOf(spellClassesKeys,spellClassName);
+				}
+
 				rowID = getOrMakeSpellRowID(spellObjList,spellName,spellClass);
 				if (_.isUndefined(rowID))
 				{
@@ -634,15 +681,16 @@ export function importSpells (spells,spellclasses)
 				repeatPrefix = repeatPrefix + rowID;
 				
 				attrs[repeatPrefix+"_name"] = spellName;
-				attrs[repeatPrefix+"_spell_level"] = level;
+				attrs[repeatPrefix+"_spell_level_r"] = attrs[repeatPrefix+"_spell_level"] = level;
 				attrs[repeatPrefix+"_spellclass_number"] = spellClass;
+				attrs[repeatPrefix+"_spellclass"] = spellClassName;
 				attrs[repeatPrefix+"_components"] = spell._componenttext.replace("Divine Focus", "DF").replace("Focus","F").replace("Material","M").replace("Verbal","V").replace("Somatic","S").replace(" or ","/");
 				attrs[repeatPrefix+"_duration"] = spell._duration;
 				attrs[repeatPrefix+"_save"] = spell._save.replace(/DC \d+/,"").trim();
 				attrs[repeatPrefix+"_savedc"] = parseNum(spell._dc);
 				attrs[repeatPrefix+"_cast-time"] = spell._casttime;
 				attrs[repeatPrefix+"_sr"] = spell._resist.replace("harmless","Harmless");
-				attrs[repeatPrefix+"_DC_misc"] = parseNum(spell._dc) - parseNum(spellclasses[(spell._class !== "") ? spell._class:Object.keys(spellclasses)[0]]._basespelldc) - level;
+				attrs[repeatPrefix+"_DC_misc"] = parseNum(spell._dc) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._basespelldc) - level;
 	
 				switch(spell._range.toLowerCase())
 				{
@@ -680,7 +728,7 @@ export function importSpells (spells,spellclasses)
 				
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
-			setAttrs(attrs);
+			setAttrs(attrs, {silent: true});
 		});
 	});
 }
@@ -789,7 +837,7 @@ export function importSkills (attrs,skills,size,ACP)
 					attrs["craft-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
 				craft++;
 			}
-			else if (craft <= 3)
+			else if (craft <= 10)
 			{
 				skillAttrPrefix = "craft" + craft;
 				if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -798,7 +846,7 @@ export function importSkills (attrs,skills,size,ACP)
 			}
 			else
 			{
-				if (misc <= 5)
+				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
 				if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -818,7 +866,7 @@ export function importSkills (attrs,skills,size,ACP)
 					attrs["perform-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
 				perform++;
 			}
-			else if (perform <= 3)
+			else if (perform <= 10)
 			{
 				skillAttrPrefix = "perform" + perform;
 				if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -827,7 +875,7 @@ export function importSkills (attrs,skills,size,ACP)
 			}
 			else
 			{
-				if (misc <= 5)
+				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
 					if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -847,7 +895,7 @@ export function importSkills (attrs,skills,size,ACP)
 					attrs["profession-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
 				profession++;
 			}
-			else if (profession <= 3)
+			else if (profession <= 10)
 			{
 				skillAttrPrefix = "profession" + profession;
 				if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -856,7 +904,7 @@ export function importSkills (attrs,skills,size,ACP)
 			}
 			else
 			{
-				if (misc <= 5)
+				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
 					if (skill._name.match(/\(([^\)]+)\)/) !== null)
@@ -897,7 +945,7 @@ export function importSkills (attrs,skills,size,ACP)
 				attrs["artistry-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
 				artistry++;
 			}
-			else if (artistry <= 3)
+			else if (artistry <= 10)
 			{
 				skillAttrPrefix = "artistry" + artistry;
 				attrs["artistry"+artistry+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
@@ -905,7 +953,7 @@ export function importSkills (attrs,skills,size,ACP)
 			}
 			else
 			{
-				if (misc <= 5)
+				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
 					attrs[skillAttrPrefix+"-name"] = skill._name;
@@ -923,7 +971,7 @@ export function importSkills (attrs,skills,size,ACP)
 				attrs["lore-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
 				lore++;
 			}
-			else if (lore <= 3)
+			else if (lore <= 10)
 			{
 				skillAttrPrefix = "lore" + lore;
 				attrs["lore"+lore+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
@@ -931,7 +979,7 @@ export function importSkills (attrs,skills,size,ACP)
 			}
 			else
 			{
-				if (misc <= 5)
+				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
 					attrs[skillAttrPrefix+"-name"] = skill._name;
@@ -944,8 +992,9 @@ export function importSkills (attrs,skills,size,ACP)
 		else
 			skillAttrPrefix = skill._name.toLowerCase().replace(/\s/g,"-").replace("(","").replace(")","").replace("-hand","-Hand").replace("e-device","e-Device").replace("-artist","-Artist").replace("-animal","-Animal");
 		
+		attrs[skillAttrPrefix] = parseNum(skill._value);
 		attrs[skillAttrPrefix+"-ranks"] = parseNum(skill._ranks);
-		attrs[skillAttrPrefix+"-ability"] = skill._attrname+"-mod";
+		attrs[skillAttrPrefix+"-ability"] = "@{"+skill._attrname+"-mod}";
 		attrs[skillAttrPrefix+"-ability-mod"] = parseNum(skill._attrbonus);
 		
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;
@@ -966,17 +1015,40 @@ export function importSkills (attrs,skills,size,ACP)
 		// Add situation modifiers to the macro
 		if (!_.isUndefined(skill.situationalmodifiers.situationalmodifier))
 		{
-			var macro = "@{PC-whisper} &{template:pf_generic} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} @{toggle_rounded_flag} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name="+skill._name+"}} {{Check=[[ @{skill-query} + [[ @{"+skillAttrPrefix+"} ]] ]]}}";
+			var notes = "";
 			skill.situationalmodifiers.situationalmodifier = arrayify(skill.situationalmodifiers.situationalmodifier);
 			var j = 0;
 			while (j < skill.situationalmodifiers.situationalmodifier.length)
 			{
-				macro = macro + " {{" + skill.situationalmodifiers.situationalmodifier[j]._source + "=" + skill.situationalmodifiers.situationalmodifier[j]._text+"}}"
+				notes = notes + "}} {{" + skill.situationalmodifiers.situationalmodifier[j]._source + "=" + skill.situationalmodifiers.situationalmodifier[j]._text;
 				j++;
 			}
-			attrs[skillAttrPrefix+"-macro"] = macro;
+			attrs[skillAttrPrefix+"-note"] = notes;
 		}
 	}
+	var numCPP = Math.max(craft,perform,profession,artistry,lore);
+	if (numCPP > 6)
+		attrs["custom_skill_num_show"] = 10;
+	else if (numCPP > 3)
+		attrs["custom_skill_num_show"] = 6;
+	else if (numCPP > 2)
+		attrs["custom_skill_num_show"] = 3;
+	else if (numCPP > 2)
+		attrs["custom_skill_num_show"] = 2;
+	else
+		attrs["custom_skill_num_show"] = 1;
+
+	if (misc > 6)
+		attrs["misc_skill_num_show"] = 10;
+	else if (misc > 3)
+		attrs["misc_skill_num_show"] = 6;
+	else if (misc > 2)
+		attrs["misc_skill_num_show"] = 3;
+	else if (misc > 2)
+		attrs["misc_skill_num_show"] = 2;
+	else
+		attrs["misc_skill_num_show"] = 1;
+
 }
 
 // Import ACP and Max Dex; these aren't included under items, but the final values are listed in penalties
@@ -998,36 +1070,39 @@ export function importPenalties (attrs,penalties)
 	return ACP;
 }
 
-export function importAC (attrs,acObj)
+export function importAC (attrs,acObj,armorPenalties)
 {
-	var tempacmisc=0;
+	attrs["AC"] = parseNum(acObj._ac);
+	attrs["Touch"] = parseNum(acObj._touch);
+	attrs["Flat-Footed"] = parseNum(acObj._flatfooted);
+
 	attrs["AC-natural"] = parseNum(acObj._fromnatural);
 	attrs["AC-deflect"] = parseNum(acObj._fromdeflect);
 	attrs["AC-dodge"] = parseNum(acObj._fromdodge);
+	attrs["AC-armor"] = parseNum(acObj._fromarmor);
+	attrs["AC-shield"] = parseNum(acObj._fromshield);
 	
 	// Are we replacing Dex to AC with something else?
 	if (acObj._fromdexterity === "")
 	{
 		if (acObj._fromcharisma !== "")
 		{
-			tempacmisc=parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
-			attrs["AC-ability"] = "CHA-mod";
-			attrs["AC-misc"] = tempacmisc;
-			attrs["AC-misc-mod"] = tempacmisc;
+			attrs["AC-ability"] = "( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromcharisma);
+			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
 		else if (acObj._fromwisdom !== "")
 		{
-			tempacmisc = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
-			attrs["AC-ability"] = "WIS-mod";
-			attrs["AC-misc"] = tempacmisc;
-			attrs["AC-misc-mod"] = tempacmisc;
+			attrs["AC-ability"] = "( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromwisdom);
+			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
-		else
-		{
-			tempacmisc = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
-			attrs["AC-misc"] = tempacmisc;
-			attrs["AC-misc-mod"] = tempacmisc;
-		}
+	}
+	else
+	{
+		attrs["AC-ability"] = "( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )";
+		attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromdexterity);
+		attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 	}
 }
 
@@ -1044,11 +1119,12 @@ export function importCharacter (characterObj)
 		// Class will be an array if multiclassed, but a single object if single-classed; make it an array, just to be safe
 		characterObj.classes.class = arrayify(characterObj.classes.class);
 
-		classes = importClasses(attrs, characterObj.classes.class);
+		classes = importClasses(attrs, characterObj.classes.class, characterObj.health._hitdice);
 
 		// If any of the character's classes is a spellcaster, it'll be listed here, too
 		if (!_.isUndefined(characterObj.spellclasses.spellclass))
 		{
+			attrs["use_spells"] = 1;
 			characterObj.spellclasses.spellclass = arrayify(characterObj.spellclasses.spellclass);
 			spellClasses = importSpellClasses(attrs, characterObj.spellclasses.spellclass,classes,characterObj.attributes.attribute);
 			
@@ -1057,28 +1133,12 @@ export function importCharacter (characterObj)
 			var spellNames = [];
 			spellsArray = _.reject(spellsArray,function(spell) { if (_.contains(spellNames,spell._name)) return true; spellNames.concat(spell._name); return false; });
 			importSpells(spellsArray,spellClasses);
-			/*if (!_.isUndefined(characterObj.spellsknown.spell))
-			{
-				characterObj.spellsknown.spell = arrayify(characterObj.spellsknown.spell);
-				importSpells(characterObj.spellsknown.spell,spellClasses);
-			}
-			if (!_.isUndefined(characterObj.spellbook.spell))
-			{
-				characterObj.spellbook.spell = arrayify(characterObj.spellbook.spell);
-				importSpells(characterObj.spellbook.spell,spellClasses);
-			}
-			if (!_.isUndefined(characterObj.spellsmemorized.spell))
-			{
-				characterObj.spellsmemorized.spell = arrayify(characterObj.spellsmemorized.spell);
-				importSpells(characterObj.spellsmemorized.spell,spellClasses);
-			}*/
 		}
 		
 		// Need to keep track of what archetypes the character has, since class feature source could be an archetype
 		archetypes = buildArchetypeArray(classes);
 	}
 	
-	importAC(attrs,characterObj.armorclass);
 	characterObj.penalties.penalty = arrayify(characterObj.penalties.penalty);
 	var ACP = importPenalties(attrs,characterObj.penalties.penalty);
 
@@ -1088,6 +1148,8 @@ export function importCharacter (characterObj)
 	armorPenalties.maxDex = parseNum(attrs["armor3-max-dex"]);
 	armorPenalties.spellfail = parseNum(attrs["armor3-spell-fail"]);
 	
+	importAC(attrs,characterObj.armorclass,armorPenalties);
+
 	// We might change these values if we're using a shield, so don't set them outside of item import
 	if (!_.isUndefined(attrs["armor3-acp"]))
 		delete attrs["armor3-acp"];
@@ -1165,26 +1227,34 @@ export function importCharacter (characterObj)
 			_.each(featuresArray, function(obj){ featuresList[obj.rowID] = obj; });
 			importFeatures(asyncAttrs, featuresList, specials, archetypes, resources);
 
-			setAttrs(asyncAttrs);
+			setAttrs(asyncAttrs,{silent: true});
 		});
 	});
 
 	attrs["experience"] = parseFloat(characterObj.xp._total);
 
-	attrs["class-0-bab"] = parseNum(characterObj.attack._baseattack);
+	attrs["class-0-bab"] = attrs["bab"] = attrs["melee_bab-mod"] = attrs["melee2_bab-mod"] = attrs["ranged_bab-mod"] = attrs["ranged2_bab-mod"] = attrs["melee_bab-mod"] = attrs["cmb_bab-mod"] = attrs["cmb2_bab-mod"] = parseNum(characterObj.attack._baseattack);
 	
 	// Set max hp; remove Con mod from hp first, since the sheet will add that in
 	// Since the XML doesn't break this down by class, add it all to class 0
+	attrs["non-lethal-damage_max"] = attrs["HP_max"] = parseNum(characterObj.health._hitpoints);
 	var level = calcHitDice(characterObj.health._hitdice);
-	attrs["class-0-hp"] = (parseNum(characterObj.health._hitpoints) - (level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified)));
+	attrs["level"] = level;
+	attrs["HP-ability-mod"] = parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
+	attrs["hp_ability_bonus"] = level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
+	attrs["total-hp"] = attrs["class-0-hp"] = (parseNum(characterObj.health._hitpoints) - (level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified)));
 	importInit(attrs,characterObj.initiative);
 	var racialHD = level - parseNum(characterObj.classes._level);
 	if (racialHD > 0)
+	{
+		attrs["add_race"] = 1;
 		attrs["npc-hd-num"] = racialHD;
+	}
 
 	var size = getSizeMod(characterObj.size._name);
 	attrs["size"] = size;
 	attrs["default_char_size"] = size;
+	attrs["CMD-size"] = size * -1;
 
 	characterObj.skills.skill = arrayify(characterObj.skills.skill);
 	importSkills(attrs,characterObj.skills.skill,size,ACP);
@@ -1224,6 +1294,10 @@ export function importCharacter (characterObj)
 		attrs["languages"] = buildList(characterObj.languages.language, "_name");
 	}
 
+	attrs["npc-type"] = arrayify(characterObj.types.type)[0]._name;
+	if (!_.isUndefined(characterObj.subtypes.subtype))
+		 attrs["npc-type"] = attrs["npc-type"] + " ("+buildList(arrayify(characterObj.subtypes.subtype), "_name")+")";
+
 	attrs["character_name"] = characterObj._name;
 	attrs["player-name"] = characterObj._playername;
 	attrs["deity"] = characterObj.deity._name;
@@ -1236,16 +1310,58 @@ export function importCharacter (characterObj)
 	attrs["hair"] = characterObj.personal._hair;
 	attrs["eyes"] = characterObj.personal._eyes;
 	attrs["skin"] = characterObj.personal._skin;
+	attrs["character_description"] = characterObj.personal.description;
 
 	attrs["npc-cr"] = characterObj.challengerating._text.replace("CR ","");
 	attrs["npc-xp"] = characterObj.xpaward._value;
+
+	attrs["speed-base"] = attrs["speed-modified"] = parseNum(characterObj.movement.speed._value);
+
+	attrs["cmb"] = parseNum(characterObj.maneuvers._total);
+	attrs["cmd"] = parseNum(characterObj.maneuvers._cmd);
+	attrs["ff-cmd"] = parseNum(characterObj.maneuvers._cmdflatfooted);
+	attrs["cmd-str"] = attrs["STR-mod"]; // CMB/CMD doesn't have any breakdown in XML, so have to assume still using STR
+	attrs["cmd-misc"] = attrs["cmd"] - 10 - attrs["AC-ability-mod"] - attrs["cmd-str"] - attrs["CMD-size"] - attrs["AC-dodge"] - attrs["AC-deflect"] - attrs["bab"];
+
+	attrs["attk-melee"] = parseNum( characterObj.attack._meleeattack.split("/")[0]);
+	attrs["attk-ranged"] = attrs["attk-melee2"] = parseNum( characterObj.attack._rangedattack.split("/")[0]);	// Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
 	
 	if (!_.isUndefined(characterObj.favoredclasses.favoredclass))
 	{
 		characterObj.favoredclasses.favoredclass = arrayify(characterObj.favoredclasses.favoredclass);
 		attrs["class-favored"] = buildList(characterObj.favoredclasses.favoredclass, "_name");
 	}
-	setAttrs(attrs,{},function() { PFSheet.recalculate(); });
+	
+	attrs["other-PP"] = characterObj.money._pp;
+	attrs["other-GP"] = characterObj.money._gp;
+	attrs["other-SP"] = characterObj.money._sp;
+	attrs["other-CP"] = characterObj.money._cp;
+
+	attrs["load-str-bonus"] = parseNum(characterObj.encumbrance._encumstr) - attrs["STR"];
+	attrs["load-light"] = characterObj.encumbrance._light;
+	attrs["load-medium"] = characterObj.encumbrance._medium;
+	attrs["load-heavy"] = attrs["lift-above-head"] = characterObj.encumbrance._heavy;
+	attrs["load-max"] = attrs["lift-off-ground"] = parseNum(characterObj.encumbrance._heavy) * 2;
+	attrs["lift-drag-and-push"] = parseNum(characterObj.encumbrance._heavy) * 5;
+
+	if (!_.isUndefined(characterObj.pathfindersociety))
+	{
+		attrs["set_pfs"] = 1;
+		PFHealth.setToPFS(null);
+	}
+
+	if (!_.isUndefined(characterObj.factions.faction))
+	{
+		var faction = _.find(arrayify(characterObj.factions.faction), function(fac) { return _.isUndefined(fac._retired);});
+		if (!_.isUndefined(faction))
+		{
+			attrs["prestige"] = faction._cpa;
+			attrs["fame"] = faction._tpa;
+			attrs["faction_notes"] = faction._name;
+		}
+	}
+
+	setAttrs(attrs,{silent: true});
 }
 export function registerEventHandlers () {
 	on("change:herolab_import", function(eventInfo) {
@@ -1269,5 +1385,5 @@ export function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-//PFConsole.log('   HLImport module loaded         ');
-//PFLog.modulecount++;
+PFConsole.log('   HLImport module loaded         ');
+PFLog.modulecount++;
