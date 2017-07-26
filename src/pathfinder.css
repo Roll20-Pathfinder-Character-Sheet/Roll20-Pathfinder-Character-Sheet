@@ -1602,13 +1602,7 @@ h2.sheet-clickheader {
 .sheet-table-cell.sheet-small-label.sheet-cssbutton-cell {
 	padding-top:1em;
 }
-.sheet-maxhealbutton + span::before {
-    content: '✚'; /*'⛨☤';*/
-    vertical-align:top;	
-    padding: 3px 2px 1px 1px !important;
-	width:1.6em;
-	height:1.6em;
-}
+
 .sheet-createattackbutton + span::before {
     content: '⚔';
     margin-top: 5px;
@@ -1627,19 +1621,16 @@ h2.sheet-clickheader {
     vertical-align:top;
     padding: 4px 0 0 0 !important;
 }
-.sheet-newbuff-button + span::before {
-    content: '☘';
-    margin-top: 5px;
-    vertical-align:top;	
-    padding: 3px 0 0 0 !important;
-}
-.sheet-newtemplate-button + span::before {
-    content: '+'; /*  '✚';*/
-    margin-top: 5px;
-    vertical-align:top;	
-    padding: 3px 0 0 0 !important;
-}
 
+.sheet-maxhealbutton + span::before,
+.sheet-newbuff-button + span::before,
+.sheet-newtemplate-button + span::before {
+    content: '✚'; /*'⛨☤';*/
+    vertical-align:top;	
+    padding: 3px 2px 1px 1px;
+	width:1.6em;
+	height:1.6em;
+}
 .sheet-cssbutton-label {
     margin-left: -3em;
     font-weight: bold;
@@ -1914,9 +1905,11 @@ hr.sheet-skinny {
     display: block;
     width: 100%;
 }
+/* we must have fixed whatever was moving stuff around cause this has no effect anymore
 .repcontainer.editmode + .repcontrol {
     margin-bottom: 3em;
 }
+*/
 .repcontainer.editmode + .repcontrol .repcontrol_edit {
     text-align: right;
    /* margin-left: calc(95% - 4em);*/
@@ -1970,14 +1963,17 @@ hr.sheet-skinny {
 	color: #000;
 }
 .repcontrol .repcontrol_edit:after {
-	content: 'W';
+/*	content: 'W'; hamburger menu*/
+    font-family: Arial !important;
+    font-weight: bold;
+    content: '☰';
 	visibility: visible;
 	font-family: pictos;
 	background-color: #fff;
 	border: 1px solid #000;
 	border-radius: 2px;
 	font-size: 1rem;
-	padding: 2px 3px 2px 3px;
+	padding: 3px 3px 2px 3px;
 	color: #000;
 	margin-left: -3em;
 }
@@ -2939,30 +2935,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
 .sheet-nextitem2-hide:checked + .sheet-nextitem2,
-/*
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
-input[name$="class-info-show"].sheet-nextitem-show:not(:checked) ~ .sheet-experience,
-input[name$="prestige_fame"].sheet-nextitem-show:not(:checked) ~ .sheet-faction-notes,
-input[name$="initiative-show"].sheet-nextitem-show:not(:checked) ~ .sheet-speeds,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability-display,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-dodge,
-
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-l,
-input[value="Medium"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-m,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-h,
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-l,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-h,
-input[value="Tower Shield"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-t,
-
-input[name$="ammo"].sheet-nextitem-show:not(:checked) ~ .sheet-ammo,
-input[name$="frequency"].sheet-nextitem-show:not(:checked) ~ .sheet-freq-rounds,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-casting-ability,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-ability-sr,
-input[name$="metamagic"].sheet-nextitem-show:not(:checked) ~ .sheet-slot,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-endurance-feat,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-gritty-mode,
-*/
 /* logic section */
 .sheet-xor-A-show:not(:checked)~.sheet-xor-B-show:not(:checked)~.sheet-xor-sect,
 .sheet-xor-A-show:checked~.sheet-xor-B-show:checked~.sheet-xor-sect,
