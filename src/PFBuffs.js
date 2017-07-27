@@ -232,7 +232,7 @@ function mergeOldIntoNewBuffs(callback){
 				buffs = Object.keys(v).filter(function(attr){
 					return (attr.indexOf(prefix)===0);
 				}).filter (function(attr){
-					return (/\macro\-text/i).test(attr);
+					return (/size|macro\-text/i).test(attr);
 				}).filter(function(macroattr){
 					if(v[macroattr]){
 						return true;
