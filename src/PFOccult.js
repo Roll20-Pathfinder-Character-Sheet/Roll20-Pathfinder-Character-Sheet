@@ -27,9 +27,9 @@ function updateDamage(v,setter){
 }
 
 
-export function updateDamageAsync(callback,dummy,eventInfo){
+export function updateDamageAsync(callback,silently,eventInfo){
     getAttrs(['buff_dmg_kineticblast-total','kineticblast_dmg-mod','kineticblast_dmg'],function(v){
-        var setter={},currb=0,newb=0;
+        var setter={},params={};
         try {
             v= _.mapObject(v,function(val,key){
                 return (parseInt(val,10)||0);
@@ -39,7 +39,8 @@ export function updateDamageAsync(callback,dummy,eventInfo){
             TAS.error("PFOccult.updateDamageAsync",err);
         } finally {
             if(_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams,callback);
+                if(silently){params=PFConst.silentParams;}
+                SWUtils.setWrapper(setter,params,callback);
             } else if (typeof callback === "function"){
                 callback();
             }
@@ -47,9 +48,9 @@ export function updateDamageAsync(callback,dummy,eventInfo){
     });
 }
 
-export function updateAttackAsync(callback,dummy,eventInfo){
+export function updateAttackAsync(callback,silently,eventInfo){
     getAttrs(['buff_kineticblast-total','kineticblast_attack-mod','kineticblast_attack'],function(v){
-        var setter={};
+        var setter={},params={};
         try {
             v= _.mapObject(v,function(val,key){
                 return (parseInt(val,10)||0);
@@ -59,7 +60,8 @@ export function updateAttackAsync(callback,dummy,eventInfo){
             TAS.error("PFOccult.updateAttackAsync",err);
         } finally {
             if(_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams,callback);
+                if(silently){params=PFConst.silentParams;}
+                SWUtils.setWrapper(setter,params,callback);
             } else if (typeof callback === "function"){
                 callback();
             }
@@ -103,11 +105,11 @@ function recalculate(callback,dummy,oldversion){
 
 on("change:kineticblast_attack_macro_text", TAS.callback(function eventKineticBlastMacroUpdate(eventInfo) {
     TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-    SWUtils.evaluateAndAddToTotAsync(null,true,'kineticblast_attack_macro_text','kineticblast_attack-mod','kineticblast_attack');
+    SWUtils.evaluateAndAddToTotAsync(null,null,'kineticblast_attack_macro_text','kineticblast_attack-mod','kineticblast_attack');
 }));
 on("change:kineticblast_dmg_macro_text", TAS.callback(function eventKineticBlastDamageMacroUpdate(eventInfo) {
     TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-    SWUtils.evaluateAndAddToTotAsync(null,true,'kineticblast_dmg_macro_text','kineticblast_dmg-mod','kineticblast_dmg');
+    SWUtils.evaluateAndAddToTotAsync(null,null,'kineticblast_dmg_macro_text','kineticblast_dmg-mod','kineticblast_dmg');
 }));
 
 on("change:use_burn",TAS.callback(function eventUseBurn(eventInfo){
