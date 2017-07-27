@@ -456,7 +456,8 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		PFAbility.recalculate,
 		PFInitiative.recalculate,
 		PFAttacks.recalculate,
-		PFHorror.recalculate
+		PFHorror.recalculate,
+		PFOccult.recalculate
 	],		
 	numberModules = _.size(parallelRecalcFuncs),
 	doneOneModuleInner = _.after(numberModules, done),
