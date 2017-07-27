@@ -1567,7 +1567,7 @@ h2.sheet-clickheader {
 	vertical-align: top;
 }
 .sheet-split-column-show + span::before {
-	content: '▮';
+	content: '❚❚';/* '▮';*/
 	padding-top: 1px;
 	vertical-align: top;
 }
