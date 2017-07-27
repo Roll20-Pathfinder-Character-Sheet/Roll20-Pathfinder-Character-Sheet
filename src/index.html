@@ -7579,7 +7579,7 @@
 					<div class="sheet-cheat sheet-burn-sect"></div>
 					<input class="sheet-showarrow sheet-h2arrow sheet-burn-sect" type="checkbox" name="attr_burn-show"  data-i18n-title="showsect-cmd"  value="1" checked />
 					<h2 class="sheet-clickheader sheet-showsect sheet-burn-sect"><label class="sheet-burn-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">burn</label></h2>
-					<div class="sheet-h2-section sheet-non-table sheet-half-readonly sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
+					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
 						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kineticist-burn">Kineticist Burn</span>
 						<div class="sheet-linked-custom">
 							<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
@@ -7597,6 +7597,38 @@
 							<div class="sheet-divider-db-lg">/</div>
 							<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
 							<span data-i18n="internal-buffer" >Internal Buffer </span>
+						</div>
+						<div class="sheet-linked-custom">
+							<div class="sheet-linked-fields sheet-entry-long">
+								<input type="checkbox" name="attr_kineticblast_attack-mod_error" class="sheet-error-mshow" value="1" />
+								<textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+								<input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
+								<span class="sheet-center" data-i18n="kinetic-blast" >kinetic blast</span>
+							</div>
+							<div class="sheet-small-label2">
+								<input type="number" name="attr_buff_kineticblast-total" title="@{buff_kineticblast-total}" value="0" class="sheet-calc" readonly/>
+								<span data-i18n="buff">Buff</span>
+							</div>
+							<div class="sheet-small-label2">
+								<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" value="0" class="sheet-calc" readonly />
+								<span data-i18n="blast">blast</span>
+							</div>
+						</div>
+						<div class="sheet-linked-custom">
+							<div class="sheet-linked-fields sheet-entry-long">
+								<input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="sheet-error-mshow" value="1" />
+								<textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+								<input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+								<span class="sheet-center" data-i18n="kinetic-blast-damage-abbrv" >kinetic blast damage bonus </span>
+							</div>
+							<div class="sheet-small-label2">
+								<input type="number" name="attr_buff_dmg_kineticblast-total" title="@{buff_dmg_kineticblast-total}" value="0" class="sheet-calc" readonly/>
+								<span data-i18n="buff">Buff</span>
+							</div>
+							<div class="sheet-small-label2">
+								<input type="number" name="attr_kineticblast_dmg" title="@{kineticblast_dmg}" value="0" class="sheet-calc" readonly />
+								<span data-i18n="blast-damage-abbrv">blast dmg</span>
+							</div>
 						</div>
 					</div>			
 				</div>
@@ -13135,15 +13167,14 @@
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="advanced-class-guide">Advanced Class Guide</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-arcane-reservoir-title" /><b data-i18n-title="show-arcane-reservoir-title" data-i18n="show-arcane-reservoir"> Show arcane reservoir</b>
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-arcane-reservoir-title" /><b data-i18n-title="show-arcane-reservoir-title" data-i18n="show-spellpoint-arcane-reservoir"> Show arcane reservoir</b>
 					</span>
 				</div>
 				<div class="sheet-table-row">
 					<span class="sheet-table-config-row-name" data-i18n="occult-adventures">Occult Adventures</span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" title="@{use_burn}" name="attr_use_burn" value="1" class="sheet-selectedlabel-check" data-i18n-aria-label="use-kineticist-burn" /><b><span data-i18n-title="use-kineticist-burn" data-i18n="use-kineticist-burn"> Use Kinticist Burn</span></b>
-						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-phrenic-pool-title" /><b data-i18n-title="show-phrenic-pool-title" data-i18n="show-phrenic-pool"> Show Phrenic Pool</b>
-						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-mesmerist-tricks-title" /><b data-i18n-title="show-mesmerist-tricks-title" data-i18n="show-mesmerist-tricks"> Show Mesmerist Tricks</b>
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-phrenic-spellpoint-pool-title" /><b data-i18n-title="show-phrenic-spellpoint-pool-title" data-i18n="show-phrenic-spellpoint-pool"> Phrenic Pool or Mesmerist</b>
 					</span>
 				</div>
 				<div class="sheet-table-row">

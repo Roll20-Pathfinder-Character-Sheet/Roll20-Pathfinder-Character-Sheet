@@ -17,6 +17,7 @@ import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
 import * as PFSkills from './PFSkills';
 import * as PFBuffsOld from './PFBuffsOld';
+import * as PFOccult from './PFOccult';
 
 export var
 //values in the bonus dropdown
@@ -188,7 +189,9 @@ events = {
 		"check_ability": [PFInitiative.updateInitiative],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"size": [PFSize.updateSizeAsync]
+		"size": [PFSize.updateSizeAsync],
+		"kineticblast": [PFOccult.updateAttackAsync],
+		"dmg_kineticblast": [PFOccult.updateDamageAsync]
 	}
 };
 
@@ -232,7 +235,7 @@ function mergeOldIntoNewBuffs(callback){
 				buffs = Object.keys(v).filter(function(attr){
 					return (attr.indexOf(prefix)===0);
 				}).filter (function(attr){
-					return (/\macro\-text/i).test(attr);
+					return (/size|macro\-text/i).test(attr);
 				}).filter(function(macroattr){
 					if(v[macroattr]){
 						return true;

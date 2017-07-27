@@ -200,6 +200,7 @@ input[readonly], input[disabled] {
     width: 7.7em;
     min-width:6em;
 }
+.sheet-linked-fields .sheet-inline-textarea.sheet-linked-cellfield,
 .sheet-linked-tablecell select.sheet-linked-cellfield,
 .sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
@@ -210,13 +211,6 @@ input[readonly], input[disabled] {
 	width:calc(100% - 2.8em);
     max-width:calc(100% - 2.8em);
 }
-
-/**
-select.sheet-linked-cellfield,
-select.sheet-linked-cellfield + input,
-input.sheet-linked-cellfield{
-	display:inline;
-}*/
 
 /* like br */
 .sheet-cheat {
@@ -629,6 +623,10 @@ also need 1 more level in selector or base css will override border */
 .sheet-section-spellclass .sheet-nontable-name {
     background-color: #4a6486;
 }
+.sheet-roundborder {
+	border: 1px solid #808080;
+	border-radius: 5px;    
+}
 
 .sheet-linked-custom,
 .sheet-linked-custom-wideinputs {
@@ -688,11 +686,27 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span,
 .sheet-linked-custom-wideinputs > span,
-.sheet-linked-custom > span {
+.sheet-linked-custom > span,
+.sheet-linked-custom .sheet-linked-fields > span  {
 	display:block;
 	clear:both;
-	width:calc(100% - 1em);
-	background-color:transparent;
+	width:calc(100% - .5em);
+    background-color:transparent;
+}
+
+.sheet-burn-sect .sheet-linked-custom > span,
+.sheet-burn-sect .sheet-linked-custom .sheet-linked-fields > span {
+    font-weight: bold;
+    font-style: italic;
+    font-size: .7rem;
+    color:black;
+}
+
+.sheet-burn-sect .sheet-linked-custom {
+    width:calc(20% - 4px);
+}
+.sheet-burn-sect .sheet-linked-custom:nth-child(n+4) {
+    width:calc(30% - 4px);
 }
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span {
@@ -1567,7 +1581,7 @@ h2.sheet-clickheader {
 	vertical-align: top;
 }
 .sheet-split-column-show + span::before {
-	content: '▮';
+	content: '❚❚';/* '▮';*/
 	padding-top: 1px;
 	vertical-align: top;
 }
@@ -2552,6 +2566,9 @@ span.sheet-entry-wide textarea {
 .sheet-nontable-repeating .sheet-divider-db-lg {
     vertical-align: middle;
 }
+.sheet-entry-vlong {
+    width: 13em;
+}
 .sheet-entry-long {
     width: 10em;
 }
@@ -2724,6 +2741,11 @@ input[type="number"].sheet-entry-wide {
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-entry-rowname {
     width: 65%;
+}
+.sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
+.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
+.sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-vlong {
+    width: 11em;
 }
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
