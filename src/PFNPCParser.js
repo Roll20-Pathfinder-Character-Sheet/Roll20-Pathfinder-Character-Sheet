@@ -3031,21 +3031,24 @@ function createClassEntries (characterClass, attrs,setter) {
 /**************************** THE BIG ONE ***********************/
 /*importFromCompendium - imports all stuff*/
 export function importFromCompendium (eventInfo, callback, errorCallback) {
-	var done = _.once(function(){
-		//TAS.info("##############################################");
+	var done = function(shouldupdate){
+		TAS.info("##############################################");
 		TAS.info("Leaving importFromCompendium");
+		if(shouldupdate){
+			PFSheet.checkForUpdate(true);
+		}
 		if (typeof callback === "function"){
 			callback();
 		}
-	}),
+	},
 	errorDone = _.once(function(){
 		//TAS.info("##############################################");
-		TAS.info("Leaving importFromCompendium NOTHING DONE");
+		TAS.warn("Leaving importFromCompendium NOTHING DONE");
 		if (typeof errorCallback === "function"){
 			errorCallback();
 		}
 	}),
-	fields = npcCompendiumAttributesPlayer.concat(["is_npc", "alignment"]);
+	fields = npcCompendiumAttributesPlayer.concat(["is_npc", "alignment","npc_parse_no_recalc"]);
 	getAttrs(fields, function (v) {
 		var setter = {}, abilityScores = {}, sizeMap = {}, speedMap = {}, hpMap = {}, acMap = {},
 		importantFeats = {}, reachObj = {}, racialModsMap = {}, skillsMap = {}, attackGrid = {},
@@ -3056,6 +3059,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		cr, attacklist, hpMod, tempArray, spellObj, casterObj,
 		matches, attackArray, classSkillArray, specialAttacks, SLAs, attackArrays,
 		specialAbilities = {}, reachExceptions = [], allSoFar = {}, specialQualities=[],
+		recalcWhenDone=0,
 		match, baseSaves = {};
 		//TAS.debug("importFromCompendium", v);
 		try {
@@ -3065,7 +3069,9 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			bab = parseInt(v["bab_compendium"], 10) || 0;
 			//some basics ***************************************************
 			setter['level']=0;
-			setter['is_newsheet']=1;
+			if(!parseInt(v.npc_parse_no_recalc,10)){
+				recalcWhenDone=1;
+			}
 			setter["is_npc"] = "1";
 			setter['is_v1'] = "1";
 			setter['PFSheet_Version'] =String((PFConst.version.toFixed(2)));
@@ -3331,11 +3337,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				//TAS.debug("after createFeatureEntries attrnum:" + _.size(setter));
 			}
 
-			if(_.size(setter)){
-				_.extend(allSoFar,setter);
-				SWUtils.setWrapper(setter,PFConst.silentParams,function(){TAS.notice("saved 8 SHOULD HAVE BEEN EMPTY#######");});
-				setter={};
-			}
+
 			//TAS.debug("before skills attrnum:" + _.size(setter));
 			// skills *********************************************************
 			if (v.skills_compendium) {
@@ -3349,6 +3351,11 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 					//TAS.debug("after createSkillEntries attrnum:" + _.size(setter));
 				}
 			}
+			//if(_.size(setter)){
+			//	_.extend(allSoFar,setter);
+			//	SWUtils.setWrapper(setter,PFConst.silentParams,function(){TAS.notice("saved 8 SKILLS");});
+			//	setter={};
+			//}
 		} catch (err2) {
 			TAS.error("importFromCompendium outer at end", err2);
 		} finally {
@@ -3359,9 +3366,13 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				setter['use_buff_bonuses']=1;
 				//TAS.info("##############################################","END OF importFromCompendium");
 				//TAS.debug("setting",setter);
+				if(recalcWhenDone){
+					setter['is_newsheet']=1;
+					setter['recalc1']=1;
+				}
 				SWUtils.setWrapper(setter, PFConst.silentParams, function(){
 					TAS.notice("##### finished settings now done");
-					done();
+					done(recalcWhenDone);
 				});
 			} else {
 				setter["npc_import_now"]=0;
@@ -3379,17 +3390,7 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		getAttrs(['npc_import_now'], function (v) {
 			if (parseInt(v.npc_import_now, 10) === 1) {
-				importFromCompendium(eventInfo, function(){
-					//instead of just calling recalculate set recalc button and call checkforupdate
-					//so users sees something is happening.
-					getAttrs(['npc_parse_no_recalc'],function(vin){
-						if (!parseInt(vin.npc_parse_no_recalc,10)){
-							SWUtils.setWrapper({'recalc1':1},PFConst.silentParams,function(){
-								PFSheet.checkForUpdate(true);
-							});
-						}
-					});
-				});
+				importFromCompendium(eventInfo);
 			}
 		});
 	}
