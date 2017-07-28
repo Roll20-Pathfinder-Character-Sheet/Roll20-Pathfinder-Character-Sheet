@@ -262,7 +262,7 @@ function mergeOldIntoNewBuffs(callback){
 					}
 					//size has special handling
 					if(buffs.indexOf('size')>=0){
-						TAS.debug("adding buff for size");
+						//TAS.debug("adding buff for size");
 						buffCounter++;
 						buffprefix = tempprefix + buffCounter ;
 						setter[buffprefix+'-show']=1;
@@ -344,9 +344,9 @@ function mergeOldIntoNewBuffs(callback){
 						}
 					}
 					//loop through any buffs left
-					TAS.debug("NON SPECIAL BUFFS LEFT: ",buffs);
+					//TAS.debug("NON SPECIAL BUFFS LEFT: ",buffs);
 					buffs.forEach(function(buff){
-						TAS.debug("adding buff "+buff+" to setter, macro is "+v[prefix+'buff-'+buff+'_macro-text']);
+						//TAS.debug("adding buff "+buff+" to setter, macro is "+v[prefix+'buff-'+buff+'_macro-text']);
 						buffCounter++;
 						if(buffCounter>6){
 							buffCounter=1;
