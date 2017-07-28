@@ -1978,7 +1978,7 @@ hr.sheet-skinny {
 }
 .repcontrol .repcontrol_edit:after {
 /*	content: 'W'; hamburger menu*/
-    font-family: Arial !important;
+    font-family: Arial ;
     font-weight: bold;
     content: '☰';
 	visibility: visible;
@@ -1989,10 +1989,13 @@ hr.sheet-skinny {
 	font-size: 1rem;
 	padding: 3px 3px 2px 3px;
 	color: #000;
-	margin-left: -3em;
+    margin-left: -3em;
+    width:1rem;
 }
 .editmode ~ .repcontrol .repcontrol_edit:after {
+    font-family: Pictos;
 	content: '3';
+    width:1rem;
 }
 .repcontrol_edit:hover:before,
 .repcontrol_edit:hover:after, 
