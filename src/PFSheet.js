@@ -282,9 +282,10 @@ function expandAll  () {
  */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		SWUtils.setWrapper({'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
-			 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
-			'attentionv165-show':1,'modify_dmg_by_size':1 },PFConst.silentParams,function(){
+		var setter={'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
+			 'use_advanced_options':0,'modify_dmg_by_size':1,'PFSheet_Version': String((PFConst.version.toFixed(2)))};
+		setter[PFConst.announcementVersionAttr]=1;
+		SWUtils.setWrapper(setter,PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
@@ -598,7 +599,7 @@ export function checkForUpdate (forceRecalc) {
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
-	'race', 'class-0-name', 'npc-type', 'level'], function (v) {
+	'race', 'class-0-name', 'npc-type', 'level','hide_announcements',PFConst.announcementVersionAttr], function (v) {
 		var setter = {},
 		setAny = 0,
 		migrateSheet=false,
@@ -615,6 +616,7 @@ export function checkForUpdate (forceRecalc) {
 			});
 		};
 		TAS.notice("Attributes at version: " + currVer);
+
 		if (forceRecalc){
 			recalc=true;
 		} else {
@@ -634,6 +636,10 @@ export function checkForUpdate (forceRecalc) {
 		//force this on sheet open, not sure wtf is wrong
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
+		}
+		if (!newSheet && parseInt(v.hide_announcements,10) && !parseInt(v[PFConst.announcementVersionAttr],10)){
+			setter[PFConst.announcementVersionAttr]=1;
+			SWUtils.setWrapper(setter,PFConst.silentParams);		
 		}
 		if (newSheet) {
 			PFSkills.migrate();
@@ -733,6 +739,11 @@ function registerEventHandlers () {
 		}
 	}));
 
+	on("change:hide_announcements",function(){
+		var setter={};
+		setter[PFConst.announcementVersionAttr]=1;
+		setAttrs(setter,PFConst.silentParams);
+	});
 }
 registerEventHandlers();
 
