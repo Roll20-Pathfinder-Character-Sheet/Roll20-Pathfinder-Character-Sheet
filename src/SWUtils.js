@@ -35,15 +35,20 @@ export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 		cb(vals);
 	});
 });
-
+/**Calls getTranslationByKey, if error encountered returns string passed in
+ * @param {string} str 
+ */
 export function getTranslated (str){
 	var tempstr='';
 	try{
 		if(str){
-			tempstr=getTranslationByKey(str)||(str[0].toUpperCase()+str.slice(1));
+			tempstr=getTranslationByKey(str);
+			if(!tempstr){
+				tempstr =str[0].toUpperCase()+str.slice(1);
+			}
 		}
 	} catch(e){
-		tempstr=(str[0].toUpperCase()+str.slice(1));
+		tempstr=str[0].toUpperCase()+str.slice(1);
 	} finally {
 		return tempstr;
 	}

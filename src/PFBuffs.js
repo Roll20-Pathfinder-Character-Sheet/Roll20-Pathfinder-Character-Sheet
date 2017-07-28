@@ -1051,7 +1051,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 	//TAS.debug("adding common buff for :"+name+" should calc is:"+calc,v);
 	switch(name){
 		case 'rage':
-			setter[prefix+'name']='Rage (Ex)';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-rage');
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
@@ -1087,11 +1087,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			tempint = tempint / 2;
 			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
-			setter[prefix+'notes']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-rage-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'unchainedrage':
-			setter[prefix+'name']='Rage (Unchained) (Ex)';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-rage-unchained');
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
@@ -1133,11 +1133,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			tempint = tempint * level;
 			setter[prefix+'b5_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
-			setter[prefix+'notes']='While in rage, a barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-rage-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'prayer':
-			setter[prefix+'name']='Prayer';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-prayer');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1162,7 +1162,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=1;
 			break;
 		case 'prayerdebuff':
-			setter[prefix+'name']='Prayer (debuff)';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-prayer-debuff');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1187,7 +1187,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=-1;
 			break;
 		case 'bless':
-			setter[prefix+'name']='Bless';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-bless');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1201,11 +1201,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_macro-text']='1';
 			setter[prefix+'b2_val']=1;
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Bless: +@{b2_val} morale bonus on saving throws against fear effects. (Show buff 2 buff to calculate bonus automatically).';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-bless-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'aid':
-			setter[prefix+'name']='Aid';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-aid');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1229,11 +1229,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			}
 			setter[prefix+'b3_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Aid:  +@{b2_val} morale bonus on saving throws against fear effects. (Show buff 2 buff to calculate bonus automatically).';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-aid-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'haste':
-			setter[prefix+'name']='Haste';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-haste');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1263,11 +1263,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			}
 			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='attack';
-			setter[prefix+'notes']='When making a full attack action, a hasted creature may make one extra attack with one natural or manufactured weapon. All modes of movement increase.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-haste-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'enlargeperson':
-			setter[prefix+'name']='Enlarge Person';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-enlarge-person');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1285,10 +1285,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='-2';
 			setter[prefix+'b3_val']=-2;
-			setter[prefix+'notes']='Reach increased, height x2, weight x4.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-enlarge-person-note');
 			break;
 		case 'divinefavor':
-			setter[prefix+'name']='Divine Favor';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-divine-favor');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1313,7 +1313,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'shieldoffaith':
-			setter[prefix+'name']='Shield of Faith';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-shield-of-faith');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1335,7 +1335,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'shield':
-			setter[prefix+'name']='Shield';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-shield');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1344,11 +1344,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'add_note_to_roll']='defense';
-			setter[prefix+'notes']='Shield: Negates magic missile attacks directed at you. This bonus applies against incorporeal touch attacks, since it is a force effect.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-shield-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'magearmor':
-			setter[prefix+'name']='Mage Armor';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-mage-armor');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1357,11 +1357,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_macro-text']='4';
 			setter[prefix+'b1_val']=4;
 			setter[prefix+'add_note_to_roll']='defense';
-			setter[prefix+'notes']='Mage Armor: made of force, incorporeal creatures can\'t bypass it the way they do normal armor.';
+			setter[prefix+'notes']= SWUtils.getTranslated('buff-magearmor-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'inspirecourage':
-			setter[prefix+'name']='Inspire Courage';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-inspire-courage');
 			setter[prefix+'bufftype']='song';
 			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
@@ -1392,11 +1392,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_macro-text']='1+floor((@{level}+1)/6)';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';
-			setter[prefix+'notes']='Inspire Courage: +@{b2_val} morale bonus on saving throws against charm and fear effects. (Show buff 2 buff to calculate bonus automatically).';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-inspire-courage-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'inspiregreatness':
-			setter[prefix+'name']='Inspire Greatness';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-inspire-greatness');
 			setter[prefix+'bufftype']='song';
 			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
@@ -1426,7 +1426,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=2;
 			break;
 		case 'inspireheroics':
-			setter[prefix+'name']='Inspire Heroics';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-inspire-heroics');
 			setter[prefix+'bufftype']='song';
 			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
@@ -1441,7 +1441,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_val']=4;
 			break;
 		case 'inspiredrage':
-			setter[prefix+'name']='Inspired Rage';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-inspired-rage');
 			setter[prefix+'bufftype']='song';
 			setter[prefix+'tabcat']='song';
 			setter[prefix+'b1-show']=1;
@@ -1479,11 +1479,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			}
 			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
-			setter[prefix+'notes']='While under the effects of inspired rage, allies other than the skald cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration';
+			setter[prefix+'notes']=  SWUtils.getTranslated('buff-inspired-rage-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'heroism':
-			setter[prefix+'name']='Heroism';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-heroism');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1503,7 +1503,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_val']=2;
 			break;
 		case 'blessingoffervor':
-			setter[prefix+'name']='Blessing of Fervor';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-blessing-of-fervor');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1526,11 +1526,11 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_bonustype']='enhancement';
 			setter[prefix+'b4_macro-text']='30';
 			setter[prefix+'b4_val']=30;
-			setter[prefix+'notes']='Pick speed bonus by checking buff 4, or Attack/AC/Reflex bonus, or other bonuses per round.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-blessing-of-fervor-note');
 			setter[prefix+'description-show']=1;
 			break;
 		case 'goodhope':
-			setter[prefix+'name']='Good Hope';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-good-hope');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1555,7 +1555,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=2;
 			break;
 		case 'crushingdespair':
-			setter[prefix+'name']='Crushing Despair';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-crushing-despair');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1576,7 +1576,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4_val']=-2;
 			break;
 		case 'archonsaura':
-			setter[prefix+'name']='Archon\'s Aura';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-archons-aura');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1593,10 +1593,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_val']=-2;
 			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Archon\'s Aura: lasts until it successfully hits caster with an attack';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-archons-aura-note');
 			break;
 		case 'curse':
-			setter[prefix+'name']='Curse';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-curse');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1616,10 +1616,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_macro-text']='-4';
 			setter[prefix+'b2_val']=-4;
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Choose -6 to any ability or the other debuffs, or turn all off and on each turn, the target has a 50% chance to act normally; otherwise, it takes no action';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-curse-note');
 			break;
 		case 'desecrate':
-			setter[prefix+'name']='Desecrate (If Undead)';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-desecrate');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1639,10 +1639,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_val']=1;
 			setter[prefix+'add_note_to_roll']='save'
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='add +3 to save vs channel energy. Double bonuses if alter present.'
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-desecrate-note');
 			break;
 		case 'consecrate':
-			setter[prefix+'name']='Consecrate (If Undead)';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-consecrate');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1659,10 +1659,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_val']=-1;
 			setter[prefix+'add_note_to_roll']='save'
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Channel energy save DCs increase by 3 (equivalent to -3 penalty).  Double penalties if alter present.'
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-consecrate-note');
 			break;
 		case 'slow':
-			setter[prefix+'name']='Slow';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-slow');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1682,10 +1682,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_macro-text']='-ceil(ceil(@{speed-base}/2)/5)*5';
 			setter[prefix+'b3_val']=-15;
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Also apply staggered condition'
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-slow-note');
 			break;
 		case 'reduceperson':
-			setter[prefix+'name']='Reduce Person';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-reduce-person');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1703,10 +1703,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_bonustype']='size';
 			setter[prefix+'b3_macro-text']='+2';
 			setter[prefix+'b3_val']=+2;
-			setter[prefix+'notes']='Reach decreased, height /2, weight /4.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-reduce-person-note');
 			break;
 		case 'bane':
-			setter[prefix+'name']='Bane';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-bane');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1719,10 +1719,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_val']=-1;
 			setter[prefix+'add_note_to_roll']='save';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Bane: @{b2_val} penalty on saving throws against fear effects. (Show buff 2 buff to calculate penalty automatically).';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-bane-note');
 			break;
 		case 'deathknell':
-			setter[prefix+'name']='Death Knell';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-death-knell');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1745,7 +1745,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'notes']='roll 1d8 and place in temp hp macro textbox';
 			break;
 		case 'magicvestment':
-			setter[prefix+'name']='Magic Vestment';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-magic-vestment');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1759,7 +1759,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'ward':
-			setter[prefix+'name']='Ward';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-ward');
 			setter[prefix+'bufftype']='hex';
 			setter[prefix+'tabcat']='hex';
 			setter[prefix+'b1-show']=1;
@@ -1778,10 +1778,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';			
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Ward: This ward lasts until the warded creature is hit or fails a saving throw';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-ward-note');
 			break;
 		case 'battlespirit':
-			setter[prefix+'name']='Battle Spirit';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-battle-spirit');
 			setter[prefix+'bufftype']='aura';
 			setter[prefix+'tabcat']='aura';
 			setter[prefix+'b1-show']=1;
@@ -1800,7 +1800,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'battleward':
-			setter[prefix+'name']='Battle Ward';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-battle-ward');
 			setter[prefix+'bufftype']='hex';
 			setter[prefix+'tabcat']='hex';
 			setter[prefix+'b1-show']=1;
@@ -1814,10 +1814,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Battle Ward: The next time a foe makes an attack roll against the target, the ward activates and grants a @{b1_val} deflection bonus to the warded creature\'s AC. Each subsequent time the warded creature is attacked, the defection bonus decreases by 1.';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-battle-ward-note');
 			break;
 		case 'hamperinghex':
-			setter[prefix+'name']='hampering Hex';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-hampering-hex');
 			setter[prefix+'bufftype']='hex';
 			setter[prefix+'tabcat']='hex';
 			setter[prefix+'b1-show']=1;
@@ -1827,7 +1827,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'notes']='At 8th level the penalty becomes -4';
 			break;
 		case 'boneward':
-			setter[prefix+'name']='Bone Ward';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-bone-ward');
 			setter[prefix+'bufftype']='hex';
 			setter[prefix+'tabcat']='hex';
 			setter[prefix+'b1-show']=1;
@@ -1841,7 +1841,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			break;
 		case 'stardust':
-			setter[prefix+'name']='Stardust';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-stardust');
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
@@ -1854,10 +1854,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='Also apply @{b1_val} penalty to sight based perception checks';
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-stardust-note');
 			break;
 		case 'airbarrier':
-			setter[prefix+'name']='Air Barrier';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-air-barrier');
 			setter[prefix+'bufftype']='hex';
 			setter[prefix+'tabcat']='hex';
 			setter[prefix+'b1-show']=1;
@@ -1878,10 +1878,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			}
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'description-show']='1';
-			setter[prefix+'notes']='At 13th level, this barrier causes incoming arrows, rays, and other ranged attacks requiring an attack roll against her to suffer a 50% miss chance.';
+			setter[prefix+'notes']= SWUtils.getTranslated('buff-air-barrier-note');
 			break;
 		case 'elementaloverflow':
-			setter[prefix+'name']='Elemental Overflow';
+			setter[prefix+'name']=SWUtils.getTranslated('buff-elemental-overflow');
 			setter[prefix+'bufftype']='class';
 			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
@@ -1911,7 +1911,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b5_val']=0;
 			setter[prefix+'description-show']='1';
 			setter[prefix+'add_note_to_roll']='defense';
-			setter[prefix+'notes']='Has a [[({1d1,{1d0,(@{class-0-level}-2)d1}kh1}kl1)*5*@{kineticistburn}]] chance to ignore the effects of a critical hit or sneak attack';
+			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{class-0-level}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
 			break;
 	}
 		
