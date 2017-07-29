@@ -80,6 +80,9 @@ h4,h5,h6 {
     font-size: .8125rem;
     color: initial;
 }
+.sheet-pf-wrapper {
+    width:100%;min-width:100%;margin-top:-1em;
+}
 /* standalone generic toggles */
 .sheet-wounds-show,
 .sheet-mythic-show,
@@ -660,6 +663,8 @@ also need 1 more level in selector or base css will override border */
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section > .sheet-notes {
 	padding: .125em .125em .125em .25em;
 }
+
+
 .sheet-custom-roll-inner {
 	display:flex;
 	height:auto;
@@ -1837,6 +1842,24 @@ input.sheet-refreshbutton {
     font-size: .75rem;
     padding: 0 .25em 0 .25em;
 }
+.sheet-conditions {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    padding-left: .25em;
+    padding-right: .25em;
+    align-items: center;
+}
+.sheet-conditions .sheet-nontable-name {
+    margin-left: -.25em;
+    margin-right: -.25em;
+    width: calc(100% + .5em);
+}
+.sheet-conditions .sheet-option-condition {
+    font-size: .75rem;
+    white-space: nowrap;
+}
+
 .sheet-no-pad-right {
     padding-right: 0 !important;
 }

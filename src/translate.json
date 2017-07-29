@@ -1,4 +1,6 @@
 {
+	"show-all-conditions-desc": "Show conditions that do not have a numeric effect on sheet stats.",
+	"show-all-conditions": "SHOW ALL CONDITIONS",
 	"speed-halved": " Speed Halved",
 	"manual-recalc-after-parse": "Manual ↻ Recalc after Parse",
 	"manual-recalc-for-high-cr": "Check to manually hit recalc after parse is complete (Recommended for high CR creatures with many abilities)",
