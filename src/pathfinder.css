@@ -193,7 +193,11 @@ input[readonly], input[disabled] {
 }
 /* keeps textarea and readonly number attribute to right inline with each other in one table cell */
 .sheet-table-cell.sheet-linked-tablecell {
-	width:13em;
+    width:13em;
+    white-space: nowrap;
+}
+.sheet-table-cell.sheet-linked-tablecell-short {
+	white-space: nowrap;
 }
 .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
