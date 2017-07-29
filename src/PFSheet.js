@@ -210,7 +210,8 @@ function expandAll  () {
 				'extra_fields_abilities_show':1,
 				'extra_fields_init_show':1,
 				'extra_fields_speeds_show':1,
-				'extra_fields_defense_show':1
+				'extra_fields_defense_show':1,
+				'extra_fields_conditions_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
