@@ -2810,9 +2810,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-extra-show:checked ~ div .sheet-extra-sect-inverse,
 /* buttons */
 .sheet-progress-show:not(:checked) ~ .sheet-progress-icon,
-/*
-.sheet-nextitem-show:not(:checked) + *,
-*/
 .sheet-use-size-show:not(:checked) ~ .sheet-use-size,
 .sheet-use-size-show:checked ~ .sheet-dont-use-size,
 .sheet-use-size-show:not(:checked) ~ .sheet-repeating-fields .sheet-use-size,
@@ -2820,33 +2817,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:checked ~ .sheet-dont-use-size,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
-
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
-
-input[name$="class-info-show"].sheet-nextitem-show:not(:checked) ~ .sheet-experience,
-input[name$="prestige_fame"].sheet-nextitem-show:not(:checked) ~ .sheet-faction-notes,
-input[name$="initiative-show"].sheet-nextitem-show:not(:checked) ~ .sheet-speeds,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability-display,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-dodge,
-
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-l,
-input[value="Medium"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-m,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-h,
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-l,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-h,
-input[value="Tower Shield"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-t,
-
-input[name$="ranged_2_show"].sheet-nextitem-show:not(:checked) ~ .sheet-ranged2,
-input[name$="cmb_2_show"].sheet-nextitem-show:not(:checked) ~ .sheet-cmb2,
-input[name$="ammo"].sheet-nextitem-show:not(:checked) ~ .sheet-ammo,
-input[name$="frequency"].sheet-nextitem-show:not(:checked) ~ .sheet-freq-rounds,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-casting-ability,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-ability-sr,
-input[name$="metamagic"].sheet-nextitem-show:not(:checked) ~ .sheet-slot,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-endurance-feat,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-gritty-mode,
-
 /* logic section */
 .sheet-xor-A-show:not(:checked)~.sheet-xor-B-show:not(:checked)~.sheet-xor-sect,
 .sheet-xor-A-show:checked~.sheet-xor-B-show:checked~.sheet-xor-sect,

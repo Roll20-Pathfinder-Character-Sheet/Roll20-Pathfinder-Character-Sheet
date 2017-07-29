@@ -1585,212 +1585,212 @@
 						<input type="checkbox" name="attr_multiclassed" value="1" class="sheet-multiclassed-show sheet-noshow" />
 						<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_class-info-show" data-i18n-aria-label="class-information" data-i18n-title="showsect-cmd"  value="1" checked />
 						<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="class-race-xp">Class, Race, Experience</label></h2>						
-							<div class="sheet-h2-section sheet-class-grid">
-								<span class="sheet-nontable-name" data-i18n="class-race-information-abbrv">Class and Race Info</span>
-								<input class="sheet-sect-show sheet-sect-show-inverse sheet-not-C-show sheet-or-A-show sheet-noshow" type="checkbox" name="attr_is_npc" value="1" role="presentation" />
-								<input class="sheet-sect sheet-or-D-show sheet-hide-readonly sheet-selectedlabel-check" name="attr_add_class" value="1" type="checkbox" />
-								<b class="sheet-sect sheet-hide-readonly" data-i18n="add-class-levels">Add Class Levels</b>
-								<input class="sheet-sect-inverse sheet-or-B-show sheet-hide-readonly sheet-selectedlabel-check" name="attr_add_race" value="1" type="checkbox"/>
-								<b class="sheet-sect-inverse sheet-hide-readonly" data-i18n="add-hit-dice">Add Race/Monster HD</b>
-								<div class="sheet-cheat"></div>
-								<div class="sheet-table sheet-class-table sheet-wide-numbers sheet-hasexpandrows sheet-narrow-numbers-readonly" role="region" aria-label="Class Information" data-i18n-aria-label="class-information">
-									<span class="sheet-table-name sheet-secondary-table-name sheet-not-C-or-D-sect sheet-show-readonly" aria-label="Base Class Levels and Monster HD BAB, hp, skills, and saves" data-i18n="class-and-level">Class(es) and levels</span>
-									<div class="sheet-table-group-head sheet-not-C-or-D-sect">
-										<div class="sheet-table-row">
-											<span class="sheet-table-header sheet-nowrap sheet-left" data-i18n-title="class-number-explanation"  data-i18n-aria-label="class-number-explanation" data-i18n="class-number">Class #</span>
-											<span class="sheet-table-header sheet-entry-long" data-i18n-title="class-name"  data-i18n-aria-label="class-name" data-i18n="class-name">Class Name</span>
-											<span class="sheet-table-header" data-i18n-title="level-current"  data-i18n-aria-label="level-current" data-i18n="level">Level</span>
-											<span class="sheet-table-header" data-i18n-title="hit-die-desc"  data-i18n-aria-label="hit-die-desc" data-i18n="d-hit-die">d(hitdie)</span>
-											<span class="sheet-table-header" data-i18n-title="hit-points-class-title"  data-i18n-aria-label="hit-points-class-title" data-i18n="class-hit-points-abbrv">Class hp</span>
-											<span class="sheet-table-header" data-i18n-title="favored-class-hit-points-title"  data-i18n-aria-label="favored-class-hit-points-title" data-i18n="favored-class-hit-points-abbrv">FC hp</span>
-											<span class="sheet-table-header" data-i18n-title="base-attack-bonus"  data-i18n-aria-label="base-attack-bonus" data-i18n="base-attack-bonus-abbrv">BAB</span>
-											<span class="sheet-table-header" data-i18n-title="skills-per-level"  data-i18n-aria-label="skills-per-level" data-i18n="skills-per-level-abbrv">Skills /lvl</span>
-											<span class="sheet-table-header" data-i18n-title="favored-class-skill"  data-i18n-aria-label="favored-class-skill" data-i18n="favored-class-skill-abbrv">FC Skill</span>
-											<span class="sheet-table-header" data-i18n-title="alternate-favored-class"  data-i18n-aria-label="alternate-favored-class" data-i18n="alternate-favored-class-abbrv">FC Alt</span>
-											<span class="sheet-table-header" data-i18n-title="fortitude-save"  data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv" aria-label="Fortitude Save">Fort</span>
-											<span class="sheet-table-header" data-i18n-title="reflex-save"  data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" data-i18n-title="willpower-save-abbrv"  data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
-										</div>
-									</div>
-									<div class="sheet-table-group sheet-not-C-or-D-sect">
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell"><b data-i18n-title="class-0-title" data-i18n="1-ordinal">1st</b></span>
-											<span class="sheet-table-cell"><input title="@{class-0-name}" type="text" name="attr_class-0-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-0-level}" type="number" name="attr_class-0-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-hd}" type="text" name="attr_class-0-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-hp}" type="number" name="attr_class-0-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-fchp}" type="number" name="attr_class-0-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-bab}" type="number" name="attr_class-0-bab" value="0" step="0" min="0"/></span>
-											<span class="sheet-table-cell"><input title="@{class-0-skill}" type="number" name="attr_class-0-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-fcskill}" type="number" name="attr_class-0-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-fcalt}" type="number" name="attr_class-0-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Fort}" type="number" name="attr_class-0-Fort" value="0" step="0" min="0"/></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Ref}" type="number" name="attr_class-0-Ref" value="0" step="0" min="0"/></span>
-											<span class="sheet-table-cell"><input title="@{class-0-Will}" type="number" name="attr_class-0-Will" value="0" step="0" min="0"/></span>
-										</div>
-										<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_class1_show" value="1" data-i18n-title="expand-multiclass"  data-i18n-aria-label="Expand-multiclass"  /><span class="sheet-showsect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
-										<div class="sheet-table-row sheet-sect">
-											<span class="sheet-table-cell"><b data-i18n-title="class-1-title" data-i18n="2-ordinal">2nd</b></span>
-											<span class="sheet-table-cell"><input title="@{class-1-name}" type="text" name="attr_class-1-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-1-level}" type="number" name="attr_class-1-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-hd}" type="text" name="attr_class-1-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-hp}" type="number" name="attr_class-1-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-fchp}" type="number" name="attr_class-1-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-bab}" type="number" name="attr_class-1-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-skill}" type="number" name="attr_class-1-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-fcskill}" type="number" name="attr_class-1-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-fcalt}" type="number" name="attr_class-1-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Fort}" type="number" name="attr_class-1-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Ref}" type="number" name="attr_class-1-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-1-Will}" type="number" name="attr_class-1-Will" value="0" step="0" min="0" /></span>
-										</div>
-										<input type="checkbox" class="sheet-showarrow sheet-sect2-show sheet-sect sheet-expand-arrow sheet-expand2" name="attr_class2_show" value="1"  data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
-										<div class="sheet-table-row sheet-sect sheet-sect2">
-											<span class="sheet-table-cell"><b data-i18n-title="class-2-title" data-i18n="3-ordinal">3rd</b></span>
-											<span class="sheet-table-cell"><input title="@{class-2-name}" type="text" name="attr_class-2-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-2-level}" type="number" name="attr_class-2-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-hd}" type="text" name="attr_class-2-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-hp}" type="number" name="attr_class-2-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-fchp}" type="number" name="attr_class-2-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-bab}" type="number" name="attr_class-2-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-skill}" type="number" name="attr_class-2-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-fcskill}" type="number" name="attr_class-2-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-fcalt}" type="number" name="attr_class-2-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Fort}" type="number" name="attr_class-2-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Ref}" type="number" name="attr_class-2-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-2-Will}" type="number" name="attr_class-2-Will" value="0" step="0" min="0" /></span>
-										</div>
-										<input type="checkbox" class="sheet-showarrow sheet-sect3-show sheet-sect sheet-sect2 sheet-expand-arrow sheet-expand3" name="attr_class3_show" value="1" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect sheet-sect2" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
-										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
-											<span class="sheet-table-cell"><b data-i18n-title="class-3-title" data-i18n="4-ordinal">4th</b></span>
-											<span class="sheet-table-cell"><input title="@{class-3-name}" type="text" name="attr_class-3-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-3-level}" type="number" name="attr_class-3-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-hd}" type="text" name="attr_class-3-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-hp}" type="number" name="attr_class-3-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-fchp}" type="number" name="attr_class-3-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-bab}" type="number" name="attr_class-3-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-skill}" type="number" name="attr_class-3-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-fcskill}" type="number" name="attr_class-3-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-fcalt}" type="number" name="attr_class-3-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Fort}" type="number" name="attr_class-3-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Ref}" type="number" name="attr_class-3-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-3-Will}" type="number" name="attr_class-3-Will" value="0" step="0" min="0" /></span>
-										</div>
-										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
-											<span class="sheet-table-cell"><b data-i18n-title="class-4-title" data-i18n="5-ordinal">5th</b></span>
-											<span class="sheet-table-cell"><input title="@{class-4-name}" type="text" name="attr_class-4-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-4-level}" type="number" name="attr_class-4-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-hd}" type="text" name="attr_class-4-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-hp}" type="number" name="attr_class-4-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-fchp}" type="number" name="attr_class-4-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-bab}" type="number" name="attr_class-4-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-skill}" type="number" name="attr_class-4-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-fcskill}" type="number" name="attr_class-4-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-fcalt}" type="number" name="attr_class-4-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Fort}" type="number" name="attr_class-4-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Ref}" type="number" name="attr_class-4-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-4-Will}" type="number" name="attr_class-4-Will" value="0" step="0" min="0" /></span>
-										</div>
-										<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
-											<span class="sheet-table-cell"><b data-i18n-title="class-5-title" data-i18n="6-ordinal">6th</b></span>
-											<span class="sheet-table-cell"><input title="@{class-5-name}" type="text" name="attr_class-5-name" data-i18n-placeholder="class-name" ></span>
-											<span class="sheet-table-cell"><input title="@{class-5-level}" type="number" name="attr_class-5-level" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-hd}" type="text" name="attr_class-5-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-hp}" type="number" name="attr_class-5-hp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-fchp}" type="number" name="attr_class-5-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-bab}" type="number" name="attr_class-5-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-skill}" type="number" name="attr_class-5-skill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-fcskill}" type="number" name="attr_class-5-fcskill" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-fcalt}" type="number" name="attr_class-5-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Fort}" type="number" name="attr_class-5-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Ref}" type="number" name="attr_class-5-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{class-5-Will}" type="number" name="attr_class-5-Will" value="0" step="0" min="0" /></span>
-										</div>
-									</div>
-									<span class="sheet-nontable-name sheet-secondary-table-name sheet-either-or-sect sheet-show-readonly" style="position: absolute;" data-i18n="monster-racial-hit-dice-abbrv">Monster Racial HD</span>
-									<div class="sheet-table-group sheet-either-or-sect" style="margin-top:1em";>
-										<div class="sheet-table-row sheet-creature-race-header">
-											<span class="sheet-table-header sheet-right sheet-nowrap" data-i18n="race">Race</span>
-											<span class="sheet-table-header sheet-entry-long"  data-i18n="type-or-sub-type">Type (Sub type)</span>
-											<span class="sheet-table-header" data-i18n-title="hit-dice-desc" data-i18n="number-hit-dice-abbrv"># HD</span>
-											<span class="sheet-table-header" data-i18n-title="hit-die-desc" data-i18n="d-hit-die">d(hitdie)</span>
-											<span class="sheet-table-header" data-i18n="hit-points-abbrv">hp</span>
-											<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
-											<span class="sheet-table-header" data-i18n-title="base-attack-bonus"  data-i18n-aria-label="base-attack-bonus" data-i18n="base-attack-bonus-abbrv">BAB</span>
-											<span class="sheet-table-header" data-i18n-title="skills-per-hit-die"  data-i18n-aria-label="skills-per-hit-die" data-i18n="skills-per-hit-die-abbrv">Skills /HD</span>
-											<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
-											<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
-											<span class="sheet-table-header" data-i18n-title="fortitude-save"  data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv">Fort</span>
-											<span class="sheet-table-header" data-i18n-title="reflex-save"  data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
-											<span class="sheet-table-header" data-i18n-title="willpower-save-abbrv"  data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
-										</div>
-										<div class="sheet-table-row">
-											<span class="sheet-table-cell" data-i18n-title="type-or-sub-type"  style="padding-left:.5em;"><b><span data-i18n="type">Type</span></b></span>
-											<span class="sheet-table-cell sheet-left" style="padding-left:.5em;"><span title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type"  class="sheet-left"></span></span>
-											<span class="sheet-table-cell"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-hd}" type="text" name="attr_npc-hd" value="" class="sheet-number" /></span>
-											<span class="sheet-table-cell"><input title="@{NPC-HP}" type="number" name="attr_NPC-HP" value="0" /></span>
-											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fchp}" type="number" name="attr_npc-fchp" value="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-bab}" type="number" name="attr_npc-bab" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-skill}" type="number" name="attr_npc-skill" value="0" /></span>
-											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcskill}" type="number" name="attr_npc-fcskill" value="0" /></span>
-											<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcalt}" type="number" name="attr_npc-fcalt" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Fort}" type="number" name="attr_npc-Fort" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Ref}" type="number" name="attr_npc-Ref" value="0" step="0" min="0" /></span>
-											<span class="sheet-table-cell"><input title="@{npc-Will}" type="number" name="attr_npc-Will" value="0" step="0" min="0" /></span>
-										</div>
-									</div>
-									<div class="sheet-total-row">
-										<span class="sheet-table-cell"><b><span data-i18n="total">Total</span></b></span>
-										<span class="sheet-table-cell"><input class="sheet-not-C-or-D-sect" title="@{class-favored}" type="text" name="attr_class-favored" data-i18n-placeholder="favored-class" /></span>
-										<span class="sheet-table-cell"><input title="@{level}" type="number" name="attr_level" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell"></span>
-										<span class="sheet-table-cell"><input title="@{total-hp}" type="number" name="attr_total-hp" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell sheet-label sheet-not-C-or-D-sect" >&nbsp;</span>
-										<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell"><input title="@{total-skill}" type="number" name="attr_total-skill" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell sheet-not-C-or-D-sect"><input title="@{total-fcskill}" type="number" name="attr_total-fcskill" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell sheet-not-C-or-D-sect"><input title="@{total-fcalt}" type="number" name="attr_total-fcalt" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell"><input title="@{total-Fort}" type="number" name="attr_total-Fort" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell"><input title="@{total-Ref}" type="number" name="attr_total-Ref" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-table-cell"><input title="@{total-Will}" type="number" name="attr_total-Will" value="0" class="sheet-calc" readonly /></span>
+						<div class="sheet-h2-section sheet-class-grid">
+							<span class="sheet-nontable-name" data-i18n="class-race-information-abbrv">Class and Race Info</span>
+							<input class="sheet-sect-show sheet-sect-show-inverse sheet-not-C-show sheet-or-A-show sheet-noshow" type="checkbox" name="attr_is_npc" value="1" role="presentation" />
+							<input class="sheet-sect sheet-or-D-show sheet-hide-readonly sheet-selectedlabel-check" name="attr_add_class" value="1" type="checkbox" />
+							<b class="sheet-sect sheet-hide-readonly" data-i18n="add-class-levels">Add Class Levels</b>
+							<input class="sheet-sect-inverse sheet-or-B-show sheet-hide-readonly sheet-selectedlabel-check" name="attr_add_race" value="1" type="checkbox"/>
+							<b class="sheet-sect-inverse sheet-hide-readonly" data-i18n="add-hit-dice">Add Race/Monster HD</b>
+							<div class="sheet-cheat"></div>
+							<div class="sheet-table sheet-class-table sheet-wide-numbers sheet-hasexpandrows sheet-narrow-numbers-readonly" role="region" aria-label="Class Information" data-i18n-aria-label="class-information">
+								<span class="sheet-table-name sheet-secondary-table-name sheet-not-C-or-D-sect sheet-show-readonly" aria-label="Base Class Levels and Monster HD BAB, hp, skills, and saves" data-i18n="class-and-level">Class(es) and levels</span>
+								<div class="sheet-table-group-head sheet-not-C-or-D-sect">
+									<div class="sheet-table-row">
+										<span class="sheet-table-header sheet-nowrap sheet-left" data-i18n-title="class-number-explanation"  data-i18n-aria-label="class-number-explanation" data-i18n="class-number">Class #</span>
+										<span class="sheet-table-header sheet-entry-long" data-i18n-title="class-name"  data-i18n-aria-label="class-name" data-i18n="class-name">Class Name</span>
+										<span class="sheet-table-header" data-i18n-title="level-current"  data-i18n-aria-label="level-current" data-i18n="level">Level</span>
+										<span class="sheet-table-header" data-i18n-title="hit-die-desc"  data-i18n-aria-label="hit-die-desc" data-i18n="d-hit-die">d(hitdie)</span>
+										<span class="sheet-table-header" data-i18n-title="hit-points-class-title"  data-i18n-aria-label="hit-points-class-title" data-i18n="class-hit-points-abbrv">Class hp</span>
+										<span class="sheet-table-header" data-i18n-title="favored-class-hit-points-title"  data-i18n-aria-label="favored-class-hit-points-title" data-i18n="favored-class-hit-points-abbrv">FC hp</span>
+										<span class="sheet-table-header" data-i18n-title="base-attack-bonus"  data-i18n-aria-label="base-attack-bonus" data-i18n="base-attack-bonus-abbrv">BAB</span>
+										<span class="sheet-table-header" data-i18n-title="skills-per-level"  data-i18n-aria-label="skills-per-level" data-i18n="skills-per-level-abbrv">Skills /lvl</span>
+										<span class="sheet-table-header" data-i18n-title="favored-class-skill"  data-i18n-aria-label="favored-class-skill" data-i18n="favored-class-skill-abbrv">FC Skill</span>
+										<span class="sheet-table-header" data-i18n-title="alternate-favored-class"  data-i18n-aria-label="alternate-favored-class" data-i18n="alternate-favored-class-abbrv">FC Alt</span>
+										<span class="sheet-table-header" data-i18n-title="fortitude-save"  data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv" aria-label="Fortitude Save">Fort</span>
+										<span class="sheet-table-header" data-i18n-title="reflex-save"  data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
+										<span class="sheet-table-header" data-i18n-title="willpower-save-abbrv"  data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
 									</div>
 								</div>
-							</div>
-							<div class="sheet-h2-section sheet-experience sheet-sect-inverse">
-								<input class="sheet-wider-readonly sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
-								<input class="sheet-wider-readonly sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
-								<div class="sheet-table sheet-sect">
-									<span class="sheet-table-name sheet-secondary-table-name" data-i18n="experience-points-abbrv">XP</span>
-									<div class="sheet-table-group-head">
-										<input class="sheet-sect-show sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
-										<input class="sheet-sect2-show sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
-										<span class="sheet-table-header" data-i18n="current-experience" >Current Experience</span>
-										<span class="sheet-table-header sheet-divider-lg">&nbsp;</span>
-										<span class="sheet-table-header" data-i18n="next-level">Next Level</span>
-										<span class="sheet-table-header sheet-sect sheet-left-border" data-i18n="prestige-points">Prestige Points</span>
-										<span class="sheet-table-header sheet-sect sheet-divider-lg">&nbsp;</span>
-										<span class="sheet-table-header sheet-sect" data-i18n="fame">Fame</span>
-										<span class="sheet-table-header sheet-sect2 sheet-left-border" data-i18n="hero-points">Hero Points</span>
+								<div class="sheet-table-group sheet-not-C-or-D-sect">
+									<div class="sheet-table-row">
+										<span class="sheet-table-cell"><b data-i18n-title="class-0-title" data-i18n="1-ordinal">1st</b></span>
+										<span class="sheet-table-cell"><input title="@{class-0-name}" type="text" name="attr_class-0-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-0-level}" type="number" name="attr_class-0-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-hd}" type="text" name="attr_class-0-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-hp}" type="number" name="attr_class-0-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-fchp}" type="number" name="attr_class-0-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-bab}" type="number" name="attr_class-0-bab" value="0" step="0" min="0"/></span>
+										<span class="sheet-table-cell"><input title="@{class-0-skill}" type="number" name="attr_class-0-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-fcskill}" type="number" name="attr_class-0-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-fcalt}" type="number" name="attr_class-0-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-0-Fort}" type="number" name="attr_class-0-Fort" value="0" step="0" min="0"/></span>
+										<span class="sheet-table-cell"><input title="@{class-0-Ref}" type="number" name="attr_class-0-Ref" value="0" step="0" min="0"/></span>
+										<span class="sheet-table-cell"><input title="@{class-0-Will}" type="number" name="attr_class-0-Will" value="0" step="0" min="0"/></span>
+									</div>
+									<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_class1_show" value="1" data-i18n-title="expand-multiclass"  data-i18n-aria-label="Expand-multiclass"  /><span class="sheet-showsect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
+									<div class="sheet-table-row sheet-sect">
+										<span class="sheet-table-cell"><b data-i18n-title="class-1-title" data-i18n="2-ordinal">2nd</b></span>
+										<span class="sheet-table-cell"><input title="@{class-1-name}" type="text" name="attr_class-1-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-1-level}" type="number" name="attr_class-1-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-hd}" type="text" name="attr_class-1-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-hp}" type="number" name="attr_class-1-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-fchp}" type="number" name="attr_class-1-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-bab}" type="number" name="attr_class-1-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-skill}" type="number" name="attr_class-1-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-fcskill}" type="number" name="attr_class-1-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-fcalt}" type="number" name="attr_class-1-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-Fort}" type="number" name="attr_class-1-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-Ref}" type="number" name="attr_class-1-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-1-Will}" type="number" name="attr_class-1-Will" value="0" step="0" min="0" /></span>
+									</div>
+									<input type="checkbox" class="sheet-showarrow sheet-sect2-show sheet-sect sheet-expand-arrow sheet-expand2" name="attr_class2_show" value="1"  data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
+									<div class="sheet-table-row sheet-sect sheet-sect2">
+										<span class="sheet-table-cell"><b data-i18n-title="class-2-title" data-i18n="3-ordinal">3rd</b></span>
+										<span class="sheet-table-cell"><input title="@{class-2-name}" type="text" name="attr_class-2-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-2-level}" type="number" name="attr_class-2-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-hd}" type="text" name="attr_class-2-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-hp}" type="number" name="attr_class-2-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-fchp}" type="number" name="attr_class-2-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-bab}" type="number" name="attr_class-2-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-skill}" type="number" name="attr_class-2-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-fcskill}" type="number" name="attr_class-2-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-fcalt}" type="number" name="attr_class-2-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-Fort}" type="number" name="attr_class-2-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-Ref}" type="number" name="attr_class-2-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-2-Will}" type="number" name="attr_class-2-Will" value="0" step="0" min="0" /></span>
+									</div>
+									<input type="checkbox" class="sheet-showarrow sheet-sect3-show sheet-sect sheet-sect2 sheet-expand-arrow sheet-expand3" name="attr_class3_show" value="1" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass" /><span class="sheet-showsect sheet-sect sheet-sect2" data-i18n-title="expand-multiclass" data-i18n-aria-label="Expand-multiclass"></span>
+									<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
+										<span class="sheet-table-cell"><b data-i18n-title="class-3-title" data-i18n="4-ordinal">4th</b></span>
+										<span class="sheet-table-cell"><input title="@{class-3-name}" type="text" name="attr_class-3-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-3-level}" type="number" name="attr_class-3-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-hd}" type="text" name="attr_class-3-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-hp}" type="number" name="attr_class-3-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-fchp}" type="number" name="attr_class-3-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-bab}" type="number" name="attr_class-3-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-skill}" type="number" name="attr_class-3-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-fcskill}" type="number" name="attr_class-3-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-fcalt}" type="number" name="attr_class-3-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-Fort}" type="number" name="attr_class-3-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-Ref}" type="number" name="attr_class-3-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-3-Will}" type="number" name="attr_class-3-Will" value="0" step="0" min="0" /></span>
+									</div>
+									<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
+										<span class="sheet-table-cell"><b data-i18n-title="class-4-title" data-i18n="5-ordinal">5th</b></span>
+										<span class="sheet-table-cell"><input title="@{class-4-name}" type="text" name="attr_class-4-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-4-level}" type="number" name="attr_class-4-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-hd}" type="text" name="attr_class-4-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-hp}" type="number" name="attr_class-4-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-fchp}" type="number" name="attr_class-4-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-bab}" type="number" name="attr_class-4-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-skill}" type="number" name="attr_class-4-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-fcskill}" type="number" name="attr_class-4-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-fcalt}" type="number" name="attr_class-4-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-Fort}" type="number" name="attr_class-4-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-Ref}" type="number" name="attr_class-4-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-4-Will}" type="number" name="attr_class-4-Will" value="0" step="0" min="0" /></span>
+									</div>
+									<div class="sheet-table-row sheet-sect sheet-sect2 sheet-sect3">
+										<span class="sheet-table-cell"><b data-i18n-title="class-5-title" data-i18n="6-ordinal">6th</b></span>
+										<span class="sheet-table-cell"><input title="@{class-5-name}" type="text" name="attr_class-5-name" data-i18n-placeholder="class-name" ></span>
+										<span class="sheet-table-cell"><input title="@{class-5-level}" type="number" name="attr_class-5-level" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-hd}" type="text" name="attr_class-5-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-hp}" type="number" name="attr_class-5-hp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-fchp}" type="number" name="attr_class-5-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-bab}" type="number" name="attr_class-5-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-skill}" type="number" name="attr_class-5-skill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-fcskill}" type="number" name="attr_class-5-fcskill" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-fcalt}" type="number" name="attr_class-5-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-Fort}" type="number" name="attr_class-5-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-Ref}" type="number" name="attr_class-5-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{class-5-Will}" type="number" name="attr_class-5-Will" value="0" step="0" min="0" /></span>
+									</div>
+								</div>
+								<span class="sheet-nontable-name sheet-secondary-table-name sheet-either-or-sect sheet-show-readonly" style="position: absolute;" data-i18n="monster-racial-hit-dice-abbrv">Monster Racial HD</span>
+								<div class="sheet-table-group sheet-either-or-sect" style="margin-top:1em";>
+									<div class="sheet-table-row sheet-creature-race-header">
+										<span class="sheet-table-header sheet-right sheet-nowrap" data-i18n="race">Race</span>
+										<span class="sheet-table-header sheet-entry-long"  data-i18n="type-or-sub-type">Type (Sub type)</span>
+										<span class="sheet-table-header" data-i18n-title="hit-dice-desc" data-i18n="number-hit-dice-abbrv"># HD</span>
+										<span class="sheet-table-header" data-i18n-title="hit-die-desc" data-i18n="d-hit-die">d(hitdie)</span>
+										<span class="sheet-table-header" data-i18n="hit-points-abbrv">hp</span>
+										<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
+										<span class="sheet-table-header" data-i18n-title="base-attack-bonus"  data-i18n-aria-label="base-attack-bonus" data-i18n="base-attack-bonus-abbrv">BAB</span>
+										<span class="sheet-table-header" data-i18n-title="skills-per-hit-die"  data-i18n-aria-label="skills-per-hit-die" data-i18n="skills-per-hit-die-abbrv">Skills /HD</span>
+										<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
+										<span class="sheet-table-header sheet-not-C-or-D-sect"></span>
+										<span class="sheet-table-header" data-i18n-title="fortitude-save"  data-i18n-aria-label="fortitude-save" data-i18n="fortitude-abbrv">Fort</span>
+										<span class="sheet-table-header" data-i18n-title="reflex-save"  data-i18n-aria-label="reflex-save" data-i18n="reflex-abbrv">Ref</span>
+										<span class="sheet-table-header" data-i18n-title="willpower-save-abbrv"  data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
 									</div>
 									<div class="sheet-table-row">
-										<input class="sheet-sect-show sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
-										<input class="sheet-sect2-show sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
-										<span class="sheet-table-cell"><input class="sheet-entry-wide" title="@{experience}" type="number" name="attr_experience" data-i18n-placeholder="experience-current-place"  /></span>
-										<span class="sheet-divider-lg">/</span>
-										<span class="sheet-table-cell"><input class="sheet-entry-wide" title="@{experience|max}" type="number" name="attr_experience_max" data-i18n-placeholder="experience-next"  /></span>
-										<span class="sheet-table-cell sheet-sect"><input class="sheet-entry-wide" title="@{prestige}" type="number" name="attr_prestige" data-i18n-placeholder="prestige-points"  /></span>
-										<span class="sheet-divider-lg sheet-sect">/</span>
-										<span class="sheet-table-cell sheet-sect"><input class="sheet-entry-wide" title="@{fame}" type="number" name="attr_fame" data-i18n-placeholder="fame"  /></span>
-										<span class="sheet-table-cell sheet-sect2"><input class="sheet-entry-wide" title="@{hero-points}" type="number" name="attr_hero-points" data-i18n-placeholder="hero-points"  /></span>
+										<span class="sheet-table-cell" data-i18n-title="type-or-sub-type"  style="padding-left:.5em;"><b><span data-i18n="type">Type</span></b></span>
+										<span class="sheet-table-cell sheet-left" style="padding-left:.5em;"><span title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type"  class="sheet-left"></span></span>
+										<span class="sheet-table-cell"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-hd}" type="text" name="attr_npc-hd" value="" class="sheet-number" /></span>
+										<span class="sheet-table-cell"><input title="@{NPC-HP}" type="number" name="attr_NPC-HP" value="0" /></span>
+										<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fchp}" type="number" name="attr_npc-fchp" value="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-bab}" type="number" name="attr_npc-bab" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-skill}" type="number" name="attr_npc-skill" value="0" /></span>
+										<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcskill}" type="number" name="attr_npc-fcskill" value="0" /></span>
+										<span class="sheet-table-cell sheet-not-C-or-D-sect"><input style="display:none;" title="@{npc-fcalt}" type="number" name="attr_npc-fcalt" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-Fort}" type="number" name="attr_npc-Fort" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-Ref}" type="number" name="attr_npc-Ref" value="0" step="0" min="0" /></span>
+										<span class="sheet-table-cell"><input title="@{npc-Will}" type="number" name="attr_npc-Will" value="0" step="0" min="0" /></span>
 									</div>
 								</div>
-								<input class="sheet-nextitem-show" type="checkbox" name="attr_use_prestige_fame" value="1" />
-								<div class="sheet-faction-notes sheet-nextitem" style="width:99%;margin-top:.5em;">
-									<label class="sheet-left sheet-small-label" style="display: block;" data-i18n="faction-notes">Faction Notes</label>
-									<textarea class="sheet-inline-textarea" title="@{faction_notes}" name="attr_faction_notes" data-i18n-placeholder="faction-notes-place" ></textarea>
+								<div class="sheet-total-row">
+									<span class="sheet-table-cell"><b><span data-i18n="total">Total</span></b></span>
+									<span class="sheet-table-cell"><input class="sheet-not-C-or-D-sect" title="@{class-favored}" type="text" name="attr_class-favored" data-i18n-placeholder="favored-class" /></span>
+									<span class="sheet-table-cell"><input title="@{level}" type="number" name="attr_level" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell"></span>
+									<span class="sheet-table-cell"><input title="@{total-hp}" type="number" name="attr_total-hp" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell sheet-label sheet-not-C-or-D-sect" >&nbsp;</span>
+									<span class="sheet-table-cell"><input title="@{bab}" type="number" name="attr_bab" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell"><input title="@{total-skill}" type="number" name="attr_total-skill" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell sheet-not-C-or-D-sect"><input title="@{total-fcskill}" type="number" name="attr_total-fcskill" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell sheet-not-C-or-D-sect"><input title="@{total-fcalt}" type="number" name="attr_total-fcalt" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell"><input title="@{total-Fort}" type="number" name="attr_total-Fort" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell"><input title="@{total-Ref}" type="number" name="attr_total-Ref" value="0" class="sheet-calc" readonly /></span>
+									<span class="sheet-table-cell"><input title="@{total-Will}" type="number" name="attr_total-Will" value="0" class="sheet-calc" readonly /></span>
 								</div>
 							</div>
+						</div>
+						<div class="sheet-h2-section sheet-experience sheet-sect-inverse">
+							<input class="sheet-wider-readonly sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
+							<input class="sheet-wider-readonly sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
+							<div class="sheet-table sheet-sect">
+								<span class="sheet-table-name sheet-secondary-table-name" data-i18n="experience-points-abbrv">XP</span>
+								<div class="sheet-table-group-head">
+									<input class="sheet-sect-show sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
+									<input class="sheet-sect2-show sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
+									<span class="sheet-table-header" data-i18n="current-experience" >Current Experience</span>
+									<span class="sheet-table-header sheet-divider-lg">&nbsp;</span>
+									<span class="sheet-table-header" data-i18n="next-level">Next Level</span>
+									<span class="sheet-table-header sheet-sect sheet-left-border" data-i18n="prestige-points">Prestige Points</span>
+									<span class="sheet-table-header sheet-sect sheet-divider-lg">&nbsp;</span>
+									<span class="sheet-table-header sheet-sect" data-i18n="fame">Fame</span>
+									<span class="sheet-table-header sheet-sect2 sheet-left-border" data-i18n="hero-points">Hero Points</span>
+								</div>
+								<div class="sheet-table-row">
+									<input class="sheet-sect-show sheet-noshow" type="checkbox" name="attr_use_prestige_fame" value="1" />
+									<input class="sheet-sect2-show sheet-noshow" type="checkbox" name="attr_use_hero_points" value="1" />
+									<span class="sheet-table-cell"><input class="sheet-entry-wide" title="@{experience}" type="number" name="attr_experience" data-i18n-placeholder="experience-current-place"  /></span>
+									<span class="sheet-divider-lg">/</span>
+									<span class="sheet-table-cell"><input class="sheet-entry-wide" title="@{experience|max}" type="number" name="attr_experience_max" data-i18n-placeholder="experience-next"  /></span>
+									<span class="sheet-table-cell sheet-sect"><input class="sheet-entry-wide" title="@{prestige}" type="number" name="attr_prestige" data-i18n-placeholder="prestige-points"  /></span>
+									<span class="sheet-divider-lg sheet-sect">/</span>
+									<span class="sheet-table-cell sheet-sect"><input class="sheet-entry-wide" title="@{fame}" type="number" name="attr_fame" data-i18n-placeholder="fame"  /></span>
+									<span class="sheet-table-cell sheet-sect2"><input class="sheet-entry-wide" title="@{hero-points}" type="number" name="attr_hero-points" data-i18n-placeholder="hero-points"  /></span>
+								</div>
+							</div>
+							<input class="sheet-nextitem-show" type="checkbox" name="attr_use_prestige_fame" value="1" />
+							<div class="sheet-faction-notes sheet-nextitem" style="width:99%;margin-top:.5em;">
+								<label class="sheet-left sheet-small-label" style="display: block;" data-i18n="faction-notes">Faction Notes</label>
+								<textarea class="sheet-inline-textarea" title="@{faction_notes}" name="attr_faction_notes" data-i18n-placeholder="faction-notes-place" ></textarea>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="sheet-cheat"></div>

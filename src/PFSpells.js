@@ -331,8 +331,16 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
                         return m;
                     }
                 }, 0 , function (m, r, a) {
+                    try {
                     a.S[fieldname] = m;
                     a.S[fieldname2] = m;
+                    } catch (erri){
+                        TAS.error("ERROR calculating spells per day!",erri);
+                        if (a && a.I){
+                            a.I[fieldname]=m;
+                            a.I[fieldname2]=m;
+                        }
+                    }
                 }).execute(done);
             }  else { 
                 done();
