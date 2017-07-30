@@ -202,9 +202,11 @@ input[readonly], input[disabled] {
     min-width:9em;
 }
 .sheet-table-cell.sheet-linked-tablecell-short {
-    width: 7.7em;
-    min-width:6em;
+    width: 7.8em;
+    min-width:6.5em;
+    white-space: nowrap;
 }
+
 .sheet-linked-fields .sheet-inline-textarea.sheet-linked-cellfield,
 .sheet-linked-tablecell select.sheet-linked-cellfield,
 .sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {
