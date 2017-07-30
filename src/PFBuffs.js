@@ -393,7 +393,7 @@ function mergeOldIntoNewBuffs(callback){
 function getBuffNotes(id,v,setter){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	prefix='repeating_buff2_'+idStr,
-	notestr='',notefield='',notereg, addNote=0,tempstr='';
+	notestr='',buffstr='', notefield='',notereg, addNote=0,tempstr='';
 	try {
 		setter=setter||{};
 		if(v[prefix+'add_note_to_roll']){
@@ -402,11 +402,12 @@ function getBuffNotes(id,v,setter){
 		if (parseInt(v[prefix+'enable_toggle'],10)===1 && notefield){
 			addNote=1;
 		}
-		notestr='@{'+prefix+'notes}';
+		buffstr=SWUtils.getTranslated('buff');
+		notestr='**'+buffstr+": @{"+ prefix+'name}:** @{'+prefix+'notes}';
 		notereg = new RegExp (SWUtils.escapeForRegExp(notestr),'i');
 		if(notefield){
 			tempstr=v[notefield]||'';
-			TAS.debug("the note is "+tempstr);
+			//TAS.debug("the note is "+tempstr);
 			if(!tempstr){
 				if(addNote){
 					setter[notefield] = notestr;
@@ -462,11 +463,11 @@ function addNoteAsync(id,eventInfo){
 	prefix = 'repeating_buff2_'+idStr;
 	
 	fields=buffNoteFields.concat([prefix+'add_note_to_roll',prefix+'enable_toggle']);
-	TAS.debug("the fields are ",fields);
+	//TAS.debug("the fields are ",fields);
 	getAttrs(fields,function(v){
 		var setter = getBuffNotes(id,v);
 		if (_.size(setter)){
-			TAS.debug('PFBuffs set notes',setter);
+			//TAS.debug('PFBuffs set notes',setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 	});
@@ -683,7 +684,6 @@ function updateBuffTotal (col,rows,v,setter){
 					}
 				});
 				//NOW START SUMMING
-				//TAS.debug("PFBUFFS FINAL BONUSES for "+ col+":",bonuses);
 				//if ability, penalty is applied seperately
 				if(isAbility &&  _.contains(bonuses,'penalty')){
 					sums.pen=bonuses.penalty;
