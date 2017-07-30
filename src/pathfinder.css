@@ -213,8 +213,8 @@ input[readonly], input[disabled] {
 }
 .sheet-linked-tablecell-short select.sheet-linked-cellfield,
 .sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
-	width:calc(100% - 2.8em);
-    max-width:calc(100% - 2.8em);
+	width:calc(100% - 2.9em);
+    max-width:calc(100% - 2.9em);
 }
 
 /* like br */
@@ -2978,6 +2978,7 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-nexor-A-show:checked~.sheet-nexor-B-show:not(:checked)~.sheet-nexor-sect,
 .sheet-nexor-A-show:not(:checked)~.sheet-nexor-B-show:checked~.sheet-nexor-sect,
 .sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked) ~ .sheet-or3-sect,
+.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked) ~ .sheet-or4-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ .sheet-either-or-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-class-table .sheet-either-or-sect,
 .sheet-spells-per-day .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-table .sheet-either-or-sect,
