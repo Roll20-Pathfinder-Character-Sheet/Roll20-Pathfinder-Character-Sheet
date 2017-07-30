@@ -80,6 +80,11 @@ h4,h5,h6 {
     font-size: .8125rem;
     color: initial;
 }
+.sheet-pf-wrapper {
+    width: 100%;
+    min-width: 100%;
+    margin-top: -1em;
+}
 /* standalone generic toggles */
 .sheet-wounds-show,
 .sheet-mythic-show,
@@ -1721,6 +1726,25 @@ input.sheet-refreshbutton {
 }
 .sheet-selectedlabel-check:checked + b:not(.sheet-offCase) {
     color: black;
+}
+
+.sheet-conditions {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: .25em;
+    padding-right: .25em;
+
+}
+.sheet-conditions .sheet-nontable-name {
+    margin-left: -.25em;
+    margin-right: -.25em;
+    width: calc(100% + .5em);
+}
+.sheet-conditions .sheet-option-condition {
+    white-space: nowrap;
+    font-size: .75rem;
 }
 
 .sheet-conditions .sheet-table-row {
