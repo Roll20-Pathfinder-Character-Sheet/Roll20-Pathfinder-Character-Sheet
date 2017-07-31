@@ -29,8 +29,8 @@ defenseArmorShieldColumns = ["equipped", "acbonus", "enhance", "max-dex", "acp",
 defenseFieldTotals = ["acp", "max-dex", "AC-armor", "AC-shield", "spell-fail", "acp-attack-mod", "max-dex-source", "current-load"],
 defenseArmorFields = SWUtils.cartesianAppend(defenseArmorShieldRows, ['-'], defenseArmorShieldColumns).concat(defenseFieldTotals),
 events = {
-    defenseEventsAuto: "change:bab change:ac-penalty change:cmd-penalty change:size change:ac-shield change:ac-armor change:ac-ability-mod change:ff-dex change:cmd-dex change:ff-cmd-dex change:cmd-str change:max-dex",
-    defenseEventsPlayer: "change:ff-dex change:ac-penalty change:cmd-penalty change:size change:ac-dodge change:ac-natural change:ac-deflect change:ac-misc change:cmd-misc",
+    defenseEventsAuto: "change:bab change:ac-penalty change:cmd-penalty change:size change:ac-shield change:ac-armor change:ac-ability-mod change:ff-dex change:cmd-dex change:ff-cmd-dex change:cmd-str change:max-dex change:ac-misc-mod change:cmd-misc-mod",
+    defenseEventsPlayer: "change:ff-dex change:ac-penalty change:cmd-penalty change:size change:ac-dodge change:ac-natural change:ac-deflect",
     defenseEventsEither: "change:size change:AC-ability change:FF-ability change:CMD-ability1 change:CMD-ability2 change:CMD-ability"
 };
 
@@ -38,38 +38,39 @@ events = {
  * http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#combat-maneuver-defense
  * Any penalties to a creature's AC also apply to its CMD
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateDefenses ( callback, silently, eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.updateDefenses");
+        //TAS.debug("leaving PFDefense.updateDefenses");
         if (typeof callback === "function") {
             callback();
         }
     });
     getAttrs(["AC-ability-mod", "FF-DEX", "AC-penalty", "CMD-penalty", "size", "max-dex", "AC-dodge", 
-    "AC-natural", "AC-deflect", "AC-misc", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
-    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
+    "AC-natural", "AC-deflect", "AC-misc-mod", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
+    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc-mod", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
     "AC-ability", "FF-ability", "CMD-ability", "CMD-ability1", "CMD-ability2", "AC-armor", "AC-shield", 
     "condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained", 
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
     "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
+    "buff_dodge-total","buff_deflection-total", "buffsumac", "buffsumtouch", "buffsumff", "buffsumcmd", "buffsumffcmd ",
     "current-load", "max-dex-source"], function (v) {
         var size = parseInt(v["size"], 10) || 0,
         dodge = parseInt(v["AC-dodge"], 10) || 0,
         deflect = parseInt(v["AC-deflect"], 10) || 0,
-        miscAC = parseInt(v["AC-misc"], 10) || 0,
+        miscAC = parseInt(v["AC-misc-mod"], 10) || 0,
         condPenalty = parseInt(v["AC-penalty"], 10) || 0,
         buffs = parseInt(v["buff_AC-total"], 10) || 0,
-        buffsTouch = parseInt(v["buff_Touch-total"], 10) || 0,
-        buffsCMD = parseInt(v["buff_CMD-total"], 10) || 0,
+        buffsTouchOnly = parseInt(v["buff_Touch-total"], 10) || 0,
+        buffsCMDOnly = parseInt(v["buff_CMD-total"], 10) || 0,
         armor = parseInt(v["AC-armor"], 10) || 0,
         shield = parseInt(v["AC-shield"], 10) || 0,
         natural = parseInt(v["AC-natural"], 10) || 0,
         bab = parseInt(v["bab"], 10) || 0,
-        miscCMD = parseInt(v["CMD-misc"], 10) || 0,
+        miscCMD = parseInt(v["CMD-misc-mod"], 10) || 0,
         maxDex = parseInt(v["max-dex"], 10),
         cmdPenalty = parseInt(v["CMD-penalty"], 10) || 0,
         blinded = (parseInt(v["condition-Blinded"], 10) || 0) ? 1 : 0,
@@ -113,24 +114,30 @@ export function updateDefenses ( callback, silently, eventInfo) {
         shieldbuff = parseInt(v['buff_shield-total'],10)||0,
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
         flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
+        dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
         buffac = 0,
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
+        buffcmd = 0,
         setAny = 0,
         setter = {},
         params = {};
         try {
-            //TAS.debug("PFDefense.updateDefenses:",v);
-            buffac=buffs+armorbuff+shieldbuff+naturalbuff;
-            bufftouch=buffsTouch;
+            TAS.debug("PFDefense.updateDefenses: buffs "+buffs,v);
+            
+            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
+            bufftouch=buffs+buffsTouchOnly+dodgebuff;
             buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
-            buffffcmd = buffsCMD+flatfootedbuff;
-         //   buffcmd = buffs
-            setter.buffsumac=buffac;
-            setter.buffsumtouch=bufftouch;
-            setter.buffsumff=buffff;
-            setter.buffsumffcmd = buffffcmd;
+            buffcmd = buffs+buffsCMDOnly+dodgebuff;
+            buffffcmd = buffs+buffsCMDOnly+flatfootedbuff;
+
+            dodge += dodgebuff;
+            //deflect ;
+            armor += armorbuff;
+            shield += shieldbuff;
+            natural += naturalbuff;
+
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if (acAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
@@ -225,6 +232,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     //dexModShowLimit=1;
                     dodge = 0;
                     noDexShowLimit = 1;
+                } else {
+                    buffff += dodgebuff;
+                    buffffcmd += dodgebuff;
                 }
                 //set to same as flat footed (probably 0) or less than if ability already under 10.
                 ability = Math.min(ability,ffAbility);
@@ -234,26 +244,33 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 bab = parseInt(v.level,10)||0;
             }
             ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
-            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouch;
+            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + bufftouch;
             ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
-            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffsCMD;
-            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffsCMD + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
+            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+
+
+            if(parseInt(v.buffsumff,10)!==buffff){
+                setter.buffsumff=buffff;
+            }
+            if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
+                setter.buffsumffcmd = buffffcmd;
+            }
+            if(parseInt(v.buffsumtouch,10)!==bufftouch){
+                setter.buffsumtouch = bufftouch;
+            }
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
-                setAny += 1;
             }
             if (touch !== currTouch || isNaN(currTouch)) {
                 setter["Touch"] = touch;
-                setAny += 1;
             }
             if (ff !== currFF || isNaN(currFF)) {
                 setter["Flat-Footed"] = ff;
-                setAny += 1;
             }
             //TAS.debug("PFDefense.updateDefenses currcmd is :"+ currCMD +", new cmd is:"+ cmd);
             if (cmd !== currCMD || isNaN(currCMD)) {
                 setter["CMD"] = cmd;
-                setAny += 1;
             }
             if (cmdFF !== currCMDFF || isNaN(currCMDFF)) {
                 setter["FF-CMD"] = cmdFF;
@@ -284,7 +301,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -306,7 +323,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
  */
 export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
+        //TAS.debug("leaving PFDefense.setDefenseDropdownMod for "+dropdownField);
         if (typeof callback === "function") {
             callback();
         }
@@ -368,7 +385,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
                             setter["CMD-ability"]=v['AC-ability'];
                             setter[defenseDropdowns["CMD-ability"]]=currACmod;
                         }
-                        setAttrs(setter,PFConst.silentParams,updateAndDone);
+                        SWUtils.setWrapper(setter,PFConst.silentParams,updateAndDone);
                     } else {
                         updateAndDone();
                     }
@@ -387,7 +404,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  * if not proficient sets attack penalty
  * for backward compatibility, proficiency is string and 0 is proficient, anything else non proficient
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateArmor (callback, silently, eventInfo) {
@@ -484,7 +501,7 @@ export function updateArmor (callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -494,17 +511,20 @@ export function updateArmor (callback, silently, eventInfo) {
 /** applyConditions Updates the AC-penalty and CMD-penalty field based on conditions
  *only difference is CMD penalty affected by energy drain for some reason
  *@param {function} callback optional call when done
- *@param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function applyConditions (callback, silently,eventInfo) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.applyConditions");
+        //TAS.debug("leaving PFDefense.applyConditions");
         if (typeof callback === "function") {
             callback();
         }
     });
-    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode"], function (v) {
+    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", 
+    "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode",
+    "condition-Grappled", "condition-Invisible",
+    "condition-Paralyzed","condition-Helpless","condition-Prone","condition_defense_notes"], function (v) {
         var subTotPenalty = 0,
         drained = 0,
         woundLevel = 0,
@@ -514,25 +534,52 @@ export function applyConditions (callback, silently,eventInfo) {
         woundPenalty = 0,
         hasEndurance = 0,
         grittyMode = 0,
+        defenseNote='',
         setter = {},
         params = {};
         try {
-            drained = parseInt(v["condition-Drained"], 10) || 0;
-            woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
-            AC = parseInt(v["AC-penalty"], 10) || 0;
-            CMD = parseInt(v["CMD-penalty"], 10) || 0;
-            hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
-            grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
-            woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
-            subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Pinned"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
-            subTotPenalty += woundPenalty;
-            newCMD = drained + subTotPenalty;
-            if (AC !== subTotPenalty) {
-                setter["AC-penalty"] = subTotPenalty;
+            //if user pressed Grappled or invisible, just skip to notes
+            if (!eventInfo || !(/grappled|invisible/i).test(eventInfo.sourceAttribute)){ 
+                drained = parseInt(v["condition-Drained"], 10) || 0;
+                woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
+                AC = parseInt(v["AC-penalty"], 10) || 0;
+                CMD = parseInt(v["CMD-penalty"], 10) || 0;
+                hasEndurance = parseInt(v.has_endurance_feat, 10) || 0;
+                grittyMode = parseInt(v.wounds_gritty_mode, 10) || 0;
+                woundPenalty = PFUtils.getWoundPenalty(woundLevel, hasEndurance, grittyMode);
+                subTotPenalty = -1 * ((parseInt(v["condition-Blinded"], 10) || 0) + (parseInt(v["condition-Pinned"], 10) || 0) + (parseInt(v["condition-Cowering"], 10) || 0) + (parseInt(v["condition-Stunned"], 10) || 0));
+                subTotPenalty += woundPenalty;
+                newCMD = drained + subTotPenalty;
+                if (AC !== subTotPenalty) {
+                    setter["AC-penalty"] = subTotPenalty;
+                }
+                if (CMD !== newCMD) {
+                    setter["CMD-penalty"] = newCMD;
+                }
+            } else {
+                silently=true;
             }
-            if (CMD !== newCMD) {
-                setter["CMD-penalty"] = newCMD;
-            }
+			if(parseInt(v['condition-Paralyzed'],10)){
+                defenseNote+='**'+ SWUtils.getTranslated('paralyzed')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-paralyzed-note') + '\r\n';
+			}
+			if(parseInt(v['condition-Prone'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('prone')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-prone-note') + '\r\n';
+			}
+			if(parseInt(v['condition-Helpless'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('helpless')+'**: ';
+				defenseNote+=SWUtils.getTranslated('condition-helpless-note') + '\r\n';
+			}
+			if(parseInt(v['condition-Grappled'],10) && parseInt(v['condition-Invisible'],10)){
+                defenseNote+= '**'+SWUtils.getTranslated('grappled')+' + ' +SWUtils.getTranslated('invisible') + '**: ';
+				defenseNote+=SWUtils.getTranslated('condition-grappled-invisible-note') + '\r\n';
+			}
+
+			if(defenseNote!==v.condition_defense_notes){
+				setter['condition_defense_notes'] = defenseNote;				
+			}
+            
         } catch (err) {
             TAS.error("PFDefense.applyConditions:", err);
         } finally {
@@ -540,7 +587,7 @@ export function applyConditions (callback, silently,eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -554,7 +601,7 @@ export function applyConditions (callback, silently,eventInfo) {
  */
 export function migrate (callback,oldversion){
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.migrate");
+        //TAS.debug("leaving PFDefense.migrate");
         if (typeof callback === "function") {
             callback();
         }
@@ -578,7 +625,7 @@ export function migrate (callback,oldversion){
                 TAS.error("PFDefense.migrate",err);
             } finally {
                 if (_.size(setter)>0){
-                    setAttrs(setter,PFConst.silentParams,done);
+                    SWUtils.setWrapper(setter,PFConst.silentParams,done);
                 } else {
                     done();
                 }
@@ -591,12 +638,12 @@ export function migrate (callback,oldversion){
 
 /** recalculate defense grid
  * @param {function} callback guaranteed call when done
- * @param {boolean} silently optional if true call setAttrs with PFConst.silentParams
+ * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  * @param {number} oldversion 
  */
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFDefense.recalculate");
+        //TAS.debug("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -615,7 +662,7 @@ export function recalculate (callback, silently, oldversion) {
             }, silently);
         }, silently);
     },silently);
-}
+});
 
 function registerEventHandlers () {
     _.each(defenseDropdowns, function (write, read) {
@@ -638,7 +685,7 @@ function registerEventHandlers () {
     }));		
     on(events.defenseEventsAuto, TAS.callback(function eventUpdateDefensesAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker") {
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
             updateDefenses(null,null,eventInfo);
         }
     }));
@@ -667,5 +714,5 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-PFConsole.log( '   PFDefense module loaded        ' );
-PFLog.modulecount++;
+//PFConsole.log( '   PFDefense module loaded        ' );
+//PFLog.modulecount++;

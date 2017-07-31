@@ -13,9 +13,9 @@ import * as PFUtilsAsync from './PFUtilsAsync';
  * @returns {Array} of strings comprising macro
  */
 function splitMacro (macrostr){
-    var splitted,newsplit,lastclosing;
+    var splitted,newsplit,lastclosing,temparray;
     if (!macrostr) {return "";}
-    splitted = macrostr.split(/(?=\{\{)/);
+    splitted = macrostr.split(/(?=\{\{)|(?=\&\{)|(?=\|\|)/);
     splitted = SWUtils.trimBoth(splitted);
     newsplit = _.reduce(splitted,function(memo,val){
         try {
@@ -35,6 +35,22 @@ function splitMacro (macrostr){
                         memo=memo.concat(SWUtils.trimBoth(SWUtils.trimBoth(val.slice(lastclosing+2)).replace('&amp;','&').split(/(?=[\@\&]\{)/)));
                     }
                 }
+            } else if (val.slice(0,2)==='&{'){
+                val=val.replace('&amp;','&'); 
+                memo=memo.concat(SWUtils.trimBoth(val.split(/(?=[\@\&]\{)/)));
+            } else if (val.slice(0,2)==='||'){
+                if(SWUtils.trimBoth(val)!=='||'){
+                    val=val.replace('&amp;','&');
+                    temparray=SWUtils.trimBoth(val.split(/(?=[\@\&]\{)/));
+                    if (temparray[0]==='||'){
+                        //skip first one
+                        temparray = temparray.slice(1);
+                    } else if (temparray[0].slice(-2)!=='||'){
+                        //only add || to end of first one
+                        temparray[0]= temparray[0]+'||';
+                    }
+                    memo=memo.concat(temparray);
+                }
             } else {
                 val=val.replace('&amp;','&'); 
                 memo=memo.concat(SWUtils.trimBoth(val.split(/(?=[\@\&]\{)/)));
@@ -47,6 +63,31 @@ function splitMacro (macrostr){
     },[]);
     return newsplit;
 }
+
+export function getTracking(macrostr){
+    var trackArray=[],entries=[],last;
+    try {
+        //TAS.debug("PFMacros.getTracking on" ,macrostr);
+        entries = splitMacro(macrostr);
+        TAS.debug("PFMacros.getTracking array is ",entries);
+        if(entries && _.size(entries) ){
+            trackArray = entries.filter(function(entry){
+                return (/^\{\{[a-z]+tracking\d+=/i).test(entry);
+            }).concat(entries.filter(function(entry){
+                if (entry.slice(0,1)!=='{{' && entry.indexOf('||')>=0){
+                    return 1;
+                }
+                return 0;
+            }));
+        }
+        TAS.debug("PFMacros.getTracking tracking is ",trackArray);        
+    } catch (err){
+        TAS.error("PFMacros.getTracking error",err);
+    } finally {
+        return trackArray;
+    }
+}
+
 /** arrayToMap Splits array of {{x=y}} to mapping of '{{x=': 'y}}' 
  * and splits &{template:templatename} on the :
  * unless the item has no equals sign then the value = map.
@@ -218,7 +259,7 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
     }
 }
 /** migrateRepeatingMacros updates all macros in the section 
- * @param {function} callback after calling setAttrs with the new macros
+ * @param {function} callback after calling SWUtils.setWrapper with the new macros
  * @param {string} section  name after "repeating_"
  * @param {string} fieldname  the attribute name containing the macro after "id_"
  * @param {string} defaultMacro the current Macro in the page
@@ -233,7 +274,7 @@ export function migrateMacro  (currMacro,defaultMacro,defaultMap,deleteArray,sam
  */
 export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray, whisper){
    var done = _.once(function(){
-        TAS.debug("leaving migrateRepeatingMacros for "+ section + ", "+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacros for "+ section + ", "+fieldname);
         if (typeof callback === "function") {
             callback();
         }
@@ -279,7 +320,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
                 }
             },{});
             if (_.size(setter)>0){
-                setAttrs(setter,{},done);
+                SWUtils.setWrapper(setter,{},done);
             } else {
                 done();
             }
@@ -290,7 +331,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
  * each parameter below potentially has the word 'REPLACE' in it, for each element in replaceArray,
  * replace the word REPLACE with that element.
  * This is not the most efficient, but it was alot easier than rewriting migrateRepeatingMacros 
- *@param {function} callback after calling setAttrs with the new macros
+ *@param {function} callback after calling SWUtils.setWrapper with the new macros
  *@param {string} section  name after "repeating_"
  *@param {string} fieldname  the attribute name containing the macro after "id_"
  *@param {string} defaultMacro the current Macro in the page
@@ -306,7 +347,7 @@ export function migrateRepeatingMacros  (callback,section,fieldname,defaultMacro
  */
 export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultMacro,defaultMap,deleteArray,replaceArray, whisper){
    var done=_.once(function(){
-        TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacrosMult for "+section+"_"+fieldname);
         if (typeof callback === "function"){
             callback();
         }
@@ -406,7 +447,7 @@ export function migrateRepeatingMacrosMult  (callback,section,fieldname,defaultM
  */
 export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMap, deleteArray, sameAsKeys, whisper){
     var done = _.once(function(){
-        TAS.debug("leaving migrateRepeatingMacros for "+ fieldname);
+        //TAS.debug("leaving migrateRepeatingMacros for "+ fieldname);
         if (typeof callback === "function") {
             callback();
         }
@@ -443,7 +484,7 @@ export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMa
             TAS.error("migrateRepeatingMacros error migrating "+fieldname+", "+currMacro,innererr);
         } finally {
             if (_.size(setter)>0){
-                setAttrs(setter,{},done);
+                SWUtils.setWrapper(setter,{},done);
             } else {
                 done();
             }
@@ -462,7 +503,7 @@ export function migrateStaticMacro (callback, fieldname, defaultMacro, defaultMa
  */
 export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultMaps,deleteArrays, sameAsKeys, whisper){
     var done = _.once(function(){
-        TAS.debug("leaving migrateStaticMacros ");
+        //TAS.debug("leaving migrateStaticMacros ");
         if (typeof callback === "function") {
             callback();
         }
@@ -509,7 +550,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
         },{});
         //TAS.debug("migrateStaticMacros setting ", setter);
         if (_.size(setter)>0){
-            setAttrs(setter,{},done);
+            SWUtils.setWrapper(setter,{},done);
         } else {
             done();
         }
@@ -524,7 +565,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
  * 
  * if any of the "REMOVENUMBER" values are used, then caller should set useNoNumber to true
  * 
- * @param {function} callback after calling setAttrs with the new macros
+ * @param {function} callback after calling SWUtils.setWrapper with the new macros
  * @param {string} fieldname string pattern of attr we are saving to. Should have one of 'REPLACE','REPLACELOWER','REPLACEREMOVENUMBER','REPLACELOWERREMOVENUMBER' in it, which will be replaced by values in replaceArray
  * @param {string} defaultMacro default macro with REPLACE strings
  * @param {{string : {current:string,  old:[  string ],  replacements:[  { from: string, to:string}]  }
@@ -541,7 +582,7 @@ export function migrateStaticMacros  (callback,fieldnames,defaultMacros,defaultM
 export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defaultMap, deleteArray, replaceArray, 
     keysToReplaceShortcut, valsToReplaceShortcut, useNoNumber, whisper){
     var done=_.once(function(){
-        TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
+        //TAS.debug("leaving migrateRepeatingMacrosMult for "+fieldname);
         if (typeof callback === "function"){
             callback();
         }
@@ -672,5 +713,5 @@ export function migrateStaticMacrosMult (callback, fieldname, defaultMacro, defa
         done();
     }
 }
-PFConsole.log('   PFMacros module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFMacros module loaded         ');
+//PFLog.modulecount++;

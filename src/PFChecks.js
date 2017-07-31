@@ -2,8 +2,9 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
-import * as PFUtils  from './PFUtils';
-/* PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
+import * as PFUtils from './PFUtils';
+import * as SWUtils from './SWUtils';
+/** PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
  * Reads in condition that affect Ability and Skill checks and updates condition fields.
  * checks-cond, Phys-skills-cond, Perception-cond.
  */
@@ -13,11 +14,15 @@ export function applyConditions (callback, silently) {
 			callback();
 		}
 	};
-	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened", "condition-Wounds", "has_endurance_feat", "wounds_gritty_mode", "checks-cond", "Phys-skills-cond", "Perception-cond", "wound_threshold-show", "CasterLevel-Penalty"], function (v) {
+	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened", 
+	"condition-Wounds", "has_endurance_feat", "wounds_gritty_mode", "checks-cond", "Phys-skills-cond",
+	"wound_threshold-show", "CasterLevel-Penalty", "condition-Dazzled","condition-Deafened","condition-Fascinated",
+	"condition_skill_notes","condition_init_notes"	], function (v) {
 		//there is no Fascinated, if we add it then:
 		//,"condition-Fascinated" -4 to perception
 		var setter = {},
-		params = {}, drained = 0, fear = 0, sick = 0, woundPenalty = 0, wounds = 0, allSkillsMod = 0, casterlevel = 0, blindedMod = 0, currAllSkills = 0, currPhysSkills = 0, currPerSkills = 0, currCaster = 0;
+		params = {}, drained = 0, fear = 0, sick = 0, woundPenalty = 0, wounds = 0, allSkillsMod = 0, casterlevel = 0, blindedMod = 0, currAllSkills = 0, currPhysSkills = 0, currPerSkills = 0, currCaster = 0,
+		skillNote='',initNote='',attackNote='',defenseNote='';
 		try {
 			drained = parseInt(v["condition-Drained"], 10) || 0;
 			fear = -1 * (parseInt(v["condition-Fear"], 10) || 0);
@@ -29,7 +34,7 @@ export function applyConditions (callback, silently) {
 			blindedMod = -2 * (parseInt(v["condition-Blinded"], 10) || 0);
 			currAllSkills = parseInt(v["checks-cond"], 10) || 0;
 			currPhysSkills = parseInt(v["Phys-skills-cond"], 10) || 0;
-			currPerSkills = parseInt(v["Perception-cond"], 10) || 0;
+	
 			currCaster = parseInt(v["CasterLevel-Penalty"], 10) || 0;
 			if (allSkillsMod !== currAllSkills || isNaN(currAllSkills)) {
 				setter["checks-cond"] = allSkillsMod;
@@ -37,22 +42,48 @@ export function applyConditions (callback, silently) {
 			if (blindedMod !== currPhysSkills || isNaN(currPhysSkills)) {
 				setter["Phys-skills-cond"] = blindedMod;
 			}
-			if (blindedMod !== currPerSkills || isNaN(currPerSkills)) {
-				setter["Perception-cond"] = blindedMod;
-			}
+
 			if (casterlevel !== currCaster || isNaN(currCaster)) {
 				setter["CasterLevel-Penalty"] = casterlevel;
 			}
+			if(blindedMod){
+				skillNote+= '**'+SWUtils.getTranslated('blinded')+'**: ';
+				skillNote+= SWUtils.getTranslated('condition-blinded-note') + '\r\n';
+				initNote+= SWUtils.getTranslated('blinded')+': ';
+				initNote+= SWUtils.getTranslated('condition-blinded-speed') + '\r\n';
+			}
+			if(parseInt(v['condition-Dazzled'],10)){
+				skillNote+= '**'+SWUtils.getTranslated('dazzled')+'**: ';
+				skillNote+=SWUtils.getTranslated('condition-dazzled-note') + '\r\n';
+			}
+			if(parseInt(v['condition-Deafened'],10)){
+				skillNote+= '**'+SWUtils.getTranslated('deafened')+'**: ';
+				skillNote+=SWUtils.getTranslated('condition-deafened-note') + '\r\n';
+			}
+			if(parseInt(v['condition-Fascinated'],10)){
+				skillNote+= '**'+SWUtils.getTranslated('fascinated')+'**: ';
+				skillNote+=SWUtils.getTranslated('condition-fascinated-title') + '\r\n';
+			}
+
+	
+			if(skillNote!==v.condition_skill_notes){
+				setter['condition_skill_notes'] = skillNote;
+			}
+			if(initNote!==v.condition_init_notes){
+				setter['condition_init_notes'] = initNote;				
+			}
+
+
 		} catch (err) {
 			TAS.error("PFChecks.applyConditions", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				setAttrs(setter, {}, done);
+				SWUtils.setWrapper(setter, {}, done);
 			} else {
 				done();
 			}
 		}
 	});
 }
-PFConsole.log('   PFChecks module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFChecks module loaded         ');
+//PFLog.modulecount++;

@@ -3,7 +3,7 @@ export default {
 	unarmedAttacksRegExp : /unarmed|strike|punch|palm|flurry|blow|touch/i,
 	combatManeuversRegExp : /bull\s*rush|trip|disarm|dirty\s*trick|drag|grapple|overrun|reposition|steal|sunder|trip/i,
 	primaryNaturalAttacksRegExp : /bite|claw|gore|slam|sting|talon/i,
-	importantFeatRegExp : /Weapon Fine|^Run$|Enduran|Defensive Combat Train|Agile Maneuv|Arcane Arm|Combat Cast|Critical Focus|Skill Focus|Critical|Intimidating Prow/i,
+	importantFeatRegExp : /Weapon Fine|^Run$|Enduran|Defensive Combat Train|Agile Maneuv|Arcane Arm|Combat Cast|Critical Focus|Skill Focus|Critical|Intimidating Prow|great fortitude|iron will|lightning reflexes/i,
 	spAttackAttacks : /blooddrain|touch|energydrain|bleed|burn|constrict|trample|engulf|heat|powerfulcharge|swallowwhole|constrict/i,
 	spAttackAttacksPreProcess : /rake|rend|web/i,
 	abilitySrch : /str|dex|con|int|wis|cha/i,
@@ -31,7 +31,7 @@ export default {
 		fey: ['Appraise', 'Bluff', 'Climb', 'Craft', 'Diplomacy', 'Disguise', 'Escape-Artist', 'Fly', 'Knowledge-Geography', 'Knowledge-Local', 'Knowledge-Nature', 'Perception', 'Perform', 'Sense-Motive', 'Sleight-of-Hand', 'Stealth', 'Swim', 'Use-Magic-Device'],
 		monstrous: ['Climb', 'Craft', 'Fly', 'Intimidate', 'Perception', 'Ride', 'Stealth', 'Survival', 'Swim'],
 		humanoid: ['Climb', 'Craft', 'Handle-Animal', 'Heal', 'Profession', 'Ride', 'Survival'],
-		magicalbeast: ['Acrobatics', 'Climb', 'Fly', 'Perception', 'Steatlh', 'Swim'],
+		magicalbeast: ['Acrobatics', 'Climb', 'Fly', 'Perception', 'Stealth', 'Swim'],
 		outsider: ['Bluff', 'Craft', 'Knowledge-Planes', 'Perception', 'Sense-Motive', 'Stealth'],
 		plant: ['Perception', 'Stealth'],
 		undead: ['Climb', 'Disguise', 'Fly', 'Intimidate', 'Knowledge-Arcana', 'Knowledge-Religion', 'Perception', 'Sense-Motive', 'Spellcraft', 'Stealth']

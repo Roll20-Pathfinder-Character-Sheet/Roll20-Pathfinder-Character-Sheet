@@ -12,13 +12,16 @@ function updatePsionicBonusPower (callback, silently) {
 		if (typeof callback === "function") {
 			callback();
 		}
-	});
+	}),
+	params={};
+	if (silently) {
+		params = PFConst.silentParams;
+	}
 	getAttrs(["selected-ability-psionic-power", "psionic-level-total", "ability-psionic-power"], function (v) {
 		SWUtils.evaluateExpression(v["selected-ability-psionic-power"], function (value) {
 			var ability = 0,
 			currentTotal = 0,
 			newTotal = 0,
-			params = {},
 			finished = false;
 			try {
 				ability = parseInt(value, 10) || 0;
@@ -26,11 +29,8 @@ function updatePsionicBonusPower (callback, silently) {
 				newTotal = Math.floor(ability * (parseInt(v["psionic-level-total"], 10) || 0) * 0.5);
 				//TAS.debug("ability=" + ability, "newTotal=" + newTotal, "currentTotal=" + currentTotal);
 				if (currentTotal !== newTotal) {
-					if (silently) {
-						params = PFConst.silentParams;
-					}
 					finished = true;
-					setAttrs({
+					SWUtils.setWrapper({
 						"ability-psionic-power": newTotal
 					}, params, done);
 				}
@@ -41,6 +41,10 @@ function updatePsionicBonusPower (callback, silently) {
 					done();
 				}
 			}
+		},function(){
+			SWUtils.setWrapper({
+				"ability-psionic-power": 0
+			}, params, done);
 		});
 	});
 }
@@ -49,7 +53,7 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFPsionicRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("Leaving PFPsionic.recalculate");
 		if (typeof callback === "function") {
@@ -68,7 +72,7 @@ export function recalculate (callback, silently, oldversion) {
 			done();
 		}
 	});
-}
+});
 function registerEventHandlers () {
 	on("change:psionic-level change:psionic-level-misc", TAS.callback(function eventUpdatePsionicLevel(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -78,7 +82,7 @@ function registerEventHandlers () {
 	}));
 	on("change:class-psionic-power change:ability-psionic-power change:misc-psionic-power", TAS.callback(function eventUpdatePsionicPower(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && eventInfo.sourceAttribute==='ability-psionic-power')) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" && eventInfo.sourceAttribute==='ability-psionic-power')) {
 			SWUtils.updateRowTotal(["psionic-power_max", "class-psionic-power", "ability-psionic-power", "misc-psionic-power"]);
 		}
 	}));
@@ -88,5 +92,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFPsionic module loaded        ');
-PFLog.modulecount++;
+//PFConsole.log('   PFPsionic module loaded        ');
+//PFLog.modulecount++;

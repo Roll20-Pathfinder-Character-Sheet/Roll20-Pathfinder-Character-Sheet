@@ -9,8 +9,8 @@ import * as PFUtils  from './PFUtils';
 
 export var saveTypes = ["Fort", "Ref", "Will"];
 var events = {
-	saveEventsAuto: "change:saves-cond change:total-REPLACE change:REPLACE-ability-mod",
-	saveEventsPlayer: "change:REPLACE-trait change:REPLACE-enhance change:REPLACE-resist change:REPLACE-misc"
+	saveEventsAuto: "change:saves-cond change:total-REPLACE change:REPLACE-ability-mod change:REPLACE-misc-mod",
+	saveEventsPlayer: "change:REPLACE-trait change:REPLACE-enhance change:REPLACE-resist"
 };
 
 export function applyConditions (callback, silently) {
@@ -45,7 +45,7 @@ export function applyConditions (callback, silently) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}
@@ -53,45 +53,47 @@ export function applyConditions (callback, silently) {
 	});
 }
 /* updateSave - updates the saves for a character
-* @save = type of save: Fort, Ref, Will  (first character capitalized)
-*/
+ * @save = type of save: Fort, Ref, Will  (first character capitalized)
+ */
 export function updateSave (save, callback, silently) {
-	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc", "saves-cond", "buff_" + save + "-total"];
+	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
-export function recalculate (callback, silently, oldversion) {
+export function updateSaves(callback,silently){
 	var done = _.once(function () {
-		TAS.info("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	saved = _.after(3, function () {
-		//TAS.debug"finished 3 saves");
 		done();
 	});
-	TAS.debug("at PFSaves.recalculate");
+	updateSave("Fort", saved, silently);
+	updateSave("Ref", saved, silently);
+	updateSave("Will", saved, silently);
+}
+export var recalculate = TAS.callback(function PFSavesRecalculate(callback, silently, oldversion) {
+	var done = _.once(function () {
+		TAS.info("leaving PFSaves.recalculate");
+		if (typeof callback === "function") {
+			callback();
+		}
+	});
+	//TAS.debug("at PFSaves.recalculate");
 	try {
 		applyConditions(function () {
-			try {
-				updateSave("Fort", saved, silently);
-				updateSave("Ref", saved, silently);
-				updateSave("Will", saved, silently);
-			} catch (err2) {
-				TAS.error("PFSaves.recalculate inner saves", err2);
-				done();
-			}
+			updateSaves(done,silently);
 		}, silently);
 	} catch (err) {
 		TAS.error("PFSaves.recalculate OUTER", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	_.each(saveTypes, function (save) {
 		var eventToWatch = events.saveEventsAuto.replace(/REPLACE/g, save);
 		on(eventToWatch, TAS.callback(function eventUpdateSaveAuto(eventInfo) {
-			if (eventInfo.sourceType === "sheetworker") {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event for " + save + ": " + eventInfo.sourceType);
 				updateSave(save, eventInfo);
 			}
@@ -108,5 +110,5 @@ function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-PFConsole.log('   PFSaves module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFSaves module loaded          ');
+//PFLog.modulecount++;
