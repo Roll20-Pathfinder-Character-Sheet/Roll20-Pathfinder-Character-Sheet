@@ -18,12 +18,14 @@ optionDefaults = {
         melee: "@{melee-attack-notes}",
         ranged: "@{ranged-attack-notes}",
         CMB: "@{CMB-notes}",
-        attack: "@{attack-notes}"
+        attack: "@{attack-notes}",
+        dual: "@{melee-attack-notes}"
     },
     image: {
         melee: "@{header_image-pf_attack-melee}",
         ranged: "@{header_image-pf_attack-ranged}",
-        CMB: "@{header_image-pf_attack-cmb}"
+        CMB: "@{header_image-pf_attack-cmb}",
+        dual: "@{header_image-pf_attack-dual}"
     }
 },
 //not used since melee options field actually look at the text..
@@ -50,23 +52,28 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
     var 
     attackType = PFUtils.findAbilityInString(rowValues[prefix + "attack-type"]),
     damageAbility = PFUtils.findAbilityInString(rowValues[prefix + "damage-ability"]),
-    optionText = "";
-    if (!(attackType || rowValues[prefix + "attack"] )) {
-        optionText += "{{no_attack_roll=1}}";
+    optionText = "{{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}";
+    if (attackType!=='dual' && !(attackType || rowValues[prefix + "attack"] )) {
+        optionText += " {{no_attack_roll=1}}";
     } else if (attackType){
-        attackType = attackType.replace('attk-','').replace('2', '')||"";
+        if(attackType!=='dual'){
+            attackType = attackType.replace('attk-','').replace('2', '')||"";
+        } 
         if(toggleValues['show'+attackType.toLowerCase()]){
+            optionText += " ";
             optionText += optionTemplates[attackType + "_notes"].replace("REPLACE", optionDefaults.notes[attackType])||"";
         }
     }
     if (toggleValues.showheader_image) {
+        optionText += " ";
         optionText += optionTemplates.header_image.replace("REPLACE", optionDefaults.image[attackType||'melee'])||"";
     }
-    if (!(damageAbility || rowValues[prefix + "damage"] || 
+    if (attackType!=='dual' && !(damageAbility || rowValues[prefix + "damage"] || 
         (parseInt(rowValues[prefix + "damage-dice-num"], 10) && parseInt(rowValues[prefix + "damage-die"], 10)))) {
-        optionText += "{{no_damage=1}}";
+        optionText += " {{no_damage=1}}";
     }
     if (toggleValues.showattack) {
+        optionText += " ";
         optionText += optionTemplates.attack_notes.replace("REPLACE", optionDefaults.notes.attack)||"";
     }
     return optionText;
@@ -75,7 +82,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
  * note this is almost exactly like resetOption suggesting there is a way to refactor these*/
 export function resetOption (id, eventInfo, callback) {
     var done = _.once(function(){
-        TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
+        //TAS.debug("leaving PFAttackOptions.resetOption, rowid: "+ id);
         if (typeof callback === "function"){
             callback();
         }
@@ -86,6 +93,7 @@ export function resetOption (id, eventInfo, callback) {
     }),
     allFields = optionToggles;
     allFields = allFields.concat(rowfields);
+    allFields.push(prefix + "macro_options");
     //TAS.log("resetOption, fields to get",allFields);
     getAttrs(allFields, function (v) {
         var toggleValues = _.reduce(optionToggles, function (memo, attr) {
@@ -95,11 +103,11 @@ export function resetOption (id, eventInfo, callback) {
         optionText = "",
         setter = {};
         optionText = getOptionText(prefix, toggleValues, v)||"";
-        if (typeof optionText !== "undefined" && optionText !== null) {
+        if ( optionText !== v[prefix + "macro_options"]) {
             setter[prefix + "macro_options"] = optionText;
         }
         if (_.size(setter) > 0) {
-            setAttrs(setter, PFConst.silentParams, done);
+            SWUtils.setWrapper(setter, PFConst.silentParams, done);
         } else {
             done();
         }
@@ -122,6 +130,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
             return memo;
         }, {});
         fields = SWUtils.cartesianAppend(["repeating_weapon_"],ids,repeatingOptionGetAttrsLU);
+        fields = fields.concat(SWUtils.cartesianAppend(["repeating_weapon_"],ids,["_macro_options"]));
         getAttrs(fields,function(v){
             var setter = _.reduce(ids,function(memo,id){
                 var prefix='repeating_weapon_'+id+'_',tempstr='';
@@ -136,7 +145,7 @@ export function resetSomeOptions (ids,eventInfo,callback){
                 }
             },{});
             if(_.size(setter)){
-                setAttrs(setter,PFConst.silentParams,done);
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
             } else {
                 done();
             }
@@ -154,9 +163,9 @@ export function migrate (callback){
         callback();
     }
 }
-export function recalculate  (callback) {
+export var recalculate = TAS.callback(function callPFAttackOptionsRecalculate (callback) {
     resetOptions(callback);
-}
+});
 function registerEventHandlers () {
     _.each(optionToggles, function (toggleField) {
         on("change:" + toggleField, TAS.callback(function toggleAttackNoteOption(eventInfo) {
@@ -170,7 +179,7 @@ function registerEventHandlers () {
     _.each(events.attackOptionEventsAuto, function (fieldToWatch) {
         var eventToWatch = "change:repeating_weapon:" + fieldToWatch;
         on(eventToWatch, TAS.callback(function eventUpdateAttackTypeOptionSheet(eventInfo) {
-            if (eventInfo.sourceType === "sheetworker") {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 resetOption(null, eventInfo);
             }
@@ -187,5 +196,5 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-PFConsole.log( '   PFAttackOptions module loaded  ');
-PFLog.modulecount++;
+//PFConsole.log( '   PFAttackOptions module loaded  ');
+//PFLog.modulecount++;

@@ -5,16 +5,15 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
+import * as PFCustom from './PFCustom';
 import * as PFMigrate from './PFMigrate';
 import * as PFDefense from './PFDefense';
 import * as PFSize from './PFSize';
 import * as PFUtilsAsync  from './PFUtilsAsync';
-//import * as PFMacros from './PFMacros';
-//import * as PFMenus from './PFMenus';
 import * as PFInitiative from './PFInitiative';
 import * as PFSkills from './PFSkills';
 import * as PFEncumbrance from './PFEncumbrance';
-import* as PFInventory from './PFInventory';
+import * as PFInventory from './PFInventory';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFBuffs from './PFBuffs';
 import * as PFSaves from './PFSaves';
@@ -32,8 +31,9 @@ import * as PFPsionic from './PFPsionic';
 import * as PFMythic from './PFMythic';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
 import * as PFConditions from './PFConditions';
-import * as PFNPCParser from './PFNPCParser';
 import * as PFHorror from './PFHorror';
+import * as PFOccult from './PFOccult';
+
 function expandAll  () {
 	getAttrs(["expandall"], function (v) {
 		var skilltab = "4",
@@ -43,111 +43,110 @@ function expandAll  () {
 			//set tabs to "all"
 			//set conditions and buffs to "show"
 			//set all others to default (which is "show")
-			setAttrs({
+			SWUtils.setWrapper({
 				"expandall": "0",
 				pagetab: "99",
 				abilities_tab: "99",
+				"npc-abilities_tab": "99",
 				skills_tab: "99",
 				spellclass_tab: "99",
 				spells_tab: "99",
 				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-				'sheet-conditions-show':0,
-				'buffstop-show':0,
-				'command-buttons-show':0,
-				'NPC-command-buttons-show':0,
-				'character-details-show':0,
-				'ability-scores-show':0,
-				'class-info-show':0,
-				'class1_show':0,
-				'class2_show':0,
-				'class3_show':0,
-				'health-and-wounds-show':0,
-				'initiative-show':0,
-				'macro-text-show':0,
-				'notes-show':0,
-				'saves-show':0,
-				'extra_fields_saves_show':1,
-				'extra_fields_spells_show':1,
-				'extra_fields_caster_show':1,
-				'defense-values-show':0,
-				'armor-shield-show':0,
-				'sanity-show':0,
-				'defense-notes-show':0,
-				'attack-bonuses-show':0,
-				'atkm2_show':0,
-				'attack-notes-show':0,
-				'attack-options-show':0,
-				'two-weapon-show':0,
-				'attacks-show':0,
-				'skill-ranks-show':0,
-				'skill_options-show':0,
-				'skills-show':0,
-				'artistry-show':0,
-				'craft-show':0,
-				'knowledge-show':0,
-				'lore-show':0,
-				'perform-show':0,
-				'profession-show':0,
-				'misc-show':0,
-				'skill-notes-show':0,
-				'ability-command-buttons-show':0,
-				'NPC-ability-command-buttons-show':0,
-				'feats-show':0,
-				'mythic-info-show':0,
-				'psionic-info-show':0,
-				'abilities-show':0,
-				'spellclasses-show':0,
-				'spellclass-0-show':0,
-				'spellclass-0-spellpoints-show':0,
-				'spellclass-0-spells-notes-show':0,
-				'spellclass-0-perday-show':0,
-				'spellclass-0-domains-show':0,
-				'domain02_show':0,
-				'domain03_show':0,
-				'spellclass-1-show':0,
-				'spellclass-1-spellpoints-show':0,
-				'spellclass-1-spells-notes-show':0,
-				'spellclass-1-perday-show':0,
-				'spellclass-1-domains-show':0,
-				'spellclass-2-show':0,
-				'spellclass-2-spellpoints-show':0,
-				'spellclass-2-spells-notes-show':0,
-				'spellclass-2-perday-show':0,
-				'spellclass-2-domains-show':0,
-				'spelloptions-show':0,
-				'spell-lists-show':0,
-				'currency-show':0,
-				'carried-weight-show':0,
-				'loads-show':0,
-				'worn-items-show':0,
-				'other-items-show':0,
-				'equipment-show':0,
-				'npc-compimport-show':0,
-				'npc-details-show':0,
-				'npc-defense-show':0,
-				'npc-offense-show':0,
-				'npc-speed-show':0,
-				'npc-repeating-weapons-show':0,
-				'npc-spell-like-abilities-show':0,
-				'npc-tactics-show':0,
-				'npc-statistics-show':0,
-				'npc-feats-show':0,
-				'npc-mythic-feats-show':0,
-				'npc-skills-show':0,
-				'npc-ecology-show':0,
-				'npc-special-abilities-show':0,
-				'custom-attr-sect-a-show':0,
-				'custom-attr-sect-c-show':0,
-				'custom-attr-sect-b-show':0,
-				'custom-attr-sect-d-show':0,
-				'custom-attr-sect-n-show':0,
-				'header-image-show':0,
-				'sheet-import-show':0,
+		'sheet-conditions-show':1,
+				'buffstop-show':1,
+				'command-buttons-show':1,
+				'NPC-command-buttons-show':1,
+				'character-details-show':1,
+				'ability-scores-show':1,
+				'class-info-show':1,
+				'class1_show':1,
+				'class2_show':1,
+				'class3_show':1,
+				'health-and-wounds-show':1,
+				'initiative-show':1,
+				'macro-text-show':1,
+				'notes-show':1,
+				'saves-show':1,
+				'defense-values-show':1,
+				'armor-shield-show':1,
+				'sanity-show':1,
+				'defense-notes-show':1,
+				'attack-bonuses-show':1,
+				'atkm2_show':1,
+				'attack-notes-show':1,
+				'attack-options-show':1,
+				'two-weapon-show':1,
+				'attacks-show':1,
+				'skill-ranks-show':1,
+				'skill_options-show':1,
+				'skills-show':1,
+				'artistry-show':1,
+				'craft-show':1,
+				'knowledge-show':1,
+				'lore-show':1,
+				'perform-show':1,
+				'profession-show':1,
+				'misc-show':1,
+				'skill-notes-show':1,
+				'ability-command-buttons-show':1,
+				'NPC-ability-command-buttons-show':1,
+				'feats-show':1,
+				'mythic-info-show':1,
+				'psionic-info-show':1,
+				'abilities-show':1,
+				'spellclasses-show':1,
+				'spellclass-0-show':1,
+				'spellclass-0-spellpoints-show':1,
+				'spellclass-0-spells-notes-show':1,
+				'spellclass-0-perday-show':1,
+				'spellclass-0-domains-show':1,
+				'domain02_show':1,
+				'domain03_show':1,
+				'spellclass-1-show':1,
+				'spellclass-1-spellpoints-show':1,
+				'spellclass-1-spells-notes-show':1,
+				'spellclass-1-perday-show':1,
+				'spellclass-1-domains-show':1,
+				'spellclass-2-show':1,
+				'spellclass-2-spellpoints-show':1,
+				'spellclass-2-spells-notes-show':1,
+				'spellclass-2-perday-show':1,
+				'spellclass-2-domains-show':1,
+				'spelloptions-show':1,
+				'spell-lists-show':1,
+				'currency-show':1,
+				'carried-weight-show':1,
+				'loads-show':1,
+				'worn-items-show':1,
+				'other-items-show':1,
+				'equipment-show':1,
+				'npc-compimport-show':1,
+				'npc-details-show':1,
+				'npc-defense-show':1,
+				'npc-offense-show':1,
+				'npc-speed-show':1,
+				'npc-repeating-weapons-show':1,
+				'npc-spell-like-abilities-show':1,
+				'npc-tactics-show':1,
+				'npc-statistics-show':1,
+				'npc-feats-show':1,
+				'npc-mythic-feats-show':1,
+				'npc-skills-show':1,
+				'npc-ecology-show':1,
+				'npc-special-abilities-show':1,
+				'custom-attr-sect-a-show':1,
+				'custom-attr-sect-c-show':1,
+				'custom-attr-sect-b-show':1,
+				'custom-attr-sect-d-show':1,
+				'custom-attr-sect-n-show':1,
+				'header-image-show':1,
+				'sheet-import-show':1,
 				'roll-template-info-show':1,
 				'macros-show':1,
-				'migrations-show':0,
-				'cleanup-show':0,
+				'migrations-show':1,
+				'cleanup-show':1,
+				'san-show':1,	
 				'buff-min-show':0,
 				'buff-expand-show':0,
 				'buff-column-show':0,
@@ -201,7 +200,18 @@ function expandAll  () {
 				'npc-abilities-column-show':0,
 				'npc-special-abilities-min-show':0,
 				'npc-special-abilities-expand-show':0,
-				'npc-special-abilities-column-show':0
+				'npc-special-abilities-column-show':0,
+				'extra_fields_san_show':1,
+				'extra_fields_attacks_show':1,
+				'extra_fields_skills_show':1,
+				'extra_fields_saves_show':1,
+				'extra_fields_spells_show':1,
+				'extra_fields_caster_show':1,
+				'extra_fields_abilities_show':1,
+				'extra_fields_init_show':1,
+				'extra_fields_speeds_show':1,
+				'extra_fields_defense_show':1,
+				'extra_fields_conditions_show':1
 			});
 			//now go through repeating sections and expand those to be sure users can see them.
 			_.each(PFConst.repeatingSections, function (section) {
@@ -211,17 +221,22 @@ function expandAll  () {
 						var prefix = rsection + "_" + id + "_";
 						switch (section) {
 							case 'weapon':
-								memo[prefix + "add-damage-show"] = 0;
-								memo[prefix + "iterative-attacks-show"] = 0;
-								memo[prefix + "advmacro-text-show"] = 0;
+								memo[prefix + "add-damage-show"] = 1;
+								memo[prefix + "iterative-attacks-show"] = 1;
+								memo[prefix + "advmacro-text-show"] = 1;
 								break;
 							case 'buff':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								break;
+							case 'buff2':
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'spells':
-								memo[prefix + "spell-misc-show"] = 0;
-								memo[prefix + "description-show"] = 0;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "attack-show"] = 1;
+								memo[prefix + "description-show"] = 1;
 								break;
 							case 'class-ability':
 							case 'feat':
@@ -229,30 +244,32 @@ function expandAll  () {
 							case 'trait':
 							case 'mythic-ability':
 							case 'mythic-feat':
+								memo[prefix + "description-show"] = 1;
+								break;
 							case 'item':
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "armor-attributes-show"] = 0;
-								memo[prefix + "weapon-attributes-show"] = 0;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "armor-attributes-show"] = 1;
+								memo[prefix + "weapon-attributes-show"] = 1;
 								break;
 							case 'npc-spell-like-abilities':
-								memo[prefix + "attack-show"] = 0;
+								memo[prefix + "attack-show"] = 1;
 								break;
 							case 'ability':
-								memo[prefix + "options-show"] = 0;
-								memo[prefix + "description-show"] = 0;
-								memo[prefix + "misc-show"] = 0;
-								memo[prefix + "showextrafields"] = 0;
-								memo[prefix + "range-show"] = 0;
+								memo[prefix + "options-show"] = 1;
+								memo[prefix + "description-show"] = 1;
+								memo[prefix + "misc-show"] = 1;
+								memo[prefix + "showextrafields"] = 1;
+								memo[prefix + "range-show"] = 1;
 								break;
 						}
 						memo[prefix + "row-show"] = 0;
-						memo[prefix + "ids-show"] = 0;
-						if (section !== 'buff'){
-							memo[prefix + "macro-text-show"] = 0;
+						memo[prefix + "ids-show"] = 1;
+						if (section !== 'buff' && section!=='buff2'){
+							memo[prefix + "macro-text-show"] = 1;
 						}
 						return memo;
 					}, {});
-					setAttrs(setter, {
+					SWUtils.setWrapper(setter, {
 						silent: true
 					});
 				});
@@ -262,18 +279,19 @@ function expandAll  () {
 }
 
 /** Sets any values if sheet created brand new. Makes sure all migrations up to date.
-* makes sure NPC value set. 
-*/
+ * makes sure NPC value set. 
+ */
 function setupNewSheet (callback){
 	var done = _.once(function(){
-		setAttrs({'is_newsheet':0, 'is_v1':1, 'use_advanced_options':0, 'PFSheet_Version': String((PFConst.version.toFixed(2))),
-			'attentionv158-show':1 },PFConst.silentParams,function(){
+		var setter={'is_newsheet':0, 'is_v1':1, 'use_buff_bonuses':1,
+			 'use_advanced_options':0,'modify_dmg_by_size':1,'PFSheet_Version': String((PFConst.version.toFixed(2)))};
+		setter[PFConst.announcementVersionAttr]=1;
+		SWUtils.setWrapper(setter,PFConst.silentParams,function(){
 			if (typeof callback === "function"){
 				callback();
 			}
 		});
 	});
-	
 	getAttrs(['is_npc', 'set_pfs'],function(v){
 		var isNPC = parseInt(v.is_npc,10)||0,
 		isPFS = parseInt(v.set_pfs,10)||0;
@@ -288,56 +306,15 @@ function setupNewSheet (callback){
 		});
 	});
 }
-function recalcExpressions (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.equationMacros),
-	done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalcExpressions");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(countEqs, done);
-	try {
-		_.each(PFConst.equationMacros, function (writeField, readField) {
-			try {
-				SWUtils.evaluateAndSetNumber(readField, writeField, 0, doneOne, silently);
-			} catch (err) {
-				TAS.error("PFSheet.recalcExpressions", err);
-				doneOne();
-			}
-		});
-	} catch (err2) {
-		TAS.error("PFSheet.recalcExpressions OUTER wtf how did this happen?", err2);
-	} finally {
-		done();
-	}
-}
-function recalcDropdowns (callback, silently, oldversion) {
-	var countEqs = _.size(PFConst.dropdowns),
-	done = _.once(function () {
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(countEqs, done);
-	try {
-		_.each(PFConst.dropdowns, function (writeField, readField) {
-			try {
-				PFUtilsAsync.setDropdownValue(readField, writeField, doneOne, silently);
-			} catch (err) {
-				TAS.error("PFSheet.recalcDropdowns", err);
-				doneOne();
-			}
-		});
-	} catch (err2) {
-		TAS.error("PFSheet.recalcDropdowns OUTER wtf how did this happen?", err2);
-	} finally {
-		done();
-	}
-}
-export function migrate (oldversion, callback, errorCallback) {
+
+/** Only updates things between versions, normally things that are not part of migrate()
+ *@param {number} oldversion the current version attribute
+ *@param {function} callback when done if no errors
+ *@param {function} errorCallback  call this if we get an error
+ */
+function upgrade (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.migrate");
+		//TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -353,7 +330,7 @@ export function migrate (oldversion, callback, errorCallback) {
 	doneOne;
 	try {
 		//don't need to check if oldversion > 0 since this is only called if it is.
-		TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
+		//TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
 		if (oldversion < 1.0) {
 			doneOne=_.after(7,function(){
 				TAS.info("we finished calling all the migrates");
@@ -396,9 +373,6 @@ export function migrate (oldversion, callback, errorCallback) {
 				PFHealth.recalculate(null,false,oldversion);
 				PFMigrate.migrateSpellPointFlag(null,oldversion);
 			}
-			if (oldversion < 1.19){
-				PFAttackGrid.setTopMacros();
-			}
 			if (oldversion < 1.20){
 				PFHealth.recalculate();
 			}
@@ -429,6 +403,7 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
 			}
+
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
 				PFSkills.migrate();
@@ -439,8 +414,25 @@ export function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.57){
 				PFDefense.updateDefenses();
 			}
-			if (oldversion < 1.58){
-				PFAttacks.adjustAllDamageDiceAsync();
+			if (oldversion <= 1.65){
+				PFCustom.migrate(function(){
+					PFBuffs.migrate(function(){
+						PFConditions.migrate(function(){
+							PFBuffs.recalculate(function(){
+								PFCustom.recalculate(function(){
+									PFSkills.migrate(function(){
+										PFSkills.recalculateSkills();
+									},oldversion);
+									PFAbility.setRuleTabs();
+									PFInventory.updateLocations();
+									PFAttacks.adjustAllDamageDiceAsync();
+									PFAttacks.updateDualWieldAttacks();
+									PFAttacks.recalculateRepeatingWeapons();
+								});
+							});
+						},oldversion);
+					},oldversion);
+				},oldversion);
 			}
 		}
 	} catch (err) {
@@ -452,7 +444,7 @@ export function migrate (oldversion, callback, errorCallback) {
 }
 function recalculateParallelModules (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateParallelModules");
+		//TAS.debug("leaving PFSheet.recalculateParallelModules");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -466,7 +458,8 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		PFAbility.recalculate,
 		PFInitiative.recalculate,
 		PFAttacks.recalculate,
-		PFHorror.recalculate
+		PFHorror.recalculate,
+		PFOccult.recalculate
 	],		
 	numberModules = _.size(parallelRecalcFuncs),
 	doneOneModuleInner = _.after(numberModules, done),
@@ -479,7 +472,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		doneOneModuleInner();
 	};
 
-	TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
+	//TAS.debug("at recalculateParallelModules! there are "+numberModules +" modules");
 	try {
 		_.each(parallelRecalcFuncs, function (methodToCall) {
 			try {
@@ -498,7 +491,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 }
 function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
+		//TAS.debug("leaving PFSheet.recalculateDefenseAndEncumbrance");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -517,7 +510,7 @@ function recalculateDefenseAndEncumbrance (callback, silently, oldversion) {
 }
 function recalculateCore (callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSheet.recalculateCore");
+		//TAS.debug("leaving PFSheet.recalculateCore");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -534,14 +527,11 @@ function recalculateCore (callback, silently, oldversion) {
 	mythicOnce = _.once(function(){
 		PFMythic.recalculate(npcOnce, silently, oldversion);
 	}),
-	expressionsOnce = _.once(function () {
-		recalcExpressions(mythicOnce, silently, oldversion);
-	}),
-	dropdownsOnce = _.once(function () {
-		recalcDropdowns(expressionsOnce, silently, oldversion);
+	customOnce = _.once(function () {
+		PFCustom.recalculate(mythicOnce, silently, oldversion);
 	}),
 	conditioncheckOnce = _.once(function () {
-		PFChecks.applyConditions(dropdownsOnce, silently, oldversion);
+		PFChecks.applyConditions(customOnce, silently, oldversion);
 	}),
 	classOnce = _.once(function () {
 		PFClassRaceGrid.recalculate(conditioncheckOnce, silently, oldversion);
@@ -561,6 +551,19 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
+/** migrates sheet specific things not part of other modules
+ * @param {number} oldversion the current version attribute
+ * @param {function} callback when done if no errors
+ * 
+ * @param {} callback 
+ * @param {*} oldversion 
+ */
+export function migrate (callback,oldversion){
+	if (typeof callback === "function"){
+		callback();
+	}
+}
+
 /** recalculate - all pages in sheet!  
  *@param {number} oldversion the current version attribute
  *@param {function} callback when done if no errors
@@ -574,26 +577,30 @@ export function recalculate (oldversion, callback, silently) {
 		}
 	},
 	callParallel = TAS.callback(function callRecalculateParallelModules() {
-		recalculateParallelModules(TAS.callback(done), silently, oldversion);
+		recalculateParallelModules(done, silently, oldversion);
 	}),
 	callEncumbrance = TAS.callback(function callRecalculateDefenseAndEncumbrance() {
-		recalculateDefenseAndEncumbrance(TAS.callback(callParallel), silently, oldversion);
+		recalculateDefenseAndEncumbrance(callParallel, silently, oldversion);
+	}),
+	callRecalcCore = TAS.callback(function callRecalculateCore(){
+		recalculateCore(callEncumbrance, silently, oldversion);
 	});
 	silently=true;
-	recalculateCore(callEncumbrance, silently, oldversion);
+	migrate(callRecalcCore,oldversion);
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
-*  calls recalulateSheet if versions don't match or if recalculate button was pressed.*/
-function checkForUpdate () {
+ *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
+ * */
+export function checkForUpdate (forceRecalc) {
 	var done = function () {
-		setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
+		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
 	errorDone = _.once(function (){
 		TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
-		setAttrs({ recalc1: 0, migrate1: 0 }, { silent: true });
+		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
-	'race', 'class-0-name', 'npc-type', 'level'], function (v) {
+	'race', 'class-0-name', 'npc-type', 'level','hide_announcements',PFConst.announcementVersionAttr], function (v) {
 		var setter = {},
 		setAny = 0,
 		migrateSheet=false,
@@ -601,7 +608,7 @@ function checkForUpdate () {
 		recalc = false,
 		currVer = parseFloat(v.PFSheet_Version, 10) || 0,
 		setUpgradeFinished = function() {
-			setAttrs({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
+			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
 			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
@@ -610,27 +617,36 @@ function checkForUpdate () {
 			});
 		};
 		TAS.notice("Attributes at version: " + currVer);
-		if (parseInt(v["recalc1"],10) ){
-			//HIT RECALC
-			recalc = true;
-		} 
-		if (parseInt(v["migrate1"],10)) {
-			migrateSheet =true;
-		}
-		if  ( parseInt(v["is_newsheet"],10) || (currVer === 0 &&  (parseInt(v.is_v1,10) || (  !(parseInt(v.hp, 10) || parseInt(v.hp_max, 10) || parseInt(v['npc-hd'], 10) || parseInt(v['npc-hd-num'], 10) ||
-			v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
-			//NEW SHEET:
-			newSheet=true;
+
+		if (forceRecalc){
+			recalc=true;
+		} else {
+			if (parseInt(v["recalc1"],10) ){
+				//HIT RECALC
+				recalc = true;
+			} 
+			if (parseInt(v["migrate1"],10)) {
+				migrateSheet =true;
+			}
+			if  ( parseInt(v["is_newsheet"],10) || (currVer === 0 &&  (parseInt(v.is_v1,10) || (  !(parseInt(v.hp, 10) || parseInt(v.hp_max, 10) || parseInt(v['npc-hd'], 10) || parseInt(v['npc-hd-num'], 10) ||
+				v.race || v['class-0-name'] || v['npc-type'] || parseInt(v['level'], 10))))) ) {
+				//NEW SHEET:
+				newSheet=true;
+			}
 		}
 		//force this on sheet open, not sure wtf is wrong
-		PFSkills.migrate();
 		if (currVer !== PFConst.version) {
 			migrateSheet = true;
 		}
+		if (!newSheet && parseInt(v.hide_announcements,10) && !parseInt(v[PFConst.announcementVersionAttr],10)){
+			setter[PFConst.announcementVersionAttr]=1;
+			SWUtils.setWrapper(setter,PFConst.silentParams);		
+		}
 		if (newSheet) {
+			PFSkills.migrate();
 			setupNewSheet(done);
 		} else if (migrateSheet){
-			migrate(currVer, setUpgradeFinished, errorDone);
+			upgrade(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
 			recalculate(currVer, done, true);
@@ -639,7 +655,10 @@ function checkForUpdate () {
 		}
 	});
 }
+
 function registerEventHandlers () {
+	var eventToWatch='';
+
 	on("sheet:opened", TAS.callback(function eventSheetOpened() {
 		//eventInfo has undefined values for this event.
 		checkForUpdate();
@@ -656,20 +675,7 @@ function registerEventHandlers () {
 			expandAll();
 		}
 	});
-	//GENERIC DROPDOWNS
-	_.each(PFConst.dropdowns, function (write, read) {
-		on("change:" + read, TAS.callback(function eventGenericDropdowns(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			PFUtilsAsync.setDropdownValue(read, write);
-		}));
-	});
-	//GENERIC EQUATIONS
-	_.each(PFConst.equationMacros, function (write, read) {
-		on("change:" + read, TAS.callback(function eventGenericEquationMacro(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndSetNumber(read, write);
-		}));
-	});
+
 	on("change:repeating_weapon:source-item", TAS.callback(function eventUpdateAttackSourceItem(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -709,24 +715,8 @@ function registerEventHandlers () {
 		}
 	}));
 	
-	// PARSE CREATE NPC MONSTER
-	on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			getAttrs(['npc_import_now'], function (v) {
-				if ((parseInt(v.npc_import_now, 10) || 0) === 1) {
-					PFNPCParser.importFromCompendium(eventInfo, function(){
-						//instead of just calling recalculate set recalc button and call checkforupdate
-						//so users sees something is happening.
-						setAttrs({recalc1:1},PFConst.silentParams,function(){
-							checkForUpdate();
-						});
-					});
-				}
-			});
-		}
-	}));
-	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
+	//delete a list
+	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_buff2 change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
 	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
@@ -740,16 +730,21 @@ function registerEventHandlers () {
 							setter={};
 							setter[eventInfo.sourceAttribute]=0;
 							setter[eventInfo.sourceAttribute+'_btn']=0;
-							setAttrs(setter,{silent:true});
+							SWUtils.setWrapper(setter,{silent:true});
 							if ((/buff/i).test(eventInfo.sourceAttribute)){
 								PFBuffs.clearBuffTotals();
-							}		
+							}
 						},section);
 				}
 			});
 		}
 	}));
 
+	on("change:hide_announcements",function(){
+		var setter={};
+		setter[PFConst.announcementVersionAttr]=1;
+		setAttrs(setter,PFConst.silentParams);
+	});
 }
 registerEventHandlers();
 

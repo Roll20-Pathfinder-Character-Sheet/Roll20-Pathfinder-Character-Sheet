@@ -5,6 +5,7 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as PFMigrate from './PFMigrate';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
+import * as SWUtils from './SWUtils';
 
 /*setWoundLevel sets would level based on current HP when you already have all fields.
  * sets  @{condition-Wounds} based on :
@@ -16,7 +17,7 @@ import * as PFClassRaceGrid from './PFClassRaceGrid';
  */
 function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	var setWounds = 0;
-	TAS.debug("at PFHealth.setWoundLevel, hp is " + hp);
+	//TAS.debug("at PFHealth.setWoundLevel, hp is " + hp);
 	if (hp <= grazed) {
 		if (hp > wounded) {
 			setWounds = 1;
@@ -28,7 +29,7 @@ function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
 	}
 	//TAS.debug("PFHealth.setWoundLevel, hp:"+hp+", currWounds:"+currWounds+", setWounds:"+setWounds);
 	if (setWounds !== currWounds) {
-		setAttrs({
+		SWUtils.setWrapper({
 			"condition-Wounds": setWounds
 		});
 	}
@@ -39,7 +40,7 @@ function setWoundLevel (hp, grazed, wounded, critical, currWounds) {
  */
 function setWoundLevelLookup (hp) {
 	//TAS.debug"PFHealth.setWoundLevelLookup, hp passed in is:" + hp);
-	TAS.debug("at PFHealth.setWoundLevelLookup, hp is " + hp);
+	//TAS.debug("at PFHealth.setWoundLevelLookup, hp is " + hp);
 	getAttrs(["HP", "HP_grazed", "HP_wounded", "HP_critical", "condition-Wounds", "wound_threshold-show"], function (v) {
 		if(parseInt(v["wound_threshold-show"],10)){
 			if (isNaN(parseInt(hp, 10))) {
@@ -60,7 +61,7 @@ function setWoundLevelLookup (hp) {
 function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
 	var setter={}, grazed=0,wounded=0,critical=0,disabled=0;
 	try {
-		TAS.debug("at PFHealth.setWoundThreshholds, hp is"+hp);
+		//TAS.debug("at PFHealth.setWoundThreshholds, hp is"+hp);
 		grazed = Math.floor(maxHP * 0.75);
 		wounded = Math.floor(maxHP * 0.5);
 		critical = Math.floor(maxHP * 0.25);
@@ -81,7 +82,7 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
 		TAS.error("PFHealth.setWoundThresholds",err);
 	} finally {
 		if (_.size(setter) > 0) {
-			setAttrs(setter, PFConst.silentParams, function(){
+			SWUtils.setWrapper(setter, PFConst.silentParams, function(){
 				setWoundLevel(hp, grazed, wounded, critical, currWoundLevel);
 			});
 		} else {
@@ -95,12 +96,12 @@ function setWoundThreshholds (hp, maxHP, currWoundLevel, abilityMod, v) {
  * If Wound Threshholds are not used, makes sure that condition-Wounds is set to 0.
  */
 export function setWoundThreshholdsLookup () {
-	TAS.debug("at PFHealth.setWoundThreshholdsLookup");
+	//TAS.debug("at PFHealth.setWoundThreshholdsLookup");
 	getAttrs(["HP", "HP_max", "wound_threshold-show", "condition-Wounds", "HP-ability-mod","HP_grazed", "HP_wounded", "HP_critical", "HP_disabled"], function (v) {
 		if (parseInt(v["wound_threshold-show"],10)===1){
 			setWoundThreshholds(parseInt(v["HP"], 10) || 0, parseInt(v["HP_max"], 10) || 0, parseInt(v["condition-Wounds"], 10) || 0, parseInt(v["HP-ability-mod"], 10) || 0, v);
 		} else if ((parseInt(v["condition-Wounds"], 10) || 0) !== 0) {
-			setAttrs({
+			SWUtils.setWrapper({
 				"condition-Wounds": "0"
 			});
 		}
@@ -119,11 +120,11 @@ export function setWoundThreshholdsLookup () {
 function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilityMod, staggered) {
 	if (hpAbility !== "0") {
 		if (nonLethalDmg >= (hp + temphp + (usesWounds ? (1 + hpAbilityMod) : 0))) {
-			setAttrs({
+			SWUtils.setWrapper({
 				"condition-Staggered": "1"
 			},PFConst.silentParams);
 		} else if (staggered ) {
-			setAttrs({
+			SWUtils.setWrapper({
 				"condition-Staggered": "0"
 			},PFConst.silentParams);
 		}
@@ -144,13 +145,13 @@ export function updateCurrHPLookup () {
 /** updateMaxHPLookup
  * sets max HP
  * @param {function} callback when done
- * @param {boolean} silently if T then call setAttrs with {silent:True}
+ * @param {boolean} silently if T then call SWUtils.setWrapper with {silent:True}
  * @param {boolean} forceReset recalculates max HP and sets HP to it.
  * @param {object} eventInfo unused
  */
 export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 	var done = _.once(function () {
-		TAS.debug("leaving updateMaxHPLookup");
+		//TAS.debug("leaving updateMaxHPLookup");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -212,7 +213,7 @@ export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 			TAS.error("PFHealth.updateMaxHPLookup", err);
 		} finally {
 			if (_.size(setter)>0){
-				setAttrs(setter, PFConst.silentParams, function(){
+				SWUtils.setWrapper(setter, PFConst.silentParams, function(){
 					if (increaseHPWhenMaxHPIncreases && !(forceReset || currHPMax === newHPMax)){
 						updateCurrHP(newHP , tempHP, nonLethal, 0, v["HP-ability"], abilityMod, v["condition-Staggered"]);
 						if (usesWounds){
@@ -250,7 +251,7 @@ export function updateTempMaxHP (callback, silently,forceReset) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs({
+				SWUtils.setWrapper({
 					"HP-temp": newHPTemp,
 					"HP-temp_max": newHPTempMax
 				}, params, function () {
@@ -272,7 +273,7 @@ export function setToPFS (callback,eventInfo){
 			callback();
 		}
 	});
-	setAttrs({'use_prestige_fame':1, 'auto_calc_hp':1, 'autohp_percent':1,'maxhp_lvl1':1},
+	SWUtils.setWrapper({'use_prestige_fame':1, 'auto_calc_hp':1, 'autohp_percent':1,'maxhp_lvl1':1},
 		PFConst.silentParams,
 		function (){
 			if (eventInfo){
@@ -288,10 +289,10 @@ export function ensureNPCHPZero(callback){
 		isNPC = parseInt(v.is_npc,10)||0;
 		if (!isNPC){
 			if (!npcHD && !npcLevels && npcHP){
-				setAttrs({'npc-hd-num':'','NPC-HP':0});
+				SWUtils.setWrapper({'npc-hd-num':'','NPC-HP':0});
 			}
 		} else {
-			setAttrs({
+			SWUtils.setWrapper({
 			'npc-hd-num2':0,
 			'npc-hd2':0,
 			'HP-misc':'',
@@ -302,7 +303,7 @@ export function ensureNPCHPZero(callback){
 }
 export function migrate (callback, oldversion){
 	var done = _.once(function(){
-		TAS.debug("leaving PFHealth.migrate 2");
+		//TAS.debug("leaving PFHealth.migrate 2");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -312,9 +313,9 @@ export function migrate (callback, oldversion){
 		ensureNPCHPZero();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFHealthRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFHealth.recalculate");
+		//TAS.debug("leaving PFHealth.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -329,9 +330,9 @@ export function recalculate (callback, silently, oldversion) {
 	callUpdateTempHP = _.once(function () {
 		updateTempMaxHP(callUpdateMaxHPLookup);
 	});
-	TAS.debug("at PFHealth.recalculate");
+	//TAS.debug("at PFHealth.recalculate");
 	migrate(callUpdateTempHP,oldversion);
-}
+});
 function registerEventHandlers () {
 	on("change:set_pfs",TAS.callback(function eventsetPFSFlag(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -344,12 +345,13 @@ function registerEventHandlers () {
 		}
 	}));
 	//hp************************************************************************
-	on("change:hp-ability-mod change:level change:total-hp change:total-mythic-hp change:hp-formula-mod change:HP-misc", TAS.callback(function eventUpdateHPPlayerMisc(eventInfo) {
+	on("change:hp-ability-mod change:level change:total-hp change:total-mythic-hp change:hp-formula-mod ", TAS.callback(function eventUpdateHPPlayerMisc(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && eventInfo.sourceAttribute !== "hp-misc")) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
 			updateMaxHPLookup();
 		}
 	}));
+
 	on("change:mythic-adventures-show", TAS.callback(function eventUpdateHPPlayer(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -371,7 +373,7 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			updateMaxHPLookup(null,null,eventInfo,true);
 			updateTempMaxHP(null,null,true);
-			setAttrs({
+			SWUtils.setWrapper({
 				"HP_reset": "0"
 			}, PFConst.silentParams);
 		}
@@ -390,5 +392,5 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-PFConsole.log('   PFHealth module loaded         ');
-PFLog.modulecount++;
+//PFConsole.log('   PFHealth module loaded         ');
+//PFLog.modulecount++;

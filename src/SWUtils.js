@@ -3,6 +3,57 @@ import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
+TAS.config({
+ logging: {
+   info: process.env.NODE_ENV !== 'production',
+   debug: process.env.NODE_ENV !== 'production'
+ }
+});
+if (process.env.NODE_ENV !== 'production') {
+  TAS.debugMode();
+}
+
+export function setWrapper(a,b,c){
+	//setAttrs(a,b,c);
+	
+	var bad=false;
+	//TAS.debug("setting "+_.size(a)+" values:",a);
+	_.each(a,function(v,k){
+		if (!v && (isNaN(v) || v === undefined)){
+			TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
+			bad=true;
+		}
+	});
+	if (bad){
+		TAS.callstack();
+	}
+	setAttrs(a,b,c);
+}
+
+export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
+	getAttrs(a,function(vals){
+		cb(vals);
+	});
+});
+/**Calls getTranslationByKey, if error encountered returns string passed in
+ * @param {string} str 
+ */
+export function getTranslated (str){
+	var tempstr='';
+	try{
+		if(str){
+			tempstr=getTranslationByKey(str);
+			if(!tempstr){
+				tempstr =str[0].toUpperCase()+str.slice(1);
+			}
+		}
+	} catch(e){
+		tempstr=str[0].toUpperCase()+str.slice(1);
+	} finally {
+		return tempstr;
+	}
+}
+
 
 /* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
@@ -25,10 +76,11 @@ function validNumericStr (preeval) {
 }
 /** searches a string for @{attribute} and replaces those with their values, passes result to the callback
  * if error then passes null
+ * recursive: if replace str also has @{attribute} references then calls this function again
  * @param {string} stringToSearch = string containing one or more @{fieldname}
  * @param {function(string)} callback when done passes resultant string to callback
  */
-export function findAndReplaceFields (stringToSearch, callback) {
+export function findAndReplaceFields(stringToSearch, callback) {
 	var fieldnames ;
 	if (typeof callback !== "function") {
 		return;
@@ -100,13 +152,25 @@ function convertKL1KH1toMinMax  (str) {
 	}
 	return str;
 }
+
+function validateMatchingParens(str){
+	if ((str.match(/\(/g) || []).length !== (str.match(/\)/g) || []).length || 
+		(str.match(/\{/g) || []).length !== (str.match(/\}/g) || []).length ||
+		(str.match(/\[/g) || []).length !== (str.match(/\]/g) || []).length ) {
+			return 0;
+	}
+	return 1;
+}
+
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
  * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
- *@param {function(Number)} callback a function taking one parameter - could be int or float
+ *@param {function(Number)} callback a function taking one parameter - always Number, could be 0 but never null or undefined
+ *@param {function} errcallback function called if it cannot evaluate to a number
  */
-export function evaluateExpression (exprStr, callback) {
-	var bmatches1 = 0, bmatches2 = 0, pmatches1 = 0, pmatches2 = 0, smatches1 = 0, smatches2 = 0;
+export function evaluateExpression (exprStr, callback, errcallback) {
+	var value;
+	//TAS.debug("evaluateExpression: expstr:"+exprStr);
 	if (typeof callback !== "function") {
 		return;
 	}
@@ -114,56 +178,52 @@ export function evaluateExpression (exprStr, callback) {
 		callback(0);
 		return;
 	}
-	//verify that same number of parenthesis exists
-	bmatches1 = (exprStr.match(/\(/g) || []).length;
-	bmatches2 = (exprStr.match(/\)/g) || []).length;
-	pmatches1 = (exprStr.match(/\{/g) || []).length;
-	pmatches2 = (exprStr.match(/\}/g) || []).length;
-	smatches1 = (exprStr.match(/\[/g) || []).length;
-	smatches2 = (exprStr.match(/\]/g) || []).length;
-	if (bmatches1 !== bmatches2 || pmatches1 !== pmatches2 || smatches1 !== smatches2) {
-		TAS.warn("evaluateExpression: Mismatched brackets, cannot evaluate:" + exprStr);
-		callback(null);
+	value = Number(exprStr);
+	if (!isNaN(value)) {
+		TAS.callback("the vlaue is "+value+" returning");
+		callback(value);
 		return;
 	}
-
+	if(!validateMatchingParens(exprStr)){
+		TAS.warn("evaluateExpression: Mismatched brackets, cannot evaluate:" + exprStr);
+		errcallback(null);
+		return;
+	}
 	findAndReplaceFields(exprStr, function (replacedStr) {
-		var evaluated,
-		newexprStr;
-		//TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
+		var evaluated;
+		TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
 		if (replacedStr === null || replacedStr === undefined) {
-			callback(null);
+			callback(0);
 			return;
 		}
 		try {
-			replacedStr = replacedStr.replace(/\s+/g, '').replace(/\[\[/g, "(").replace(/\]\]/g, ")").replace(/\[/g, "(").replace(/\]/g, ")");
-			newexprStr = convertKL1KH1toMinMax(replacedStr);
-			//TAS.debug("replacedStr is now "+newexprStr);
-			if (newexprStr !== replacedStr) {
-				replacedStr = newexprStr;
-			}
-			if (!isNaN(Number(replacedStr)) && isFinite(replacedStr)) {
-				evaluated = parseFloat(replacedStr);
-				if (!isNaN(evaluated)) {
-					callback(evaluated);
-					return;
-				}
-			}
-			if (typeof replacedStr !== "undefined" && replacedStr !== null && validNumericStr(replacedStr)) {
-				evaluated = ExExp.handleExpression(replacedStr);
-				if (!isNaN(evaluated)) {
-					callback(evaluated);
-				} else {
-					TAS.warn("cannot evaluate this to number: " + exprStr +" came back with " + replacedStr);
-					callback(null);
-				}
-			} else {
+			//convert double square brackets to parens
+			replacedStr = replacedStr.replace(/\s+/g, '').replace(/\[\[/g, "(").replace(/\]\]/g, ")");
+			//delete any notes (words between brackets)
+			replacedStr = replacedStr.replace(/\[[^\]]+\]/g,'');
+			replacedStr = convertKL1KH1toMinMax(replacedStr);
+			//TAS.debug("replacedStr is now "+replacedStr);
+			if (replacedStr === "" || replacedStr === null || replacedStr === undefined || !validNumericStr(replacedStr)) {
 				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
-				callback(null);
+				callback(0);
+				return;
+			}
+			//if only number left.
+			evaluated = Number(replacedStr);
+			if (!isNaN(evaluated) && isFinite(replacedStr)) {
+				callback(evaluated);
+				return;
+			}
+			evaluated = ExExp.handleExpression(replacedStr);
+			if (!isNaN(evaluated)) {
+				callback(evaluated);
+			} else {
+				TAS.warn("cannot evaluate this to number: " + exprStr +" came back with " + replacedStr);
+				errcallback(null);
 			}
 		} catch (err3) {
 			TAS.error("error trying to convert to number:" + err3);
-			callback(null);
+			errcallback(null);
 		}
 	});
 }
@@ -173,17 +233,15 @@ export function evaluateExpression (exprStr, callback) {
  * if not, then replace any @{field} references with numbers, and then evaluate it
  * as a mathematical expression till we find a number.
  *
- * note this is NOT recursive, you can't point one field of
- *
  * @param {string} readField= field to read containing string to parse
  * @param {string} writeField= field to write to
  * @param {number} defaultVal= optional, default to set if we cannot evaluate the field. If not supplied assume 0
- * @param {function} callback - function(newval, oldval, ischanged)
+ * @param {function(newval, oldval, ischanged)} callback - function(newval, oldval, ischanged)
  * @param {boolean} silently if true set new val with {silent:true}
  * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
- * @param {function} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
+ * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
-export function evaluateAndSetNumber (readField, writeField, defaultVal, callback, silently, errcallback) {
+export function evaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
 	var done = function (a, b, c,currError) {
 		var donesetter={};
 		if (currError){
@@ -196,7 +254,7 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 	},
 	errordone = function(a,b,c,currError){
 		var donesetter={};
-		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
+		////TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
 			setAttrs(donesetter,{silent:true});				
@@ -207,82 +265,164 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
 			callback(a, b, c);
 		}
 	};
-	getAttrs([readField, writeField, writeField+"_error"], function (values) {
-		var setter = {},
-		params = {},
+	//TAS.debug("evaluateAndSetNumber about to get "+readField);
+	getAttrs([readField, writeField, writeField+"_error"], function (v) {
+		var params = {},
 		trueDefault=0, 
 		currVal=0,
 		isError=0,
-		currError=0,
-		isChanged=false,
-		value=0;	
+		currError=0;
 		try {
+			//TAS.debug("evaluateAndSetNumber values are ",v);
 			if (silently){params.silent=true;}
-			currError= parseInt(values[writeField+"_error"],10)||0;
+			currError= parseInt(v[writeField+"_error"],10)||0;
 			trueDefault = defaultVal || 0;
-			currVal = parseInt(values[writeField], 10);
-			value = Number(values[readField]);
-			//check for blank
-			if (typeof values[readField] === "undefined" || !values[readField] || values[readField]===null || values[readField]==="" ) {
-				//if value of readField is blank then set to defaultval.
-				value = trueDefault;
-				if (currVal !== value || isNaN(currVal)) {
+			currVal = parseInt(v[writeField], 10);
+			evaluateExpression(v[readField], function (value) {
+				var setter={};
+				//TAS.debug("evaluateExpression returned with number "+value);
+				//Use double equals not triple here! triple results in incorrect falsey readings
+				//changed to 2 equals and flip so value2 on left. 
+				if (isNaN(currVal) || value != currVal) {
 					setter[writeField] = value;
-					setAttrs(setter, params, function () {
-						done(value, currVal, true,currError);
-					});
+					setWrapper(setter, params, function () { done(value, currVal, true,currError)});
 				} else {
 					done(value, currVal, false,currError);
 				}
-			} else if (!isNaN(value)) {
-				//check for number
-				if (currVal !== value) {
-					setter[writeField] = value;
-					setAttrs(setter, params, function () {
-						done(value, currVal, true,currError);
-					});
+			}, function(){
+				var setter={};
+				//only double equals not triple! important!
+				if (isNaN(currVal) || trueDefault != currVal) {
+					setter[writeField] = trueDefault;
+					setWrapper(setter, params, function () { errordone(trueDefault, currVal, true,currError)});
 				} else {
-					done(value, currVal, false,currError);
+					errordone(trueDefault,currVal,false,currError);
 				}
-			} else {
-				//pass to evaluateExpression 
-				evaluateExpression(values[readField], function (value2) {
-					try {
-						if (value2 === null || value2===undefined || isNaN(value2)) {
-							isError=1;
-							value2=trueDefault;
-							//TAS.debug("setting "+ writeField+" to " +value2);
-						}
-						if (isNaN(currVal) || currVal !== value2) {
-							setter[writeField] = value2;
-						} 
-						if (_.size(setter)>0){
-							isChanged=true;
-						}
-					} catch (err2) {
-						TAS.error("SWUtils.evaluateAndSetNumber error after call to evaluateExpression ", err2);
-						isError=1;
-					} finally {
-						setAttrs(setter, params, function () {
-							if (!isError){
-								done(value2, currVal, isChanged,currError);
-							} else {
-								errordone(value2,currVal,isChanged,currError);
-							}
-						});
-
-					}
-				});
-			}
+			});
 		} catch (err) {
 			TAS.error("SWUtils.evaluateAndSetNumber", err);
 			errordone(0,0,0,0);
-			//setter[writeField+'_error']=1;
-			//setAttrs(setter,{silent:true},function(){errordone(value, currVal, false,currError);});
 		}
 	});
 }
-/** Reads dropdown value
+/** Evaluates expression in exprStr, and adds addVal to it, then sets to writeField. This allows you to 
+ * evaluate an expression and add something else to it
+ * @param {function} callback  when done
+ * @param {boolean} silently if call setAttrs with silent:true
+ * @param {string} exprStr  string to evaluate
+ * @param {string} writeField field to write with evaluated result
+ * @param {string|number} currVal current value of expression
+ * @param {string|number} addVal value to add
+ */
+export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addVal){
+	var done = function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	};
+	evaluateExpression(exprStr,function(newVal){
+		var curr = parseInt(currVal,10)||0,
+		addn = parseInt(addVal,10)||0,
+		params={}, setter={};
+		newVal+=addn;
+		if(newVal !== curr){
+			setter[writeField]=newVal;
+			if(silently){
+				params={silent:true};
+			}
+			setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	},function(){
+		TAS.warn("SWUtils.evaluateAndAdd error returend evaluating "+exprStr);
+		done();
+	});
+}
+/** Calls evaluateAndAdd if you don't have the values of the 3 attributes
+ * 
+ * @param {function} callback 
+ * @param {boolean} silently 
+ * @param {string} readField 
+ * @param {string} writeField 
+ * @param {string} addField 
+ */
+export function evaluateAndAddAsync(callback,silently,readField,writeField,addField){
+	getAttrs([readField,writeField,addField],function(v){
+		evaluateAndAdd(callback,silently,v[readField],writeField,v[writeField],v[addField]);
+	});
+}
+/** Evaluates expression in exprStr, if different than current, add to the tot field
+ * use to evaluate misc mod and quickly update what they apply to or not
+ * 
+ * @param {function} callback  when done
+ * @param {boolean} silently if rrue call setAttrs for totField with silent:true
+ * @param {string} exprStr  string to evaluate
+ * @param {string} writeField field to write with evaluated result SILENTLY nomatter what (so we don't loop)
+ * @param {string|number} currVal current value of expression
+ * @param {string} totField total field to apply difference to
+ * @param {string|number} totVal current total value
+ */
+export function evaluateAndAddToTot(callback,silently,exprStr,writeField,currVal,totField,totVal){
+	var done = function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	};
+	evaluateExpression(exprStr,function(newVal){
+		var params={},silentSetter={},
+		setter={};
+		currVal = parseInt(currVal,10)||0;
+		if(newVal !== currVal ){
+			if(!silently){
+				silentSetter[writeField]=newVal;
+				setWrapper(silentSetter,{silent:true});
+			} else {
+				setter[writeField]=newVal;
+				params={silent:true};
+			}
+			totVal=parseInt(totVal,10)||0;
+			totVal += (newVal - currVal);
+			setter[totField] = totVal;
+			setWrapper(setter,params,done);
+		} else {
+			done();
+		}
+	},done);
+}
+/** calls evaluateAndAddToTot if you don't have the values of the 3 attributes. perfect for misc fields
+ * 
+ * @param {function} callback 
+ * @param {boolean} silently 
+ * @param {string} readField 
+ * @param {string} writeField 
+ * @param {string} totField 
+ */
+export function evaluateAndAddToTotAsync(callback,silently,readField,writeField,totField){
+	getAttrs([readField,writeField,totField],function(v){
+		evaluateAndAddToTot(callback,silently,v[readField],writeField,v[writeField],totField,v[totField]);
+	});	
+}
+
+function getDropdownValueSync(fieldToFind,synchrousFindAttributeFunc){
+	var foundField = "";
+	//TAS.debug("finding dropdown values are ",values);
+	if ( fieldToFind === "0" || fieldToFind === 0 || fieldToFind === "dual" || (fieldToFind && fieldToFind["0"] === 0)) {
+		//select = none
+		return 0;
+	} else if (!fieldToFind ) {
+		return ""
+	} else {
+		if(synchrousFindAttributeFunc){
+			foundField = synchrousFindAttributeFunc(fieldToFind);
+		} else {
+			//TAS.debug("function is null so set field to "+fieldToFind);
+			foundField = fieldToFind;
+		}
+		return foundField
+	}
+}
+/** Reads dropdown value and passes via callback
  * determines attribute referenced, gets that attribute value, passes it to callback.
  * similar to evaluateAndSetNumber but uses a synchronus function to perform search and replace, and assumes the string is only one value not an expression.
  * necessary because some dropdowns have other text in the dropdowns, so we can't use the dropdown value exactly as is.
@@ -292,27 +432,58 @@ export function evaluateAndSetNumber (readField, writeField, defaultVal, callbac
  * @param {function(int)} callback pass the value the dropdown selection represents
  *   exceptions: if readField is not found pass in "", if readField is 0 or starts with 0 pass in 0.
  */
-export function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
-	if (!readField || (callback && typeof callback !== "function") || typeof synchrousFindAttributeFunc !== "function") {
+function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
+	if (!readField || (callback && typeof callback !== "function") ) {
 		return;
 	}
 	getAttrs([readField], function (values) {
-		var fieldToFind = values[readField],
-		foundField = "";
-		if (typeof fieldToFind === "undefined" || fieldToFind === null) {
-			callback("");
-		} else if (fieldToFind === "0" || fieldToFind === 0 || fieldToFind.indexOf("0") === 0) {
-			//select = none
-			callback(0);
-		} else {
-			foundField = synchrousFindAttributeFunc(fieldToFind);
-			getAttrs([foundField], function (v) {
-				var valueOf = parseInt(v[foundField], 10) || 0;
-				callback(valueOf, foundField);
-			});
+		var foundField=getDropdownValueSync(values[readField],synchrousFindAttributeFunc);
+		callback(foundField);
+	});
+}
+function setDropdownAndAddToTot(newVal,writeField,currVal,totField,totVal,callback,silently){
+	var done = function(){ 
+		if(typeof callback==="function"){
+			callback();
+		}
+	},
+	params={},silentSetter={},setter={};
+	if(isNaN(newVal) || newVal === currVal){
+		done();
+	}
+	if(!silently){
+		silentSetter[writeField]=newVal;
+		setWrapper(silentSetter,{silent:true});
+	} else {
+		setter[writeField]=newVal;
+		params={silent:true};
+	}
+	totVal += (newVal - currVal);
+	setter[totField] = totVal;
+	setWrapper(setter,params,callback);
+}
+export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchrousFindAttributeFunc,callback,silently){
+	getAttrs([readField,writeField,totField],function(v){
+		var foundField='',newVal=0,currVal=0,totVal=0;
+		try {
+			foundField = getDropdownValueSync(v[readField],synchrousFindAttributeFunc);
+			if(foundField){
+				getAttrs([foundField],function(vi){
+					var newVal=parseInt(vi[foundField],10)||0;
+					setDropdownAndAddToTot(newVal,writeField,parseInt(v[writeField],10)||0,totField,parseInt(v[totField],10)||0,callback,silently);
+				});
+			} else {
+				setDropdownAndAddToTot(foundField,writeField,parseInt(v[writeField],10)||0,totField,parseInt(v[totField],10)||0,callback,silently);
+			}
+		} catch (err){
+			TAS.error("SWUtils.setDropdownAndAddToTot for read:"+readField+",write:"+writeField+",tot:"+totField,v,err);
+			if (typeof callback==="function"){
+				callback();
+			}				
 		}
 	});
 }
+
 /** Looks at a dropdown value, and sets writeField(s) with the number to which selected option refers.
  * calls getDropdownValue
  * @param {string} readField the dropdown field
@@ -322,50 +493,41 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
  *         with the value we set as the only parameter.
  * @param {boolean} silently if true call setAttrs with {silent:true}
  */
-export function setDropdownValue (readField, writeFields, synchrousFindAttributeFunc, callback, silently) {
+export function setDropdownValue (readField, writeField, synchrousFindAttributeFunc, callback, silently) {
 	var done = function (newval, currval, changed) {
 		if (typeof callback === "function") {
+			//TAS.notice("SWUtils.setDropdownValue returning new:"+newval+", old:"+currval+", changed:"+changed);
 			callback(newval, currval, changed);
 		}
 	};
-	getDropdownValue(readField, synchrousFindAttributeFunc, function (valueOf) {
-		var params = {};
+	getAttrs([readField],function(values){
+		var foundField = '', params = {},fields=[];
+		foundField = getDropdownValueSync(values[readField],synchrousFindAttributeFunc);
+		//TAS.debug("SWUtils.setDropdownValue from:"+readField+", to:"+writeFields+", after call to getDropdownValue returned with:"+foundField);
 		if (silently) {params.silent=true;}
-		if (Array.isArray(writeFields) && writeFields.length === 1) {
-			writeFields = writeFields[0];
+		fields =[writeField];
+		if(foundField){
+			fields.push(foundField);
 		}
-		if (typeof writeFields === "string") {
-			getAttrs([writeFields], function (v) {
-				var currValue = parseInt(v[writeFields], 10),
-				setter = {};
-				//TAS.debug("setDropdownValue, readField:" + readField + ", currValue:" + currValue + ", newValue:" + valueOf);
-				if (currValue !== valueOf || isNaN(currValue)) {
-					setter[writeFields] = valueOf;
-					setAttrs(setter, params, function () {
-						done(valueOf, currValue, true);
-					});
-				} else {
-					done(valueOf, currValue, false);
-				}
-			});
-		} else if (Array.isArray(writeFields)) {
-			getAttrs(writeFields, function (v) {
-				var i = 0,
-				setter = {};
-				for (i = 0; i < writeFields.length; i++) {
-					if (parseInt(v[writeFields[i]], 10) !== valueOf) {
-						setter[writeFields[i]] = valueOf;
-					}
-				}
-				if (_.size(setter) > 0) {
-					setAttrs(setter, params, function () {
-						done(valueOf, 0, true);
-					});
-				} else {
-					done(valueOf, 0, false);
-				}
-			});
-		}
+		//TAS.debug("SWUtils.setDropdownValue getting ",fields);
+		getAttrs(fields, function (v) {
+			var currValue = 0, valueOf=0, setter = {};
+			if(foundField){
+				valueOf = parseInt(v[foundField], 10) || 0;
+			} else {
+				valueOf =foundField;
+			}
+			currValue = parseInt(v[writeField], 10);
+			//TAS.debug("setDropdownValue, v["+foundField+"]:" + v[foundField] + ", currValue:" + currValue + ", newValue:" + valueOf);
+			if (currValue !== valueOf || isNaN(currValue)) {
+				setter[writeField] = valueOf;
+				setAttrs(setter, params, function () {
+					done(valueOf, currValue, true);
+				});
+			} else {
+				done(valueOf, currValue, false);
+			}
+		});
 	});
 }
 /** getRowTotal return newvalue, currentvalue, allvalues in callback. Summed up floats and round total to int. 
@@ -502,10 +664,10 @@ export function escapeForRollTemplate  (str) {
 	if (!str){return str;}
 	return str.replace(/\{\{/g, '&#123;&#123;');
 }
-/** escapes string so it can be used in the name section of another link button
+/** escapes string so it can be used in API button
  *if it finds [name](link) in a string it will remove the [ and ] and the (link)
  * replaces [ and ] with escaped versions everywhere else.
- *@param {string] str the string we want to use inside a link button
+ *@param {string} str the string we want to use inside a link button
  *@returns {string} safe to use new name for button
  */
 export function escapeForChatLinkButton (str){
@@ -529,6 +691,20 @@ export function escapeForChatLinkButton (str){
 	retstr = retstr.replace(/\[/g,'&#91;').replace(/\]/g,'&#93;');
 	return retstr;
 }
+/** not used but will be faster than current using split'_' for arbitrary maybe not for 3... need to test
+ * no creation or deletion of strings
+ * @param {*} str 
+ * @param {*} pat 
+ * @param {*} n 
+ */
+export function nthIndex (str,pat,n){
+	var i;
+	for (i = 0; n > 0 && i !== -1; n -= 1) {
+		i = str.indexOf(pat,  i ? (i + 1) : i);
+	} 
+	return i;
+}
+
 /** returns id portion of a source Attribute or repeating row attribute name
  * @param {string} sourceAttribute from eventInfo object
  * @returns {string} the id portion of string, or blank.
@@ -542,9 +718,14 @@ export function getRowId  (sourceAttribute) {
 	}
 	return "";
 }
+/** Returns attribute name not including repeating_section_id_****
+ * 
+ * @param {string} source 
+ */
 export function getAttributeName  (source) {
+	var itemId="", attrib="";
 	if (!source) { return ""; }
-	var itemId = getRowId(source), attrib = "";
+	itemId = getRowId(source);
 	if (itemId) {
 		attrib = source.substring(source.indexOf(itemId) + itemId.length + 1, source.length);
 	}
@@ -617,7 +798,7 @@ export function splitByCommaIgnoreParens(str){
 	if (!str) {return [];}
 	ret = str.match(/((?:[^(),]|\([^()]*\))+)/g);
 	ret = trimBoth(ret);
-	return ret;
+	return _.uniq(ret);
 }
 export function deleteRepeating(callback,section){
 	var done = _.once(function(){
@@ -629,12 +810,12 @@ export function deleteRepeating(callback,section){
 		done();
 		return;
 	}
-	TAS.debug("SWUtils.deleteFeatures",section);
+	//TAS.debug("SWUtils.deleteFeatures",section);
 	getSectionIDs(section,function(ids){
 		var prefix="repeating_"+section+"_";
 		if(ids && _.size(ids)){
 			ids.forEach(function(id) {
-				TAS.debug("deleting "+prefix+id);
+				//TAS.debug("deleting "+prefix+id);
 				removeRepeatingRow(prefix+id);
 			});
 			done();
@@ -645,5 +826,5 @@ export function deleteRepeating(callback,section){
 }
 
 
-PFConsole.log( '   SWUtils module loaded          ' );
-PFLog.modulecount++;
+//PFConsole.log( '   SWUtils module loaded          ' );
+//PFLog.modulecount++;

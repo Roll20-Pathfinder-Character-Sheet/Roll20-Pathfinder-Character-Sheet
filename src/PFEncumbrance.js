@@ -2,6 +2,7 @@
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
+import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
 
@@ -245,7 +246,7 @@ function updateCurrentLoad (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -421,7 +422,7 @@ export function updateLoadsAndLift (callback, silently) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                setAttrs(setter, params, done);
+                SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
             }
@@ -436,8 +437,9 @@ export function updateModifiedSpeed  (callback) {
             callback();
         }
     }),
-    attribList = ["current-load", "speed-base", "speed-modified", 
-    "speed-run",  "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total"  ];
+    attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
+        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","condition-Slowed","run_cond_applied",
+    	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -450,6 +452,8 @@ export function updateModifiedSpeed  (callback) {
         speedDropdown = parseInt(v["max-dex-source"], 10) || 0,
         origRunMult = isNaN(parseInt(v["run-mult"], 10)) ? 4 : parseInt(v["run-mult"], 10),
         buff = parseInt(v["buff_speed-total"],10)||0,
+        halfSpeed = 0,
+        cannotRun=0,
         newSpeed = base,
         runMult = origRunMult,
         newRun = base * runMult,
@@ -463,7 +467,19 @@ export function updateModifiedSpeed  (callback) {
         try {
             base = base + buff;
             newSpeed = newSpeed + buff ;
-            //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
+            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Exhausted'],10)===3){
+                halfSpeed=1;
+                base = Math.floor(base/10)*5; //we actually modify old base due to calcs below
+                newSpeed = base;
+                cannotRun=1;
+            } else if (parseInt(v['condition-Fatigued'],10)===1 ){
+                cannotRun=1;
+            }
+            if (buff < 0){
+                halfSpeed=1;
+            }
+
+             //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
             // #0: Armor, Shield & Load
             // #1: Armor & Shield only
             // #2: Load only
@@ -510,6 +526,9 @@ export function updateModifiedSpeed  (callback) {
                     newSpeed = base;
                 }
             }
+            if(cannotRun){
+                runMult=0;
+            }
             newRun = newSpeed * runMult;
             if (currSpeed !== newSpeed) {
                 setter["speed-modified"] = newSpeed;
@@ -517,11 +536,17 @@ export function updateModifiedSpeed  (callback) {
             if (currRun !== newRun) {
                 setter["speed-run"] = newRun;
             }
+            if (halfSpeed !== (parseInt(v['condition-Slowed'],10)||0)   ){
+                setter['condition-Slowed']=halfSpeed;
+            }
+            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)   ){
+                setter.run_cond_applied=cannotRun;
+            }
         } catch (err) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
         } finally {
             if (_.size(setter) > 0) {
-                setAttrs(setter, {}, done);
+                SWUtils.setWrapper(setter, PFConst.silentParams, done);
             } else {
                 done();
             }
@@ -537,7 +562,7 @@ export function migrate (callback){
     getAttrs(['max-dex-source'],function(v){
         var val = parseInt(v['max-dex-source'],10);
         if (isNaN(val)){
-            setAttrs({'max-dex-source':0},PFConst.silentParams,done);
+            SWUtils.setWrapper({'max-dex-source':0},PFConst.silentParams,done);
         } else {
             done();
         }
@@ -545,9 +570,9 @@ export function migrate (callback){
 
 
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFEncumbranceRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFEncumbrance.recalculate");
+        //TAS.debug("leaving PFEncumbrance.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -567,23 +592,40 @@ export function recalculate (callback, silently, oldversion) {
         TAS.error("PFEncumbrance.recalculate", err);
         done();
     }
-}
+});
 function registerEventHandlers  () {
-    on("change:current-load change:speed-base change:race change:armor3-equipped change:armor3-type change:max-dex-source change:run-mult", TAS.callback(function eventUpdateModifiedSpeed(eventInfo) {
+    on("change:speed-base change:race change:armor3-equipped change:max-dex-source change:run-mult", TAS.callback(function eventUpdateSpeedPlayer(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        updateModifiedSpeed();
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api"){
+            updateModifiedSpeed();
+        }
     }));
+    on("change:current-load change:armor3-equipped change:armor3-type", TAS.callback(function eventUpdateSpeedAuto(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
+            updateModifiedSpeed();
+        }
+    }));
+
     on('change:load-light change:carried-total', TAS.callback(function eventUpdateCurrentLoad(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        if (eventInfo.sourceType === "sheetworker"){
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateCurrentLoad();
         }
     }));
-    on("change:STR change:legs change:load-str-bonus change:load-multiplier change:load-misc", TAS.callback(function eventUpdateLoadsAndLift(eventInfo) {
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        updateLoadsAndLift();
+    on("change:size-multiplier change:legs change:load-str-bonus change:load-multiplier change:load-misc", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api"){
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateLoadsAndLift();
+        }
     }));
+    on("change:STR change:size", TAS.callback(function eventUpdateLoadsAndLiftAuto(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
+            updateLoadsAndLift();
+        }
+    }));    
 }
 registerEventHandlers();
-PFConsole.log( '   PFEncumbrance module loaded    ' );
-PFLog.modulecount++;
+//PFConsole.log( '   PFEncumbrance module loaded    ' );
+//PFLog.modulecount++;

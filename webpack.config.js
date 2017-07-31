@@ -30,12 +30,26 @@ var webpackConfig = {
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src/index.html'),
-      inlineSource: '.js$'
-    }),
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      comments: false,
+      sourceMap: false
+    }),    
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/index.html'),
+      inlineSource: '.js$',
+      minify: {
+        //collapseWhitespace: true,
+        caseSensitive: true,
+        removeComments: true,
+        removeRedundantAttributes: false,
+        removeScriptTypeAttributes: false,
+        removeStyleLinkTypeAttributes: false,
+        sortAttributes: true,
+        sortClassName: true
+      }    
     }),
     new HtmlWebpackInlineSourcePlugin(),
     function RegexReplace(...args) {

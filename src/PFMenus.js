@@ -43,8 +43,8 @@ var menuMap={
  * @param {function(string)} callback Pass string for command macro as first param, or ""
  */
 export function getRepeatingCommandMacro (baseAttribs,callback,header){
-    var done = function (macro) { 
-            if (typeof callback === "function") { callback(macro); } 
+    var done = function (macro,origMacro) { 
+            if (typeof callback === "function") { callback(macro,origMacro); } 
         },
         defaultTemplate = "pf_block",
         defaultHeader="header_image-pf_block",
@@ -82,7 +82,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         filterField=baseAttribs.filterField||filterField;
         altUsesField=baseAttribs.altUsesField||altUsesField;
         altGroupByField=baseAttribs.altGroupBy||'';
-        // TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
+        //TAS.debug("PFMenus.getRepeatingCommandMacro attribs, menu so far:",baseAttribs,baseMacro);
     } catch (outerErr){
         TAS.error("PFMenus.getRepeatingCommandMacro outererror for "+ baseAttribs.section, outerErr);
         done("");
@@ -127,9 +127,16 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
             return;
         }
         fields.push( '_reporder_repeating_'+baseAttribs.section);
+        if(baseAttribs.origMacroAttr){
+            fields.push(baseAttribs.origMacroAttr);
+        }
         getAttrs(fields,function(v){
-            var restOfMacro="", totalMacro="",orderedList,repList,customSorted=0, rowCounter=20;
+            var restOfMacro="", totalMacro="",orderedList,repList,customSorted=0, rowCounter=20,
+            origMacro="";
             try {
+                if(baseAttribs.origMacroAttr){
+                    origMacro=v[baseAttribs.origMacroAttr]||"";
+                }
                 //TAS.debug('PFMenus.getRepeatingCommandMacro returned with',v);
                 if (v['_reporder_repeating_'+baseAttribs.section]) {
                     repList = v['_reporder_repeating_'+baseAttribs.section].split(",");
@@ -278,7 +285,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                 } else {
                     totalMacro=baseMacro + noRows; 
                 }
-                done(totalMacro);
+                done(totalMacro,origMacro);
             }
         });
     });
@@ -292,7 +299,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
  */
 export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
     var done = _.once(function () {
-            //TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
+            ////TAS.debug("leaving PFMenus.resetOneCommandMacro: " + menuName);
             if (typeof callback === "function") {
                 callback();
             }
@@ -335,12 +342,17 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         if (groupMap && params.groupBy){
             params.groupMap = groupMap;
         }
+        params.origMacroAttr=macroName + params.macroSuffix;
         //TAS.debug("PFMenus.resetOneCommandMacro getting rollmenu for "+menuName,params);
-        getRepeatingCommandMacro( params,function(newMacro){
+        getRepeatingCommandMacro( params,function(newMacro,oldMacro){
             var setter={};
             //TAS.debug("PFMenus.resetOneCommandMacro returned with "+menuName+", writing to "+macroName + params.macroSuffix,newMacro);
-            setter[macroName + params.macroSuffix]=newMacro||"";
-            setAttrs(setter,PFConst.silentParams,done);
+            if (!oldMacro || newMacro !== oldMacro){
+                setter[macroName + params.macroSuffix]=newMacro||"";
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            } else {
+                done();
+            }
         },header);
     } catch (errouter){
         TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
@@ -356,5 +368,5 @@ export function resetOneCommandMacroNoNPC (section,callback,header){
     });
 }
 
-PFConsole.log('   PFMenus module loaded          ');
-PFLog.modulecount++;
+//PFConsole.log('   PFMenus module loaded          ');
+//PFLog.modulecount++;

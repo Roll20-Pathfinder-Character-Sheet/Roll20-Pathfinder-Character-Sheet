@@ -98,48 +98,116 @@ events = {
 	attackEventsSLA:["damage-macro-text","damage-type","abil-sr","save","abil-attack-type","name","range_numeric"],
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
 };
-/** sets tab for an ability. these have multiple checkboxes, not a radio
- *@param {string} id optional id of row
- *@param {function} callback call when done
- *@param {obj} eventInfo from 'on' event change:rule_category
- */
-function setRuleTab (id,callback, eventInfo){
-	var idStr = SWUtils.getRepeatingIDStr(id),
-	prefix = "repeating_ability_" + idStr,
-	catfields=[],
-	ruleCategoryField=prefix+"rule_category",
-	abilityTypeField=prefix+'ability_type',
-	fields=[ruleCategoryField,abilityTypeField];
-	catfields=_.map(categoryAttrs,function(attr){
-		return prefix+attr;
-	});
-	fields = fields.concat(catfields);
-	getAttrs(fields,function(v){
-		var setter, ruleType=0,abilityType=0;
-		setter = _.reduce(catfields,function(m,attr){
-			m[attr]=0;
-			return m;
-		},{});
-		if (v[abilityTypeField] ){
-			abilityType= tabTypeSorted[v[abilityTypeField]];
-			setter[prefix+'tabcat'+abilityType]=1;
-		}
-		if (v[ruleCategoryField]) {
-			ruleType=tabRuleSorted[v[ruleCategoryField]];
-			setter[prefix+'tabcat'+ruleType]=1;
-			setter[prefix+'tabcat-1']=0;
-		} else {
-			setter[prefix+'tabcat-1']=1;
-		}
 
-		//TAS.debug("PFAbility.setRuleTab, setting",setter);
-		setAttrs(setter,PFConst.silentParams);
+function setClassName (id,callback,eventInfo){
+	var done = _.once(function(){
+		if (typeof callback === "function"){
+			callback();
+		}
+	}),
+	idStr = SWUtils.getRepeatingIDStr(id),
+	prefix="repeating_ability_"+idStr,
+	clbasisField=prefix+"CL-basis";
+	getAttrs([prefix+'CL-basis', prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+		var clBase='',setter={},match;
+		try {
+			if (v[clbasisField]){
+				if (v[clbasisField]==="@{level}"){
+					clBase =v["race"];
+				} else if (v[clbasisField]==="@{npc-hd-num}"){
+					clBase = v["race"];
+				} else if (parseInt(v[clbasisField],10)===0){
+					clBase ="";
+				} else {
+					match = v[prefix+"CL-basis"].match(/\d+/);
+					if (match){
+						clBase=v["class-"+match[0]+"-name"];
+					}
+				}
+				if(v[prefix+'class-name']!==clBase){
+					setter[prefix+'class-name']=clBase;
+				}
+			}
+		} catch(err) {
+			TAS.error("PFAbility.setClassName",err);
+		} finally {
+			if (_.size(setter)>0){
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
+			} else {
+				done();
+			}
+		}
 	});
 }
-function setRuleTabs (){
+
+function setTypeTab(callback,silently,id,eventInfo){
+	var prefix = 'repeating_ability_'+SWUtils.getRepeatingIDStr(id);
+	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
+		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
+		var setter={},params=PFConst.silentParams;
+		//TAS.debug("############ PFAbility setTypeTab",v);
+		setter[prefix + 'tabcat2']=v[prefix + 'ability_type']||'-1';
+		//TAS.notice("############","Ability setting ",setter);
+		SWUtils.setWrapper(setter,params);
+	});
+}
+function setRuleTab (callback,silently,id,eventInfo){
+	var prefix = 'repeating_ability_'+SWUtils.getRepeatingIDStr(id);
+	getAttrs([prefix + 'frequency',  prefix + 'rule_category',prefix + 'CL-basis',prefix + 'ability_type',
+		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
+		var setter={}, ruleForTab='', params=PFConst.silentParams;
+		switch(v[prefix + 'rule_category']){
+			case 'racial-trait':
+				ruleForTab='trait';
+				break;
+			case 'monster-rule':
+				ruleForTab='other';
+				break;
+			default:
+				ruleForTab=v[prefix + 'rule_category']||'';
+				break;
+		}
+		if(!ruleForTab){ ruleForTab='-1';}
+		setter[prefix + 'tabcat'] = ruleForTab;
+
+		//if users changed the rule then change the tab we're checked on
+		if(eventInfo ) {
+			if (ruleForTab!=='-1'){  
+				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilites_tab) ){
+					setter.abilities_tab = ruleForTab;
+				}
+				if( v['npc-abilities_tab'] !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v['npc-abilities_tab']) ){
+					setter['npc-abilities_tab'] = ruleForTab;
+				}
+			}
+			if( v[prefix + 'rule_category'] === 'class-features' && 
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+					setter[prefix + 'CL-basis']='@{class-0-level}';
+					params={};
+			} else if (v[prefix + 'rule_category'] === 'racial-traits' && 
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+					setter[prefix + 'CL-basis']='@{level}';
+					params={};
+			}
+		}
+		if(v[prefix + 'rule_category']==='spell-like-abilities'){
+			v[prefix + 'tabcat2']='Sp';
+			setter[prefix + 'ability_type']='Sp';
+		}
+		if(! v[prefix + 'frequency']){
+			setter[prefix + 'frequency']="not-applicable";
+		}
+		if(_.size(setter)){
+			//TAS.notice("############","Ability setting ",setter);
+			SWUtils.setWrapper(setter,params,setClassName);
+		}
+	});
+}
+export function setRuleTabs (){
 	getSectionIDs("repeating_ability",function(ids){
 		_.each(ids,function(id){
-			setRuleTab(id);
+			setRuleTab(null,null,id);
+			setTypeTab(null,null,id);
 		});
 	});
 }
@@ -207,8 +275,8 @@ function getNewAbilityAttrs (ability){
 		 setter[prefix+'row_id']=id;
 		 setter[prefix+'showinmenu']=ability['showinmenu']||0;
 		 setter[prefix+'name']=ability.name||'';
-		 setter[prefix+'used']=ability['used']||'';
-		 setter[prefix+'used_max']=ability['used_max']||'';
+		 setter[prefix+'used']=ability['used']||0;
+		 setter[prefix+'used_max']=ability['used_max']||0;
 		 setter[prefix+'max-calculation']=ability['max-calculation']||'';
 		 setter[prefix+'short-description']=ability['short-description']||'';
 		 setter[prefix+'description']=ability['description']||'';
@@ -250,35 +318,32 @@ function getNewAbilityAttrs (ability){
 }
 export function copyToAbilities(callback,abilities) {
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.copyToAbilities");
+		//TAS.debug("leaving PFAbility.copyToAbilities");
 		if (typeof callback === "function")  {
 			callback();
 		}
 	}), 
 	setter={};
-	TAS.debug("At PFAbility.copyToAbilities");
+	//TAS.debug("At PFAbility.copyToAbilities");
 	if (_.size(abilities)){
 		_.each(abilities,function(ability){
 			var xtra= getNewAbilityAttrs(ability);
-			TAS.debug("PFAbility.copyToAbilities adding ",xtra);
+			//TAS.debug("PFAbility.copyToAbilities adding ",xtra);
 			_.extend(setter,xtra);
 		});
-		TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
+		//TAS.debug("##########################","PFAbility.copyToAbilities setting",setter);
 	}
 	if(_.size(setter)){
-		 setAttrs(setter,PFConst.silentParams,done);
+		 SWUtils.setWrapper(setter,PFConst.silentParams,done);
 	} else {
 		 done();
 	}
 }
 
-
-/** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus)
- *@param {function} callback call when done	
- */
+/** resetTopCommandMacro sets all-abilities_buttons_macro (menu of ability menus) */
 function getTopOfMenu (callback,isNPC){
 	var done = function (str) {
-		TAS.debug("leaving PFAbility.getTopOfMenu");
+		//TAS.debug("leaving PFAbility.getTopOfMenu");
 		if (typeof callback === "function") {
 			callback(str);
 		}
@@ -341,7 +406,7 @@ export function resetCommandMacro (callback){
 export function importFromCompendium (callback,eventInfo){
 	var done=_.once(function(){
 		resetCommandMacro();
-		TAS.debug("leaving PFAbility.importFromCompendium");
+		//TAS.debug("leaving PFAbility.importFromCompendium");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -440,57 +505,18 @@ export function importFromCompendium (callback,eventInfo){
 			TAS.error("PFAbility.importFromCompendium",err);
 		} finally {
 			if(_.size(silentSetter)>0){
-				setAttrs(silentSetter,PFConst.silentParams);
+				SWUtils.setWrapper(silentSetter,PFConst.silentParams);
 			}
 			//TAS.debug"PFAbility.importFromCompendium, setting",setter);
 			if (_.size(setter)>0){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
 		}
 	});
 }
-function setClassName (id,callback,eventInfo){
-	var done = _.once(function(){
-		if (typeof callback === "function"){
-			callback();
-		}
-	}),
-	idStr = SWUtils.getRepeatingIDStr(id),
-	prefix="repeating_ability_"+idStr,
-	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis',prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
-		var clBase='',setter={},match;
-		try {
-			if (v[clbasisField]){
-				if (v[clbasisField]==="@{level}"){
-					clBase =v["race"];
-				} else if (v[clbasisField]==="@{npc-hd-num}"){
-					clBase = v["race"];
-				} else if (parseInt(v[clbasisField],10)===0){
-					clBase ="";
-				} else {
-					match = v[prefix+"CL-basis"].match(/\d+/);
-					if (match){
-						clBase=v["class-"+match[0]+"-name"];
-					}
-				}
-				if(v[prefix+'class-name']!==clBase){
-					setter[prefix+'class-name']=clBase;
-				}
-			}
-		} catch(err) {
-			TAS.error("PFAbility.setClassName",err);
-		} finally {
-			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
-			} else {
-				done();
-			}
-		}
-	});
-}
+
 export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 	var notes="",attackType="";
 	setter = setter||{};
@@ -552,13 +578,11 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 }
 /**Triggered from a button in repeating spells 
  *@param {string} id the row id or null
- *@param {function} callback when done
- *@param {boolean} silently setattrs silent:true
- *@param {object} eventInfo if id is null get id from here.
+ *@param {string} weaponId if updating existing row
  */
 export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.createAttackEntryFromRow");
+		//TAS.debug("leaving PFAbility.createAttackEntryFromRow");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -610,7 +634,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 					params = PFConst.silentParams;
 				}
 				//TAS.debug("PFAbility.createAttackEntryFromRow setting:",setter);
-				setAttrs(setter, {}, function(){
+				SWUtils.setWrapper(setter, {}, function(){
 					//can do these in parallel
 					//TAS.debug("PFAbility.createAttackEntryFromRow came back from setter ");
 					PFAttackOptions.resetOption(newRowId);
@@ -619,14 +643,14 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 				});
 			} else {
 				setter[slaPrefix + "create-attack-entry"] = 0;
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			}
 		}
 	});
 }
 export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFAbility.updateAssociatedAttack");
+		//TAS.debug("leaving PFAbility.updateAssociatedAttack");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -669,7 +693,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 						if (silently) {
 							params = PFConst.silentParams;
 						}
-						setAttrs(setter, params, function(){
+						SWUtils.setWrapper(setter, params, function(){
 							PFAttackOptions.resetSomeOptions(idlist);
 						});
 					} else {
@@ -682,7 +706,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 }
 function updateCharLevel (id,callback,eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateCharLevel");
+		//TAS.debug("leaving updateCharLevel");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -707,7 +731,7 @@ function updateCharLevel (id,callback,eventInfo){
 			TAS.error("PFAbility.updateCharLevel",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -716,7 +740,7 @@ function updateCharLevel (id,callback,eventInfo){
 }
 function updateAbilityRange (id, callback, silently, eventInfo){
 	var done=_.once(function(){
-		TAS.debug("leaving updateAbilityRange");
+		//TAS.debug("leaving updateAbilityRange");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -748,7 +772,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 			TAS.error("updateAbilityRange",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,{},done);
+				SWUtils.setWrapper(setter,{},done);
 			} else {
 				done();
 			}
@@ -756,7 +780,7 @@ function updateAbilityRange (id, callback, silently, eventInfo){
 	});
 }
 /** to use in calls to _.invoke or otherwise, sets switch variables to setter for given row
- * @param {jsobj} setter to pass in first var of setAttrs
+ * @param {jsobj} setter to pass in first var of SWUtils.setWrapper
  * @param {string} id the id of this row, or null if we are within the row context already
  * @param {jsobj} v the values needed returned by getAttrs
  */
@@ -820,7 +844,7 @@ function resetOption (setter, id, v, eventInfo){
 }
 function resetOptionAsync (id, callback , eventInfo){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.resetOption");
+		//TAS.debug("leaving PFAbility.resetOption");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -839,7 +863,7 @@ function resetOptionAsync (id, callback , eventInfo){
 			TAS.error("PFAbility.recalcAbilities",err);
 		} finally {
 			if (_.size(setter)){
-				setAttrs(setter,PFConst.silentParams,done,eventInfo);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done,eventInfo);
 			} else {
 				done();
 			}
@@ -849,7 +873,7 @@ function resetOptionAsync (id, callback , eventInfo){
 
 function recalcAbilities (callback,silently, eventInfo,levelOnly){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.recalcAbilities");
+		//TAS.debug("leaving PFAbility.recalcAbilities");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -861,21 +885,16 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 			done();
 			return;
 		}
-		//TAS.debug("there are "+ numids+" rows to recalc");
 		doneOne	= _.after(numids,done);
 		//refactor to do all rows at once
 		calllevel= function(id){
 			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
-				//TAS.debug("PFAbility.recalcAbilities calling updateCharLevel for "+id);
 				updateCharLevel(id,function(){
-					//TAS.debug("PFAbility.recalcAbilities calling updateAbilityRange for "+id);
 					updateAbilityRange(id,function(){
-					//	TAS.debug("PFAbility.recalcAbilities calling updateAssociatedAttack for "+id);
-					//	updateAssociatedAttack(id,null,false,null);
 						doneOne();
 					});
 				});
-			});
+			},true,true);
 		};
 		_.each(ids,function(id){
 			calllevel(id);
@@ -887,13 +906,13 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFAbility.migrateRepeatingMacros");
+		//TAS.debug("leaving PFAbility.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	migrated = _.once(function(){
-		setAttrs({'migrated_ability_macrosv112':1},PFConst.silentParams);
+		SWUtils.setWrapper({'migrated_ability_macrosv112':1},PFConst.silentParams);
 		done();
 	}),
 	defaultName = '',defaultMacro='',
@@ -909,10 +928,9 @@ export function migrateRepeatingMacros (callback){
 					done();
 					return;
 				}
-				//TAS.debug("PFAbility.migrateRepeatingMacros about to call PFMacros",defaultMacro);
 				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
 			} else {
-				migrated();
+				done();
 			} 
 		} catch (err){
 			TAS.error("PFAbility.migrateRepeatingMacros error setting up "+section,err);
@@ -922,14 +940,14 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback){
 	var done = function(){
-		TAS.debug("leaving PFAbility.migrate");
+		//TAS.debug("leaving PFAbility.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}
 	};
 	migrateRepeatingMacros(done);
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFAbility.recalculate");
 		if (typeof callback === "function") {
@@ -937,7 +955,6 @@ export function recalculate (callback, silently, oldversion) {
 		}
 	}),
 	doneWithList = function(){
-		//TAS.debug("now calling resetcommandmacro");
 		resetCommandMacro();
 		done();
 	},
@@ -953,7 +970,7 @@ export function recalculate (callback, silently, oldversion) {
 		TAS.error("PFAbility.recalculate, ", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",
@@ -968,11 +985,9 @@ function registerEventHandlers () {
 		m+= singleEvent + a + " ";
 		return m;
 	},macroEvent);
-	on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
-		var attr;
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && attr==='used_max')) {
+	on (macroEvent, TAS.callback(function eventRepeatingAbilityCommandMacroUpdate(eventInfo){
+		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFFeatures.resetTopCommandMacro(null,eventInfo);
 			resetCommandMacro();
 		}
@@ -989,10 +1004,10 @@ function registerEventHandlers () {
 		return m;
 	},"");
 	on(eventToWatch,	TAS.callback(function eventChangeAbilityTypeFrequencyOrRange(eventInfo){
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ||  (/range/i).test(eventInfo.sourceAttribute) ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || eventInfo.sourceAttribute.indexOf('range')>0 ) {
-				resetOptionAsync();
-			}
+			resetOptionAsync();
+		}
 	}));
 	on("change:repeating_ability:CL-misc change:repeating_ability:spell_level-misc", 
 		TAS.callback(function eventSLAEquationMacro(eventInfo){
@@ -1001,20 +1016,20 @@ function registerEventHandlers () {
 	}));
 	on("change:buff_CasterLevel-total change:CasterLevel-Penalty",
 		TAS.callback(function eventAbilityLevelChange(eventInfo){
-		if (eventInfo.sourceType === "sheetworker"  ) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"  ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			recalcAbilities(null,null,eventInfo,true);
 		}
 	}));
 	on("change:repeating_ability:CL-basis-mod change:repeating_ability:CL-misc-mod",
 		TAS.callback(function eventAbilityLevelChange(eventInfo){
-		if (eventInfo.sourceType === "sheetworker"  ) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"  ) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateCharLevel(null,null,eventInfo);
 		}
 	}));
 	on("change:repeating_ability:compendium_category", TAS.callback(function eventAbilityCompendium(eventInfo){
-		if (eventInfo.sourceAttribute !== "sheetworker"){
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType==="api"){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			importFromCompendium(null,eventInfo);
 		}
@@ -1030,7 +1045,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		//cl-misc-mod, cl-basis-mod  is sheetworker, range_pick and range must be player
 		if ( ((/range/i).test(eventInfo.sourceAttribute) && (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" )) || 
-			((/CL/i).test(eventInfo.sourceAttribute) && eventInfo.sourceType === "sheetworker") ) {
+			((/CL/i).test(eventInfo.sourceAttribute) && eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") ) {
 				updateAbilityRange(null,null,false,eventInfo);
 			}
 	}));
@@ -1038,16 +1053,20 @@ function registerEventHandlers () {
 		memo+="change:repeating_ability:"+attr+" ";
 		return memo;
 	},"");
-	on(eventToWatch,	TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		updateAssociatedAttack(null,null,null,eventInfo);
+	on(eventToWatch, TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType==="api" || (/range_numeric/i).test(eventInfo.sourceAttribute) ){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			updateAssociatedAttack(null,null,null,eventInfo);
+		}
 	}));
-	on("change:repeating_ability:rule_category change:repeating_ability:ability_type", TAS.callback(function eventUpdateSLARuleCat(eventInfo){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		setRuleTab(null,null,eventInfo);
+	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		setRuleTab(null,null,null,eventInfo);
 	}));
+	on("change:repeating_ability:ability_type", TAS.callback(function eventUpdateAbilityType(eventInfo){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		setTypeTab(null,null,null,eventInfo);
+	}));
+
 }
 registerEventHandlers();
-PFConsole.log('   PFAbility module loaded        ' );
-PFLog.modulecount++;
-

@@ -143,7 +143,7 @@ events = {
  */
 export function resetTopCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetTopCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetTopCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -205,7 +205,7 @@ export function resetTopCommandMacro (callback){
 			TAS.error("PFFeatures.resetTopCommandMacro",err);
 		}finally {
 			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -217,7 +217,7 @@ export function resetTopCommandMacro (callback){
  */
 export function resetCommandMacro (callback){
 	var done = _.once(function () {
-		TAS.debug("leaving PFFeatures.resetCommandMacro");
+		//TAS.debug("leaving PFFeatures.resetCommandMacro");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -294,7 +294,7 @@ export function resetCommandMacro (callback){
  * Loops through all rows in the given repeating section.
  * @param {string} section= the name of the section after the word "repeating_"
  * @param {function} callback when done
- * @param {boolean} silently if T then call setAttrs with {silent:true}
+ * @param {boolean} silently if T then call SWUtils.setWrapper with {silent:true}
  */
 function recalculateRepeatingMaxUsed (section, callback, silently) {
 	var done = _.once(function () {
@@ -302,17 +302,27 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 			callback();
 		}
 	});
-	getSectionIDs("repeating_" + section, function (ids) {
-		var totrows = _.size(ids),
-		rowdone = _.after(totrows, done);
-		if (totrows > 0) {
-			_.each(ids, function (id, index) {
-				var prefix = "repeating_" + section + "_" + id;
-				SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, silently);
-			});
-		} else {
+	getAttrs(['is_newsheet'],function(vout){
+		//new sheets have nothing
+		if(parseInt(vout.is_newsheet,10)){
 			done();
+			return;
 		}
+		getSectionIDs("repeating_" + section, function (ids) {
+			var totrows = _.size(ids),
+			rowdone = _.after(totrows, done);
+			if (totrows > 0) {
+				if(section ==='ability'){
+					TAS.notice("checking max used for ability silent is:"+silently);
+				}
+				_.each(ids, function (id, index) {
+					var prefix = "repeating_" + section + "_" + id;
+					SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, true);
+				});
+			} else {
+				done();
+			}
+		});
 	});
 }
 export function convertNameToLevel (name){
@@ -345,7 +355,7 @@ export function getAbilities (callback,errorcallback,section){
 			done();
 		}
 	});
-	TAS.debug("at PFFeatures.getAbilities "+section);
+	//TAS.debug("at PFFeatures.getAbilities "+section);
 	if (!section){notDone();return;}
 	getSectionIDs('repeating_'+section,function(ids){
 		var fields,isSLA=0;
@@ -382,7 +392,7 @@ export function getAbilities (callback,errorcallback,section){
 									if (obj['CL-basis']==="@{level}"){
 										obj["class-name"]=v['race'];
 									} else if (v[prefix+'class-number']){
-										TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
+										//TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
 										obj["class-name"]=v[v[prefix+'class-number']];
 									} else {
 										obj["class-name"]="";
@@ -450,7 +460,7 @@ export function copyToAbilities(callback,section,eventInfo){
 		if(eventInfo && (/merge/i).test(eventInfo.sourceAttribute)){
 			setter={};
 			setter[eventInfo.sourceAttribute]=0;
-			setAttrs(setter,PFConst.silentParams);
+			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 		if (typeof callback === "function"){
 			callback(param);
@@ -463,11 +473,11 @@ export function copyToAbilities(callback,section,eventInfo){
 			PFMenus.resetOneCommandMacro(section,true);
 		},true,0);
 	});
-	TAS.debug("at PFFeatures.copyToAbilities:"+section);
+	//TAS.debug("at PFFeatures.copyToAbilities:"+section);
 	getAbilities(function(list){
-		TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
+		//TAS.debug("PFFeatures.copyToAbilities returned from get Abilities list is: ",list);
 		if(list && _.size(list)>0){
-			TAS.debug("now calling PFAbilitycopytoAbilities");
+			//TAS.debug("now calling PFAbilitycopytoAbilities");
 			PFAbility.copyToAbilities(merged,list);
 		} else {
 			done();
@@ -479,7 +489,7 @@ export function copyToAbilities(callback,section,eventInfo){
 }
 export function setNewDefaults (callback,section){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.setNewDefaults");
+		//TAS.debug("leaving PFFeatures.setNewDefaults");
 		if(typeof callback === "function"){
 			callback();
 		}
@@ -517,7 +527,7 @@ export function setNewDefaults (callback,section){
 			TAS.error("PFFeatures.setNewDefaults error setting defaults for "+section,err);
 		} finally {
 			if (_.size(setter)>0){
-				setAttrs(setter,PFConst.silentParams,done);
+				SWUtils.setWrapper(setter,PFConst.silentParams,done);
 			} else {
 				done();
 			}
@@ -526,13 +536,13 @@ export function setNewDefaults (callback,section){
 }
 export function migrateRepeatingMacros (callback){
 	var done = _.once(function(){
-		TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
+		//TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	doneOne = _.after(_.size(featureLists),function(){
-		setAttrs({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
+		SWUtils.setWrapper({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
 	});
 	_.each(featureLists,function(section){
 		var defaultName = '',defaultMacro='';
@@ -556,7 +566,7 @@ export function migrateRepeatingMacros (callback){
 }
 export function migrate (callback, oldversion){
 	var done = function(){
-		TAS.debug("leaving PFFeatures.migrate");
+		//TAS.debug("leaving PFFeatures.migrate");
 		if (typeof callback === "function"){
 			callback();
 		}
@@ -586,7 +596,7 @@ export function migrate (callback, oldversion){
 		}
 	});
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFFeaturesRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
 		TAS.info("leaving PFFeatures.recalculate");
 		if (typeof callback === "function") {
@@ -601,15 +611,15 @@ export function recalculate (callback, silently, oldversion) {
 		});
 		calculateMaxUses = function(){
 			_.each(PFConst.repeatingMaxUseSections, function (section) {
-				recalculateRepeatingMaxUsed(section, TAS.callback(doneWithList), silently);
+				recalculateRepeatingMaxUsed(section, doneWithList, silently);
 			});
 		};
-		migrate(TAS.callback(calculateMaxUses),oldversion);
+		migrate(calculateMaxUses,oldversion);
 	} catch (err) {
 		TAS.error("PFFeatures.recalculate, ", err);
 		done();
 	}
-}
+});
 function registerEventHandlers () {
 	var tempstr="";
 
@@ -645,10 +655,11 @@ function registerEventHandlers () {
 			m+= singleEvent + a + " ";
 			return m;
 		},macroEvent);
-		on (macroEvent, TAS.callback(function eventRepeatingCommandMacroUpdate(eventInfo){
+		on (macroEvent, TAS.callback(function eventRepeatingOldListsCommandMacroUpdate(eventInfo){
 			var attr;
 			attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker" && attr==='used_max')) {
+			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker"  && attr==='used_max')) {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				attr='repeating_'+section+'_showinmenu';
 				getAttrs([attr,'is_npc'],function(v){
 					var isNPC=parseInt(v.is_npc,10)||0;
@@ -661,6 +672,6 @@ function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-PFConsole.log('   PFFeatures module loaded       ' );
-PFLog.modulecount++;
+//PFConsole.log('   PFFeatures module loaded       ' );
+//PFLog.modulecount++;
 
