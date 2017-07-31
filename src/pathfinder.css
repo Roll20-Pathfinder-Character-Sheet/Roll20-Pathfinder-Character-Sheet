@@ -1652,6 +1652,9 @@ h2.sheet-clickheader {
 	width:1.6em;
 	height:1.6em;
 }
+.sheet-newbuff-button + span::before {
+    padding: 5px 2px 1px 1px;
+}
 .sheet-cssbutton-label {
     margin-left: -3em;
     font-weight: bold;
