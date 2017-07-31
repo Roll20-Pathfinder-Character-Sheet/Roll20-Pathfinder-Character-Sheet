@@ -1007,11 +1007,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-mainnav ~ .sheet-tab {
-    width: 8%;
+    width: 9%;
 }
 .sheet-mainnav ~ .sheet-tabinput {
-    width: 8%;
-    margin-right: -8%;
+    width: 9%;
+    margin-right: -9%;
 }
 .sheet-mainnav ~ .sheet-tab.sheet-narrow-tab {
     width: 7%;
