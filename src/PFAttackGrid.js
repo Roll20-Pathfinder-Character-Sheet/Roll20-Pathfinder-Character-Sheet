@@ -249,7 +249,7 @@ export function updateAttackAsync  (attype, callback, silently) {
     }
 }
 
-export function updateAttacks(callback,silently,attypes){
+export function updateAttacks(callback,silently,attypes,eventInfo){
     var fields,validtypes;
     try {
         if (!attypes){ 
@@ -307,13 +307,13 @@ export function updateAttacks(callback,silently,attypes){
 export function updateAttackGrid(buffType,eventInfo){
     switch(buffType.toLowerCase()){
         case 'melee':
-            updateAttacks(null, ['melee','melee2']);
+            updateAttacks(null, null, ['melee','melee2']);
             break;
         case 'ranged':
-            updateAttacks(null, ['ranged','ranged2']);
+            updateAttacks(null, null, ['ranged','ranged2']);
             break;
         case 'cmb':
-            updateAttacks(null, ['CMB','CMB2']);
+            updateAttacks(null, null, ['CMB','CMB2']);
             break;
         case 'melee2':
             updateAttackAsync('melee2');
@@ -327,7 +327,7 @@ export function updateAttackGrid(buffType,eventInfo){
     }
 }
 export function recalculateMelee(dummy1,dummy2,eventInfo){
-    updateAttacks(null, ['melee','melee2','CMB','CMB2']);
+    updateAttacks(null, null, ['melee','melee2','CMB','CMB2']);
 }
 
 
@@ -436,7 +436,7 @@ function registerEventHandlers () {
     on("change:attk-penalty", TAS.callback(function eventAttackPenalty(eventInfo) {
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            updateAttacks();
+            updateAttacks(null,null,null,eventInfo);
         }
     }));
     on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {

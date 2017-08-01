@@ -2135,7 +2135,7 @@ function registerEventHandlers () {
 			on(eventToWatch, TAS.callback(function eventBuffTotalNoParam(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" || eventInfo.sourceType === "api") {
-					methodToCall(null,false, eventInfo);
+					methodToCall(null,false,null, eventInfo);
 				}
 			}));
 		});
