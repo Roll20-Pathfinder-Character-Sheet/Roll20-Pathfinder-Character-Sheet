@@ -435,7 +435,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				},oldversion);
 			}
 			if (oldversion <= 1.66){
-				PFAttackGrid.migrate(null,oldversion);
+				PFAttackGrid.recalculate();
 				PFInventory.migrate(null,oldversion);
 			}
 		}
