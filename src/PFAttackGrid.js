@@ -268,7 +268,9 @@ export function updateAttacks(callback,silently,attypes){
         if(typeof callback === "function"){
             callback();
         }
+        return;
     }
+    TAS.debug("PFAttackGrid.updateAttacks",attypes,fields);
     getAttrs(fields,function(vout){
         var v={},setter={},params={};
         try{
@@ -457,5 +459,3 @@ function registerEventHandlers () {
     
 }
 registerEventHandlers();
-//PFConsole.log('   PFAttackGrid module loaded     ');
-//PFLog.modulecount++;
