@@ -434,6 +434,10 @@ function upgrade (oldversion, callback, errorCallback) {
 					},oldversion);
 				},oldversion);
 			}
+			if (oldversion <= 1.66){
+				PFAttackGrid.recalculate();
+				PFInventory.migrate(null,oldversion);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
