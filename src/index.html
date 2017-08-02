@@ -40,6 +40,7 @@
 				<li>Dual wield: now use <em>attack name</em> instead of ID to generate</li>
 				<li>Globally hide this announcement using <strong>Apply Default Settings</strong> at bottom of Roll 20's ⛭<em>My Settings</em> page (chat area at right).</li>
 				<li><strong><em>Faster!</em></strong></li>
+				<li><strong>Hero Lab Import</strong> upgraded. You must hit "recalc" after importing. <button type="roll" class="sheet-no-decoration" data-i18n-title="url-link"  style="color: #0000ff" name="roll_blank" value="https://app.roll20.net/forum/permalink/5359044/"><b style="font-size:.75rem;">More Information ...</b></button></li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv165-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -13482,14 +13483,14 @@
 				<label><input type="checkbox" class="sheet-selectedlabel-check" name="attr_is_v1" value="1" title="@{is_v1}" /><b data-i18n-aria-label="sheet-created-after-v1" data-i18n-title="sheet-created-after-v1"  data-i18n="is-v1">Is V1 sheet</b></label>
 				<div class="sheet-table sheet-migrations">
 					<div class="sheet-table-row">
-						<span class="sheet-table-config-row-name" data-i18n="pre-v1" >Pre 1.0</span>
+						<span class="sheet-table-config-row-name"  >< 1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_classSkillsMigrated" title="@{classSkillsMigrated}" value="1" /><span data-i18n-title="class-skills-migrated" data-i18n-aria-label="class-skills-migrated" data-i18n="class-skills-migrated">Class skill checkboxes</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_damage-multiplier" title="@{migrated_damage-multiplier}" value="1" /><span data-i18n-title="attacks-dmg-migrated-title" data-i18n-aria-label="attacks-dmg-migrated-title" title="Repeating Attack damage multiplier migrated." data-i18n="attacks-dmg-migrated">Dmg Multiplier</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_spellranges_migrated" title="@{spellranges_migrated}" value="1" /><span data-i18n="spellranges-migrated">Spell Ranges</span></label></span>
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="post-v1">V 1.0</span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_npc" title="@{migrated_npc}" value="1"/><span data-i18n="npc-migrated">NPC Values Migrated</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_repeating_item_attributes" title="@{migrated_repeating_item_attributes}" value="1"><span data-i18n="copy-duplicate-attrs" >Copy duplicate fields</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_worn_equipment" title="@{migrated_worn_equipment}" value="1" /><span data-i18n-title="worn-equipment-migrated" data-i18n-aria-label="worn-equipment-migrated" data-i18n="worn-equipment-migrated">Worn Equipment </span></label></span>
@@ -13510,18 +13511,25 @@
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" >
-						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="v1">Post V 1.0</span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.01 - 1.58</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_linked_attacks" title="@{migrated_linked_attacks}" value="1"><span data-i18n="linked-attacks" > Linked attacks</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_take10_dropdown" title="@{migrated_take10_dropdown}" value="1"><span data-i18n="skill-take10-dropdown" >Skill take 10 dropdown</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_buffs_rangeddmg_abiilty" title="@{migrated_buffs_rangeddmg_abiilty}" value="1"><span data-i18n="rangeddmg-ability-buffs" > Ranged dmg and Ability Check Buffs</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_ability_dropdowns2" title="@{migrated_ability_dropdowns2}" value="1"><span data-i18n="ability-attack-dropdowns" > Ability Dropdowns</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" >&nbsp;</span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.65</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_buffs_rangeddmg_abiilty" title="@{migrated_buffs_rangeddmg_abiilty}" value="1"><span data-i18n="rangeddmg-ability-buffs" > Damage and Check Buffs</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_ability_dropdowns2" title="@{migrated_ability_dropdowns2}" value="1"><span data-i18n="ability-attack-dropdowns" > Ability and Attack Type Dropdowns</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_skill_speedup" title="@{migrated_skill_speedup}" value="1"><span data-i18n="skill-calculation-speed" > Skill calc speed</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_bab_dropdowns" title="@{migrated_attack_bab_dropdowns}" value="1"><span data-i18n="attack-bonus-dropdowns" > Attack bonus dropdowns</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_newfields" title="@{migrated_itemlist_newfields}" value="1"><span data-i18n="item-macros-current" > Attack bonus dropdowns</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrate_fatigued_conditions" title="@{migrate_fatigued_conditions}" value="1"><span data-i18n="fatigued-conditions" > Fatigued Conditions</span></label></span>
+					</div>
+					<div class="sheet-table-row" >
+						<span class="sheet-table-config-row-name" >&nbsp;</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_bab_dropdowns" title="@{migrated_attack_bab_dropdowns}" value="1"><span data-i18n="attack-bonus-dropdowns" > Attack bonus dropdowns</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_newfields" title="@{migrated_itemlist_newfields}" value="1"><span data-i18n="item-macros-current" > Equipment Macros to current</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 				</div>
 			</div>
