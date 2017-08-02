@@ -1,7 +1,7 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.63,
-
+	version: 1.66,
+	announcementVersionAttr: 'attentionv165-show',
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
@@ -105,7 +105,7 @@ export default {
 		"internalbuffer_macro_text": "internalbuffer_max",
 		"spellclass-0-spell-points-misc": "spellclass-0-spell-points-misc-mod",
 		"spellclass-1-spell-points-misc": "spellclass-1-spell-points-misc-mod",
-		"spellclass-2-spell-points-misc": "spellclass-2-spell-points-misc-mod"		
+		"spellclass-2-spell-points-misc": "spellclass-2-spell-points-misc-mod"
 	},
 	customEquationMacros: {
 		"customa1": "customa1-mod",

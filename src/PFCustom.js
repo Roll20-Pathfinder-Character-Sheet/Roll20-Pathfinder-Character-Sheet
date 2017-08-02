@@ -73,7 +73,8 @@ function showMiscFields () {
 		'extra_fields_caster_show':1,
 		'extra_fields_abilities_show':1,
 		'extra_fields_init_show':1,
-		'extra_fields_speeds_show':1
+		'extra_fields_speeds_show':1,
+		'extra_fields_conditions_show':1
 	},PFConst.silentParams);
 }
 function hideMiscFields () {
@@ -86,7 +87,8 @@ function hideMiscFields () {
 		'extra_fields_caster_show':0,
 		'extra_fields_abilities_show':0,
 		'extra_fields_init_show':0,
-		'extra_fields_speeds_show':0
+		'extra_fields_speeds_show':0,
+		'extra_fields_conditions_show':0
 	},PFConst.silentParams);
 }
 

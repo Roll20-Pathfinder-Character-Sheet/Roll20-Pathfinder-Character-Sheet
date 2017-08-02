@@ -438,7 +438,7 @@ export function updateModifiedSpeed  (callback) {
         }
     }),
     attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
-        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","speed_cond_applied","run_cond_applied",
+        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","condition-Slowed","run_cond_applied",
     	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
@@ -474,6 +474,9 @@ export function updateModifiedSpeed  (callback) {
                 cannotRun=1;
             } else if (parseInt(v['condition-Fatigued'],10)===1 ){
                 cannotRun=1;
+            }
+            if (buff < 0){
+                halfSpeed=1;
             }
 
              //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
@@ -533,8 +536,8 @@ export function updateModifiedSpeed  (callback) {
             if (currRun !== newRun) {
                 setter["speed-run"] = newRun;
             }
-            if (halfSpeed !== (parseInt(v.speed_cond_applied,10)||0)   ){
-                setter.speed_cond_applied=halfSpeed;
+            if (halfSpeed !== (parseInt(v['condition-Slowed'],10)||0)   ){
+                setter['condition-Slowed']=halfSpeed;
             }
             if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)   ){
                 setter.run_cond_applied=cannotRun;

@@ -134,9 +134,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
 
             dodge += dodgebuff;
             //deflect ;
-            armor += armorbuff;
-            shield += shieldbuff;
-            natural += naturalbuff;
+            //armor += armorbuff;
+            //shield += shieldbuff;
+            //natural += naturalbuff;
 
             //TAS.debug(v);
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
@@ -249,15 +249,20 @@ export function updateDefenses ( callback, silently, eventInfo) {
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
 
-
-            if(parseInt(v.buffsumff,10)!==buffff){
-                setter.buffsumff=buffff;
-            }
-            if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
-                setter.buffsumffcmd = buffffcmd;
+            if(parseInt(v.buffsumac,10)!==buffac){
+                setter.buffsumac=buffac;
             }
             if(parseInt(v.buffsumtouch,10)!==bufftouch){
                 setter.buffsumtouch = bufftouch;
+            }
+            if(parseInt(v.buffsumff,10)!==buffff){
+                setter.buffsumff=buffff;
+            }
+            if(parseInt(v.buffsumcmd,10)!==buffcmd){
+                setter.buffsumcmd = buffcmd;
+            }
+            if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
+                setter.buffsumffcmd = buffffcmd;
             }
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;

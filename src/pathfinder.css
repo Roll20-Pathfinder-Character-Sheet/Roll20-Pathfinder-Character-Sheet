@@ -80,6 +80,11 @@ h4,h5,h6 {
     font-size: .8125rem;
     color: initial;
 }
+.sheet-pf-wrapper {
+    width: 100%;
+    min-width: 100%;
+    margin-top: -1em;
+}
 /* standalone generic toggles */
 .sheet-wounds-show,
 .sheet-mythic-show,
@@ -191,15 +196,18 @@ input[readonly], input[disabled] {
 .sheet-half {
     height: 3em;
 }
-/* keeps textarea and readonly number attribute to riFght inline with each other in one table cell */
+/* keeps textarea and readonly number attribute to right inline with each other in one table cell */
 .sheet-table-cell.sheet-linked-tablecell {
 	width:13em;
     min-width:9em;
 }
 .sheet-table-cell.sheet-linked-tablecell-short {
-    width: 7.7em;
-    min-width:6em;
+    width: 7.8em;
+    min-width:6.5em;
+    white-space: nowrap;
 }
+
+.sheet-linked-fields .sheet-inline-textarea.sheet-linked-cellfield,
 .sheet-linked-tablecell select.sheet-linked-cellfield,
 .sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
@@ -207,16 +215,9 @@ input[readonly], input[disabled] {
 }
 .sheet-linked-tablecell-short select.sheet-linked-cellfield,
 .sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
-	width:calc(100% - 2.8em);
-    max-width:calc(100% - 2.8em);
+	width:calc(100% - 2.9em);
+    max-width:calc(100% - 2.9em);
 }
-
-/**
-select.sheet-linked-cellfield,
-select.sheet-linked-cellfield + input,
-input.sheet-linked-cellfield{
-	display:inline;
-}*/
 
 /* like br */
 .sheet-cheat {
@@ -629,6 +630,10 @@ also need 1 more level in selector or base css will override border */
 .sheet-section-spellclass .sheet-nontable-name {
     background-color: #4a6486;
 }
+.sheet-roundborder {
+	border: 1px solid #808080;
+	border-radius: 5px;    
+}
 
 .sheet-linked-custom,
 .sheet-linked-custom-wideinputs {
@@ -688,11 +693,27 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span,
 .sheet-linked-custom-wideinputs > span,
-.sheet-linked-custom > span {
+.sheet-linked-custom > span,
+.sheet-linked-custom .sheet-linked-fields > span  {
 	display:block;
 	clear:both;
-	width:calc(100% - 1em);
-	background-color:transparent;
+	width:calc(100% - .5em);
+    background-color:transparent;
+}
+
+.sheet-burn-sect .sheet-linked-custom > span,
+.sheet-burn-sect .sheet-linked-custom .sheet-linked-fields > span {
+    font-weight: bold;
+    font-style: italic;
+    font-size: .7rem;
+    color:black;
+}
+
+.sheet-burn-sect .sheet-linked-custom {
+    width:calc(20% - 4px);
+}
+.sheet-burn-sect .sheet-linked-custom:nth-child(n+4) {
+    width:calc(30% - 4px);
 }
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span {
@@ -986,11 +1007,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-mainnav ~ .sheet-tab {
-    width: 8%;
+    width: 9%;
 }
 .sheet-mainnav ~ .sheet-tabinput {
-    width: 8%;
-    margin-right: -8%;
+    width: 9%;
+    margin-right: -9%;
 }
 .sheet-mainnav ~ .sheet-tab.sheet-narrow-tab {
     width: 7%;
@@ -1567,7 +1588,7 @@ h2.sheet-clickheader {
 	vertical-align: top;
 }
 .sheet-split-column-show + span::before {
-	content: '▮';
+	content: '❚❚';/* '▮';*/
 	padding-top: 1px;
 	vertical-align: top;
 }
@@ -1602,13 +1623,7 @@ h2.sheet-clickheader {
 .sheet-table-cell.sheet-small-label.sheet-cssbutton-cell {
 	padding-top:1em;
 }
-.sheet-maxhealbutton + span::before {
-    content: '✚'; /*'⛨☤';*/
-    vertical-align:top;	
-    padding: 3px 2px 1px 1px !important;
-	width:1.6em;
-	height:1.6em;
-}
+
 .sheet-createattackbutton + span::before {
     content: '⚔';
     margin-top: 5px;
@@ -1627,19 +1642,19 @@ h2.sheet-clickheader {
     vertical-align:top;
     padding: 4px 0 0 0 !important;
 }
-.sheet-newbuff-button + span::before {
-    content: '☘';
-    margin-top: 5px;
-    vertical-align:top;	
-    padding: 3px 0 0 0 !important;
-}
-.sheet-newtemplate-button + span::before {
-    content: '+'; /*  '✚';*/
-    margin-top: 5px;
-    vertical-align:top;	
-    padding: 3px 0 0 0 !important;
-}
 
+.sheet-maxhealbutton + span::before,
+.sheet-newbuff-button + span::before,
+.sheet-newtemplate-button + span::before {
+    content: '✚'; /*'⛨☤';*/
+    vertical-align:top;	
+    padding: 3px 2px 1px 1px;
+	width:1.6em;
+	height:1.6em;
+}
+.sheet-newbuff-button + span::before {
+    padding: 5px 2px 1px 1px;
+}
 .sheet-cssbutton-label {
     margin-left: -3em;
     font-weight: bold;
@@ -1823,15 +1838,25 @@ input.sheet-refreshbutton {
 .sheet-selectedlabel-check:checked + b:not(.sheet-offCase) {
     color: black;
 }
+.sheet-conditions {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: .25em;
+    padding-right: .25em;
 
-.sheet-conditions .sheet-table-row {
-    height: 1.85em;
 }
-
-.sheet-conditions .sheet-table-cell {
+.sheet-conditions .sheet-nontable-name {
+    margin-left: -.25em;
+    margin-right: -.25em;
+    width: calc(100% + .5em);
+}
+.sheet-conditions .sheet-option-condition {
+    white-space: nowrap;
     font-size: .75rem;
-    padding: 0 .25em 0 .25em;
 }
+
 .sheet-no-pad-right {
     padding-right: 0 !important;
 }
@@ -1914,9 +1939,11 @@ hr.sheet-skinny {
     display: block;
     width: 100%;
 }
+/* we must have fixed whatever was moving stuff around cause this has no effect anymore
 .repcontainer.editmode + .repcontrol {
     margin-bottom: 3em;
 }
+*/
 .repcontainer.editmode + .repcontrol .repcontrol_edit {
     text-align: right;
    /* margin-left: calc(95% - 4em);*/
@@ -1970,19 +1997,25 @@ hr.sheet-skinny {
 	color: #000;
 }
 .repcontrol .repcontrol_edit:after {
-	content: 'W';
+/*	content: 'W'; hamburger menu*/
+    font-family: Arial ;
+    font-weight: bold;
+    content: '☰';
 	visibility: visible;
 	font-family: pictos;
 	background-color: #fff;
 	border: 1px solid #000;
 	border-radius: 2px;
 	font-size: 1rem;
-	padding: 2px 3px 2px 3px;
+	padding: 3px 3px 2px 3px;
 	color: #000;
-	margin-left: -3em;
+    margin-left: -3em;
+    width:1rem;
 }
 .editmode ~ .repcontrol .repcontrol_edit:after {
+    font-family: Pictos;
 	content: '3';
+    width:1rem;
 }
 .repcontrol_edit:hover:before,
 .repcontrol_edit:hover:after, 
@@ -2556,6 +2589,9 @@ span.sheet-entry-wide textarea {
 .sheet-nontable-repeating .sheet-divider-db-lg {
     vertical-align: middle;
 }
+.sheet-entry-vlong {
+    width: 13em;
+}
 .sheet-entry-long {
     width: 10em;
 }
@@ -2728,6 +2764,11 @@ input[type="number"].sheet-entry-wide {
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-entry-rowname {
     width: 65%;
+}
+.sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
+.sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-vlong,
+.sheet-counted:not(:checked) ~ .sheet-small-label2.sheet-entry-vlong {
+    width: 11em;
 }
 .sheet-minimize-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
 .sheet-split-column-show:checked ~ .sheet-repeating-fields .sheet-entry-long,
@@ -2902,7 +2943,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-misc-show:not(:checked)~.sheet-misc,
 .sheet-id-show:not(:checked) ~ .sheet-repeating-id,
 .sheet-range-show:not(:checked) ~ .sheet-range,
-.sheet-extra-show:not(:checked) ~ .sheet-section-extra,
 .sheet-sp-show:not(:checked) ~ .sheet-sect-sp,
 .sheet-sp-show:checked ~ .sheet-sect-sp-inverse,
 /* pc vs npc */
@@ -2929,9 +2969,6 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-extra-show:checked ~ div .sheet-extra-sect-inverse,
 /* buttons */
 .sheet-progress-show:not(:checked) ~ .sheet-progress-icon,
-/*
-.sheet-nextitem-show:not(:checked) + *,
-*/
 .sheet-use-size-show:not(:checked) ~ .sheet-use-size,
 .sheet-use-size-show:checked ~ .sheet-dont-use-size,
 .sheet-use-size-show:not(:checked) ~ .sheet-repeating-fields .sheet-use-size,
@@ -2940,37 +2977,13 @@ div.sheet-macro-text .sheet-small-label2,
 .sheet-use-size-show:checked ~ .sheet-repeating-fields .sheet-size-affects-show:not(:checked) ~ .sheet-use-size,
 .sheet-nextitem-show:not(:checked) + .sheet-nextitem,
 .sheet-nextitem2-hide:checked + .sheet-nextitem2,
-
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-concentration,
-
-input[name$="class-info-show"].sheet-nextitem-show:not(:checked) ~ .sheet-experience,
-input[name$="prestige_fame"].sheet-nextitem-show:not(:checked) ~ .sheet-faction-notes,
-input[name$="initiative-show"].sheet-nextitem-show:not(:checked) ~ .sheet-speeds,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-ability-display,
-input[name$="uncanny_dodge"].sheet-nextitem-show:not(:checked) ~ .sheet-ac-dodge,
-
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-l,
-input[value="Medium"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-m,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-armor3-h,
-input[value="Light"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-l,
-input[value="Heavy"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-h,
-input[value="Tower Shield"].sheet-nextitem-show:not(:checked) ~ .sheet-shield3-t,
-
-input[name$="ammo"].sheet-nextitem-show:not(:checked) ~ .sheet-ammo,
-input[name$="frequency"].sheet-nextitem-show:not(:checked) ~ .sheet-freq-rounds,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-casting-ability,
-input[name$="ability_type"].sheet-nextitem-show:not(:checked) ~ .sheet-ability-sr,
-input[name$="metamagic"].sheet-nextitem-show:not(:checked) ~ .sheet-slot,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-endurance-feat,
-input[name$="wound_threshold-show"].sheet-nextitem-show:not(:checked) ~ .sheet-gritty-mode,
-
 /* logic section */
 .sheet-xor-A-show:not(:checked)~.sheet-xor-B-show:not(:checked)~.sheet-xor-sect,
 .sheet-xor-A-show:checked~.sheet-xor-B-show:checked~.sheet-xor-sect,
 .sheet-nexor-A-show:checked~.sheet-nexor-B-show:not(:checked)~.sheet-nexor-sect,
 .sheet-nexor-A-show:not(:checked)~.sheet-nexor-B-show:checked~.sheet-nexor-sect,
 .sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked)~.sheet-or3-show:not(:checked) ~ .sheet-or3-sect,
+.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked)~.sheet-or4-show:not(:checked) ~ .sheet-or4-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ .sheet-either-or-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-class-table .sheet-either-or-sect,
 .sheet-spells-per-day .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-table .sheet-either-or-sect,

@@ -274,20 +274,24 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
     getAttrs(["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max","spellclass-" + classidx + "-level-" + spelllvl + "-class",
         "spellclass-" + classidx + "-level-" + spelllvl + "-bonus", "spellclass-" + classidx + "-level-" + spelllvl + "-misc"], function(v){
         var newCount=0,base =0, rest=0,total=0,curr=0,setter={};
-        base = parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-class"],10);
-        curr =  parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"],10)||0;
-        if(isNaN(base)){
-            newCount=0;
-        } else {
-            rest = (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-bonus"],10)||0) + 
-                (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-misc"],10)||0);
-            newCount = base + rest;
-        }
-        if (newCount !== curr){
-            setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
-
-            SWUtils.setWrapper(setter,PFConst.silentParams,done);
-        } else {
+        try {
+            base = parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-class"],10);
+            curr =  parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"],10)||0;
+            if(isNaN(base)){
+                newCount=0;
+            } else {
+                rest = (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-bonus"],10)||0) + 
+                    (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-misc"],10)||0);
+                newCount = base + rest;
+            }
+            if (newCount !== curr){
+                setter["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max"]=newCount;
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            } else {
+                done();
+            }
+        } catch(err){
+            TAS.error("PFSpellCasterClasses.updateMaxSpellsPerDay err",err);
             done();
         }
     });
