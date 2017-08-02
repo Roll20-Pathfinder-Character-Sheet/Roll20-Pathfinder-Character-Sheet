@@ -1,4 +1,4 @@
-#Pathfinder Character Sheet for Roll20.net
+# Pathfinder Character Sheet for Roll20.net
 
 ## Editing
 In order to edit complete the following sections
@@ -33,27 +33,27 @@ Curl allows us to download The Arron Sheet, instead of maintaining our own copy
 ### Building
 Run `npm run build` to build the project, the output will show up in a new folder called dist
 ------
-#Specific instructions for Windows w/ Visual Studio Code
-##git 
+## Specific instructions for Windows w/ Visual Studio Code
+### git 
 1. if you already have Github for windows you do not need to install git separately. If you do not have it, then you must still download it or else download git as above. You can also have both side by side
 2. Add Github for windows to the PATH variable using these instructions  (there is only a 'cmd' directory, no bin directory, contrary to what this says): http://www.chambaud.com/2013/07/08/adding-git-to-path-when-using-github-for-windows/
 
-##VS Code and Node.js integration
+### VS Code and Node.js integration
 
 2. Download and install Visual Studio Code https://code.visualstudio.com/Download
 3. You can easily install Node from here at the link titled "Install Nodejs for your platform" which links to an .msi file  https://code.visualstudio.com/Docs/runtimes/nodejs you don't need to use the 'nvm' commands this way. If you need nvm then you probably already know what you are doing and don't need these instructions.
 
-##Extensions
+### Extensions
 4. Required: In VS Code Extensions, download egamma's npm implementation for VS Code: https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script
 5. Optional: npm intellisense extension helps: https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense
 6. Optional: The .jshint files are used by jshint for VSCode: https://marketplace.visualstudio.com/items?itemName=dbaeumer.jshint
 7. Optional: new CodeLens extentsion for git, js: https://code.visualstudio.com/blogs/2017/02/12/code-lens-roundup
 8. To not have to retype the password every time you push to git: 
 
-##curl
+### curl
 8. you must still install curl as above
 
-##opening project.
+### opening project.
 9. fork project if you haven't already
 10. clone project from within VS Code
 
@@ -61,4 +61,18 @@ Run `npm run build` to build the project, the output will show up in a new folde
 Much easier to fork from github's web interface first.
 Then use the URL of your fork as the url of the repository i think with the git clone command
 some help: https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/
+
+# Module Breakdown
+Each "page" or section of the Pathfinder sheet has one or more modules associated with it. For instance, the core page has PFAbilityScores, PFInitiative, PFClassRaceGrid etc. The Defense page has PFDefense, PFSaves. The Attacks page has PFAttacks, spells page PFSpells, etc.
+
+## Repeating sections
+Pages with repeating sections will have a module for the repeating list, another module for the page-level variables (usually above it on the page), and a 3rd module for "roll options" the user has selected. For the attacks page it is :
+* **PFAttacks:** the repeating_weapon list
+* **PFAttackGrid:** the melee,ranged,cmb grid at the top
+* **PFAttackOptions: ** the options checkboxes and how they affect macros
+
+spells:
+* **PFSpells:** the repeating_spells list
+* **PFSpellCasterClasses:** The spell caster section, spells per day, spell points, etc
+* **PFSpellOptions:** the spell options and updating of macros
 
