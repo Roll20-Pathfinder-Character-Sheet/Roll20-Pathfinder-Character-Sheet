@@ -662,13 +662,23 @@ export function importSpells (spells,spellclasses)
 				level = parseNum(spell._level);
 				repeatPrefix = "repeating_spells_";
 				spellName = spell._name.replace(/\(x\d+\)/,"").trim();
-				spellClassName = spell._class;
-				spellClass = _.indexOf(spellClassesKeys,spellClassName);
-
-				if (spellClass == -1)
+				
+				// If the spell doesn't specify a class, assume its our first spellcaster
+				if (spell._class === "")
 				{
-					spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
+					spellClass = 0;
+					spellClassName = spellClassesKeys[0];
+				}
+				else
+				{
+					spellClassName = spell._class;
 					spellClass = _.indexOf(spellClassesKeys,spellClassName);
+
+					if (spellClass == -1)
+					{
+						spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
+						spellClass = _.indexOf(spellClassesKeys,spellClassName);
+					}
 				}
 
 				rowID = getOrMakeSpellRowID(spellObjList,spellName,spellClass);
