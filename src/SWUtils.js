@@ -215,6 +215,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 				return;
 			}
 			evaluated = ExExp.handleExpression(replacedStr);
+			//TAS.debug("At SWUtils evaluate expressions, it is: "+replacedStr+", which evaluates to "+ evaluated);
 			if (!isNaN(evaluated)) {
 				callback(evaluated);
 			} else {
@@ -323,10 +324,13 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 	evaluateExpression(exprStr,function(newVal){
 		var curr = parseInt(currVal,10)||0,
 		addn = parseInt(addVal,10)||0,
+		newPlus = 0,
 		params={}, setter={};
-		newVal+=addn;
-		if(newVal !== curr){
-			setter[writeField]=newVal;
+		newVal = parseInt(newVal,10)||0;
+		newPlus = newVal + addn;
+		TAS.notice("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
+		if(newPlus !== curr){
+			setter[writeField]=newPlus;
 			if(silently){
 				params={silent:true};
 			}
@@ -373,6 +377,7 @@ export function evaluateAndAddToTot(callback,silently,exprStr,writeField,currVal
 		var params={},silentSetter={},
 		setter={};
 		currVal = parseInt(currVal,10)||0;
+		newVal = parseInt(newVal,10)||0;
 		if(newVal !== currVal ){
 			if(!silently){
 				silentSetter[writeField]=newVal;
