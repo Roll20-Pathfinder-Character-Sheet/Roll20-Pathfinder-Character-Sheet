@@ -962,7 +962,7 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
                 SWUtils.setWrapper(setter, params, function(){
                     //can do these in parallel
                     PFAttacks.updateRepeatingWeaponDamage(newRowId,null);
-                    PFAttacks.updateRepeatingWeaponAttack(newRowId,null);
+                    PFAttacks.updateRepeatingWeaponAttackAsync(newRowId,null);
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
                     done();
