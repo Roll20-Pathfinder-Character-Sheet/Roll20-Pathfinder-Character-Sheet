@@ -860,13 +860,14 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
                 //do it silently so we don't loop 
                 equipType = parseInt(w[item_entry + "equip-type"],10);
                 actualLocation= parseInt(w[item_entry+"location"],10);
-                if ( (equipType === equipMap.Armor && actualLocation!== locationMap.Armor) ||
-                    ( equipType === equipMap.Shield && actualLocation !== locationMap.Shield )){
+                if ( location !== actualLocation){
+//                    (equipType === equipMap.Armor && actualLocation!== locationMap.Armor) ||
+ //                   ( equipType === equipMap.Shield && actualLocation !== locationMap.Shield )){
                         silentSetter[item_entry + "old_location"] = actualLocation;
                         silentSetter[item_entry+"location"] = location;
                 } else {
                     //need to remove any others from armor or shield location depending
-                    takeOffWornItem(location);
+                    //takeOffWornItem(location);
                 }
             } else {
                 TAS.warning("no reason to update armor or shield for " + sourceAttribute + " in location " + locationNames[location]);
