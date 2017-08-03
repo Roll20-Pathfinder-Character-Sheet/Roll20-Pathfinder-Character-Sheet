@@ -81,32 +81,18 @@ export function resetCommandMacro(callback){
     PFMenus.resetOneCommandMacro('item',false,doneOne,'',groupMapForMenu);
 }
 /** Gets the worn item grid row name corresponding to location number in dropdown
- *@param {int|string} location a value from repeating_item_$X_location or name of location
+ *@param {Number|string} location a value from repeating_item_$X_location or name of location
  *@returns {string} name of "worn-space" to set
  */
 function getWornItemNameField (location) {
     var wornSlot = "";
     if(isNaN(location)&&location!==null&&location!==undefined){
-        switch(location){
-            case 'Armor':
-                wornSlot= 'armor3';
-                break;
-            case 'Shield':
-                wornSlot = 'shield3';
-                break;
-            default:
-                wornSlot=location.toLowerCase();
-                break;
-        }
-        return wornSlot;
+        return 'worn-'+location;
     } else if (location > 1 && locationNames[location]) {
-        //TAS.debug("getWornItemNameField at location:" + wornEquipmentRowsPlusCarried[location]);
-        if (location !== locationMap.Armor && location !== locationMap.Shield) {
+        try {
             wornSlot = "worn-" + locationNames[location];
-        } else if (location === locationMap.Armor) {
-            wornSlot = "armor3";
-        } else if (location === locationMap.Shield) {
-            wornSlot = "shield3";
+        } catch (e){
+            TAS.error("PFInventory.getWornItemNameField",e);
         }
     }
     return wornSlot;
@@ -114,13 +100,10 @@ function getWornItemNameField (location) {
 
 /**
  * 
- * @param {string} location must be in locationNames
+ * @param {int} location must be in locationNames
  */
 function takeOffWornItem(location){
     var namefield='',rollfield='';
-    if( !_.contains(locationNames,location) && locationMap[location] >= locationMap.equipped  ){
-        return;
-    }
     namefield=getWornItemNameField(location);
     rollfield=namefield+'-roll';
     getAttrs([namefield,rollfield],function(vout){
@@ -130,7 +113,7 @@ function takeOffWornItem(location){
             id=SWUtils.getRowId(vout[rollfield]);
             if(id){
                 setter['repeating_item_'+id+'_location']=locationMap.Carried;
-                setter['repeating_item_'+id+'_old_location']=locationMap[location];
+                setter['repeating_item_'+id+'_old_location']=locationMap.Carried;
             }
         }
         if(vout[namefield]){
@@ -593,6 +576,48 @@ function migrateWornEquipment (callback) {
         }
     });
 }
+function   unsetOtherItems   (callback,location, id) {
+    if (!id || location < 2 || !location) {
+        if (typeof callback === "function"){
+            callback();
+        }
+    }
+    /*
+    * The player has now changed the location to a worn slot, so check for other repeating items that have the same
+    * slot and set them to 'carried'.
+    */
+    getSectionIDs("repeating_item", function (idarray) { // get the repeating set
+        var attribs = [];
+        if (_.size(idarray) <= 1) {
+            if (typeof callback === "function"){
+                callback();
+            }
+            return;
+        }
+        _.each(idarray, function (currentID, i) { // loop through the set
+            if (currentID !== id) {
+                attribs.push("repeating_item_" + currentID + "_location");
+            }
+        });
+        getAttrs(attribs, function (w) {
+            var setter = {};
+            _.each(idarray, function (currentID, i) { // loop through the set
+                if ((parseInt(w["repeating_item_" + currentID + "_location"], 10) || 0) === location) {
+                    setter["repeating_item_" + currentID + "_location"] = 0;
+                    setter["repeating_item_" + currentID + "_old_location"] = 0;
+                }
+                
+            });
+            if (_.size(setter) > 0) {
+                SWUtils.setWrapper(setter, { silent: true }, callback);
+            } else {
+                if (typeof callback === "function"){
+                    callback();
+                }
+            }
+        });
+    });
+}
 /** set old location to the new location, and unset other items set to this location, also updates loctype-tab
  *@param {string} id id of row updated, or null
  *@param {function} callback to call when done
@@ -607,43 +632,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
         }
     }),
     /* unsetOtherItems makes sure any other row than id is not in location */
-    unsetOtherItems = function (location, id) {
-        if (!id || location < 2 || !location) {
-            done();
-            return;
-        }
-        /*
-        * The player has now changed the location to a worn slot, so check for other repeating items that have the same
-        * slot and set them to 'carried'.
-        */
-        getSectionIDs("repeating_item", function (idarray) { // get the repeating set
-            var attribs = [];
-            if (_.size(idarray) <= 1) {
-                done();
-                return;
-            }
-            _.each(idarray, function (currentID, i) { // loop through the set
-                if (currentID !== id) {
-                    attribs.push("repeating_item_" + currentID + "_location");
-                }
-            });
-            getAttrs(attribs, function (w) {
-                var setter = {};
-                _.each(idarray, function (currentID, i) { // loop through the set
-                    if ((parseInt(w["repeating_item_" + currentID + "_location"], 10) || 0) === location) {
-                        setter["repeating_item_" + currentID + "_location"] = 0;
-                        setter["repeating_item_" + currentID + "_old_location"] = 0;
-                    }
-                    
-                });
-                if (_.size(setter) > 0) {
-                    SWUtils.setWrapper(setter, { silent: true }, done);
-                } else {
-                    done();
-                }
-            });
-        });
-    },
+
     idStr = SWUtils.getRepeatingIDStr(id),
     item_entry = 'repeating_item_' + idStr,
     realItemID = id || (eventInfo ? (SWUtils.getRowId(eventInfo.sourceAttribute) || "") : ""),
@@ -708,6 +697,11 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                         wornItemAttrs[wornSlot] = "";
                         wornItemAttrs[wornSlot + "-roll"] = "";
                     }
+//                    if(oldlocation===locationMap.Armor){
+//                        wornItemAttrs['armor3']='';
+//                    } else if (oldlocation ===locationMap.Shield){
+//                        wornItemAttrs['shield3']='';
+//                    }
                 } else if (location > locationMap.NotCarried) {
                     wornSlot = getWornItemNameField(location);
                     TAS.debug("#####################at set location the new location "+ location+","+locationNames[location]+ " is "+wornSlot);
@@ -719,6 +713,11 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "Row "+ realItemID;
                         }
                         wornItemAttrs[wornSlot + "-roll"] = "@{" + rollField + "}";
+//                        if(location===locationMap.Armor){
+//                            wornItemAttrs['armor3']=itemName;
+//                        } else if (location ===locationMap.Shield){
+//                            wornItemAttrs['shield3']=itemName;
+//                        }
                     }
                     if (oldlocation > 1 && oldlocation !== location) {
                         wornSlot = getWornItemNameField(oldlocation);
@@ -726,6 +725,11 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "";
                             wornItemAttrs[wornSlot + "-roll"] = "";
                         }
+//                        if(oldlocation===locationMap.Armor){
+//                            wornItemAttrs['armor3']='';
+//                        } else if (oldlocation ===locationMap.Shield){
+//                            wornItemAttrs['shield3']='';
+//                        }
                     }
                 }
             } catch (err2) {
@@ -735,7 +739,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                     //TAS.debug("updateEquipmentLocation, setting slot ", wornItemAttrs);
                     SWUtils.setWrapper(wornItemAttrs, PFConst.silentParams, function () {
                         if (location > locationMap.NotCarried){
-                            unsetOtherItems(location, realItemID);
+                            unsetOtherItems(callback,location, realItemID);
                         }
                         done();
                     });
@@ -767,6 +771,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
     itemFullPrefix = "",
     attribList = [],
     id ="",
+    wornSlotField="",
     item_entry="",
     itemFields = ["item-acbonus","item-acenhance","item-max-dex","item-acp","item-spell-fail","item-defense-type","item-proficiency",
         "name","set-as-armor","set-as-shield","location","old_location","equip-type","acenhance"];
@@ -777,6 +782,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
         if (item_entry.slice(-1) !== "_") {
             item_entry += "_";
         }
+        wornSlotField=getWornItemNameField(location);
         itemFullPrefix = item_entry + "item-";
         defenseItem = ((location === locationMap.Armor) ? "armor3" : "shield3");
         //TAS.debug"at update worn armor, defenseItem=" + defenseItem);
@@ -788,6 +794,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
             return memo;
         }, attribList);
         attribList.push(defenseItem);
+        attribList.push(wornSlotField);
         //TAS.debug("PFInventory.updateWornArmorAndShield fields ", attribList);
     } catch (err) {
         TAS.error("PFInventory.updateWornArmorAndShield error before getattrs", err);
@@ -796,7 +803,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
     }
     //TAS.debug("attribList=" + attribList);
     getAttrs(attribList, function (w) {
-        var i=0, setter={}, silentSetter={}, equipType=0,actualLocation=0, attrib="";
+        var i=0, setter={}, silentSetter={}, equipType=0,actualLocation=0, attrib="",itemName='';
         try {
             //if we are setting new, or updating an item in the location, or updating an item in a diffrent location
             //so we can set a new ring of shield, but not update it. but we can update armor and shields.
@@ -812,14 +819,6 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
                             setter[defenseItem + "-" + PFDefense.defenseArmorShieldColumns[i]] = attrib;
                         }
                     }
-                }
-                attrib = w[item_entry + "name"];
-                if (attrib) {
-                    if (w[defenseItem] !== attrib) {
-                        setter[defenseItem] = attrib;
-                    }
-                } else {
-                    setter[defenseItem] = "";
                 }
                 attrib = w[itemFullPrefix + "acenhance"];
                 if (attrib){
@@ -856,15 +855,30 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
                 if (attrib) {
                     silentSetter[item_entry + "set-as-shield"] = "0";
                 }
+                //set armor3 or shield3 name
+                itemName = w[item_entry + "name"];
+                if (itemName) {
+                    if (w[defenseItem] !== itemName) {
+                        setter[defenseItem] = itemName;
+                    }
+                } else {
+                    setter[defenseItem] = "";
+                }
                 //if we hit "set as armor or shield" on a peice of armor / shield equipment, make sure to slot it.
                 //do it silently so we don't loop 
                 equipType = parseInt(w[item_entry + "equip-type"],10);
                 actualLocation= parseInt(w[item_entry+"location"],10);
-                if ( (equipType === equipMap.Armor && actualLocation!== locationMap.Armor) ||
-                    ( equipType === equipMap.Shield && actualLocation !== locationMap.Shield )){
+                //this would only be if "set as armor" checked
+                if ( (location === locationMap.Armor && equipType === equipMap.Armor && actualLocation!== locationMap.Armor) ||
+                    ( location ===  locationMap.Shield && equipType === equipMap.Shield && actualLocation !== locationMap.Shield )){
                         silentSetter[item_entry + "old_location"] = actualLocation;
                         silentSetter[item_entry+"location"] = location;
-                } else {
+                        if(itemName && w[wornSlotField]!==itemName){
+                            silentSetter[wornSlotField]=itemName;
+                        } else if (!itemName){
+                            silentSetter[wornSlotField]=''; //when would this happen? never.
+                        }
+                } else if (equipType !== equipMap.Armor && equipType !== equipMap.Shield ){
                     //need to remove any others from armor or shield location depending
                     takeOffWornItem(location);
                 }
@@ -1674,9 +1688,15 @@ function registerEventHandlers  () {
     on('change:repeating_item:location', TAS.callback(function eventUpdateItemLocation(eventInfo){
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            updateEquipmentLocation(null,null,null,eventInfo);
             getAttrs(['repeating_item_location','repeating_item_old_location'],function(v){
                 var newLoc=parseInt(v.repeating_item_location,10),oldLoc=parseInt(v.repeating_item_old_location,10);
+                if(newLoc === locationMap.Armor || newLoc === locationMap.Shield){
+                    updateWornArmorAndShield(newLoc,eventInfo.sourceAttribute,function(){
+                        updateEquipmentLocation(null,null,null,eventInfo);
+                    });
+                } else {
+                    updateEquipmentLocation(null,null,null,eventInfo);
+                }
                 if (newLoc!==locationMap.NotCarried || (oldLoc !== locationMap.NotCarried && oldLoc !== newLoc)){
                     updateRepeatingItems(null,false,{'weight':1});
                 }
@@ -1749,7 +1769,7 @@ function registerEventHandlers  () {
         updateCarriedTotal();
     }));
     //change item worn in shield or armor location
-    on('change:repeating_item:location change:repeating_item:item-defense-type change:repeating_item:item-acbonus change:repeating_item:item-max-dex change:repeating_item:item-acp change:repeating_item:item-spell-fail change:repeating_item:item-proficiency change:repeating_item:acenhance', TAS.callback(function eventUpdateWornArmorAndShield(eventInfo) {
+    on('change:repeating_item:item-defense-type change:repeating_item:item-acbonus change:repeating_item:item-max-dex change:repeating_item:item-acp change:repeating_item:item-spell-fail change:repeating_item:item-proficiency change:repeating_item:acenhance', TAS.callback(function eventUpdateEquippedArmorOrShield(eventInfo) {
             var location = 0;
             TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
             getAttrs(["repeating_item_location"], function (v) {
@@ -1783,13 +1803,17 @@ function registerEventHandlers  () {
     on("change:repeating_item:set-as-armor", TAS.callback(function eventcreateArmorEntryFromRow(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            updateWornArmorAndShield(locationMap.Armor, eventInfo.sourceAttribute,null );
+            updateWornArmorAndShield(locationMap.Armor,eventInfo.sourceAttribute,function(){
+                updateEquipmentLocation(null,null,null,eventInfo);
+            });
         }
     }));
     on("change:repeating_item:set-as-shield", TAS.callback(function eventcreateShieldEntryFromRow(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            updateWornArmorAndShield(locationMap.Shield, eventInfo.sourceAttribute,null );
+            updateWornArmorAndShield(locationMap.Shield,eventInfo.sourceAttribute,function(){
+                updateEquipmentLocation(null,null,null,eventInfo);
+            });
         }
     }));
     on("change:repeating_item:showinmenu change:repeating_item:equip-type change:repeating_item:name", TAS.callback(function eventShowItemInMenu(eventInfo) {
