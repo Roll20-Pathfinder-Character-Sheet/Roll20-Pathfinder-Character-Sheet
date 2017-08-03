@@ -39,17 +39,7 @@ var webpackConfig = {
     }),   
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
-      inlineSource: '.js$',
-     minify: {
-       //collapseWhitespace: true,
-       caseSensitive: true,
-       removeComments: true,
-       removeRedundantAttributes: false,
-       removeScriptTypeAttributes: false,
-       removeStyleLinkTypeAttributes: false,
-       sortAttributes: true,
-       sortClassName: true
-     }    
+      inlineSource: '.js$'
     }),
     new HtmlWebpackInlineSourcePlugin(),
     function RegexReplace(...args) {

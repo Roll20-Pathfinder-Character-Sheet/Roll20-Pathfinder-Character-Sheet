@@ -1381,6 +1381,11 @@ function updateSpellsOld  (callback, silently, eventInfo) {
  *@param {object} eventInfo used to find row id since id param will be null
  */
 export function importFromCompendium (id, eventInfo) {
+    if(eventInfo){
+        if (!id){
+            id = SWUtils.getRowId(eventInfo.sourceAttribute);
+        }
+    }
     getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description"], function (v) {
         var levelStrBase = v["repeating_spells_spell_lvlstr"],
         rangeText = v["repeating_spells_range_from_compendium"],
@@ -1403,11 +1408,12 @@ export function importFromCompendium (id, eventInfo) {
         minHunterSpellLevel = 99,
         hunterIdx = 99,
         isAttack = false,
+        levels,
         allSame=1,
         modeLevel=-1,
         counter = 0,
         callUpdateSpell = true;
-        //TAS.debug("at pfspells.importFromCompendium",v);
+        TAS.debug("at pfspells.importFromCompendium",v);
         if(!(/spell/i).test(v.repeating_spells_compendium_category)){
             setSilent.repeating_spells_name='Cannot parse ' + v.repeating_spells_compendium_category;
             setAttrs(setSilent,PFConst.silentParams);
@@ -1515,40 +1521,42 @@ export function importFromCompendium (id, eventInfo) {
                         });
                     }
                 }
-            } catch (err) {
+            } catch (err2) {
+                TAS.error("PFSpells.importfromCompendium err2:",err2);
                 classMatch = "";
+                foundMatch=0;
             }
-            if (!foundMatch){
-                //get mode 
-                // IF FOODS IS AN ARRAY then : so how to do it with 
-                var levels = _.map(classes,function(oneclass){
-                    return oneclass[1];
-                });
-                level=_.chain(levels).countBy().pairs().max(_.last).head().value()||0;
-                idx=0;
-                classMatch = originalClasses[0];
-                setSilent['repeating_spells_description']= 'Original spell level:'+v['repeating_spells_spell_lvlstr'] + ' \r\n'+ v['repeating_spells_description'];
-            } else {
-                setSilent['repeating_spells_description']= SWUtils.trimBoth(v['repeating_spells_description']);
+            try{
+                if (!foundMatch){
+                    TAS.warn("importFromCompendium: did not find class match");
+                    setSilent['repeating_spells_description']= 'Original spell level:'+v['repeating_spells_spell_lvlstr'] + ' \r\n'+ v['repeating_spells_description'];
+                    // If the levels/classes is an array get mode and use that for level
+                    levels = _.map(classes,function(oneclass){
+                        return oneclass[1];
+                    });
+                    level=_.chain(levels).countBy().pairs().max(_.last).head().value()||0;
+                    idx=0;
+                    classMatch=originalClasses[0];
+                } else {
+                    setSilent['repeating_spells_description']= SWUtils.trimBoth(v['repeating_spells_description']);
+                }
+            } catch (err3){
+                TAS.error("PFSpells.importFromCompendium err3",err3);
+            } finally {
+                level = level||0;
+                idx=idx||0;
+                classMatch = classMatch||originalClasses[0]||'Sorceror';
+                foundMatch=true;
             }
-            // if (counter > 1 || !foundMatch) {
-            //     TAS.warn("importFromCompendium: did not find class match");
-            //     //leave at current choice if there is one
-            //     setSilent["repeating_spells_spell_level"] = "";
-            //     setSilent["repeating_spells_spell_level_r"] = -1;
-            //     setSilent["repeating_spells_spell_class_r"] = -1;
-            //     setSilent["repeating_spells_spellclass_number"] = "";
-            //     setSilent["repeating_spells_spellclass"] = levelStrBase;
-            //     callUpdateSpell = false;
-            // } else {
-                setSilent["repeating_spells_spellclass_number"] = idx;
-                setSilent["repeating_spells_spell_level"] = level;
-                setSilent["repeating_spells_spell_level_r"] = level;
-                setSilent["repeating_spells_spellclass"] = classMatch;
-                setSilent["repeating_spells_spell_class_r"] = idx;
-                //change tab so spell doesn't disappear.
-                setSilent["spells_tab"] = level;
-            //}
+            
+            setSilent["repeating_spells_spell_level"] = level;
+            setSilent["repeating_spells_slot"] = level;
+            setSilent["repeating_spells_spell_level_r"] = level;
+            setSilent["repeating_spells_spellclass_number"] = idx;
+            setSilent["repeating_spells_spell_class_r"] = idx;
+            setSilent["repeating_spells_spellclass"] = classMatch;
+            //change tab so spell doesn't disappear.
+            setSilent["spells_tab"] = level;
         }
         if (rangeText) {
             try {
@@ -1578,7 +1586,7 @@ export function importFromCompendium (id, eventInfo) {
         setSilent["repeating_spells_effect_from_compendium"] = "";
         if (_.size(setSilent) > 0) {
             SWUtils.setWrapper(setSilent, PFConst.silentParams, function () {
-                    updateSpell(null, eventInfo);
+                    updateSpell(id, eventInfo);
             });
         }
     });

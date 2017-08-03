@@ -186,7 +186,7 @@ function updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval,callback){
  * @param {string} overrideAttr optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
  * @param {number} overrideValue optional = if overrideAttr then this should be a number usually int but it won't check
  */
-function updateRepeatingWeaponAttack(id, eventInfo) {
+export function updateRepeatingWeaponAttack(id, eventInfo) {
 	//is it faster to not do the idstr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);

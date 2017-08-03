@@ -961,6 +961,8 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
                 //TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
                 SWUtils.setWrapper(setter, params, function(){
                     //can do these in parallel
+                    PFAttacks.updateRepeatingWeaponDamage(newRowId,null);
+                    PFAttacks.updateRepeatingWeaponAttack(newRowId,null);
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
                     done();
