@@ -662,13 +662,23 @@ export function importSpells (spells,spellclasses)
 				level = parseNum(spell._level);
 				repeatPrefix = "repeating_spells_";
 				spellName = spell._name.replace(/\(x\d+\)/,"").trim();
-				spellClassName = spell._class;
-				spellClass = _.indexOf(spellClassesKeys,spellClassName);
-
-				if (spellClass == -1)
+				
+				// If the spell doesn't specify a class, assume its our first spellcaster
+				if (spell._class === "")
 				{
-					spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
+					spellClass = 0;
+					spellClassName = spellClassesKeys[0];
+				}
+				else
+				{
+					spellClassName = spell._class;
 					spellClass = _.indexOf(spellClassesKeys,spellClassName);
+
+					if (spellClass == -1)
+					{
+						spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
+						spellClass = _.indexOf(spellClassesKeys,spellClassName);
+					}
 				}
 
 				rowID = getOrMakeSpellRowID(spellObjList,spellName,spellClass);
@@ -1087,20 +1097,20 @@ export function importAC (attrs,acObj,armorPenalties)
 	{
 		if (acObj._fromcharisma !== "")
 		{
-			attrs["AC-ability"] = "( ((@{CHA-mod} + [[ @{max-dex-source} ]]) - abs(@{CHA-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability"] = "CHA-mod";
 			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromcharisma);
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromcharisma) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
 		else if (acObj._fromwisdom !== "")
 		{
-			attrs["AC-ability"] = "( ((@{WIS-mod} + [[ @{max-dex-source} ]]) - abs(@{WIS-mod} - [[ @{max-dex-source} ]])) / 2 )";
+			attrs["AC-ability"] = "WIS-mod";
 			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromwisdom);
 			attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromwisdom) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 		}
 	}
 	else
 	{
-		attrs["AC-ability"] = "( ((@{DEX-mod} + [[ @{max-dex-source} ]]) - abs(@{DEX-mod} - [[ @{max-dex-source} ]])) / 2 )";
+		attrs["AC-ability"] = "DEX-mod";
 		attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromdexterity);
 		attrs["AC-misc"] = parseNum(acObj._ac) - 10 - parseNum(acObj._fromarmor) - parseNum(acObj._fromshield) - parseNum(acObj._fromdexterity) - parseNum(acObj._fromsize) - parseNum(acObj._fromnatural) - parseNum(acObj._fromdeflect) - parseNum(acObj._fromdodge);
 	}
