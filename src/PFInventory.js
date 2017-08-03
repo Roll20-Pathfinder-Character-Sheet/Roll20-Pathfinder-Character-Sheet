@@ -880,7 +880,7 @@ function updateWornArmorAndShield  (location, sourceAttribute, callback) {
                         }
                 } else if (equipType !== equipMap.Armor && equipType !== equipMap.Shield ){
                     //need to remove any others from armor or shield location depending
-                    //takeOffWornItem(location);
+                    takeOffWornItem(location);
                 }
             } else {
                 TAS.warning("no reason to update armor or shield for " + sourceAttribute + " in location " + locationNames[location]);
