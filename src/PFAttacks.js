@@ -186,7 +186,7 @@ function updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval,callback){
  * @param {string} overrideAttr optional = if we are passing in a value this is the fieldname after "repeating_weapon_"
  * @param {number} overrideValue optional = if overrideAttr then this should be a number usually int but it won't check
  */
-export function updateRepeatingWeaponAttack(id, eventInfo) {
+export function updateRepeatingWeaponAttackAsync(id, eventInfo) {
 	//is it faster to not do the idstr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
@@ -644,7 +644,7 @@ export function syncAllDefaultDamageDiceAsync (){
 		getSectionIDs('repeating_weapons',function(ids){
 			var setter={},fields;
 			if(_.size(ids)){
-				fields= SWUtils.cartesianAppend(['repeating_weapon_',ids,['_damage-dice-num','_damage-die','_size_affects']]);
+				fields= SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_damage-dice-num','_damage-die','_size_affects']);
 				getAttrs(fields,function(v){
 					_.each(ids,function(id){
 						syncDefaultDamageDice(id,v,setter,modifyDMG);
@@ -1254,6 +1254,15 @@ function recalcRepeatingMacroFields (ids,callback){
 		}
 	});
 }
+export function updateRepeatingAttacks(attackType){
+	getSectionIDs("repeating_weapon", function (ids) {
+		if(!ids || _.size(ids)===0){
+			done();
+			return;
+		}
+		recalcRepeatingNonMacroFields(ids);
+	});
+}
 export function recalculateRepeatingWeapons (callback){
 	var done = _.once(function(){
 		//TAS.debug("leaving PFAttacks.recalculateRepeatingWeapons");
@@ -1573,13 +1582,13 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:attack-type-mod change:repeating_weapon:attack-mod", TAS.callback(function eventUpdateRepeatingWeaponAttackSheet(eventInfo) {
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateRepeatingWeaponAttack(null, eventInfo);
+			updateRepeatingWeaponAttackAsync(null, eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:masterwork change:repeating_weapon:proficiency", TAS.callback(function eventUpdateRepeatingWeaponAttackPlayer(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateRepeatingWeaponAttack(null, eventInfo);
+			updateRepeatingWeaponAttackAsync(null, eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:damage-ability", TAS.callback(function eventHandleRepeatingDamageDropdown(eventInfo) {
@@ -1623,7 +1632,7 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:enhance", TAS.callback(function eventUpdateRepeatingWeaponAttackAndDamage(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			updateRepeatingWeaponAttack(null, eventInfo);
+			updateRepeatingWeaponAttackAsync(null, eventInfo);
 			updateRepeatingWeaponDamage();
 		}
 	}));
@@ -1640,6 +1649,16 @@ function registerEventHandlers () {
 				updateRepeatingWeaponsFromCrit(attack, eventInfo);
 			}
 		}));
+
+		on("change:" + attackFields.atk, TAS.callback(function eventAttackUpdate(eventInfo) {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				TAS.debug("Yeah baby!");
+				updateRepeatingAttacks(eventInfo.sourceAttribute);
+				//updateRepeatingWeaponAttacks(); //does not exist yet
+			}
+		}));
+		
 	});
 
 	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_size change:repeating_weapon:default_damage-die change:repeating_weapon:size_affects", TAS.callback(function eventWeaponDice(eventInfo) {
@@ -1678,7 +1697,6 @@ function registerEventHandlers () {
 			updateDualWieldAttacks(null,eventInfo);
 		}
 	}));
-	
 }
 registerEventHandlers();
 //PFConsole.log('   PFAttacks module loaded        ');
