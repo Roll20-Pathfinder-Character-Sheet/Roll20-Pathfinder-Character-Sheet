@@ -437,6 +437,7 @@ function upgrade (oldversion, callback, errorCallback) {
 			if (oldversion <= 1.66){
 				PFAttackGrid.recalculate();
 				PFInventory.migrate(null,oldversion);
+				PFSkills.migrate();
 			}
 		}
 	} catch (err) {

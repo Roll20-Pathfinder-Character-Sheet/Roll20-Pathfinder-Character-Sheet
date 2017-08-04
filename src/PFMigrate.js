@@ -843,6 +843,8 @@ export function getAllMigrateFlags (v){
     v['migrated_ability_dropdowns2']=1;
     v['migrated_attack_bab_dropdowns']=1;
     v["migrated_itemlist_newfields"]=1;
+    v['migrated_skill_speedup2']=1;
+    v['migrate_fatigued_conditions']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){
