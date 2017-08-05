@@ -53,7 +53,7 @@ function expandAll  () {
 				spells_tab: "99",
 				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-		'sheet-conditions-show':1,
+				'sheet-conditions-show':1,
 				'buffstop-show':1,
 				'command-buttons-show':1,
 				'NPC-command-buttons-show':1,
@@ -425,9 +425,12 @@ function upgrade (oldversion, callback, errorCallback) {
 									},oldversion);
 									PFAbility.setRuleTabs();
 									PFInventory.updateLocations();
-									PFAttacks.adjustAllDamageDiceAsync();
-									PFAttacks.updateDualWieldAttacks();
-									PFAttacks.recalculateRepeatingWeapons();
+									PFAttackGrid.recalculate(function(){
+										PFAttacks.adjustAllDamageDiceAsync();
+										PFAttacks.updateDualWieldAttacks();
+										PFAttacks.recalculateRepeatingWeapons();
+									});
+									PFInventory.migrate();
 								});
 							});
 						},oldversion);
@@ -436,7 +439,7 @@ function upgrade (oldversion, callback, errorCallback) {
 			}
 			if (oldversion <= 1.66){
 				PFAttackGrid.recalculate();
-				PFInventory.migrate(null,oldversion);
+				PFInventory.migrate();
 				PFSkills.migrate();
 			}
 		}

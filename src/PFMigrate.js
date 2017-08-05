@@ -854,6 +854,3 @@ export function setAllMigrateFlags (callback){
     });
     SWUtils.setWrapper(getAllMigrateFlags(), PFConst.silentParams, done);
 }
-
-//PFConsole.log( '   PFMigrate module loaded        ' );
-//PFLog.modulecount++;
