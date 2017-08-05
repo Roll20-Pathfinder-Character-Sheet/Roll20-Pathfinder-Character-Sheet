@@ -3115,6 +3115,21 @@
 						</div>
 					</div>
 				</div>
+				<div class="sheet-h2-section sheet-damage-grid" style="margin-top:.25em;">
+					<div class="sheet-table">
+						<div class="sheet-table-row">
+							<span class="sheet-table-cell">Melee Dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Alt Melee Dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG2-mod}" name="attr_DMG2-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}+@{buff_dmg_melee2-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Ranged dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Alt Ranged dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged2-mod}" name="attr_DMG_ranged2-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}+@{buff_DMG_ranged2-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<div style="display:none;"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></div>
+						</div>
+					</div>
+				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attack-notes-show" data-i18n-aria-label="attack-notes" data-i18n-title="showsect-cmd"  value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="attack-notes">Attack Notes</label></h2>
