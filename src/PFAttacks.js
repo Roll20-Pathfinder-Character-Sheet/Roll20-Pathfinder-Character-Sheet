@@ -1256,15 +1256,21 @@ function recalcRepeatingMacroFields (ids,callback){
 	});
 }
 export function updateRepeatingAttacks(attackType){
+	var updateRow = function(id){
+			var prefix = 'repeating_weapon_'+id+'_';
+			SWUtils.setDropdownValue(prefix + "attack-type",prefix +"attack-type-mod",null,function(){
+				updateRepeatingWeaponAttackAsync(id);
+			},true);
+	};
 	getSectionIDs("repeating_weapon", function (ids) {
 		if(!ids || _.size(ids)===0){
 			done();
 			return;
 		}
 		_.each(ids,function(id){
-			updateRepeatingWeaponAttackAsync();
+			updateRow(id);
 		});
-//		recalcRepeatingNonMacroFields(ids);
+		//recalcRepeatingNonMacroFields(ids);
 	});
 }
 export function recalculateRepeatingWeapons (callback){
@@ -1658,8 +1664,8 @@ function registerEventHandlers () {
 			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				TAS.debug("Yeah baby!");
-				recalculateRepeatingWeapons();
-				//updateRepeatingAttacks(eventInfo.sourceAttribute);
+				//recalculateRepeatingWeapons();
+				updateRepeatingAttacks(eventInfo.sourceAttribute);
 				//updateRepeatingWeaponAttacks(); //does not exist yet
 			}
 		}));
