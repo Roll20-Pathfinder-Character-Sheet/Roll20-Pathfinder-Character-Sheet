@@ -1629,8 +1629,8 @@ export function migrate  (callback, oldversion) {
         getAttrs(['migrated_itemlist_newfields'],function(v){
             try{
                 if(!parseInt(v.migrated_itemlist_newfields,10)){
-                    PFMacros.migrateRepeatingMacros(done,'item','macro-text',
-                        defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
+                    //PFMacros.migrateRepeatingMacros(done,'item','macro-text',
+                    //    defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
                     SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
                 } else{
                     done();
