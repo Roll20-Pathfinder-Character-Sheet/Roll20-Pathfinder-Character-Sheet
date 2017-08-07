@@ -404,7 +404,7 @@ function setSkillVal (skill, v, setter){
 				skillTot += adj;
 			} else if (skillSize === 2) {
 				adj = parseInt(v["size_skill_double"], 10) || 0;
-				if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
+				//if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
 				skillTot += adj;
 			}
 		} 

@@ -312,9 +312,9 @@ function recalculateRepeatingMaxUsed (section, callback, silently) {
 			var totrows = _.size(ids),
 			rowdone = _.after(totrows, done);
 			if (totrows > 0) {
-				if(section ==='ability'){
-					TAS.notice("checking max used for ability silent is:"+silently);
-				}
+				//if(section ==='ability'){
+				//	TAS.notice("checking max used for ability silent is:"+silently);
+				//}
 				_.each(ids, function (id, index) {
 					var prefix = "repeating_" + section + "_" + id;
 					SWUtils.evaluateAndSetNumber(prefix + "_max-calculation", prefix + "_used_max", 0, rowdone, true);
