@@ -2414,13 +2414,21 @@ input[type="text"][name="attr_source-ability"]
   width: calc(50% - 4px);
   float: left;
 }
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-section-mythic {
   width: calc(100% - 4px);
   float: left;
 }
-
+div.sheet-feats .sheet-table-row span {
+    text-align: center;
+}
+div.sheet-feats .sheet-table-row span:last-child {
+    width: auto;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats {
+    width: calc(100% - 4px);
+    display: inline-table;
+}
 
 /* if first row is not header */
 
