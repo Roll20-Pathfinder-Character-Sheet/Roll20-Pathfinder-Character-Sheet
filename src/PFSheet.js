@@ -486,10 +486,10 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		_.each(parallelRecalcFuncs, function (methodToCall) {
 			try {
 				currstarted++;
-				TAS.info("starting " + currstarted + " parallel modules");
+				//TAS.info("starting " + currstarted + " parallel modules calling:"+methodToCall);
 				methodToCall(doneOneModule, silently, oldversion);
 			} catch (err) {
-				TAS.error("PFSheet.recalculateParallelModules", err);
+				TAS.error("PFSheet.recalculateParallelModules error calling recalculate", err);
 				doneOneModule();
 			}
 		});
