@@ -214,7 +214,7 @@ function mergeOldIntoNewBuffs(callback){
 			done(1);
 			return;
 		}
-		TAS.debug("OLD BUFFS ARE: ", ids, v);
+		//TAS.debug("OLD BUFFS ARE: ", ids, v);
 		ids.forEach(function(id){
 			var prefix = 'repeating_buff_'+id+'_',
 			newId='',
@@ -249,7 +249,7 @@ function mergeOldIntoNewBuffs(callback){
 				}).filter(function(attr){
 					return ( parseInt(v[prefix+'buff-'+attr+'-show'],10) === 1); //only where -show checked
 				});
-				TAS.debug("BUFFS MERGE LEFT ON ROW "+id+" are ",buffs);
+				//TAS.debug("BUFFS MERGE LEFT ON ROW "+id+" are ",buffs);
 				//if any left then create new buff2 row
 				if (_.size(buffs)) {
 					newId=generateRowID();
