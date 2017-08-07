@@ -2401,8 +2401,7 @@ input[type="text"][name="attr_source-ability"]
 }
 
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons {
   width: calc(50% - 4px);
   float: left;
 }
@@ -2411,11 +2410,12 @@ input[type="text"][name="attr_source-ability"]
   float: left;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-section-mythic {
   width: calc(50% - 4px);
   float: left;
 }
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-section-mythic {
   width: calc(100% - 4px);
   float: left;
