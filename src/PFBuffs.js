@@ -689,15 +689,18 @@ function updateBuffTotal (col,rows,v,setter){
 					sums.pen=bonuses.penalty;
 					bonuses.penalty=0;
 				}
-
+				if(bonuses.dodge){
+					TAS.info("THERE IS A DODGE BONUS!!",bonuses);
+				}
 				//if ac,touch,cmd,flatfooted, copy dodge  out
-				if(armorcols.indexOf(col)>=0){
-					if ( _.contains(bonuses,'dodge')){
+				if(col==='ac' && bonuses.dodge){
+					TAS.debug("yes thats right setting totaldodge");
+//					if ( _.contains(bonuses,'dodge')){
 						if(col==='ac'){
-							totaldodge = bonuses.dodge;
+							totaldodge += bonuses.dodge;
 						}
 						bonuses.dodge=0;
-					}
+//					}
 				}
 				sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
 					m+=bonus;
@@ -707,20 +710,19 @@ function updateBuffTotal (col,rows,v,setter){
 		}
 
 		if(col==='ac'){
-			//TAS.debug("column is AC, setting dodge to "+totaldodge);
+			TAS.info("column is AC, setting dodge to "+totaldodge);
 			//this means we ignore dodge, deflection to touch, cmd, flatfooted
 			tempdodge=parseInt(v['buff_dodge-total'],10)||0;
 			//ignore dodge and deflect for any other than ac
 			if (totaldodge !== tempdodge){
 				setter['buff_dodge-total']=totaldodge;
-				tempInt = parseInt(v['buff_dodge_exists'],10)||0;
-				if(totaldodge && !tempInt){
-					setter['buff_dodge_exists']=1;
-				} else if (tempInt && !totaldodge) {
-					setter['buff_dodge_exists']=0;
-				}
 			}
-
+			tempInt = parseInt(v['buff_dodge_exists'],10)||0;
+			if(totaldodge && !tempInt){
+				setter['buff_dodge_exists']=1;
+			} else if (tempInt && !totaldodge) {
+				setter['buff_dodge_exists']=0;
+			}
 		}
 
 		totalcol=buffToTot[col];
