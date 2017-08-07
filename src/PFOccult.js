@@ -69,7 +69,7 @@ export function updateAttackAsync(callback,silently,eventInfo){
     });
 }
 
-function recalculate(callback,dummy,oldversion){
+export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dummy,oldversion){
     var updateBlasts = _.after(2,function(){
         getAttrs(['buff_kineticblast-total','kineticblast_attack-mod','kineticblast_attack',
         'buff_dmg_kineticblast-total','kineticblast_dmg-mod','kineticblast_dmg'],function(v){
@@ -101,7 +101,7 @@ function recalculate(callback,dummy,oldversion){
             callback();
         }
     });
-}
+});
 
 on("change:kineticblast_attack_macro_text", TAS.callback(function eventKineticBlastMacroUpdate(eventInfo) {
     TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

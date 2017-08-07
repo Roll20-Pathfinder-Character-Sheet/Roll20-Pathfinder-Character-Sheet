@@ -328,7 +328,7 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 		params={}, setter={};
 		newVal = parseInt(newVal,10)||0;
 		newPlus = newVal + addn;
-		TAS.notice("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
+		//TAS.debug("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
 		if(newPlus !== curr){
 			setter[writeField]=newPlus;
 			if(silently){

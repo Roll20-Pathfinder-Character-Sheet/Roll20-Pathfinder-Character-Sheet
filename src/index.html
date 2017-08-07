@@ -2269,7 +2269,7 @@
 						</div>
 						<div class="sheet-table-group">
 							<div class="sheet-table-row">
-								<span class="sheet-table-row-name"><span class="sheet-show-readonly sheet-inverse-readonly" style="position:absolute; top:.65em; margin-left:-14px; color:white; font-family:pictos custom; font-size:4rem; font-weight:lighter;">e</span><span data-i18n="armor-class-abbrv" data-i18n-title="armor-class"  data-i18n-aria-label="armor-class">AC</span></span>
+								<span class="sheet-table-row-name"><span class="sheet-show-readonly sheet-inverse-readonly" style="position:absolute; top:.7em; margin-left:-14px; color:white; font-family:pictos custom; font-size:4rem; font-weight:lighter;">e</span><span data-i18n="armor-class-abbrv" data-i18n-title="armor-class"  data-i18n-aria-label="armor-class">AC</span></span>
 								<span class="sheet-table-cell"><input title="@{AC}" type="number" name="attr_AC" value="10" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
@@ -2713,7 +2713,7 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_defense-notes-show" data-i18n-aria-label="defense-notes" data-i18n-title="showsect-cmd"  value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="special-defense-notes">Special Defenses and Notes</label></h2>
 				<span class="sheet-nontable-name" data-i18n="special-defense-notes">Special Defenses and Notes </span>
-				<div class="sheet-h2-section sheet-special-defenses sheet-wide-readonly">
+				<div class="sheet-h2-section sheet-special-defenses">
 					<div class="sheet-table">
 						<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="special-defense">Special Defenses</span>
 						<div class="sheet-table-group">
@@ -10009,7 +10009,7 @@
 			<div class="sheet-section6 sheet-section sheet-section-equipment" role="region" aria-label="Euipment" data-i18n-aria-label="equipment">
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
 				<h1 class="sheet-selected-tabtitle" data-i18n="equipment">Equipment</h1>
-				<div class="sheet-col sheet-col1">
+				<div class="sheet-col sheet-col1 sheet-equipment">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_currency-show" data-i18n-aria-label="currency" data-i18n-title="showsect-cmd"  value="1" checked />
 					<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="currency">Currency</label></h2>
@@ -10141,7 +10141,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="sheet-col sheet-col2">
+				<div class="sheet-col sheet-col2 sheet-worn-items">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_worn-items-show" data-i18n-aria-label="worn-items" data-i18n-title="showsect-cmd"  value="1" checked />
 					<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="worn-items">Worn Items</label></h2>
@@ -13600,9 +13600,9 @@
 </div>			
 		</div>
 	</div>
-	<div data-i18n-aria-label="footnotes-aria" class="sheet-footnotes" aria-label="Footnote information">
+	<div data-i18n-aria-label="footnotes-aria" class="sheet-footnotes sheet-left" aria-label="Footnote information">
 		<hr style="border-color: #a9a9a9;">
-		<ul style="list-style: none;">
+		<ul style="list-style: none;margin-left: 1.5em;text-indent:-1.5em;">
 			<li data-i18n="footnote-a">⒜ Evaluated at edit time, must evaluate to number. No queries. Extended Expressions allowed.</li>
 			<li data-i18n="footnote-b">⒝ Evaluated at roll time in chat. Queries allowed. Must put [[brackets]] around rolls.</li>
 			<li data-i18n="footnote-c">⒞ Evaluated at roll time in chat. Queries allowed. Must evaluate to number. No [[brackets]] needed.</li>

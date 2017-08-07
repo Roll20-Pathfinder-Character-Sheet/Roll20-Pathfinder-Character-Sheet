@@ -986,9 +986,9 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
                     setter["repeating_weapon_" + newRowId + "_" + attr] = v[item_entry + "item-" + attr];
                 }
             });
-            if ( (/melee/i).test(v[item_entry + "item-attack_type"])) {
+            if ( (/melee/i).test(v[item_entry + "item-attack-type"])) {
                 setter["repeating_weapon_" + newRowId + "_damage-ability"] = "STR-mod";
-            } else if ( (/ranged/i).test(v[item_entry + "item-attack_type"])) {
+            } else if ( (/ranged/i).test(v[item_entry + "item-attack-type"])) {
                 setter["repeating_weapon_" + newRowId + "_isranged"] = 1;
             }
             enhance = parseInt(v[item_entry + "item-wpenhance"],10)||0;
@@ -1018,17 +1018,13 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
             if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
                 //TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
-                SWUtils.setWrapper(setter, params, function(){
-                    //can do these in parallel
-                    PFAttacks.updateRepeatingWeaponDamage(newRowId,null);
-                    PFAttacks.updateRepeatingWeaponAttackAsync(newRowId,null);
-                    PFAttackOptions.resetOption(newRowId);
-                    PFAttackGrid.resetCommandMacro();
-                    done();
+                SWUtils.setWrapper(setter, PFConst.silentParams, function(){
+                    PFAttacks.recalcRepeatingWeapon(newRowId,function(){
+                        PFAttackGrid.resetCommandMacro();
+                        PFAttackOptions.resetOption(newRowId);
+                        done();
+                    });
                 });
-                //if (_.size(silentSetter)){
-                //    SWUtils.setWrapper(silentSetter,PFConst.silentParams);
-                //}
             } else {
                 setter[item_entry + "create-attack-entry"] = 0;
                 SWUtils.setWrapper(setter,PFConst.silentParams,done);

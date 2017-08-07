@@ -1273,6 +1273,13 @@ export function updateRepeatingAttacks(attackType){
 		//recalcRepeatingNonMacroFields(ids);
 	});
 }
+
+export function recalcRepeatingWeapon(id,callback){
+	recalcRepeatingMacroFields([id],function(){
+		recalcRepeatingNonMacroFields([id],callback);
+	});	
+}
+
 export function recalculateRepeatingWeapons (callback){
 	var done = _.once(function(){
 		//TAS.debug("leaving PFAttacks.recalculateRepeatingWeapons");
