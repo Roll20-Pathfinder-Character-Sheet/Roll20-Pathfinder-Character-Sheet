@@ -441,6 +441,7 @@ function upgrade (oldversion, callback, errorCallback) {
 				PFAttackGrid.recalculate();
 				PFInventory.migrate();
 				PFSkills.migrate();
+				PFDefense.recalculate();
 			}
 		}
 	} catch (err) {
