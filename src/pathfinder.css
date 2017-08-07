@@ -2431,6 +2431,9 @@ input[type="text"][name="attr_source-ability"]
 .sheet-table-cell.sheet-notes-cell {
     vertical-align: top;
 }
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section:not(.sheet-section-npc) > .sheet-h2-section:not(.sheet-wide-readonly).sheet-notes {
+    width: calc(100% - 4px);
+}
 .sheet-config-table {
     margin-bottom: 1em;
 }
