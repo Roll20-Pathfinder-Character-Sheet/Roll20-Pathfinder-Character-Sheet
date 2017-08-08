@@ -4816,7 +4816,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	color:white;	
 }
 .sheet-inspecial {
-	display:block;
+	display:inline-block;
 	text-indent:1.25em;
 }
 
