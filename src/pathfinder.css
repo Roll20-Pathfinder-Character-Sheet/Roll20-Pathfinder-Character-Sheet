@@ -1263,6 +1263,7 @@ input.sheet-tabinput {
     border-radius: 7px;
 }
 
+
 .sheet-h2-section.sheet-current-loads , 
 .sheet-h2-section.sheet-loads-and-lift,
 .sheet-h2-section.sheet-currency {
@@ -2430,8 +2431,7 @@ input[type="text"][name="attr_source-ability"]
 }
 
 
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats {
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons {
   width: calc(50% - 4px);
   float: left;
 }
@@ -2440,7 +2440,6 @@ input[type="text"][name="attr_source-ability"]
   float: left;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons,
-.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-section-mythic {
   width: calc(50% - 4px);
   float: left;
@@ -2449,7 +2448,17 @@ input[type="text"][name="attr_source-ability"]
   width: calc(100% - 4px);
   float: left;
 }
-
+div.sheet-feats .sheet-table-row span {
+    text-align: center;
+}
+div.sheet-feats .sheet-table-row span:last-child {
+    width: auto;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats,
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section .sheet-col .sheet-h2-section.sheet-feats {
+    width: calc(100% - 4px);
+    display: inline-table;
+}
 
 /* if first row is not header */
 
@@ -2459,6 +2468,9 @@ input[type="text"][name="attr_source-ability"]
 .sheet-notes-cell,
 .sheet-table-cell.sheet-notes-cell {
     vertical-align: top;
+}
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section:not(.sheet-section-npc) > .sheet-h2-section:not(.sheet-wide-readonly).sheet-notes {
+    width: calc(100% - 4px);
 }
 .sheet-config-table {
     margin-bottom: 1em;
@@ -4834,7 +4846,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	color:white;	
 }
 .sheet-inspecial {
-	display:block;
+	display:inline-block;
 	text-indent:1.25em;
 }
 
@@ -4848,6 +4860,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-dualwield-hide:not(:checked) ~ .sheet-dual-sect,
 .sheet-dualwield-hide:not(:checked) ~ .sheet-sect.sheet-expand .sheet-dual-sect {
 	display:none;
+}
+.sheet-h2-section.sheet-dual-wield-sect.sheet-wide-readonly {
+    padding: 4px;
+    border: 2px solid #CCCCCC;
+    border-radius: 7px;
 }
 
 .sheet-option-header {
