@@ -1,4 +1,6 @@
 {
+	"physical": "Physical",
+	"energy": "Energy",
 	"physical-blast": "Physical blast",
 	"physical-blade": "Physical blade/whip",
 	"energy-blast": "Energy blast",
