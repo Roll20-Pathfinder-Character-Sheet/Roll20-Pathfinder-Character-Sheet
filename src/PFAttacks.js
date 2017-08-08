@@ -618,8 +618,8 @@ function syncDefaultDamageDice (id,v,setter,useSizeMod,prefix){
 		prefix='repeating_weapon_'+SWUtils.getRepeatingIDStr(id);
 	}
 	if (!useSizeMod || !parseInt(v[prefix+'size_affects'],10)){
-		setter[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num'];
-		setter[prefix+'default_damage-die']=v[prefix+'damage-die'];
+		setter[prefix+'default_damage-dice-num']=v[prefix+'damage-dice-num']||0;
+		setter[prefix+'default_damage-die']=v[prefix+'damage-die']||0;
 	}
 	return setter;
 }
@@ -632,7 +632,9 @@ function syncDefaultDamageDiceAsync (id,eventInfo){
 		prefix='repeating_weapon_'+idStr;
 	getAttrs(['modify_dmg_by_size',prefix+'size_affects',prefix+'damage-dice-num',prefix+'damage-die'],function(v){
 		var setter={}, useSizeMod=0;
-		useSizeMod=parseInt(v.modify_dmg_by_size,10)||0;
+		if (parseInt(v.modify_dmg_by_size,10) || parseInt(v[prefix+'size_affects'],10)){
+			useSizeMod=1;
+		}
 		syncDefaultDamageDice(id,v,setter,useSizeMod,prefix);
 		if(_.size(setter)){
 			SWUtils.setWrapper(setter,PFConst.silentParams);
@@ -641,17 +643,20 @@ function syncDefaultDamageDiceAsync (id,eventInfo){
 }
 export function syncAllDefaultDamageDiceAsync (){
 	getAttrs(['modify_dmg_by_size'],function(vout){
-		var modifyDMG = parseInt(vout.modify_dmg_by_size,10)||0;
+		
 		getSectionIDs('repeating_weapons',function(ids){
 			var setter={},fields;
 			if(_.size(ids)){
 				fields= SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_damage-dice-num','_damage-die','_size_affects']);
+				fields.push('modify_dmg_by_size');
 				getAttrs(fields,function(v){
+					var modifyGlobal=0;
 					_.each(ids,function(id){
-						syncDefaultDamageDice(id,v,setter,modifyDMG);
+						var modifyDice = modifyGlobal && parseInt(v['repeating_weapon_'+id+'_size_affects'],10)||0;
+						syncDefaultDamageDice(id,v,setter,modifyDice);
 					});
 					if(_.size(setter)){
-					SWUtils.setWrapper(setter,PFConst.silentParams);
+						SWUtils.setWrapper(setter,PFConst.silentParams);
 					}
 				});
 			}
@@ -1179,12 +1184,13 @@ function recalcRepeatingNonMacroFields (ids,callback){
 	fields = fields.concat(SWUtils.cartesianAppend(['repeating_weapon_'],ids,sizeFieldsLU));
 	fields = fields.concat(updateCharAttrs);
 	getAttrs(fields,function(v){
-		var charAttMap={},	setter;
+		var charAttMap={},	setter, modifyDiceGlobal=0;
 		//set global values to int so we don't have to do it over and over per row.
 		charAttMap = _.object(_.map(updateCharAttrs,function(attr){
 			return [attr, parseInt(v[attr],10)||0];
 		}));
 		_.extend(v,charAttMap);
+		modifyDiceGlobal = parseInt(v.modify_dmg_by_size,10)||0;
 		//v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
 		//v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
 		//v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
@@ -1193,7 +1199,7 @@ function recalcRepeatingNonMacroFields (ids,callback){
 		setter = _.reduce(ids,function(m,id){
 			var xtra={},useSize=0;
 			try {
-				if(v.modify_dmg_by_size && v['repeating_weapon_'+id+'_size_affects']){
+				if(modifyDiceGlobal && v['repeating_weapon_'+id+'_size_affects']){
 					useSize=1;
 				}
 				if(v['repeating_weapon_'+id+'_attack-type']!=='dual'){
@@ -1267,7 +1273,6 @@ export function updateRepeatingAttacks(attackType){
 	};
 	getSectionIDs("repeating_weapon", function (ids) {
 		if(!ids || _.size(ids)===0){
-			done();
 			return;
 		}
 		_.each(ids,function(id){

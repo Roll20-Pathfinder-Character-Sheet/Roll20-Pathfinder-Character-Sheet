@@ -74,11 +74,11 @@ export function updateAttackAsync(callback,silently,eventInfo){
 
 function createAttack (eventInfo){
     getAttrs(['kineticblast_attack_type','create_kineticblast_attack','kineticblast_attack'],function(v){
-        var weaponPrefix='',id='',attackType='',setter={},name='',damage='',dmgname='';
+        var weaponPrefix='',id='',attackType='',setter={},name='',damage='',dmgname='',kblastattack=0;
         if(parseInt(v.create_kineticblast_attack,10)){
             try {
                 id = generateRowID();
-                weaponPrefix = 'create_attack_'+id+'_';
+                weaponPrefix = 'repeating_weapon_'+id+'_';
                 name=v.kineticblast_attack_type;
                 name=name.replace('physical','physical-').replace('composite','composite-').replace('energy','energy-');
                 name = SWUtils.getTranslated(name);
@@ -92,10 +92,15 @@ function createAttack (eventInfo){
                 if((/physical/i).test(v.kineticblast_attack_type)){
                     setter[weaponPrefix + "vs"] = "AC";
                     damage += "phys_";
+                    dmgname = SWUtils.getTranslated('physical');
                 } else {
                     setter[weaponPrefix + "vs"] = "touch";
                     damage += "energy_";
+                    dmgname = SWUtils.getTranslated('energy');
                 }
+                kblastattack=parseInt(v.kineticblast_attack,10)||0;
+                setter[weaponPrefix + "attack"]="@{kineticblast_attack}";
+                setter[weaponPrefix + "attack-mod"]=kblastattack;
                 if((/blast/i).test(v.kineticblast_attack_type)){
                     setter[weaponPrefix + "attack-type"] = 'attk-ranged';
                     setter[weaponPrefix + "range"] = "@{kineticblast_range}";
@@ -105,9 +110,7 @@ function createAttack (eventInfo){
                     setter[weaponPrefix + "attack-type"] = 'attk-melee';
                     damage += "melee";
                 }
-                dmgname = SWUtils.getTranslated('damage');
-                setter[weaponPrefix + "attack"]="@{kineticblast_attack}";
-                setter[weaponPrefix + "attack-mod"]=parseInt(v.kineticblast_attack,10)||0;
+                damage = "@{"+damage+"}";
                 setter[weaponPrefix + "precision_dmg_macro"] = damage;
                 setter[weaponPrefix + "precision_dmg_type"] = dmgname;
                 setter[weaponPrefix + "critical_dmg_macro"] = damage;
