@@ -7588,7 +7588,47 @@
 					<h2 class="sheet-clickheader sheet-showsect sheet-kineticist"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">Kinetic Burn</label></h2>
 					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect sheet-kineticist" role="section" data-i18n-aria-label="kineticist-burn" >
 						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kineticist-burn">Kineticist Burn</span>
-						<div class="sheet-linked-custom">
+						<span class="sheet-small-label2 sheet-entry-vshort">
+							<select name="attr_kineticist_class" title="@{kineticist_class}" >
+								<option value="class-0-level" data-i18n="1-ordinal-class" selected>1st Class</option>
+								<option value="class-1-level" data-i18n="2-ordinal-class">2nd Class</option>
+								<option value="class-2-level" data-i18n="3-ordinal-class">3rd Class</option>
+								<option value="class-3-level" data-i18n="4-ordinal-class">4th Class</option>
+								<option value="class-4-level" data-i18n="5-ordinal-class">5th Class</option>
+								<option value="class-5-level" data-i18n="6-ordinal-class">6th Class</option>
+								<option value="level" data-i18n="full-caster-level-abbrv" >Level/HD</option>
+								<option value="npc-hd-num" data-i18n="race-hd-default">Race only</option>
+							</select>
+							<span data-i18n="class">Class</span>
+						</span>
+						<label class="sheet-small-label2 sheet-small-numbers">
+							<input type="number" name="attr_kineticist_halflevel" title="@{kineticist_halflevel}" value="0" />
+							<span data-i18n-title="one-per-two-levels" title="1 plus 1 per 2 levels beyond first" >half level</span>
+						</label>
+						<label class="sheet-small-label2">
+							<select class="sheet-select-small" title="@{kinetic_ability}" name="attr_kinetic_ability">
+								<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+								<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+								<option value="CON-mod" data-i18n="constitution-abbrv" selected>CON</option>
+								<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+								<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+								<option value="CHA-mod" data-i18n="charisma-abbrv" >CHA</option>
+							</select>
+							<span data-i18n-title="ability" data-i18n-aria-label="ability" data-i18n="ability" >Ability</span>
+						</label>
+						<label class="sheet-small-label2 sheet-small-numbers">
+							<input type="number" name="attr_kineticist_ability_mod" title="@{kineticist_ability_mod}" value="0" />
+							<span  data-i18n="modifier-abbrv" >mod</span>
+						</label>
+						<span class="sheet-small-label2 sheet-small-number">
+							<input type="number" name="attr_kineticblast_dc" title="@{kineticblast_dc}" value="0" style="display:inline;" />
+							<span data-i18n="difficulty-class-abbrv">DC</span>
+						</span>
+						<span class="sheet-small-label2 sheet-number">
+							<input type="number" name="attr_kineticblast_range" title="@{kineticblast_range}" value="30" style="display:inline;" />
+							<span data-i18n="range">Range</span>
+						</span>
+						<div class="sheet-small-label2 sheet-linked-tablecell sheet-left">
 							<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
 							<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight">3+@{CON-mod}</textarea>
 							<input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
@@ -7597,7 +7637,7 @@
 							<input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="sheet-calc sheet-highlight" readonly />
 							<span class="sheet-note-a" data-i18n="burn" >Burn </span>
 						</div>
-						<div class="sheet-linked-custom">
+						<div class="sheet-small-label2 sheet-linked-tablecell sheet-left">
 							<input type="checkbox" name="attr_internalbuffer_max_error" class="sheet-error-mshow" value="1" />
 							<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight">floor((@{class-0-level}-1)/5)</textarea>
 							<input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
@@ -7605,37 +7645,43 @@
 							<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
 							<span class="sheet-note-a" data-i18n="internal-buffer" >Internal Buffer </span>
 						</div>
-						<div class="sheet-linked-custom">
-							<div class="sheet-linked-fields sheet-entry-long">
-								<input type="checkbox" name="attr_kineticblast_attack-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
-								<input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
-								<span class="sheet-note-a" data-i18n="kinetic-blast" >kinetic blast</span>
-							</div>
-							<div class="sheet-small-label2" style="margin-left: -.5em;">
-								<input type="number" name="attr_buff_kineticblast-total" title="@{buff_kineticblast-total}" value="0" class="sheet-calc" readonly/>
-								<span data-i18n="elemental-overflow-abbrv">Elem Over</span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" value="0" class="sheet-calc" readonly />
-								<span data-i18n="blast">blast</span>
-							</div>
+						<div class="sheet-small-label2 sheet-linked-fields sheet-entry-long">
+							<input type="checkbox" name="attr_kineticblast_attack-mod_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+							<input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
+							<span class="sheet-note-a" data-i18n="kinetic-blast" >kinetic blast</span>
 						</div>
-						<div class="sheet-linked-custom">
-							<div class="sheet-linked-fields sheet-entry-long">
-								<input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
-								<input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
-								<span class="sheet-note-a" data-i18n="kinetic-blast-damage-abbrv" >kinetic blast damage bonus </span>
-							</div>
-							<div class="sheet-small-label2" style="margin-left: -.5em;">
-								<input type="number" name="attr_buff_dmg_kineticblast-total" title="@{buff_dmg_kineticblast-total}" value="0" class="sheet-calc" readonly/>
-								<span data-i18n="elemental-overflow-abbrv">Elem Over</span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_kineticblast_dmg" title="@{kineticblast_dmg}" value="0" class="sheet-calc" readonly />
-								<span data-i18n="blast-damage-modifier-abbrv">blast dmg mod</span>
-							</div>
+						<div class="sheet-small-label2 sheet-entry-vshort" >
+							<input type="number" name="attr_buff_kineticblast-total" title="@{buff_kineticblast-total}" value="0" class="sheet-calc" readonly/>
+							<span data-i18n="elemental-overflow-abbrv">Elem Over</span>
+						</div>
+						<div class="sheet-small-label2 sheet-number">
+							<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" value="0" class="sheet-calc" readonly />
+							<span data-i18n="blast">blast</span>
+						</div>
+						<div class="sheet-small-label2 sheet-linked-fields sheet-entry-long">
+							<input type="checkbox" name="attr_kineticblade_attack-mod_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticblade_attack_macro_text" title="@{kineticblade_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+							<input type="number" name="attr_kineticblade_attack-mod" title="@{kineticblade_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
+							<span class="sheet-note-a" data-i18n="kinetic-blade-whip" >kinetic blade/whip</span>
+						</div>
+						<div class="sheet-small-label2 sheet-number">
+							<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" value="0" class="sheet-calc" readonly />
+							<span data-i18n="blast">blast</span>
+						</div>
+						<div class="sheet-small-label2 sheet-linked-tablecell sheet-entry-long">
+							<input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+							<input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+							<span class="sheet-note-a" data-i18n="kinetic-blast-damage-abbrv" >kinetic blast damage bonus </span>
+						</div>
+						<div class="sheet-small-label2 sheet-entry-vshort" >
+							<input type="number" name="attr_buff_dmg_kineticblast-total" title="@{buff_dmg_kineticblast-total}" value="0" class="sheet-calc" readonly/>
+							<span data-i18n="elemental-overflow-abbrv">Elem Over</span>
+						</div>
+						<div class="sheet-small-label2 sheet-number">
+							<input type="number" name="attr_kineticblast_dmg" title="@{kineticblast_dmg}" value="0" class="sheet-calc" readonly />
+							<span data-i18n="blast-damage-modifier-abbrv">blast dmg mod</span>
 						</div>
 					</div>
 					<div class="sheet-cheat sheet-kineticist"></div>
@@ -7654,7 +7700,6 @@
 								<option value="compositeenergyblast" data-i18n="composite-energy-blast">Composite energy blast</option>
 								<option value="compositeenergyblade" data-i18n="composite-energy-blade">Composite energy blade/whip</option>
 							</select>
-							<input type="number" name="attr_kineticblast_range" title="@{kineticblast_range}" value="30" style="display:inline;" />
 							<input type="checkbox" name="attr_create_kineticblast_attack" value="1" class="sheet-cssbutton sheet-createattackbutton" title="@{create_kineticblast_attack}" data-i18n-aria-label="create-attack-entry"><span></span>
 							<span data-i18n-title="create-kinetic-blast-attack" data-i18n-aria-label="create-kinetic-blast-attack" data-i18n="create-attack" >Create Attack</span>
 						</div>
