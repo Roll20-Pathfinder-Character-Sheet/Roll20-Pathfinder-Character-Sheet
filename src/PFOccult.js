@@ -4,6 +4,9 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
+import * as PFAttacks from './PFAttacks';
+import * as PFAttackGrid from './PFAttackGrid';
+import * as PFAttackOptions from './PFAttackOptions';
 
 function updateAttack(v,setter){
     var currb=0,newb=0;
@@ -69,6 +72,78 @@ export function updateAttackAsync(callback,silently,eventInfo){
     });
 }
 
+function createAttack (eventInfo){
+    getAttrs(['kineticblast_attack_type','create_kineticblast_attack','kineticblast_attack'],function(v){
+        var weaponPrefix='',id='',attackType='',setter={},name='',damage='',dmgname='',kblastattack=0;
+        if(parseInt(v.create_kineticblast_attack,10)){
+            try {
+                id = generateRowID();
+                weaponPrefix = 'repeating_weapon_'+id+'_';
+                name=v.kineticblast_attack_type;
+                name=name.replace('physical','physical-').replace('composite','composite-').replace('energy','energy-');
+                name = SWUtils.getTranslated(name);
+                name = name.replace('-',' '); //just in case
+                setter[weaponPrefix + "name"] = name;
+                if((/composite/i).test(v.kineticblast_attack_type)){
+                    damage="compositeblast_dmg_";
+                } else {
+                    damage="kineticblast_dmg_";
+                }
+                if((/physical/i).test(v.kineticblast_attack_type)){
+                    setter[weaponPrefix + "vs"] = "AC";
+                    damage += "phys_";
+                    dmgname = SWUtils.getTranslated('physical');
+                } else {
+                    setter[weaponPrefix + "vs"] = "touch";
+                    damage += "energy_";
+                    dmgname = SWUtils.getTranslated('energy');
+                }
+                kblastattack=parseInt(v.kineticblast_attack,10)||0;
+                setter[weaponPrefix + "attack"]="@{kineticblast_attack}";
+                setter[weaponPrefix + "attack-mod"]=kblastattack;
+                if((/blast/i).test(v.kineticblast_attack_type)){
+                    setter[weaponPrefix + "attack-type"] = 'attk-ranged';
+                    setter[weaponPrefix + "range"] = "@{kineticblast_range}";
+                    setter[weaponPrefix + "isranged"] = 1;
+                    damage += "ranged";
+                } else {
+                    setter[weaponPrefix + "attack-type"] = 'attk-melee';
+                    damage += "melee";
+                }
+                damage = "@{"+damage+"}";
+                setter[weaponPrefix + "precision_dmg_macro"] = damage;
+                setter[weaponPrefix + "precision_dmg_type"] = dmgname;
+                setter[weaponPrefix + "critical_dmg_macro"] = damage;
+                setter[weaponPrefix + "critical_dmg_type"] = dmgname;
+                setter[weaponPrefix + "default_damage-dice-num"] = 0;
+                setter[weaponPrefix + "default_damage-die"] = 0;
+                setter[weaponPrefix + "damage-dice-num"] = 0;
+                setter[weaponPrefix + "damage-die"] = 0;
+                setter[weaponPrefix + "size_affects"] = 0;
+                setter[weaponPrefix + "damage-ability"] = "0";
+                
+                TAS.debug("PFOccult.createAttack",setter);
+            } catch (err) {
+                TAS.error("PFAttacks.createAttack err creating "+v.kineticblast_attack_type,err);
+            } finally {
+                if(_.size(setter)){
+                    setter.create_kineticblast_attack=0;
+                    SWUtils.setWrapper(setter,PFConst.silentParams,function(){
+                        TAS.debug("################ created attack "+id);
+                        PFAttacks.recalcRepeatingWeapon(id,function(){
+                            PFAttackGrid.resetCommandMacro();
+                            PFAttackOptions.resetOption(id);
+                        });
+                    });
+                } else {
+                    SWUtils.setWrapper({'create_kineticblast_attack':0},PFConst.silentParams);
+                }
+            }
+        }
+    });
+}
+
+
 export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dummy,oldversion){
     var updateBlasts = _.after(2,function(){
         getAttrs(['buff_kineticblast-total','kineticblast_attack-mod','kineticblast_attack',
@@ -118,6 +193,14 @@ on("change:use_burn",TAS.callback(function eventUseBurn(eventInfo){
         recalculate();
     }
 }));
+
+on("change:create_kineticblast_attack",TAS.callback(function eventCreateKineticAttack(eventInfo){
+    if(eventInfo.sourceType==="player"||eventInfo.sourceType==="api"){
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        createAttack(eventInfo);
+    }
+}));
+
 
 
 on("change:kineticistburn",TAS.callback(function eventUpdateBurn(eventInfo){

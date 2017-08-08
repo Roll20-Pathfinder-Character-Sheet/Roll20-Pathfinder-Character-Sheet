@@ -191,7 +191,7 @@ input[readonly], input[disabled] {
 }
 .sheet-skill-macro-text {
     height: 1.85em;
-	resize:both;
+	resize: both;
 }
 .sheet-half {
     height: 3em;
@@ -217,6 +217,9 @@ input[readonly], input[disabled] {
 .sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 2.9em);
     max-width:calc(100% - 2.9em);
+}
+.sheet-linked-tablecell.sheet-small-label2 select.sheet-linked-cellfield {
+    display:inline;
 }
 
 /* like br */
@@ -645,9 +648,7 @@ also need 1 more level in selector or base css will override border */
 	border: 1px solid #808080;
 	border-radius: 5px;
 }
-.sheet-burn-sect .sheet-linked-custom {
-    width: calc(50% - 3px);
-}
+
 .sheet-linked-custom-notes,
 .sheet-linked-custom-roll {
 	width:100%;
@@ -660,7 +661,8 @@ also need 1 more level in selector or base css will override border */
 	margin-bottom:1em;
 }
 .sheet-linked-custom textarea,
-.sheet-linked-custom .sheet-inline-textarea {
+.sheet-linked-custom .sheet-inline-textarea,
+.sheet-kinetic-sect .sheet-linked-tablecell select.sheet-linked-cellfield {
 	width:calc(100% - 7em);
 /*	display:inline; */
 }
@@ -670,7 +672,7 @@ also need 1 more level in selector or base css will override border */
 .sheet-custom-roll-inner {
 	display:flex;
 	height:auto;
-	flex-flow:row nowrap;
+	flex-flow: row nowrap;
 	align-items:stretch;
 }
 .sheet-custom-buttons {
@@ -695,26 +697,52 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom-wideinputs > span,
 .sheet-linked-custom > span,
 .sheet-linked-custom .sheet-linked-fields > span  {
-	display:block;
-	clear:both;
-	width:calc(100% - .5em);
-    background-color:transparent;
+	display: block;
+	clear: both;
+	width: calc(100% - .5em);
+    background-color: transparent;
 }
-
+.sheet-burn-sect {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    align-content: flex-start;
+    justify-content: space-between;
+}
 .sheet-burn-sect .sheet-linked-custom > span,
 .sheet-burn-sect .sheet-linked-custom .sheet-linked-fields > span {
     font-weight: bold;
     font-style: italic;
     font-size: .7rem;
-    color:black;
+    color: black;
+    white-space: normal;
+}
+.sheet-burn-sect .sheet-linked-custom .sheet-linked-fields {
+    width: calc(100% - 7.5em);
 }
 
 .sheet-burn-sect .sheet-linked-custom {
-    width:calc(20% - 4px);
+    width: calc(20% - 4px);
+    flex: 1 1  calc(20% - 4px);
 }
 .sheet-burn-sect .sheet-linked-custom:nth-child(n+4) {
     width:calc(30% - 4px);
+    flex: 3 3 calc(30% - 4px);
 }
+
+.sheet-kinetic-sect {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+    align-content: center;
+    justify-content: flex-start;
+}
+.sheet-kinetic-sect .sheet-small-label2 {
+    flex: 1 1 calc(33% - 4px);
+    width: auto;
+    height: auto;
+}
+
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span {
 	margin-bottom:.25em;
@@ -1560,7 +1588,8 @@ h2.sheet-clickheader {
     color: #DDDDDD;
 }
 .sheet-minimize-show:checked + span::before {
-	content: '▢';
+    font-family: "Pictos" !important;
+	content: '|';    /* '▢'; */
 	padding-top: 2px;
 	vertical-align: top;
 }
@@ -4865,7 +4894,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-config-show:checked ~ .sheet-pfsheet,
 .sheet-config-show:not(:checked) ~ .sheet-section-config,
 /* config page toggles override all others: */
-.sheet-burn-show:not(:checked) ~ .sheet-burn-sect, 
+.sheet-kineticist-show:not(:checked) ~ .sheet-kineticist,
 .sheet-horror-show:not(:checked) ~ .sheet-horror-sect, 
 .sheet-dual-wield-show:not(:checked)~.sheet-dual-wield-sect,
 
