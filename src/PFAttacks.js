@@ -1191,11 +1191,14 @@ function recalcRepeatingNonMacroFields (ids,callback){
 		//v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
-			var xtra={}
+			var xtra={},useSize=0;
 			try {
+				if(v.modify_dmg_by_size && v['repeating_weapon_'+id+'_size_affects']){
+					useSize=1;
+				}
 				if(v['repeating_weapon_'+id+'_attack-type']!=='dual'){
 					xtra=getRecalculatedAttack(id,v);
-					resetWeaponSizeAndDamage(id,v.size,v,xtra,v.modify_dmg_by_size);
+					resetWeaponSizeAndDamage(id,v.size,v,xtra,useSize);
 					_.extend(m,xtra);
 				}
 			} catch (erri){

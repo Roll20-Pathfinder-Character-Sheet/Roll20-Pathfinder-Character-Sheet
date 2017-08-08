@@ -174,8 +174,8 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_CMB_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-combat-maneuver-bonus-title"><input title="@{buff_CMB-total}" name="attr_buff_CMB-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-combat-maneuver-bonus-title" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_cmb2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-combat-maneuver-bonus2-title"><input title="@{buff_cmb2-total}" name="attr_buff_cmb2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-combat-maneuver-bonus2-title" data-i18n="combat-maneuver-bonus-abbrv2">CMB</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-title"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-title" data-i18n="damage-abbrv">Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-melee-title" data-i18n="damage-melee-abbrv">Melee Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee2-title"><input title="@{buff_dmg_melee2-total}" name="attr_buff_dmg_melee2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-melee2-title" data-i18n="melee2-damage-abbrv">Melee Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-blade-damage-title"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-blade-damage-title" data-i18n="damage-blade-abbrv">Melee Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-blade-damage2-title"><input title="@{buff_dmg_melee2-total}" name="attr_buff_dmg_melee2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-blade-damage2-title" data-i18n="melee2-damage-abbrv">Melee Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-ranged-title" data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged2-title"><input title="@{buff_dmg_ranged2-total}" name="attr_buff_dmg_ranged2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-ranged2-title" data-i18n="ranged2-damage-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Check_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-ability-skill-checks-title"><input title="@{buff_Check-total}" name="attr_buff_Check-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-ability-skill-checks" data-i18n="all-checks">all checks</span></label>
@@ -1228,7 +1228,7 @@
 											<span data-i18n-title="buff-melee-title"  data-i18n-aria-label="buff-melee-title"><span data-i18n="melee">Melee</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Melee-show}" name="attr_buff-Melee-show" value="1" /></span>
 											<span data-i18n-title="buff-ranged-title"  data-i18n-aria-label="buff-ranged-title"><span data-i18n="ranged">Ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Ranged-show}" name="attr_buff-Ranged-show" value="1" /></span>
 											<span data-i18n-title="buff-combat-maneuver-bonus-title"  data-i18n-aria-label="buff-combat-maneuver-bonus-title"><span data-i18n="combat-maneuver-bonus-only-abbrv">CMB only</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMB-show}" name="attr_buff-CMB-show" value="1" /></span>
-											<span data-i18n-title="buff-damage-melee-title"  data-i18n-aria-label="buff-damage-melee-title"><span data-i18n="damage-melee-abbrv">Dmg</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG-show}" name="attr_buff-DMG-show" value="1" /></span>
+											<span data-i18n-title="buff-blade-damage-title"  data-i18n-aria-label="buff-blade-damage-title"><span data-i18n="damage-blade-abbrv">Dmg</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG-show}" name="attr_buff-DMG-show" value="1" /></span>
 											<span data-i18n-title="buff-damage-ranged-title"  data-i18n-aria-label="buff-damage-ranged-title"><span data-i18n="damage-ranged-abbrv">DMG_ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" /></span>
 										</div>
 										<div class="sheet-section3 sheet-section sheet-section-defense" role="region" aria-label="defenses" data-i18n-aria-label="defenses">
@@ -7585,7 +7585,7 @@
 					<input class="sheet-kineticist-show sheet-noshow" type="checkbox" name="attr_use_burn" value="1" />
 					<div class="sheet-cheat sheet-kineticist"></div>
 					<input class="sheet-showarrow sheet-h2arrow sheet-kineticist" type="checkbox" name="attr_burn-show"  data-i18n-title="showsect-cmd"  value="1" checked />
-					<h2 class="sheet-clickheader sheet-showsect sheet-kineticist"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist">Kineticist</label></h2>
+					<h2 class="sheet-clickheader sheet-showsect sheet-kineticist"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">Kinetic Burn</label></h2>
 					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect sheet-kineticist" role="section" data-i18n-aria-label="kineticist-burn" >
 						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kineticist-burn">Kineticist Burn</span>
 						<div class="sheet-linked-custom">
@@ -7638,15 +7638,33 @@
 							</div>
 						</div>
 					</div>
-					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-kineticist sheet-kinetic-sect">
+					<div class="sheet-cheat sheet-kineticist"></div>
+					<input class="sheet-showarrow sheet-h2arrow sheet-kineticist" type="checkbox" name="attr_blast-show"  data-i18n-title="showsect-cmd"  value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect sheet-kineticist"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kinetic-blast">Kinetic blast</label></h2>
+					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-kinetic-sect sheet-kineticist" role="section" data-i18n-aria-label="kinetic-blast" >
 						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kinetic-blast-attack-damage-macros">Kinetic blast attack and damage macros</span>
+						<div class="sheet-small-label2 sheet-linked-tablecell sheet-left" >
+							<select class="sheet-linked-cellfield" name="attr_kineticblast_attack_type" title="@{kineticblast_attack_type}" >
+								<option value="physicalblast" data-i18n="physical-blast">Physical blast</option>
+								<option value="physicalblade" data-i18n="physical-blade">Physical blade/whip</option>
+								<option value="energyblast" data-i18n="energy-blast">Energy blast</option>
+								<option value="energyblade" data-i18n="energy-blade">Energy blade/whip</option>
+								<option value="compositephysicalblast" data-i18n="composite-physical-blast">Composite physical blast</option>
+								<option value="compositephysicalblade" data-i18n="composite-physical-blade">Composite physical blade/whip</option>
+								<option value="compositeenergyblast" data-i18n="composite-energy-blast">Composite energy blast</option>
+								<option value="compositeenergyblade" data-i18n="composite-energy-blade">Composite energy blade/whip</option>
+							</select>
+							<input type="number" name="attr_kineticblast_range" title="@{kineticblast_range}" value="30" style="display:inline;" />
+							<input type="checkbox" name="attr_create_kineticblast_attack" value="1" class="sheet-cssbutton sheet-createattackbutton" title="@{create_kineticblast_attack}" data-i18n-aria-label="create-attack-entry"><span></span>
+							<span data-i18n-title="create-kinetic-blast-attack" data-i18n-aria-label="create-kinetic-blast-attack" data-i18n="create-attack" >Create Attack</span>
+						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_kineticblast_dmg_phys_ranged" title="@{kineticblast_dmg_phys_ranged}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ floor((@{class-0-level}+1)/2)d6 + floor((@{class-0-level}+1)/2) + @{CON-mod} +@{kineticblast_dmg} ]]</textarea>
 							<span class="sheet-note-b" data-i18n-title="physical-blast-damage-desc" data-i18n="physical-blast-damage" >Physical blast dmg</span>
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_kineticblast_dmg_phys_melee" title="@{kineticblast_dmg_phys_melee}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ floor((@{class-0-level}+1)/2)d6 + floor((@{class-0-level}+1)/2) + @{CON-mod} +@{kineticblast_dmg-mod} ]]</textarea>
-							<span class="sheet-note-b" data-i18n-title="physical-blast-damage-melee-desc" data-i18n="physical-blast-damage-melee" >Physical blade/whip dmg</span>
+							<span class="sheet-note-b" data-i18n-title="physical-blade-damage-desc" data-i18n="physical-blade-damage" >Physical blade/whip dmg</span>
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_kineticblast_dmg_energy_ranged" title="@{kineticblast_dmg_energy_ranged}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ floor((@{class-0-level}+1)/2)d6 + floor(@{CON-mod}/2) + @{kineticblast_dmg} ]]</textarea>
@@ -7654,7 +7672,7 @@
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_kineticblast_dmg_energy_melee" title="@{kineticblast_dmg_energy_melee}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ floor((@{class-0-level}+1)/2)d6 + floor(@{CON-mod}/2) + @{kineticblast_dmg-mod} ]]</textarea>
-							<span class="sheet-note-b"  data-i18n-title="energy-blast-damage-melee-desc" data-i18n="energy-blast-damage-melee" >Energy blade/whip dmg</span>
+							<span class="sheet-note-b"  data-i18n-title="energy-blade-damage-desc" data-i18n="energy-blade-damage" >Energy blade/whip dmg</span>
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_compositeblast_dmg_phys_ranged" title="@{compositeblast_dmg_phys_ranged}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ (2*floor((@{class-0-level}+1)/2))d6 + (2*floor((@{class-0-level}+1)/2)) + @{CON-mod} +@{kineticblast_dmg} ]]</textarea>
@@ -7662,7 +7680,7 @@
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_compositeblast_dmg_phys_melee" title="@{compositeblast_dmg_phys_melee}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ (2*floor((@{class-0-level}+1)/2))d6 + (2*floor((@{class-0-level}+1)/2)) + @{CON-mod} +@{kineticblast_dmg-mod} ]]</textarea>
-							<span class="sheet-note-b" data-i18n-title="composite-physical-blast-damage-melee-desc" data-i18n="composite-physical-blast-damage-melee" >composite Physical blade/whip dmg</span>
+							<span class="sheet-note-b" data-i18n-title="composite-physical-blade-damage-desc" data-i18n="composite-physical-blade-damage" >composite Physical blade/whip dmg</span>
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_compositeblast_dmg_energy_ranged" title="@{compositeblast_dmg_energy_ranged}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ (2*floor((@{class-0-level}+1)/2))d6 + floor(@{CON-mod}/2) + @{kineticblast_dmg} ]]</textarea>
@@ -7670,7 +7688,7 @@
 						</div>
 						<div class="sheet-small-label2">
 							<textarea name="attr_compositeblast_dmg_energy_melee" title="@{compositeblast_dmg_energy_melee}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea">[[ (2*floor((@{class-0-level}+1)/2))d6 + floor(@{CON-mod}/2) + @{kineticblast_dmg-mod} ]]</textarea>
-							<span class="sheet-note-b" data-i18n-title="composite-energy-blast-damage-melee-desc" data-i18n="composite-energy-blast-damage-melee" >composite Energy blade/whip dmg</span>
+							<span class="sheet-note-b" data-i18n-title="composite-energy-blade-damage-desc" data-i18n="composite-energy-blade-damage" >composite Energy blade/whip dmg</span>
 						</div>
 					</div>			
 				</div>
@@ -10995,7 +11013,7 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse sheet-nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
 									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-nondual-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv"  /><span data-i18n="type">Type</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-nondual-sect">
-										<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
+										<input class="sheet-number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
 										<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 										<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
 										<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>

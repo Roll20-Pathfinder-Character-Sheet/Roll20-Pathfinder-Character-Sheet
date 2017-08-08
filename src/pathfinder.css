@@ -191,7 +191,7 @@ input[readonly], input[disabled] {
 }
 .sheet-skill-macro-text {
     height: 1.85em;
-	resize:both;
+	resize: both;
 }
 .sheet-half {
     height: 3em;
@@ -217,6 +217,9 @@ input[readonly], input[disabled] {
 .sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
 	width:calc(100% - 2.9em);
     max-width:calc(100% - 2.9em);
+}
+.sheet-linked-tablecell.sheet-small-label2 select.sheet-linked-cellfield {
+    display:inline;
 }
 
 /* like br */
@@ -658,7 +661,8 @@ also need 1 more level in selector or base css will override border */
 	margin-bottom:1em;
 }
 .sheet-linked-custom textarea,
-.sheet-linked-custom .sheet-inline-textarea {
+.sheet-linked-custom .sheet-inline-textarea,
+.sheet-kinetic-sect .sheet-linked-tablecell select.sheet-linked-cellfield {
 	width:calc(100% - 7em);
 /*	display:inline; */
 }
@@ -734,11 +738,10 @@ also need 1 more level in selector or base css will override border */
     justify-content: flex-start;
 }
 .sheet-kinetic-sect .sheet-small-label2 {
-    flex: 1 1 calc(24% - 4px);
+    flex: 1 1 calc(33% - 4px);
     width: auto;
     height: auto;
 }
-
 
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span {
@@ -1584,7 +1587,8 @@ h2.sheet-clickheader {
     color: #DDDDDD;
 }
 .sheet-minimize-show:checked + span::before {
-	content: '▢';
+    font-family: "Pictos" !important;
+	content: '|';    /* '▢'; */
 	padding-top: 2px;
 	vertical-align: top;
 }
