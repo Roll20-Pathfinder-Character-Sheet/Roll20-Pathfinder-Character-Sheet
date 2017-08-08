@@ -1235,6 +1235,7 @@ input.sheet-tabinput {
     border-radius: 7px;
 }
 
+
 .sheet-h2-section.sheet-current-loads , 
 .sheet-h2-section.sheet-loads-and-lift,
 .sheet-h2-section.sheet-currency {
@@ -4830,6 +4831,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-dualwield-hide:not(:checked) ~ .sheet-dual-sect,
 .sheet-dualwield-hide:not(:checked) ~ .sheet-sect.sheet-expand .sheet-dual-sect {
 	display:none;
+}
+.sheet-h2-section.sheet-dual-wield-sect.sheet-wide-readonly {
+    padding: 4px;
+    border: 2px solid #CCCCCC;
+    border-radius: 7px;
 }
 
 .sheet-option-header {
