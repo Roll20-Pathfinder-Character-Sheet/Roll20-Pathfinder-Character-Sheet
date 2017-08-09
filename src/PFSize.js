@@ -194,6 +194,33 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 	}
 }
 
+export function setSize(str,setter){
+	var tempstr='',sizeMap={};
+	try {
+		sizeMap = getSizeFromText(str);
+		if (sizeMap && sizeMap.size !== 0) {
+			setter.size = sizeMap.size;
+			setter['default_char_size']=sizeMap.size;
+			setter.size_skill = sizeMap.skillSize;
+			setter["CMD-size"] = (sizeMap.size * -1);
+			setter.size_skill_double = (sizeMap.skillSize * 2);
+		} else {
+			setter['size']=0;
+			setter['default_char_size']=0;
+			setter.size_skill = 0;
+			setter["CMD-size"] = 0;
+			setter.size_skill_double =0;
+			if (!sizeMap){
+				sizeMap = {'size':0,'skillSize':0};
+			}
+		}
+		//tempstr=reverseSizeNameMap[String(sizeMap.size)];
+		setter['size_display']=SWUtils.getTranslated(str.toLowerCase());
+	} finally {
+		return sizeMap
+	}
+}
+
 export function updateSize (v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
 		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';

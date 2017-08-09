@@ -448,7 +448,13 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
 		}));
 	});
-    
+	on("change:kineticist_level", TAS.callback(function eventKineticistLevel(eventInfo){
+		if(eventInfo.sourceType==='player'){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			PFUtilsAsync.setDropdownValue('kineticist_level', 'kineticist_level-mod');
+		}
+	}));
+	
 }
 
 registerEventHandlers();
