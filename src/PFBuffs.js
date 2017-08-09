@@ -1098,7 +1098,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'tabcat']='class';
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='melee';
-			setter[prefix+'b1_bonustype']='morale';
+			setter[prefix+'b1_bonustype']='untyped';
 			setter[prefix+'b1_macro-text']='2+(floor((@{level}-1)/10))';
 			if(calc===1){
 				if(level<11){
@@ -1114,7 +1114,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg_melee';
-			setter[prefix+'b2_bonustype']='morale';
+			setter[prefix+'b2_bonustype']='untyped';
 			setter[prefix+'b2_macro-text']='2+(floor((@{level}-1)/10))';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
@@ -1124,7 +1124,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b3_val']=-2;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
-			setter[prefix+'b4_bonustype']='morale';
+			setter[prefix+'b4_bonustype']='untyped';
 			setter[prefix+'b4_macro-text']='2+floor((@{level}-1)/10)';
 			tempint = tempint / 2;
 			setter[prefix+'b4_val']=tempint;
@@ -1889,31 +1889,31 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='kineticblast';
 			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='min(@{kineticistburn},max(0,floor(@{class-0-level}/3)))';
+			setter[prefix+'b1_macro-text']='min(@{kineticistburn},max(0,floor(@{kineticist_level-mod}/3)))';
 			setter[prefix+'b1_val']=0;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg_kineticblast';
 			setter[prefix+'b2_bonustype']='untyped';
-			setter[prefix+'b2_macro-text']='2*min(@{kineticistburn},max(0,floor(@{class-0-level}/3)))';
+			setter[prefix+'b2_macro-text']='2*min(@{kineticistburn},max(0,floor(@{kineticist_level-mod}/3)))';
 			setter[prefix+'b2_val']=0;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='dex';
 			setter[prefix+'b3_bonustype']='size';
-			setter[prefix+'b3_macro-text']='min(3,max(0,floor((@{kineticistburn}-1)/2)),floor((@{class-0-level}-1)/5))*2';
+			setter[prefix+'b3_macro-text']='min(3,max(0,floor((@{kineticistburn}-1)/2)),floor((@{kineticist_level-mod}-1)/5))*2';
 			setter[prefix+'b3_val']=0;
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='con';
 			setter[prefix+'b4_bonustype']='size';
-			setter[prefix+'b4_macro-text']='min(2,max(0,floor((@{kineticistburn}+1)/4)),floor((@{class-0-level}+4)/10))*2';
+			setter[prefix+'b4_macro-text']='min(2,max(0,floor((@{kineticistburn}+1)/4)),floor((@{kineticist_level-mod}+4)/10))*2';
 			setter[prefix+'b4_val']=0;
 			setter[prefix+'b5-show']=1;
 			setter[prefix+'b5_bonus']='str';
 			setter[prefix+'b5_bonustype']='size';
-			setter[prefix+'b5_macro-text']='min(1,max(0,floor(@{kineticistburn}/5)),floor(@{class-0-level}/11))*2';
+			setter[prefix+'b5_macro-text']='min(1,max(0,floor(@{kineticistburn}/5)),floor(@{kineticist_level-mod}/11))*2';
 			setter[prefix+'b5_val']=0;
 			setter[prefix+'description-show']='1';
 			setter[prefix+'add_note_to_roll']='defense';
-			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{class-0-level}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
+			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{kineticist_level-mod}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
 			break;
 	}
 		
