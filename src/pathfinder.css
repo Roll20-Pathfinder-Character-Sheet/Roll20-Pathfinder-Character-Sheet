@@ -181,6 +181,7 @@ input[readonly], input[disabled] {
 .sheet-inline-textarea,
 .sheet-skill-macro-text {
     height: 2.15em;
+    min-height: 2.15em;
     width: calc(100% - 4px);
     margin: 0;
     resize: vertical;
