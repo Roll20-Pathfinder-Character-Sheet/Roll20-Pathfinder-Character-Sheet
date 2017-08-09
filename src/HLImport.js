@@ -560,7 +560,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
 						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = "@{"+abScores[j]._name.substr(0,3).toUpperCase()+"-mod}";
+						attr["Concentration-"+spellClassIndex+"-ability"] = +abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
 						setAttrs(attr,{silent: true});
 						break;
 					}
@@ -1004,7 +1004,7 @@ export function importSkills (attrs,skills,size,ACP)
 		
 		attrs[skillAttrPrefix] = parseNum(skill._value);
 		attrs[skillAttrPrefix+"-ranks"] = parseNum(skill._ranks);
-		attrs[skillAttrPrefix+"-ability"] = "@{"+skill._attrname+"-mod}";
+		attrs[skillAttrPrefix+"-ability"] = skill._attrname+"-mod";
 		attrs[skillAttrPrefix+"-ability-mod"] = parseNum(skill._attrbonus);
 		
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;
