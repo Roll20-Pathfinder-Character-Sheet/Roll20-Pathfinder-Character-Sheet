@@ -33,10 +33,11 @@ export default {
         'CMD-ability': 'FF-CMD',
         'CMD-ability1': 'CMD-STR',
         'CMD-ability2':	'CMD-DEX',
-		'selected-ability-psionic-power': 'ability-psionic-power'
+		'selected-ability-psionic-power': 'ability-psionic-power',
+		'kineticist_ability': 'kineticist_ability-mod'
 		},
 	levelPlusBABManualDropdowns:[
-		'melee_bab','melee2_bab','ranged_bab','ranged2_bab','cmb_bab','cmb2_bab'
+		'melee_bab','melee2_bab','ranged_bab','ranged2_bab','cmb_bab','cmb2_bab','kineticist_level'
 	],
 	manualDropdownDefaults: {
 		"HP-ability": "CON-mod",
@@ -63,7 +64,8 @@ export default {
         'CMD-ability': '0',
         'CMD-ability1': 'STR-mod',
         'CMD-ability2':	'DEX-mod',
-		'selected-ability-psionic-power': '0'
+		'selected-ability-psionic-power': '0',
+		'kineticist_ability':'CON-mod'
 	},
 	repeatingAttackTypeManualDropdowns:{
 		"weapon":"attack-type",
@@ -103,6 +105,8 @@ export default {
 		"attk-CMB2-misc": "attk-CMB2-misc-mod",
 		"kineticistburn_macro_text": "kineticistburn_max",
 		"internalbuffer_macro_text": "internalbuffer_max",
+		"kineticblast_attack_macro_text": "kineticblast_attack-mod",
+		"kineticblast_dmg_macro_text": "kineticblast_dmg-mod",
 		"spellclass-0-spell-points-misc": "spellclass-0-spell-points-misc-mod",
 		"spellclass-1-spell-points-misc": "spellclass-1-spell-points-misc-mod",
 		"spellclass-2-spell-points-misc": "spellclass-2-spell-points-misc-mod"

@@ -197,6 +197,7 @@ input[readonly], input[disabled] {
     height: 3em;
 }
 /* keeps textarea and readonly number attribute to right inline with each other in one table cell */
+.sheet-small-label2.sheet-linked-tablecell,
 .sheet-table-cell.sheet-linked-tablecell {
 	width:13em;
     min-width:9em;
@@ -218,9 +219,26 @@ input[readonly], input[disabled] {
 	width:calc(100% - 2.9em);
     max-width:calc(100% - 2.9em);
 }
-.sheet-linked-tablecell.sheet-small-label2 select.sheet-linked-cellfield {
-    display:inline;
+
+.sheet-linked-fields.sheet-small-label2 input[type="number"],
+.sheet-linked-fields.sheet-small-label2 select,
+.sheet-linked-fields.sheet-small-label2 textarea,
+.sheet-linked-fields.sheet-small-label2 .sheet-divider-db-lg,
+.sheet-linked-fields.sheet-small-label2 .sheet-divider-db,
+.sheet-linked-tablecell.sheet-small-label2 input[type="number"],
+.sheet-linked-tablecell.sheet-small-label2 select,
+.sheet-linked-tablecell.sheet-small-label2 textarea,
+.sheet-linked-tablecell.sheet-small-label2 .sheet-divider-db-lg,
+.sheet-linked-tablecell.sheet-small-label2 .sheet-divider-db {
+    display:inline !important;
 }
+.sheet-kinetic-sect .sheet-linked-fields {
+    width: 10em;
+}
+.sheet-kinetic-sect .sheet-linked-tablecell {
+    margin-right: -1em;
+}
+
 
 /* like br */
 .sheet-cheat {
@@ -660,8 +678,10 @@ also need 1 more level in selector or base css will override border */
 .sheet-linked-custom-roll {
 	margin-bottom:1em;
 }
+
 .sheet-linked-custom textarea,
 .sheet-linked-custom .sheet-inline-textarea,
+.sheet-kinetic-sect .sheet-linked-tablecell .sheet-inline-textarea,
 .sheet-kinetic-sect .sheet-linked-tablecell select.sheet-linked-cellfield {
 	width:calc(100% - 7em);
 /*	display:inline; */
@@ -730,18 +750,6 @@ also need 1 more level in selector or base css will override border */
     flex: 3 3 calc(30% - 4px);
 }
 
-.sheet-kinetic-sect {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: stretch;
-    align-content: center;
-    justify-content: flex-start;
-}
-.sheet-kinetic-sect .sheet-small-label2 {
-    flex: 1 1 calc(33% - 4px);
-    width: auto;
-    height: auto;
-}
 
 .sheet-linked-custom-notes > span,
 .sheet-linked-custom-roll > span {
@@ -1513,6 +1521,7 @@ h2.sheet-clickheader {
 .sheet-addarmorbutton,
 .sheet-configbutton,
 .sheet-addshieldbutton,
+.sheet-createmacrobutton,
 .sheet-createattackbutton {
     margin-right: -1.5rem;
 }
@@ -1653,7 +1662,12 @@ h2.sheet-clickheader {
 .sheet-table-cell.sheet-small-label.sheet-cssbutton-cell {
 	padding-top:1em;
 }
-
+.sheet-createmacrobutton + span::before {
+    font-family: "Pictos Three" !important;
+    content: 'g';
+    vertical-align:top;
+    padding: 4px 0 0 0 !important;
+}
 .sheet-createattackbutton + span::before {
     content: '⚔';
     margin-top: 5px;
@@ -2939,6 +2953,10 @@ div.sheet-macro-text .sheet-small-label2,
 }
 span.sheet-table-cell.sheet-linked-tablecell.sheet-extra-sect {
     text-align: right;
+}
+.sheet-kinetic-sect .sheet-linked-tablecell,
+.sheet-kinetic-sect .sheet-linked-fields {
+    height: auto;
 }
 .sheet-defense-table .sheet-table-group-head span.sheet-table-header {
     min-width: 3.25em;
