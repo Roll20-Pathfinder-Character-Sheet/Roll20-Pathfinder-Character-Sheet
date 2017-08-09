@@ -157,8 +157,8 @@ function setRuleTab (callback,silently,id,eventInfo){
 		prefix + 'tabcat', prefix + 'tabcat2','abilities_tab','npc-abilities_tab'],function(v){
 		var setter={}, ruleForTab='', params=PFConst.silentParams;
 		switch(v[prefix + 'rule_category']){
-			case 'racial-trait':
-				ruleForTab='trait';
+			case 'racial-traits':
+				ruleForTab='traits';
 				break;
 			case 'monster-rule':
 				ruleForTab='other';
