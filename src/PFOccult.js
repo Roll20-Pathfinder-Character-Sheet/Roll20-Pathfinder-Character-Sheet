@@ -88,9 +88,9 @@ function updateDC (callback,dummy,eventInfo){
 }
 
 function createAttackMacros(eventInfo){
-    getAttrs(['kineticblast_attack_type','kineticblast_type','kineticblast_damage_type','use_devestating_infusion'],function(v){
+    getAttrs(['kineticblast_attack_type','kineticblast_type','kineticblast_damage_type','use_devastating_infusion'],function(v){
         var attackstr='',damagestr='',levels='',devastating=0,composite=0,dice='6',setter={};
-        devastating=parseInt(v.use_devestating_infusion,10)||0;
+        devastating=parseInt(v.use_devastating_infusion,10)||0;
         if(v.kineticblast_type==='composite'){
             composite=1;
         }
