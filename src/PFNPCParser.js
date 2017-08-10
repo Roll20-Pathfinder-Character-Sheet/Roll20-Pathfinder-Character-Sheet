@@ -3396,3 +3396,25 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 	}
 }));
 
+on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo) {
+	if (eventInfo.sourceType === "player" ) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		importFromCompendium(eventInfo,function(){
+			getAttrs(['vision'],function(v){
+				var setter={}, matches,tempint=0;
+				setter.bar1_link = 'HP';
+				setter.light_hassight = 1;
+				if(v.vision){
+					matches= v.vision.match(/darkvision (\d+)/i);
+					if (matches && matches[1]){
+						tempint = parseInt(matches[1],10)||60;
+						setter.light_radius=tempint;
+						setter.light_dimradius=tempint;
+					}
+				}
+				setDefaultToken(setter);
+			});
+		});
+	}
+}));
+

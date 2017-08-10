@@ -110,11 +110,11 @@ function createAttackMacros(eventInfo){
             }
             damagestr=levels+'d'+dice;
             if(devastating){
-                damagestr = damagestr + '+@{kineticist_ability}';
+                damagestr = damagestr + '+@{kineticist_ability-mod}';
             } else if(v.kineticblast_damage_type==='physical'){
-                damagestr = damagestr+'+'+levels+'+@{kineticist_ability}';
+                damagestr = damagestr+'+'+levels+'+@{kineticist_ability-mod}';
             } else {
-                damagestr = damagestr+'+floor(@{kineticist_ability}/2)';
+                damagestr = damagestr+'+floor(@{kineticist_ability-mod}/2)';
             }
             damagestr = damagestr + '+@{kineticblast_dmg-mod}';
             if(v.kineticblast_attack_type==='ranged'){
@@ -197,7 +197,9 @@ export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dumm
     getAttrs(['use_burn'],function(vout){
         if(parseInt(vout.use_burn,10)){
             updateDC();
-        } else if (typeof callback === "function"){
+        }
+        if (typeof callback === "function"){
+            TAS.debug("leaving PFOccult.recalculate");
             callback();
         }
     });
