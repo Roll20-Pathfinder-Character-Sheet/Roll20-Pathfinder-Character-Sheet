@@ -8,70 +8,6 @@ import * as PFAttacks from './PFAttacks';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttackOptions from './PFAttackOptions';
 
-function updateAttack(v,setter){
-    var currb=0,newb=0;
-    setter=setter||{};
-    currb=v.kineticblast_attack||0;
-    newb=(v['buff_kineticblast-total']||0) + (v['kineticblast_attack-mod']||0);
-    if(currb!==newb){
-        setter.kineticblast_attack=newb;
-    }
-    return setter;
-}
-function updateDamage(v,setter){
-    var currb=0,newb=0;
-    setter=setter||{};
-    currb=v.kineticblast_dmg||0;
-    newb=(v['buff_dmg_kineticblast-total']||0) + (v['kineticblast_dmg-mod']||0);
-    if(currb!==newb){
-        setter.kineticblast_dmg=newb;
-    }
-    return setter;
-}
-
-
-export function updateDamageAsync(callback,silently,eventInfo){
-    getAttrs(['buff_dmg_kineticblast-total','kineticblast_dmg-mod','kineticblast_dmg'],function(v){
-        var setter={},params={};
-        try {
-            v= _.mapObject(v,function(val,key){
-                return (parseInt(val,10)||0);
-            });
-            updateDamage(v,setter);
-        } catch(err){
-            TAS.error("PFOccult.updateDamageAsync",err);
-        } finally {
-            if(_.size(setter)){
-                if(silently){params=PFConst.silentParams;}
-                SWUtils.setWrapper(setter,params,callback);
-            } else if (typeof callback === "function"){
-                callback();
-            }
-        }
-    });
-}
-
-export function updateAttackAsync(callback,silently,eventInfo){
-    getAttrs(['buff_kineticblast-total','kineticblast_attack-mod','kineticblast_attack'],function(v){
-        var setter={},params={};
-        try {
-            v= _.mapObject(v,function(val,key){
-                return (parseInt(val,10)||0);
-            });
-            updateAttack(v,setter);
-        } catch(err){
-            TAS.error("PFOccult.updateAttackAsync",err);
-        } finally {
-            if(_.size(setter)){
-                if(silently){params=PFConst.silentParams;}
-                SWUtils.setWrapper(setter,params,callback);
-            } else if (typeof callback === "function"){
-                callback();
-            }
-        }
-    });
-}
-
 
 function updateDC (callback,dummy,eventInfo){
     getAttrs(['kineticist_level-mod','kineticist_ability-mod','kineticblast_dc'],function(v){
@@ -110,19 +46,19 @@ function createAttackMacros(eventInfo){
             }
             damagestr=levels+'d'+dice;
             if(devastating){
-                damagestr = damagestr + '+@{kineticist_ability}';
+                damagestr = damagestr + '+@{kineticist_ability-mod}';
             } else if(v.kineticblast_damage_type==='physical'){
-                damagestr = damagestr+'+'+levels+'+@{kineticist_ability}';
+                damagestr = damagestr+'+'+levels+'+@{kineticist_ability-mod}';
             } else {
-                damagestr = damagestr+'+floor(@{kineticist_ability}/2)';
+                damagestr = damagestr+'+floor(@{kineticist_ability-mod}/2)';
             }
             damagestr = damagestr + '+@{kineticblast_dmg-mod}';
             if(v.kineticblast_attack_type==='ranged'){
                 damagestr = damagestr + '+@{buff_dmg_kineticblast-total}';
             }
         }
-        setter.kineticblast_attack=attackstr;
-        setter.kineticblast_dmg='[['+damagestr+']]';
+        setter.kineticblast_tempattack=attackstr;
+        setter.kineticblast_tempdmg='[['+damagestr+']]';
         setter.create_kineticblast_macro=0;
         SWUtils.setWrapper(setter,PFConst.silentParams);
     });
@@ -130,7 +66,7 @@ function createAttackMacros(eventInfo){
 
 
 function createAttack (eventInfo){
-    getAttrs(['adv_macro_show','create_kineticblast_attack','kineticblast_attack_type','kineticblast_type', 'kineticblast_damage_type','kineticblast_attack','kineticblast_dmg'],function(v){
+    getAttrs(['adv_macro_show','create_kineticblast_attack','kineticblast_attack_type','kineticblast_type', 'kineticblast_damage_type','kineticblast_tempattack','kineticblast_tempdmg'],function(v){
         var weaponPrefix='',id='',attackType='',setter={},name='',damage='',dmgname='',kblastattack=0;
         if(parseInt(v.create_kineticblast_attack,10)){
             try {
@@ -149,9 +85,9 @@ function createAttack (eventInfo){
                     dmgname = SWUtils.getTranslated('energy');
                 }
                 if(parseInt(v.adv_macro_show)){
-                    setter[weaponPrefix + "attack_macro_insert"]=v.kineticblast_attack;
+                    setter[weaponPrefix + "attack_macro_insert"]=v.kineticblast_tempattack;
                 } else {
-                    setter[weaponPrefix + "attack"]=v.kineticblast_attack;
+                    setter[weaponPrefix + "attack"]=v.kineticblast_tempattack;
                 }
                 if(v.kineticblast_attack_type==='ranged'){
                     setter[weaponPrefix + "attack-type"] = 'attk-ranged';
@@ -160,9 +96,9 @@ function createAttack (eventInfo){
                 } else {
                     setter[weaponPrefix + "attack-type"] = 'attk-melee';
                 }
-                setter[weaponPrefix + "precision_dmg_macro"] = v.kineticblast_dmg;
+                setter[weaponPrefix + "precision_dmg_macro"] = v.kineticblast_tempdmg;
                 setter[weaponPrefix + "precision_dmg_type"] = dmgname;
-                setter[weaponPrefix + "critical_dmg_macro"] = v.kineticblast_dmg;
+                setter[weaponPrefix + "critical_dmg_macro"] = v.kineticblast_tempdmg;
                 setter[weaponPrefix + "critical_dmg_type"] = dmgname;
                 setter[weaponPrefix + "notes"] = "DC [[@{kineticblast_dc}]] (if applicable)";                
                 setter[weaponPrefix + "default_damage-dice-num"] = 0;
@@ -197,7 +133,9 @@ export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dumm
     getAttrs(['use_burn'],function(vout){
         if(parseInt(vout.use_burn,10)){
             updateDC();
-        } else if (typeof callback === "function"){
+        }
+        if (typeof callback === "function"){
+            TAS.debug("leaving PFOccult.recalculate");
             callback();
         }
     });

@@ -17,7 +17,6 @@ import * as PFEncumbrance from './PFEncumbrance';
 import * as PFSize from './PFSize';
 import * as PFSkills from './PFSkills';
 import * as PFBuffsOld from './PFBuffsOld';
-import * as PFOccult from './PFOccult';
 
 export var
 //values in the bonus dropdown
@@ -189,9 +188,7 @@ events = {
 		"check_ability": [PFInitiative.updateInitiative],
 		"initiative": [PFInitiative.updateInitiative],
 		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"size": [PFSize.updateSizeAsync],
-		"kineticblast": [PFOccult.updateAttackAsync],
-		"dmg_kineticblast": [PFOccult.updateDamageAsync]
+		"size": [PFSize.updateSizeAsync]
 	}
 };
 
