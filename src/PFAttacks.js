@@ -7,7 +7,6 @@ import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 import * as PFUtilsAsync  from './PFUtilsAsync';
 import * as PFMacros from './PFMacros';
-import * as PFMenus from './PFMenus';
 import * as PFMigrate from './PFMigrate';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
