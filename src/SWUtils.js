@@ -706,6 +706,7 @@ export function escapeForChatLinkButton (str){
 		retstr = str;
 	}
 	retstr = retstr.replace(/\[/g,'&#91;').replace(/\]/g,'&#93;');
+	retstr = escapeForMacroCall(retstr);
 	return retstr;
 }
 /** not used but will be faster than current using split'_' for arbitrary maybe not for 3... need to test
