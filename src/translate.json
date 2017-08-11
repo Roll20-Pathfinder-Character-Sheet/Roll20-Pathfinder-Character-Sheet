@@ -891,7 +891,7 @@
 	"encumbrance-source": "Encumbrance Source",
 	"encumbrance-str-bonus-title": "Bonus to Strength score for carrying capacity only",
 	"energy-drained": " Energy Drain",
-	"enforce-requires-training": "Enforce Requires Training?",
+	"enforce-requires-training": "Unusable untrained not appear in menu?",
 	"engineering": "Engineering",
 	"enhance": "Enhance",
 	"enhancement": "Enhancement",
