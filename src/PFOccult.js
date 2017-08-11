@@ -42,15 +42,15 @@ function createAttackMacros(eventInfo){
                 levels='floor((@{kineticist_level-mod}+1)/2)';
             }
             if(composite){
-                levels = '(2*'+levels+')';
+                levels = '2*'+levels+'';
             }
-            damagestr=levels+'d'+dice;
+            damagestr='[[ '+levels+' ]]d'+dice;
             if(devastating){
-                damagestr = damagestr + '+@{kineticist_ability-mod}';
+                damagestr = damagestr + '+ @{kineticist_ability-mod}';
             } else if(v.kineticblast_damage_type==='physical'){
-                damagestr = damagestr+'+'+levels+'+@{kineticist_ability-mod}';
+                damagestr = damagestr+'+ [[ '+levels+' ]] + @{kineticist_ability-mod}';
             } else {
-                damagestr = damagestr+'+floor(@{kineticist_ability-mod}/2)';
+                damagestr = damagestr+'+ [[ floor(@{kineticist_ability-mod}/2) ]]';
             }
             damagestr = damagestr + '+@{kineticblast_dmg-mod}';
             if(v.kineticblast_attack_type==='ranged'){
@@ -58,7 +58,7 @@ function createAttackMacros(eventInfo){
             }
         }
         setter.kineticblast_tempattack=attackstr;
-        setter.kineticblast_tempdmg='[['+damagestr+']]';
+        setter.kineticblast_tempdmg='[[ '+damagestr+' ]]';
         setter.create_kineticblast_macro=0;
         SWUtils.setWrapper(setter,PFConst.silentParams);
     });
