@@ -233,7 +233,7 @@ export function importFeats (attrs,feats,featIDList,resources)
 // Hero Lab stores armor and shields identically, so so assume anything with "shield" or "klar" in the name is a shield
 export function nameIsShield (name)
 {
-	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
+	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("buckler") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
 		return true;
 	return false;
 }
@@ -699,9 +699,24 @@ export function importSpells (spells,spellclasses)
 				attrs[repeatPrefix+"_save"] = spell._save.replace(/DC \d+/,"").trim();
 				attrs[repeatPrefix+"_savedc"] = parseNum(spell._dc);
 				attrs[repeatPrefix+"_cast-time"] = spell._casttime;
-				attrs[repeatPrefix+"_sr"] = spell._resist.replace("harmless","Harmless");
 				attrs[repeatPrefix+"_DC_misc"] = parseNum(spell._dc) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._basespelldc) - level;
+				attrs[repeatPrefix+"_CL_misc"] = parseNum(spell._casterlevel) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._casterlevel);
+				attrs[repeatPrefix+"_casterlevel"] = spell._casterlevel;
 	
+				if (spell._resist.toLowerCase().indexOf("yes") !== -1)
+				{
+					if (spell._resist.toLowerCase().indexOf("harmless") !== -1)
+						attrs[repeatPrefix+"_sr"] = "Yes (Harmless)";
+					else if (spell._resist.toLowerCase().indexOf("object") !== -1)
+						attrs[repeatPrefix+"_sr"] = "Yes (Object)";
+					else
+						attrs[repeatPrefix+"_sr"] = "Yes";
+				}
+				else if (spell._resist.toLowerCase().indexOf("no") !== -1)
+					attrs[repeatPrefix+"_sr"] = "No";
+				else
+					attrs[repeatPrefix+"_sr"] = "";
+
 				switch(spell._range.toLowerCase())
 				{
 					case "close (25 + 5 ft./2 levels)":
