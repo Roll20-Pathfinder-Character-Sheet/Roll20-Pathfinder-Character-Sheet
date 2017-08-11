@@ -355,8 +355,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack .sheet-accessible:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_spell .sheet-accessible:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_block .sheet-accessible:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Verdana, sans-serif;
-	--sheet-pf-header-specfont: Verdana, sans-serif;
+    --sheet-pf-specfont: Verdana, Trebuchet MS, Tahoma, Optima, Arial, sans-serif;
+	--sheet-pf-header-specfont: Verdana, Trebuchet MS, Tahoma, Optima, Arial, sans-serif;
 }
 
 .sheet-comic:checked ~ .sheet-pf-wrapper,
@@ -366,8 +366,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack .sheet-comic:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_spell .sheet-comic:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_block .sheet-comic:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Comic Sans MS, sans-serif;
-	--sheet-pf-header-specfont: Comic Sans MS, sans-serif;
+    --sheet-pf-specfont: Comic Sans MS, cursive, sans-serif;
+	--sheet-pf-header-specfont: Comic Sans MS, cursive, sans-serif;
 }
 .sheet-segoe:checked ~ .sheet-pf-wrapper,
 .sheet-rolltemplate-pf_generic .sheet-segoe:checked ~ .sheet-roll-table,
@@ -376,8 +376,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack .sheet-segoe:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_spell .sheet-segoe:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_block .sheet-segoe:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Segoe UI, sans-serif;
-	--sheet-pf-header-specfont: Segoe UI, sans-serif;
+    --sheet-pf-specfont: Segoe UI, Segoe, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+	--sheet-pf-header-specfont: Segoe UI, Segoe, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
 }
 .sheet-lucida:checked ~ .sheet-pf-wrapper,
 .sheet-rolltemplate-pf_generic .sheet-lucida:checked ~ .sheet-roll-table,
@@ -397,9 +397,32 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack .sheet-fantasy:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_spell .sheet-fantasy:checked ~ .sheet-roll-table,
 .sheet-rolltemplate-pf_block .sheet-fantasy:checked ~ .sheet-roll-table {
-    --sheet-pf-header-specfont: Lucida Calligraphy, Zapf Chancery, Matura MT Script Capitals, Copperplate Gothic Bold, sans-serif;
-	--sheet-pf-specfont: Georgia, Palatino, Cambria, Book Antiqua, sans-serif;
+    --sheet-pf-header-specfont:  Zapf Chancery, Lucida Calligraphy, Brush Script MT, serif;
+	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
 }
+
+.sheet-fantasy2:checked ~ .sheet-pf-wrapper,
+.sheet-rolltemplate-pf_generic .sheet-fantasy2:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_ability .sheet-fantasy2:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_defense .sheet-fantasy2:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_attack .sheet-fantasy2:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_spell .sheet-fantasy2:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_block .sheet-fantasy2:checked ~ .sheet-roll-table {
+    --sheet-pf-header-specfont:  Papyrus,  Matura MT Script Capitals, Brush Script MT, serif;
+	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
+}
+
+.sheet-fantasy3:checked ~ .sheet-pf-wrapper,
+.sheet-rolltemplate-pf_generic .sheet-fantasy3:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_ability .sheet-fantasy3:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_defense .sheet-fantasy3:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_attack .sheet-fantasy3:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_spell .sheet-fantasy3:checked ~ .sheet-roll-table,
+.sheet-rolltemplate-pf_block .sheet-fantasy3:checked ~ .sheet-roll-table {
+    --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate, Century Gothic, serif;
+    --sheet-pf-specfont: Copperplate Gothic Light, Copperplate, Centure Gothic, serif;
+}
+
 .sheet-pf-wrapper,
 .sheet-rolltemplate-pf_generic  .sheet-roll-table,
 .sheet-rolltemplate-pf_ability  .sheet-roll-table,
