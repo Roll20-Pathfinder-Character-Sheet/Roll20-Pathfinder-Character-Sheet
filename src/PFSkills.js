@@ -404,7 +404,7 @@ function setSkillVal (skill, v, setter){
 				skillTot += adj;
 			} else if (skillSize === 2) {
 				adj = parseInt(v["size_skill_double"], 10) || 0;
-				if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
+				//if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
 				skillTot += adj;
 			}
 		} 
@@ -941,21 +941,39 @@ export function migrate (callback, oldversion) {
 		});
 	},
 	migrateMacros2 = function(callback){
-		getAttrs(['migrated_skill_speedup'],function(vout){
+		getAttrs(['migrated_skill_speedup2'],function(vout){
 			var fields;
-			if(parseInt(vout.migrated_skill_speedup,10)===1){
+			if(parseInt(vout.migrated_skill_speedup2,10)===1){
 				if (typeof callback === "function"){ callback();}
 				return;
 			}
 			fields = allTheSkills.map(function(skill){return skill+'-macro';});
 			getAttrs(fields,function(v){
 				var setter={};
-				setter=_.reduce(v,function(m,macro,attr){
-					m[attr]=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-					return m;
-				},{});
-				setter.migrated_skill_speedup=1;
-				setAttrs(setter,PFConst.silentParams,callback);
+				try{
+					setter=_.reduce(v,function(m,macro,attr){
+						var temp='';
+						try {
+							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<0){					
+								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+							}
+							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+							if(temp !== v[attr]){						
+								m[attr]=temp;
+							}
+						} catch (ierr){
+							TAS.error("PFBuffs.migrate add buff checks for "+attr,ierr);
+						} finally {
+							return m;
+						}
+					},{});
+				} catch (err){
+					TAS.error("PFSkills.migrate skill speedup",err);
+				} finally {
+					setter.migrated_skill_speedup2=1;
+					setAttrs(setter,PFConst.silentParams,callback);
+				}
 			});
 		});
 	},

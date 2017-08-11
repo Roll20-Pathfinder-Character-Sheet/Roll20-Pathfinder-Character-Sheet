@@ -40,6 +40,7 @@
 				<li>Dual wield: now use <em>attack name</em> instead of ID to generate</li>
 				<li>Globally hide this announcement using <strong>Apply Default Settings</strong> at bottom of Roll 20's ⛭<em>My Settings</em> page (chat area at right).</li>
 				<li><strong><em>Faster!</em></strong></li>
+				<li><strong>Hero Lab Import</strong> upgraded. You must hit "recalc" after importing. <button type="roll" class="sheet-no-decoration" data-i18n-title="url-link"  style="color: #0000ff" name="roll_blank" value="https://app.roll20.net/forum/permalink/5359044/"><b style="font-size:.75rem;">More Information ...</b></button></li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv165-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -173,8 +174,8 @@
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_CMB_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-combat-maneuver-bonus-title"><input title="@{buff_CMB-total}" name="attr_buff_CMB-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-combat-maneuver-bonus-title" data-i18n="combat-maneuver-bonus-abbrv">CMB</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_cmb2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-combat-maneuver-bonus2-title"><input title="@{buff_cmb2-total}" name="attr_buff_cmb2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-combat-maneuver-bonus2-title" data-i18n="combat-maneuver-bonus-abbrv2">CMB</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_DMG_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number" data-i18n-aria-label="buff-damage-title"><input title="@{buff_DMG-total}" name="attr_buff_DMG-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-title" data-i18n="damage-abbrv">Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee-title"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-melee-title" data-i18n="damage-melee-abbrv">Melee Dmg</span></label>
-					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-melee2-title"><input title="@{buff_dmg_melee2-total}" name="attr_buff_dmg_melee2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-melee2-title" data-i18n="melee2-damage-abbrv">Melee Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-blade-damage-title"><input title="@{buff_dmg_melee-total}" name="attr_buff_dmg_melee-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-blade-damage-title" data-i18n="damage-blade-abbrv">Melee Dmg</span></label>
+					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_melee2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-blade-damage2-title"><input title="@{buff_dmg_melee2-total}" name="attr_buff_dmg_melee2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-blade-damage2-title" data-i18n="melee2-damage-abbrv">Melee Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged-title"><input title="@{buff_dmg_ranged-total}" name="attr_buff_dmg_ranged-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-ranged-title" data-i18n="damage-ranged-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_dmg_ranged2_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-damage-ranged2-title"><input title="@{buff_dmg_ranged2-total}" name="attr_buff_dmg_ranged2-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-damage-ranged2-title" data-i18n="ranged2-damage-abbrv">Ranged Dmg</span></label>
 					<input type="checkbox" class="sheet-buff-exists" name="attr_buff_Check_exists" value="1" role="presentation" /><label class="sheet-small-label2 sheet-number sheet-wide-buff-exists" data-i18n-aria-label="buff-ability-skill-checks-title"><input title="@{buff_Check-total}" name="attr_buff_Check-total" type="number" value="0" class="sheet-calc" readonly /><span class="sheet-nowrap-over" data-i18n-title="buff-ability-skill-checks" data-i18n="all-checks">all checks</span></label>
@@ -242,7 +243,7 @@
 				<label class="sheet-option-condition sheet-extra-sect sheet-left"><input type="checkbox" title="@{condition-Stable}" class="sheet-boldlabel-check" name="attr_condition-Stable" value="1" /><b><span data-i18n-title="condition-stable-title"  data-i18n-aria-label="condition-stable-title" data-i18n="stable">Stable</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left"><input type="checkbox" title="@{condition-Staggered}" class="sheet-boldlabel-check" name="attr_condition-Staggered" value="1" /><b><span data-i18n-title="condition-staggered-title"  data-i18n-aria-label="condition-staggered-title" data-i18n="staggered">Staggered</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left"><input type="checkbox" title="@{condition-Suffocating}" class="sheet-boldlabel-check" name="attr_condition-Suffocating" value="1" /><b><span data-i18n-title="condition-suffocating-title"  data-i18n-aria-label="condition-suffocating-title" data-i18n="suffocating">Suffocating</span></b></label>
-				<label class="sheet-option-condition sheet-extra-sect sheet-left"><input type="checkbox" title="@{condition-Stunned}" class="sheet-boldlabel-check" name="attr_condition-Stunned" value="2" /><b><span data-i18n-title="condition-stunned-title"  data-i18n-aria-label="condition-stunned-title" data-i18n="stunned">Stunned</span></b></label>
+				<label class="sheet-option-condition sheet-left"><input type="checkbox" title="@{condition-Stunned}" class="sheet-boldlabel-check" name="attr_condition-Stunned" value="2" /><b><span data-i18n-title="condition-stunned-title"  data-i18n-aria-label="condition-stunned-title" data-i18n="stunned">Stunned</span></b></label>
 				<label class="sheet-option-condition sheet-left"><input type="checkbox" title="@{condition-Unconscious}" class="sheet-boldlabel-check" name="attr_condition-Unconscious" value="1" /><b><span data-i18n-title="condition-unconscious-title"  data-i18n-aria-label="condition-unconscious-title" data-i18n="unconscious">Unconscious</span></b></label>		
 			</div>
 			<div class="sheet-repeating-sect sheet-buffs">
@@ -1227,7 +1228,7 @@
 											<span data-i18n-title="buff-melee-title"  data-i18n-aria-label="buff-melee-title"><span data-i18n="melee">Melee</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Melee-show}" name="attr_buff-Melee-show" value="1" /></span>
 											<span data-i18n-title="buff-ranged-title"  data-i18n-aria-label="buff-ranged-title"><span data-i18n="ranged">Ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-Ranged-show}" name="attr_buff-Ranged-show" value="1" /></span>
 											<span data-i18n-title="buff-combat-maneuver-bonus-title"  data-i18n-aria-label="buff-combat-maneuver-bonus-title"><span data-i18n="combat-maneuver-bonus-only-abbrv">CMB only</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-CMB-show}" name="attr_buff-CMB-show" value="1" /></span>
-											<span data-i18n-title="buff-damage-melee-title"  data-i18n-aria-label="buff-damage-melee-title"><span data-i18n="damage-melee-abbrv">Dmg</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG-show}" name="attr_buff-DMG-show" value="1" /></span>
+											<span data-i18n-title="buff-blade-damage-title"  data-i18n-aria-label="buff-blade-damage-title"><span data-i18n="damage-blade-abbrv">Dmg</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG-show}" name="attr_buff-DMG-show" value="1" /></span>
 											<span data-i18n-title="buff-damage-ranged-title"  data-i18n-aria-label="buff-damage-ranged-title"><span data-i18n="damage-ranged-abbrv">DMG_ranged</span>:<input  type="checkbox" title="@{repeating_buff_$X_buff-DMG_ranged-show}" name="attr_buff-DMG_ranged-show" value="1" /></span>
 										</div>
 										<div class="sheet-section3 sheet-section sheet-section-defense" role="region" aria-label="defenses" data-i18n-aria-label="defenses">
@@ -1288,7 +1289,7 @@
 				<button type="roll" name="roll_spellbook-1" class="sheet-command-button sheet-sect2 sheet-sect-spellclass1" value="/w &quot;@{character_name}&quot; @{spellclass-1-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-1}}" title="%{selected|spellbook-1}"><span name="attr_spellclass-1-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_spellbook-2" class="sheet-command-button sheet-sect2 sheet-sect-spellclass2" value="/w &quot;@{character_name}&quot; @{spellclass-2-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-2}}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span>&nbsp;<span data-i18n="spellbook">Spellbook</span></button>
 				<button type="roll" name="roll_items" class="sheet-command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
-				<input type="hidden" name="attr_allmenus_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row01=[^{init-speed-info-abbrv}](~@{character_id}|init-speed-info) }} {{row02=[^{abilities}](~@{character_id}|abilities) }} {{row03=[^{ability-checks}](~@{character_id}|ability_checks) }} {{row04=[^{initiative}](~@{character_id}|Roll-for-initiative) }} {{row05=[^{defenses}](~@{character_id}|defenses) }} {{row06=[^{attacks}](~@{character_id}|attacks) }} {{row07=[^{skills}](~@{character_id}|skills) }} {{row08=[^{items}](~@{character_id}|items) }} @{allspells_macro} @{allcustom_macro}" />
+				<input type="hidden" name="attr_allmenus_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row01=[^{init-speed-info-abbrv}](~@{character_id}|init-speed-info) }} {{row02=[^{initiative}](~@{character_id}|Roll-for-initiative) }} {{row03=[^{ability-checks}](~@{character_id}|ability_checks) }} {{row04=[^{abilities}](~@{character_id}|abilities) }} {{row05=[^{defenses}](~@{character_id}|defenses) }} {{row06=[^{attacks}](~@{character_id}|attacks) }} {{row07=[^{combat-skills}](~@{character_id}|combat_skills) }} {{row08=[^{all-skills}](~@{character_id}|skills) }} {{row09=[^{items}](~@{character_id}|items) }} @{allspells_macro} @{allcustom_macro}" />
 				<input type="hidden" name="attr_allspells_macro" value="" />
 				<input type="hidden" name="attr_allcustom_macro" value="" />
 				<input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv-caps}](~@{character_id}|Roll-for-initiative)}}" />
@@ -1297,7 +1298,7 @@
 				<input type="hidden" name="attr_attacks-macro" value="&{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{attacks}}} @{attacks_header_macro} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_attacks_header_macro" value="{{row01= **^{base-attacks}** }} {{row02=[^{melee}](~@{character_id}|Melee-Attack-Roll) [^{ranged}](~@{character_id}|Ranged-Attack-Roll) [^{combat-maneuver-bonus-abbrv}](~@{character_id}|CMB-Check) [^{melee2}](~@{character_id}|Melee2-Attack-Roll) [^{ranged2}](~@{character_id}|Ranged2-Attack-Roll) [^{combat-maneuver-bonus-abbrv2}](~@{character_id}|CMB2-Check) }}" />
 				<input type="hidden" name="attr_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{skills} }} {{ [^{appraise}](~@{character_id}|Appraise-check) [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{climb}](~@{character_id}|Climb-check) [^{craft}](~@{character_id}|craft_skills_buttons_macro) [^{diplomacy}](~@{character_id}|Diplomacy-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{disguise}](~@{character_id}|Disguise-check) [^{escape-artist}](~@{character_id}|Escape-Artist-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{heal}](~@{character_id}|Heal-check) [^{knowledge}](~@{character_id}|knowledge_skills_buttons_macro) [^{intimidate}](~@{character_id}|Intimidate-check) [^{linguistics}](~@{character_id}|Linguistics-check) [^{misc-skill}](~@{character_id}|misc-skill_skills_buttons_macro) [^{perception}](~@{character_id}|Perception-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) [^{profession}](~@{character_id}|profession_skills_buttons_macro) [^{ride}](~@{character_id}|Ride-check) [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{sleight-of-hand}](~@{character_id}|Sleight-of-Hand-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{swim}](~@{character_id}|Swim-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) }}" />
-				<input type="hidden" name="attr_combat_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-skills} }} {{^{skills}}} {{ [^{acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff}](~@{character_id}|Bluff-check) [^{disable-device}](~@{character_id}|Disable-Device-check) [^{fly}](~@{character_id}|Fly-check) [^{handle-animal}](~@{character_id}|Handle-Animal-check) [^{intimidate}](~@{character_id}|Intimidate-check) [^{perception}](~@{character_id}|Perception-check)  [^{ride}](~@{character_id}|Ride-check)  [^{sense-motive}](~@{character_id}|Sense-Motive-check) [^{spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth}](~@{character_id}|Stealth-check) [^{use-magic-device}](~@{character_id}|Use-Magic-Device-check) [^{perform}](~@{character_id}|perform_skills_buttons_macro) }} {{^{knowledge} ^{skills}}} {{ [^{arcana}](~@{character_id}|Knowledge-Arcana-check) [^{dungeoneering}](~@{character_id}|Knowledge-Dungeoneering-check) [^{engineering}](~@{character_id}|Knowledge-Engineering-check) [^{geography}](~@{character_id}|Knowledge-Geography-check) [^{history}](~@{character_id}|Knowledge-History-check) [^{local}](~@{character_id}|Knowledge-Local-check) [^{nature}](~@{character_id}|Knowledge-Nature-check) [^{nobility}](~@{character_id}|Knowledge-Nobility-check) [^{planes}](~@{character_id}|Knowledge-Planes-check) [^{religion}](~@{character_id}|Knowledge-Religion-check) }}" />							
+				<input type="hidden" name="attr_combat_skills-macro" value="&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-skills} }} {{^{skills}}} {{ [^{acrobatics} +@{Acrobatics}](~@{character_id}|Acrobatics-check) [^{bluff} +@{Bluff}](~@{character_id}|Bluff-check) [^{disable-device} +@{Disable-Device}](~@{character_id}|Disable-Device-check) [^{fly} +@{Fly}](~@{character_id}|Fly-check) [^{handle-animal} +@{Handle-Animal}](~@{character_id}|Handle-Animal-check) [^{intimidate} +@{Intimidate}](~@{character_id}|Intimidate-check) [^{perception} +@{Perception}](~@{character_id}|Perception-check)  [^{ride} +@{Ride}](~@{character_id}|Ride-check)  [^{sense-motive} +@{Sense-Motive}](~@{character_id}|Sense-Motive-check) [^{spellcraft} +@{Spellcraft}](~@{character_id}|Spellcraft-check) [^{stealth} +@{Stealth}](~@{character_id}|Stealth-check) [^{use-magic-device} +@{Use-Magic-Device}](~@{character_id}|Use-Magic-Device-check) [^{perform} +@{Perform}](~@{character_id}|perform_skills_buttons_macro) }} {{ ^{knowledge} ^{skills} }} {{ [^{arcana} +@{Knowledge-Arcana}](~@{character_id}|Knowledge-Arcana-check) [^{dungeoneering} +@{Knowledge-Dungeoneering}](~@{character_id}|Knowledge-Dungeoneering-check) [^{engineering} +@{Knowledge-Engineering}](~@{character_id}|Knowledge-Engineering-check) [^{geography} +@{Knowledge-Geography}](~@{character_id}|Knowledge-Geography-check) [^{history} +@{Knowledge-History}](~@{character_id}|Knowledge-History-check) [^{local} +@{Knowledge-Local}](~@{character_id}|Knowledge-Local-check) [^{nature} +@{Knowledge-Nature}](~@{character_id}|Knowledge-Nature-check) [^{nobility} +@{Knowledge-Nobility}](~@{character_id}|Knowledge-Nobility-check) [^{planes} +@{Knowledge-Planes}](~@{character_id}|Knowledge-Planes-check) [^{religion} +@{Knowledge-Religion}](~@{character_id}|Knowledge-Religion-check) }}" />
 				<input type="hidden" name="attr_spellclass-0-book" value="&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-1-book" value="&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
 				<input type="hidden" name="attr_spellclass-2-book" value="&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{row01=**^{check}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}} {{description=^{none-available} }}" />
@@ -2268,7 +2269,7 @@
 						</div>
 						<div class="sheet-table-group">
 							<div class="sheet-table-row">
-								<span class="sheet-table-row-name"><span class="sheet-show-readonly sheet-inverse-readonly" style="position:absolute; top:.65em; margin-left:-14px; color:white; font-family:pictos custom; font-size:4rem; font-weight:lighter;">e</span><span data-i18n="armor-class-abbrv" data-i18n-title="armor-class"  data-i18n-aria-label="armor-class">AC</span></span>
+								<span class="sheet-table-row-name"><span class="sheet-show-readonly sheet-inverse-readonly" style="position:absolute; top:.7em; margin-left:-14px; color:white; font-family:pictos custom; font-size:4rem; font-weight:lighter;">e</span><span data-i18n="armor-class-abbrv" data-i18n-title="armor-class"  data-i18n-aria-label="armor-class">AC</span></span>
 								<span class="sheet-table-cell"><input title="@{AC}" type="number" name="attr_AC" value="10" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
@@ -2712,7 +2713,7 @@
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_defense-notes-show" data-i18n-aria-label="defense-notes" data-i18n-title="showsect-cmd"  value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="special-defense-notes">Special Defenses and Notes</label></h2>
 				<span class="sheet-nontable-name" data-i18n="special-defense-notes">Special Defenses and Notes </span>
-				<div class="sheet-h2-section sheet-special-defenses sheet-wide-readonly">
+				<div class="sheet-h2-section sheet-special-defenses">
 					<div class="sheet-table">
 						<span class="sheet-table-name sheet-secondary-table-name sheet-show-readonly" data-i18n="special-defense">Special Defenses</span>
 						<div class="sheet-table-group">
@@ -3114,6 +3115,21 @@
 						</div>
 					</div>
 				</div>
+				<div class="sheet-h2-section sheet-damage-grid" style="margin-top:.25em;">
+					<div class="sheet-table">
+						<div class="sheet-table-row">
+							<span class="sheet-table-cell">Melee Dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Alt Melee Dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG2-mod}" name="attr_DMG2-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}+@{buff_dmg_melee2-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Ranged dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<span class="sheet-table-cell">Alt Ranged dmg mod:</span>
+							<span class="sheet-table-cell"><input type="text" title="@{DMG_ranged2-mod}" name="attr_DMG_ranged2-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}+@{buff_DMG_ranged2-total}-@{condition-Sickened})" class="sheet-calc sheet-number" disabled /></span>
+							<div style="display:none;"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="sheet-number sheet-calc" /></div>
+						</div>
+					</div>
+				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_attack-notes-show" data-i18n-aria-label="attack-notes" data-i18n-title="showsect-cmd"  value="1" checked />
 				<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="attack-notes">Attack Notes</label></h2>
@@ -3309,7 +3325,7 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
 								<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
-								<label class="sheet-small-label2 sheet-entry-short">
+								<label class="sheet-small-label2 sheet-entry-med">
 									<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
 										<option value="0" data-i18n="none-default" selected>&#8226;None</option>
 										<option value="attk-melee" data-i18n="melee">Melee</option>
@@ -3398,7 +3414,7 @@
 								<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse sheet-nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
 								<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-nondual-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv"  /><span data-i18n="type">Type</span></label>
 								<label class="sheet-small-label2 sheet-narrow-numbers sheet-nondual-sect">
-									<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
+									<input class="sheet-number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 									<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
 									<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
@@ -7566,62 +7582,131 @@
 							<span class="sheet-table-cell sheet-nowrap"><label ><input type="checkbox" title="@{psionic-focus}" name="attr_psionic-focus" value="1" /><b data-i18n-title="psionic-focus-title" data-i18n-aria-label="psionic-focus-title" title="Is maintaining psionic focus."><span data-i18n="psionic-focus"> Psionic Focus</span></b></label></span>
 						</div>
 					</div>
-					<input class="sheet-burn-show sheet-noshow" type="checkbox" name="attr_use_burn" value="1" />
-					<div class="sheet-cheat sheet-burn-sect"></div>
-					<input class="sheet-showarrow sheet-h2arrow sheet-burn-sect" type="checkbox" name="attr_burn-show"  data-i18n-title="showsect-cmd"  value="1" checked />
-					<h2 class="sheet-clickheader sheet-showsect sheet-burn-sect"><label class="sheet-burn-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">burn</label></h2>
-					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-burn-sect" role="section" data-i18n-aria-label="kineticist-burn" >
+					<input class="sheet-kineticist-show sheet-noshow" type="checkbox" name="attr_use_burn" value="1" />
+					<div class="sheet-cheat sheet-kineticist"></div>
+					<input class="sheet-showarrow sheet-h2arrow sheet-kineticist" type="checkbox" name="attr_burn-show"  data-i18n-title="showsect-cmd"  value="1" checked />
+					<h2 class="sheet-clickheader sheet-showsect sheet-kineticist"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="kineticist-burn">Kinetic Burn</label></h2>
+					<div class="sheet-h2-section sheet-non-table sheet-narrow-numbers sheet-kineticist sheet-kinetic-sect" role="section" data-i18n-aria-label="kineticist-burn" style="height:auto;">
 						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kineticist-burn">Kineticist Burn</span>
-						<div class="sheet-linked-custom">
+						<label class="sheet-small-label2">
+							<select name="attr_kineticist_level" title="@{kineticist_level}" class="sheet-entry-vshort" >
+								<option value="class-0-level" data-i18n="1-ordinal-class" selected>1st Class</option>
+								<option value="class-1-level" data-i18n="2-ordinal-class">2nd Class</option>
+								<option value="class-2-level" data-i18n="3-ordinal-class">3rd Class</option>
+								<option value="class-3-level" data-i18n="4-ordinal-class">4th Class</option>
+								<option value="class-4-level" data-i18n="5-ordinal-class">5th Class</option>
+								<option value="class-5-level" data-i18n="6-ordinal-class">6th Class</option>
+								<option value="level" data-i18n="full-caster-level-abbrv" >Level/HD</option>
+								<option value="npc-hd-num" data-i18n="race-hd-default">Race only</option>
+							</select>
+							<span data-i18n="class">Class</span>
+						</label>
+						<label class="sheet-small-label2 sheet-small-numbers">
+							<input type="number" name="attr_kineticist_level-mod" title="@{kineticist_level-mod}" value="0" class="sheet-calc" readonly />
+							<span data-i18n-title="level" title="level" >level</span>
+						</label>
+						<label class="sheet-small-label2">
+							<select class="sheet-select-small" title="@{kineticist_ability}" name="attr_kineticist_ability">
+								<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+								<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+								<option value="CON-mod" data-i18n="constitution-abbrv" selected>CON</option>
+								<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+								<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+								<option value="CHA-mod" data-i18n="charisma-abbrv" >CHA</option>
+							</select>
+							<span data-i18n-title="ability" data-i18n-aria-label="ability" data-i18n="ability" >Ability</span>
+						</label>
+						<label class="sheet-small-label2 sheet-small-numbers">
+							<input type="number" name="attr_kineticist_ability-mod" title="@{kineticist_ability-mod}" value="0" class="sheet-calc" readonly />
+							<span data-i18n="modifier-abbrv" >mod</span>
+						</label>
+						<label class="sheet-small-label2 sheet-linked-tablecell sheet-left">
 							<input type="checkbox" name="attr_kineticistburn_max_error" class="sheet-error-mshow" value="1" />
-							<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight">3+@{CON-mod}</textarea>
+							<textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">3+@{kineticist_ability-mod}</textarea>
 							<input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
 							<input type="hidden" name="attr_oldkineticistburn" value="0"  />
 							<div class="sheet-divider-db-lg">/</div>
 							<input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="sheet-calc sheet-highlight" readonly />
-							<span data-i18n="burn" >Burn </span>
-						</div>
-						<div class="sheet-linked-custom">
+							<span class="sheet-note-a" data-i18n="burn" >Burn </span>
+						</label>
+						<label class="sheet-small-label2 sheet-linked-tablecell sheet-left">
 							<input type="checkbox" name="attr_internalbuffer_max_error" class="sheet-error-mshow" value="1" />
-							<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight">floor((@{class-0-level}-1)/5)</textarea>
+							<textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight">floor((@{kineticist_level-mod}-1)/5)</textarea>
 							<input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
 							<div class="sheet-divider-db-lg">/</div>
 							<input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="sheet-calc sheet-highlight" readonly />
-							<span data-i18n="internal-buffer" >Internal Buffer </span>
+							<span class="sheet-note-a" data-i18n="internal-buffer" >Internal Buffer </span>
+						</label>
+						<label class="sheet-small-label2 sheet-small-numbers">
+							<input type="number" name="attr_kineticblast_dc" title="@{kineticblast_dc}" value="0" class="sheet-calcS" readonly  />
+							<span data-i18n="difficulty-class-abbrv">DC</span>
+						</label>
+						<label class="sheet-small-label2 sheet-number">
+							<input type="number" name="attr_kineticblast_range" title="@{kineticblast_range}" value="30" />
+							<span data-i18n="range">Range</span>
+						</label>
+						<label class="sheet-small-label2 sheet-linked-fields sheet-left">
+							<input type="checkbox" name="attr_kineticblast_attack-mod_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+							<input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
+							<span class="sheet-note-a" data-i18n="miscellaneous-attack-bonus-abbrv" >misc atk bonus</span>
+						</label>
+						<label class="sheet-small-label2 sheet-linked-fields sheet-left">
+							<input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="sheet-error-mshow" value="1" />
+							<textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
+							<input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
+							<span class="sheet-note-a" data-i18n="miscellaneous-damage-bonus-abbrv" >misc dmg bonus</span>
+						</label>
+						<div class="sheet-cheat"></div>
+						<span class="sheet-nontable-name sheet-secondary-table-name sheet-show-readonly" data-i18n="kinetic-blast-attack-damage-macros">create-attack</span>
+
+						<div class="sheet-small-label2" >
+							<select class="sheet-select-small" name="attr_kineticblast_attack_type" title="@{kineticblast_attack_type}" >
+								<option value="ranged" data-i18n="ranged" selected>Ranged</option>
+								<option value="melee" data-i18n="melee">Melee</option>
+							</select>
+							<span data-i18n="attack-type-abbrv">atk type</span>
 						</div>
-						<div class="sheet-linked-custom">
-							<div class="sheet-linked-fields sheet-entry-long">
-								<input type="checkbox" name="attr_kineticblast_attack-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place"  class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield"></textarea>
-								<input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="sheet-calc sheet-highlight sheet-linked-cellfield" readonly />
-								<span class="sheet-center" data-i18n="kinetic-blast" >kinetic blast</span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_buff_kineticblast-total" title="@{buff_kineticblast-total}" value="0" class="sheet-calc" readonly/>
-								<span data-i18n="buff">Buff</span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" value="0" class="sheet-calc" readonly />
-								<span data-i18n="blast">blast</span>
-							</div>
+
+						<div class="sheet-small-label2" >
+							<select class="sheet-select-small" name="attr_kineticblast_type" title="@{kineticblast_type}" >
+								<option value="kinetic" data-i18n="kinetic" selected>Kinetic</option>
+								<option value="composite" data-i18n="composite">Composite</option>
+							</select>
+							<span data-i18n="blast">blast</span>
 						</div>
-						<div class="sheet-linked-custom">
-							<div class="sheet-linked-fields sheet-entry-long">
-								<input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="sheet-error-mshow" value="1" />
-								<textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="sheet-inline-textarea sheet-highlight sheet-linked-cellfield">floor((@{class-0-level}+1)/2)</textarea>
-								<input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="sheet-calc sheet-highlight" readonly />
-								<span class="sheet-center" data-i18n="kinetic-blast-damage-abbrv" >kinetic blast damage bonus </span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_buff_dmg_kineticblast-total" title="@{buff_dmg_kineticblast-total}" value="0" class="sheet-calc" readonly/>
-								<span data-i18n="buff">Buff</span>
-							</div>
-							<div class="sheet-small-label2">
-								<input type="number" name="attr_kineticblast_dmg" title="@{kineticblast_dmg}" value="0" class="sheet-calc" readonly />
-								<span data-i18n="blast-damage-abbrv">blast dmg</span>
-							</div>
+						<div class="sheet-small-label2">
+							<select class="sheet-select-small" name="attr_kineticblast_damage_type" title="@{kineticblast_damage_type}" >
+								<option value="physical" data-i18n="physical" selected>Physical</option>
+								<option value="energy" data-i18n="energy">Energy</option>
+							</select>
+							<span data-i18n="damage-type-abbrv">dmg type</span>
 						</div>
-					</div>			
+						<div class="sheet-small-label2">
+							<input type="checkbox" value="1" name="attr_use_devastating_infusion" title="@{use_devastating_infusion}" />
+							<span data-i18n="devastating-infusion">dice</span>
+						</div>
+						<div class="sheet-small-label2">
+							<input type="checkbox" name="attr_create_kineticblast_macro" value="1" class="sheet-cssbutton sheet-createmacrobutton" title="@{create_kineticblast_macro}" ><span></span>
+							<span data-i18n-title="create-macros" data-i18n="create-macros" >Create Macros</span>
+						</div>
+						<div class="sheet-small-label2" style="width:20%;height:auto;">
+							<textarea name="attr_kineticblast_tempattack" title="@{kineticblast_tempattack}" class="sheet-inline-textarea"  ></textarea>
+							<span class="sheet-note-a" data-i18n="attack-macro">attack macro</span>
+						</div>
+						<div class="sheet-small-label2" style="width:20%;height:auto;">
+							<textarea name="attr_kineticblast_tempdmg" title="@{kineticblast_tempdmg}"  class="sheet-inline-textarea" ></textarea>
+							<span class="sheet-note-b" data-i18n="damage-macro">damage macro</span>
+						</div>
+						<div class="sheet-small-label2">
+							<input type="checkbox" name="attr_create_kineticblast_attack" value="1" class="sheet-cssbutton sheet-createattackbutton" title="@{create_kineticblast_attack}" data-i18n-aria-label="create-attack-entry"><span></span>
+							<span data-i18n-title="create-kinetic-blast-attack" data-i18n-aria-label="create-kinetic-blast-attack" data-i18n="create-attack" >Create Attack</span>
+						</div>
+					</div>
+					<div style="display:none;">
+						<input type="number" name="attr_kineticblast_attack" title="@{kineticblast_attack}" class="sheet-inline-textarea" />
+						<input type="number" name="attr_kineticblast_dmg" title="@{kineticblast_dmg}"  class="sheet-inline-textarea" />
+					</div>
 				</div>
 				<div class="sheet-cheat"></div>
 				<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_abilities-show" data-i18n-aria-label="abilities" data-i18n-title="showsect-cmd"  value="1" checked  />
@@ -9993,7 +10078,7 @@
 			<div class="sheet-section6 sheet-section sheet-section-equipment" role="region" aria-label="Euipment" data-i18n-aria-label="equipment">
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
 				<h1 class="sheet-selected-tabtitle" data-i18n="equipment">Equipment</h1>
-				<div class="sheet-col sheet-col1">
+				<div class="sheet-col sheet-col1 sheet-equipment">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_currency-show" data-i18n-aria-label="currency" data-i18n-title="showsect-cmd"  value="1" checked />
 					<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="currency">Currency</label></h2>
@@ -10125,7 +10210,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="sheet-col sheet-col2">
+				<div class="sheet-col sheet-col2 sheet-worn-items">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_worn-items-show" data-i18n-aria-label="worn-items" data-i18n-title="showsect-cmd"  value="1" checked />
 					<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="worn-items">Worn Items</label></h2>
@@ -10211,13 +10296,13 @@
 							</div>
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell sheet-right" data-i18n="armor">Armor</span>
-								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_armor3-roll" title="%{selected|armor3-roll}" value=""></button></span>
-								<span class="sheet-table-cell sheet-left"><input title="@{armor3}" type="text" name="attr_armor3" value="" data-i18n-placeholder="item-name"  class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_worn-armor-roll" title="%{selected|worn-armor-roll}" value=""></button></span>
+								<span class="sheet-table-cell sheet-left"><input title="@{worn-armor}" type="text" name="attr_worn-armor" value="" data-i18n-placeholder="item-name"  class="sheet-calc" readonly /></span>
 							</div>
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell sheet-right" data-i18n="shield">Shield</span>
-								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_shield3-roll" title="%{selected|shield3-roll}" value=""></button></span>
-								<span class="sheet-table-cell sheet-left"><input title="@{shield3}" type="text" name="attr_shield3" value="" data-i18n-placeholder="item-name"  class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell sheet-repeating-rollbutton"><button type="roll" name="attr_worn-shield-roll" title="%{selected|shield3-roll}" value=""></button></span>
+								<span class="sheet-table-cell sheet-left"><input title="@{worn-shield}" type="text" name="attr_worn-shield" value="" data-i18n-placeholder="item-name"  class="sheet-calc" readonly /></span>
 							</div>
 						</div>
 					</div>
@@ -10855,7 +10940,7 @@
 										<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 									</div>
 									<span class="sheet-divider-db sheet-sect sheet-nondual-sect">+</span>
-									<label class="sheet-small-label2 sheet-entry-short">
+									<label class="sheet-small-label2 sheet-entry-med">
 										<select class="sheet-select-small" title="@{repeating_weapon_$X_attack-type}" name="attr_attack-type">
 											<option value="0" data-i18n="none-default" selected>&#8226;None</option>
 											<option value="attk-melee" data-i18n="melee">Melee</option>
@@ -10944,7 +11029,7 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-space-right-collapse sheet-nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="sheet-calc" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
 									<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-nondual-sect"><input type="text" name="attr_type" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv"  /><span data-i18n="type">Type</span></label>
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-nondual-sect">
-										<input class="sheet-number" type="number" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
+										<input class="sheet-number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0"  />
 										<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 										<span class="sheet-sect2" data-i18n="range-in-feet">Range</span>
 										<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
@@ -13482,14 +13567,14 @@
 				<label><input type="checkbox" class="sheet-selectedlabel-check" name="attr_is_v1" value="1" title="@{is_v1}" /><b data-i18n-aria-label="sheet-created-after-v1" data-i18n-title="sheet-created-after-v1"  data-i18n="is-v1">Is V1 sheet</b></label>
 				<div class="sheet-table sheet-migrations">
 					<div class="sheet-table-row">
-						<span class="sheet-table-config-row-name" data-i18n="pre-v1" >Pre 1.0</span>
+						<span class="sheet-table-config-row-name"  >< 1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_classSkillsMigrated" title="@{classSkillsMigrated}" value="1" /><span data-i18n-title="class-skills-migrated" data-i18n-aria-label="class-skills-migrated" data-i18n="class-skills-migrated">Class skill checkboxes</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_damage-multiplier" title="@{migrated_damage-multiplier}" value="1" /><span data-i18n-title="attacks-dmg-migrated-title" data-i18n-aria-label="attacks-dmg-migrated-title" title="Repeating Attack damage multiplier migrated." data-i18n="attacks-dmg-migrated">Dmg Multiplier</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_spellranges_migrated" title="@{spellranges_migrated}" value="1" /><span data-i18n="spellranges-migrated">Spell Ranges</span></label></span>
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="post-v1">V 1.0</span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.0</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_npc" title="@{migrated_npc}" value="1"/><span data-i18n="npc-migrated">NPC Values Migrated</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_repeating_item_attributes" title="@{migrated_repeating_item_attributes}" value="1"><span data-i18n="copy-duplicate-attrs" >Copy duplicate fields</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_worn_equipment" title="@{migrated_worn_equipment}" value="1" /><span data-i18n-title="worn-equipment-migrated" data-i18n-aria-label="worn-equipment-migrated" data-i18n="worn-equipment-migrated">Worn Equipment </span></label></span>
@@ -13510,18 +13595,25 @@
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" >
-						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="v1">Post V 1.0</span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.01 - 1.58</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_linked_attacks" title="@{migrated_linked_attacks}" value="1"><span data-i18n="linked-attacks" > Linked attacks</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_take10_dropdown" title="@{migrated_take10_dropdown}" value="1"><span data-i18n="skill-take10-dropdown" >Skill take 10 dropdown</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_buffs_rangeddmg_abiilty" title="@{migrated_buffs_rangeddmg_abiilty}" value="1"><span data-i18n="rangeddmg-ability-buffs" > Ranged dmg and Ability Check Buffs</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_ability_dropdowns2" title="@{migrated_ability_dropdowns2}" value="1"><span data-i18n="ability-attack-dropdowns" > Ability Dropdowns</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 					<div class="sheet-table-row" style="background-color:#eeeeee;">
-						<span class="sheet-table-config-row-name" >&nbsp;</span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_skill_speedup" title="@{migrated_skill_speedup}" value="1"><span data-i18n="skill-calculation-speed" > Skill calc speed</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_bab_dropdowns" title="@{migrated_attack_bab_dropdowns}" value="1"><span data-i18n="attack-bonus-dropdowns" > Attack bonus dropdowns</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_newfields" title="@{migrated_itemlist_newfields}" value="1"><span data-i18n="item-macros-current" > Attack bonus dropdowns</span></label></span>
+						<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" >1.65</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_buffs_rangeddmg_abiilty" title="@{migrated_buffs_rangeddmg_abiilty}" value="1"><span data-i18n="rangeddmg-ability-buffs" > Damage and Check Buffs</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_ability_dropdowns3" title="@{migrated_ability_dropdowns3}" value="1"><span data-i18n="ability-attack-dropdowns" > Ability and Attack Type Dropdowns</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_skill_speedup2" title="@{migrated_skill_speedup2}" value="1"><span data-i18n="skill-calculation-speed" > Skill calc speed</span></label></span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrate_fatigued_conditions" title="@{migrate_fatigued_conditions}" value="1"><span data-i18n="fatigued-conditions" > Fatigued Conditions</span></label></span>
+					</div>
+					<div class="sheet-table-row" >
+						<span class="sheet-table-config-row-name" >&nbsp;</span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_bab_dropdowns" title="@{migrated_attack_bab_dropdowns}" value="1"><span data-i18n="attack-bonus-dropdowns" > Attack bonus dropdowns</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_newfields" title="@{migrated_itemlist_newfields}" value="1"><span data-i18n="item-macros-current" > Equipment Macros to current</span></label></span>
+						<span class="sheet-table-cell sheet-left"></span>
+						<span class="sheet-table-cell sheet-left"></span>
 					</div>
 				</div>
 			</div>
@@ -13577,9 +13669,9 @@
 </div>			
 		</div>
 	</div>
-	<div data-i18n-aria-label="footnotes-aria" class="sheet-footnotes" aria-label="Footnote information">
+	<div data-i18n-aria-label="footnotes-aria" class="sheet-footnotes sheet-left" aria-label="Footnote information">
 		<hr style="border-color: #a9a9a9;">
-		<ul style="list-style: none;">
+		<ul style="list-style: none;margin-left: 1.5em;text-indent:-1.5em;">
 			<li data-i18n="footnote-a">⒜ Evaluated at edit time, must evaluate to number. No queries. Extended Expressions allowed.</li>
 			<li data-i18n="footnote-b">⒝ Evaluated at roll time in chat. Queries allowed. Must put [[brackets]] around rolls.</li>
 			<li data-i18n="footnote-c">⒞ Evaluated at roll time in chat. Queries allowed. Must evaluate to number. No [[brackets]] needed.</li>
@@ -13972,7 +14064,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack}}
 						{{#crit_confirm}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm}}
-						{{#crit_damage}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit Damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage}}</div></div>{{/crit_damage}}
+						{{^no_damage}}{{#crit_damage}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit Damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage}}</div></div>{{/crit_damage}}{{/no_damage}}
 						{{#critical_dmg1}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg1}}</div></div>{{/critical_dmg1}}
 						{{#critical_dmg2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg2}}</div></div>{{/critical_dmg2}}
 						{{/rollWasCrit() attack}}
@@ -13987,7 +14079,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack2}}
 						{{#crit_confirm2}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm2}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm2}}
-						{{#crit_damage2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage2}}</div></div>{{/crit_damage2}}
+						{{^no_damage}}{{#crit_damage2}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage2}}</div></div>{{/crit_damage2}}{{/no_damage}}
 						{{#critical_dmg21}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg21}}</div></div>{{/critical_dmg21}}
 						{{#critical_dmg22}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg22}}</div></div>{{/critical_dmg22}}
 						{{/rollWasCrit() attack2}}
@@ -14002,7 +14094,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack3}}
 						{{#crit_confirm3}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm3}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm3}}
-						{{#crit_damage3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage3}}</div></div>{{/crit_damage3}}
+						{{^no_damage}}{{#crit_damage3}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage3}}</div></div>{{/crit_damage3}}{{/no_damage}}
 						{{#critical_dmg31}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg31}}</div></div>{{/critical_dmg31}}
 						{{#critical_dmg32}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg32}}</div></div>{{/critical_dmg32}}
 						{{/rollWasCrit() attack3}}
@@ -14017,7 +14109,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack4}}
 						{{#crit_confirm4}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm4}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm4}}
-						{{#crit_damage4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage4}}</div></div>{{/crit_damage4}}
+						{{^no_damage}}{{#crit_damage4}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage4}}</div></div>{{/crit_damage4}}{{/no_damage}}
 						{{#critical_dmg41}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg41}}</div></div>{{/critical_dmg41}}
 						{{#critical_dmg42}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg42}}</div></div>{{/critical_dmg42}}
 						{{/rollWasCrit() attack4}}
@@ -14032,7 +14124,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack5}}
 						{{#crit_confirm5}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm5}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm5}}
-						{{#crit_damage5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage5}}</div></div>{{/crit_damage5}}
+						{{^no_damage}}{{#crit_damage5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage5}}</div></div>{{/crit_damage5}}{{/no_damage}}
 						{{#critical_dmg51}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg51}}</div></div>{{/critical_dmg51}}
 						{{#critical_dmg52}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg52}}</div></div>{{/critical_dmg52}}
 						{{/rollWasCrit() attack5}}
@@ -14047,7 +14139,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack6}}
 						{{#crit_confirm6}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm6}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm6}}
-						{{#crit_damage6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage6}}</div></div>{{/crit_damage6}}
+						{{^no_damage}}{{#crit_damage6}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage6}}</div></div>{{/crit_damage6}}{{/no_damage}}
 						{{#critical_dmg61}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg61}}</div></div>{{/critical_dmg61}}
 						{{#critical_dmg62}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg62}}</div></div>{{/critical_dmg62}}
 						{{/rollWasCrit() attack6}}
@@ -14062,7 +14154,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack7}}
 						{{#crit_confirm7}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm7}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm7}}
-						{{#crit_damage7}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage7}}</div></div>{{/crit_damage7}}
+						{{^no_damage}}{{#crit_damage7}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage7}}</div></div>{{/crit_damage7}}{{/no_damage}}
 						{{#critical_dmg71}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg71}}</div></div>{{/critical_dmg71}}
 						{{#critical_dmg72}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg72}}</div></div>{{/critical_dmg72}}
 						{{/rollWasCrit() attack7}}
@@ -14077,7 +14169,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack8}}
 						{{#crit_confirm8}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm8}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm8}}
-						{{#crit_damage8}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage8}}</div></div>{{/crit_damage8}}
+						{{^no_damage}}{{#crit_damage8}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage8}}</div></div>{{/crit_damage8}}{{/no_damage}}
 						{{#critical_dmg81}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg81}}</div></div>{{/critical_dmg81}}
 						{{#critical_dmg82}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg82}}</div></div>{{/critical_dmg82}}
 						{{/rollWasCrit() attack8}}
@@ -14092,7 +14184,7 @@
 					{{^no_attack_roll}}<div class="sheet-roll-groupc">
 						{{#rollWasCrit() attack9}}
 						{{#crit_confirm9}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm9}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm9}}
-						{{#crit_damage9}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage9}}</div></div>{{/crit_damage9}}
+						{{^no_damage}}{{#crit_damage9}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage9}}</div></div>{{/crit_damage9}}{{/no_damage}}
 						{{#critical_dmg91}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg91}}</div></div>{{/critical_dmg91}}
 						{{#critical_dmg92}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg92}}</div></div>{{/critical_dmg92}}
 						{{/rollWasCrit() attack9}}
@@ -14163,7 +14255,7 @@
 				{{#precision_dmg2}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg2}}</span></label>{{/precision_dmg2}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack}}
 				{{#crit_confirm}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm}}
-				{{#crit_damage}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage}}</span></label>{{/crit_damage}}
+				{{^no_damage}}{{#crit_damage}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage}}</span></label>{{/crit_damage}}{{/no_damage}}
 				{{#critical_dmg1}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg1}}</span></label>{{/critical_dmg1}}
 				{{#critical_dmg2}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg2}}</span></label>{{/critical_dmg2}}
 				{{/rollWasCrit() attack}}{{/no_attack_roll}}
@@ -14173,7 +14265,7 @@
 				{{#precision_dmg22}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg22}}</span></label>{{/precision_dmg22}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack2}}
 				{{#crit_confirm2}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm2}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm2}}
-				{{#crit_damage2}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage2}}</span></label>{{/crit_damage2}}
+				{{^no_damage}}{{#crit_damage2}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage2}}</span></label>{{/crit_damage2}}{{/no_damage}}
 				{{#critical_dmg21}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg21}}</span></label>{{/critical_dmg21}}
 				{{#critical_dmg22}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg22}}</span></label>{{/critical_dmg22}}
 				{{/rollWasCrit() attack2}}{{/no_attack_roll}}
@@ -14183,7 +14275,7 @@
 				{{#precision_dmg32}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg32}}</span></label>{{/precision_dmg32}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack3}}
 				{{#crit_confirm3}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm3}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm3}}
-				{{#crit_damage3}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage3}}</span></label>{{/crit_damage3}}
+				{{^no_damage}}{{#crit_damage3}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage3}}</span></label>{{/crit_damage3}}{{/no_damage}}
 				{{#critical_dmg31}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg31}}</span></label>{{/critical_dmg31}}
 				{{#critical_dmg32}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg32}}</span></label>{{/critical_dmg32}}
 				{{/rollWasCrit() attack3}}{{/no_attack_roll}}
@@ -14193,7 +14285,7 @@
 				{{#precision_dmg42}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg42}}</span></label>{{/precision_dmg42}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack4}}
 				{{#crit_confirm4}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm4}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm4}}
-				{{#crit_damage4}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage4}}</span></label>{{/crit_damage4}}
+				{{^no_damage}}{{#crit_damage4}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage4}}</span></label>{{/crit_damage4}}{{/no_damage}}
 				{{#critical_dmg41}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg41}}</span></label>{{/critical_dmg41}}
 				{{#critical_dmg42}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg42}}</span></label>{{/critical_dmg42}}
 				{{/rollWasCrit() attack4}}{{/no_attack_roll}}
@@ -14203,7 +14295,7 @@
 				{{#precision_dmg52}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg52}}</span></label>{{/precision_dmg52}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack5}}
 				{{#crit_confirm5}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm5}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm5}}
-				{{#crit_damage5}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage5}}</span></label>{{/crit_damage5}}
+				{{^no_damage}}{{#crit_damage5}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage5}}</span></label>{{/crit_damage5}}{{/no_damage}}
 				{{#critical_dmg51}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg51}}</span></label>{{/critical_dmg51}}
 				{{#critical_dmg52}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg52}}</span></label>{{/critical_dmg52}}
 				{{/rollWasCrit() attack5}}{{/no_attack_roll}}
@@ -14213,7 +14305,7 @@
 				{{#precision_dmg62}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg62}}</span></label>{{/precision_dmg62}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack6}}
 				{{#crit_confirm6}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm6}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm6}}
-				{{#crit_damage6}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage6}}</span></label>{{/crit_damage6}}
+				{{^no_damage}}{{#crit_damage6}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage6}}</span></label>{{/crit_damage6}}{{/no_damage}}
 				{{#critical_dmg61}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg61}}</span></label>{{/critical_dmg61}}
 				{{#critical_dmg62}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg62}}</span></label>{{/critical_dmg62}}
 				{{/rollWasCrit() attack6}}{{/no_attack_roll}}
@@ -14223,7 +14315,7 @@
 				{{#precision_dmg72}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg72}}</span></label>{{/precision_dmg72}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack7}}
 				{{#crit_confirm7}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm7}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm7}}
-				{{#crit_damage7}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage7}}</span></label>{{/crit_damage7}}
+				{{^no_damage}}{{#crit_damage7}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage7}}</span></label>{{/crit_damage7}}{{/no_damage}}
 				{{#critical_dmg71}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg71}}</span></label>{{/critical_dmg71}}
 				{{#critical_dmg72}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg72}}</span></label>{{/critical_dmg72}}
 				{{/rollWasCrit() attack7}}{{/no_attack_roll}}
@@ -14233,7 +14325,7 @@
 				{{#precision_dmg82}}<label class="sheet-atksbkg sheet-dmg-x">{{#precision_dmg2_type}}<span data-i18n-title="extra-damage" data-i18n-aria-label="extra-damage">{{precision_dmg2_type}}</span>{{/precision_dmg2_type}}{{^precision_dmg2_type}}<span data-i18n="extra-damage">Precision Dmg</span>{{/precision_dmg2_type}}:<span class="sheet-right">{{precision_dmg82}}</span></label>{{/precision_dmg82}}
 				{{^no_attack_roll}}{{#rollWasCrit() attack8}}
 				{{#crit_confirm8}}<label class="sheet-atksbkg sheet-atk-c sheet-confirm"><span data-i18n="critical-confirm">Crit Confirm</span>:<span class="sheet-right">{{crit_confirm8}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</span></label>{{/crit_confirm8}}
-				{{#crit_damage8}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage8}}</span></label>{{/crit_damage8}}
+				{{^no_damage}}{{#crit_damage8}}<label class="sheet-atksbkg sheet-crit-dmg"><span data-i18n="critical-damage">Crit Damage</span>:<span class="sheet-right">+{{crit_damage8}}</span></label>{{/crit_damage8}}{{/no_damage}}
 				{{#critical_dmg81}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg1_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg1_type}}</span>{{/critical_dmg1_type}}{{^critical_dmg1_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg1_type}}:<span class="sheet-right">+{{critical_dmg81}}</span></label>{{/critical_dmg81}}
 				{{#critical_dmg82}}<label class="sheet-atksbkg sheet-crit-dmg-x">{{#critical_dmg2_type}}<span data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{critical_dmg2_type}}</span>{{/critical_dmg2_type}}{{^critical_dmg2_type}}<span data-i18n="extra-critical-damage">Xtra Crit Dmg</span>{{/critical_dmg2_type}}:<span class="sheet-right">+{{critical_dmg82}}</span></label>{{/critical_dmg82}}
 				{{/rollWasCrit() attack8}}{{/no_attack_roll}}
@@ -14247,7 +14339,7 @@
 				{{^no_attack_roll}}<div class="sheet-roll-groupc">
 					{{#rollWasCrit() attack9}}
 					{{#crit_confirm9}}<div class="sheet-roll-row sheet-crit-row"><div class="sheet-roll-cell sheet-confirm">**<span data-i18n="critical-confirm">Crit Confirm</span>**</div><div class="sheet-roll-cell sheet-left">{{crit_confirm9}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/crit_confirm9}}
-					{{#crit_damage9}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage9}}</div></div>{{/crit_damage9}}
+					{{^no_damage}}{{#crit_damage9}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg">**<span data-i18n="critical-damage">Crit damage</span>**</div><div class="sheet-roll-cell">+{{crit_damage9}}</div></div>{{/crit_damage9}}{{/no_damage}}
 					{{#critical_dmg91}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg1_type}}**{{critical_dmg1_type}}**{{/critical_dmg1_type}}{{^critical_dmg1_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg1_type}}</div><div class="sheet-roll-cell">+{{critical_dmg91}}</div></div>{{/critical_dmg91}}
 					{{#critical_dmg92}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-crit-dmg-x" data-i18n-title="extra-critical-damage" data-i18n-aria-label="extra-critical-damage">{{#critical_dmg2_type}}**{{critical_dmg2_type}}**{{/critical_dmg2_type}}{{^critical_dmg2_type}}**<span data-i18n="extra-critical-damage">Extra Crit Dmg</span>**{{/critical_dmg2_type}}</div><div class="sheet-roll-cell">+{{critical_dmg92}}</div></div>{{/critical_dmg92}}
 					{{/rollWasCrit() attack9}}

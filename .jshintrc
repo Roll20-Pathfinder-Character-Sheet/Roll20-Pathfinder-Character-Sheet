@@ -1,5 +1,5 @@
 {
-    "predef":["console","on","process","randomInteger","getSectionIDs","getTranslationByKey","getAttrs","setAttrs","removeRepeatingRow","generateRowID"],
+    "predef":["console","on","process","randomInteger","getSectionIDs","getTranslationByKey","getAttrs","setAttrs","removeRepeatingRow","generateRowID","setDefaultToken"],
     "strict": true,
     "eqeqeq": true,
     "latedef": true,

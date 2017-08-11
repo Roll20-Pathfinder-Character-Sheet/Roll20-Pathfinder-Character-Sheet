@@ -56,7 +56,7 @@ export function applyConditions (callback, silently) {
  * @save = type of save: Fort, Ref, Will  (first character capitalized)
  */
 export function updateSave (save, callback, silently) {
-	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total"];
+	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total", "buff_saves-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
 export function updateSaves(callback,silently){
@@ -74,7 +74,7 @@ export function updateSaves(callback,silently){
 }
 export var recalculate = TAS.callback(function PFSavesRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.info("leaving PFSaves.recalculate");
+		TAS.debug("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}

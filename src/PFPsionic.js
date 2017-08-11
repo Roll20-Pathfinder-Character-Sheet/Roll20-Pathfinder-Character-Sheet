@@ -6,30 +6,29 @@ import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 
 
+
 /* **************PSIONIC************** */
 function updatePsionicBonusPower (callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
 		}
-	}),
-	params={};
-	if (silently) {
-		params = PFConst.silentParams;
-	}
-	getAttrs(["selected-ability-psionic-power", "psionic-level-total", "ability-psionic-power"], function (v) {
-		SWUtils.evaluateExpression(v["selected-ability-psionic-power"], function (value) {
+	});
+	SWUtils.getDropdownValue("selected-ability-psionic-power",null,function(value){
+		getAttrs(["psionic-level-total", "ability-psionic-power"], function (v) {
 			var ability = 0,
 			currentTotal = 0,
 			newTotal = 0,
-			finished = false;
+			params={};
 			try {
 				ability = parseInt(value, 10) || 0;
 				currentTotal = parseInt(v["ability-psionic-power"], 10) || 0;
 				newTotal = Math.floor(ability * (parseInt(v["psionic-level-total"], 10) || 0) * 0.5);
-				//TAS.debug("ability=" + ability, "newTotal=" + newTotal, "currentTotal=" + currentTotal);
+				TAS.debug("PFSIONIC ability=" + ability, "newTotal=" + newTotal, "currentTotal=" + currentTotal);
 				if (currentTotal !== newTotal) {
-					finished = true;
+					if (silently) {
+						params = PFConst.silentParams;
+					}
 					SWUtils.setWrapper({
 						"ability-psionic-power": newTotal
 					}, params, done);
@@ -37,14 +36,8 @@ function updatePsionicBonusPower (callback, silently) {
 			} catch (err) {
 				TAS.error("PFPsionic.updatePsionicBonusPower", err);
 			} finally {
-				if (!finished) {
-					done();
-				}
+				done();
 			}
-		},function(){
-			SWUtils.setWrapper({
-				"ability-psionic-power": 0
-			}, params, done);
 		});
 	});
 }

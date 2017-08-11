@@ -186,7 +186,7 @@ export function migrate(callback,oldversion){
         }
     }),
     updatedGroup = _.after(4,function(){
-        setAttrs({'migrated_ability_dropdowns2':1},PFConst.silentParams,done);
+        setAttrs({'migrated_ability_dropdowns3':1},PFConst.silentParams,done);
     }),
 	updateRepeatingAttackTypes = function(){
 		var sections,doneOneSection;
@@ -376,13 +376,9 @@ export function migrate(callback,oldversion){
 			}
         });
 	};
-	if (oldversion===1.63||PFConst.version===1.63){
-		showMiscFields();
-	}    
-    getAttrs(['migrated_ability_dropdowns2'],function(v){
+    getAttrs(['migrated_ability_dropdowns3'],function(v){
         var setter={};
-		TAS.notice("PFSheet.migrateDropdowns START","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",v);
-        if(!parseInt(v.migrated_ability_dropdowns2,10)){
+        if(!parseInt(v.migrated_ability_dropdowns3,10)){
             updateRepeating();
             updateNonRepeating();
 			updateRepeatingAttackTypes();
@@ -452,7 +448,13 @@ function registerEventHandlers () {
 			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
 		}));
 	});
-    
+	on("change:kineticist_level", TAS.callback(function eventKineticistLevel(eventInfo){
+		if(eventInfo.sourceType==='player'){
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			PFUtilsAsync.setDropdownValue('kineticist_level', 'kineticist_level-mod');
+		}
+	}));
+	
 }
 
 registerEventHandlers();

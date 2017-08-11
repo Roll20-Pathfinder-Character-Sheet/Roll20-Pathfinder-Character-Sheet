@@ -328,7 +328,7 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 		params={}, setter={};
 		newVal = parseInt(newVal,10)||0;
 		newPlus = newVal + addn;
-		TAS.notice("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
+		//TAS.debug("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
 		if(newPlus !== curr){
 			setter[writeField]=newPlus;
 			if(silently){
@@ -409,7 +409,7 @@ export function evaluateAndAddToTotAsync(callback,silently,readField,writeField,
 	});	
 }
 
-function getDropdownValueSync(fieldToFind,synchrousFindAttributeFunc){
+function getDropdownSetting(fieldToFind,synchrousFindAttributeFunc){
 	var foundField = "";
 	//TAS.debug("finding dropdown values are ",values);
 	if ( fieldToFind === "0" || fieldToFind === 0 || fieldToFind === "dual" || (fieldToFind && fieldToFind["0"] === 0)) {
@@ -437,12 +437,24 @@ function getDropdownValueSync(fieldToFind,synchrousFindAttributeFunc){
  * @param {function(int)} callback pass the value the dropdown selection represents
  *   exceptions: if readField is not found pass in "", if readField is 0 or starts with 0 pass in 0.
  */
-function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
+export function getDropdownValue (readField, synchrousFindAttributeFunc, callback) {
 	if (!readField || (callback && typeof callback !== "function") ) {
 		return;
 	}
 	getAttrs([readField], function (values) {
-		var foundField=getDropdownValueSync(values[readField],synchrousFindAttributeFunc);
+		var foundField=getDropdownSetting(values[readField],synchrousFindAttributeFunc);
+		if(foundField){
+			getAttrs([foundField],function(v){
+				var intVer = parseInt(v[foundField],10);
+				if(isNaN(intVer)){
+					callback(v[foundField]);
+				} else {
+					callback(intVer);
+				}
+			});
+		} else {
+			callback(foundField);
+		}
 		callback(foundField);
 	});
 }
@@ -471,7 +483,7 @@ export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchr
 	getAttrs([readField,writeField,totField],function(v){
 		var foundField='',newVal=0,currVal=0,totVal=0;
 		try {
-			foundField = getDropdownValueSync(v[readField],synchrousFindAttributeFunc);
+			foundField = getDropdownSetting(v[readField],synchrousFindAttributeFunc);
 			if(foundField){
 				getAttrs([foundField],function(vi){
 					var newVal=parseInt(vi[foundField],10)||0;
@@ -507,7 +519,7 @@ export function setDropdownValue (readField, writeField, synchrousFindAttributeF
 	};
 	getAttrs([readField],function(values){
 		var foundField = '', params = {},fields=[];
-		foundField = getDropdownValueSync(values[readField],synchrousFindAttributeFunc);
+		foundField = getDropdownSetting(values[readField],synchrousFindAttributeFunc);
 		//TAS.debug("SWUtils.setDropdownValue from:"+readField+", to:"+writeFields+", after call to getDropdownValue returned with:"+foundField);
 		if (silently) {params.silent=true;}
 		fields =[writeField];

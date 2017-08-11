@@ -76,6 +76,7 @@ export var recalculate = TAS.callback(function PFHorrorRecalculate(callback){
     setSanityScore();
     setSanityThreshold();
     if (typeof callback === "function"){
+        TAS.info("Leaving PFHorror.recalculate");
         callback();
     }
 });

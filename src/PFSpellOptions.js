@@ -285,7 +285,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
 *@param {jsobj} eventInfo NOT USED
 */
 export function resetOption (id, eventInfo) {
-    var prefix = "repeating_spells_" + SWUtils.getRepeatingfIDStr(id),
+    var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     allFields;
     allFields = _.map(repeatingOptionAttrsToGet, function (field) {
         return prefix + field;
