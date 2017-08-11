@@ -941,9 +941,9 @@ export function migrate (callback, oldversion) {
 		});
 	},
 	migrateMacros2 = function(callback){
-		getAttrs(['migrated_skill_speedup2'],function(vout){
+		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
-			if(parseInt(vout.migrated_skill_speedup2,10)===1){
+			if(parseInt(vout.migrated_skill_speedup3,10)){
 				if (typeof callback === "function"){ callback();}
 				return;
 			}
@@ -971,7 +971,7 @@ export function migrate (callback, oldversion) {
 				} catch (err){
 					TAS.error("PFSkills.migrate skill speedup",err);
 				} finally {
-					setter.migrated_skill_speedup2=1;
+					setter.migrated_skill_speedup3=1;
 					setAttrs(setter,PFConst.silentParams,callback);
 				}
 			});

@@ -186,7 +186,7 @@ export function migrate(callback,oldversion){
         }
     }),
     updatedGroup = _.after(4,function(){
-        setAttrs({'migrated_ability_dropdowns3':1},PFConst.silentParams,done);
+        setAttrs({'migrated_ability_dropdowns4':1},PFConst.silentParams,done);
     }),
 	updateRepeatingAttackTypes = function(){
 		var sections,doneOneSection;
@@ -376,9 +376,9 @@ export function migrate(callback,oldversion){
 			}
         });
 	};
-    getAttrs(['migrated_ability_dropdowns3'],function(v){
+    getAttrs(['migrated_ability_dropdowns4'],function(v){
         var setter={};
-        if(!parseInt(v.migrated_ability_dropdowns3,10)){
+        if(!parseInt(v.migrated_ability_dropdowns4,10)){
             updateRepeating();
             updateNonRepeating();
 			updateRepeatingAttackTypes();
