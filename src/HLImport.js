@@ -244,7 +244,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 	getSectionIDs(repeatPrefix, function(idarray) {
 		var itemNameAttrs = _.union(_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_name"; }),["shield3-acp","shield3-spell-fail"]);
 		getAttrs(itemNameAttrs, function(names) {
-			console.log("importItems");
+
 			// Pull out the shield attributes before we build the ID list
 			var shieldACP = parseNum(names["shield3-acp"]);
 			var shieldASF = parseNum(names["shield3-spell-fail"]);
@@ -551,17 +551,16 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 				
 			// Make a guess at which ability modifier is used for this class
 			if (!_.isUndefined(classes[spellClassName]._basespelldc))
-				abMod = parseNum(classes[spellClassName]._basespelldc) - 10;
-			if (!_.isUndefined(classes[spellClassName]._basespelldc))
 			{
+				abMod = parseNum(classes[spellClassName]._basespelldc) - 10;
+
 				// Start at the fourth ability score (Intelligence), so we skip the physical abilities
 				for (j = 3; j < abScores.length; j++)
 				{
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
-						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = +abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
-						setAttrs(attr,{silent: true});
+						attrs["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
+						console.log(attrs["Concentration-"+spellClassIndex+"-ability"]);
 						break;
 					}
 				}
@@ -627,7 +626,6 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 
 export function importSpells (spells,spellclasses)
 {
-	console.log("Import spells");
 	var wizNames = ["Abjurer","Conjurer","Diviner","Enchanter","Evoker","Illusionist","Necromancer","Transmuter"];
 	var repeatPrefix = "repeating_spells";
 	getSectionIDs(repeatPrefix, function(idarray) {
@@ -851,7 +849,7 @@ export function importSkills (attrs,skills,size,ACP)
 			continue;
 		}*/
 		skill = skills[i];
-		console.log(skill._name);
+
 		// Figure out where we're putting this skill on the character sheet
 		if (skill._name.indexOf("Craft") !== -1)
 		{
