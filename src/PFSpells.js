@@ -1605,7 +1605,7 @@ export function migrateRepeatingMacros (callback){
         SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
     });
     getAttrs(['migrated_spells_macrosv1'],function(v){
-        if (parseInt(v.migrated_spells_macrosv1,10)!==1){
+        if (!parseInt(v.migrated_spells_macrosv1,10)){
             PFMacros.migrateRepeatingMacros(migrated,'spells','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
             PFMacros.migrateRepeatingMacros(migrated,'spells','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
         } else {
