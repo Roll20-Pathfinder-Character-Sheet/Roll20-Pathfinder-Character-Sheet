@@ -5,6 +5,7 @@ import {PFLog, PFConsole} from './PFLog';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils from './PFUtils';
+import * as PFAttacks from './PFAttacks';
 
 export var abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 export var abilitymods = ["STR-mod", "DEX-mod", "CON-mod", "INT-mod", "WIS-mod", "CHA-mod"];
@@ -90,6 +91,7 @@ function propagateAbilityModsAsync(callback,silently,attr,newval){
     } else {
         attrs = abilitymods;
     }
+    PFAttacks.updateRepeatingWeaponAbilityDropdowns(null,null,attr);    
     fields = attrs;
     fields = fields.concat(Object.keys(PFConst.abilityScoreManualDropdowns));
     fields = fields.concat(_.values(PFConst.abilityScoreManualDropdowns));

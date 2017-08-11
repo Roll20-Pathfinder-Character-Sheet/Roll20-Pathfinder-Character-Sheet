@@ -237,6 +237,18 @@ function updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval,callback){
 		});
 	}
 }
+export function updateRepeatingWeaponAbilityDropdowns(eventInfo,ability){
+	getSectionIDs("repeating_weapon", function (ids) {
+		_.each(ids,function(id){
+			PFUtilsAsync.setRepeatingDropdownValue("weapon", id, "damage-ability", "damage-ability-mod",
+			function(newval,oldval,changed){
+				if(changed){
+					updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+				}
+			},true);
+		});
+	});
+}
 /** updateRepeatingWeaponDamage - updates total-damage*/
 function updateRepeatingWeaponDamage(id, eventInfo) {
 	var resetOptionsWhenDone = function () {

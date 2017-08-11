@@ -1966,7 +1966,7 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 				done();
 				return;
 			}
-			if(parseInt(v.use_buff_bonuses,10)===1){
+			if(parseInt(v.use_buff_bonuses,10)){
 				reEvaluateCustomMacros(function(){
 					updateAllBuffTotalsAsync(function(){
 						resetStatuspanel();//no need to wait

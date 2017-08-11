@@ -42,15 +42,15 @@ function createAttackMacros(eventInfo){
                 levels='floor((@{kineticist_level-mod}+1)/2)';
             }
             if(composite){
-                levels = '(2*'+levels+')';
+                levels = '2*'+levels+'';
             }
-            damagestr=levels+'d'+dice;
+            damagestr='[[ '+levels+' ]]d'+dice;
             if(devastating){
-                damagestr = damagestr + '+@{kineticist_ability-mod}';
+                damagestr = damagestr + '+ @{kineticist_ability-mod}';
             } else if(v.kineticblast_damage_type==='physical'){
-                damagestr = damagestr+'+'+levels+'+@{kineticist_ability-mod}';
+                damagestr = damagestr+'+ [[ '+levels+' ]] + @{kineticist_ability-mod}';
             } else {
-                damagestr = damagestr+'+floor(@{kineticist_ability-mod}/2)';
+                damagestr = damagestr+'+ [[ floor(@{kineticist_ability-mod}/2) ]]';
             }
             damagestr = damagestr + '+@{kineticblast_dmg-mod}';
             if(v.kineticblast_attack_type==='ranged'){
@@ -58,7 +58,7 @@ function createAttackMacros(eventInfo){
             }
         }
         setter.kineticblast_tempattack=attackstr;
-        setter.kineticblast_tempdmg='[['+damagestr+']]';
+        setter.kineticblast_tempdmg='[[ '+damagestr+' ]]';
         setter.create_kineticblast_macro=0;
         SWUtils.setWrapper(setter,PFConst.silentParams);
     });
@@ -128,6 +128,34 @@ function createAttack (eventInfo){
     });
 }
 
+export function updateNLDamageFromBurn (eventInfo){
+    getAttrs(['non-lethal-damage','kineticistburn','oldkineticistburn','level'],function(v){
+        var nld=0,oldburn=0,newburn=0,diff=0,level=0,newdmg=0,newnld=0,setter={};
+        try{
+            oldburn=parseInt(v['oldkineticistburn'],10)||0;
+            newburn=parseInt(v['kineticistburn'],10)||0;
+            if(oldburn!==newburn){
+                setter.oldkineticistburn=newburn;
+                nld=parseInt(v['non-lethal-damage'],10)||0;
+                diff = (newburn-oldburn)||0;
+                level = parseInt(v.level,10)||0;
+                newdmg=diff*level;
+                TAS.debug("PFOccult.change:kineticistburn level:"+ level+", newdmg:"+newdmg+", curr nld:"+nld,v);
+                newnld = nld + newdmg;
+                if (newnld<0){
+                    newnld=0;
+                }
+                setter['non-lethal-damage']=newnld;
+            }
+        } catch (err){
+            TAS.error("PFOccult.change:kineticistburn kineticburn",err);
+        } finally {
+            if (_.size(setter)){
+                SWUtils.setWrapper(setter,PFConst.silentParams);
+            }
+        }
+    });
+}
 
 export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dummy,oldversion){
     getAttrs(['use_burn'],function(vout){
@@ -177,33 +205,8 @@ on("change:create_kineticblast_attack",TAS.callback(function eventCreateKineticA
 }));
 
 on("change:kineticistburn",TAS.callback(function eventUpdateBurn(eventInfo){
-    if(eventInfo.sourceType==="player"||eventInfo.sourceType==="api"){
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-        getAttrs(['non-lethal-damage','kineticistburn','oldkineticistburn','level'],function(v){
-            var nld=0,oldburn=0,newburn=0,diff=0,level=0,newdmg=0,newnld=0,setter={};
-            try{
-                oldburn=parseInt(v['oldkineticistburn'],10)||0;
-                newburn=parseInt(v['kineticistburn'],10)||0;
-                if(oldburn!==newburn){
-                    setter.oldkineticistburn=newburn;
-                    nld=parseInt(v['non-lethal-damage'],10)||0;
-                    diff = (newburn-oldburn)||0;
-                    level = parseInt(v.level,10)||0;
-                    newdmg=diff*level;
-                    TAS.debug("PFOccult.change:kineticistburn level:"+ level+", newdmg:"+newdmg+", curr nld:"+nld,v);
-                    newnld = nld + newdmg;
-                    if (newnld<0){
-                        newnld=0;
-                    }
-                    setter['non-lethal-damage']=newnld;
-                }
-            } catch (err){
-                TAS.error("PFOccult.change:kineticistburn kineticburn",err);
-            } finally {
-                if (_.size(setter)){
-                    SWUtils.setWrapper(setter,PFConst.silentParams);
-                }
-            }
-        });
+    if(eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        updateNLDamageFromBurn(eventInfo);
     }
 }));
