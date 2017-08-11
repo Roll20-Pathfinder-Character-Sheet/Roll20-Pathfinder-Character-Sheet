@@ -560,7 +560,6 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
 						attrs["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
-						console.log(attrs["Concentration-"+spellClassIndex+"-ability"]);
 						break;
 					}
 				}
