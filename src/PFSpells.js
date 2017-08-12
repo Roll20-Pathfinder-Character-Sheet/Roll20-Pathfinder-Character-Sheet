@@ -1629,6 +1629,7 @@ export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback,
         resetSpellsPrepared();
         resetSpellsTotals(null, null, null, silently);
         resetCommandMacro();
+        PFSpellOptions.resetOptions();
         done();
     }),
     callUpdateSpells = _.once(function(){

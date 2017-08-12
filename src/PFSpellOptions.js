@@ -12,34 +12,34 @@ export var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_t
     "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", 
     "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes"],
 optionTemplates = {
-    school: "{{school=REPLACE}}",
-    casting_time: "{{casting_time=REPLACE}}",
-    components: "{{components=REPLACE}}",
-    duration: "{{duration=REPLACE}}",
-    saving_throw: "{{saving_throw=REPLACE}}",
-    sr: "{{sr=REPLACE}}",
-    casterlevel: "{{casterlevel=[[ REPLACE ]]}}",
-    range: "{{range=REPLACE}}",
-    targets: "{{targets=REPLACE}}",
-    Concentration: "{{Concentration=[[ REPLACE ]]}}",
-    description: "{{description=REPLACE}}",
-    dc: "{{dc=[[ REPLACE ]]}}",
-    spellPen: "{{spellPen=[[ REPLACE ]]}}",
-    range_pick: "{{REPLACE=Range_pick}}",
-    rangetext: "{{rangetext=REPLACE}}",
-    level: "{{level=REPLACE}}",
-    spellclass: "{{spellclass=REPLACE}}",
+    school: "{{school=@{school}}}",
+    casting_time: "{{casting_time=@{cast-time}}}",
+    components: "{{components=@{components}}}",
+    duration: "{{duration=@{duration}}}",
+    saving_throw: "{{saving_throw=@{save}}}",
+    sr: "{{sr=@{sr}}}",
+    casterlevel: "{{casterlevel=[[ @{casterlevel} ]]}}",
+    range: "{{range=@{range_numeric}}}",
+    targets: "{{targets=@{targets}}}",
+    Concentration: "{{Concentration=[[ @{Concentration-mod} ]]}}",
+    description: "{{description=@{description}}}",
+    dc: "{{dc=[[ @{savedc} ]]}}",
+    spellPen: "{{spellPen=[[ @{SP-mod} ]]}}",
+    range_pick: "{{@{range_pick}=Range_pick}}",
+    rangetext: "{{rangetext=@{range}}}",
+    level: "{{level=@{spell_level}}}",
+    spellclass: "{{spellclass=@{spellclass}}}",
     cast_def: "{{cast_def=[[ REPLACE ]]}}",
     cast_defDC: "{{cast_defDC=[[ REPLACE ]]}}",
     concentrationNote: "{{concentrationNote=REPLACE}}",
     spellPenNote: "{{spellPenNote=REPLACE}}",
-    casterlevel_chk: "{{casterlevel_chk=[[ 1d20 + REPLACE ]]}}",
-    Concentration_chk: "{{Concentration_chk=[[ 1d20 + REPLACE ]]}}",
+    casterlevel_chk: "{{casterlevel_chk=[[ 1d20 + @{casterlevel} ]]}}",
+    Concentration_chk: "{{Concentration_chk=[[ 1d20 + @{Concentration-mod} ]]}}",
     spellnotes: "{{spells_notes=REPLACE}}",
     spell_fail_check: "{{spell_fail_check=[[ 1d100cf<[[ @{spell-fail} ]]cs>[[ @{spell-fail}+1 ]] ]]}}",
     spell_fail: "{{spell_fail=@{spell-fail}}}",
-    spelldamage: "{{spelldamage=REPLACE}}",
-    spelldamagetype: "{{spelldamagetype=REPLACE}}"
+    spelldamage: "{{spelldamage=@{damage-macro-text}}}",
+    spelldamagetype: "{{spelldamagetype=@{damage-type}}}"
 },
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
@@ -92,35 +92,35 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                     //TAS.debug"made it inside toggleField");
                     switch (fieldUpdated) {
                         case 'school':
-                            optionText = optionText.replace(optionTemplateRegexes.school, optionTemplates.school.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.school, optionTemplates.school);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'cast-time':
-                            optionText = optionText.replace(optionTemplateRegexes.casting_time, optionTemplates.casting_time.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.casting_time, optionTemplates.casting_time);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'components':
-                            optionText = optionText.replace(optionTemplateRegexes.components, optionTemplates.components.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.components, optionTemplates.components);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'duration':
-                            optionText = optionText.replace(optionTemplateRegexes.duration, optionTemplates.duration.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.duration, optionTemplates.duration);//replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'range':
-                            optionText = optionText.replace(optionTemplateRegexes.range, optionTemplates.range.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.range, optionTemplates.range);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'targets':
-                            optionText = optionText.replace(optionTemplateRegexes.targets, optionTemplates.targets.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            optionText = optionText.replace(optionTemplateRegexes.targets, optionTemplates.targets);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'save':
                             if (PFUtils.shouldNotDisplayOption('saving_throw', newValue)) {
                                 optionText = PFUtils.deleteOption(optionText, "saving_throw", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.saving_throw, optionTemplates.saving_throw.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                                optionText = optionText.replace(optionTemplateRegexes.saving_throw, optionTemplates.saving_throw);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             }
                             break;
                         case 'sr':
                             if (PFUtils.shouldNotDisplayOption('sr', newValue)) {
                                 optionText = PFUtils.deleteOption(optionText, "sr", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.sr, optionTemplates.sr.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.sr, optionTemplates.sr);//.replace("REPLACE", newValue));
                             }
                             break;
                         case 'damage-macro-text':
@@ -128,7 +128,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             if (PFUtils.shouldNotDisplayOption('damage-macro-text', newValue)) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamage", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.spelldamage, optionTemplates.spelldamage.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.spelldamage, optionTemplates.spelldamage);//.replace("REPLACE", newValue));
                             }
                             break;
                         case 'damage-type':
@@ -136,7 +136,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             if (PFUtils.shouldNotDisplayOption('damage-type', newValue)) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamagetype", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates.spelldamagetype.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates);//.spelldamagetype.replace("REPLACE", newValue));
                             }
                             break;
                     }
@@ -179,69 +179,69 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         return "{{condition_note=@{condition_spell_notes}}}";
     }
     if (toggleValues.showschool) {
-        optionText += optionTemplates.school.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "school"]))||"";
+        optionText += optionTemplates.school;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "school"]))||"";
     }
     if (toggleValues.showlevel) {
-        optionText += optionTemplates.spellclass.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "spellclass"]))||"";
-        optionText += optionTemplates.level.replace("REPLACE", spellLevel);
+        optionText += optionTemplates.spellclass;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "spellclass"]))||"";
+        optionText += optionTemplates.level;//.replace("REPLACE", spellLevel);
     }
     if (toggleValues.showcasting_time) {
-        optionText += optionTemplates.casting_time.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "cast-time"]))||"";
+        optionText += optionTemplates.casting_time;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "cast-time"]))||"";
     }
     if (toggleValues.showcomponents) {
-        optionText += optionTemplates.components.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "components"]))||"";
+        optionText += optionTemplates.components;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "components"]))||"";
     }
     if (toggleValues.showsaving_throw) {
         newValue = rowValues[prefix + "save"] || "";
         if (PFUtils.shouldNotDisplayOption('saving_throw', newValue)) {
             optionText += "{{saving_throw=}}";
         } else {
-            optionText += optionTemplates.saving_throw.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)||"");
+            optionText += optionTemplates.saving_throw;//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)||"");
         }
-        optionText += optionTemplates.dc.replace("REPLACE", parseInt(rowValues[prefix + "savedc"], 10) || 0);
+        optionText += optionTemplates.dc;//.replace("REPLACE", parseInt(rowValues[prefix + "savedc"], 10) || 0);
     }
     if (toggleValues.showrange) {
-        optionText += optionTemplates.range_pick.replace("REPLACE", rowValues[prefix + "range_pick"] || "blank")||"";
-        optionText += optionTemplates.range.replace("REPLACE", parseInt(rowValues[prefix + "range_numeric"], 10) || 0)||"";
-        optionText += optionTemplates.rangetext.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "range"] || "")||"");
+        optionText += optionTemplates.range_pick;//.replace("REPLACE", rowValues[prefix + "range_pick"] || "blank")||"";
+        optionText += optionTemplates.range;//.replace("REPLACE", parseInt(rowValues[prefix + "range_numeric"], 10) || 0)||"";
+        optionText += optionTemplates.rangetext;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "range"] || "")||"");
     }
     if (toggleValues.showtargets) {
-        optionText += optionTemplates.targets.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "targets"])||"");
+        optionText += optionTemplates.targets;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "targets"])||"");
     }
     if (toggleValues.showduration) {
-        optionText += optionTemplates.duration.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "duration"])||"");
+        optionText += optionTemplates.duration;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "duration"])||"");
     }
     if (toggleValues.showsr) {
         newValue = rowValues[prefix + "sr"] || "";
         if (PFUtils.shouldNotDisplayOption('sr', newValue)) {
             optionText += "{{sr=}}";
         } else {
-            optionText += optionTemplates.sr.replace("REPLACE", newValue)||"";
+            optionText += optionTemplates.sr;//.replace("REPLACE", newValue)||"";
         }
     }
     if (toggleValues.showcasterlevel && customCasterlevel) {
-        optionText += optionTemplates.casterlevel.replace("REPLACE", casterlevel)||"";
+        optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
     } else {
         optionText += "{{casterlevel=}}";
     }
     if (toggleValues.showcasterlevel_check) {
-        optionText += optionTemplates.casterlevel_chk.replace("REPLACE", casterlevel)||"";
+        optionText += optionTemplates.casterlevel_chk;//.replace("REPLACE", casterlevel)||"";
     }
     if (toggleValues.showcasterlevel || toggleValues.showcasterlevel_check) {
         newValue = parseInt(rowValues[prefix + "SP-mod"], 10) || 0;
         if (newValue === 0) {
             optionText += "{{spellPen=}}";
         } else {
-            optionText += optionTemplates.spellPen.replace("REPLACE", newValue)||"";
+            optionText += optionTemplates.spellPen;//.replace("REPLACE", newValue)||"";
         }
     }
     if (toggleValues.showconcentration && customConcentration) {
-        optionText += optionTemplates.Concentration.replace("REPLACE", concentrationMod)||"";
+        optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     } else {
         optionText += "{{Concentration=}}";
     }
     if (toggleValues.showconcentration_check) {
-        optionText += optionTemplates.Concentration_chk.replace("REPLACE", concentrationMod)||"";
+        optionText += optionTemplates.Concentration_chk;//.replace("REPLACE", concentrationMod)||"";
     }
     if (toggleValues.showconcentration || toggleValues.showconcentration_check) {
         if (defMod > 0) {
@@ -252,7 +252,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.cast_defDC.replace("REPLACE", defDC)||"";
     }
     if (toggleValues.showdescription) {
-        optionText += optionTemplates.description.replace("REPLACE", "@{description}")||"";
+        optionText += optionTemplates.description;//.replace("REPLACE", "@{description}")||"";
     } 
     if (toggleValues.showspellnotes) {
         optionText += optionTemplates.spellnotes.replace("REPLACE", "@{spell-class-"+classNum+"-spells-notes}")||"";
@@ -265,12 +265,12 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
 
     if (toggleValues.showdamage ){
         if(!PFUtils.findAbilityInString(rowValues[prefix+"spell-attack-type"])){
-            optionText += optionTemplates.spelldamage.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
+            optionText += optionTemplates.spelldamage;//.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
         } else {
             optionText += "{{spelldamage=}}";
         }
         if (rowValues["damage-type"]){
-            optionText += optionTemplates.spelldamagetype.replace("REPLACE", rowValues["damage-type"]||"");
+            optionText += optionTemplates.spelldamagetype;//.replace("REPLACE", rowValues["damage-type"]||"");
         } else {
             optionText += "{{spelldamagetype=}}";
         }

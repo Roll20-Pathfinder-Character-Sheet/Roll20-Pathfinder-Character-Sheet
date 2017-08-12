@@ -521,7 +521,9 @@ export function updateModifiedSpeed  (callback) {
                             newSpeed = ((base + 10) * 2 / 3) - 5;
                         }
                     }
-                    runMult--;
+                    if (combinedLoad===2){
+                        runMult--;
+                    }
                 } else {
                     newSpeed = base;
                 }
