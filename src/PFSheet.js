@@ -567,18 +567,6 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
-/** migrates sheet specific things not part of other modules
- * @param {number} oldversion the current version attribute
- * @param {function} callback when done if no errors
- * 
- * @param {} callback 
- * @param {*} oldversion 
- */
-export function migrate (callback,oldversion){
-	if (typeof callback === "function"){
-		callback();
-	}
-}
 
 /** recalculate - all pages in sheet!  
  *@param {number} oldversion the current version attribute
@@ -661,6 +649,7 @@ export function checkForUpdate (forceRecalc) {
 		if (newSheet) {
 			setupNewSheet(done);
 		} else if (migrateSheet){
+			TAS.notice("UPGRADE SHEET");
 			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
