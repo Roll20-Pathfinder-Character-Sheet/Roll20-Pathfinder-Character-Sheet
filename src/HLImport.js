@@ -4,6 +4,8 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog, PFConsole} from './PFLog';
 import * as PFSheet from './PFSheet';
 import * as PFHealth from  './PFHealth';
+import * as PFSpellOptions from './PFSpellOptions';
+import * as PFSpells from './PFSpells';
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -233,7 +235,7 @@ export function importFeats (attrs,feats,featIDList,resources)
 // Hero Lab stores armor and shields identically, so so assume anything with "shield" or "klar" in the name is a shield
 export function nameIsShield (name)
 {
-	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
+	if (name.toLowerCase().indexOf("shield") !== -1 || name.toLowerCase().indexOf("buckler") !== -1 || name.toLowerCase().indexOf("klar") !== -1)
 		return true;
 	return false;
 }
@@ -244,7 +246,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 	getSectionIDs(repeatPrefix, function(idarray) {
 		var itemNameAttrs = _.union(_.map(idarray,function(id) { return repeatPrefix+"_"+id+"_name"; }),["shield3-acp","shield3-spell-fail"]);
 		getAttrs(itemNameAttrs, function(names) {
-			console.log("importItems");
+
 			// Pull out the shield attributes before we build the ID list
 			var shieldACP = parseNum(names["shield3-acp"]);
 			var shieldASF = parseNum(names["shield3-spell-fail"]);
@@ -551,17 +553,15 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 				
 			// Make a guess at which ability modifier is used for this class
 			if (!_.isUndefined(classes[spellClassName]._basespelldc))
-				abMod = parseNum(classes[spellClassName]._basespelldc) - 10;
-			if (!_.isUndefined(classes[spellClassName]._basespelldc))
 			{
+				abMod = parseNum(classes[spellClassName]._basespelldc) - 10;
+
 				// Start at the fourth ability score (Intelligence), so we skip the physical abilities
 				for (j = 3; j < abScores.length; j++)
 				{
 					if (parseNum(abScores[j].attrbonus._modified) === abMod)
 					{
-						var attr = {}
-						attr["Concentration-"+spellClassIndex+"-ability"] = +abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
-						setAttrs(attr,{silent: true});
+						attrs["Concentration-"+spellClassIndex+"-ability"] = abScores[j]._name.substr(0,3).toUpperCase()+"-mod";
 						break;
 					}
 				}
@@ -627,7 +627,6 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 
 export function importSpells (spells,spellclasses)
 {
-	console.log("Import spells");
 	var wizNames = ["Abjurer","Conjurer","Diviner","Enchanter","Evoker","Illusionist","Necromancer","Transmuter"];
 	var repeatPrefix = "repeating_spells";
 	getSectionIDs(repeatPrefix, function(idarray) {
@@ -699,9 +698,24 @@ export function importSpells (spells,spellclasses)
 				attrs[repeatPrefix+"_save"] = spell._save.replace(/DC \d+/,"").trim();
 				attrs[repeatPrefix+"_savedc"] = parseNum(spell._dc);
 				attrs[repeatPrefix+"_cast-time"] = spell._casttime;
-				attrs[repeatPrefix+"_sr"] = spell._resist.replace("harmless","Harmless");
 				attrs[repeatPrefix+"_DC_misc"] = parseNum(spell._dc) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._basespelldc) - level;
+				attrs[repeatPrefix+"_CL_misc"] = parseNum(spell._casterlevel) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._casterlevel);
+				attrs[repeatPrefix+"_casterlevel"] = spell._casterlevel;
 	
+				if (spell._resist.toLowerCase().indexOf("yes") !== -1)
+				{
+					if (spell._resist.toLowerCase().indexOf("harmless") !== -1)
+						attrs[repeatPrefix+"_sr"] = "Yes (Harmless)";
+					else if (spell._resist.toLowerCase().indexOf("object") !== -1)
+						attrs[repeatPrefix+"_sr"] = "Yes (Object)";
+					else
+						attrs[repeatPrefix+"_sr"] = "Yes";
+				}
+				else if (spell._resist.toLowerCase().indexOf("no") !== -1)
+					attrs[repeatPrefix+"_sr"] = "No";
+				else
+					attrs[repeatPrefix+"_sr"] = "";
+
 				switch(spell._range.toLowerCase())
 				{
 					case "close (25 + 5 ft./2 levels)":
@@ -738,7 +752,7 @@ export function importSpells (spells,spellclasses)
 				
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
-			setAttrs(attrs, {silent: true});
+			setAttrs(attrs, {silent: true},function(){PFSpellOptions.resetOptions();PFSpells.resetCommandMacro()});
 		});
 	});
 }
@@ -836,7 +850,7 @@ export function importSkills (attrs,skills,size,ACP)
 			continue;
 		}*/
 		skill = skills[i];
-		console.log(skill._name);
+
 		// Figure out where we're putting this skill on the character sheet
 		if (skill._name.indexOf("Craft") !== -1)
 		{
