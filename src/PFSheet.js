@@ -590,7 +590,7 @@ export function recalculate (oldversion, callback, silently) {
 		recalculateCore(callEncumbrance, silently, oldversion);
 	});
 	silently=true;
-	migrate(callRecalcCore,oldversion);
+	callRecalcCore();
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
  *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
