@@ -4,6 +4,7 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import {PFLog, PFConsole} from './PFLog';
 import * as PFSheet from './PFSheet';
 import * as PFHealth from  './PFHealth';
+import * as PFSpellOptions from './PFSpellOptions';
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -750,7 +751,7 @@ export function importSpells (spells,spellclasses)
 				
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
-			setAttrs(attrs, {silent: true});
+			setAttrs(attrs, {silent: true},function(){PFSpellOptions.resetOptions();});
 		});
 	});
 }
