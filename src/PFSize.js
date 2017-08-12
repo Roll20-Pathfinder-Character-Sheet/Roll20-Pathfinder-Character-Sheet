@@ -178,11 +178,17 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				if (sizediff >0 ) {
 					currSize++;
 					sizediff--;
-					if (currow===20){break;}
+					if (currow>=20){
+						TAS.warn("PFSize.updateDamageDice increased off top of grid to row "+currow);
+						break;
+					}
 				} else {
 					currSize--;
 					sizediff++;
-					if (currow===1) {break;}
+					if (currow<=1) {
+						TAS.warn("PFSize.updateDamageDice decreased under bottom of grid to row "+currow);
+						break;
+					}
 				}
 				TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
 			}
@@ -221,17 +227,17 @@ export function setSize(str,setter){
 	}
 }
 
-export function updateSize (v,eventInfo,setter) {
+export function updateSize (levelChange,v,eventInfo,setter) {
 	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
 		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
 		size = parseInt(v['size'], 10) || 0;
-		buffLevels=parseInt(v['buff_size-total'],10)||0;
-		if (buffLevels!==0 ){
+//		buffLevels=parseInt(v['buff_size-total'],10)||0;
+		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
-			newlevel = deflevel+buffLevels;
+			newlevel = deflevel+levelChange;
 			buffSize = reverseSizeMap[String(newlevel)];
 			if (buffSize!==size){
 				setter['size']=buffSize;
@@ -243,14 +249,9 @@ export function updateSize (v,eventInfo,setter) {
 				size = defaultSize;
 			}
 		}
-		try {
-			tempstr=reverseSizeNameMap[String(size)];
-			if (tempstr){
-				sizeDisplay = getTranslationByKey(sizeDisplay);
-			}
-		} catch (err3){
-			sizeDisplay = tempstr;
-		}
+
+		tempstr=reverseSizeNameMap[String(size)];
+		sizeDisplay=SWUtils.getTranslated(tempstr);
 		if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
 			setter.size_display=sizeDisplay;
 		}
@@ -266,7 +267,7 @@ export function updateSize (v,eventInfo,setter) {
 	}
 }
 
-export function updateSizeAsync (callback, silently,eventInfo) {
+export function updateSizeAsync (callback, silently,dummy,eventInfo) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -274,9 +275,11 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 	});
 	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
-		setter = {};
+		setter = {},
+		levelChange=0;
 		try {
-			updateSize(v,eventInfo,setter);
+			levelChange=parseInt(v['buff_size-total'],10)||0;
+			updateSize(levelChange,v,eventInfo,setter);
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
@@ -285,7 +288,7 @@ export function updateSizeAsync (callback, silently,eventInfo) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, done);
 			} else {
 				done();
 			}
@@ -308,16 +311,16 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFSizeRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFSize.recalculate");
+		//TAS.debug("leaving PFSize.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	});
-	TAS.debug("At PFSize.recalculate");
+	//TAS.debug("At PFSize.recalculate");
 	updateSizeAsync(done, silently,null);
-}
+});
 function registerEventHandlers () {
 	//size
 	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {
