@@ -5,6 +5,7 @@ import {PFLog, PFConsole} from './PFLog';
 import * as PFSheet from './PFSheet';
 import * as PFHealth from  './PFHealth';
 import * as PFSpellOptions from './PFSpellOptions';
+import * as PFSpells from './PFSpells';
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -751,7 +752,7 @@ export function importSpells (spells,spellclasses)
 				
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
-			setAttrs(attrs, {silent: true},function(){PFSpellOptions.resetOptions();});
+			setAttrs(attrs, {silent: true},function(){PFSpellOptions.resetOptions();PFSpells.resetCommandMacro()});
 		});
 	});
 }
