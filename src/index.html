@@ -10063,9 +10063,12 @@
 										</label>											
 									</div>
 									<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-									<input class="sheet-macro-text" type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" />
-									<textarea class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
-									<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper}  &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+									<div class="sheet-macro-text" >
+										<span style="display:inline;background:white;"><span data-i18n="options">Options</span>:</span>
+										<input style="display:inline;width:90%;float:right;"  type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" />
+										<textarea class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
+										<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper}  &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+									</div>
 									<div class="sheet-repeating-id">
 										<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id" />
 									</div>
@@ -11671,9 +11674,12 @@
 												</label>											
 											</div>
 											<textarea class="sheet-desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-											<input class="sheet-macro-text" type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" />
-											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
-											<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+											<div class="sheet-macro-text" >
+												<span style="display:inline;background:white;"><span data-i18n="options">Options</span>:</span>
+												<input style="display:inline;width:90%;float:right;"  type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" />
+												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+												<textarea class="sheet-macro-text" title="@{repeating_spells_$X_npc-macro-text}" name="attr_npc-macro-text">@{NPC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
+											</div>
 											<div class="sheet-repeating-id">
 												<span data-i18n="row-identification-for-macros">Row ID for macros</span>: <span class="sheet-selectable" name="attr_row_id"></span>
 											</div>
