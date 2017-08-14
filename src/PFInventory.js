@@ -46,24 +46,6 @@ defaultRepeatingMacroMap = {
 },
 defaultDeletedMacroAttrs=[];
 
-export function migrateRepeatingMacros(callback){
-    var done = _.once(function () {
-        //TAS.debug("leaving PFInventory.resetCommandMacro: ");
-        if (typeof callback === "function") {
-            callback();
-        }
-    }), 
-    migrated = function(){
-        SWUtils.setWrapper({'migrated_item_macrosv1':1},PFConst.silentParams, done);
-    };
-    getAttrs(['migrated_item_macrosv1'],function(v){
-        if((parseInt(v.migrated_item_macros,10)||0)!==1){
-            PFMacros.migrateRepeatingMacros(migrated,'item','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
-        } else {
-            done();
-        }
-    });
-}
 /** resetCommandMacro sets command button macro with all rows from one ability list.
  * calls PFMenus.getRepeatingCommandMacro
  * sets the returned string to macro with attribute name: section+"_buttons_macro"
@@ -704,7 +686,7 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
 //                    }
                 } else if (location > locationMap.NotCarried) {
                     wornSlot = getWornItemNameField(location);
-                    TAS.debug("#####################at set location the new location "+ location+","+locationNames[location]+ " is "+wornSlot);
+                    //TAS.debug("#####################at set location the new location "+ location+","+locationNames[location]+ " is "+wornSlot);
                     if (wornSlot) {
                         itemName = v[nameField] || "";
                         if (itemName){
@@ -1620,31 +1602,11 @@ export function migrate  (callback, oldversion) {
         if (typeof callback === "function"){
             callback();
         }
-    }),
-    migrateMacroAddNewAttrs=function(){
-        getAttrs(['migrated_itemlist_newfields'],function(v){
-            try{
-                if(!parseInt(v.migrated_itemlist_newfields,10)){
-                    //PFMacros.migrateRepeatingMacros(done,'item','macro-text',
-                    //    defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs);
-                    SWUtils.setWrapper({'migrated_itemlist_newfields':1},PFConst.silentParams);
-                } else{
-                    done();
-                }
-            }catch (err){
-                TAS.error("PFInventory.migrate.migrateMacroAddNewAttrs",err);
-                done();
-            }
-        });
-    };
+    });
     //TAS.debug("At PFInventory.migrate");
     PFMigrate.migrateRepeatingItemAttributes(TAS.callback(function callPFInventorySetNewDefaults(){
         setNewDefaults(TAS.callback( function callPFInventoryMigrateWornEquipment(){
-            migrateWornEquipment(function(){
-                migrateMacroAddNewAttrs();
-                migrateRepeatingMacros();
-                done();
-            });
+            migrateWornEquipment(done);
         }));
     }));
 }

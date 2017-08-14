@@ -74,7 +74,7 @@ export function updateSaves(callback,silently){
 }
 export var recalculate = TAS.callback(function PFSavesRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.info("leaving PFSaves.recalculate");
+		TAS.debug("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}

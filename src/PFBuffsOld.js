@@ -315,16 +315,15 @@ function updateAllBuffTotalsAsync (callback,silently){
 			callback();
 		}
 	});
-
+	TAS.debug("PFBuffsOld.updateAllBuffTotalsAsync");
 	getSectionIDs('repeating_buff',function(ids){
-		var fields,buffRepFields;
+		var fields;
 		if(!ids || _.size(ids)===0){
 			clearBuffTotals(done,silently);
 			return;
 		}
-		buffRepFields = buffColumns.map(function(buff){return '_buff-'+buff;});
-		buffRepFields = buffRepFields.concat(SWUtils.cartesianAppend(['_buff-'],buffColumns,['-show','_type']));
-		fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,buffRepFields);
+		fields = SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-'],buffColumns,['','-show']);
+		fields = fields.concat(SWUtils.cartesianAppend(['repeating_buff_'],ids,['_buff-enable_toggle']));
 		fields = fields.concat(buffTotFields);
 		//fields = fields.concat(charBonusFields);
 		fields.push('use_buff_bonuses');
@@ -335,12 +334,13 @@ function updateAllBuffTotalsAsync (callback,silently){
 			bonuses = {},
 			params={}, setter={};
 			try {
-				//TAS.debug("PFBuffsOld.updateAllBuffTotalsAsync found:",v);
+				TAS.debug("PFBuffsOld.updateAllBuffTotalsAsync found:",v);
 				useBonuses=parseInt(v.use_buff_bonuses,10)||0;
 				ids = ids.filter(function(id){
 					return parseInt(v['repeating_buff_'+id+'_buff-enable_toggle'],10);
 				});
 				if(!ids || _.size(ids)===0){
+					TAS.debug("there are no ids with enable toggle checked");
 					clearBuffTotals(done,silently);
 					return;
 				}				
@@ -399,6 +399,7 @@ export function reEvaluateCustomMacros(callback,silently){
 	recalculateBuffColumn = function (ids, col) {
 		var rowtotal = _.size(ids),
 			rowDone;
+		TAS.debug("PFBuffsOld.recalculateBuffColumn:"+col);
 		if (col==='size'){
 			columnDone();
 			return;
@@ -558,14 +559,16 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 			callback();
 		}
 	});
-	migrate(function(){
-		getAttrs(['use_buff_bonuses'],function(v){
-			if(parseInt(v.use_buff_bonuses,10)!==1){
+	getAttrs(['use_buff_bonuses'],function(v){
+		if(!parseInt(v.use_buff_bonuses,10)){
+			TAS.debug("USING OLD BUFFS");
+			migrate(function(){
 				reEvaluateCustomMacros(done,silently);
-			} else {
-                done();
-            }
-		});
+			});
+		} else {
+			TAS.debug("USING NEW BUFFS");
+			done();
+		}
 	});
 });
 function registerEventHandlers () {

@@ -530,7 +530,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         }
     }),
     attribList = [], itemId='',idStr='',item_entry='',
-    attributes = ["range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
+    attributes = ["create-attack-entry", "range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
     commonAttributes = ["spell-attack-type","name"];
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
@@ -557,21 +557,23 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         idStr="",
         params = {};
         try {
-            //TAS.debug("at PFSpells.createAttackEntryFromRow",v);
-            if (!PFUtils.findAbilityInString(v[item_entry + "spell-attack-type"]) && !v[item_entry + "damage-macro-text"]) {
-                TAS.warn("no attack to create for spell "+ v[item_entry+"name"] +", "+ itemId );
-            } else {
-                if (! weaponId ){
-                    newRowId = generateRowID();
+            if (parseInt(v[prefix+"create-attack-entry"],10)){
+                //TAS.debug("at PFSpells.createAttackEntryFromRow",v);
+                if (!PFUtils.findAbilityInString(v[item_entry + "spell-attack-type"]) && !v[item_entry + "damage-macro-text"]) {
+                    TAS.warn("no attack to create for spell "+ v[item_entry+"name"] +", "+ itemId );
                 } else {
-                    newRowId = weaponId;
+                    if (! weaponId ){
+                        newRowId = generateRowID();
+                    } else {
+                        newRowId = weaponId;
+                    }
+                    idStr = newRowId+"_";
+                    prefix += idStr;
+                    setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
+                    setter[prefix + "source-spell"] = itemId;
+                    setter[prefix+"group"]="Spell";
+                    setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
                 }
-                idStr = newRowId+"_";
-                prefix += idStr;
-                setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
-                setter[prefix + "source-spell"] = itemId;
-                setter[prefix+"group"]="Spell";
-				setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
             }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
@@ -1603,7 +1605,7 @@ export function migrateRepeatingMacros (callback){
         SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
     });
     getAttrs(['migrated_spells_macrosv1'],function(v){
-        if (parseInt(v.migrated_spells_macrosv1,10)!==1){
+        if (!parseInt(v.migrated_spells_macrosv1,10)){
             PFMacros.migrateRepeatingMacros(migrated,'spells','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
             PFMacros.migrateRepeatingMacros(migrated,'spells','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
         } else {
@@ -1627,6 +1629,7 @@ export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback,
         resetSpellsPrepared();
         resetSpellsTotals(null, null, null, silently);
         resetCommandMacro();
+        PFSpellOptions.resetOptions();
         done();
     }),
     callUpdateSpells = _.once(function(){

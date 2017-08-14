@@ -330,6 +330,16 @@ function registerEventHandlers  () {
             setHitPoints();					
         }
     }));
+    on("change:class-0-level change:class-1-level change:class-2-level change:class-3-level change:class-4-level change:class-5-level change:bab change:level",TAS.callback(function eventUpdateLevel(eventInfo){
+        if (((eventInfo.sourceAttribute==='level' || eventInfo.sourceAttribute==='bab') && eventInfo.sourceType === "sheetworker") 
+        || eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            _.each(PFConst.levelPlusBABManualDropdowns,function(attr){
+                SWUtils.setDropdownValue(attr,attr+'-mod');
+            });
+        }
+    }));
+
 }
 registerEventHandlers();
 //PFConsole.log('   PFClassRaceGrid module loaded  ' );
