@@ -237,9 +237,9 @@ input[readonly], input[disabled] {
     width: 10em;
 }
 .sheet-kinetic-sect .sheet-linked-tablecell {
-    margin-right: -1em;
+    margin-left: -.25em;
+    margin-right: -.25em;
 }
-
 
 /* like br */
 .sheet-cheat {
