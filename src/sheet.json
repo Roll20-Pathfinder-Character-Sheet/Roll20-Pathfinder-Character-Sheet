@@ -22,6 +22,13 @@
 			"description" : "Use to update all sheets to latest versionusing Apply Default Settings on Experimental Features section of Settings from INSIDE your campaign."
 		},
 		{
+			"attribute": "hide_announcements",
+			"displayname": "Hide announcements for new sheets",
+			"type": "checkbox",
+			"value": "1",
+			"description" : "Can use on campaign settings 'experimental' section to hide announcements for all sheets after updates.."
+		},
+		{
 			"attribute": "PC-whisper",
 			"displayname": "PC rolls",
 			"type": "select",
