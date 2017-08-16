@@ -10,6 +10,8 @@
 <input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
+<input type="checkbox" name="attr_use_specfont" value="6" class="sheet-fantasy2 sheet-noshow" role="presentation" />
+<input type="checkbox" name="attr_use_specfont" value="7" class="sheet-fantasy3 sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_background" value="1" class="sheet-graph-paper sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_background" value="2" class="sheet-parchment-1 sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_background" value="3" class="sheet-parchment-2 sheet-noshow" role="presentation" />
@@ -12953,12 +12955,14 @@
 					<span class="sheet-table-config-row-name" data-i18n="font-background" >Font / background</span>
 					<span class="sheet-table-cell sheet-left">
 						<select name="attr_use_specfont" title="@{use_specfont}" class="sheet-select-small sheet-entry-med">
-							<option value="0" data-i18n="arial-default">•Arial</option>
+							<option value="0" data-i18n="arial-default">•Lucida Grande</option>
 							<option value="1" data-i18n="verdana">Verdana</option>
 							<option value="2" data-i18n="comic-sans">Comic Sans</option>
 							<option value="3" data-i81n="segoe">Segoe UI</option>
-							<option value="4" data-i81n="lucida">Lucida</option>
-							<option value="5" data-i81n="fantasy">Fantasy</option>
+							<option value="4" data-i81n="lucida">Lucida Sans</option>
+							<option value="5" data-i81n="fantasy">zapf-chancery</option>
+							<option value="6" data-i81n="papyrus">Papyrus</option>
+							<option value="7" data-i81n="copperplate">Copperplate</option>
 						</select>
 					</span>
 					<span class="sheet-table-cell sheet-left">
@@ -13697,11 +13701,6 @@
 	<div role="contentinfo" aria-label="rolltemplates" class="sheet-section-roll_templates" style="display:none;opacity:0;height:1em;overflow:hidden;">
 		<!-- Spell Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_spell">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_spell {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
 				<div class="sheet-roll-header" style="width:100%;">
@@ -14038,11 +14037,6 @@
 		</rolltemplate>
 		<!-- Attack Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_attack">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
 				<div class="sheet-roll-header" style="width:100%;">
@@ -14397,11 +14391,6 @@
 		</rolltemplate>
 		<!-- Defense Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_defense">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_defense {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
 				<div class="sheet-roll-header" style="width:100%;">
@@ -14512,11 +14501,6 @@
 		</rolltemplate>
 		<!-- Ability Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_ability">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_ability {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
 				<div class="sheet-roll-header">
@@ -14672,11 +14656,6 @@
 		</rolltemplate>
 		<!-- Generic Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_generic">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_generic {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
 				<div class="sheet-roll-header">
@@ -14781,11 +14760,6 @@
 		</rolltemplate>
 		<!-- Block Text Roll Templates -->
 		<rolltemplate class="sheet-rolltemplate-pf_block">
-			<input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comid-sans sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="4" class="sheet-lucida sheet-noshow" role="presentation" />
-			<input type="checkbox" name="attr_use_specfont" value="5" class="sheet-fantasy sheet-noshow" role="presentation" />
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_block {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="menu" >
 				<div class="sheet-roll-header" style="width:100%;">
