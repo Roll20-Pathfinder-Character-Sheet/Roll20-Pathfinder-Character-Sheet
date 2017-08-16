@@ -378,21 +378,21 @@ h1,h2,h3,h4,
 	--sheet-pf-header-specfont: Lucida Sans Unicode, Trebuchet MS, Lucida Grande, sans-serif;
 }
 
-.sheet-fantasy:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-header-specfont:  Zapf Chancery, Lucida Calligraphy, Brush Script MT, Georgia, serif;
-	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
-}
 
-.sheet-fantasy2:checked ~ .sheet-pf-wrapper {
+.sheet-fantasy:checked ~ .sheet-pf-wrapper {
     --sheet-pf-header-specfont:  Papyrus,  Matura MT Script Capitals, Brush Script MT, serif;
 	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
 }
 
-.sheet-fantasy3:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate, Century Gothic, serif;
-    --sheet-pf-specfont: Copperplate Gothic Light, Copperplate, Centure Gothic, serif;
+.sheet-fantasy2:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate Gothic, Copperplate Gothic Light, Coperplate,  serif;
+    --sheet-pf-specfont: Copperplate Gothic Light, Copperplate,  serif;
 }
 
+.sheet-fantasy3:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont:  Zapf Chancery, Lucida Calligraphy, Brush Script MT, Georgia, serif;
+	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
+}
 .sheet-pf-wrapper,
 .sheet-rolltemplate-pf_generic .sheet-roll-table,
 .sheet-rolltemplate-pf_ability .sheet-roll-table,
@@ -573,12 +573,6 @@ input[type="text"].sheet-number,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly .sheet-number, 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly input[type=text].sheet-number{
 	width: 2.5em;
-}
-.sheet-wide-buff-exists.sheet-small-label2.sheet-number {
-    width:4.1em;
-}
-.sheet-wide-buff-exists.sheet-small-label2.sheet-number input {
-    margin-left:.25em;
 }
 
 .sheet-buff-row {
@@ -2291,6 +2285,8 @@ input.sheet-highlight[readonly]
     color: Black;
     position: relative;
     bottom: 0;
+    overflow-x: visible;
+    white-space: nowrap;
 }
 .sheet-text-button,
 button.sheet-text-button {
