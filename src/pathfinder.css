@@ -483,7 +483,9 @@ h1,h2,h3,h4,
 .sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-condition-exists:checked + label {
 	background-color: #2f4f4f;
 }
-
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-table-header {
+    background-color: darkkhaki;
+}
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper {
 	background-image:url("http://i.imgur.com/XC0noYEg.jpg");
 	background-size: cover; 
@@ -498,6 +500,9 @@ h1,h2,h3,h4,
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-boldlabel-check:checked + b:not(.sheet-offCase),
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-condition-exists:checked + label {
 	background-color: #2f4f4f;
+}
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-table-header {
+    background-color: darkkhaki;
 }
 
 /* button sizing based on arial*/
@@ -2186,9 +2191,9 @@ input.sheet-highlight,
 .sheet-highlight input:disabled,
 .sheet-highlight input.sheet-calc,
 .sheet-highlight input[readonly] {
-    border-top: 2px white solid;
-    border-left: 2px white solid;
-    border-right: 2px white solid;
+    border-top: 2px transparent solid;
+    border-left: 2px transparent solid;
+    border-right: 2px transparent solid;
 }
 input.sheet-highlight:disabled,
 input.sheet-highlightinput.sheet-calc,
