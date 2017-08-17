@@ -15,23 +15,23 @@ if (process.env.NODE_ENV !== 'production') {
 
 export function setWrapper(a,b,c){
 	var bad=false;
-	a = _.omit(a,function(v,k){
-		if (!v && (isNaN(v) || v === undefined)){
-			TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
-			bad=true;
-			return true;
-		}
-		return false;
-	});
-//	_.each(a,function(v,k){
+	// a = _.omit(a,function(v,k){
 	// 	if (!v && (isNaN(v) || v === undefined)){
 	// 		TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
 	// 		bad=true;
+	// 		return true;
 	// 	}
-	// });
-	if (bad){
-		TAS.callstack();
-	}
+	// 	return false;
+	//});
+	_.each(a,function(v,k){
+	 	if (!v && (isNaN(v) || v === undefined)){
+	 		TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
+	 		bad=true;
+	 	}
+	});
+	//if (bad){
+	//	TAS.callstack();
+	//}
 //	TAS.debug("setting ",a);
 	setAttrs(a,b,c);
 }
