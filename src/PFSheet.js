@@ -597,10 +597,11 @@ export function recalculate (oldversion, callback, silently) {
  * */
 export function checkForUpdate (forceRecalc) {
 	var done = function () {
+		TAS.info("leaving PFSheet.checkForUpdate");
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
 	errorDone = _.once(function (){
-		TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
+		TAS.warn("leaving PFSheet.checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',

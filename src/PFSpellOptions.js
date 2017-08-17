@@ -136,7 +136,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamagetype", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates);//.spelldamagetype.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates.spelldamagetype);//.spelldamagetype.replace("REPLACE", newValue));
                             }
                             break;
                     }

@@ -1374,6 +1374,17 @@ h2 label {
     font-size: 1em;
     color: DarkGray;
 }
+
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-counted + span::before,
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-ack-button + .sheet-showsect::before,
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-showarrow + .sheet-showsect::before,
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-counted + span::before,
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-ack-button + .sheet-showsect::before,
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-showarrow + .sheet-showsect::before {
+    color: darkslategray;
+}
+
+
 .sheet-showarrow.sheet-npc-details-show + .sheet-showsect::before {
 	color:White;
 	padding-top:.5em;
@@ -1933,6 +1944,10 @@ hr.sheet-skinny {
 	width: 100%;
 	border: .75rem solid #DAE4F2;
 	margin-top: -1.45rem;
+}
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-subnav-hr,
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-subnav-hr {
+    border-color:  darkkhaki;
 }
 .sheet-npchead-bottom {
     margin-bottom: 5px;
