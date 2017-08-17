@@ -1371,8 +1371,8 @@
 			<label role="menuitem" class="sheet-tab sheet-tab1 sheet-narrow-tab" data-i18n-title="core" data-i18n-aria-label="core" title="Core" data-i18n="core">Core</label>
 			<input type="radio" name="attr_tab" value="2" class="sheet-tabinput sheet-tab2 sheet-wider-tab" data-i18n-title="defenses" aria-label="Defenses" data-i18n-aria-label="defenses" />
 			<label role="menuitem" class="sheet-tab sheet-tab2 sheet-wider-tab" data-i18n-title="defenses" data-i18n-aria-label="defenses" title="defenses" data-i18n="defenses">Defenses</label>
-			<input type="radio" name="attr_tab" value="3" class="sheet-tabinput sheet-tab3" data-i18n-title="attacks" daria-label="Attacks" data-i18n-aria-label="attacks" />
-			<label role="menuitem" class="sheet-tab sheet-tab3" data-i18n-title="attacks" data-i18n-aria-label="attacks" data-i18n="attacks">Attacks</label>
+			<input type="radio" name="attr_tab" value="3" class="sheet-tabinput sheet-tab3 sheet-wider-tab" data-i18n-title="attacks" daria-label="Attacks" data-i18n-aria-label="attacks" />
+			<label role="menuitem" class="sheet-tab sheet-tab3 sheet-wider-tab" data-i18n-title="attacks" data-i18n-aria-label="attacks" data-i18n="attacks">Attacks</label>
 			<input type="radio" name="attr_tab" value="4" class="sheet-tabinput sheet-tab4 sheet-wider-tab" data-i18n-title="abilities" aria-label="Abilities" data-i18n-aria-label="abilities" />
 			<label role="menuitem" class="sheet-tab sheet-tab4 sheet-wider-tab" data-i18n-title="abilities" data-i18n-aria-label="abilities" data-i18n="abilities">Abilities</label>
 			<input type="radio" name="attr_tab" value="5" class="sheet-tabinput sheet-tab5" data-i18n-title="skills" aria-label="Skills" data-i18n-aria-label="skills" />
@@ -1385,8 +1385,8 @@
 			<label role="menuitem" class="sheet-tab sheet-tab8 sheet-narrow-tab sheet-npc-only" data-i18n-title="npc" data-i18n-aria-label="npc" title="NPC" data-i18n="npc">NPC</label>
 			<input type="radio" name="attr_tab" value="9" class="sheet-tabinput sheet-tab9 sheet-wider-tab" data-i18n-title="custom" aria-label="custom" data-i18n-aria-label="custom" />
 			<label role="menuitem" class="sheet-tab sheet-tab9 sheet-wider-tab" data-i18n-title="custom" data-i18n-aria-label="custom" title="custom" data-i18n="custom">Custom</label>
-			<input type="radio" name="attr_tab" value="10" class="sheet-tabinput sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
-			<label role="menuitem" class="sheet-tab sheet-tab10 sheet-narrow-tab" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
+			<input type="radio" name="attr_tab" value="10" class="sheet-tabinput sheet-tab10" data-i18n-title="notes" aria-label="notes" data-i18n-aria-label="notes" />
+			<label role="menuitem" class="sheet-tab sheet-tab10" data-i18n-title="notes" data-i18n-aria-label="notes" title="notes" data-i18n="notes">notes</label>
 			<input type="radio" name="attr_tab" value="99" class="sheet-tabinput sheet-tab99" data-i18n-title="all" aria-label="All" data-i18n-aria-label="all" />
 			<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 			<div class="sheet-cheat"></div>
@@ -9989,11 +9989,14 @@
 								</label>
 								<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
 								<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
+								<input type="checkbox" value="close" name="attr_range_pick" class="sheet-or-C-show sheet-noshow" />
+								<input type="checkbox" value="medium" name="attr_range_pick" class="sheet-or-D-show sheet-noshow" />
+								<input type="checkbox" value="long" name="attr_range_pick" class="sheet-or-E-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-either-or-sect">
 									<input type="text" value="" name="attr_range" title="@{repeating_spells_$X_range}" data-i18n-placeholder="range-custom-place"  />
 									<span class="sheet-nowrap" data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span>
 								</label>
-								<label class="sheet-small-label2 sheet-sect sheet-number">
+								<label class="sheet-small-label2 sheet-or5-sect sheet-sect sheet-number">
 									<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
 									<span data-i18n="range-in-feet">Range</span>
 								</label>
@@ -11600,11 +11603,14 @@
 										</label>
 										<input type="checkbox" value="number" name="attr_range_pick" class="sheet-or-A-show sheet-noshow" />
 										<input type="checkbox" value="perlevel" name="attr_range_pick" class="sheet-or-B-show sheet-noshow" />
+										<input type="checkbox" value="close" name="attr_range_pick" class="sheet-or-C-show sheet-noshow" />
+										<input type="checkbox" value="medium" name="attr_range_pick" class="sheet-or-D-show sheet-noshow" />
+										<input type="checkbox" value="long" name="attr_range_pick" class="sheet-or-E-show sheet-noshow" />
 										<label class="sheet-small-label2 sheet-entry-8p-shrink sheet-sect sheet-either-or-sect">
 											<input type="text" value="" name="attr_range" title="@{repeating_spells_$X_range}" data-i18n-placeholder="range-custom-place"  />
 											<span class="sheet-nowrap" data-i18n-title="range-per-level-desc" data-i18n-aria-label="range-per-level-desc" data-i18n="range-custom">Custom Range</span>
 										</label>
-										<label class="sheet-small-label2 sheet-sect sheet-number">
+										<label class="sheet-small-label2 sheet-or5-sect sheet-sect sheet-number">
 											<input title="@{repeating_spells_$X_range_numeric}" type="number" value="0" name="attr_range_numeric" placeholder="0" class="sheet-calc" readonly>
 											<span data-i18n="range-in-feet">Range</span>
 										</label>
@@ -13690,7 +13696,7 @@
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">
 		<div class="sheet-table">
-			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width: 2.5em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
+			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width: 3em ; height: 1.4em ; vertical-align: top ; padding: 0px 2px 0 2px ; border: none" name="attr_PFSheet_Version" value="0" class="sheet-calc sheet-number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="sheet-table" style="margin-top: -.5em;">
 			<span class="sheet-table-cell sheet-3col"><button type="roll" class="sheet-no-decoration" data-i18n-title="url-link"  style="color: #0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:.75em;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>

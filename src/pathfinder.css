@@ -1042,11 +1042,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-tab.sheet-tab99 {
-    width: 4% !important;
+    width: 4.75% !important;
 }
 .sheet-tabinput.sheet-tab99 {
-    width: 4% !important;
-    margin-right: -4% !important;
+    width: 4.75% !important;
+    margin-right: -4.75% !important;
 }
 .sheet-mainnav ~ .sheet-tab,
 .sheet-mainnav ~ .sheet-tabinput {
@@ -3067,10 +3067,12 @@ span.sheet-table-cell.sheet-linked-tablecell.sheet-extra-sect {
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ .sheet-either-or-sect,
 .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-class-table .sheet-either-or-sect,
 .sheet-spells-per-day .sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked) ~ div.sheet-table .sheet-either-or-sect,
-.sheet-or-B-show:checked~.sheet-nor-sect,
+.sheet-or-A-show:not(:checked)~.sheet-or-B-show:not(:checked)~ .sheet-or-C-show:not(:checked)~.sheet-or-D-show:not(:checked)~.sheet-or-E-show:not(:checked)~.sheet-or5-sect,
 .sheet-or-A-show:checked~.sheet-nor-sect,
+.sheet-or-B-show:checked~.sheet-nor-sect,
 .sheet-or-C-show:checked~.sheet-nor-sect,
 .sheet-or-D-show:checked~.sheet-nor-sect,
+.sheet-or-E-show:checked~.sheet-nor-sect,
 .sheet-not-A-show:checked ~ .sheet-or-B-show:not(:checked) ~ .sheet-not-A-or-B-sect,
 .sheet-not-A-show:checked ~ .sheet-or-B-show:not(:checked) ~ div .sheet-not-A-or-B-sect,
 .sheet-not-C-show:checked ~ .sheet-or-D-show:not(:checked) ~ .sheet-not-C-or-D-sect,
