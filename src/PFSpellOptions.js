@@ -124,19 +124,19 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             }
                             break;
                         case 'damage-macro-text':
-                            //TAS.debug"found damage macro-text="+newValue);
-                            if (PFUtils.shouldNotDisplayOption('damage-macro-text', newValue)) {
+                            TAS.debug("found damage macro-text="+newValue);
+                            if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamage", optionTemplateRegexes);
                             } else {
                                 optionText = optionText.replace(optionTemplateRegexes.spelldamage, optionTemplates.spelldamage);//.replace("REPLACE", newValue));
                             }
                             break;
                         case 'damage-type':
-                            //TAS.debug"found damage type"+newValue);
-                            if (PFUtils.shouldNotDisplayOption('damage-type', newValue)) {
+                            TAS.debug("found damage type"+newValue);
+                            if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamagetype", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates);//.spelldamagetype.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates.spelldamagetype);//.spelldamagetype.replace("REPLACE", newValue));
                             }
                             break;
                     }
@@ -264,7 +264,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     }
 
     if (toggleValues.showdamage ){
-        if(!PFUtils.findAbilityInString(rowValues[prefix+"spell-attack-type"])){
+        if(rowValues[prefix+"spelldamage"]){
             optionText += optionTemplates.spelldamage;//.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
         } else {
             optionText += "{{spelldamage=}}";
