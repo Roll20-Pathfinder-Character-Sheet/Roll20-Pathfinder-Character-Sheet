@@ -237,9 +237,9 @@ input[readonly], input[disabled] {
     width: 10em;
 }
 .sheet-kinetic-sect .sheet-linked-tablecell {
-    margin-right: -1em;
+    margin-left: -.25em;
+    margin-right: -.25em;
 }
-
 
 /* like br */
 .sheet-cheat {
@@ -327,7 +327,7 @@ h1,h2,h3,h4,
 .sheet-table-header,
 .sheet-text-button,
 .sheet-tab {
-    font-family: Arial, sans-serif;
+    font-family: Lucida Grande, Arial, sans-serif;
 }
 .sheet-panel-name {
     font-family: tahoma, arial black, sans-serif;
@@ -344,99 +344,87 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack,
 .sheet-rolltemplate-pf_spell,
 .sheet-rolltemplate-pf_block {
-	--sheet-pf-specfont: Arial, sans-serif;
-	--sheet-pf-header-specfont: Arial, sans-serif;
+	--sheet-pf-specfont: Lucida Grande, Trebuchet MS, Candara, Arial, sans-serif;
+	--sheet-pf-header-specfont: Lucida Grande, Trebuchet MS, Candara, Arial, sans-serif;
 }
 
-.sheet-accessible:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-accessible:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-accessible:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-accessible:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-accessible:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-accessible:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-accessible:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Verdana, Trebuchet MS, Tahoma, Optima, Arial, sans-serif;
-	--sheet-pf-header-specfont: Verdana, Trebuchet MS, Tahoma, Optima, Arial, sans-serif;
+.sheet-rolltemplate-pf_generic .sheet-roll-accessible,
+.sheet-rolltemplate-pf_ability .sheet-roll-accessible,
+.sheet-rolltemplate-pf_defense .sheet-roll-accessible,
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible,
+.sheet-rolltemplate-pf_spell .sheet-roll-accessible,
+.sheet-rolltemplate-pf_block .sheet-roll-accessible,
+.sheet-rolltemplate-pf_generic .sheet-roll-accessible *,
+.sheet-rolltemplate-pf_ability .sheet-roll-accessible *,
+.sheet-rolltemplate-pf_defense .sheet-roll-accessible *,
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible *,
+.sheet-rolltemplate-pf_spell .sheet-roll-accessible *,
+.sheet-rolltemplate-pf_block .sheet-roll-accessible *,
+.sheet-accessible:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-specfont: Verdana, Trebuchet MS, Tahoma, sans-serif;
+	--sheet-pf-header-specfont: Verdana, Trebuchet MS, Tahoma, sans-serif;
 }
 
-.sheet-comic:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-comic:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-comic:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-comic:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-comic:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-comic:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-comic:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Comic Sans MS, cursive, sans-serif;
-	--sheet-pf-header-specfont: Comic Sans MS, cursive, sans-serif;
+.sheet-comic:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-specfont: Comic Sans MS, Patrick Hand, cursive, sans-serif;
+	--sheet-pf-header-specfont: Comic Sans MS, Patrick Hand, cursive, sans-serif;
 }
-.sheet-segoe:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-segoe:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-segoe:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-segoe:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-segoe:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-segoe:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-segoe:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Segoe UI, Segoe, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
-	--sheet-pf-header-specfont: Segoe UI, Segoe, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif;
+.sheet-segoe:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-specfont: Segoe UI, Tahoma, Candara, sans-serif;
+	--sheet-pf-header-specfont: Segoe UI, Tahoma, Candara, sans-serif;
 }
-.sheet-lucida:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-lucida:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-lucida:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-lucida:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-lucida:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-lucida:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-lucida:checked ~ .sheet-roll-table {
-    --sheet-pf-specfont: Lucida Sans Unicode, Lucida Grande, sans-serif;
-	--sheet-pf-header-specfont: Lucida Sans Unicode, Lucida Sans, Lucida Grande, sans-serif;
+.sheet-lucida:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-specfont: Lucida Sans Unicode, Trebuchet MS, Lucida Grande, sans-serif;
+	--sheet-pf-header-specfont: Lucida Sans, Lucida Sans Unicode, Trebuchet MS, Lucida Grande, sans-serif;
 }
 
-.sheet-fantasy:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-fantasy:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-fantasy:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-fantasy:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-fantasy:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-fantasy:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-fantasy:checked ~ .sheet-roll-table {
-    --sheet-pf-header-specfont:  Zapf Chancery, Lucida Calligraphy, Brush Script MT, serif;
+.sheet-fantasy:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont:  Papyrus,  Matura MT Script Capitals, fantasy, serif;
 	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
 }
 
-.sheet-fantasy2:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-fantasy2:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-fantasy2:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-fantasy2:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-fantasy2:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-fantasy2:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-fantasy2:checked ~ .sheet-roll-table {
-    --sheet-pf-header-specfont:  Papyrus,  Matura MT Script Capitals, Brush Script MT, serif;
+.sheet-fantasy2:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate Gothic, Copperplate Gothic Light, Coperplate, serif;
+    --sheet-pf-specfont: Copperplate Gothic Light, Copperplate, Big Caslon, Calisto MT,  serif;
+}
+
+.sheet-fantasy3:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont:  Lucida Calligraphy, Zapf Chancery, Brush Script MT, fantasy, serif;
 	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
 }
-
-.sheet-fantasy3:checked ~ .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic .sheet-fantasy3:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_ability .sheet-fantasy3:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_defense .sheet-fantasy3:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_attack .sheet-fantasy3:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_spell .sheet-fantasy3:checked ~ .sheet-roll-table,
-.sheet-rolltemplate-pf_block .sheet-fantasy3:checked ~ .sheet-roll-table {
-    --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate, Century Gothic, serif;
-    --sheet-pf-specfont: Copperplate Gothic Light, Copperplate, Centure Gothic, serif;
-}
-
 .sheet-pf-wrapper,
-.sheet-rolltemplate-pf_generic  .sheet-roll-table,
-.sheet-rolltemplate-pf_ability  .sheet-roll-table,
-.sheet-rolltemplate-pf_defense  .sheet-roll-table,
-.sheet-rolltemplate-pf_attack  .sheet-roll-table,
-.sheet-rolltemplate-pf_spell  .sheet-roll-table,
-.sheet-rolltemplate-pf_block  .sheet-roll-table,
+.sheet-rolltemplate-pf_generic .sheet-roll-table,
+.sheet-rolltemplate-pf_ability .sheet-roll-table,
+.sheet-rolltemplate-pf_defense .sheet-roll-table,
+.sheet-rolltemplate-pf_attack .sheet-roll-table,
+.sheet-rolltemplate-pf_spell .sheet-roll-table,
+.sheet-rolltemplate-pf_block .sheet-roll-table,
+.sheet-rolltemplate-pf_generic .sheet-roll-accessible,
+.sheet-rolltemplate-pf_ability .sheet-roll-accessible,
+.sheet-rolltemplate-pf_defense .sheet-roll-accessible,
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible,
+.sheet-rolltemplate-pf_spell .sheet-roll-accessible,
+.sheet-rolltemplate-pf_block .sheet-roll-accessible,
+.sheet-pf-wrapper .sheet-small-label2 span,
 .sheet-pf-wrapper .sheet-text-button,
-.sheet-pf-wrapper  button,
-.sheet-pf-wrapper  input,
+.sheet-pf-wrapper button,
+.sheet-pf-wrapper input,
 .sheet-pf-wrapper textarea,
 .sheet-pf-wrapper select {
     font-family: var(--sheet-pf-specfont);
 }
+.sheet-rolltemplate-pf_generic .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_ability .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_defense .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_attack .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_spell .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_block .sheet-roll-table .sheet-roll-header,
+.sheet-rolltemplate-pf_generic .sheet-roll-accessible h3,
+.sheet-rolltemplate-pf_ability .sheet-roll-accessible h3,
+.sheet-rolltemplate-pf_defense .sheet-roll-accessible h3,
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible h3,
+.sheet-rolltemplate-pf_spell .sheet-roll-accessible h3,
+.sheet-rolltemplate-pf_block .sheet-roll-accessible h3,
 .sheet-pf-wrapper .sheet-tab,
 .sheet-pf-wrapper .sheet-panel-name,
 .sheet-pf-wrapper .sheet-table-name,
@@ -495,7 +483,9 @@ h1,h2,h3,h4,
 .sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-condition-exists:checked + label {
 	background-color: #2f4f4f;
 }
-
+.sheet-parchment-1:checked ~ .sheet-pf-wrapper .sheet-table-header {
+    background-color: darkkhaki;
+}
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper {
 	background-image:url("http://i.imgur.com/XC0noYEg.jpg");
 	background-size: cover; 
@@ -510,6 +500,9 @@ h1,h2,h3,h4,
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-boldlabel-check:checked + b:not(.sheet-offCase),
 .sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-condition-exists:checked + label {
 	background-color: #2f4f4f;
+}
+.sheet-parchment-2:checked ~ .sheet-pf-wrapper .sheet-table-header {
+    background-color: darkkhaki;
 }
 
 /* button sizing based on arial*/
@@ -584,12 +577,6 @@ input[type="text"].sheet-number,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly .sheet-number, 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly input[type=text].sheet-number{
 	width: 2.5em;
-}
-.sheet-wide-buff-exists.sheet-small-label2.sheet-number {
-    width:4.1em;
-}
-.sheet-wide-buff-exists.sheet-small-label2.sheet-number input {
-    margin-left:.25em;
 }
 
 .sheet-buff-row {
@@ -2204,9 +2191,9 @@ input.sheet-highlight,
 .sheet-highlight input:disabled,
 .sheet-highlight input.sheet-calc,
 .sheet-highlight input[readonly] {
-    border-top: 2px white solid;
-    border-left: 2px white solid;
-    border-right: 2px white solid;
+    border-top: 2px transparent solid;
+    border-left: 2px transparent solid;
+    border-right: 2px transparent solid;
 }
 input.sheet-highlight:disabled,
 input.sheet-highlightinput.sheet-calc,
@@ -2302,6 +2289,8 @@ input.sheet-highlight[readonly]
     color: Black;
     position: relative;
     bottom: 0;
+    overflow-x: visible;
+    white-space: nowrap;
 }
 .sheet-text-button,
 button.sheet-text-button {

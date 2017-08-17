@@ -235,7 +235,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
             optionText += optionTemplates.spellPen;//.replace("REPLACE", newValue)||"";
         }
     }
-    if (toggleValues.showconcentration && customConcentration) {
+    if (toggleValues.showconcentration && (customConcentration || customCasterlevel)) {
         optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     } else {
         optionText += "{{Concentration=}}";
