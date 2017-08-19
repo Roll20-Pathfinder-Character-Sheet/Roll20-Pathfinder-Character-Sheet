@@ -179,6 +179,7 @@ input[readonly], input[disabled] {
 
 
 .sheet-inline-textarea,
+.sheet-macro-text-inline,
 .sheet-skill-macro-text {
     height: 2.15em;
     min-height: 2.15em;
@@ -209,14 +210,14 @@ input[readonly], input[disabled] {
     white-space: nowrap;
 }
 
-.sheet-linked-fields .sheet-inline-textarea.sheet-linked-cellfield,
+.sheet-linked-fields .sheet-macro-text-inline.sheet-linked-cellfield,
 .sheet-linked-tablecell select.sheet-linked-cellfield,
-.sheet-linked-tablecell .sheet-inline-textarea.sheet-linked-cellfield {
+.sheet-linked-tablecell .sheet-macro-text-inline.sheet-linked-cellfield {
 	width:calc(100% - 3.5em);
     max-width:calc(100% - 3.5em);
 }
 .sheet-linked-tablecell-short select.sheet-linked-cellfield,
-.sheet-linked-tablecell-short .sheet-inline-textarea.sheet-linked-cellfield {
+.sheet-linked-tablecell-short .sheet-macro-text-inline.sheet-linked-cellfield {
 	width:calc(100% - 2.9em);
     max-width:calc(100% - 2.9em);
 }
@@ -425,6 +426,7 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible h3,
 .sheet-rolltemplate-pf_spell .sheet-roll-accessible h3,
 .sheet-rolltemplate-pf_block .sheet-roll-accessible h3,
+.sheet-pf-wrapper input.sheet-entry-custom-header,
 .sheet-pf-wrapper .sheet-tab,
 .sheet-pf-wrapper .sheet-panel-name,
 .sheet-pf-wrapper .sheet-table-name,
@@ -691,8 +693,8 @@ also need 1 more level in selector or base css will override border */
 }
 
 .sheet-linked-custom textarea,
-.sheet-linked-custom .sheet-inline-textarea,
-.sheet-kinetic-sect .sheet-linked-tablecell .sheet-inline-textarea,
+.sheet-linked-custom .sheet-macro-text-inline,
+.sheet-kinetic-sect .sheet-linked-tablecell .sheet-macro-text-inline,
 .sheet-kinetic-sect .sheet-linked-tablecell select.sheet-linked-cellfield {
 	width:calc(100% - 7em);
 /*	display:inline; */
@@ -819,6 +821,7 @@ also need 1 more level in selector or base css will override border */
 .sheet-rule-options .sheet-table .sheet-table-row:nth-child(odd){
 	background-color:#eeeeee;
 }
+.sheet-header-images.sheet-table .sheet-macro-text-inline,
 .sheet-header-images.sheet-table .sheet-inline-textarea {
 	resize:horizontal;
 }
@@ -995,9 +998,8 @@ button[type=roll].sheet-command-button::before {
 .sheet-linked-fields .sheet-small-label2:last-child {
     margin-left: 0;
 }
-.sheet-macro-text-inline {
-    width: 9em;
-}
+
+
 .sheet-section0.sheet-section-abilities span ~ input[type="checkbox"], 
 .sheet-section1.sheet-section-skills span ~ input[type="checkbox"], 
 .sheet-section2.sheet-section-attack span ~ input[type="checkbox"], 
@@ -1054,11 +1056,11 @@ input.sheet-tabinput {
     height: 1.5em;
 }
 .sheet-mainnav ~ .sheet-tab {
-    width: 9%;
+    width: 8%;
 }
 .sheet-mainnav ~ .sheet-tabinput {
-    width: 9%;
-    margin-right: -9%;
+    width: 8%;
+    margin-right: -8%;
 }
 .sheet-mainnav ~ .sheet-tab.sheet-narrow-tab {
     width: 7%;
@@ -4936,6 +4938,25 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-skills .sheet-table-row .sheet-table-cell:nth-of-type(7) {
     transform: rotate(90deg);
 }
+input.sheet-macro-text-inline,
+textarea.sheet-macro-text-inline,
+.sheet-macro-text-inline input, 
+textarea.sheet-macro-text, 
+textarea.sheet-skill-macro-text ,
+input.sheet-skill-macro-text {
+    font-family: lucida console, consolas, monospace;
+}
+.sheet-accessible:checked ~ .sheet-pf-wrapper input.sheet-macro-text-inline,
+.sheet-accessible:checked ~ .sheet-pf-wrapper textarea.sheet-macro-text-inline,
+.sheet-accessible:checked ~ .sheet-pf-wrapper .sheet-macro-text-inline input, 
+.sheet-accessible:checked ~ .sheet-pf-wrapper textarea.sheet-macro-text, 
+.sheet-accessible:checked ~ .sheet-pf-wrapper .sheet-inline-textarea, 
+.sheet-accessible:checked ~ .sheet-pf-wrapper textarea.sheet-skill-macro-text,
+.sheet-accessible:checked ~ .sheet-pf-wrapper input.sheet-skill-macro-text {
+    font-family: lucida sans typewriter, miriam fixed, lucida console, consolas, monospace;
+}
+
+
 /*skill too crowded*/
 .sheet-skills .sheet-divider,
 /* turn config page on /off */
