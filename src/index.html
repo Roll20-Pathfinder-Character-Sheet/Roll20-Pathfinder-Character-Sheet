@@ -13774,7 +13774,7 @@
 						{{#casterlevel_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="rolls">Rolls</span>**</div><div></div></div>{{/casterlevel_chk}}
 						{{^casterlevel_chk}}{{#Concentration_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="rolls">Rolls</span>**</div><div></div></div>{{/Concentration_chk}}{{/casterlevel_chk}}
 						{{#casterlevel_chk}}
-						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;(<span data-i18n="level">{{casterlevel}}</span>){{/casterlevel}}</div><div class="sheet-roll-cell">**=**{{casterlevel_chk}}</div></div>
+						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}</div><div class="sheet-roll-cell">**=**{{casterlevel_chk}}</div></div>
 						{{#sr}}{{#spellPen}}<div class="sheet-roll-row"><div class="sheet-roll-cell" style="text-indent:1em">**<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>:**&nbsp;**+**{{spellPen}}</div><div class="sheet-roll-cell"></div></div>{{/spellPen}}{{/sr}}
 						{{/casterlevel_chk}}
 						{{#Concentration_chk}}
@@ -13926,7 +13926,7 @@
 				{{/Concentration}}{{/Concentration_chk}}
 				{{#casterlevel_chk}}<h4 data-i18n="rolls">Rolls</h4>{{/casterlevel_chk}}
 				{{^casterlevel_chk}}{{#Concentration_chk}}<h4>Rolls</h4>{{/Concentration_chk}}{{/casterlevel_chk}}
-				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}(<span data-i18n="level">Level</span>&nbsp;{{casterlevel}}){{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
+				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
 				{{#sr}}{{#spellPen}}<label style="text-indent:1em"> **<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>: <span>+**{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
 				{{/casterlevel_chk}}
 				{{#Concentration_chk}}<label>**<span data-i18n="concentration-check">Concentration Check</span>** {{#Concentration}}**+**{{Concentration}}{{/Concentration}}<span class="sheet-right">**=**{{Concentration_chk}}</span></label>
@@ -14784,7 +14784,7 @@
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
-					{{#casterlevel}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="casterlevel">casterlevel</span>:** {{casterlevel}}</div></div>{{/casterlevel}}
+					{{#casterlevel}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level">casterlevel</span>:** {{casterlevel}}</div></div>{{/casterlevel}}
 					{{#concentration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="concentration">concentration</span>:** {{concentration}}</div></div>{{/concentration}}
 					{{#location}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="location">Location</span>:**&nbsp;{{location}}</div></div>{{/location}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
@@ -14837,7 +14837,7 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#casterlevel}}<label>**<span data-i18n="casterlevel">casterlevel</span>:**&nbsp;<span>{{casterlevel}}</span></label>{{/casterlevel}}
+				{{#casterlevel}}<label>**<span data-i18n="caster-level">casterlevel</span>:**&nbsp;<span>{{casterlevel}}</span></label>{{/casterlevel}}
 				{{#concentration}}<label>**<span data-i18n="concentration">casterlevel</span>:**&nbsp;<span>{{concentration}}</span></label>{{/concentration}}
 				{{#location}}<label>**<span data-i18n="location">Location</span>:**&nbsp;<span>{{location}}</span></label>{{/location}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}

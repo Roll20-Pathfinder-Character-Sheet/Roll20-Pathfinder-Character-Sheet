@@ -68,7 +68,7 @@ rowattrToOptionToggleMap = {
     "damage-type": "toggle_spell_damage_notes"
 },
 events = {
-    spellOptionEventsPlayer: ["school", "cast-time", "components", "duration", "save", "sr", "range", "targets", "damage-macro-text", "damage-type"]
+    spellOptionEventsPlayer: ["school", "cast-time", "components", "duration", "save", "sr", "range", "targets", "damage-macro-text", "damage-type","sp-mod"]
  };
 /** updateSpellOption - updates an existing @{spell_options} text for a row depending on the field updated on existing row
  * 
@@ -78,7 +78,7 @@ events = {
 export function updateSpellOption (eventInfo, fieldUpdated) {
     var fieldName = "repeating_spells_" + fieldUpdated,
     toggleField = rowattrToOptionToggleMap[fieldUpdated];
-    getAttrs([fieldName, "repeating_spells_spell_options", "repeating_spells_spell_lvlstr", toggleField, "repeating_spells_SP-mod", "repeating_spells_savedc"], function (v) {
+    getAttrs([fieldName, "repeating_spells_spell_options", "repeating_spells_spell_lvlstr", toggleField, "repeating_spells_sr", "repeating_spells_SP-mod", "repeating_spells_savedc"], function (v) {
         var optionText = v["repeating_spells_spell_options"],
         newValue = "", 
         setter = {};
@@ -139,6 +139,13 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                                 optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates.spelldamagetype);//.spelldamagetype.replace("REPLACE", newValue));
                             }
                             break;
+                        case 'sp-mod':
+                            TAS.debug("found damage type"+newValue);
+                            if (!newValue) {
+                                optionText = PFUtils.deleteOption(optionText, "spellPen", optionTemplateRegexes);
+                            } else {
+                                optionText = optionText.replace(optionTemplateRegexes.spellPen, optionTemplates.spellPen);//.spelldamagetype.replace("REPLACE", newValue));
+                            }
                     }
                     setter["repeating_spells_spell_options"] = optionText;
                     SWUtils.setWrapper(setter, {
@@ -218,6 +225,13 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         } else {
             optionText += optionTemplates.sr;//.replace("REPLACE", newValue)||"";
         }
+        newValue = parseInt(rowValues[prefix+"SP-mod"],10)||0;
+        if(newValue){
+            optionText += optionTemplates.spellPen;
+        } else {
+            optionText += "{{spellPen=}}";
+        }
+
     }
     if (toggleValues.showcasterlevel && customCasterlevel) {
         optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
