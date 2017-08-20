@@ -582,12 +582,12 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	if(tempstr){
 		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
 		if(matches){
-			TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
+			//TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
 			updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
 		} else if (tempstr==='physical'){
 			updatedAttr = /STR\-mod|DEX\-mod/;
 		}
-		TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
+		//TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
 	}
 	if(!updatedAttr){
 		done();
@@ -596,13 +596,13 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	fields = allTheSkills.map(function(skill){
 		return skill+'-ability';
 	});
-	TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
+	//TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
 	getAttrs(fields,function(v){
 		var skillArray=[];
-		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
+		//TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
 		skillArray = _.reduce(v,function(m,val,field){
 			if(updatedAttr.test(val)){
-				TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
+				//TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
 				m.push(field.slice(0,-8));
 			}
 			return m;

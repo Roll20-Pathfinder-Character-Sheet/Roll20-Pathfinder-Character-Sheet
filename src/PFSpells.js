@@ -1139,7 +1139,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         "Concentration-0-def", "Concentration-1-def", "Concentration-2-def", 
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name"];
 
-    TAS.debug("PFSPells.updateSpell: getting fields",fields);
+    //TAS.debug("PFSPells.updateSpell: getting fields",fields);
 
     getAttrs(fields, function (v) {
         var setter = {},
@@ -1415,7 +1415,7 @@ export function importFromCompendium (id, eventInfo) {
         modeLevel=-1,
         counter = 0,
         callUpdateSpell = true;
-        TAS.debug("at pfspells.importFromCompendium",v);
+        TAS.info("at pfspells.importFromCompendium",v);
         if(!(/spell/i).test(v.repeating_spells_compendium_category)){
             setSilent.repeating_spells_name='Cannot parse ' + v.repeating_spells_compendium_category;
             setAttrs(setSilent,PFConst.silentParams);

@@ -187,7 +187,7 @@ function getOneSetAttackFields (attype){
     }
     fields.push('attk-penalty');
     fields.push('buff_attack-total');
-    TAS.debug("PFAttackGrid.getOneSetAttackFields returning fields for "+attype,fields);
+    //TAS.debug("PFAttackGrid.getOneSetAttackFields returning fields for "+attype,fields);
     return fields;
 }
 /**
@@ -201,7 +201,7 @@ function getAttackFields (attypes){
     fields= _.chain(validtypes).map(function(key){return _.values(attackGridFields[key]);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
     fields.push('attk-penalty');
     fields.push('buff_attack-total');
-    TAS.debug("PFAttackGrid.getAttackFields returning fields for ",attypes,fields);
+    //TAS.debug("PFAttackGrid.getAttackFields returning fields for ",attypes,fields);
     return fields;
 }
 /** updateAttack - updates one row of attack grid (left most column in grid)
@@ -357,7 +357,7 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
     },fields);
     getAttrs(fields,function(v){
         var newVal=0,setter={},silentSetter={},ranged2=0,cmb2=0;
-        TAS.debug("updateAttackBABDropdownDiffs values", v);
+        //TAS.debug("updateAttackBABDropdownDiffs values", v);
 
         newVal=parseInt(v[fieldUpdated],10)||0;
         ranged2=parseInt(v.ranged_2_show,10)||0;
@@ -365,7 +365,7 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
         Object.keys(attackGridFields).filter(function(a){
             return ((a!=='ranged2'||ranged2) &&  (a!=='CMB2'||cmb2));
         }).filter(function(a){
-            TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
+            //TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
             return ( (v[attackGridFields[a].babdd]||'').toLowerCase()===fieldUpdated.toLowerCase());
         }).forEach(function(a){
             var currVal=0,diff=0;
@@ -398,7 +398,7 @@ export function migrate (callback, oldversion){
  */
 export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
-        //TAS.debug("leaving PFAttackGrid.recalculate");
+        TAS.info("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
             callback();
         }

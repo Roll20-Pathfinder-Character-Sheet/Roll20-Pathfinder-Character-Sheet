@@ -128,7 +128,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             }
                             break;
                         case 'damage-macro-text':
-                            TAS.debug("found damage macro-text="+newValue);
+                            //TAS.debug("found damage macro-text="+newValue);
                             if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamage", optionTemplateRegexes);
                             } else {
@@ -136,7 +136,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             }
                             break;
                         case 'damage-type':
-                            TAS.debug("found damage type"+newValue);
+                            //TAS.debug("found damage type"+newValue);
                             if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamagetype", optionTemplateRegexes);
                             } else {

@@ -793,7 +793,7 @@ export function migrateAttackDropdowns (callback,oldversion){
             setter.cmb2_bab='bab';
             setter['cmb2_bab-mod']=bab;
             setter.migrated_attack_bab_dropdowns = 1;
-            TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
+            //TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
             SWUtils.setWrapper(setter,PFConst.silentParams,callback);
         } else if (typeof callback === "function"){
             callback();
