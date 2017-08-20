@@ -348,7 +348,7 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
         return;
     }
     fieldUpdated =eventInfo.sourceAttribute;
-    fields=[fieldUpdated,'ranged_2_show','cmb_2_show'];
+    fields=[fieldUpdated];
     fields = Object.keys(attackGridFields).reduce(function(m,a){
         m.push(a);
         m.push(attackGridFields[a].babdd);
@@ -360,11 +360,9 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
         //TAS.debug("updateAttackBABDropdownDiffs values", v);
 
         newVal=parseInt(v[fieldUpdated],10)||0;
-        ranged2=parseInt(v.ranged_2_show,10)||0;
-        cmb2= parseInt(v.cmb_2_show,10)||0;
+        ranged2=1;
+        cmb2= 1;
         Object.keys(attackGridFields).filter(function(a){
-            return ((a!=='ranged2'||ranged2) &&  (a!=='CMB2'||cmb2));
-        }).filter(function(a){
             //TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
             return ( (v[attackGridFields[a].babdd]||'').toLowerCase()===fieldUpdated.toLowerCase());
         }).forEach(function(a){
