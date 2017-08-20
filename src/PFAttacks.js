@@ -30,52 +30,6 @@ updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_
 	"condition-Sickened","size","default_char_size","modify_dmg_by_size"],
 linkedAttackType = { 'equipment':1, 'spell':2, 'ability':3,  'weapon':4};
 
-var defaultRepeatingMacro = '&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}',
-defaultRepeatingMacroMap={
-	'&{template:':{'current':'pf_attack}',old:['pf_generic}','pf_block}']},
-	'@{toggle_attack_accessible}':{'current':'@{toggle_attack_accessible}'},
-	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-	'{{color=':{'current':'@{rolltemplate_color}}}'},
-	'{{character_name=':{'current':'@{character_name}}}'},
-	'{{character_id=':{'current':'@{character_id}}}'},
-	'{{subtitle}}':{'current':'{{subtitle}}'},
-	'{{name=':{'current':'@{name}}}'},
-	'{{attack=':{'current':'[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}}','old':['{{attack=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{total-attack} ]] ]]}}'],'replacements':[{'from':'[[ @{total-attack} ]]','to':'@{attack_macro}'},{'from':'@{total-attack}','to':'@{attack_macro}'}]},
-	'{{damage=':{'current':'[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}}','old':['[[ @{damage-dice-num}d@{damage-die} + [[ @{total-damage} ]] ]]}}'],'replacements':[{'from':'[[ @{total-damage} ]]','to':'@{damage_macro}'},{'from':'@{total-damage}','to':'@{damage_macro}'}]},
-	'{{crit_confirm=':{'current':'[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}}','old':['[[ 1d20 + [[ @{total-attack} ]] ]]}}'],'replacements':[{'from':'[[ @{total-attack} ]]','to':'@{attack_macro} + [[ @{crit_conf_mod} ]]'},{'from':'@{total-attack}','to':'@{attack_macro} + [[ @{crit_conf_mod} ]]'}]},
-	'{{crit_damage=':{'current':'[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}}','old':['[[ [[ (@{damage-dice-num} * (@{crit-multiplier} - 1)) ]]d@{damage-die} + [[ (@{total-damage} * (@{crit-multiplier} - 1)) ]] ]]}}'],'replacements':[{'from':'@{total-damage}','to':'(@{damage_macro})'}]},
-	'{{type=':{'current':'@{type}}}'},
-	'{{weapon_notes=':{'current':'@{notes}}}'},
-	'@{iterative_attacks}':{'current':'@{iterative_attacks}'},
-	'@{macro_options}':{'current':'@{macro_options}'},
-	'{{vs=':{'current':'@{vs}}}'},
-	'{{vs@{vs}=':{'current':'@{vs}}}'},
-	'{{precision_dmg1=':{'current':'@{precision_dmg_macro}}}'},
-	'{{precision_dmg1_type=':{'current':'@{precision_dmg_type}}}'},
-	'{{precision_dmg2=':{'current':'@{global_precision_dmg_macro}}}'},
-	'{{precision_dmg2_type=':{'current':'@{global_precision_dmg_type}}}'},
-	'{{critical_dmg1=':{'current':'@{critical_dmg_macro}}}'},
-	'{{critical_dmg1_type=':{'current':'@{critical_dmg_type}}}'},
-	'{{critical_dmg2=':{'current':'@{global_critical_dmg_macro}}}'},
-	'{{critical_dmg2_type=':{'current':'@{global_critical_dmg_type}}}'},
-	'{{attack1name=':{'current':'@{iterative_attack1_name}}}'}
-	},
-defaultDeletedMacroAttrs = ['{{description=@{notes}}}','@{toggle_accessible_flag}'],
-defaultIterativeRepeatingMacro='{{attackREPLACE=[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attackREPLACE_value} ]] [iterative] ]]}} {{damageREPLACE=[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}} {{crit_confirmREPLACE=[[ 1d20 + [[ @{attack_macro} + @{iterative_attackREPLACE_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}} {{crit_damageREPLACE=[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACE1=@{precision_dmg_macro}}} {{precision_dmgREPLACE2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACE1=@{critical_dmg_macro}}} {{critical_dmgREPLACE2=@{global_critical_dmg_macro}}} {{attackREPLACEname=@{iterative_attackREPLACE_name}}}',
-defaultIterativeRepeatingMacroMap = {
-	'{{attackREPLACE=':{'current':'[[ 1d20cs>[[ @{crit-target} ]] + [[ @{attack_macro} + @{iterative_attackREPLACE_value} ]] [iterative] ]]}}', 'old':['[[ 1d20cs>[[ @{crit-target} ]] + [[ @{total-attack} + @{iterative_attackREPLACE_value} ]] ]]}}'],'replacements':[{'from':'[[ @{total-attack} ]]','to':'@{attack_macro}'},{'from':'@{total-attack}','to':'@{attack_macro}'}]},
-	'{{damageREPLACE=':{'current':'[[ @{damage-dice-num}d@{damage-die} + @{damage_macro} ]]}}', 'old':['[[ @{damage-dice-num}d@{damage-die} + [[ @{total-damage} ]] ]]}}'],'replacements':[{'from':'[[ @{total-damage} ]]','to':'@{damage_macro}'},{'from':'@{total-damage}','to':'@{damage_macro}'}]},
-	'{{crit_confirmREPLACE=':{'current':'[[ 1d20 + [[ @{attack_macro} + @{iterative_attackREPLACE_value} ]] [iterative] + [[ @{crit_conf_mod} ]] ]]}}', 'old':['[[ 1d20 + [[ @{total-attack} + @{iterative_attackREPLACE_value} ]] ]]}}'],'replacements':[{'from':'[[ @{total-attack} + @{iterative_attackREPLACE_value} ]]','to':'[[ @{attack_macro} + @{iterative_attackREPLACE_value} ]] [iterative] + [[ @{crit_conf_mod} ]]'},{'from':'@{total-attack} + @{iterative_attackREPLACE_value}','to':'@{attack_macro} + @{iterative_attackREPLACE_value} + @{crit_conf_mod}'}]},
-	'{{crit_damageREPLACE=':{'current':'[[ [[ @{damage-dice-num} * [[ @{crit-multiplier} - 1 ]] ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}}', 'old':['[[ [[ (@{damage-dice-num} * (@{crit-multiplier} - 1)) ]]d@{damage-die} + [[ (@{total-damage} * (@{crit-multiplier} - 1)) ]] ]]}}'],'replacements':[{'from':'@{total-damage}','to':'(@{damage_macro})'}]},
-	'{{precision_dmgREPLACE1=':{'current':'@{precision_dmg_macro}}}'},
-	'{{precision_dmgREPLACE2=':{'current':'@{global_precision_dmg_macro}}}'},
-	'{{critical_dmgREPLACE1=':{'current':'@{critical_dmg_macro}}}'},
-	'{{critical_dmgREPLACE2=':{'current':'@{global_critical_dmg_macro}}}'},
-	'{{attackREPLACEname=':{'current':'@{iterative_attackREPLACE_name}}}'}
-},
-defaultIterativeDeletedMacroAttrs=null,
-defaultIterativeAttrName='var_iterative_attackREPLACE_macro',
-defaultIterativeReplaceArray=['2','3','4','5','6','7','8','9'];
 
 function getRepeatingAddInMacroPortion (macro, toggle, portion) {
 	if (!(macro === "" || macro === "0" || macro === undefined || macro === null || toggle === "" || toggle === "0" || toggle === undefined || toggle === null)) {
@@ -916,7 +870,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 		//macroText
 		//mainhand attack:
 		macroText=
-			'&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{header_image=@{header_image-pf_attack-dual}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} ' +		
+			'&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{header_image=@{header_image-pf_attack-dual}}} {{font=@{apply_specfont_chat}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} ' +		
 			'{{attack=[[ 1d20cs>[[ @{repeating_weapon_' + params.mainhand_id + '_crit-target} ]] + [[@{repeating_weapon_' + params.mainhand_id + '_attack_macro} ]] + @{attack-mod} ]]}} ' +
 			'{{damage=[[@{repeating_weapon_' + params.mainhand_id + '_damage-dice-num}d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + @{repeating_weapon_' + params.mainhand_id + '_damage_macro} ]]}} ' +
 			'{{crit_confirm=[[ 1d20 + [[ @{repeating_weapon_' + params.mainhand_id + '_attack_macro} ]] + @{attack-mod} ]]}} ' +

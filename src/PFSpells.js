@@ -22,21 +22,6 @@ classesUsingOtherSpellLists = {
     "skald": "bard",
     "bloodrager": "sorcerer"
 };
-var defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
-defaultRepeatingMacroMap = {
-    '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
-    '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
-    '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-    '{{color=':{'current':'@{rolltemplate_color}}}'},
-    '{{header_image=':{'current':'@{header_image-pf_spell}}}'},
-    '{{name=':{'current':'@{name}}}'},
-    '{{character_name=':{'current':'@{character_name}}}'},
-    '{{character_id=':{'current':'@{character_id}}}'},
-    '{{subtitle}}':{'current':'{{subtitle}}'},
-    '{{deafened_note=':{'current':'@{SpellFailureNote}}}'},
-    '@{spell_options}':{'current':'@{spell_options}'}},
-defaultDeletedMacroAttrs=['@{toggle_accessible_flag}'];
-
 
 export function resetCommandMacro (eventInfo, callback) {
     //TAS.debug("at PFSpells.resetCommandMacro");

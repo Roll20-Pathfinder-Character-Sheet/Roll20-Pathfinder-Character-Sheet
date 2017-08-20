@@ -25,26 +25,7 @@ equipMap = {'noEquipType':0,'Weapon':1,'Armor':2,'Ammo':3,'Consumables':4,'Other
 groupMapForMenu = {0:'',1:'weapons',2:'armor-shield',3:'ammunition',4:'consumables',5:'other-magic-items',6:'gear-tool',7:'other-items',8:'charged-magics',9:'other-items-2'},
 totaledFields = {'value':1,'hp':1,'weight':1},
 commonLinkedAttributes = ["attack-type", "range", "masterwork", "crit-target", "crit-multiplier", "damage-dice-num", "damage-die", "damage",
-    "precision_dmg_macro", "precision_dmg_type", "critical_dmg_macro", "critical_dmg_type"],
-defaultRepeatingMacro='&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-item}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{location=^{location@{location}}}} {{hasuses=@{has_uses}}} {{qty=@{qty}}} {{qtymax=@{qty_max}}} {{shortdesc=@{short-description}}} {{description=@{description}}}',
-defaultRepeatingMacroMap = {
-    '&{template:':{'current':'pf_block}'},
-    '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-    '@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-    '{{color=':{'current':'@{rolltemplate_color}}}'},
-    '{{header_image=':{'current':'@{header_image-pf_block-item}}}',old:['header_image-pf_block}}}']},
-    '{{name=':{'current':'@{name}}}'},
-    '{{character_name=':{'current':'@{character_name}}}'},
-    '{{character_id=':{'current':'@{character_id}}}'},
-    '{{subtitle}}':{'current':'{{subtitle}}'},
-    '{{location=':{'current':'^{location@{location}}}}'},
-    '{{hasuses=':{'current':'@{has_uses}}}'},
-    '{{qty=':{'current':'@{qty}}}'},
-    '{{qty_max=':{'current':'@{qty_max}}}'},
-    '{{shortdesc=':{'current':'@{short-description}}}'},
-    '{{description=':{'current':'@{description}}}',old:['@{short-description}}}']}
-},
-defaultDeletedMacroAttrs=[];
+    "precision_dmg_macro", "precision_dmg_type", "critical_dmg_macro", "critical_dmg_type"];
 
 /** resetCommandMacro sets command button macro with all rows from one ability list.
  * calls PFMenus.getRepeatingCommandMacro
