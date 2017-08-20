@@ -7778,7 +7778,7 @@
 								<span style="display:none;" class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
 								<span class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
 								<label class="sheet-small-label2" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
-								<label class="sheet-small-label2 sheet-entry-15p-shrink">
+								<label class="sheet-small-label2 sheet-entry-12p-shrink">
 									<select class="sheet-select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
 										<option value="class-features" data-i18n="class-features">Class Features</option>
@@ -7947,11 +7947,11 @@
 										<label class="sheet-small-label2 sheet-sect-sp">
 											<select class="sheet-select-small" title="@{repeating_ability_$X_abil-sr}" name="attr_abil-sr" accept="Spell Resistance" >
 												<option value="" data-i18n="select-spell-resistance-default">&#8226;Select SR</option>
-												<option value="Yes" data-i18n="yes" selected>Yes</option>
+												<option value="Yes" data-i18n="yes">Yes</option>
 												<option value="No" data-i18n="no">No</option>
 												<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
-												<option value="No (Harmless)" data-i18n="no-harmless">No (Harmless)</option>
 												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
+												<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
 											</select>
 											<span data-i18n-title="spell-resistance" data-i18n-aria-label="spell-resistance" data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
@@ -12312,7 +12312,7 @@
 								<span class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
 								<span style="display:none;" class="sheet-small-label2 sheet-repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
 								<label class="sheet-small-label2" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
-								<label class="sheet-small-label2 sheet-entry-15p-shrink">
+								<label class="sheet-small-label2 sheet-entry-12p-shrink">
 									<select class="sheet-select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
 										<option value="class-features" data-i18n="class-features">Class Features</option>
@@ -12481,11 +12481,11 @@
 										<label class="sheet-small-label2 sheet-sect-sp">
 											<select class="sheet-select-small" title="@{repeating_ability_$X_abil-sr}" name="attr_abil-sr" accept="Spell Resistance" >
 												<option value="" data-i18n="select-spell-resistance-default">&#8226;Select SR</option>
-												<option value="Yes" data-i18n="yes" selected>Yes</option>
+												<option value="Yes" data-i18n="yes">Yes</option>
 												<option value="No" data-i18n="no">No</option>
 												<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
-												<option value="No (Harmless)" data-i18n="no-harmless">No (Harmless)</option>
 												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
+												<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
 											</select>
 											<span data-i18n-title="spell-resistance" data-i18n-aria-label="spell-resistance" data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
@@ -13551,30 +13551,6 @@
 			<hr>
 		</div>
 		<div class="sheet-cheat"></div>
-		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_macros-show" data-i18n-aria-label="macros" data-i18n-title="showsect-cmd"  value="1" />
-		<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="macros">Macros</label></h2>
-		<div class="sheet-h2-section sheet-macro-recalcs">
-			<span class="sheet-nontable-name" data-i18n="ensure-macros-uptodate">Ensure macros are up to date.</span>
-			<span data-i18n="macro-recalc-instructions">If you are having problems with list or skill macros, uncheck the appropriate box below and hit the recalc button.</span>
-			<br>
-			<div class="sheet-table">
-				<div class="sheet-table-row" >
-					<span class="sheet-table-config-row-name" style="width:5em;border-bottom:none;" data-i18n="macros">Macros</span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_skill_macrosv1" title="@{migrated_skill_macrosv1}" value="1" checked /><span data-i18n-title="skill-macros-current" data-i18n="skill-macros-current">Skill macros to current</span></label></span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_macrosv1" title="@{migrated_attack_macrosv1}" value="1" checked/><span data-i18n="attack-macros-current" >Attack macros current</span></label></span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_ability_macrosv112" title="@{migrated_ability_macrosv112}" value="1" checked /><span data-i18n="ability-macros-current" >Ability macros current</span></label></span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_spells_macrosv1" title="@{migrated_spells_macrosv1}" value="1" checked /><span data-i18n-title="spell-macros-current" data-i18n="spell-macros-current">Spell macros to current</span></label></span>
-				</div>
-				<div class="sheet-table-row" style="background-color:#eeeeee;" >
-					<span class="sheet-table-config-row-name"  style="width:5em;border-bottom:none;">&nbsp;</span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_item_macrosv1" title="@{migrated_item_macrosv1}" value="1" checked /><span data-i18n-title="item-macros-current" data-i18n="item-macros-current">Equipment macros to current</span></label></span>
-					<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_feature_macrosv109" title="@{migrated_feature_macrosv109}" value="1" checked /><span data-i18n="feature-macros-v1" >Original feature macros V1</span></label></span>
-					<span class="sheet-table-cell sheet-left">&nbsp;</span>
-					<span class="sheet-table-cell sheet-left">&nbsp;</span>
-				</div>
-			</div>
-		</div>
-		<div class="sheet-cheat"></div>
 		<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_migrations-show" data-i18n-aria-label="migrations" data-i18n-title="showsect-cmd"  value="1" />
 		<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="migrations">migrations</label></h2>
 		<div class="sheet-h2-section sheet-migrations">
@@ -13774,7 +13750,7 @@
 						{{#casterlevel_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="rolls">Rolls</span>**</div><div></div></div>{{/casterlevel_chk}}
 						{{^casterlevel_chk}}{{#Concentration_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="rolls">Rolls</span>**</div><div></div></div>{{/Concentration_chk}}{{/casterlevel_chk}}
 						{{#casterlevel_chk}}
-						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;(<span data-i18n="level">{{casterlevel}}</span>){{/casterlevel}}</div><div class="sheet-roll-cell">**=**{{casterlevel_chk}}</div></div>
+						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}</div><div class="sheet-roll-cell">**=**{{casterlevel_chk}}</div></div>
 						{{#sr}}{{#spellPen}}<div class="sheet-roll-row"><div class="sheet-roll-cell" style="text-indent:1em">**<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>:**&nbsp;**+**{{spellPen}}</div><div class="sheet-roll-cell"></div></div>{{/spellPen}}{{/sr}}
 						{{/casterlevel_chk}}
 						{{#Concentration_chk}}
@@ -13926,7 +13902,7 @@
 				{{/Concentration}}{{/Concentration_chk}}
 				{{#casterlevel_chk}}<h4 data-i18n="rolls">Rolls</h4>{{/casterlevel_chk}}
 				{{^casterlevel_chk}}{{#Concentration_chk}}<h4>Rolls</h4>{{/Concentration_chk}}{{/casterlevel_chk}}
-				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}(<span data-i18n="level">Level</span>&nbsp;{{casterlevel}}){{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
+				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
 				{{#sr}}{{#spellPen}}<label style="text-indent:1em"> **<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>: <span>+**{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
 				{{/casterlevel_chk}}
 				{{#Concentration_chk}}<label>**<span data-i18n="concentration-check">Concentration Check</span>** {{#Concentration}}**+**{{Concentration}}{{/Concentration}}<span class="sheet-right">**=**{{Concentration_chk}}</span></label>
@@ -14784,7 +14760,7 @@
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
 				<div class="sheet-roll-group">
-					{{#casterlevel}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="casterlevel">casterlevel</span>:** {{casterlevel}}</div></div>{{/casterlevel}}
+					{{#casterlevel}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level">casterlevel</span>:** {{casterlevel}}</div></div>{{/casterlevel}}
 					{{#concentration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="concentration">concentration</span>:** {{concentration}}</div></div>{{/concentration}}
 					{{#location}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="location">Location</span>:**&nbsp;{{location}}</div></div>{{/location}}
 					{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
@@ -14837,7 +14813,7 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#casterlevel}}<label>**<span data-i18n="casterlevel">casterlevel</span>:**&nbsp;<span>{{casterlevel}}</span></label>{{/casterlevel}}
+				{{#casterlevel}}<label>**<span data-i18n="caster-level">casterlevel</span>:**&nbsp;<span>{{casterlevel}}</span></label>{{/casterlevel}}
 				{{#concentration}}<label>**<span data-i18n="concentration">casterlevel</span>:**&nbsp;<span>{{concentration}}</span></label>{{/concentration}}
 				{{#location}}<label>**<span data-i18n="location">Location</span>:**&nbsp;<span>{{location}}</span></label>{{/location}}
 				{{#class}}<label><span>{{class}}</span></label>{{/class}}

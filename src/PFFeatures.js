@@ -534,36 +534,7 @@ export function setNewDefaults (callback,section){
 		}
 	});
 }
-export function migrateRepeatingMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(_.size(featureLists),function(){
-		SWUtils.setWrapper({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
-	});
-	_.each(featureLists,function(section){
-		var defaultName = '',defaultMacro='';
-		try {
-			defaultName = defaultMacroMap[section]||'default';
-			defaultMacro=defaultMacros[defaultName];
-			if (!defaultMacro){
-				TAS.error("cannot find default macro for section "+section);
-				doneOne();
-				return;
-			}
-			PFMacros.migrateRepeatingMacros(doneOne,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{PC-Whisper}');
-			if(section==='feat'||section==='racial-trait'){
-				PFMacros.migrateRepeatingMacros(null,section,'npc-macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-Whisper}');
-			}
-		} catch (err){
-			TAS.error("PFFeatures.migrateRepeatingMacros error setting up "+section,err);
-			doneOne();
-		}
-	});
-}
+
 export function migrate (callback, oldversion){
 	var done = function(){
 		//TAS.debug("leaving PFFeatures.migrate");
@@ -571,17 +542,8 @@ export function migrate (callback, oldversion){
 			callback();
 		}
 	},
-	afterNewDefaults = function(){
-		getAttrs(['migrated_feature_macrosv109'],function(v){
-			if(! parseInt(v.migrated_feature_macrosv109,10)){
-				migrateRepeatingMacros(done);
-			} else {
-				done();
-			}
-		});
-	},
 	numLists = _.size(featureLists),
-	doneOne = _.after(numLists,afterNewDefaults);
+	doneOne = _.after(numLists,done);
 	//TAS.debug"at PFFeatures.migrate");
 	getAttrs(['migrated_featurelists_defaults'],function(vm){
 		var featuremigrated=0,abilitymigrated=0;
@@ -592,7 +554,7 @@ export function migrate (callback, oldversion){
 				setNewDefaults(doneOne,section);
 			});
 		} else {
-			afterNewDefaults();
+			done();
 		}
 	});
 }
