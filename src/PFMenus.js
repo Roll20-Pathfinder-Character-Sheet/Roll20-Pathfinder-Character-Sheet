@@ -358,15 +358,3 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
     }
 }
-/** same as resetOneCommandMacro if you do not know the npc status 
- *@param {string} section name after "repeating_"
- *@param {function} callback  when done
- */
-export function resetOneCommandMacroNoNPC (section,callback,header){
-    getAttrs(['is_npc'],function(v){
-        resetOneCommandMacro(section, (parseInt(v.is_npc,10)||0), callback,header);
-    });
-}
-
-//PFConsole.log('   PFMenus module loaded          ');
-//PFLog.modulecount++;

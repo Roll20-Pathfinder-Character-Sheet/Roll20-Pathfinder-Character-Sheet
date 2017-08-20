@@ -679,11 +679,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                         wornItemAttrs[wornSlot] = "";
                         wornItemAttrs[wornSlot + "-roll"] = "";
                     }
-//                    if(oldlocation===locationMap.Armor){
-//                        wornItemAttrs['armor3']='';
-//                    } else if (oldlocation ===locationMap.Shield){
-//                        wornItemAttrs['shield3']='';
-//                    }
                 } else if (location > locationMap.NotCarried) {
                     wornSlot = getWornItemNameField(location);
                     //TAS.debug("#####################at set location the new location "+ location+","+locationNames[location]+ " is "+wornSlot);
@@ -695,11 +690,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "Row "+ realItemID;
                         }
                         wornItemAttrs[wornSlot + "-roll"] = "@{" + rollField + "}";
-//                        if(location===locationMap.Armor){
-//                            wornItemAttrs['armor3']=itemName;
-//                        } else if (location ===locationMap.Shield){
-//                            wornItemAttrs['shield3']=itemName;
-//                        }
                     }
                     if (oldlocation > 1 && oldlocation !== location) {
                         wornSlot = getWornItemNameField(oldlocation);
@@ -707,11 +697,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "";
                             wornItemAttrs[wornSlot + "-roll"] = "";
                         }
-//                        if(oldlocation===locationMap.Armor){
-//                            wornItemAttrs['armor3']='';
-//                        } else if (oldlocation ===locationMap.Shield){
-//                            wornItemAttrs['shield3']='';
-//                        }
                     }
                 }
             } catch (err2) {

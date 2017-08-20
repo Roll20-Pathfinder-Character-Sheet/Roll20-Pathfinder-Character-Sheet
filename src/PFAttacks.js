@@ -1460,21 +1460,7 @@ export function setNewDefaultsAsync (callback){
 		});
 	});
 }
-export function migrateRepeatingMacro (callback){
-	var done = _.once(function(){
-		if(typeof callback === "function"){
-			callback();
-		}
-	}),
-	migratedIteratives = function(){
-		SWUtils.setWrapper({'migrated_attack_macrosv1':1},PFConst.silentParams,callback);
-	},
-	migrated = _.after(2,function(){
-		PFMacros.migrateRepeatingMacrosMult(migratedIteratives,'weapon',defaultIterativeAttrName,defaultIterativeRepeatingMacro,defaultIterativeRepeatingMacroMap,defaultIterativeDeletedMacroAttrs,defaultIterativeReplaceArray);
-	});
-	PFMacros.migrateRepeatingMacros(migrated,'weapon','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
-	PFMacros.migrateRepeatingMacros(migrated,'weapon','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
-}
+
 export function migrateLinkedAttacks (callback, oldversion){
 	var done=_.once(function(){
 		if (typeof callback === "function"){
@@ -1533,20 +1519,19 @@ export function migrate (callback, oldversion){
 			callback();
 		}
 	});
-	getAttrs([ "migrated_damage-multiplier","migrated_attack_macrosv1"],function(v){
-		var migrateDamage = 0, migrateMacrosv1=0,migrateIteratives=0;
+	getAttrs([ "migrated_damage-multiplier"],function(v){
+		var migrateDamage = 0, migrateIteratives=0;
 		migrateDamage = parseInt(v["migrated_damage-multiplier"], 10) || 0;
-		migrateMacrosv1 = parseInt(v["migrated_attack_macrosv1"], 10) || 0;
 		migrateIteratives = parseInt(v["migrated_attacklist_defaults111"]);
-		if(migrateDamage && migrateMacrosv1 && migrateIteratives){
+		if(migrateDamage  && migrateIteratives){
 			done();
 			return;
 		}
 		getSectionIDs('repeating_weapon',function(ids){
-			var callmigrateMacrostov1,callmigrateMacrostov64,callmigrateRepeatingDamage,callSetDefaults;
+			var callmigrateMacrostov64,callmigrateRepeatingDamage,callSetDefaults;
 			try{
 				if (!ids || _.size(ids)<=0){
-					SWUtils.setWrapper({"migrated_damage-multiplier":1,'migrated_attack_macrosv1':1,'migrated_attacklist_defaults111':1},
+					SWUtils.setWrapper({"migrated_damage-multiplier":1,'migrated_attacklist_defaults111':1},
 						PFConst.silentParams,done);
 					return;
 				}
@@ -1555,13 +1540,9 @@ export function migrate (callback, oldversion){
 						migrateLinkedAttacks(done);
 					});
 				};
-				callmigrateMacrostov1=function(){
-					if(!migrateMacrosv1){migrateRepeatingMacro(callSetDefaults);}
-					else { callSetDefaults();}
-				};
 				callmigrateRepeatingDamage =function(){
-					if(!migrateDamage){PFMigrate.migrateRepeatingDamage(ids,callmigrateMacrostov1);}
-					else {callmigrateMacrostov1();}
+					if(!migrateDamage){PFMigrate.migrateRepeatingDamage(ids,callSetDefaults);}
+					else {callSetDefaults();}
 				};
 				callmigrateRepeatingDamage();
 			} catch (err){

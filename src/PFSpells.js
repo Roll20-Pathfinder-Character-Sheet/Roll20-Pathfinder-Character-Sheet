@@ -1595,30 +1595,9 @@ export function importFromCompendium (id, eventInfo) {
         }
     });
 }
-export function migrateRepeatingMacros (callback){
-    var done = _.once(function(){
-        //TAS.debug("leaving PFSpells.migrateRepeatingMacros");
-        if(typeof callback === "function"){
-            callback();
-        }
-    }),
-    migrated = _.after(2,function(){
-        resetCommandMacro();
-        SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
-    });
-    getAttrs(['migrated_spells_macrosv1'],function(v){
-        if (!parseInt(v.migrated_spells_macrosv1,10)){
-            PFMacros.migrateRepeatingMacros(migrated,'spells','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
-            PFMacros.migrateRepeatingMacros(migrated,'spells','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
-        } else {
-            done();
-        }
-    });
-}
+
 export function migrate (callback) {
-    PFMigrate.migrateSpellRanges(function () {
-        migrateRepeatingMacros (callback);
-    });
+    PFMigrate.migrateSpellRanges(callback);
 }
 
 export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback, silently, oldversion) {

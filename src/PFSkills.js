@@ -156,32 +156,6 @@ events = {
 	skillEventsPlayer: "change:REPLACE-ability change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
 
-function migrateMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFSkills.migrateMacros");
-		if (typeof callback === "function"){
-			callback();
-		}
-	}),
-	doneOne = _.after(3,function(){
-		SWUtils.setWrapper({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
-	});
-	try {
-		//TAS.debug("at PFSkills.migrateMacros");
-		getAttrs(['migrated_skill_macrosv1'],function(v){
-			if(! parseInt(v.migrated_skill_macrosv1,10)) {
-				//TAS.debug"migrateMacros, calling migrateStaticMacrosMult on regular skills ");
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultSkillMacro,defaultSkillMacroMap,null,allNonFillInSkills,keysNeedingReplacing,valsNeedingReplacing,false);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultFillInSkillMacro,defaultFillInSkillMacroMap,null,nonMiscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultMiscSkillMacro,defaultMiscSkillMacroMap,null,miscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-			} else {
-				done();
-			}
-		});
-	} catch (err){
-		done();
-	}
-}
 
 /**appendToSubSkills - util to append the string to all 10 names of one type of skill (perform, craft, knowledge, etc)
  * adds the numbers from 0-9 or 1-10 or knowledge, then appends the string , to generate all 10 versions.
@@ -1018,9 +992,7 @@ export function migrate (callback, oldversion) {
 	//TAS.debug("at PFSkills.migrate");
 	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
-	migrateMacros(function(){
-		migrateMacros2(doneOne);
-	});
+	migrateMacros2(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
 	
 }
