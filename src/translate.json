@@ -1,4 +1,5 @@
 {
+	"apply-font-chatrolls": " Apply font to chat rolls",
 	"update-to-latest": "Update all sheets to latest version",
 	"script": "Script",
 	"copperplate": "Copperplate",
@@ -943,7 +944,7 @@
 	"faction-notes": "Faction Notes",
 	"faction-notes-place": "Fame, Prestige, and Faction Notes",
 	"fame": "Fame",
-	"fantasy": "Fantasy",
+	"fantasy": "Fantasy (Papyrus)",
 	"fascinated": " Fascinated",
 	"fatigued": " Fatigued",
 	"fatigued-conditions": " Fatigued Conditions",

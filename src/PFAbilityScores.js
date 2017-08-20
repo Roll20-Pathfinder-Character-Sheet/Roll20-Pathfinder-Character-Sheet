@@ -349,7 +349,7 @@ export var migrate = TAS.callback(function callPFAbilityScoreMigrate(callback,ol
 /** recalculates all attributes written to by this module. */
 export var recalculate = TAS.callback(function callPFAbilityScoresRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFAbilityScores.recalculate");
+        TAS.info("leaving PFAbilityScores.recalculate");
         if (typeof callback === "function") {
             callback();
         }

@@ -315,7 +315,7 @@ export function migrate (callback, oldversion){
 }
 export var recalculate = TAS.callback(function PFHealthRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFHealth.recalculate");
+		TAS.info("leaving PFHealth.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
