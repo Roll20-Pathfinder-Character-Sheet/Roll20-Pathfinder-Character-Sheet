@@ -289,7 +289,10 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
                 spellLevel= parseInt(v.repeating_spells_spell_level, 10)||0;
                 //TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
                 if (!isNaN(spellLevel)){
-                    classNum = parseInt(v.repeating_spells_spellclass_number,10)||0;
+                    classNum = parseInt(v.repeating_spells_spellclass_number,10);
+                    if(isNaN(classNum)){
+                        setAttrs({'repeating_spells_spellclass_number':0});
+                    }
                     metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
                     if (metamagic){
                         slot = parseInt(v.repeating_spells_slot,10);
@@ -356,7 +359,11 @@ function getSpellTotals  (ids, v, setter) {
             try {
                 spellLevel = parseInt(v[prefix + "spell_level"], 10)||0;
                 if ( !isNaN(spellLevel) ) {
-                    classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
+                    classNum = parseInt(v[prefix + "spellclass_number"], 10);
+                    if(isNaN(classNum)){
+                        classNum=0;
+                        setter[prefix+"spellclass_number"]=0;
+                    }
                     metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
                     slot = parseInt(v[prefix + "slot"], 10);
                     if (metamagic && !isNaN(slot)){
@@ -652,6 +659,9 @@ function updatePreparedSpellState (id, eventInfo) {
         } else if (uses < 1 && preparedState !== 0) {
             setter["repeating_spells_prepared_state"] = "0";
         }
+        if (isNaN(classnum)){
+            setter["repeating_spells_spellclass_number"]=0;
+        }
         if (_.size(setter)) {
             if (hideUnprepared) {
                 SWUtils.setWrapper(setter, PFConst.silentParams, resetCommandMacro());
@@ -717,7 +727,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
             defMod = parseInt(vout["Concentration-" + classIdx + "-def"], 10),
             classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0,
             classSPMisc = parseInt(vout["spellclass-" + classIdx + "-SP-mod"], 10) || 0,
-            newClassName = vout["spellclass-" + classIdx + "-name"],
+            newClassName = vout["spellclass-" + classIdx + "-name"]||'',
             updateDefensiveCasting = eventInfo ? (/\-def$/i.test(eventInfo.sourceAttribute)) : false;
         if (classLevel <= 0) {
             done();
@@ -759,17 +769,17 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                             if (isNaN(classNum)) {
                                 classNum = 0;
                                 classNumSetter[prefix + "spellclass_number"] = 0;
-                                classNumSetter[prefix + "spellclass"] = v['spellclass-0-name'];
+                                classNumSetter[prefix + "spellclass"] = v['spellclass-0-name']||'';
                             }
                             if (!multiclassed || classNum === classIdx) {
                                 if (classNum !== classRadio || isNaN(classRadio)) {
                                     setter[prefix + "spell_class_r"] = classNum;
                                 }
-                                newClassName = v['spellclass-'+classNum+'-name'];
+                                newClassName = v['spellclass-'+classNum+'-name']||'';
                                 if (newClassName !== v[prefix + "spellclass"]) {
                                     setter[prefix + "spellclass"] = newClassName;
                                     if (optionText) {
-                                        optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.spellclass, PFSpellOptions.optionTemplates.spellclass.replace("REPLACE", SWUtils.escapeForRollTemplate(v[prefix + "spellclass"])));
+                                        optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.spellclass, PFSpellOptions.optionTemplates.spellclass.replace("REPLACE", SWUtils.escapeForRollTemplate(newClassName)));
                                         setOption = 1;
                                     }
                                 }
@@ -1113,7 +1123,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         currDCField = prefix + "savedc";        
     }
     fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc", 
-        prefix + "spellclass_number", prefix + "range_pick", prefix + "range", prefix + "range_numeric", 
+         prefix + "range_pick", prefix + "range", prefix + "range_numeric", 
         prefix + "SP-mod", prefix + "SP_misc", prefix + "Concentration_misc", prefix + "Concentration-mod", 
         prefix + "spell_options", prefix + "used", prefix + "slot", prefix + "metamagic", spellLevelField, 
         spellLevelRadioField, dcMiscField, currDCField, 
@@ -1180,7 +1190,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 if (classNum !== classRadio) {
                     setter[classRadioField] = classNum;
                 }
-                className = v["spellclass-" + classNum + "-name"];
+                className = v["spellclass-" + classNum + "-name"]||'';
                 if (v[classNameField] !== className) {
                     //TAS.debug("setting class name field, should be doing this if classnum was undefined");
                     setter[classNameField] = className;
