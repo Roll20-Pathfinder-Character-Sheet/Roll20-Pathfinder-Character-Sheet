@@ -904,48 +904,10 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		});
 	});
 }
-export function migrateRepeatingMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFAbility.migrateRepeatingMacros");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	migrated = _.once(function(){
-		SWUtils.setWrapper({'migrated_ability_macrosv112':1},PFConst.silentParams);
-		done();
-	}),
-	defaultName = '',defaultMacro='',
-	section = 'ability';
-	getAttrs(['migrated_ability_macrosv112'],function(v){
-		try {
-			if(!parseInt(v.migrated_ability_macrosv112,10)){
-				
-				defaultName = defaultMacroMap[section]||'default';
-				defaultMacro=defaultMacros[defaultName];
-				if (!defaultMacro){
-					TAS.error("cannot find default macro for section "+section);
-					done();
-					return;
-				}
-				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
-			} else {
-				done();
-			} 
-		} catch (err){
-			TAS.error("PFAbility.migrateRepeatingMacros error setting up "+section,err);
-			done();
-		}
-	});
-}
 export function migrate (callback){
-	var done = function(){
-		//TAS.debug("leaving PFAbility.migrate");
-		if (typeof callback === "function"){
-			callback();
-		}
-	};
-	migrateRepeatingMacros(done);
+	if (typeof callback === "function"){
+		callback();
+	}
 }
 export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
