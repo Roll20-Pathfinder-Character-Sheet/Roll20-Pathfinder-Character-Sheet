@@ -372,8 +372,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_spell .sheet-font-12,
 .sheet-rolltemplate-pf_block .sheet-font-12,
 .sheet-comic:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-specfont: Comic Sans MS, Patrick Hand, cursive, sans-serif;
-	--sheet-pf-header-specfont: Comic Sans MS, Patrick Hand, cursive, sans-serif;
+    --sheet-pf-specfont: Comic Sans MS, Patrick Hand, Lucida Handwriting, cursive, sans-serif;
+	--sheet-pf-header-specfont: Comic Sans MS, Patrick Hand, Lucida Handwriting, cursive, sans-serif;
 }
 .sheet-rolltemplate-pf_generic .sheet-font-13,
 .sheet-rolltemplate-pf_ability .sheet-font-13,
@@ -382,8 +382,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_spell .sheet-font-13,
 .sheet-rolltemplate-pf_block .sheet-font-13,
 .sheet-segoe:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-specfont: Segoe UI, Tahoma, Candara, sans-serif;
-	--sheet-pf-header-specfont: Segoe UI, Tahoma, Candara, sans-serif;
+    --sheet-pf-specfont: Segoe UI, Tahoma, Candara, Century Gothic, sans-serif;
+	--sheet-pf-header-specfont: Segoe UI, Tahoma, Candara, Century Gothic, sans-serif;
 }
 .sheet-rolltemplate-pf_generic .sheet-font-14,
 .sheet-rolltemplate-pf_ability .sheet-font-14,
@@ -392,8 +392,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_spell .sheet-font-14,
 .sheet-rolltemplate-pf_block .sheet-font-14,
 .sheet-lucida:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-specfont: Lucida Sans Unicode, Trebuchet MS, Lucida Grande, sans-serif;
-	--sheet-pf-header-specfont: Lucida Sans, Lucida Sans Unicode, Trebuchet MS, Lucida Grande, sans-serif;
+    --sheet-pf-specfont: Lucida Sans Unicode Regular, Lucida Sans Unicode, Candara, Calibri, Arial Narrow, sans-serif;
+	--sheet-pf-header-specfont: Lucida Sans, Lucida Sans Unicode Regular, Lucida Sans Unicode, Candara, Calibri, Arial Narrow, sans-serif;
 }
 .sheet-rolltemplate-pf_generic .sheet-font-15,
 .sheet-rolltemplate-pf_ability .sheet-font-15,
@@ -402,8 +402,18 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_spell .sheet-font-15,
 .sheet-rolltemplate-pf_block .sheet-font-15,
 .sheet-fantasy:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-header-specfont:  Papyrus,  Matura MT Script Capitals, fantasy, serif;
-	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
+    --sheet-pf-header-specfont:  Papyrus, Zapf Chancery, Matura MT Script Capitals, Lucida Calligraphy, Brush Script MT, Script MT Bold,Script Regular, serif;
+	--sheet-pf-specfont: Goudy Old Style, Garamond, Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
+}
+.sheet-rolltemplate-pf_generic .sheet-font-17,
+.sheet-rolltemplate-pf_ability .sheet-font-17,
+.sheet-rolltemplate-pf_defense .sheet-font-17,
+.sheet-rolltemplate-pf_attack .sheet-font-17,
+.sheet-rolltemplate-pf_spell .sheet-font-17,
+.sheet-rolltemplate-pf_block .sheet-font-17,
+.sheet-fantasy3:checked ~ .sheet-pf-wrapper {
+    --sheet-pf-header-specfont:  Lucida Calligraphy, Segoe UI Script, Segoe Script, Script MT Regular, Brush Script MT,  Script MT Bold, Script Regular, serif;
+	--sheet-pf-specfont: Hoefler Text, Baskerville, Georgia, Palatino, Cambria, Book Antiqua, serif;
 }
 .sheet-rolltemplate-pf_generic .sheet-font-16,
 .sheet-rolltemplate-pf_ability .sheet-font-16,
@@ -414,16 +424,6 @@ h1,h2,h3,h4,
 .sheet-fantasy2:checked ~ .sheet-pf-wrapper {
     --sheet-pf-header-specfont: Copperplate Gothic Bold, Copperplate Gothic, Copperplate Gothic Light, Coperplate, serif;
     --sheet-pf-specfont: Copperplate Gothic Light, Copperplate, Big Caslon, Calisto MT,  serif;
-}
-.sheet-rolltemplate-pf_generic .sheet-font-17,
-.sheet-rolltemplate-pf_ability .sheet-font-17,
-.sheet-rolltemplate-pf_defense .sheet-font-17,
-.sheet-rolltemplate-pf_attack .sheet-font-17,
-.sheet-rolltemplate-pf_spell .sheet-font-17,
-.sheet-rolltemplate-pf_block .sheet-font-17,
-.sheet-fantasy3:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-header-specfont:  Lucida Calligraphy, Zapf Chancery, Brush Script MT, fantasy, serif;
-	--sheet-pf-specfont: Georgia, Palatino, Cambria, Hoefler Text, Book Antiqua, serif;
 }
 
 .sheet-pf-wrapper,
