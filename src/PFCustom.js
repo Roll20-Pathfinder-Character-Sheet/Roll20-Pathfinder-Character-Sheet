@@ -367,10 +367,10 @@ export function migrate(callback,oldversion){
 				TAS.error("PFSheet.migrate Skills dropdowns ",err);
 			} finally {
 				if (_.size(setter)){
-					TAS.debug("Migrate skill dropdowns setting:",setter);
+					//TAS.debug("Migrate skill dropdowns setting:",setter);
 					setAttrs(setter,PFConst.silentParams,updatedGroup);
 				} else {
-					TAS.error("Migrate skill dropdowns, there was nothing to set!");
+					TAS.warn("Migrate skill dropdowns, there was nothing to set!");
 					updatedGroup();
 				}
 			}

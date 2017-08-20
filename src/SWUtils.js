@@ -15,24 +15,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 export function setWrapper(a,b,c){
 	var bad=false;
-	// a = _.omit(a,function(v,k){
-	// 	if (!v && (isNaN(v) || v === undefined)){
-	// 		TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
-	// 		bad=true;
-	// 		return true;
-	// 	}
-	// 	return false;
-	//});
 	_.each(a,function(v,k){
-	 	if (!v && (isNaN(v) || v === undefined)){
-	 		TAS.error("#####################################","Setting NaN or undefined at "+k,"#####################################");
+	 	if (v!=='' && !v && (isNaN(v) || v === undefined)){
+			a[k]="";
+	 		TAS.warn("#####################################","Setting NaN or undefined for attribute: "+k+" resetting to '' ","#####################################");
 	 		bad=true;
 	 	}
 	});
-	//if (bad){
-	//	TAS.callstack();
-	//}
-//	TAS.debug("setting ",a);
 	setAttrs(a,b,c);
 }
 
@@ -197,7 +186,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 	}
 	findAndReplaceFields(exprStr, function (replacedStr) {
 		var evaluated;
-		TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
+		//TAS.debug("search and replace of " + exprStr + " resulted in " + replacedStr);
 		if (replacedStr === null || replacedStr === undefined) {
 			callback(0);
 			return;
