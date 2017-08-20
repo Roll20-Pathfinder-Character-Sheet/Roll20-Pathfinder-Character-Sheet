@@ -10130,7 +10130,10 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell"><input title="@{carried-currency}" type="number" name="attr_carried-currency" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider-lg">+</span>
-								<span class="sheet-table-cell"><input title="@{carried-equipment}" type="text" class="sheet-number" name="attr_carried-equipment" value="@{item_total_weight}" disabled /></span>
+								<span class="sheet-table-cell">
+									<input title="@{item_total_weight}" type="number"  name="attr_item_total_weight" value="0" class="sheet-calc" readonly />	
+									<input title="@{carried-equipment}" type="hidden" class="sheet-number" name="attr_carried-equipment" value="@{item_total_weight}" disabled />
+								</span>
 								<span class="sheet-divider-lg">+</span>
 								<span class="sheet-table-cell"><input title="@{carried-misc}" type="number" name="attr_carried-misc" value="0" /></span>
 								<span class="sheet-divider-lg">=</span>
