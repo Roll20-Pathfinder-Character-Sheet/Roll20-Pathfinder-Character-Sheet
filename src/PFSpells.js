@@ -1388,7 +1388,7 @@ export function importFromCompendium (id, eventInfo) {
             id = SWUtils.getRowId(eventInfo.sourceAttribute);
         }
     }
-    getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description"], function (v) {
+    getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description","repeating_spells_cast-time"], function (v) {
         var levelStrBase = v["repeating_spells_spell_lvlstr"],
         rangeText = v["repeating_spells_range_from_compendium"],
         areaEffectText = (v["repeating_spells_target_from_compendium"] || "") + (v["repeating_spells_area_from_compendium"] || "") + (v["repeating_spells_effect_from_compendium"] || ""),
@@ -1550,7 +1550,9 @@ export function importFromCompendium (id, eventInfo) {
                 classMatch = classMatch||originalClasses[0]||'Sorceror';
                 foundMatch=true;
             }
-            
+            if(v["repeating_spells_cast-time"] ){
+                setSilent["repeating_spells_cast-time"]= v["repeating_spells_cast-time"].replace(/standard action/i,'S.A.');
+            }
             setSilent["repeating_spells_spell_level"] = level;
             setSilent["repeating_spells_slot"] = level;
             setSilent["repeating_spells_spell_level_r"] = level;
