@@ -450,6 +450,13 @@ function migrate (oldversion, callback, errorCallback) {
 					PFAttackGrid.recalculate();
 				});
 			}
+			if (oldversion < 1.69){
+				PFSpellCasterClasses.recalculate();
+				PFFeatures.recalculate();
+				PFAttacks.recalculate();
+				PFAbility.recalculate();
+				PFInventory.recalculate();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
