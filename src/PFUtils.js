@@ -110,7 +110,26 @@ export function findAbilityInString  (stringToSearch) {
     if (/class.5.level/i.test(stringToSearch)) {
         return "class-5-level";
     }
-    return "";
+    if (/class.0.name/i.test(stringToSearch)) {
+        return "class-0-name";
+    }
+    if (/class.1.name/i.test(stringToSearch)) {
+        return "class-1-name";
+    }
+    if (/class.2.name/i.test(stringToSearch)) {
+        return "class-2-name";
+    }
+    if (/class.3.name/i.test(stringToSearch)) {
+        return "class-3-name";
+    }
+    if (/class.4.name/i.test(stringToSearch)) {
+        return "class-4-name";
+    }
+    if (/class.5.name/i.test(stringToSearch)) {
+        return "class-5-name";
+    }
+    return stringToSearch.replace("@{","").replace("}","");
+//    return "";
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
  *@param {int} casterlevel level of caster

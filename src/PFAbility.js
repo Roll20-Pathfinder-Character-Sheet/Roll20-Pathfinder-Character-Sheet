@@ -838,6 +838,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		calllevel= function(id){
 			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
 				updateCharLevel(id,function(){
+					setClassName(id);
 					updateAbilityRange(id,function(){
 						doneOne();
 					});

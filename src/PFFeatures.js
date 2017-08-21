@@ -315,7 +315,7 @@ export function getAbilities (callback,errorcallback,section){
 										obj["class-name"]=v['race'];
 									} else if (v[prefix+'class-number']){
 										//TAS.debug("setting class-name to "+ v[prefix+'class-number'] +" value is "+ v[v[prefix+'class-number']]);
-										obj["class-name"]=v[v[prefix+'class-number']];
+										obj["class-name"]=v[PFUtils.findAbilityInString(v[prefix+'class-number'])];
 									} else {
 										obj["class-name"]="";
 									}
