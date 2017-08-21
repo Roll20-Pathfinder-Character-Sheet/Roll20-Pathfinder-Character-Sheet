@@ -1,7 +1,7 @@
 export default {
 	/* Pathfinder SHEET constants */
 	version: 1.69,
-	announcementVersionAttr: 'attentionv165-show',
+	announcementVersionAttr: 'attentionv169-show',
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
