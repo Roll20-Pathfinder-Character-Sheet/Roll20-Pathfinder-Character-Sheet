@@ -107,14 +107,14 @@ function createAttack (eventInfo){
                 setter[weaponPrefix + "damage-die"] = 0;
                 setter[weaponPrefix + "size_affects"] = 0;
                 setter[weaponPrefix + "damage-ability"] = "0";
-                TAS.debug("PFOccult.createAttack",setter);
+                //TAS.debug("PFOccult.createAttack",setter);
             } catch (err) {
                 TAS.error("PFAttacks.createAttack err creating "+v.kineticblast_attack_type,err);
             } finally {
                 if(_.size(setter)){
                     setter.create_kineticblast_attack=0;
                     SWUtils.setWrapper(setter,PFConst.silentParams,function(){
-                        TAS.debug("################ created attack "+id);
+                        //TAS.debug("################ created attack "+id);
                         PFAttacks.recalcRepeatingWeapon(id,function(){
                             PFAttackGrid.resetCommandMacro();
                             PFAttackOptions.resetOption(id);
@@ -163,7 +163,7 @@ export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dumm
             updateDC();
         }
         if (typeof callback === "function"){
-            TAS.debug("leaving PFOccult.recalculate");
+            TAS.info("leaving PFOccult.recalculate");
             callback();
         }
     });

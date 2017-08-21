@@ -42,58 +42,6 @@ otherCommandMacros = {
 	'sp':" [^{spell-like-abilities-menu}](~@{character_id}|NPCPREFIXsp_button)",
 	'su':" [^{supernatural-abilities-menu}](~@{character_id}|NPCPREFIXsu_button)"
 },
-defaultMacroMap ={
-	'abilities': 'default'
-},
-defaultMacros={
-	'default': {
-		defaultRepeatingMacro: '&{template:pf_ability} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_ability}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=^{@{rule_category}}}} {{name=@{name}}} {{rule_category=@{rule_category}}} {{source=@{class-name}}} {{is_sp=@{is_sp}}} {{hasspellrange=@{range_pick}}} {{spell_range=^{@{range_pick}}}} {{casterlevel=[[@{casterlevel}]]}} {{spell_level=[[@{spell_level}]]}} {{hasposrange=@{hasposrange}}} {{custrange=@{range}}} {{range=[[@{range_numeric}]]}} {{save=@{save}}} {{savedc=[[@{savedc}]]}} {{hassr=@{abil-sr}}} {{sr=^{@{abil-sr}}}} {{hasfrequency=@{hasfrequency}}} {{frequency=^{@{frequency}}}} {{next_cast=@{rounds_between}}} {{hasuses=@{hasuses}}} {{uses=@{used}}} {{uses_max=@{used|max}}} {{cust_category=@{cust-category}}} {{concentration=[[@{Concentration-mod}]]}} {{damage=@{damage-macro-text}}} {{damagetype=@{damage-type}}} {{hasattack=@{hasattack}}} {{attacktype=^{@{abil-attacktypestr}}}} {{targetarea=@{targets}}} {{duration=@{duration}}} {{shortdesc=@{short-description}}} {{description=@{description}}} {{deafened_note=@{SpellFailureNote}}}',
-		defaultRepeatingMacroMap:{
-			'&{template:':{'current':'pf_ability}'},
-			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-			'{{color=':{'current':'@{rolltemplate_color}}}'},
-			'{{header_image=':{'current':'@{header_image-pf_ability}}}','old':['@{header_image-pf_block}}}']},
-			'{{character_name=':{'current':'@{character_name}}}'},
-			'{{character_id=':{'current':'@{character_id}}}'},
-			'{{subtitle=':{'current':'^{@{rule_category}}}}'},
-			'{{name=':{'current':'@{name}}}'},
-			'{{rule_category=':{'current':'@{rule_category}}}'},
-			'{{source=':{'current':'@{class-name}}}'},
-			'{{is_sp=':{'current':'=@{is_sp}}}'},
-			'{{hasspellrange=':{'current':'@{range_pick}}}'},
-			'{{hassave=':{'current':'@{save}}}'},
-			'{{spell_range=':{'current':'^{@{range_pick}}}}'},
-			'{{hasposrange=':{'current':'@{hasposrange}}}'},
-			'{{custrange=':{'current':'@{range}}}'},
-			'{{range=':{'current':'[[@{range_numeric}]]}}'},
-			'{{save=':{'current':'@{save}}}'},
-			'{{savedc=':{'current':'[[@{savedc}]]}}','old':['@{savedc}}}']},
-			'{{casterlevel=':{'current':'[[@{casterlevel}]]}}'},
-			'{{spell_level=':{'current':'[[@{spell_level}]]}}'},
-			'{{hassr=':{'current':'@{abil-sr}}}'},
-			'{{sr=':{'current':'^{@{abil-sr}}}}'},
-			'{{^{duration}=':{'current':'@{duration}}}'},
-			'{{hasfrequency=':{'current':'@{frequency}}}'},
-			'{{frequency=':{'current':'^{@{frequency}}}}'},
-			'{{next_cast=':{'current':'@{rounds_between}}}'},
-			'{{hasuses=':{'current':'@{hasuses}}}'},
-			'{{uses=':{'current':'@{used}}}'},
-			'{{uses_max=':{'current':'@{used|max}}}'},
-			'{{cust_category=':{'current':'@{cust-category}}}'},
-			'{{concentration=':{'current':'[[@{Concentration-mod}]]}}','old':['@{Concentration-mod}}','@{Concentration-mod}}}']},
-			'{{damage=':{'current':'@{damage-macro-text}}}'},
-			'{{damagetype=':{'current':'@{damage-type}}}'},
-			'{{hasattack=':{'current':'@{hasattack}}}'},
-			'{{attacktype=':{'current':'^{@{abil-attacktypestr}}}}'},
-			'{{targetarea=':{'current':'@{targets}}}'},
-			'{{shortdesc=':{'current':'@{short-description}}}'},
-			'{{description=':{'current':'@{description}}}'},
-			'{{deafened_note=':{'current':'@{SpellFailureNote}}}'}
-			},
-		defaultDeletedArray: null
-	}
-},
 events = {
 	attackEventsSLA:["damage-macro-text","damage-type","abil-sr","save","abil-attack-type","name","range_numeric"],
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
@@ -904,48 +852,10 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		});
 	});
 }
-export function migrateRepeatingMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFAbility.migrateRepeatingMacros");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	migrated = _.once(function(){
-		SWUtils.setWrapper({'migrated_ability_macrosv112':1},PFConst.silentParams);
-		done();
-	}),
-	defaultName = '',defaultMacro='',
-	section = 'ability';
-	getAttrs(['migrated_ability_macrosv112'],function(v){
-		try {
-			if(!parseInt(v.migrated_ability_macrosv112,10)){
-				
-				defaultName = defaultMacroMap[section]||'default';
-				defaultMacro=defaultMacros[defaultName];
-				if (!defaultMacro){
-					TAS.error("cannot find default macro for section "+section);
-					done();
-					return;
-				}
-				PFMacros.migrateRepeatingMacros(migrated,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-whisper}');
-			} else {
-				done();
-			} 
-		} catch (err){
-			TAS.error("PFAbility.migrateRepeatingMacros error setting up "+section,err);
-			done();
-		}
-	});
-}
 export function migrate (callback){
-	var done = function(){
-		//TAS.debug("leaving PFAbility.migrate");
-		if (typeof callback === "function"){
-			callback();
-		}
-	};
-	migrateRepeatingMacros(done);
+	if (typeof callback === "function"){
+		callback();
+	}
 }
 export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {

@@ -25,26 +25,7 @@ equipMap = {'noEquipType':0,'Weapon':1,'Armor':2,'Ammo':3,'Consumables':4,'Other
 groupMapForMenu = {0:'',1:'weapons',2:'armor-shield',3:'ammunition',4:'consumables',5:'other-magic-items',6:'gear-tool',7:'other-items',8:'charged-magics',9:'other-items-2'},
 totaledFields = {'value':1,'hp':1,'weight':1},
 commonLinkedAttributes = ["attack-type", "range", "masterwork", "crit-target", "crit-multiplier", "damage-dice-num", "damage-die", "damage",
-    "precision_dmg_macro", "precision_dmg_type", "critical_dmg_macro", "critical_dmg_type"],
-defaultRepeatingMacro='&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-item}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{location=^{location@{location}}}} {{hasuses=@{has_uses}}} {{qty=@{qty}}} {{qtymax=@{qty_max}}} {{shortdesc=@{short-description}}} {{description=@{description}}}',
-defaultRepeatingMacroMap = {
-    '&{template:':{'current':'pf_block}'},
-    '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-    '@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-    '{{color=':{'current':'@{rolltemplate_color}}}'},
-    '{{header_image=':{'current':'@{header_image-pf_block-item}}}',old:['header_image-pf_block}}}']},
-    '{{name=':{'current':'@{name}}}'},
-    '{{character_name=':{'current':'@{character_name}}}'},
-    '{{character_id=':{'current':'@{character_id}}}'},
-    '{{subtitle}}':{'current':'{{subtitle}}'},
-    '{{location=':{'current':'^{location@{location}}}}'},
-    '{{hasuses=':{'current':'@{has_uses}}}'},
-    '{{qty=':{'current':'@{qty}}}'},
-    '{{qty_max=':{'current':'@{qty_max}}}'},
-    '{{shortdesc=':{'current':'@{short-description}}}'},
-    '{{description=':{'current':'@{description}}}',old:['@{short-description}}}']}
-},
-defaultDeletedMacroAttrs=[];
+    "precision_dmg_macro", "precision_dmg_type", "critical_dmg_macro", "critical_dmg_type"];
 
 /** resetCommandMacro sets command button macro with all rows from one ability list.
  * calls PFMenus.getRepeatingCommandMacro
@@ -128,10 +109,10 @@ export function updateRepeatingItems (callback, silently, attrToUpdate) {
                 if (r.I.qty > 0) {
                     if (r.I.qty_max === 0 || r.I.qty_max===1) {
                         if(attrToUpdate.weight && r.I.location !== locationMap.NotCarried) {
-                            m['item-weight'] += r.F['item-weight'] * r.I.qty;
+                            m['item-weight'] += r.F['item-weight'] * r.F.qty;
                         }
                         if (attrToUpdate.value){
-                            m.value += r.I.value * r.I.qty;
+                            m.value += r.F.value * r.F.qty;
                         }
                         if (attrToUpdate.hp){
                             m['item-hp'] += r.I['item-hp']* r.I.qty;
@@ -142,7 +123,7 @@ export function updateRepeatingItems (callback, silently, attrToUpdate) {
                             m['item-weight'] += r.F['item-weight'];
                         }
                         if (attrToUpdate.value){
-                            m.value += r.I.value;
+                            m.value += r.F.value;
                         }
                         if (attrToUpdate.hp){
                             m['item-hp'] += r.I['item-hp'];
@@ -162,14 +143,14 @@ export function updateRepeatingItems (callback, silently, attrToUpdate) {
             'value': 0
         }, function (m, r, a) {
             if(attrToUpdate.weight){
-                a.S['item_total_weight'] = m['item-weight'];
+                a.S['item_total_weight'] = Math.floor(m['item-weight']*100)/100;
             }
             if (attrToUpdate.hp){
                 a.S['item-total-hp'] = m['item-hp'];
                 a.S['item-total-hp_max'] = m['item-hp_max'];
             }
             if (attrToUpdate.value){
-                a.S['item-total-value'] = m.value;
+                a.S['item-total-value'] = Math.floor(m.value*100)/100;
             }
         }).execute(done);
     } catch (err) {
@@ -249,7 +230,7 @@ function updateCarriedTotal (callback, silently) {
  */
 function migrateWornEquipment (callback) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.migrateWornEquipment");
+        //TAS.debug("leaving PFInventory.migrateWornEquipment");
         if (typeof callback === "function") {
             callback();
         }
@@ -679,11 +660,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                         wornItemAttrs[wornSlot] = "";
                         wornItemAttrs[wornSlot + "-roll"] = "";
                     }
-//                    if(oldlocation===locationMap.Armor){
-//                        wornItemAttrs['armor3']='';
-//                    } else if (oldlocation ===locationMap.Shield){
-//                        wornItemAttrs['shield3']='';
-//                    }
                 } else if (location > locationMap.NotCarried) {
                     wornSlot = getWornItemNameField(location);
                     //TAS.debug("#####################at set location the new location "+ location+","+locationNames[location]+ " is "+wornSlot);
@@ -695,11 +671,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "Row "+ realItemID;
                         }
                         wornItemAttrs[wornSlot + "-roll"] = "@{" + rollField + "}";
-//                        if(location===locationMap.Armor){
-//                            wornItemAttrs['armor3']=itemName;
-//                        } else if (location ===locationMap.Shield){
-//                            wornItemAttrs['shield3']=itemName;
-//                        }
                     }
                     if (oldlocation > 1 && oldlocation !== location) {
                         wornSlot = getWornItemNameField(oldlocation);
@@ -707,11 +678,6 @@ function updateEquipmentLocation (id, callback, silently, eventInfo) {
                             wornItemAttrs[wornSlot] = "";
                             wornItemAttrs[wornSlot + "-roll"] = "";
                         }
-//                        if(oldlocation===locationMap.Armor){
-//                            wornItemAttrs['armor3']='';
-//                        } else if (oldlocation ===locationMap.Shield){
-//                            wornItemAttrs['shield3']='';
-//                        }
                     }
                 }
             } catch (err2) {
@@ -1275,7 +1241,7 @@ export function importFromCompendium (eventInfo){
             if(size >= 1){
                 tempInt=parseInt(setter[itemprefix+'weight'],10)||0;
                 if (tempInt){
-                    tempInt = (tempInt / 2)*100/100;
+                    tempInt = Math.floor((tempInt / 2)*100)/100;
                     setter[itemprefix+'weight']=tempInt;
                 }
             } 
@@ -1598,7 +1564,7 @@ export function setNewDefaults (callback, oldversion){
 }
 export function migrate  (callback, oldversion) {
     var done = _.once(function(){
-        TAS.debug("leaving PFInventory.migrate");
+        //TAS.debug("leaving PFInventory.migrate");
         if (typeof callback === "function"){
             callback();
         }
@@ -1612,7 +1578,7 @@ export function migrate  (callback, oldversion) {
 }
 export var recalculate = TAS.callback(function PFInventoryRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        TAS.debug("leaving PFInventory.recalculate");
+        TAS.info("leaving PFInventory.recalculate");
         if (typeof callback === "function") {
             callback();
         }

@@ -68,7 +68,7 @@ rowattrToOptionToggleMap = {
     "damage-type": "toggle_spell_damage_notes"
 },
 events = {
-    spellOptionEventsPlayer: ["school", "cast-time", "components", "duration", "save", "sr", "range", "targets", "damage-macro-text", "damage-type"]
+    spellOptionEventsPlayer: ["school", "cast-time", "components", "duration", "save", "sr", "range", "targets", "damage-macro-text", "damage-type","sp-mod"]
  };
 /** updateSpellOption - updates an existing @{spell_options} text for a row depending on the field updated on existing row
  * 
@@ -78,7 +78,7 @@ events = {
 export function updateSpellOption (eventInfo, fieldUpdated) {
     var fieldName = "repeating_spells_" + fieldUpdated,
     toggleField = rowattrToOptionToggleMap[fieldUpdated];
-    getAttrs([fieldName, "repeating_spells_spell_options", "repeating_spells_spell_lvlstr", toggleField, "repeating_spells_SP-mod", "repeating_spells_savedc"], function (v) {
+    getAttrs([fieldName, "repeating_spells_spell_options", "repeating_spells_spell_lvlstr", toggleField, "repeating_spells_sr", "repeating_spells_SP-mod", "repeating_spells_savedc"], function (v) {
         var optionText = v["repeating_spells_spell_options"],
         newValue = "", 
         setter = {};
@@ -95,7 +95,11 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             optionText = optionText.replace(optionTemplateRegexes.school, optionTemplates.school);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'cast-time':
-                            optionText = optionText.replace(optionTemplateRegexes.casting_time, optionTemplates.casting_time);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            if ( (/1\s+(?:S.A.|standard action)/i).test( newValue )){
+                                optionText = PFUtils.deleteOption(optionText, "casting_time", optionTemplateRegexes);
+                            } else {
+                                optionText = optionText.replace(optionTemplateRegexes.casting_time, optionTemplates.casting_time);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
+                            }
                             break;
                         case 'components':
                             optionText = optionText.replace(optionTemplateRegexes.components, optionTemplates.components);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
@@ -124,21 +128,28 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             }
                             break;
                         case 'damage-macro-text':
-                            //TAS.debug"found damage macro-text="+newValue);
-                            if (PFUtils.shouldNotDisplayOption('damage-macro-text', newValue)) {
+                            //TAS.debug("found damage macro-text="+newValue);
+                            if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamage", optionTemplateRegexes);
                             } else {
                                 optionText = optionText.replace(optionTemplateRegexes.spelldamage, optionTemplates.spelldamage);//.replace("REPLACE", newValue));
                             }
                             break;
                         case 'damage-type':
-                            //TAS.debug"found damage type"+newValue);
-                            if (PFUtils.shouldNotDisplayOption('damage-type', newValue)) {
+                            //TAS.debug("found damage type"+newValue);
+                            if (!newValue) {
                                 optionText = PFUtils.deleteOption(optionText, "spelldamagetype", optionTemplateRegexes);
                             } else {
-                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates);//.spelldamagetype.replace("REPLACE", newValue));
+                                optionText = optionText.replace(optionTemplateRegexes.spelldamagetype, optionTemplates.spelldamagetype);//.spelldamagetype.replace("REPLACE", newValue));
                             }
                             break;
+                        case 'sp-mod':
+                            TAS.debug("found damage type"+newValue);
+                            if (!newValue) {
+                                optionText = PFUtils.deleteOption(optionText, "spellPen", optionTemplateRegexes);
+                            } else {
+                                optionText = optionText.replace(optionTemplateRegexes.spellPen, optionTemplates.spellPen);//.spelldamagetype.replace("REPLACE", newValue));
+                            }
                     }
                     setter["repeating_spells_spell_options"] = optionText;
                     SWUtils.setWrapper(setter, {
@@ -186,7 +197,11 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.level;//.replace("REPLACE", spellLevel);
     }
     if (toggleValues.showcasting_time) {
-        optionText += optionTemplates.casting_time;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "cast-time"]))||"";
+        if ( (/1 (?:S.A.|standard action)/i).test( rowValues[prefix+"cast-time"])){
+            optionText += "{{casting_time=}}";
+        } else {
+            optionText += optionTemplates.casting_time;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "cast-time"]))||"";
+        }
     }
     if (toggleValues.showcomponents) {
         optionText += optionTemplates.components;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "components"]))||"";
@@ -218,6 +233,13 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         } else {
             optionText += optionTemplates.sr;//.replace("REPLACE", newValue)||"";
         }
+        newValue = parseInt(rowValues[prefix+"SP-mod"],10)||0;
+        if(newValue){
+            optionText += optionTemplates.spellPen;
+        } else {
+            optionText += "{{spellPen=}}";
+        }
+
     }
     if (toggleValues.showcasterlevel && customCasterlevel) {
         optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
@@ -235,7 +257,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
             optionText += optionTemplates.spellPen;//.replace("REPLACE", newValue)||"";
         }
     }
-    if (toggleValues.showconcentration && customConcentration) {
+    if (toggleValues.showconcentration && (customConcentration || customCasterlevel)) {
         optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     } else {
         optionText += "{{Concentration=}}";
@@ -264,7 +286,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     }
 
     if (toggleValues.showdamage ){
-        if(!PFUtils.findAbilityInString(rowValues[prefix+"spell-attack-type"])){
+        if(rowValues[prefix+"spelldamage"]){
             optionText += optionTemplates.spelldamage;//.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
         } else {
             optionText += "{{spelldamage=}}";

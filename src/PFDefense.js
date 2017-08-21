@@ -648,7 +648,7 @@ export function migrate (callback,oldversion){
  */
 export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFDefense.recalculate");
+        TAS.info("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
             callback();
         }

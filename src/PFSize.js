@@ -137,13 +137,13 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return memo;
 	  },{});
 	try {
-		TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
+		//TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
 		currDice=parseInt(currDice,10);
 		currDie=parseInt(currDie,10);
 		if(!(isNaN(currDice)||isNaN(currDie))){
 			dicestring=currDice+"d"+currDie;
 			currSize=sizeModToEasySizeMap[String(defaultSize)];
-			TAS.debug("currSize now : "+currSize);
+			//TAS.debug("currSize now : "+currSize);
 			if (currDice<=0 || currDie > 12 ) {return null;}
 			if (currDie===4 && currDice >24){ currDice=24;}
 			else if (currDie===6 && currDice > 16) {currDice=16;}
@@ -169,8 +169,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				newrow = currow + rowdiff;
 				newrow = Math.min(Math.max(newrow,1),20);
 				dicestring = diceSizes[newrow][0];
-				TAS.debug("PFSize "+currDice+"d"+currDie+" is currrow:"+currow+" going from size:"+
-				   currSize+" of diff:"+sizediff+", move "+rowdiff+" levels to "+ newrow+" dice is "+dicestring);
+				//TAS.debug("PFSize "+currDice+"d"+currDie+" is currrow:"+currow+" going from size:"+currSize+" of diff:"+sizediff+", move "+rowdiff+" levels to "+ newrow+" dice is "+dicestring);
 				matches=dicestring.match(/(\d+)d(\d+)/);
 				currDice=parseInt(matches[1],10);
 				currDie=parseInt(matches[2],10);
@@ -190,7 +189,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 						break;
 					}
 				}
-				TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
+				//TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
 			}
 		}
 	} catch(err){
@@ -262,7 +261,7 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
-		TAS.debug("PFSize.updateSize returning with  ",setter);
+		//TAS.debug("PFSize.updateSize returning with  ",setter);
 		return setter;
 	}
 }
@@ -284,7 +283,7 @@ export function updateSizeAsync (callback, silently,dummy,eventInfo) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				TAS.debug("PFSize.updateSizeAsync, setting:",setter);
+				//TAS.debug("PFSize.updateSizeAsync, setting:",setter);
 				if (silently) {
 					params = PFConst.silentParams;
 				}
@@ -302,7 +301,7 @@ function setNewSize(eventInfo){
 	},false,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
-	TAS.debug("PFSize.applyNewSizeToSheet");
+	//TAS.debug("PFSize.applyNewSizeToSheet");
 	PFEncumbrance.updateLoadsAndLift();
 	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 }
@@ -313,12 +312,11 @@ export function migrate (callback){
 }
 export var recalculate = TAS.callback(function PFSizeRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSize.recalculate");
+		TAS.info("leaving PFSize.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	});
-	//TAS.debug("At PFSize.recalculate");
 	updateSizeAsync(done, silently,null);
 });
 function registerEventHandlers () {

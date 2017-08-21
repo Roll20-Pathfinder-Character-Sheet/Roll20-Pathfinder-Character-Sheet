@@ -793,7 +793,7 @@ export function migrateAttackDropdowns (callback,oldversion){
             setter.cmb2_bab='bab';
             setter['cmb2_bab-mod']=bab;
             setter.migrated_attack_bab_dropdowns = 1;
-            TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
+            //TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
             SWUtils.setWrapper(setter,PFConst.silentParams,callback);
         } else if (typeof callback === "function"){
             callback();
@@ -824,12 +824,12 @@ export function getAllMigrateFlags (v){
     v['migrated_npc']=1;
     v['migrated_worn_equipment']=1;
     v['migrated_repeating_item_attributes']=1;
-    v['migrated_skill_macrosv1']=1;
-    v['migrated_attack_macrosv1']=1;
-    v['migrated_spells_macrosv1']=1;
-    v['migrated_feature_macrosv109']=1;
-    v['migrated_ability_macrosv112']=1;
-	v['migrated_item_macrosv1']=1;
+    //v['migrated_skill_macrosv1']=1;
+    //v['migrated_attack_macrosv1']=1;
+    //v['migrated_spells_macrosv1']=1;
+    //v['migrated_feature_macrosv109']=1;
+    //v['migrated_ability_macrosv112']=1;
+	//v['migrated_item_macrosv1']=1;
     v['migrated_hp_misc']=1;
     v['migrated_maxskill_misc']=1;
     v['migrated_featurelists_defaults']=1;

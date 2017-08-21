@@ -47,7 +47,7 @@ var migrateButtonMap = {
 	delete_class_features_now:'class-ability',
 	delete_slas_now:'npc-spell-like-abilities'
 },
-baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
+baseCommandMacro = "/w \"@{character_name}\" &{template:pf_block} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-abilities}}} ",
 otherCommandMacros = {
 	'class-ability':" [^{original-class-features-list}](~@{character_id}|class-ability_button)",
 	'mythic':" [^{mythic-abilities}](~@{character_id}|mythic-ability_button) [^{mythic-feats}](~@{character_id}|mythic-feat_button)",
@@ -55,84 +55,6 @@ otherCommandMacros = {
 	'racial-trait':" [^{original-racial-traits-list}](~@{character_id}|REPLACENPCracial-trait_button)",
 	'trait':" [^{original-traits-list}](~@{character_id}|trait_button)",
 	'npc-spell-like-abilities': " [^{original-spell-like-abilities-list}](~@{character_id}|npc-spell-like-abilities_button)"
-},
-defaultMacroMap ={
-	'feat': 'default',
-	'trait': 'default',
-	'racial-trait': 'default',
-	'class-ability': 'class-ability',
-	'mythic-ability': 'mythic-ability',
-	'mythic-feat': 'default'
-},
-defaultMacros={
-	'default': {
-		defaultRepeatingMacro: "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{description=@{short-description}}}",
-		defaultRepeatingMacroMap:{
-			'&{template:':{'current':'pf_generic}','old':['pf_block}']},
-			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-			'{{color=':{'current':'@{rolltemplate_color}}}'},
-			'{{header_image=':{'current':'@{header_image-pf_block}}}'},
-			'{{character_name=':{'current':'@{character_name}}}'},
-			'{{character_id=':{'current':'@{character_id}}}'},
-			'{{subtitle}}':{'current':'{{subtitle}}'},
-			'{{name=':{'current':'@{name}}}'},
-			'{{description=':{'current':'@{short-description}}}','old':[' @{short-description}}}']}},
-		defaultDeletedArray: null
-	},
-	'class-ability': {
-		defaultRepeatingMacro: "&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{class=**^{class}**: @{class-number}}} {{name=@{name}}} {{description=@{short-description}}}",
-		defaultRepeatingMacroMap:{
-			'&{template:':{'current':'pf_generic}','old':['pf_block}']},
-			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-			'{{color=':{'current':'@{rolltemplate_color}}}'},
-			'{{header_image=':{'current':'@{header_image-pf_generic}}}'},
-			'{{character_name=':{'current':'@{character_name}}}'},
-			'{{character_id=':{'current':'@{character_id}}}'},
-			'{{subtitle=':{'current':'{{subtitle}}','old':['^{@{rule_category}}}}','Class Ability}}']},
-			'{{class=':{'current':'**^{class}**: @{class-number}}}','old':['**Class**: @{class-number}}}'],replacements:[{'from':'Class','to':'class'}]},
-			'{{name=':{'current':'@{name}}}'},
-			'{{description=':{'current':'@{short-description}}}','old':[' @{short-description}}}']}},
-		defaultDeletedArray:['{{Class=**Class**: @{class-number}}}','{{subtitle=^{@{rule_category}}}}']
-	},
-	'mythic-ability': {
-		defaultRepeatingMacro: "&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{class=**^{path}**: @{mythic-number}}} {{name=@{name}}} {{description=@{short-description}}}",
-		defaultRepeatingMacroMap:{
-			'&{template:':{'current':'pf_generic}','old':['pf_block}']},
-			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-			'{{color=':{'current':'@{rolltemplate_color}}}'},
-			'{{header_image=':{'current':'@{header_image-pf_block}}}'},
-			'{{character_name=':{'current':'@{character_name}}}'},
-			'{{character_id=':{'current':'@{character_id}}}'},		
-			'{{subtitle=':{'current':'{{subtitle}}'},
-			'{{class=':{'current':'**^{path}**: @{mythic-number}}}','old':['**Path**: @{mythic-number}}}'],replacements:[{'from':'Path','to':'path'}]},
-			'{{name=':{'current':'@{name}}}'},
-			'{{description=':{'current':'@{short-description}}}','old':[' @{short-description}}}']}},
-		defaultDeletedArray: ['{{subtitle}}','{{Class=**Class**: @{class-number}}}']
-	},
-	'spell-like-ability': {
-		defaultRepeatingMacro: '&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{^{level}=[[@{level}]]}} {{^{range}=@{range}}} {{^{duration}=@{duration}}} {{^{save}=@{save}, ^{difficulty-class-abbrv} [[@{savedc}]]}} {{^{spell-resistance-abbrv}=@{abil-sr}}} {{description=@{short-description}}}',
-		defaultRepeatingMacroMap:{
-			'&{template:':{'current':'pf_generic}'},
-			'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-			'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-			'{{color=':{'current':'@{rolltemplate_color}}}'},
-			'{{header_image=':{'current':'@{header_image-pf_block}}}'},
-			'{{character_name=':{'current':'@{character_name}}}'},
-			'{{character_id=':{'current':'@{character_id}}}'},
-			'{{name=':{'current':'@{name}}}'},
-			'{{subtitle=':{'current':'{{subtitle}}','old':['^{@{rule_category}}}}','Class Ability}}']},
-			'{{^{level}=':{'current':'@{level}}}','old':['[[@{spell_level}]]}}']},
-			'{{^{range}=':{'current':'@{range}}}','old':['^{@{range_pick}} [[@{range_numeric}]]}}']},
-			'{{^{duration}=':{'current':'@{duration}}}'},
-			'{{^{save}=':{'current':'@{save}}}','old':['@{save}, ^{difficulty-class-abbrv} [[@{savedc}]]}}']},
-			'{{^{spell-resistance-abbrv}=':{'current':'@{sr}}}','old':['^{@{abil-sr}}}}']},
-			'{{description=':{'current':'@{short-description}}}','old':[' @{short-description}}}']}},
-		defaultDeletedArray: ['{{Level=@{level}}}','{{Range=@{range}}}','{{Duration=@{duration}}}','{{Save=@{save}}}','{{SR=@{sr}}}',
-				'{{^{frequency}=@{used}/@{used|max} ^{@{frequency}} @{rounds_between}}}','{{^{frequency}=@{used}/@{used|max} ^{@{frequency}}}}','{{subtitle=^{@{rule_category}}}}']
-	}
 },
 events = {
 	commandMacroFields:["name","used","used_max","showinmenu"]
@@ -534,36 +456,7 @@ export function setNewDefaults (callback,section){
 		}
 	});
 }
-export function migrateRepeatingMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFFeatures.migrateRepeatingMacros");
-		if (typeof callback === "function") {
-			callback();
-		}
-	}),
-	doneOne = _.after(_.size(featureLists),function(){
-		SWUtils.setWrapper({'migrated_feature_macrosv109':1},PFConst.silentParams,done);
-	});
-	_.each(featureLists,function(section){
-		var defaultName = '',defaultMacro='';
-		try {
-			defaultName = defaultMacroMap[section]||'default';
-			defaultMacro=defaultMacros[defaultName];
-			if (!defaultMacro){
-				TAS.error("cannot find default macro for section "+section);
-				doneOne();
-				return;
-			}
-			PFMacros.migrateRepeatingMacros(doneOne,section,'macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{PC-Whisper}');
-			if(section==='feat'||section==='racial-trait'){
-				PFMacros.migrateRepeatingMacros(null,section,'npc-macro-text',defaultMacro.defaultRepeatingMacro,defaultMacro.defaultRepeatingMacroMap,defaultMacro.defaultDeletedArray,'@{NPC-Whisper}');
-			}
-		} catch (err){
-			TAS.error("PFFeatures.migrateRepeatingMacros error setting up "+section,err);
-			doneOne();
-		}
-	});
-}
+
 export function migrate (callback, oldversion){
 	var done = function(){
 		//TAS.debug("leaving PFFeatures.migrate");
@@ -571,17 +464,8 @@ export function migrate (callback, oldversion){
 			callback();
 		}
 	},
-	afterNewDefaults = function(){
-		getAttrs(['migrated_feature_macrosv109'],function(v){
-			if(! parseInt(v.migrated_feature_macrosv109,10)){
-				migrateRepeatingMacros(done);
-			} else {
-				done();
-			}
-		});
-	},
 	numLists = _.size(featureLists),
-	doneOne = _.after(numLists,afterNewDefaults);
+	doneOne = _.after(numLists,done);
 	//TAS.debug"at PFFeatures.migrate");
 	getAttrs(['migrated_featurelists_defaults'],function(vm){
 		var featuremigrated=0,abilitymigrated=0;
@@ -592,7 +476,7 @@ export function migrate (callback, oldversion){
 				setNewDefaults(doneOne,section);
 			});
 		} else {
-			afterNewDefaults();
+			done();
 		}
 	});
 }

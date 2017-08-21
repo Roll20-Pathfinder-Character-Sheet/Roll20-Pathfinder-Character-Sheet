@@ -22,21 +22,6 @@ classesUsingOtherSpellLists = {
     "skald": "bard",
     "bloodrager": "sorcerer"
 };
-var defaultRepeatingMacro='&{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}',
-defaultRepeatingMacroMap = {
-    '&{template:':{'current':'pf_spell}',old:['pf_generic}','pf_block}']},
-    '@{toggle_spell_accessible}':{'current':'@{toggle_spell_accessible}'},
-    '@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-    '{{color=':{'current':'@{rolltemplate_color}}}'},
-    '{{header_image=':{'current':'@{header_image-pf_spell}}}'},
-    '{{name=':{'current':'@{name}}}'},
-    '{{character_name=':{'current':'@{character_name}}}'},
-    '{{character_id=':{'current':'@{character_id}}}'},
-    '{{subtitle}}':{'current':'{{subtitle}}'},
-    '{{deafened_note=':{'current':'@{SpellFailureNote}}}'},
-    '@{spell_options}':{'current':'@{spell_options}'}},
-defaultDeletedMacroAttrs=['@{toggle_accessible_flag}'];
-
 
 export function resetCommandMacro (eventInfo, callback) {
     //TAS.debug("at PFSpells.resetCommandMacro");
@@ -46,12 +31,12 @@ export function resetCommandMacro (eventInfo, callback) {
         }
     }),
     repeatingSpellAttrs = ["spell_level","spellclass_number","name","school","slot","metamagic","used","isDomain","isMythic"],
-    class0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    class1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    class2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-0-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-1-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
-    npcClass2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-2-name} ^{spells}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    class0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-0-name} ^{spells}}} {{concentration=@{Concentration-0}}} {{casterlevel=@{spellclass-0-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    class1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-1-name} ^{spells}}} {{concentration=@{Concentration-1}}} {{casterlevel=@{spellclass-1-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    class2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{spellclass-2-name} ^{spells}}} {{concentration=@{Concentration-2}}} {{casterlevel=@{spellclass-2-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass0BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-0-name} ^{spells}}} {{concentration=@{Concentration-0}}} {{casterlevel=@{spellclass-0-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-0-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-0) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass1BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-1-name} ^{spells}}} {{concentration=@{Concentration-1}}} {{casterlevel=@{spellclass-1-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-1-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-1) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
+    npcClass2BaseMacro = "&{template:pf_block} @{toggle_spell_accessible} @{toggle_rounded_flag}{{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{npc} @{spellclass-2-name} ^{spells}}} {{concentration=@{Concentration-2}}} {{casterlevel=@{spellclass-2-level-total}}} {{row01=**^{checks}**}} {{row02=[^{caster-level-check}](~@{character_id}|Spell-Class-2-CL-Check) [^{concentration-check}](~@{character_id}|Concentration-Check-2) [^{spell-failure}](~@{character_id}|Spell-Fail-Check)}}",
     pcBaseMacro=[class0BaseMacro,class1BaseMacro,class2BaseMacro],
     npcBaseMacro=[npcClass0BaseMacro,npcClass1BaseMacro,npcClass2BaseMacro],
     resetToDefault = function(configV){
@@ -304,7 +289,10 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
                 spellLevel= parseInt(v.repeating_spells_spell_level, 10)||0;
                 //TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
                 if (!isNaN(spellLevel)){
-                    classNum = parseInt(v.repeating_spells_spellclass_number,10)||0;
+                    classNum = parseInt(v.repeating_spells_spellclass_number,10);
+                    if(isNaN(classNum)){
+                        setAttrs({'repeating_spells_spellclass_number':0});
+                    }
                     metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
                     if (metamagic){
                         slot = parseInt(v.repeating_spells_slot,10);
@@ -371,7 +359,11 @@ function getSpellTotals  (ids, v, setter) {
             try {
                 spellLevel = parseInt(v[prefix + "spell_level"], 10)||0;
                 if ( !isNaN(spellLevel) ) {
-                    classNum = parseInt(v[prefix + "spellclass_number"], 10)||0;
+                    classNum = parseInt(v[prefix + "spellclass_number"], 10);
+                    if(isNaN(classNum)){
+                        classNum=0;
+                        setter[prefix+"spellclass_number"]=0;
+                    }
                     metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
                     slot = parseInt(v[prefix + "slot"], 10);
                     if (metamagic && !isNaN(slot)){
@@ -667,6 +659,9 @@ function updatePreparedSpellState (id, eventInfo) {
         } else if (uses < 1 && preparedState !== 0) {
             setter["repeating_spells_prepared_state"] = "0";
         }
+        if (isNaN(classnum)){
+            setter["repeating_spells_spellclass_number"]=0;
+        }
         if (_.size(setter)) {
             if (hideUnprepared) {
                 SWUtils.setWrapper(setter, PFConst.silentParams, resetCommandMacro());
@@ -732,7 +727,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
             defMod = parseInt(vout["Concentration-" + classIdx + "-def"], 10),
             classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0,
             classSPMisc = parseInt(vout["spellclass-" + classIdx + "-SP-mod"], 10) || 0,
-            newClassName = vout["spellclass-" + classIdx + "-name"],
+            newClassName = vout["spellclass-" + classIdx + "-name"]||'',
             updateDefensiveCasting = eventInfo ? (/\-def$/i.test(eventInfo.sourceAttribute)) : false;
         if (classLevel <= 0) {
             done();
@@ -774,17 +769,17 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                             if (isNaN(classNum)) {
                                 classNum = 0;
                                 classNumSetter[prefix + "spellclass_number"] = 0;
-                                classNumSetter[prefix + "spellclass"] = v['spellclass-0-name'];
+                                classNumSetter[prefix + "spellclass"] = v['spellclass-0-name']||'';
                             }
                             if (!multiclassed || classNum === classIdx) {
                                 if (classNum !== classRadio || isNaN(classRadio)) {
                                     setter[prefix + "spell_class_r"] = classNum;
                                 }
-                                newClassName = v['spellclass-'+classNum+'-name'];
+                                newClassName = v['spellclass-'+classNum+'-name']||'';
                                 if (newClassName !== v[prefix + "spellclass"]) {
                                     setter[prefix + "spellclass"] = newClassName;
                                     if (optionText) {
-                                        optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.spellclass, PFSpellOptions.optionTemplates.spellclass.replace("REPLACE", SWUtils.escapeForRollTemplate(v[prefix + "spellclass"])));
+                                        optionText = optionText.replace(PFSpellOptions.optionTemplateRegexes.spellclass, PFSpellOptions.optionTemplates.spellclass.replace("REPLACE", SWUtils.escapeForRollTemplate(newClassName)));
                                         setOption = 1;
                                     }
                                 }
@@ -1082,6 +1077,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     break;
                 case 'cl_misc':
                     updateClassLevel = true;
+                    updateRange = true;
                     break;
                 case 'spellclass_number':
                     updateClass = true;
@@ -1128,7 +1124,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         currDCField = prefix + "savedc";        
     }
     fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc", 
-        prefix + "spellclass_number", prefix + "range_pick", prefix + "range", prefix + "range_numeric", 
+         prefix + "range_pick", prefix + "range", prefix + "range_numeric", 
         prefix + "SP-mod", prefix + "SP_misc", prefix + "Concentration_misc", prefix + "Concentration-mod", 
         prefix + "spell_options", prefix + "used", prefix + "slot", prefix + "metamagic", spellLevelField, 
         spellLevelRadioField, dcMiscField, currDCField, 
@@ -1139,7 +1135,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         "Concentration-0-def", "Concentration-1-def", "Concentration-2-def", 
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name"];
 
-    TAS.debug("PFSPells.updateSpell: getting fields",fields);
+    //TAS.debug("PFSPells.updateSpell: getting fields",fields);
 
     getAttrs(fields, function (v) {
         var setter = {},
@@ -1159,9 +1155,11 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 updateClass=true;
             }
             baseSpellLevel = parseInt(v[spellLevelField], 10);
+            spellSlot = parseInt(v[prefix + "slot"], 10);
             if (isNaN(baseSpellLevel)){
                 spellLevelUndefined=true;
                 baseSpellLevel=0;
+                spellSlot=0;
                 setter[spellLevelRadioField] = 0;
                 setter[prefix + "slot"] = 0;
                 setter[spellLevelField]=0;
@@ -1173,15 +1171,19 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
             if (updateSpellLevel || updateDC || updateSlot || updateClass){
                 spellLevel = baseSpellLevel || 0;
-                spellSlot = parseInt(v[prefix + "slot"], 10);
                 metaMagic = parseInt(v[prefix + "metamagic"], 10) || 0;
                 spellLevelRadio = parseInt(v[spellLevelRadioField], 10);
                 levelSlot = (metaMagic ? spellSlot : spellLevel);
             }
 
-            if (updateClass || updateClassLevel || updateConcentration ){
+            if (updateClass || updateClassLevel || updateConcentration || updateRange ){
                 currCasterLevel = parseInt(v[casterlevelField], 10);
-                casterlevel = currCasterLevel || 0;
+                if(isNaN(currCasterLevel)){
+                    updateClassLevel=true;
+                    updateRange=true;
+                } else {
+                    casterlevel = currCasterLevel;
+                }
             }
             if (updateClass || updateConcentration || updateDC || updateSpellLevel){
                 spellAbilityMod = parseInt(v["Concentration-" + classNum + "-mod"], 10) || 0;
@@ -1195,7 +1197,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 if (classNum !== classRadio) {
                     setter[classRadioField] = classNum;
                 }
-                className = v["spellclass-" + classNum + "-name"];
+                className = v["spellclass-" + classNum + "-name"]||'';
                 if (v[classNameField] !== className) {
                     //TAS.debug("setting class name field, should be doing this if classnum was undefined");
                     setter[classNameField] = className;
@@ -1227,9 +1229,6 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 }
                 if (currCasterLevel !== casterlevel || isNaN(currCasterLevel)) {
                     setter[prefix + "casterlevel"] = casterlevel;
-                } else {
-                    //no updates to propagate
-                    updateClassLevel=false;
                 }
             }
             if (updateDC || updateSpellLevel) {
@@ -1244,7 +1243,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     setter[prefix + "Concentration-mod"] = newConcentration;
                 }
             }
-            if ( updateRange|| updateClassLevel ) {
+            if ( updateRange|| updateClassLevel || updateClass) {
                 newRange = PFUtils.findSpellRange(v[prefix + "range"], currChosenRange, casterlevel) || 0;
                 if (newRange !== currRange) {
                     setter[prefix + "range_numeric"] = newRange;
@@ -1290,12 +1289,14 @@ function toggleMetaMagic (id, eventInfo, callback){
             if (isNaN(level)){
                 level=0;
                 setter[spellLevelField]=0;
+                setter[spellSlotField]=0;
+            }
+            if (isNaN(slot)){
+                slot = level;
+                setter[spellSlotField]=level;
             }
             if (metamagic) {
-                if (isNaN(slot)) {
-                    slot = level;
-                    setter[spellSlotField] = level;
-                } else if (slot !== level){
+                if (slot !== level){
                     setter[spellLevelRadioField] = slot;
                     setter["spells_tab"] = slot;
                     callUpdateSpell=true;
@@ -1388,7 +1389,7 @@ export function importFromCompendium (id, eventInfo) {
             id = SWUtils.getRowId(eventInfo.sourceAttribute);
         }
     }
-    getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description"], function (v) {
+    getAttrs(["repeating_spells_compendium_category","repeating_spells_spell_lvlstr", "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "repeating_spells_range_from_compendium", "repeating_spells_target_from_compendium", "repeating_spells_area_from_compendium", "repeating_spells_effect_from_compendium","repeating_spells_description","repeating_spells_cast-time"], function (v) {
         var levelStrBase = v["repeating_spells_spell_lvlstr"],
         rangeText = v["repeating_spells_range_from_compendium"],
         areaEffectText = (v["repeating_spells_target_from_compendium"] || "") + (v["repeating_spells_area_from_compendium"] || "") + (v["repeating_spells_effect_from_compendium"] || ""),
@@ -1415,7 +1416,7 @@ export function importFromCompendium (id, eventInfo) {
         modeLevel=-1,
         counter = 0,
         callUpdateSpell = true;
-        TAS.debug("at pfspells.importFromCompendium",v);
+        TAS.info("at pfspells.importFromCompendium",v);
         if(!(/spell/i).test(v.repeating_spells_compendium_category)){
             setSilent.repeating_spells_name='Cannot parse ' + v.repeating_spells_compendium_category;
             setAttrs(setSilent,PFConst.silentParams);
@@ -1550,7 +1551,9 @@ export function importFromCompendium (id, eventInfo) {
                 classMatch = classMatch||originalClasses[0]||'Sorceror';
                 foundMatch=true;
             }
-            
+            if(v["repeating_spells_cast-time"] ){
+                setSilent["repeating_spells_cast-time"]= v["repeating_spells_cast-time"].replace(/standard action/i,'S.A.');
+            }
             setSilent["repeating_spells_spell_level"] = level;
             setSilent["repeating_spells_slot"] = level;
             setSilent["repeating_spells_spell_level_r"] = level;
@@ -1588,35 +1591,14 @@ export function importFromCompendium (id, eventInfo) {
         setSilent["repeating_spells_effect_from_compendium"] = "";
         if (_.size(setSilent) > 0) {
             SWUtils.setWrapper(setSilent, PFConst.silentParams, function () {
-                    updateSpell(id, eventInfo);
+                updateSpell(id, eventInfo);
             });
         }
     });
 }
-export function migrateRepeatingMacros (callback){
-    var done = _.once(function(){
-        //TAS.debug("leaving PFSpells.migrateRepeatingMacros");
-        if(typeof callback === "function"){
-            callback();
-        }
-    }),
-    migrated = _.after(2,function(){
-        resetCommandMacro();
-        SWUtils.setWrapper({'migrated_spells_macrosv1':1},PFConst.silentParams,done);
-    });
-    getAttrs(['migrated_spells_macrosv1'],function(v){
-        if (!parseInt(v.migrated_spells_macrosv1,10)){
-            PFMacros.migrateRepeatingMacros(migrated,'spells','npc-macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{NPC-Whisper}');
-            PFMacros.migrateRepeatingMacros(migrated,'spells','macro-text',defaultRepeatingMacro,defaultRepeatingMacroMap,defaultDeletedMacroAttrs,'@{PC-Whisper}');
-        } else {
-            done();
-        }
-    });
-}
+
 export function migrate (callback) {
-    PFMigrate.migrateSpellRanges(function () {
-        migrateRepeatingMacros (callback);
-    });
+    PFMigrate.migrateSpellRanges(callback);
 }
 
 export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback, silently, oldversion) {

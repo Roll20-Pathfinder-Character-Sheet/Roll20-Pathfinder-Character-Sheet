@@ -58,7 +58,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         linkField="roll",
         filterField="",
         filterValue="",
-		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
+		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
@@ -358,15 +358,3 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
     }
 }
-/** same as resetOneCommandMacro if you do not know the npc status 
- *@param {string} section name after "repeating_"
- *@param {function} callback  when done
- */
-export function resetOneCommandMacroNoNPC (section,callback,header){
-    getAttrs(['is_npc'],function(v){
-        resetOneCommandMacro(section, (parseInt(v.is_npc,10)||0), callback,header);
-    });
-}
-
-//PFConsole.log('   PFMenus module loaded          ');
-//PFLog.modulecount++;

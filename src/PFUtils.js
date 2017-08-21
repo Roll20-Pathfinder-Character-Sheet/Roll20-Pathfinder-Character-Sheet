@@ -207,7 +207,7 @@ export function shouldNotDisplayOption  (attr, val) {
             return (!(/^y/i.test(val)));
         case 'save':
         case 'saving_throw':
-            return ((/^n/i.test(val) || /harmless/i.test(val)) && !(/and|or/i.test(val)));
+            return ((/^no/i.test(val) || /harmless/i.test(val)) && !(/and|or/i.test(val)));
         case 'spell_fail':
             return  ( (parseInt(val,10)||0) !== 0);
         default:

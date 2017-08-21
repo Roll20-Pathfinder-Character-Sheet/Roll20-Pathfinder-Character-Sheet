@@ -38,7 +38,7 @@ subskillArrays = _.reduce(skillsWithSubSkills, function (memo, skill) {
 backgroundCoreSkills = regularBackgroundSkillsPlusKnow.concat(subskillArrays["Craft"]).concat(subskillArrays["Perform"]).concat(subskillArrays["Profession"]).concat(["Misc-Skill-5", "Misc-Skill-6", "Misc-Skill-7", "Misc-Skill-8", "Misc-Skill-9"]).sort(),
 adventureSkills = regularAdventurePlusKnow.concat(["Misc-Skill-0", "Misc-Skill-1", "Misc-Skill-2", "Misc-Skill-3", "Misc-Skill-4"]).sort(),
 checkRTArray = ["-ReqTrain", "-ranks"],
-baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
+baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
 skillHeaderMacro = "{{name=^{REPLACELOWER} ^{skills} }} ",
 npcSkillHeaderMacro = "{{name=^{npc} ^{REPLACELOWER} ^{skills} }} ",
 //  1 is the normal size modifier in size_skill, 2 is size_skill_double
@@ -115,7 +115,7 @@ consolidatedSkillAbilityDefaults = {
 	"CS-Stealth": "dex",
 	"CS-Survival": "wis"
 },
-defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
+defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultSkillMacroMap = {
 	'&{template:':{'current':'pf_generic}'},
 	'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
@@ -132,11 +132,11 @@ defaultSkillMacroMap = {
 	'@{REPLACE-cond-notes}':{'current':'@{REPLACE-cond-notes}'},
 	'{{generic_note=':{'current':'@{REPLACE-note}}}'}
 },
-defaultFillInSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWERREMOVENUMBER} @{REPLACE-name}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
+defaultFillInSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWERREMOVENUMBER} @{REPLACE-name}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultFillInSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
 	'{{name=':{'current':'^{REPLACELOWERREMOVENUMBER} (@{REPLACE-name})}}','old':['REPLACEREMOVENUMBER (@{REPLACE-name})}}','REPLACE}}','@{REPLACE-name}}}'],'replacements':[{'from':'REPLACEREMOVENUMBER','to':'^{REPLACELOWERREMOVENUMBER}'}]}
 }),
-defaultMiscSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{REPLACE}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
+defaultMiscSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{REPLACE}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
 defaultMiscSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
 	'{{name=':{'current':'@{REPLACE}}}','old':['Misc-Skill (@{REPLACE-name})}}']}
 }),
@@ -156,32 +156,6 @@ events = {
 	skillEventsPlayer: "change:REPLACE-ability change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
 
-function migrateMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFSkills.migrateMacros");
-		if (typeof callback === "function"){
-			callback();
-		}
-	}),
-	doneOne = _.after(3,function(){
-		SWUtils.setWrapper({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
-	});
-	try {
-		//TAS.debug("at PFSkills.migrateMacros");
-		getAttrs(['migrated_skill_macrosv1'],function(v){
-			if(! parseInt(v.migrated_skill_macrosv1,10)) {
-				//TAS.debug"migrateMacros, calling migrateStaticMacrosMult on regular skills ");
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultSkillMacro,defaultSkillMacroMap,null,allNonFillInSkills,keysNeedingReplacing,valsNeedingReplacing,false);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultFillInSkillMacro,defaultFillInSkillMacroMap,null,nonMiscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultMiscSkillMacro,defaultMiscSkillMacroMap,null,miscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-			} else {
-				done();
-			}
-		});
-	} catch (err){
-		done();
-	}
-}
 
 /**appendToSubSkills - util to append the string to all 10 names of one type of skill (perform, craft, knowledge, etc)
  * adds the numbers from 0-9 or 1-10 or knowledge, then appends the string , to generate all 10 versions.
@@ -608,12 +582,12 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	if(tempstr){
 		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
 		if(matches){
-			TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
+			//TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
 			updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
 		} else if (tempstr==='physical'){
 			updatedAttr = /STR\-mod|DEX\-mod/;
 		}
-		TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
+		//TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
 	}
 	if(!updatedAttr){
 		done();
@@ -622,13 +596,13 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	fields = allTheSkills.map(function(skill){
 		return skill+'-ability';
 	});
-	TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
+	//TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
 	getAttrs(fields,function(v){
 		var skillArray=[];
-		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
+		//TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
 		skillArray = _.reduce(v,function(m,val,field){
 			if(updatedAttr.test(val)){
-				TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
+				//TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
 				m.push(field.slice(0,-8));
 			}
 			return m;
@@ -1018,9 +992,7 @@ export function migrate (callback, oldversion) {
 	//TAS.debug("at PFSkills.migrate");
 	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
-	migrateMacros(function(){
-		migrateMacros2(doneOne);
-	});
+	migrateMacros2(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
 	
 }
