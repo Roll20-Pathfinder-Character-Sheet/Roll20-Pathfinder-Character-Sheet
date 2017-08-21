@@ -1077,6 +1077,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     break;
                 case 'cl_misc':
                     updateClassLevel = true;
+                    updateRange = true;
                     break;
                 case 'spellclass_number':
                     updateClass = true;
@@ -1154,9 +1155,11 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 updateClass=true;
             }
             baseSpellLevel = parseInt(v[spellLevelField], 10);
+            spellSlot = parseInt(v[prefix + "slot"], 10);
             if (isNaN(baseSpellLevel)){
                 spellLevelUndefined=true;
                 baseSpellLevel=0;
+                spellSlot=0;
                 setter[spellLevelRadioField] = 0;
                 setter[prefix + "slot"] = 0;
                 setter[spellLevelField]=0;
@@ -1168,15 +1171,19 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
             if (updateSpellLevel || updateDC || updateSlot || updateClass){
                 spellLevel = baseSpellLevel || 0;
-                spellSlot = parseInt(v[prefix + "slot"], 10);
                 metaMagic = parseInt(v[prefix + "metamagic"], 10) || 0;
                 spellLevelRadio = parseInt(v[spellLevelRadioField], 10);
                 levelSlot = (metaMagic ? spellSlot : spellLevel);
             }
 
-            if (updateClass || updateClassLevel || updateConcentration ){
+            if (updateClass || updateClassLevel || updateConcentration || updateRange ){
                 currCasterLevel = parseInt(v[casterlevelField], 10);
-                casterlevel = currCasterLevel || 0;
+                if(isNaN(currCasterLevel)){
+                    updateClassLevel=true;
+                    updateRange=true;
+                } else {
+                    casterlevel = currCasterLevel;
+                }
             }
             if (updateClass || updateConcentration || updateDC || updateSpellLevel){
                 spellAbilityMod = parseInt(v["Concentration-" + classNum + "-mod"], 10) || 0;
@@ -1222,9 +1229,6 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 }
                 if (currCasterLevel !== casterlevel || isNaN(currCasterLevel)) {
                     setter[prefix + "casterlevel"] = casterlevel;
-                } else {
-                    //no updates to propagate
-                    updateClassLevel=false;
                 }
             }
             if (updateDC || updateSpellLevel) {
@@ -1239,7 +1243,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     setter[prefix + "Concentration-mod"] = newConcentration;
                 }
             }
-            if ( updateRange|| updateClassLevel ) {
+            if ( updateRange|| updateClassLevel || updateClass) {
                 newRange = PFUtils.findSpellRange(v[prefix + "range"], currChosenRange, casterlevel) || 0;
                 if (newRange !== currRange) {
                     setter[prefix + "range_numeric"] = newRange;
@@ -1285,12 +1289,14 @@ function toggleMetaMagic (id, eventInfo, callback){
             if (isNaN(level)){
                 level=0;
                 setter[spellLevelField]=0;
+                setter[spellSlotField]=0;
+            }
+            if (isNaN(slot)){
+                slot = level;
+                setter[spellSlotField]=level;
             }
             if (metamagic) {
-                if (isNaN(slot)) {
-                    slot = level;
-                    setter[spellSlotField] = level;
-                } else if (slot !== level){
+                if (slot !== level){
                     setter[spellLevelRadioField] = slot;
                     setter["spells_tab"] = slot;
                     callUpdateSpell=true;
@@ -1585,7 +1591,7 @@ export function importFromCompendium (id, eventInfo) {
         setSilent["repeating_spells_effect_from_compendium"] = "";
         if (_.size(setSilent) > 0) {
             SWUtils.setWrapper(setSilent, PFConst.silentParams, function () {
-                    updateSpell(id, eventInfo);
+                updateSpell(id, eventInfo);
             });
         }
     });
