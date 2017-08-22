@@ -120,8 +120,8 @@ otherCharBonuses ={
 	},
 //	'natural':{'natural':'AC-natural'}
 charHelperFields = {
-	'armor':['armor3-equipped','use_piecemeal_armor'],
-	'shield':['shield3-equipped','use_piecemeal_armor']
+	'armor':['armor3-equipped'],//,'use_piecemeal_armor'],
+	'shield':['shield3-equipped']//,'use_piecemeal_armor']
 },
 //reverse otherCharBonuses: fields on sheet that affect buffs (all leaf nodes of otherCharBonuses)
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().uniq().value().sort(),
@@ -603,7 +603,7 @@ function updateBuffTotal (col,rows,v,setter){
 	totaldodge=0,tempdodge=0,
 	totalcol='',
 	isWorn=1,
-	stackArmor=0,
+	//stackArmor=0,
 	columns=[col];
 	try {
 		//TAS.debug("total sync for "+col,rows,v);
@@ -640,15 +640,15 @@ function updateBuffTotal (col,rows,v,setter){
 				},sums);
 				sums.sum += sums.pen;
 			} else {
-				if (col==='armor'||col==='shield'){
-					stackArmor = parseInt(v.use_piecemeal_armor,10)||0;
-				}
+				//if (col==='armor'||col==='shield'){
+				//	stackArmor = 0;//parseInt(v.use_piecemeal_armor,10)||0;
+				//}
 				//stack all rows
 				bonuses = rows.reduce(function(m,row){
 					if(row.bonus===col){
 						if (row.val<0){
 							m.penalty = (m.penalty||0) + row.val;
-						} else if(stackingTypes.includes(row.bonusType) || stackArmor ) {
+						} else if(stackingTypes.includes(row.bonusType)) { // || stackArmor ) {
 							m[row.bonusType] = (m[row.bonusType]||0) + row.val;
 						} else {
 							m[row.bonusType] = Math.max((m[row.bonusType]||0),row.val);
@@ -717,15 +717,14 @@ function updateBuffTotal (col,rows,v,setter){
 						}
 						return m;
 					},0);
-					if (!stackArmor){
-						isWorn = parseInt(v[col+'3-equipped'],10)||0;
-						tempInt=0;
-						if(isWorn){
-							tempInt = _.reduce(otherCharBonuses[col],function(tot,charField,bonusType){
-								tot += parseInt(v[charField],10)||0;
-								return tot;
-							},0);
-						}
+					//if (!stackArmor){ ]
+					isWorn = parseInt(v[col+'3-equipped'],10)||0;
+					tempInt=0;
+					if(isWorn){
+						tempInt = _.reduce(otherCharBonuses[col],function(tot,charField,bonusType){
+							tot += parseInt(v[charField],10)||0;
+							return tot;
+						},0);
 					}
 					
 					if (sums.sum > 0 && tempInt > 0){
@@ -844,10 +843,10 @@ function updateBuffTotalAsync (col, callback,silently){
 				}
 				if (col==='armor'){
 					fields.push('armor3-equipped');
-					fields.push('use_piecemeal_armor');	
+					//fields.push('use_piecemeal_armor');	
 				} else if (col==='shield'){
 					fields.push('shield3-equipped');
-					fields.push('use_piecemeal_armor');	
+					//fields.push('use_piecemeal_armor');	
 				}
 			} catch (outerr){
 				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getattrs",outerr);
@@ -913,7 +912,7 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs);
 		fields = fields.concat(buffTotFields);
 		fields = fields.concat(charBonusFields);
-		fields = fields.concat(['armor3-equipped','shield3-equipped','use_piecemeal_armor']);
+		fields = fields.concat(['armor3-equipped','shield3-equipped']);//,'use_piecemeal_armor']);
 		//TAS.debug("##########################","added in " , charBonusFields);
 		//don't need to get notes since we're forcing a reset
 		//fields = fields.concat(buffNoteFields);
@@ -1791,7 +1790,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='enhancement';
 			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
 			tempint=1;
@@ -1799,6 +1798,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 				tempint = 1+ Math.floor(level/4);
 			}
 			setter[prefix+'b1_val']=tempint;
+			setter[prefix+'notes']='Can change bonus to shield';
 			break;
 		case 'ward':
 			setter[prefix+'name']=SWUtils.getTranslated('buff-ward');
