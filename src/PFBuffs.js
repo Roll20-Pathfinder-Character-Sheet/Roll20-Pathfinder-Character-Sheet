@@ -116,9 +116,9 @@ otherCharBonuses ={
 	'will':{'resistance':'Will-resist','trait':'Will-trait'},
 	'ac':{'deflection':'AC-deflect'},
 	'armor':{'armor':'armor3-acbonus','enhancement':'armor3-enhance'},
-	'shield':{'shield':'shield3-acbonus','enhancement':'shield3-enhance'}
+	'shield':{'shield':'shield3-acbonus','enhancement':'shield3-enhance'},
+	'natural':{'natural':'AC-natural'}
 	},
-//	'natural':{'natural':'AC-natural'}
 charHelperFields = {
 	'armor':['armor3-equipped'],//,'use_piecemeal_armor'],
 	'shield':['shield3-equipped']//,'use_piecemeal_armor']
