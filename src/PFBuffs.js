@@ -1798,6 +1798,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 				tempint = 1+ Math.floor(level/4);
 			}
 			setter[prefix+'b1_val']=tempint;
+			setter[prefix+'description-show']='1';			
 			setter[prefix+'notes']='Can change bonus to shield';
 			break;
 		case 'ward':
