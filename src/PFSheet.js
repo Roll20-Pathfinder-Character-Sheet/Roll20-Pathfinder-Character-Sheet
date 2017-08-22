@@ -456,6 +456,7 @@ function migrate (oldversion, callback, errorCallback) {
 				PFAttacks.recalculate();
 				PFAbility.recalculate();
 				PFInventory.recalculate();
+				PFBuffs.recalculate();
 			}
 		}
 	} catch (err) {
