@@ -843,9 +843,11 @@ function updateBuffTotalAsync (col, callback,silently){
 					fields = fields.concat(otherfields);
 				}
 				if (col==='armor'){
-					fields.push('armor3-equipped').push('use_piecemeal_armor');	
+					fields.push('armor3-equipped');
+					fields.push('use_piecemeal_armor');	
 				} else if (col==='shield'){
-					fields.push('shield3-equipped').push('use_piecemeal_armor');	
+					fields.push('shield3-equipped');
+					fields.push('use_piecemeal_armor');	
 				}
 			} catch (outerr){
 				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getattrs",outerr);
