@@ -52,7 +52,8 @@ totColumns = _.values(buffToTot).concat(['dodge']).sort(),
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
 	'deflection','dodge'];
-var
+//these have only their own type, enhancement, or untyped	
+var	armorcols=['armor','shield','natural'],
 //map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
 	'ac':['cmd','touch','flatfooted'],
@@ -115,11 +116,14 @@ otherCharBonuses ={
 	'will':{'resistance':'Will-resist','trait':'Will-trait'},
 	'ac':{'deflection':'AC-deflect'},
 	'armor':{'armor':'armor3-acbonus','enhancement':'armor3-enhance'},
-	'shield':{'shield':'shield3-acbonus','enhancement':'shield3-enhance'},
-	'natural':{'natural':'AC-natural'}
+	'shield':{'shield':'shield3-acbonus','enhancement':'shield3-enhance'}
 	},
-////'armor':'armor3-acbonus','shield':'shield3-acbonus','natural':'AC-natural'},
-//fields on sheet that affect buffs (all leaf nodes of otherCharBonuses)
+//	'natural':{'natural':'AC-natural'}
+charHelperFields = {
+	'armor':['armor3-equipped'],//,'use_piecemeal_armor'],
+	'shield':['shield3-equipped']//,'use_piecemeal_armor']
+},
+//reverse otherCharBonuses: fields on sheet that affect buffs (all leaf nodes of otherCharBonuses)
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().uniq().value().sort(),
 //note fields
 buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes','buff_defense_notes'],
@@ -129,8 +133,6 @@ buffsPerRow=['b1','b2','b3','b4','b5','b6'],
 stackingTypes =['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types use this to hide the type dropdown
 bonusesWithNoTypes=['size','hptemp'],
-//these have only their own type, enhancement, or untyped
-selfTypeOrEnhance=['armor','shield','natural'],
 //all attributes on a buff row, to make getAttrs easier when totalling
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
 	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
@@ -553,7 +555,7 @@ function assembleRows (ids,v,col){
 								vals.bonusType=vals.bonus;
 							} else if (vals.bonus==='hptemp'){
 								vals.bonusType='untyped';
-							} else if (selfTypeOrEnhance.indexOf(vals.bonus)>=0){
+							} else if (armorcols.indexOf(vals.bonus)>=0){
 								//TAS.debug("PFBUFFS rows type: "+vals.bonus+" is "+ v[innerPrefix+'_bonustype']);
 								if(v[innerPrefix+'_bonustype']==='enhancement') {
 									vals.bonusType='enhancement';
@@ -600,8 +602,9 @@ function updateBuffTotal (col,rows,v,setter){
 	tempInt=0,
 	totaldodge=0,tempdodge=0,
 	totalcol='',
-	columns=[col],
-	armorcols=['ac','touch','flatfooted','cmd'];
+	isWorn=1,
+	//stackArmor=0,
+	columns=[col];
 	try {
 		//TAS.debug("total sync for "+col,rows,v);
 		setter = setter || {};
@@ -637,12 +640,15 @@ function updateBuffTotal (col,rows,v,setter){
 				},sums);
 				sums.sum += sums.pen;
 			} else {
+				//if (col==='armor'||col==='shield'){
+				//	stackArmor = 0;//parseInt(v.use_piecemeal_armor,10)||0;
+				//}
 				//stack all rows
 				bonuses = rows.reduce(function(m,row){
 					if(row.bonus===col){
 						if (row.val<0){
 							m.penalty = (m.penalty||0) + row.val;
-						} else if(stackingTypes.includes(row.bonusType) ) {
+						} else if(stackingTypes.includes(row.bonusType)) { // || stackArmor ) {
 							m[row.bonusType] = (m[row.bonusType]||0) + row.val;
 						} else {
 							m[row.bonusType] = Math.max((m[row.bonusType]||0),row.val);
@@ -665,44 +671,73 @@ function updateBuffTotal (col,rows,v,setter){
 						return m;
 					},bonuses);
 				}
-				if(armorcols.indexOf(col)>=0){
-					TAS.debug("PFBUFFS ac bonsuses  ",bonuses,otherCharBonuses[col]);
-				}
-				//subtract charsheet fields that overlap:
-				_.each(otherCharBonuses[col],function(charField,bonusType){
-					TAS.debug("PFBUFFS ac ################## type:"+bonusType+", comparing to "+charField);
-					if(bonuses[bonusType]){
-						tempInt = parseInt(v[charField],10)||0;
-						if(bonuses[bonusType] <= tempInt){
-							bonuses[bonusType]=0;
-						} else {
-							bonuses[bonusType] -= tempInt;
+				if(!( (col==='armor' && bonuses.armor > 0) || (col==='shield' && bonuses.shield > 0) )) {
+					//subtract charsheet fields that overlap:
+					_.each(otherCharBonuses[col],function(charField,bonusType){
+						TAS.debug("PFBUFFS ################## type:"+bonusType+", comparing to "+charField);
+						if(bonuses[bonusType]){
+							tempInt = parseInt(v[charField],10)||0;
+							if(bonuses[bonusType] <= tempInt){
+								bonuses[bonusType]=0;
+							} else {
+								bonuses[bonusType] -= tempInt;
+							}
 						}
+					});
+					//NOW START SUMMING
+					//if ability, penalty is applied seperately
+					if(isAbility &&  _.contains(bonuses,'penalty')){
+						sums.pen=bonuses.penalty;
+						bonuses.penalty=0;
 					}
-				});
-				//NOW START SUMMING
-				//if ability, penalty is applied seperately
-				if(isAbility &&  _.contains(bonuses,'penalty')){
-					sums.pen=bonuses.penalty;
-					bonuses.penalty=0;
-				}
-				if(bonuses.dodge){
-					TAS.info("THERE IS A DODGE BONUS!!",bonuses);
-				}
-				//if ac,touch,cmd,flatfooted, copy dodge  out
-				if(col==='ac' && bonuses.dodge){
-					TAS.debug("yes thats right setting totaldodge");
-//					if ( _.contains(bonuses,'dodge')){
+					//if ac,touch,cmd,flatfooted, copy dodge  out
+					if(col==='ac' && bonuses.dodge){
 						if(col==='ac'){
 							totaldodge += bonuses.dodge;
 						}
 						bonuses.dodge=0;
-//					}
-				}
-				sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
-					m+=bonus;
-					return m;
-				},0);
+					}
+					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
+						m+=bonus;
+						return m;
+					},0);
+				} else {
+					//if armor or shield then compare both
+					//if only enhance then is ok to use above
+					TAS.debug("PFBUFFS ac bonsuses  ",bonuses,otherCharBonuses[col]);
+					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
+						if (bonus>0){
+							m+=bonus;
+						}
+						return m;
+					},0);
+					sums.pen = _.reduce(bonuses,function(m,bonus,bonusType){
+						if (bonus<0){
+							m+=bonus;
+						}
+						return m;
+					},0);
+					//if (!stackArmor){ ]
+					isWorn = parseInt(v[col+'3-equipped'],10)||0;
+					tempInt=0;
+					if(isWorn){
+						tempInt = _.reduce(otherCharBonuses[col],function(tot,charField,bonusType){
+							tot += parseInt(v[charField],10)||0;
+							return tot;
+						},0);
+					}
+					
+					if (sums.sum > 0 && tempInt > 0){
+						if (sums.sum <= tempInt){
+							sums.sum = 0;
+						} else if (sums.sum > tempInt){
+							sums.sum -= tempInt;
+						}
+					}
+					if(sums.pen !== 0){
+						sums.sum += sums.pen;
+					}	
+				}					
 			}
 		}
 
@@ -806,7 +841,13 @@ function updateBuffTotalAsync (col, callback,silently){
 				if(_.size(otherfields)){
 					fields = fields.concat(otherfields);
 				}
-
+				if (col==='armor'){
+					fields.push('armor3-equipped');
+					//fields.push('use_piecemeal_armor');	
+				} else if (col==='shield'){
+					fields.push('shield3-equipped');
+					//fields.push('use_piecemeal_armor');	
+				}
 			} catch (outerr){
 				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getattrs",outerr);
 				done();
@@ -871,10 +912,11 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 		fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs);
 		fields = fields.concat(buffTotFields);
 		fields = fields.concat(charBonusFields);
+		fields = fields.concat(['armor3-equipped','shield3-equipped']);//,'use_piecemeal_armor']);
 		//TAS.debug("##########################","added in " , charBonusFields);
 		//don't need to get notes since we're forcing a reset
 		//fields = fields.concat(buffNoteFields);
-		
+
 		getAttrs(fields,function(v){
 			var rows=[], params={}, setter={};
 			try {
@@ -1748,7 +1790,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'bufftype']='spell';
 			setter[prefix+'tabcat']='spell';
 			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='ac';
+			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='enhancement';
 			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
 			tempint=1;
@@ -1756,6 +1798,8 @@ function getCommonBuffEntries(name,v,onByDefault){
 				tempint = 1+ Math.floor(level/4);
 			}
 			setter[prefix+'b1_val']=tempint;
+			setter[prefix+'description-show']='1';			
+			setter[prefix+'notes']='Can change bonus to shield';
 			break;
 		case 'ward':
 			setter[prefix+'name']=SWUtils.getTranslated('buff-ward');
@@ -1993,6 +2037,17 @@ function registerEventHandlers () {
 	_.each(otherCharBonuses,function(charFieldMap,buff){
 		_.each(charFieldMap,function(field,bonustype){
 			on("change:"+field,TAS.callback(function eventCharFieldUpdatesBuff(eventInfo){
+				if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
+					TAS.debug("caught " + eventInfo.sourceAttribute + ", event: " + eventInfo.sourceType);
+					updateBuffTotalAsync(buff);
+				}
+			}));
+		});
+	});
+
+	_.each(charHelperFields,function(charFieldArray,buff){
+		_.each(charFieldArray,function(field){
+			on("change:"+field,TAS.callback(function eventCharBuffHelperField(eventInfo){
 				if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
 					TAS.debug("caught " + eventInfo.sourceAttribute + ", event: " + eventInfo.sourceType);
 					updateBuffTotalAsync(buff);
