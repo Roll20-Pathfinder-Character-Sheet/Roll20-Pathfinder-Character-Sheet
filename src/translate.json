@@ -1,4 +1,6 @@
 {
+	"use-piecemeal-armor": " Use Piecemeal Armor",
+	"use-piecemeal-armor-buffs": "Changes buff behavior to allow armor and shield bonuses to stack",
 	"apply-font-chatrolls": " Apply font to chat rolls",
 	"update-to-latest": "Update all sheets to latest version",
 	"script": "Script",
