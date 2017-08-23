@@ -113,7 +113,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         armorbuff = parseInt(v['buff_armor-total'],10)||0,
         shieldbuff = parseInt(v['buff_shield-total'],10)||0,
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
-        flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
+        buffFFOnly = parseInt(v['buff_flat-footed-total'],10)||0,
         dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
         buffac = 0,
         bufftouch = 0,
@@ -128,9 +128,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             
             buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
             bufftouch=buffs+buffsTouchOnly+dodgebuff;
-            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
+            buffff=buffs+armorbuff+shieldbuff+naturalbuff+buffFFOnly;
             buffcmd = buffs+buffsCMDOnly+dodgebuff;
-            buffffcmd = buffs+buffsCMDOnly+flatfootedbuff;
+            buffffcmd = buffs+buffsCMDOnly+buffFFOnly;
 
             dodge += dodgebuff;
             //deflect ;
@@ -244,10 +244,10 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 bab = parseInt(v.level,10)||0;
             }
             ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
-            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouchOnly;
-            ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
-            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
-            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffs + buffsTouchOnly; //already has dodge and buffs and buffstouchonly
+            ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + buffFFOnly ;
+            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffs + buffsCMDOnly;
+            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffs + buffsCMDOnly + (currCMDUncanny ? dodge : 0) + buffFFOnly;
 
             if(parseInt(v.buffsumac,10)!==buffac){
                 setter.buffsumac=buffac;
