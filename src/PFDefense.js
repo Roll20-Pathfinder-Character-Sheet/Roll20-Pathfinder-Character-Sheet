@@ -244,7 +244,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 bab = parseInt(v.level,10)||0;
             }
             ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
-            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + bufftouch;
+            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + buffsTouchOnly;
             ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
             cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
