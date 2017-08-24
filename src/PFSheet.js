@@ -439,24 +439,24 @@ function migrate (oldversion, callback, errorCallback) {
 					},oldversion);
 				},oldversion);
 			}
-			if (oldversion <= 1.66){
-				
-				//PFInventory.migrate();
-			}
+
 			if (oldversion < 1.68){
 				PFCustom.migrate(function(){
-					PFSkills.recalculate();
-					PFDefense.recalculate();
-					PFAttackGrid.recalculate();
+					PFSkills.recalculate(null,null,oldversion);
+					PFDefense.recalculate(null,null,oldversion);
+					PFAttackGrid.recalculate(null,null,oldversion);
 				});
 			}
 			if (oldversion < 1.69){
-				PFSpellCasterClasses.recalculate();
-				PFFeatures.recalculate();
-				PFAttacks.recalculate();
-				PFAbility.recalculate();
-				PFInventory.recalculate();
-				PFBuffs.recalculate();
+				PFSpellCasterClasses.recalculate(null,null,oldversion);
+				PFFeatures.recalculate(null,null,oldversion);
+				PFAttacks.recalculate(null,null,oldversion);
+				PFAbility.recalculate(null,null,oldversion);
+				PFInventory.recalculate(null,null,oldversion);
+				PFBuffs.recalculate(null,null,oldversion);
+			}
+			if (oldversion < 1.70){
+				PFDefense.recalculate(null,null,oldversion);
 			}
 		}
 	} catch (err) {

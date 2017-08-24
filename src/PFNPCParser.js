@@ -3403,7 +3403,7 @@ on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo)
 			getAttrs(['vision'],function(v){
 				var setter={}, matches,tempint=0;
 				setter.bar1_link = 'HP';
-				setter.light_hassight = 1;
+				//setter.light_hassight = 1;
 				if(v.vision){
 					matches= v.vision.match(/darkvision (\d+)/i);
 					if (matches && matches[1]){
