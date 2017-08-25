@@ -3421,8 +3421,6 @@
 								<input type="hidden" name="attr_damage-type_macro_insert" value="@{toggle_global_melee_damage_macro_insert}" />
 								<input type="hidden" name="attr_macro_options" value="{{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}" />
 								<input type="hidden" name="attr_iterative_attacks" value="@{toggle_iterative_attack2} @{toggle_iterative_attack3} @{toggle_iterative_attack4} @{toggle_iterative_attack5} @{toggle_iterative_attack6} @{toggle_iterative_attack7} @{toggle_iterative_attack8} @{toggle_iterative_attack9}" />
-								<input type="hidden" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
-								<input type="hidden" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
 								<div class="sheet-sect sheet-expand">
 									<input type="checkbox" class="sheet-showarrow sheet-misc-show" name="attr_misc-show" value="1" data-i18n-title="miscellaneous" data-i18n-aria-label="miscellaneous" />
 									<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>
@@ -3439,7 +3437,10 @@
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
 									<div class="sheet-misc">
-										<label class="sheet-small-label2 sheet-entry-10p-shrink"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" data-i18n-placeholder="group-name"  /><span data-i18n="group">Group name</span></label>
+										<label class="sheet-small-label2 sheet-autoexpand">
+											<input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" data-i18n-placeholder="group-name" />
+											<span data-i18n="group">Group name</span><span name="attr_character_title" class="sheet-autoexpand"></span>
+										</label>
 										<label class="sheet-small-label2 sheet-nondual-sect">
 											<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
 												<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
@@ -3463,8 +3464,8 @@
 											</select>
 											<span data-i18n="normal-size">Normal Size</span>
 										</label>
-										<div class="sheet-small-label2" style="width:60%;height:auto;clear:both;margin-bottom:0;">
-											<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
+										<div class="sheet-small-label2" style="width:auto;height:auto;clear:both;margin-bottom:0;">
+											<textarea class="sheet-inline-textarea sheet-both" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
 											<span data-i18n="notes">Notes</span>
 										</div>
 									</div>									
@@ -3664,6 +3665,12 @@
 											<div class="sheet-cheat"></div>
 											<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
 											<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+											<div class="sheet-cheat"></div>
+											<span style="display:inline;"><span data-i18n="attack-macro">Attack Macro</span>:</span>
+											<input style="width:90%;float:right;" type="text" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
+											<div class="sheet-cheat"></div>
+											<span style="display:inline;"><span data-i18n="damage-macro">Damage Macro</span>:</span>
+											<input style="width:90%;float:right;" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
 										</label>
 									</div>
 									<div class="sheet-repeating-id">
@@ -11067,8 +11074,6 @@
 									<input type="hidden" name="attr_damage-type_macro_insert" value="@{toggle_global_melee_damage_macro_insert}" />
 									<input type="hidden" name="attr_macro_options" value="{{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}" />
 									<input type="hidden" name="attr_iterative_attacks" value="@{toggle_iterative_attack2} @{toggle_iterative_attack3} @{toggle_iterative_attack4} @{toggle_iterative_attack5} @{toggle_iterative_attack6} @{toggle_iterative_attack7} @{toggle_iterative_attack8} @{toggle_iterative_attack9}" />
-									<input type="hidden" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
-									<input type="hidden" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
 									<div class="sheet-sect sheet-expand">
 										<input type="checkbox" class="sheet-showarrow sheet-misc-show" name="attr_misc-show" value="1" data-i18n-title="miscellaneous" data-i18n-aria-label="miscellaneous" />
 										<label class="sheet-showsect sheet-misc-showlabel" data-i18n="miscellaneous-abbrv">Misc</label>
@@ -11085,7 +11090,10 @@
 										<hr class="sheet-subnav-hr">
 										<div class="sheet-cheat"></div>
 										<div class="sheet-misc">
-											<label class="sheet-small-label2 sheet-entry-10p-shrink"><input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" data-i18n-placeholder="group-name"  /><span data-i18n="group">Group name</span></label>
+											<label class="sheet-small-label2 sheet-autoexpand">
+												<input type="text" name="attr_group" value="" title="@{repeating_weapon_$X_group}" data-i18n-placeholder="group-name" />
+												<span data-i18n="group">Group name</span><span name="attr_character_title" class="sheet-autoexpand"></span>
+											</label>
 											<label class="sheet-small-label2 sheet-nondual-sect">
 												<select title="@{repeating_weapon_$X_proficiency}" name="attr_proficiency">
 													<option value="0" data-i18n="yes-default" selected>&#8226;Yes</option>
@@ -11109,8 +11117,8 @@
 												</select>
 												<span data-i18n="normal-size">Normal Size</span>
 											</label>
-											<div class="sheet-small-label2" style="width:60%;height:auto;clear:both;margin-bottom:0;">
-												<textarea class="sheet-inline-textarea" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
+											<div class="sheet-small-label2" style="width:auto;height:auto;clear:both;margin-bottom:0;">
+												<textarea class="sheet-inline-textarea sheet-both" name="attr_notes" title="@{repeating_weapon_$X_notes}" placeholder="Weapon Notes"></textarea>
 												<span data-i18n="notes">Notes</span>
 											</div>
 										</div>									
@@ -11308,8 +11316,14 @@
 											<label class="sheet-small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:2px;padding-right:2px;">
 												<h3 class="sheet-super sheet-note-d" data-i18n="full-macro">Full Macro:</h3>
 												<div class="sheet-cheat"></div>
-												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
-												<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<textarea class="sheet-macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<textarea style="display:none;" class="sheet-macro-text" title="@{repeating_weapon_$X_NPC-macro-text}" name="attr_NPC-macro-text">@{NPC-whisper} &{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
+												<div class="sheet-cheat"></div>
+												<span style="display:inline;"><span data-i18n="attack-macro">Attack Macro</span>:</span>
+												<input style="width:90%;float:right;" type="text" name="attr_attack_macro" value="[[ @{total-attack} ]] [Total] + @{toggle_attack_macro_insert} + @{attack-type_macro_insert} + @{toggle_global_attack_macro_insert}" />
+												<div class="sheet-cheat"></div>
+												<span style="display:inline;"><span data-i18n="damage-macro">Damage Macro</span>:</span>
+												<input style="width:90%;float:right;" name="attr_damage_macro" value="[[ @{total-damage} ]] [Total] + @{toggle_damage_macro_insert} + @{damage-type_macro_insert} + @{toggle_global_damage_macro_insert}" />
 											</label>
 										</div>
 										<div class="sheet-repeating-id">
