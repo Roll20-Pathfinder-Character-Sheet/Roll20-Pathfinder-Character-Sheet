@@ -115,35 +115,6 @@ consolidatedSkillAbilityDefaults = {
 	"CS-Stealth": "dex",
 	"CS-Survival": "wis"
 },
-defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultSkillMacroMap = {
-	'&{template:':{'current':'pf_generic}'},
-	'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-	'{{color=':{'current':'@{rolltemplate_color}}}'},
-	'{{header_image=':{'current':'@{header_image-pf_generic-skill}}}','old':['@{header_image-pf_generic}}}']},
-	'{{character_name=':{'current':'@{character_name}}}'},
-	'{{character_id=':{'current':'@{character_id}}}'},
-	'{{subtitle}}':{'current':'{{subtitle}}'},
-	'{{name=':{'current':'^{REPLACELOWER}}}','old':['REPLACE}}','@{REPLACE-name}}}','^{REPLACE}}}']},
-	'{{Check=':{'current':'[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}','old':['[[ 1d20 + [[ @{REPLACE} ]] ]]}}'],'replacements':[{'from':'1d20','to':'@{skill-query}'}]},
-	'@{REPLACE-ut}':{'current':'@{REPLACE-ut}'},
-	'@{skill_options}':{'current':'@{skill_options}'},
-	'@{REPLACE-cond-notes}':{'current':'@{REPLACE-cond-notes}'},
-	'{{generic_note=':{'current':'@{REPLACE-note}}}'}
-},
-defaultFillInSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWERREMOVENUMBER} @{REPLACE-name}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultFillInSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'^{REPLACELOWERREMOVENUMBER} (@{REPLACE-name})}}','old':['REPLACEREMOVENUMBER (@{REPLACE-name})}}','REPLACE}}','@{REPLACE-name}}}'],'replacements':[{'from':'REPLACEREMOVENUMBER','to':'^{REPLACELOWERREMOVENUMBER}'}]}
-}),
-defaultMiscSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{REPLACE}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultMiscSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'@{REPLACE}}}','old':['Misc-Skill (@{REPLACE-name})}}']}
-}),
-defaultSkillDeletedMacroAttrs=['{{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}'],
-defaultSkillAttrName='REPLACE-macro',
-keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
-valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
