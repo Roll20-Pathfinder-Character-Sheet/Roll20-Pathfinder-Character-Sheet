@@ -7736,8 +7736,8 @@
 					<label role="menuitem" class="sheet-tab sheet-tab3 sheet-section-mythic sheet-wider-tab" data-i18n="mythic-abilities">Mythic Abilities</label>
 					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_abilities_tab" value="special-attacks" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
 					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n="special-attacks-abbrv">Spec Atk</label>
-					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
-					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n="special-abilities-abbrv">Spec Abil</label>
+					<input type="radio" class="sheet-tabinput sheet-tab5 sheet-wider-tab" name="attr_abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
+					<label role="menuitem" class="sheet-tab sheet-tab5 sheet-wider-tab" data-i18n="special-abilities-abbrv">Spec Abil</label>
 					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_abilities_tab" value="spell-like-abilities" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n="spell-like-abilities-abbrv">Spell-like</label>
 					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_abilities_tab" value="special-qualities" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
@@ -7818,8 +7818,9 @@
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
-								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-sect2-show-inverse sheet-noshow" />
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect2-inverse sheet-sect">
+								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-or-A-show sheet-noshow sheet-nolevel-show-inverse" />
+								<input type="checkbox" name="attr_CL-basis" value="@{level}" class="sheet-or-B-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-nor-sect sheet-sect">
 									<input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="sheet-calc" readonly />
 									<span class="sheet-nowrap" data-i18n="source-name">Source Name</span>
 								</label>
@@ -7871,8 +7872,8 @@
 								<div class="sheet-sect sheet-expand"> 
 									<input type="checkbox" class="sheet-showarrow sheet-desc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
-									<input type="checkbox" class="sheet-showarrow sheet-misc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
-									<label class="sheet-showsect sheet-misc-showlabel" data-i18n="level-basis">Level basis</label>
+									<input type="checkbox" class="sheet-showarrow sheet-misc-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
+									<label class="sheet-showsect sheet-misc-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
 									<input type="checkbox" class="sheet-showarrow sheet-range-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_range-show" value="1" />
 									<label class="sheet-showsect sheet-range-showlabel" data-i18n="range">Range</label>
 									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
@@ -7883,7 +7884,7 @@
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-misc">										
+									<div class="sheet-misc sheet-nolevel-sect">										
 										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-or-A-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
@@ -7939,8 +7940,8 @@
 											<span class="sheet-super sheet-note-a" data-i18n-aria-label="spell-level-miscellaneous-desc" data-i18n-title="spell-level-miscellaneous-desc" data-i18n="miscellaneous-abbrv" style="display:inline-block;">Misc</span>
 										</label>
 										<label class="sheet-divider-db-lg sheet-nowrap sheet-either-or-sect" style="margin-left:-.5em;">)=</label>
-										<label class="sheet-small-label2 sheet-extra-sect sheet-number">
-											<input type="text" value="(@{spell_level-basis}+@{spell_level-misc-mod})" title="@{repeating_ability_$X_spell_level}" name="attr_spell_level" disabled />
+										<label class="sheet-small-label2 sheet-narrow-numbers">
+											<input type="text" class="sheet-narrow-numbers" value="(@{spell_level-basis}+@{spell_level-misc-mod})" title="@{repeating_ability_$X_spell_level}" name="attr_spell_level" disabled />
 											<span data-i18n-title="effective-spell-level" data-i18n-aria-label="effective-spell-level" data-i18n="spell-level-abbrv" >Spell lvl</span>
 										</label>
 										<label class="sheet-divider-db-lg">|</label>
@@ -7960,7 +7961,7 @@
 												<option value="No" data-i18n="no">No</option>
 												<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
 												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-												<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
+												<option value="Yes (Harmless, Object)" data-i18n="yes-harmless-object">Yes (Harmless, Object)</option>
 											</select>
 											<span data-i18n-title="spell-resistance" data-i18n-aria-label="spell-resistance" data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
@@ -8317,7 +8318,7 @@
 										<option value="No" data-i18n="no">No</option>
 										<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
 										<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-										<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
+										<option value="Yes (Harmless, Object)" data-i18n="yes-harmless-object">Yes (Harmless, Object)</option>
 									</select>
 									<br><span data-i18n="spell-resistance-abbrv">SR</span>
 								</span>
@@ -9887,23 +9888,23 @@
 					<input type="radio" class="sheet-tabinput sheet-tab0" name="attr_spells_tab" value="0" data-i18n-aria-label="level-0-spells" data-i18n-title="cantrips"  />
 					<label role="menuitem" class="sheet-tab sheet-tab0" data-i18n-title="cantrips" data-i18n-aria-label="cantrips" title="Cantrips" data-i18n="cantrips">Cantrips</label>
 					<input type="radio" class="sheet-tabinput sheet-tab1" name="attr_spells_tab" value="1" data-i18n-aria-label="level-1-spells" data-i18n-title="level-1-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab1" data-i18n-title="level-1-ordinal"  data-i18n="level-1-ordinal">1st Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab1" data-i18n-title="level-1-ordinal"  data-i18n="1-ordinal">1st Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab2" name="attr_spells_tab" value="2" data-i18n-aria-label="level-2-spells" data-i18n-title="level-2-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab2" data-i18n-title="level-2-ordinal"  data-i18n="level-2-ordinal">2nd Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab2" data-i18n-title="level-2-ordinal"  data-i18n="2-ordinal">2nd Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab3" name="attr_spells_tab" value="3" data-i18n-aria-label="level-3-spells" data-i18n-title="level-3-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab3" data-i18n-title="level-3-ordinal"  data-i18n="level-3-ordinal">3rd Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab3" data-i18n-title="level-3-ordinal"  data-i18n="3-ordinal">3rd Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_spells_tab" value="4" data-i18n-aria-label="level-4-spells" data-i18n-title="level-4-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n-title="level-4-ordinal"  data-i18n="level-4-ordinal">4th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n-title="level-4-ordinal"  data-i18n="4-ordinal">4th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_spells_tab" value="5" data-i18n-aria-label="level-5-spells" data-i18n-title="level-5-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n-title="level-5-ordinal"  data-i18n="level-5-ordinal">5th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n-title="level-5-ordinal"  data-i18n="5-ordinal">5th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_spells_tab" value="6" data-i18n-aria-label="level-6-spells" data-i18n-title="level-6-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="level-6-ordinal"  data-i18n="level-6-ordinal">6th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n-title="level-6-ordinal"  data-i18n="6-ordinal">6th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab7" name="attr_spells_tab" value="7" data-i18n-aria-label="level-7-spells" data-i18n-title="level-7-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab7" data-i18n-title="level-7-ordinal"  data-i18n="level-7-ordinal">7th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab7" data-i18n-title="level-7-ordinal"  data-i18n="7-ordinal">7th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab8" name="attr_spells_tab" value="8" data-i18n-aria-label="level-8-spells" data-i18n-title="level-8-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab8" data-i18n-title="level-8-ordinal"  data-i18n="level-8-ordinal">8th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab8" data-i18n-title="level-8-ordinal"  data-i18n="8-ordinal">8th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab9" name="attr_spells_tab" value="9" data-i18n-aria-label="level-9-spells" data-i18n-title="level-9-ordinal"  />
-					<label role="menuitem" class="sheet-tab sheet-tab9" data-i18n-title="level-9-ordinal"  data-i18n="level-9-ordinal">9th Level</label>
+					<label role="menuitem" class="sheet-tab sheet-tab9" data-i18n-title="level-9-ordinal"  data-i18n="9-ordinal">9th Level</label>
 					<input type="radio" class="sheet-tabinput sheet-tab99" name="attr_spells_tab" value="99" data-i18n-aria-label="all" data-i18n-title="all"  checked />
 					<label role="menuitem" class="sheet-tab sheet-tab99" data-i18n-title="all" data-i18n-aria-label="all" title="All" data-i18n="all">All</label>
 					<span class="sheet-nontable-name">&nbsp;</span>
@@ -9990,7 +9991,7 @@
 										<option value="No" data-i18n="no">No</option>
 										<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
 										<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-										<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
+										<option value="Yes (Harmless, Object)" data-i18n="yes-harmless-object">Yes (Harmless, Object)</option>
 									</select>
 									<span data-i18n="spell-resistance-abbrv">SR</span>
 								</label>
@@ -11636,7 +11637,7 @@
 												<option value="No" data-i18n="no">No</option>
 												<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
 												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-												<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
+												<option value="Yes (Harmless, Object)" data-i18n="yes-harmless-object">Yes (Harmless, Object)</option>
 											</select>
 											<span data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
@@ -12304,7 +12305,6 @@
 				<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="special-abilities" class="sheet-upper" >SPECIAL ABILITIES</label></h2>
 				<hr class="sheet-npc-hr sheet-npchead-bottom" />
 				<div class="sheet-h2-section sheet-abilities sheet-repeating-sect sheet-wide-readonly" role="region" aria-label="special-abilities">
-
 					<div role="menubar" class="sheet-abilitiesnav sheet-tabs sheet-custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
 					<input type="checkbox" class="sheet-mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
 					<input type="radio" class="sheet-tabinput sheet-tab0 sheet-wider-tab" name="attr_npc-abilities_tab" value="class-features" data-i18n-title="class-features" data-i18n-aria-label="class-features" />
@@ -12317,8 +12317,8 @@
 					<label role="menuitem" class="sheet-tab sheet-tab3 sheet-section-mythic sheet-wider-tab" data-i18n="mythic-abilities">Mythic Abilities</label>
 					<input type="radio" class="sheet-tabinput sheet-tab4" name="attr_npc-abilities_tab" value="special-attacks" data-i18n-title="special-attacks" data-i18n-aria-label="special-attacks" />
 					<label role="menuitem" class="sheet-tab sheet-tab4" data-i18n="special-attacks-abbrv">Spec Atk</label>
-					<input type="radio" class="sheet-tabinput sheet-tab5" name="attr_npc-abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
-					<label role="menuitem" class="sheet-tab sheet-tab5" data-i18n="special-abilities-abbrv">Spec Abil</label>
+					<input type="radio" class="sheet-tabinput sheet-tab5 sheet-wider-tab" name="attr_npc-abilities_tab" value="special-abilities" data-i18n-title="special-abilities" data-i18n-aria-label="special-abilities" />
+					<label role="menuitem" class="sheet-tab sheet-tab5 sheet-wider-tab" data-i18n="special-abilities-abbrv">Spec Abil</label>
 					<input type="radio" class="sheet-tabinput sheet-tab6" name="attr_npc-abilities_tab" value="spell-like-abilities" data-i18n-title="spell-like-abilities" data-i18n-aria-label="spell-like-abilities" />
 					<label role="menuitem" class="sheet-tab sheet-tab6" data-i18n="spell-like-abilities-abbrv">Spell-like</label>
 					<input type="radio" class="sheet-tabinput sheet-tab7 sheet-narrow-tab" name="attr_npc-abilities_tab" value="special-qualities" data-i18n-title="special-qualities" data-i18n-aria-label="special-qualities" />
@@ -12359,6 +12359,7 @@
 							<input type="radio" name="attr_tabcat" value="spell-like-abilities" class="sheet-tabcopy custnavsection-6" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="special-qualities" class="sheet-tabcopy custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="other" class="sheet-tabcopy custnavsection-8" role="presentation" />
+							<input type="radio" name="attr_tabcat2" value="-1" class="sheet-noshow" checked role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="Ex" class="sheet-tabcopy custnavsection-9" role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="Sp" class="sheet-tabcopy custnavsection-10" role="presentation" />
 							<input type="radio" name="attr_tabcat2" value="Su" class="sheet-tabcopy custnavsection-11" role="presentation" />
@@ -12384,10 +12385,10 @@
 									</select>
 									<span data-i18n-title="rule-category" data-i18n-aria-label="rule-category" data-i18n="rule">Rule</span>
 								</label>
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect">
+								<label class="sheet-small-label2 sheet-entry-vshort sheet-sect">
 									<select class="sheet-select-small sheet-select-class" title="@{repeating_ability_$X_CL-basis}" name="attr_CL-basis" >
 										<option value="0" data-i18n="not-applicable" >N/A</option>
-										<option value="@{level}" data-i18n="character-level" selected>Character Level</option>
+										<option value="@{level}" data-i18n="full-caster-level-abbrv" selected>Level/HD</option>
 										<option value="@{class-0-level}" data-i18n="1-ordinal-class">1st Class</option>
 										<option value="@{class-1-level}" data-i18n="2-ordinal-class">2nd Class</option>
 										<option value="@{class-2-level}" data-i18n="3-ordinal-class">3rd Class</option>
@@ -12398,8 +12399,9 @@
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
-								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-sect2-show-inverse sheet-noshow" />
-								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-sect2-inverse sheet-sect">
+								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-or-A-show sheet-noshow" />
+								<input type="checkbox" name="attr_CL-basis" value="@{level}" class="sheet-or-B-show sheet-noshow" />
+								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-nor-sect sheet-sect">
 									<input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="sheet-calc" readonly />
 									<span class="sheet-nowrap" data-i18n="source-name">Source Name</span>
 								</label>
@@ -12519,8 +12521,8 @@
 											<span class="sheet-super sheet-note-a" data-i18n-aria-label="spell-level-miscellaneous-desc" data-i18n-title="spell-level-miscellaneous-desc" data-i18n="miscellaneous-abbrv" style="display:inline-block;">Misc</span>
 										</label>
 										<label class="sheet-divider-db-lg sheet-nowrap sheet-either-or-sect" style="margin-left:-.5em;">)=</label>
-										<label class="sheet-small-label2 sheet-extra-sect sheet-number">
-											<input type="text" value="(@{spell_level-basis}+@{spell_level-misc-mod})" title="@{repeating_ability_$X_spell_level}" name="attr_spell_level" disabled />
+										<label class="sheet-small-label2 sheet-narrow-numbers">
+											<input type="text" class="sheet-narrow-numbers" value="(@{spell_level-basis}+@{spell_level-misc-mod})" title="@{repeating_ability_$X_spell_level}" name="attr_spell_level" disabled />
 											<span data-i18n-title="effective-spell-level" data-i18n-aria-label="effective-spell-level" data-i18n="spell-level-abbrv" >Spell lvl</span>
 										</label>
 										<label class="sheet-divider-db-lg">|</label>
@@ -12540,7 +12542,7 @@
 												<option value="No" data-i18n="no">No</option>
 												<option value="Yes (Harmless)" data-i18n="yes-harmless">Yes (Harmless)</option>
 												<option value="Yes (Object)" data-i18n="yes-object">Yes (Object)</option>
-												<option value="Yes (Harmless, Object)" data-i18n="yes-object">Yes (Object)</option>
+												<option value="Yes (Harmless, Object)" data-i18n="yes-harmless-object">Yes (Harmless, Object)</option>
 											</select>
 											<span data-i18n-title="spell-resistance" data-i18n-aria-label="spell-resistance" data-i18n="spell-resistance-abbrv">SR</span>
 										</label>
