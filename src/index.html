@@ -7693,9 +7693,9 @@
 							</select>
 							<span data-i18n="damage-type-abbrv">dmg type</span>
 						</div>
-						<div class="sheet-small-label2">
+						<div class="sheet-small-label2" style="width:6em;">
 							<input type="checkbox" value="1" name="attr_use_devastating_infusion" title="@{use_devastating_infusion}" />
-							<span data-i18n="devastating-infusion">dice</span>
+							<span style="white-space:normal;" data-i18n="devastating-infusion">dice</span>
 						</div>
 						<div class="sheet-small-label2">
 							<input type="checkbox" name="attr_create_kineticblast_macro" value="1" class="sheet-cssbutton sheet-createmacrobutton" title="@{create_kineticblast_macro}" ><span></span>
@@ -12399,7 +12399,7 @@
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
-								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-or-A-show sheet-noshow" />
+								<input type="checkbox" name="attr_CL-basis" value="0" class="sheet-or-A-show sheet-noshow sheet-nolevel-show-inverse" />
 								<input type="checkbox" name="attr_CL-basis" value="@{level}" class="sheet-or-B-show sheet-noshow" />
 								<label class="sheet-small-label2 sheet-entry-10p-shrink sheet-nor-sect sheet-sect">
 									<input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="sheet-calc" readonly />
@@ -12453,8 +12453,8 @@
 								<div class="sheet-sect sheet-expand"> 
 									<input type="checkbox" class="sheet-showarrow sheet-desc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
-									<input type="checkbox" class="sheet-showarrow sheet-misc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
-									<label class="sheet-showsect sheet-misc-showlabel" data-i18n="level-basis">Level basis</label>
+									<input type="checkbox" class="sheet-showarrow sheet-misc-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
+									<label class="sheet-showsect sheet-misc-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
 									<input type="checkbox" class="sheet-showarrow sheet-range-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_range-show" value="1" />
 									<label class="sheet-showsect sheet-range-showlabel" data-i18n="range">Range</label>
 									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
@@ -12465,7 +12465,7 @@
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-misc">										
+									<div class="sheet-misc sheet-nolevel-sect">										
 										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-or-A-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
