@@ -118,7 +118,8 @@ consolidatedSkillAbilityDefaults = {
 globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
-	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total'],
+	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total',
+	'checks-cond','buff_Check-total','buff_check_skills-total'],
 skillNameAppends = ['', '-cs', '-ranks', '-ability', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
 //ability based skill buffs events located in PFBuffs
 events = {
@@ -309,7 +310,8 @@ function setSkillVal (skill, v, setter){
 	abilityModName = '',
 	abilityName='',
 	physCond = 0,
-	perCond = 0;	
+	perCond = 0,
+	globalBuffCond=0;
 		
 	try {
 		setter = setter || {};
@@ -357,7 +359,9 @@ function setSkillVal (skill, v, setter){
 		if (skill === "Perception" || skill === "CS-Perception") {
 			perCond = parseInt(v["Perception-cond"], 10) || 0;
 		}
-		cond = allCond + physCond + perCond;
+		globalBuffCond=(parseInt(v['checks-cond'],10)||0)+(parseInt(v['buff_Check-total'],10)||0)+
+			(parseInt(v['buff_check_skills-total'],10)||0);
+		cond = allCond + physCond + perCond+globalBuffCond;
 		skillTot += ranks + cond + buffs+ (parseInt(v[abilityModName], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
 		if (currSkill !== skillTot) {
 			setter[skill] = skillTot;
@@ -537,6 +541,19 @@ export function recalculateSkills (callback, silently, onlySkills) {
 		}
 	});
 }
+
+export function updateAllSkillsDiff (newmod,oldmod){
+	TAS.notice("PFSkills updateallskills diff updating by " +newmod+", from "+ oldmod);
+	getAttrs(allTheSkills,function(v){
+		var diff = newmod - oldmod,setter={};
+		setter= _.mapObject(v,function(val,key){
+			return (parseInt(val,10)||0)+diff;
+		});
+		TAS.debug("SPSkills.updateAllSkillsDiff setting",setter);
+		SWUtils.setWrapper(setter,PFConst.silentParams);
+	});
+}
+
 export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
 	var done=function(){
 		if (typeof callback === "function"){ callback();}
@@ -1104,5 +1121,3 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-//PFConsole.log('   PFSkills module loaded         ' );
-//PFLog.modulecount++;
