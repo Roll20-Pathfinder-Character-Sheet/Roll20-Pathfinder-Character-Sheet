@@ -115,39 +115,11 @@ consolidatedSkillAbilityDefaults = {
 	"CS-Stealth": "dex",
 	"CS-Survival": "wis"
 },
-defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultSkillMacroMap = {
-	'&{template:':{'current':'pf_generic}'},
-	'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-	'{{color=':{'current':'@{rolltemplate_color}}}'},
-	'{{header_image=':{'current':'@{header_image-pf_generic-skill}}}','old':['@{header_image-pf_generic}}}']},
-	'{{character_name=':{'current':'@{character_name}}}'},
-	'{{character_id=':{'current':'@{character_id}}}'},
-	'{{subtitle}}':{'current':'{{subtitle}}'},
-	'{{name=':{'current':'^{REPLACELOWER}}}','old':['REPLACE}}','@{REPLACE-name}}}','^{REPLACE}}}']},
-	'{{Check=':{'current':'[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}','old':['[[ 1d20 + [[ @{REPLACE} ]] ]]}}'],'replacements':[{'from':'1d20','to':'@{skill-query}'}]},
-	'@{REPLACE-ut}':{'current':'@{REPLACE-ut}'},
-	'@{skill_options}':{'current':'@{skill_options}'},
-	'@{REPLACE-cond-notes}':{'current':'@{REPLACE-cond-notes}'},
-	'{{generic_note=':{'current':'@{REPLACE-note}}}'}
-},
-defaultFillInSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWERREMOVENUMBER} @{REPLACE-name}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultFillInSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'^{REPLACELOWERREMOVENUMBER} (@{REPLACE-name})}}','old':['REPLACEREMOVENUMBER (@{REPLACE-name})}}','REPLACE}}','@{REPLACE-name}}}'],'replacements':[{'from':'REPLACEREMOVENUMBER','to':'^{REPLACELOWERREMOVENUMBER}'}]}
-}),
-defaultMiscSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{REPLACE}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultMiscSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'@{REPLACE}}}','old':['Misc-Skill (@{REPLACE-name})}}']}
-}),
-defaultSkillDeletedMacroAttrs=['{{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}'],
-defaultSkillAttrName='REPLACE-macro',
-keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
-valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
-	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total'],
+	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total',
+	'checks-cond','buff_Check-total','buff_check_skills-total'],
 skillNameAppends = ['', '-cs', '-ranks', '-ability', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
 //ability based skill buffs events located in PFBuffs
 events = {
@@ -338,7 +310,8 @@ function setSkillVal (skill, v, setter){
 	abilityModName = '',
 	abilityName='',
 	physCond = 0,
-	perCond = 0;	
+	perCond = 0,
+	globalBuffCond=0;
 		
 	try {
 		setter = setter || {};
@@ -386,7 +359,9 @@ function setSkillVal (skill, v, setter){
 		if (skill === "Perception" || skill === "CS-Perception") {
 			perCond = parseInt(v["Perception-cond"], 10) || 0;
 		}
-		cond = allCond + physCond + perCond;
+		globalBuffCond=(parseInt(v['checks-cond'],10)||0)+(parseInt(v['buff_Check-total'],10)||0)+
+			(parseInt(v['buff_check_skills-total'],10)||0);
+		cond = allCond + physCond + perCond+globalBuffCond;
 		skillTot += ranks + cond + buffs+ (parseInt(v[abilityModName], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
 		if (currSkill !== skillTot) {
 			setter[skill] = skillTot;
@@ -566,6 +541,19 @@ export function recalculateSkills (callback, silently, onlySkills) {
 		}
 	});
 }
+
+export function updateAllSkillsDiff (newmod,oldmod){
+	TAS.notice("PFSkills updateallskills diff updating by " +newmod+", from "+ oldmod);
+	getAttrs(allTheSkills,function(v){
+		var diff = newmod - oldmod,setter={};
+		setter= _.mapObject(v,function(val,key){
+			return (parseInt(val,10)||0)+diff;
+		});
+		TAS.debug("SPSkills.updateAllSkillsDiff setting",setter);
+		SWUtils.setWrapper(setter,PFConst.silentParams);
+	});
+}
+
 export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
 	var done=function(){
 		if (typeof callback === "function"){ callback();}
@@ -1133,5 +1121,3 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-//PFConsole.log('   PFSkills module loaded         ' );
-//PFLog.modulecount++;
