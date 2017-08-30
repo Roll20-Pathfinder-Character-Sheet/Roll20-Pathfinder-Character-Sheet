@@ -44,8 +44,8 @@ optionTemplates = {
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
 /* non repeating */
-var optionAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
-optionTogglesPlusOptionAttrs = optionToggles.concat(optionAttrs),
+var optionHelperAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
+optionTogglesPlusOptionAttrs = optionToggles.concat(optionHelperAttrs),
 /* repeating*/
 repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", 
     "savedc", "SP-mod", "range_pick", "range", "spell_level", "spellclass", "casterlevel", "components", "spellclass_number",
@@ -163,13 +163,13 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
     });
 }
 /** getOptionText - resets entire @{spell_options} text for a spell row
-* if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
-*@param {string} id of row or null
-*@param {jsobj} eventInfo NOT USED
-*@param {object} toggleValues values from getAttrs of spell toggle option fields
-*@param {object} rowValues values from getAttrs of row attributes
-*@returns {string}
-*/
+ * if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
+ *@param {string} id of row or null
+ *@param {jsobj} eventInfo NOT USED
+ *@param {object} toggleValues values from getAttrs of spell toggle option fields
+ *@param {object} rowValues values from getAttrs of row attributes
+ *@returns {string}
+ */
 export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     customConcentration = parseInt(rowValues[prefix + "Concentration_misc"], 10) || 0,
@@ -284,9 +284,8 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.spell_fail_check||"";
         optionText += optionTemplates.spell_fail||"";
     }
-
     if (toggleValues.showdamage ){
-        if(rowValues[prefix+"spelldamage"]){
+        if(rowValues[prefix+"damage-macro-text"]){
             optionText += optionTemplates.spelldamage;//.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
         } else {
             optionText += "{{spelldamage=}}";
@@ -323,6 +322,7 @@ export function resetOption (id, eventInfo) {
         }).value(),
         optionText = "",
         setter = {};
+        TAS.debug("PFSPellOptions.resetOption id : "+id,toggleValues);
         optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";
         //TAS.debug("resetOption","About to set",setter);
         setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
@@ -342,9 +342,9 @@ export function resetOptions (callback, eventInfo) {
         }
     });
     getAttrs(optionTogglesPlusOptionAttrs, function (tv) {
-        var optionFields,toggleValues;
+        var toggleValues;
         try {
-            optionFields = repeatingOptionAttrs.concat(repeatingOptionHelperAttrs);
+            TAS.debug("PFSpellOptions.resetOptions:",tv);
             toggleValues = _.chain(optionToggles).reduce(function (memo, attr) {
                 //get word between toggle_spell_ and _notes
                 memo['show' + attr.toLowerCase().slice(13).replace('_notes', '')] = (parseInt(tv[attr], 10) || 0);
@@ -354,6 +354,7 @@ export function resetOptions (callback, eventInfo) {
                 "Concentration-1-def": (parseInt(tv["Concentration-1-def"], 10) || 0),
                 "Concentration-2-def": (parseInt(tv["Concentration-2-def"], 10) || 0)
             }).value();
+            TAS.debug("PFSPellOptions.resetOptions: ",toggleValues);
             getSectionIDs("repeating_spells", function (ids) {
                 var fields,prefixes;
                 if (!ids || _.size(ids)===0){
@@ -363,7 +364,7 @@ export function resetOptions (callback, eventInfo) {
                 prefixes = _.map(ids, function (id) {
                     return "repeating_spells_" + id + "_";
                 });
-                fields = SWUtils.cartesianAppend(prefixes,optionFields);
+                fields = SWUtils.cartesianAppend(prefixes,repeatingOptionAttrsToGet);
                 getAttrs(fields, function (v) {
                     var setter = {};
                     _.each(ids, function (id) {
@@ -388,7 +389,7 @@ export function resetOptions (callback, eventInfo) {
             done();
         }
     });
- }
+}
 export var recalculate = TAS.callback(function PFSpellOptionsRecalculate(callback) {
     resetOptions(callback);
 });
