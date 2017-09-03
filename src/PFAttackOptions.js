@@ -31,6 +31,10 @@ optionDefaults = {
 //not used since melee options field actually look at the text..
 //optionAttrs = ["melee-attack-notes", "ranged-attack-notes", "CMB-notes", "attack-notes", "header_image-pf_attack-melee", "header_image-pf_attack-ranged", "header_image-pf_attack-cmb"],
 optionToggles = ["toggle_attack_melee_notes", "toggle_attack_ranged_notes", "toggle_attack_CMB_notes", "toggle_attack_attack_notes", "toggle_attack_header_image"],
+optionMacros = ["toggle_global_attack_macro_insert","toggle_global_cmb_macro_insert","toggle_global_ranged_macro_insert","toggle_global_melee_macro_insert",
+    "toggle_global_damage_macro_insert","toggle_global_cmb_damage_macro_insert","toggle_global_damage_ranged_macro_insert","toggle_global_melee_damage_macro_insert",
+    "global_attack_macro_insert","global_cmb_macro_insert","global_ranged_macro_insert","global_melee_macro_insert",
+    "global_damage_macro_insert","global_cmb_damage_macro_insert","global_damage_ranged_macro_insert","global_melee_damage_macro_insert"],
 //attackOptionRegex = PFUtils.getOptionsCompiledRegexMap(optionTemplates),
 repeatingOptionAttrs = ["attack-type", "damage-ability", "damage-dice-num","damage-die","damage","attack"],
 repeatingOptionHelperAttrs = [""],// ["damage-mod", "attack-mod"],
@@ -196,5 +200,3 @@ function registerEventHandlers () {
     });
 }
 registerEventHandlers();
-//PFConsole.log( '   PFAttackOptions module loaded  ');
-//PFLog.modulecount++;
