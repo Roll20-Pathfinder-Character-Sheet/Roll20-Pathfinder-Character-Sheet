@@ -454,8 +454,6 @@ function migrate (oldversion, callback, errorCallback) {
 				PFAbility.recalculate(null,null,oldversion);
 				PFInventory.recalculate(null,null,oldversion);
 				PFBuffs.recalculate(null,null,oldversion);
-			}
-			if (oldversion < 1.70){
 				PFDefense.recalculate(null,null,oldversion);
 			}
 		}

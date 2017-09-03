@@ -168,6 +168,10 @@ events = {
 		"WIS": [PFAbilityScores.updateAbilityScore],
 		"CHA": [PFAbilityScores.updateAbilityScore]
 	},
+	buffEventsTotalOnUpdate :{
+		"buff_Check-total":[PFSkills.updateAllSkillsDiff],
+		"buff_check_skills-total":[PFSkills.updateAllSkillsDiff]
+	},
 	// events do NOT pass in column updated
 	buffTotalEventsNoParam: {
 		"DMG": [PFAttacks.updateRepeatingWeaponDamages],
@@ -855,7 +859,7 @@ function updateBuffTotalAsync (col, callback,silently){
 			}
 			//TAS.debug("updateBuffTotalAsync fields ",fields,'#######################################');
 			getAttrs(fields,function(v){
-				var rows,params={}, setter={};
+				var rows,params={}, setter={},diff=0;
 				try {
 					//TAS.debug("PFBuffsasync got for "+ col+" v is",v);
 					//don't need to put this in different loop but do it for future since when we move to multi column at once will need.
@@ -878,6 +882,15 @@ function updateBuffTotalAsync (col, callback,silently){
 					if (_.size(setter)){
 						if (silently){
 							params = PFConst.silentParams;
+						}
+						_.each(setter,function(val,key){
+							if(events.buffEventsTotalOnUpdate[key]){
+								var tempint=parseInt(v[key],10)||0;
+								diff += (parseInt(val,10) - tempint);
+							}
+						});
+						if (diff){
+							PFSkills.updateAllSkillsDiff(diff,0);
 						}
 						SWUtils.setWrapper(setter,params,done);
 					} else {
