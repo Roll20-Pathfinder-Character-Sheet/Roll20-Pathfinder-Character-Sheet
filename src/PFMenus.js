@@ -240,8 +240,11 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                                 tempshow=parseInt(v[linePrefix+'showinmenu'],10)||0;
                                 retObj.showinmenu = retObj.showinmenu && tempshow;
                             }
-                            if (bonusField && v[linePrefix+bonusField] && v[linePrefix+bonusField]!=='not-applicable'){
+                            if (bonusField && v[linePrefix+bonusField] && !( v[linePrefix+bonusField]==='not-applicable' ||
+                                v[linePrefix+bonusField]=="0")){ //double equal 0
                                 bonus = ' (' + (baseAttribs.translateBonus?'^{':'') + v[linePrefix+bonusField] + (baseAttribs.translateBonus?'}':'') +')';
+                            } else {
+                                bonus='';
                             }
                             buttonName  = retObj.name + bonus + usesStr;
                             retObj.chatLink='['+SWUtils.escapeForRollTemplate(SWUtils.escapeForChatLinkButton(buttonName))+'](~@{character_id}|'+ linePrefix + linkField + ')';
