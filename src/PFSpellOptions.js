@@ -95,7 +95,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
                             optionText = optionText.replace(optionTemplateRegexes.school, optionTemplates.school);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
                             break;
                         case 'cast-time':
-                            if ( !newValue || (/1\s+(?:S.A.|standard action)/i).test( newValue )){
+                            if ( !newValue || (/1\s+(S\.A\.|standard action)/i).test( newValue )){
                                 optionText = PFUtils.deleteOption(optionText, "casting_time", optionTemplateRegexes);
                             } else {
                                 optionText = optionText.replace(optionTemplateRegexes.casting_time, optionTemplates.casting_time);//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)));
@@ -197,7 +197,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.level;//.replace("REPLACE", spellLevel);
     }
     if (toggleValues.showcasting_time) {
-        if (  !rowValues[prefix+"cast-time"] || (/1 (?:S.A.|standard action)/i).test( rowValues[prefix+"cast-time"])){
+        if (  !rowValues[prefix+"cast-time"] || (/1 (S\.A\.|standard action)/i).test( rowValues[prefix+"cast-time"])){
             optionText += "{{casting_time=}}";
         } else {
             optionText += optionTemplates.casting_time;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "cast-time"]))||"";

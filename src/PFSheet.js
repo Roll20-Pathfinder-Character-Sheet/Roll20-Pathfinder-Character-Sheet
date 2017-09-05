@@ -621,7 +621,7 @@ export function checkForUpdate (forceRecalc) {
 		setUpgradeFinished = function() {
 			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
-			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
+			PFSheet_Version: String((PFConst.version.toFixed(3))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
 					recalculate(currVer, null, false);
 				}
