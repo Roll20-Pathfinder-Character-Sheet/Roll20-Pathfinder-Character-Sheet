@@ -3074,7 +3074,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			}
 			setter["is_npc"] = "1";
 			setter['is_v1'] = "1";
-			setter['PFSheet_Version'] =String((PFConst.version.toFixed(2)));
+			setter['PFSheet_Version'] =String((PFConst.version.toFixed(3)));
 			setter['max-dex-source']=3;
 			PFMigrate.getAllMigrateFlags(setter);
 			if (v.xp_compendium) {
