@@ -180,7 +180,7 @@ export function updateRepeatingWeaponAttackAsync(id, eventInfo) {
 		}
 	});
 }
-function updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval,callback){
+function updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval,callback){
 	var diff= (newval||0) - (oldval||0);
 	if(diff!==0){
 		getAttrs(["repeating_weapon_total-damage"],function(v){
@@ -196,7 +196,7 @@ export function updateRepeatingWeaponAbilityDropdowns(eventInfo,ability){
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", id, "damage-ability", "damage-ability-mod",
 			function(newval,oldval,changed){
 				if(changed){
-					updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+					updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 				}
 			},true);
 		});
@@ -614,6 +614,7 @@ function  getRecalculatedAttack (id,v,setter){
 			localsetter[prefix+"isranged"]=0;
 			isRanged=0;
 		}
+		updateRepeatingWeaponCrit(id,v,localsetter);
 		newCritBonus = critConfirmBonus + attackTypeCritBonus;
 		if (newCritBonus !== currCritBonus) {
 			localsetter[prefix+ "crit_conf_mod"] = newCritBonus;
@@ -1637,7 +1638,7 @@ function registerEventHandlers () {
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod",
 				function(newval,oldval,changed){
 					if(changed){
-						updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+						updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 					}
 				},true);
 		}
@@ -1647,7 +1648,7 @@ function registerEventHandlers () {
 		SWUtils.evaluateAndSetNumber("repeating_weapon_damage", "repeating_weapon_damage-mod",0,
 			function(newval,oldval,changed){
 				if(changed){
-					updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+					updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 				}
 			},true);
 	}));

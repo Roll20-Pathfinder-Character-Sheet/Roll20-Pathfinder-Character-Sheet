@@ -456,6 +456,10 @@ function migrate (oldversion, callback, errorCallback) {
 				PFBuffs.recalculate(null,null,oldversion);
 				PFDefense.recalculate(null,null,oldversion);
 			}
+			if (oldversion < 1.693){
+				PFCustom.fixProfessionDropdowns(PFSkills.recalculate);
+			}
+
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);
