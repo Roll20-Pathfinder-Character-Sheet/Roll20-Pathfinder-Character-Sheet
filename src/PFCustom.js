@@ -400,8 +400,12 @@ export function fixProfessionDropdowns (callback){
 		try{
 			if(!parseInt(v.migrated_skill_dropdowns5,10)){
 				setter['migrated_skill_dropdowns5']=1;
-				for (i=10;i>1;i--){
-					attr='Profession'+i+'-ability';
+				for (i=10;i>0;i--){
+					if(i>1){
+						attr='Profession'+i+'-ability';
+					}else {
+						attr='Profession-ability';
+					}
 					if(v[attr]==='INT-mod'){
 						setter[attr]='WIS-mod';
 						count++;
@@ -421,7 +425,7 @@ export function fixProfessionDropdowns (callback){
 			}
 		}
 	});
-};
+}
 
 
 export var recalculate = TAS.callback(function PFCustomRecalculate(callback,silently,oldversion){
