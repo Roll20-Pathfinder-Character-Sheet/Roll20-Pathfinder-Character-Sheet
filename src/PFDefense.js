@@ -208,7 +208,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 ability = Math.min(ability,ffAbility);
                 cmdAbility2 = lockDefAbility?ability:(Math.min(cmdAbility2,cmdFFAbility2));
             }
-
+            if(loseDex && dexModShowLimit){
+                dexModShowLimit=0;
+            }
 
             if (currUncanny) {
                 ffdodge = dodge;
