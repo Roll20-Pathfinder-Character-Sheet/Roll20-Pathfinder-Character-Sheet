@@ -842,6 +842,7 @@ export function getAllMigrateFlags (v){
     v["migrated_itemlist_newfields"]=1;
     v['migrate_fatigued_conditions']=1;
     v['migrated_attack_bab_dropdowns']=1;
+    v['migrated_skill_dropdowns5']=1;
     //force these to migrate, for some reason sheets using old values even for new Sheets!
     //v['migrated_ability_dropdowns4']=1;
     //v['migrated_take10_dropdown']=1; 

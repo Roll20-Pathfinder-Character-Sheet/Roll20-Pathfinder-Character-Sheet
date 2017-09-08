@@ -334,9 +334,11 @@ export function migrate(callback,oldversion){
 									case 'Perform':
 										tempstr='CHA-mod';
 										break;
+									case 'Profession':
+										tempstr='WIS-mod';
+										break;
 									case 'Craft':
 									case 'Knowledge':
-									case 'Profession':
 									case 'Artistry':
 									case 'Lore':
 										tempstr='INT-mod';
@@ -389,9 +391,47 @@ export function migrate(callback,oldversion){
     });
 }
 
+export function fixProfessionDropdowns (callback){
+	var fields = ['migrated_skill_dropdowns5', 'Profession-ability','Profession2-ability','Profession3-ability','Profession4-ability',
+	'Profession5-ability','Profession6-ability','Profession7-ability','Profession8-ability',
+	'Profession9-ability','Profession10-ability'];
+	getAttrs(fields,function(v){
+		var setter={},count=0,i=0,attr='';
+		try{
+			if(!parseInt(v.migrated_skill_dropdowns5,10)){
+				setter['migrated_skill_dropdowns5']=1;
+				for (i=10;i>0;i--){
+					if(i>1){
+						attr='Profession'+i+'-ability';
+					}else {
+						attr='Profession-ability';
+					}
+					if(v[attr]==='INT-mod'){
+						setter[attr]='WIS-mod';
+						count++;
+					} else {
+						break;
+					}
+				}
+			}
+		} catch (err){
+			TAS.error("PFSheet.migrate Skills dropdowns ",err);
+		} finally {
+			if (_.size(setter)){
+				//TAS.debug("Migrate skill dropdowns setting:",setter);
+				setAttrs(setter,PFConst.silentParams,callback);
+			} else if (typeof callback === "function"){
+				callback();
+			}
+		}
+	});
+}
+
+
 export var recalculate = TAS.callback(function PFCustomRecalculate(callback,silently,oldversion){
     migrate(function(){
         recalcDropdowns(function(){
+			fixProfessionDropdowns();
             recalcExpressions(function(){
                 recalcCustomExpressions(function(){
 					resetCommandMacro(callback);

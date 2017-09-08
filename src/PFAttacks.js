@@ -180,7 +180,7 @@ export function updateRepeatingWeaponAttackAsync(id, eventInfo) {
 		}
 	});
 }
-function updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval,callback){
+function updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval,callback){
 	var diff= (newval||0) - (oldval||0);
 	if(diff!==0){
 		getAttrs(["repeating_weapon_total-damage"],function(v){
@@ -196,7 +196,7 @@ export function updateRepeatingWeaponAbilityDropdowns(eventInfo,ability){
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", id, "damage-ability", "damage-ability-mod",
 			function(newval,oldval,changed){
 				if(changed){
-					updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+					updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 				}
 			},true);
 		});
@@ -226,6 +226,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		var maxA , ability,abilityMult,abilityTot,damageBuffs,currTotalDmg,dmgConditions,genDmgBuff=0,
 		miscDmg,enhance,totalDamage,rangedAttack,setter = {};
 		rangedAttack =  parseInt(v[rangedField],10)||0;
+		//if we are updating ranged damage then only update this if it's a ranged attack
 		if ( !rangedUpdate || rangedAttack ){
 			ability = parseInt(v[modname], 10) || 0;
 			abilityMult =  1;
@@ -234,15 +235,17 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			miscDmg = parseInt(v[miscDmgField], 10) || 0;
 			enhance = parseInt(v[enhanceField], 10) || 0;
 			TAS.debug('PFAttacks update damage values are :',v);
-			if (rangedAttack){
-				damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
-				if(v[attacktypeField] && v[attacktypeField].indexOf(2)>=0){
-					damageBuffs+=(parseInt(v["buff_dmg_ranged2-total"],10)||0);
-				}
-			} else {
-				damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
-				if(v[attacktypeField] && v[attacktypeField].indexOf(2)>=0){
-					damageBuffs+=(parseInt(v["buff_dmg_melee2-total"],10)||0);
+			if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
+				if (rangedAttack){
+					damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
+					if(v[attacktypeField].indexOf(2)>=0){
+						damageBuffs+=(parseInt(v["buff_dmg_ranged2-total"],10)||0);
+					}
+				} else if ((/melee/i).test(v[attacktypeField])){
+					damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
+					if(v[attacktypeField].indexOf(2)>=0){
+						damageBuffs+=(parseInt(v["buff_dmg_melee2-total"],10)||0);
+					}
 				}
 			}
 			genDmgBuff=parseInt(v['buff_DMG-total'],10)||0;
@@ -266,37 +269,89 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		}
 	});
 }
-function updateRepeatingWeaponCrit(id, eventInfo) {
+/** Updates crit_conf_mod for an attack row synchronously
+ * @param {string} id  row to update
+ * @param {Map<string,Number>} v  values from getAttrs already passed to parseInt
+ * @param {Map<string,Number>} setter optional setter for setAttrs
+ * @param {boolean} wasChecked  if true then we already verified all needed fields exist
+ * @returns {Map<string,Number>} setter passed in or new map
+ */
+function updateRepeatingWeaponCrit (id,v,setter,wasChecked){
 	var idStr = SWUtils.getRepeatingIDStr(id),
 	critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
 	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
 	attkTypeField = "repeating_weapon_" + idStr + "attack-type",
-	attrs = ["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf", "attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf", critConfirmTotalField, critConfirmField, attkTypeField];
-	getAttrs(attrs, function (v) {
-		try {
-			var currCritBonus = (parseInt(v[critConfirmTotalField], 10) || 0),
-			critConfirmBonus = (parseInt(v[critConfirmField], 10) || 0),
-			attkType = PFUtils.findAbilityInString(v[attkTypeField]),
-			attkTypeForGrid = (!attkType) ? "" : (attkType.replace('attk-', '')),
-			attackTypeBonusField = (!attkTypeForGrid) ? "" : (PFAttackGrid.attackGridFields[attkTypeForGrid].crit),
-			attackTypeBonus = (!attackTypeBonusField) ? 0 : (parseInt(v[attackTypeBonusField], 10) || 0),
-			newBonus = critConfirmBonus + attackTypeBonus,
-			setter = {};
-			if (newBonus !== currCritBonus) {
-				setter[critConfirmTotalField] = newBonus;
-				SWUtils.setWrapper(setter, {
-					silent: true
-				});
+	critConfirmBonus=0,attkTypeForGrid='',
+	attackTypeBonusField='',attackTypeBonus=0,newBonus=0;
+	try {
+		setter =setter||{};
+		critConfirmBonus = v[critConfirmField]  || 0;
+		if( wasChecked||(v[attkTypeField] !== '0' && v[attkTypeField] !=='dual') ){
+			attkTypeForGrid= v[attkTypeField].replace('attk-', '');
+			if(wasChecked||PFAttackGrid.attackGridFields[attkTypeForGrid])
+			attackTypeBonusField=PFAttackGrid.attackGridFields[attkTypeForGrid].crit;
+			if(wasChecked||attackTypeBonusField){
+				attackTypeBonus=v[attackTypeBonusField] || 0;
 			}
+		}
+		newBonus = critConfirmBonus + attackTypeBonus;
+		if (newBonus !== (v[critConfirmTotalField] || 0)) {
+			setter[critConfirmTotalField] = newBonus;
+		}	
+	} catch (err){
+		TAS.error("updateRepeatingWeaponCrit: error updating crit for id  "+id,err);
+	} finally {
+		return setter;
+	}
+}
+/** Updates crit_conf_mod for row. Called when crit_confirm is updated on a row
+ * @param {string} id  row to update
+ * @param {Map<string,string>} eventInfo from event
+ */
+function updateRepeatingWeaponCritAsync(id, eventInfo) {
+	var idStr = SWUtils.getRepeatingIDStr(id),
+	critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
+	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
+	attkTypeField = "repeating_weapon_" + idStr + "attack-type",
+	attrs = ["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf", "attk_melee2_crit_conf",
+		"attk_cmb_crit_conf", "attk_cmb2_crit_conf", critConfirmTotalField, critConfirmField, attkTypeField];
+	getAttrs(attrs, function (v) {
+		var setter = {};
+		try {
+			v = _.mapObject(v,function(val,key){
+				if (key.indexOf('attack-type')>0){
+					return val;
+				} else {
+					return (parseInt(val,10)||0);
+				}
+			});
+
+			updateRepeatingWeaponCrit(id,v,setter);
 		} catch (err) {
-			TAS.error("updateRepeatingWeaponCrit:cannot find " + v[attkTypeField] + " in grid");
+			TAS.error("updateRepeatingWeaponCritAsync: error updating crit for id  "+id,err);
+		} finally {
+			if(_.size(setter)){
+				SWUtils.setWrapper(setter, PFConst.silentParams);
+			}
 		}
 	});
 }
-function updateRepeatingWeaponsFromCrit(attacktype, eventInfo) {
-	var globalCritBonusField = PFAttackGrid.attackGridFields[attacktype].crit;
+/** Updates crit_conf_mod for each attack row matching the attack type just updated.
+ * Called when global crit bonus field updated: attk_melee_crit_conf or similar is updated
+ * @param {string} attacktype  value from key of attackGridFields
+ * @param {Map<string,string>} eventInfo from event
+ */
+function updateRepeatingWeaponsFromCritAsync(attacktype, eventInfo) {
+	var globalCritBonusField = PFAttackGrid.attackGridFields[attacktype] ? PFAttackGrid.attackGridFields[attacktype].crit : '';
+	if (!globalCritBonusField){
+		TAS.error("updateRepeatingWeaponsFromCritAsync: Invalid attack type")
+		return;
+	}
 	getSectionIDs("repeating_weapon", function (ids) {
 		var attrs = [globalCritBonusField];
+		if(!ids || _.size(ids)<1){
+			return;
+		}
 		_.each(ids, function (id) {
 			var idStr = SWUtils.getRepeatingIDStr(id);
 			attrs.push("repeating_weapon_" + idStr + "crit_conf_mod");
@@ -307,6 +362,14 @@ function updateRepeatingWeaponsFromCrit(attacktype, eventInfo) {
 		getAttrs(attrs, function (v) {
 			var globalCritBonus = parseInt(v[globalCritBonusField], 10) || 0,
 			setter = {};
+			try {
+			v = _.mapObject(v,function(val,key){
+				if (key.indexOf('attack-type')>0){
+					return val;
+				} else {
+					return (parseInt(val,10)||0);
+				}
+			});
 			_.each(ids, function (id) {
 				var idStr = SWUtils.getRepeatingIDStr(id),
 				attackTypeField = "repeating_weapon_" + idStr + "attack-type",
@@ -315,22 +378,17 @@ function updateRepeatingWeaponsFromCrit(attacktype, eventInfo) {
 				rowTot = 0,
 				currRowTot = 0;
 				//TAS.debug("row:"+id+" attacktypefield:"+v[attackTypeField]+", ability:"+ PFUtils.findAbilityInString(v[attackTypeField]) +", type is:"+attacktype);
-				if (PFUtils.findAbilityInString(v[attackTypeField]) === ("attk-" + attacktype)) {
-					//TAS.debug("this row equal");
-					rowCritTotField = "repeating_weapon_" + idStr + "crit_conf_mod";
-					currRowTot = parseInt(v[rowCritTotField], 10) || 0;
-					rowTot = globalCritBonus + (parseInt(v["repeating_weapon_" + idStr + "crit_confirm"], 10) || 0);
-					//TAS.debug("global:"+globalCritBonus+", this row:"+currRowTot+", plus "+v["repeating_weapon_" + idStr + "crit_confirm"] );
-					if (rowTot !== currRowTot) {
-						setter[rowCritTotField] = rowTot;
-					}
+				if (v[attackTypeField] === ("attk-" + attacktype)) {
+					updateRepeatingWeaponCrit(id,v,setter,true);
 				}
 			});
+		} catch (err){
+			TAS.error("updateRepeatingWeaponsFromCritAsync: error",err);
+		} finally {
 			if (_.size(setter) > 0) {
-				SWUtils.setWrapper(setter, {
-					silent: true
-				});
+				SWUtils.setWrapper(setter, PFConst.silentParams);
 			}
+		}
 		});
 	});
 }
@@ -344,10 +402,8 @@ function setRepeatingWeaponRangedFlag(id){
 	isRangedAttr=prefix+"isranged";
 	getAttrs([attypeAttr,isRangedAttr],function(v){
 		var setter={},
-		newIsRanged=0,
-		attackType="";
-		attackType=PFUtils.findAbilityInString(v[attypeAttr]);
-		if ((/ranged/i).test(attackType)) {
+		newIsRanged=0;
+		if ((/ranged/i).test(v[attypeAttr])) {
 			newIsRanged=1;
 		}
 		if ((parseInt(v[isRangedAttr],10)||0) !== newIsRanged){
@@ -479,22 +535,22 @@ export function updateAssociatedAttacksFromParents(callback){
 
 function  getRecalculatedAttack (id,v,setter){
 	var prefix = 'repeating_weapon_'+id+'_',
-		isRanged=parseInt(v[prefix+"isranged"],10)||0,
-		enhance = (parseInt(v[prefix+ "enhance"], 10) || 0),
-		masterwork = (parseInt(v[prefix+ "masterwork"], 10) || 0),
-		attkTypeMod = (parseInt(v[prefix+ "attack-type-mod"], 10) || 0),
-		prof = (parseInt(v[prefix+ "proficiency"], 10) || 0),
-		attkMacroMod = (parseInt(v[prefix+ "attack-mod"], 10) || 0),
-		currTotalAttack = parseInt(v[prefix+ "total-attack"], 10),
-		abilitydmg = parseInt(v[prefix+ "damage-ability-mod"], 10) || 0,
+		isRanged=v[prefix+"isranged"]||0,
+		enhance = v[prefix+ "enhance"] || 0,
+		masterwork = v[prefix+ "masterwork"] || 0,
+		attkTypeMod = v[prefix+ "attack-type-mod"] || 0,
+		prof = v[prefix+ "proficiency"] || 0,
+		attkMacroMod = v[prefix+ "attack-mod"] || 0,
+		currTotalAttack = v[prefix+ "total-attack"],
+		abilitydmg = v[prefix+ "damage-ability-mod"] || 0,
 		abilityMult =  1,
-		currTotalDmg = parseInt(v[prefix+ "total-damage"], 10),
-		dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0,
-		maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10),
-		currCritBonus = (parseInt(v[prefix+ "crit_conf_mod"], 10) || 0),
-		critConfirmBonus = (parseInt(v[prefix+ "crit_confirm"], 10) || 0),
-		attkType = PFUtils.findAbilityInString(v[prefix+ "attack-type"]),
-		damageBuffs = parseInt(v['buff_DMG-total'],10)||0, 
+		currTotalDmg = v[prefix+ "total-damage"],
+		dmgMacroMod = v[prefix+ "damage-mod"] || 0,
+		maxAbility = v[prefix+ "damage-ability-max"],
+		currCritBonus = v[prefix+ "crit_conf_mod"] || 0,
+		critConfirmBonus = v[prefix+ "crit_confirm"] || 0,
+		attkType = v[prefix+ "attack-type"],
+		damageBuffs = v['buff_DMG-total']||0, 
 		attkTypeForGrid='',
 		attackTypeCritBonusField='',
 		attackTypeCritBonus =0,
@@ -509,17 +565,17 @@ function  getRecalculatedAttack (id,v,setter){
 
 
 		if (isRanged){
-			damageBuffs +=  parseInt(v['buff_dmg_ranged-total'],10)||0;
+			damageBuffs +=  (v['buff_dmg_ranged-total']||0);
 			if(attkType.indexOf('2')>=0){
-				damageBuffs +=  parseInt(v['buff_dmg_ranged2-total'],10)||0;
+				damageBuffs +=  (v['buff_dmg_ranged2-total']||0);
 			}
 		} else {
-			damageBuffs +=  parseInt(v['buff_dmg_melee-total'],10)||0;
+			damageBuffs +=  (v['buff_dmg_melee-total']||0);
 			if(attkType.indexOf('2')>=0){
-				damageBuffs +=  parseInt(v['buff_dmg_melee2-total'],10)||0;
+				damageBuffs +=  (v['buff_dmg_melee2-total']||0);
 			}
 		}
-		damageBuffs -= parseInt(v['condition-Sickened'],10)||0;
+		damageBuffs -= (v['condition-Sickened']||0);
 		localsetter = setter || {};
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
@@ -533,16 +589,17 @@ function  getRecalculatedAttack (id,v,setter){
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
 			localsetter[prefix+ "total-damage"] = newTotalDamage;
 		}
-		if(attkType){
+		if(attkType && attkType !== 'dual' &&  attkType !== '0'){
 			if((/range/i).test(attkType)){
 				if(!isRanged){
+					isRanged=1;
 					localsetter[prefix+"isranged"]=1;
 				}
 			} else if (isRanged){
 				localsetter[prefix+"isranged"]=0;
 			}
 			attkTypeForGrid = attkType.replace('attk-','');
-			TAS.debug("at update nonmacro attack id "+id+" attkTypeForGrid="+attkTypeForGrid+", comparing to:",PFAttackGrid.attackGridFields);
+			//TAS.debug("at update nonmacro attack id "+id+" attkTypeForGrid="+attkTypeForGrid+", comparing to:",PFAttackGrid.attackGridFields);
 			if(attkTypeForGrid){
 				attackTypeCritBonusField = PFAttackGrid.attackGridFields[attkTypeForGrid].crit;
 				attackTypeCritBonus = (!attackTypeCritBonusField) ? 0 : v[attackTypeCritBonusField];
@@ -553,7 +610,11 @@ function  getRecalculatedAttack (id,v,setter){
 					localsetter[prefix + "damage-type_macro_insert"] = PFAttackGrid.attackGridFields[attkTypeForGrid].damagemacro;
 				}
 			}
+		} else if (isRanged){
+			localsetter[prefix+"isranged"]=0;
+			isRanged=0;
 		}
+		updateRepeatingWeaponCrit(id,v,localsetter);
 		newCritBonus = critConfirmBonus + attackTypeCritBonus;
 		if (newCritBonus !== currCritBonus) {
 			localsetter[prefix+ "crit_conf_mod"] = newCritBonus;
@@ -1150,12 +1211,21 @@ function recalcRepeatingNonMacroFields (ids,callback){
 	fields = fields.concat(updateCharAttrs);
 	getAttrs(fields,function(v){
 		var charAttMap={},	setter, modifyDiceGlobal=0;
+		v = _.mapObject(v,function(val,key){
+			if ((/attack\-type$/i).test(key)){
+				return val;
+			} else {
+				return (parseInt(val,10)||0);
+			}
+		});
 		//set global values to int so we don't have to do it over and over per row.
-		charAttMap = _.object(_.map(updateCharAttrs,function(attr){
-			return [attr, parseInt(v[attr],10)||0];
-		}));
-		_.extend(v,charAttMap);
-		modifyDiceGlobal = parseInt(v.modify_dmg_by_size,10)||0;
+		//charAttMap = _.object(_.map(updateCharAttrs,function(attr){
+		//	return [attr, parseInt(v[attr],10)||0];
+		//}));
+		//_.extend(v,charAttMap);
+		//modifyDiceGlobal = parseInt(v.modify_dmg_by_size,10)||0;
+
+
 		//v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
 		//v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
 		//v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
@@ -1536,7 +1606,7 @@ function registerEventHandlers () {
 						updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval);
 					}
 				},true);
-			updateRepeatingWeaponCrit(null, eventInfo);
+			updateRepeatingWeaponCritAsync(null, eventInfo);
 			setRepeatingWeaponInsertMacro(null, eventInfo);
 			setRepeatingWeaponRangedFlag();
 		}
@@ -1568,7 +1638,7 @@ function registerEventHandlers () {
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod",
 				function(newval,oldval,changed){
 					if(changed){
-						updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+						updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 					}
 				},true);
 		}
@@ -1578,7 +1648,7 @@ function registerEventHandlers () {
 		SWUtils.evaluateAndSetNumber("repeating_weapon_damage", "repeating_weapon_damage-mod",0,
 			function(newval,oldval,changed){
 				if(changed){
-					updateRepeatingWeaponDamageQuick(eventInfo,newval,oldval);
+					updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
 				}
 			},true);
 	}));
@@ -1610,14 +1680,14 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:crit_confirm ", TAS.callback(function eventWeaponCritConfirmBonus(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			updateRepeatingWeaponCrit(null, eventInfo);
+			updateRepeatingWeaponCritAsync(null, eventInfo);
 		}
 	}));
 	_.each(PFAttackGrid.attackGridFields, function (attackFields, attack) {
 		on("change:" + attackFields.crit, TAS.callback(function eventAttackCrit(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				updateRepeatingWeaponsFromCrit(attack, eventInfo);
+				updateRepeatingWeaponsFromCritAsync(attack, eventInfo);
 			}
 		}));
 
@@ -1671,5 +1741,3 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-//PFConsole.log('   PFAttacks module loaded        ');
-//PFLog.modulecount++;
