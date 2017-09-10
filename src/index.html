@@ -2271,7 +2271,7 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-row-name"><span class="sheet-show-readonly sheet-inverse-readonly" style="position:absolute; top:.7em; margin-left:-14px; color:white; font-family:pictos custom; font-size:4rem; font-weight:lighter;">e</span><span data-i18n="armor-class-abbrv" data-i18n-title="armor-class"  data-i18n-aria-label="armor-class">AC</span></span>
 								<span class="sheet-table-cell"><input title="@{AC}" type="number" name="attr_AC" value="10" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
+								<span class="sheet-table-cell"><span style="font-weight: bold">=10+</span></span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-ability-column"></span>
 								<span class="sheet-table-cell"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
@@ -2304,7 +2304,7 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-row-name" title="Touch Armor Class" data-i18n-placeholder="touch-armor-class" data-i18n="touch-armor-class-abbrv">Touch</span>
 								<span class="sheet-table-cell"><input title="@{Touch}" type="number" name="attr_Touch" value="10" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
+								<span class="sheet-table-cell"><span style="font-weight: bold">=10+</span></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"></span>
 								<span class="sheet-table-cell"></span>
@@ -2332,7 +2332,7 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-row-name" data-i18n-title="flat-footed-armor-class"  data-i18n-aria-label="flat-footed-armor-class" data-i18n="flat-footed-armor-class-abbrv">Flat-Footed</span>
 								<span class="sheet-table-cell"><input title="@{Flat-Footed}" type="number" name="attr_Flat-Footed" value="10" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
+								<span class="sheet-table-cell"><span style="font-weight: bold">=10+</span></span>
 								<span class="sheet-table-cell"><input title="@{AC-armor}" type="number" name="attr_AC-armor" value="0" class="sheet-calc" readonly></span>
 								<span class="sheet-table-cell sheet-ability-column"></span>
 								<span class="sheet-table-cell"><input title="@{AC-shield}" type="number" name="attr_AC-shield" value="0" class="sheet-calc" readonly></span>
@@ -2407,7 +2407,7 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-row-name" data-i18n="combat-maneuver-defense-abbrv" data-i18n-title="combat-maneuver-defense-abbrv"  data-i18n-aria-label="combat-maneuver-defense-abbrv">CMD</span>
 								<span class="sheet-table-cell"><input title="@{CMD}" type="number" name="attr_CMD" value="10" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
+								<span class="sheet-table-cell"><span style="font-weight: bold">=10+</span></span>
 								<span class="sheet-table-cell">
 									<input name="attr_hd_not_bab" type="checkbox" value="1" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" role="presentation" data-i18n-aria-label="hd-not-bab-title" />
 									<input class="sheet-sect-inverse sheet-calc" title="@{bab}" type="number" name="attr_bab" value="0" readonly>
@@ -2466,7 +2466,7 @@
 							<div class="sheet-table-row">
 								<span class="sheet-table-row-name" title="Flat-Footed Combat Maneuver Defense" data-i18n="flat-footed-combat-maneuver-defense-abbrv">FF CMD</span>
 								<span class="sheet-table-cell"><input title="@{FF-CMD}" type="number" name="attr_FF-CMD" value="10" class="sheet-calc" readonly></span>
-								<span class="sheet-table-cell">= <span style="font-weight: bold">10</span> +</span>
+								<span class="sheet-table-cell"><span style="font-weight: bold">=10+</span></span>
 								<span class="sheet-table-cell">
 									<input name="attr_hd_not_bab" type="checkbox" value="1" class="sheet-sect-show sheet-sect-show-inverse sheet-noshow" role="presentation" data-i18n-aria-label="hd-not-bab-title" />
 									<input class="sheet-sect-inverse sheet-calc" title="@{bab}" type="number" name="attr_bab" value="0" readonly>
@@ -7874,19 +7874,19 @@
 								<div class="sheet-sect sheet-expand"> 
 									<input type="checkbox" class="sheet-showarrow sheet-desc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
-									<input type="checkbox" class="sheet-showarrow sheet-misc-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
-									<label class="sheet-showsect sheet-misc-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
+									<input type="checkbox" class="sheet-showarrow sheet-level-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
+									<label class="sheet-showsect sheet-level-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
 									<input type="checkbox" class="sheet-showarrow sheet-range-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_range-show" value="1" />
 									<label class="sheet-showsect sheet-range-showlabel" data-i18n="range">Range</label>
-									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
-									<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
+									<input type="checkbox" class="sheet-showarrow sheet-attack-damage-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
+									<label class="sheet-showsect sheet-attack-damage-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
 									<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 									<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
 									<input type="checkbox" class="sheet-showarrow sheet-id-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-misc sheet-nolevel-sect">										
+									<div class="sheet-level sheet-nolevel-sect">										
 										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-or-A-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
@@ -8007,7 +8007,7 @@
 										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" data-i18n-placeholder="spell-duration"  accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" data-i18n-placeholder="school-etc"   accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
-									<div class="sheet-weapon-attributes sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table">
 										<label class="sheet-small-label2 sheet-entry-short">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -10045,8 +10045,8 @@
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
 									<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 									<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
-									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
-									<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
+									<input type="checkbox" class="sheet-showarrow sheet-attack-damage-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
+									<label class="sheet-showsect sheet-attack-damage-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
 									<input type="checkbox" class="sheet-showarrow sheet-id-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
@@ -10067,7 +10067,7 @@
 										<label class="sheet-small-label2 sheet-entry-short sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
 										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
 									</div>
-									<div class="sheet-weapon-attributes sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table">
 										<label class="sheet-small-label2" style="width:5em;">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -11691,8 +11691,8 @@
 											<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
 											<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 											<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
-											<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
-											<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
+											<input type="checkbox" class="sheet-showarrow sheet-attack-damage-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
+											<label class="sheet-showsect sheet-attack-damage-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
 											<input type="checkbox" class="sheet-showarrow sheet-id-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
 											<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 											<hr class="sheet-subnav-hr">
@@ -11713,7 +11713,7 @@
 												<label class="sheet-small-label2 sheet-entry-short sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
 												<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
 											</div>
-											<div class="sheet-weapon-attributes sheet-non-table">
+											<div class="sheet-attack-damage sheet-non-table">
 												<label class="sheet-small-label2" style="width:5em;">
 													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 													<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -12455,19 +12455,19 @@
 								<div class="sheet-sect sheet-expand"> 
 									<input type="checkbox" class="sheet-showarrow sheet-desc-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
 									<label class="sheet-showsect sheet-desc-showlabel" data-i18n="description">Description</label>
-									<input type="checkbox" class="sheet-showarrow sheet-misc-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
-									<label class="sheet-showsect sheet-misc-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
+									<input type="checkbox" class="sheet-showarrow sheet-level-show sheet-nolevel-sect" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_misc-show" value="1" />
+									<label class="sheet-showsect sheet-level-showlabel sheet-nolevel-sect" data-i18n="level-basis">Level basis</label>
 									<input type="checkbox" class="sheet-showarrow sheet-range-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Miscellaneous" name="attr_range-show" value="1" />
 									<label class="sheet-showsect sheet-range-showlabel" data-i18n="range">Range</label>
-									<input type="checkbox" class="sheet-showarrow sheet-weapon-attributes-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
-									<label class="sheet-showsect sheet-weapon-attributes-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
+									<input type="checkbox" class="sheet-showarrow sheet-attack-damage-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show attack and damage fields" name="attr_attack-show" value="1" />
+									<label class="sheet-showsect sheet-attack-damage-showlabel" data-i18n="attack-and-damage">Attack and Damage</label>
 									<input type="checkbox" class="sheet-showarrow sheet-macro-text-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Macro Text" name="attr_macro-text-show" value="1" />
 									<label class="sheet-showsect sheet-macro-text-showlabel sheet-super sheet-note-d" data-i18n="macro-text">Macro Text</label>
 									<input type="checkbox" class="sheet-showarrow sheet-id-show" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" aria-label="Show Row ID" name="attr_ids-show" value="1" />
 									<label class="sheet-showsect sheet-id-showlabel" data-i18n="identification-abbrv">ID</label>
 									<hr class="sheet-subnav-hr">
 									<div class="sheet-cheat"></div>
-									<div class="sheet-misc sheet-nolevel-sect">										
+									<div class="sheet-level sheet-nolevel-sect">										
 										<input type="checkbox" value="1" name="attr_showextrafields" class="sheet-extra-show sheet-or-A-show sheet-noshow"/>
 										<input type="checkbox" value="Sp" name="attr_ability_type" class="sheet-sp-show sheet-noshow" />
 										<label class="sheet-small-label2">
@@ -12588,7 +12588,7 @@
 										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" data-i18n-placeholder="spell-duration"  accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" data-i18n-placeholder="school-etc"   accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
-									<div class="sheet-weapon-attributes sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table">
 										<label class="sheet-small-label2 sheet-entry-short">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -13662,7 +13662,7 @@
 					<div class="sheet-table-row" >
 						<span class="sheet-table-config-row-name" >&nbsp;</span>
 						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_attack_bab_dropdowns" title="@{migrated_attack_bab_dropdowns}" value="1"><span data-i18n="attack-bonus-dropdowns" > Attack bonus dropdowns</span></label></span>
-						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_itemlist_newfields" title="@{migrated_itemlist_newfields}" value="1"><span data-i18n="item-macros-current" > Equipment Macros to current</span></label></span>
+						<span class="sheet-table-cell sheet-left"><label><input type="checkbox" name="attr_migrated_skill_dropdowns5" title="@{migrated_skill_dropdowns5}" value="1">&nbsp;<span data-i18n="profession" >profession</span>&nbsp;<span data-i18n="skills" >skills</span></label></span>
 						<span class="sheet-table-cell sheet-left"></span>
 						<span class="sheet-table-cell sheet-left"></span>
 					</div>
