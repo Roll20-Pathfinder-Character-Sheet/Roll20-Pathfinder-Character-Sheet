@@ -1,10 +1,3 @@
-<!--
--
--
--DEVELOPMENT NOT FOR PROD SUPPORT YET
--
--
--->
 <input type="checkbox" name="attr_use_specfont" value="1" class="sheet-accessible sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="2" class="sheet-comic sheet-noshow" role="presentation" />
 <input type="checkbox" name="attr_use_specfont" value="3" class="sheet-segoe sheet-noshow" role="presentation" />
@@ -332,7 +325,6 @@
 							<input type="radio" name="attr_tabcat" value="permanent" class="sheet-tabcopy custnavsection-0" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="temporary" class="sheet-tabcopy custnavsection-1" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="spell" class="sheet-tabcopy custnavsection-2" role="presentation" />
-							<input type="radio" name="attr_tabcat" value="hex" class="sheet-tabcopy custnavsection-7" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="song" class="sheet-tabcopy custnavsection-3" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="class" class="sheet-tabcopy custnavsection-4" role="presentation" />
 							<input type="radio" name="attr_tabcat" value="item" class="sheet-tabcopy custnavsection-5" role="presentation" />
@@ -2851,7 +2843,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee_desc} : condition" type="text" name="attr_attk_melee_desc" value="" /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 							<input type="checkbox" class="sheet-showarrow sheet-sect-show sheet-expand-arrow sheet-expand1" name="attr_atkm2_show" value="1" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
 							<div class="sheet-table-row sheet-sect">
@@ -2903,7 +2895,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-placeholder="alternate-ability-melee-desc"  /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{global_attack_macro_insert} + @{global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell">
@@ -2954,7 +2946,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged_crit_conf}" type="number" name="attr_attk_ranged_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged_desc} : condition" type="text" name="attr_attk_ranged_desc" value="" /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged-Attack-macro" title="@{Ranged-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 							<input type="checkbox" class="sheet-showarrow sheet-sect2-show sheet-expand-arrow sheet-expand2" name="attr_ranged_2_show" value="1" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
 							<div class="sheet-table-row sheet-sect2">
@@ -3006,7 +2998,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_ranged2_crit_conf}" type="number" name="attr_attk_ranged2_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_ranged2_desc}" type="text" name="attr_attk_ranged2_desc" value="" data-i18n-placeholder="alternate-ability-ranged-desc"  /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged2-Attack-macro" title="@{Ranged2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Ranged2-Attack-macro" title="@{Ranged2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-ranged}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{ranged2-attack}}} {{check=[[ 1d20 + [[ @{attk-ranged2} + @{global_attack_macro_insert} + @{global_ranged_macro_insert} ]] ]]}} {{description=@{attk_ranged2_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 							<div class="sheet-table-row">
 								<span class="sheet-table-cell">
@@ -3057,7 +3049,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb_crit_conf}" type="number" name="attr_attk_cmb_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb_desc}" type="text" name="attr_attk_cmb_desc" value="" /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB-Check-macro" title="@{CMB-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 							<input type="checkbox" class="sheet-showarrow sheet-sect3-show sheet-expand-arrow sheet-expand3" name="attr_cmb_2_show" value="1" data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd"><span class="sheet-showsect"></span>
 							<div class="sheet-table-row sheet-sect3">
@@ -3109,7 +3101,7 @@
 								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-left-border"><input title="@{attk_cmb2_crit_conf}" type="number" name="attr_attk_cmb2_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_cmb2_desc}" type="text" name="attr_attk_cmb2_desc" value="" data-i18n-placeholder="alternate-ability-cmb-desc"  /></span>
-								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}}</textarea></span>
+								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_CMB2-Check-macro" title="@{CMB2-Check-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-cmb}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv2}}} {{check=[[ 1d20 + [[ @{CMB2} + @{global_attack_macro_insert} + @{global_cmb_macro_insert} ]] ]]}} {{description=@{attk_cmb2_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
 							</div>
 						</div>
 					</div>
@@ -8007,7 +7999,7 @@
 										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" data-i18n-placeholder="spell-duration"  accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" data-i18n-placeholder="school-etc"   accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
-									<div class="sheet-attack-damage sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 										<label class="sheet-small-label2 sheet-entry-short">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -10067,7 +10059,7 @@
 										<label class="sheet-small-label2 sheet-entry-short sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
 										<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
 									</div>
-									<div class="sheet-attack-damage sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 										<label class="sheet-small-label2" style="width:5em;">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -11713,7 +11705,7 @@
 												<label class="sheet-small-label2 sheet-entry-short sheet-advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
 												<label class="sheet-small-label2 sheet-number"><input title="@{repeating_spells_$X_Concentration-mod}" type="number" value="0" name="attr_Concentration-mod" class="sheet-calc" readonly /><span data-i18n="concentration-abbrv">Conc</span></label>
 											</div>
-											<div class="sheet-attack-damage sheet-non-table">
+											<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 												<label class="sheet-small-label2" style="width:5em;">
 													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 													<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
@@ -12588,7 +12580,7 @@
 										<label class="sheet-small-label2 sheet-sect sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_duration}" type="text" name="attr_duration" value="" data-i18n-placeholder="spell-duration"  accept="Duration" /><span data-i18n="duration">Duration</span><span name="attr_duration" class="sheet-autoexpand"></span></label>
 										<label class="sheet-small-label2 sheet-entry-15p-shrink sheet-autoexpand"><input title="@{repeating_ability_$X_cust-category}" type="text" name="attr_cust-category" value="" data-i18n-placeholder="school-etc"   accept="School" /><span data-i18n-title="custom-category-desc" data-i18n-aria-label="custom-category-desc" data-i18n="category">Category</span><span name="attr_cust-category" class="sheet-autoexpand"></span></label>
 									</div>
-									<div class="sheet-attack-damage sheet-non-table">
+									<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 										<label class="sheet-small-label2 sheet-entry-short">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
