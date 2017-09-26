@@ -1946,7 +1946,7 @@ input.sheet-refreshbutton {
 
 /*selected text */
 .sheet-selectedlabel-check + b:not(.sheet-offCase) {
-    color: DimGray;
+    color: #333333;
     font-size: .75rem;
     line-height: 1.5em;
     padding: 1px .5em 1px .25em;
