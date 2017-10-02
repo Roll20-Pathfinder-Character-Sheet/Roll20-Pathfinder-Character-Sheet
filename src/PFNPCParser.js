@@ -3395,7 +3395,7 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 		});
 	}
 }));
-
+/*
 on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo) {
 	if (eventInfo.sourceType === "player" ) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -3412,9 +3412,10 @@ on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo)
 						setter.light_dimradius=tempint;
 					}
 				}
-				setDefaultToken(setter);
+				//setDefaultToken(setter);
 			});
 		});
 	}
 }));
 
+*/
