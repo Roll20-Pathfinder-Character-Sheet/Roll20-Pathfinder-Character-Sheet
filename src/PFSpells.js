@@ -549,7 +549,6 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         idStr="",
         params = {};
         try {
-            if (parseInt(v[prefix+"create-attack-entry"],10)){
                 //TAS.debug("at PFSpells.createAttackEntryFromRow",v);
                 if (!PFUtils.findAbilityInString(v[item_entry + "spell-attack-type"]) && !v[item_entry + "damage-macro-text"]) {
                     TAS.warn("no attack to create for spell "+ v[item_entry+"name"] +", "+ itemId );
@@ -566,7 +565,6 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     setter[prefix+"group"]="Spell";
                     setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
                 }
-            }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
         } finally {
