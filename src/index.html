@@ -10389,16 +10389,23 @@
 					<!-- hide/show some fields -->
 					<label style="position: absolute;margin-top: -1.75em;"></label>
 					<input type="checkbox" class="sheet-selectedlabel-check sheet-equipment-onetime-show" name="attr_equipment_onetime_show" title="@{equipment_onetime_show}" value="1" role="presentation" checked /><b data-i18n-title="show-onetime-item-fields-title" data-i18n-aria-label="show-onetime-item-fields-title" title="Show item equipment type, hardness, item-hp, item-hp|max, and value." data-i18n="show-more-fields">Show more fields</b>
-					<div class="sheet-table" style="display:sheet-inline-table;width:60%;float:right;" >
-						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
-						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals:</b></span>
-						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly="">
-						<b data-i18n-title="pounds-title"  data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv">lbs.</b></span>						
-						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly="">
-						<b data-i18n-title="gold-pieces"  data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv">GP</b></span>
-						<!-- keep these in case someone needs them -->
-						<input title="@{item-total-hp}" type="hidden" name="attr_item-total-hp" value="0" class="sheet-calc" readonly="">					
-						<input title="@{item-total-hp|max}" type="hidden" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly="">
+					<div class="sheet-table">
+						<div class="sheet-row" style="text-align: right;">
+							<label data-i18n="totals" style="padding-top: 1em;">Totals:</label>
+							<label class="sheet-small-label2 sheet-autoexpand">
+								<input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc sheet-entry-wide" readonly="">
+								<span name="attr_item_total_weight" class="sheet-autoexpand"></span>
+							</label>
+							<span data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv" title="Weight in pounds" aria-label="Weight in pounds">lbs</span>
+							<label class="sheet-small-label2 sheet-autoexpand">
+								<input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc sheet-entry-wide" readonly="">
+								<span name="attr_item-total-value" class="sheet-autoexpand"></span>
+							</label>
+							<span data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv" title="Gold pieces" aria-label="Gold pieces">GP</span>
+							<!-- keep these in case someone needs them -->
+							<input title="@{item-total-hp}" type="hidden" name="attr_item-total-hp" value="0" class="sheet-calc" readonly="">					
+							<input title="@{item-total-hp|max}" type="hidden" name="attr_item-total-hp_max" value="0" class="sheet-calc" readonly="">
+						</div>
 					</div>
 					<div class="sheet-sect sheet-table sheet-repeating-fields sheet-hiderepborder">
 						<fieldset class="repeating_item">
@@ -10616,12 +10623,19 @@
 						</fieldset>
 					</div>
 					<div class="sheet-table">
-						<span class="sheet-table-cell sheet-left" style="width: 76%;">&nbsp;</span>
-						<span class="sheet-table-cell sheet-right" style="width: 8%;min-width: 6em;"><b data-i18n="totals">Totals</b></span>
-						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc" readonly="">
-						<b data-i18n-title="pounds-title"  data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv">lbs.</b></span>						
-						<span class="sheet-table-cell sheet-left" style="width: 8%;min-width: 6em;"><input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc" readonly="">
-						<b data-i18n-title="gold-pieces"  data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv">GP</b></span>
+						<div class="sheet-row" style="text-align: right;">
+							<label data-i18n="totals" style="padding-top: 1em;">Totals:</label>
+							<label class="sheet-small-label2 sheet-autoexpand">
+								<input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc sheet-entry-wide" readonly="">
+								<span name="attr_item_total_weight" class="sheet-autoexpand"></span>
+							</label>
+							<span data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv" title="Weight in pounds" aria-label="Weight in pounds">lbs</span>
+							<label class="sheet-small-label2 sheet-autoexpand">
+								<input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc sheet-entry-wide" readonly="">
+								<span name="attr_item-total-value" class="sheet-autoexpand"></span>
+							</label>
+							<span data-i18n-title="gold-pieces" data-i18n-aria-label="gold-pieces" data-i18n="gold-pieces-abbrv" title="Gold pieces" aria-label="Gold pieces">GP</span>
+						</div>
 					</div>
 				</div>
 				<!-- xp at end of sheet in read mode -->
