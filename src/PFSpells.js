@@ -288,49 +288,45 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
             if(!parseInt(v.total_spells_manually,10)){
                 spellLevel= parseInt(v.repeating_spells_spell_level, 10)||0;
                 //TAS.debug("total spells manually is off spellLEvel is "+spellLevel);
-                if (!isNaN(spellLevel)){
-                    classNum = parseInt(v.repeating_spells_spellclass_number,10);
-                    if(isNaN(classNum)){
-                        setAttrs({'repeating_spells_spellclass_number':0});
-                    }
-                    metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
-                    if (metamagic){
-                        slot = parseInt(v.repeating_spells_slot,10);
-                        if(!isNaN(slot)){
-                            spellLevel =slot;
-                        }
-                    }
-                    //now update the spells per day for the associated class idx and spell level
-                    fieldname = "spellclass-" + classNum + "-level-" + spellLevel + "-spells-per-day";
-                    fieldname2 =  "spellclass-" + classNum + "-level-" + spellLevel + "-spells-prepared";
-                    initialtot[fieldname]=0;
-                    initialtot[fieldname2]=0;
-                    //TAS.debug("about to set "+fieldname+", and "+ fieldname2);
-                    TAS.repeating('spells').attrs(fieldname,fieldname2).fields('row_id','used', 'spell_level', 'metamagic', 'slot').reduce(function (m, r) {
-                        try {
-                            if (r.I.spell_level===spellLevel || (r.I.metamagic && r.I.slot===spellLevel)){
-                                m+=r.I.used;
-                            }
-                        } catch (innererr){
-                            TAS.error("PFSpells.updateSpellsPerDay innererr",innererr);
-                        } finally {
-                            return m;
-                        }
-                    }, 0 , function (m, r, a) {
-                        try {
-                            a.S[fieldname] = m;
-                            a.S[fieldname2] = m;
-                        } catch (erri){
-                            TAS.error("ERROR calculating spells per day!",erri);
-                            if (a && a.I){
-                                a.I[fieldname]=m;
-                                a.I[fieldname2]=m;
-                            }
-                        }
-                    }).execute(done);
-                }  else { 
-                    done();
+                classNum = parseInt(v.repeating_spells_spellclass_number,10);
+                if(isNaN(classNum)){
+                    setAttrs({'repeating_spells_spellclass_number':0});
                 }
+                metamagic = parseInt(v.repeating_spells_metamagic, 10) || 0;
+                if (metamagic){
+                    slot = parseInt(v.repeating_spells_slot,10);
+                    if(!isNaN(slot)){
+                        spellLevel =slot;
+                    }
+                }
+                //now update the spells per day for the associated class idx and spell level
+                fieldname = "spellclass-" + classNum + "-level-" + spellLevel + "-spells-per-day";
+                fieldname2 =  "spellclass-" + classNum + "-level-" + spellLevel + "-spells-prepared";
+                initialtot[fieldname]=0;
+                initialtot[fieldname2]=0;
+                //TAS.debug("about to set "+fieldname+", and "+ fieldname2);
+                TAS.repeating('spells').attrs(fieldname,fieldname2).fields('row_id','used', 'spell_level', 'metamagic', 'slot').reduce(function (m, r) {
+                    try {
+                        if (r.I.spell_level===spellLevel || (r.I.metamagic && r.I.slot===spellLevel)){
+                            m+=r.I.used;
+                        }
+                    } catch (innererr){
+                        TAS.error("PFSpells.updateSpellsPerDay innererr",innererr);
+                    } finally {
+                        return m;
+                    }
+                }, 0 , function (m, r, a) {
+                    try {
+                        a.S[fieldname] = m;
+                        a.S[fieldname2] = m;
+                    } catch (erri){
+                        TAS.error("ERROR calculating spells per day!",erri);
+                        if (a && a.I){
+                            a.I[fieldname]=m;
+                            a.I[fieldname2]=m;
+                        }
+                    }
+                }).execute(done);
             } else {
                 done();
             }
@@ -358,24 +354,25 @@ function getSpellTotals  (ids, v, setter) {
                 spellLevel, classNum=0, metamagic=0,slot,uses=0;
             try {
                 spellLevel = parseInt(v[prefix + "spell_level"], 10)||0;
-                if ( !isNaN(spellLevel) ) {
-                    classNum = parseInt(v[prefix + "spellclass_number"], 10);
-                    if(isNaN(classNum)){
-                        classNum=0;
-                        setter[prefix+"spellclass_number"]=0;
-                    }
-                    metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
-                    slot = parseInt(v[prefix + "slot"], 10);
-                    if (metamagic && !isNaN(slot)){
-                        spellLevel = slot;
-                    }
-                    totalListed[classNum][spellLevel] += 1;
-                    if (!doNotProcess){
-                        uses = parseInt(v[prefix + "used"], 10) || 0;
-                        totalPrepped[classNum][spellLevel] += uses;
-                    }
-                } else {
-                    TAS.warn("PFSpells.getSpellTotals: Spelllevel NAN: spellLevel:"+ spellLevel);
+                classNum = parseInt(v[prefix + "spellclass_number"], 10);
+                if(isNaN(classNum)){
+                    classNum=0;
+                    setter[prefix+"spellclass_number"]=0;
+                }
+                metamagic = parseInt(v[prefix + "metamagic"], 10) || 0;
+                slot = parseInt(v[prefix + "slot"], 10);
+                if (isNaN(slot)){
+                    setter[prefix+"slot"]=spellLevel;
+                } else if (metamagic && slot !== spellLevel){
+                    spellLevel = slot;
+                } else if (slot !== spellLevel){
+                    slot = spellLevel;
+                    setter[prefix+"slot"]=spellLevel;
+                }
+                totalListed[classNum][spellLevel] += 1;
+                if (!doNotProcess){
+                    uses = parseInt(v[prefix + "used"], 10) || 0;
+                    totalPrepped[classNum][spellLevel] += uses;
                 }
             } catch (err2){
                 TAS.error("PFSpells.getSpellTotals err2",err2);

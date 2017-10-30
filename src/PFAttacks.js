@@ -17,13 +17,10 @@ import * as PFSize from './PFSize';
 
 /** module for repeating_weapon section  */
 /* **********************************ATTACKS PAGE ********************************** */
-export var damageRowAttrs=["damage-ability-max","damage-ability","damage-ability-mod","damage-mod","damage_ability_mult","enhance","total-damage","attack-type","isranged"],
-damageRowAttrsLU=_.map(damageRowAttrs,function(a){return '_'+a;}),
-updateRowAttrs=["attack-mod","attack-type","attack-type-mod","crit_conf_mod","crit_confirm",
-	"isranged","masterwork","proficiency","total-attack",
-	"attack-type_macro_insert","damage-type_macro_insert"].concat(damageRowAttrs),
-updateRowAttrsLU = _.map(updateRowAttrs,function(a){return '_'+a;}),
-sizeFields=['default_damage-dice-num','default_damage-die','default_size','not_default_size','damage-dice-num','damage-die','size_affects'],
+export var damageRowAttrsLU=["_damage-ability-max","_damage-ability","_damage-ability-mod","_damage-mod","_damage_ability_mult","_enhance","_total-damage","_attack-type","_isranged"],
+updateRowAttrsLU=["_attack-mod","_attack-type","_attack-type-mod","_crit_conf_mod","_crit_confirm",
+	"_isranged","_masterwork","_proficiency","_total-attack",
+	"_attack-type_macro_insert","_damage-type_macro_insert"].concat(damageRowAttrsLU),
 sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
 updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf",
 	"buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total",
@@ -238,12 +235,12 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
 				if (rangedAttack){
 					damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
-					if(v[attacktypeField].indexOf(2)>=0){
+					if(v[attacktypeField].indexOf('2')>=0){
 						damageBuffs+=(parseInt(v["buff_dmg_ranged2-total"],10)||0);
 					}
 				} else if ((/melee/i).test(v[attacktypeField])){
 					damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
-					if(v[attacktypeField].indexOf(2)>=0){
+					if(v[attacktypeField].indexOf('2')>=0){
 						damageBuffs+=(parseInt(v["buff_dmg_melee2-total"],10)||0);
 					}
 				}
@@ -319,7 +316,7 @@ function updateRepeatingWeaponCritAsync(id, eventInfo) {
 		var setter = {};
 		try {
 			v = _.mapObject(v,function(val,key){
-				if (key.indexOf('attack-type')>0){
+				if ((/attack\-type$/i).test(key)  || (/damage\-ability$/i).test(key) || (/damage\-ability\-max$/i).test(key) || (/damage_ability_mult$/i).test(key)){
 					return val;
 				} else {
 					return (parseInt(val,10)||0);
@@ -364,7 +361,7 @@ function updateRepeatingWeaponsFromCritAsync(attacktype, eventInfo) {
 			setter = {};
 			try {
 			v = _.mapObject(v,function(val,key){
-				if (key.indexOf('attack-type')>0){
+				if ((/attack\-type$/i).test(key)  || (/damage\-ability$/i).test(key)|| (/damage\-ability\-max$/i).test(key) || (/damage_ability_mult$/i).test(key) ){
 					return val;
 				} else {
 					return (parseInt(val,10)||0);
@@ -416,7 +413,7 @@ function setRepeatingWeaponRangedFlag(id){
 
 function getRecalculatedDamageOnly (id,v){
 	var prefix = 'repeating_weapon_' + SWUtils.getRepeatingIDStr(id),
-		damagetype= v[prefix+'daamge-ability'],
+		damagetype= v[prefix+'damage-ability'],
 		isRanged=0,enhance=0,abilitydmg=0,abilityMult=1,
 		currTotalDmg=0,dmgMacroMod=0,maxAbility=999,
 		dmgConditions = v["condition-Sickened"],
@@ -560,10 +557,21 @@ function  getRecalculatedAttack (id,v,setter){
 		newTotalAttack=0,
 		localsetter;
 	try{
-
+		localsetter = setter || {};
+		if(attkType && attkType !== 'dual' &&  attkType !== '0'){
+			if((/range/i).test(attkType)){
+				if(!isRanged){
+					isRanged=1;
+					localsetter[prefix+"isranged"]=1;
+				}
+			} else if (isRanged){
+				localsetter[prefix+"isranged"]=0;
+			}
+		} else if (isRanged){
+			localsetter[prefix+"isranged"]=0;
+			isRanged=0;
+		}
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
-
-
 		if (isRanged){
 			damageBuffs +=  (v['buff_dmg_ranged-total']||0);
 			if(attkType.indexOf('2')>=0){
@@ -576,28 +584,29 @@ function  getRecalculatedAttack (id,v,setter){
 			}
 		}
 		damageBuffs -= (v['condition-Sickened']||0);
-		localsetter = setter || {};
 		newTotalAttack = Math.max(enhance, masterwork) + attkTypeMod + prof + attkMacroMod;
 		if (newTotalAttack !== currTotalAttack || isNaN(currTotalAttack)) {
 			localsetter[prefix+ "total-attack"] = newTotalAttack;
 		}
+		maxAbility=parseInt(maxAbility,10);
 		if(!isRanged || isNaN(maxAbility)) {
 			maxAbility=999;
 		}
-		abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
+		abilityTotDmg = Math.min(Math.floor(abilityMult * abilitydmg), maxAbility);
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
+		TAS.debug("###########################",
+			"getRecalculatedAttack attackType:"+ attkType + ", ability:"+ 
+			v['repeating_weapon_'+id+'_damage-ability'] + " mod:"+ 
+			v['repeating_weapon_'+id+'_damage-ability-mod'] + 
+			", isranged:"+ isRanged + ", damageBuffs:"+damageBuffs +
+			", maxability:"+maxAbility + ", abilityMult:"+ abilityMult +
+			", abilitydmg:"+abilitydmg + ", ability dmg tot:"+abilityTotDmg+
+			", new total:"+newTotalDamage +", old total:"+currTotalDmg  ,
+			"###########################");
 		if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
 			localsetter[prefix+ "total-damage"] = newTotalDamage;
 		}
 		if(attkType && attkType !== 'dual' &&  attkType !== '0'){
-			if((/range/i).test(attkType)){
-				if(!isRanged){
-					isRanged=1;
-					localsetter[prefix+"isranged"]=1;
-				}
-			} else if (isRanged){
-				localsetter[prefix+"isranged"]=0;
-			}
 			attkTypeForGrid = attkType.replace('attk-','');
 			//TAS.debug("at update nonmacro attack id "+id+" attkTypeForGrid="+attkTypeForGrid+", comparing to:",PFAttackGrid.attackGridFields);
 			if(attkTypeForGrid){
@@ -610,10 +619,7 @@ function  getRecalculatedAttack (id,v,setter){
 					localsetter[prefix + "damage-type_macro_insert"] = PFAttackGrid.attackGridFields[attkTypeForGrid].damagemacro;
 				}
 			}
-		} else if (isRanged){
-			localsetter[prefix+"isranged"]=0;
-			isRanged=0;
-		}
+		} 
 		updateRepeatingWeaponCrit(id,v,localsetter);
 		newCritBonus = critConfirmBonus + attackTypeCritBonus;
 		if (newCritBonus !== currCritBonus) {
@@ -1211,25 +1217,14 @@ function recalcRepeatingNonMacroFields (ids,callback){
 	fields = fields.concat(updateCharAttrs);
 	getAttrs(fields,function(v){
 		var charAttMap={},	setter, modifyDiceGlobal=0;
+		//set values to int so we don't have to do it over and over per row.
 		v = _.mapObject(v,function(val,key){
-			if ((/attack\-type$/i).test(key)){
+			if ((/attack\-type$/i).test(key) || (/damage\-ability$/i).test(key) || (/damage\-ability\-max$/i).test(key) || (/damage_ability_mult$/i).test(key) ){
 				return val;
 			} else {
 				return (parseInt(val,10)||0);
 			}
 		});
-		//set global values to int so we don't have to do it over and over per row.
-		//charAttMap = _.object(_.map(updateCharAttrs,function(attr){
-		//	return [attr, parseInt(v[attr],10)||0];
-		//}));
-		//_.extend(v,charAttMap);
-		//modifyDiceGlobal = parseInt(v.modify_dmg_by_size,10)||0;
-
-
-		//v["buff_DMG-total"]= parseInt(v["buff_DMG-total"],10)||0;
-		//v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
-		//v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
-		//v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={},useSize=0;
@@ -1290,6 +1285,7 @@ function recalcRepeatingMacroFields (ids,callback){
 				} else {
 					SWUtils.evaluateAndSetNumber(prefix + "attack", prefix + "attack-mod",0,doneWithField,true);
 				}
+				//TAS.debug("recalcRepeatingMacroFields updating damage ability for "+id);
 				SWUtils.setDropdownValue(prefix + "attack-type",prefix +"attack-type-mod",null,doneWithField,true);
 				SWUtils.setDropdownValue(prefix + "damage-ability",prefix +"damage-ability-mod",null,doneWithField,true);
 			});
@@ -1455,7 +1451,8 @@ export function setNewDefaultsAsync (callback){
 	});
 	//TAS.debug("At PFAttacks.setNewDefaults");
 	getAttrs(['migrated_attacklist_defaults111'],function(vsize){
-		if(parseInt(vsize['migrated_attacklist_defaults111'],10)){
+		var upd = parseInt(vsize['migrated_attacklist_defaults111'],10)||0;
+		if(upd){
 			done();
 			return;
 		}
