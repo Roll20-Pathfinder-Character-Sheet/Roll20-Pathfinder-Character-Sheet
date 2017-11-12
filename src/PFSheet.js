@@ -459,6 +459,9 @@ function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.693){
 				PFCustom.fixProfessionDropdowns(PFSkills.recalculate);
 			}
+			if (oldversion < 1.697){
+				PFAttacks.recalculate(null,null,oldversion);
+			}
 
 		}
 	} catch (err) {
