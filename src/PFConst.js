@@ -1,7 +1,7 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.696,
-	announcementVersionAttr: 'attentionv169-show',
+	version: 1.697,
+	announcementVersionAttr: 'attentionv1698-show',
 
 	/***************************************Lists of Fields ************************************************************/
 	//add any new repeating sections here. This is the word after "repeating_"
@@ -131,10 +131,10 @@ export default {
 	silentParams : {'silent':true},
 	minusreg : /\-|&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/,
 	dashtominusreg : /&Mdash;|&\#8212;|\u2013|\u2014|\u2212|\u02d7/g,
-	critreg : /\/(\d+)[\-|\u2013|\u2014|\u2212|\u02d7]20(?:[x\u00d7](\d+)){0,1}/,
-	critmultreg : /[x\u00d7](\d+)/,
-	diceDiereg : /(\d+)d(\d+)\s*(?:([\+|\-|\u2013|\u2014|\u2212|\u02d7])(\d+)){0,1}/,
+	critreg : /\/(\d+)\-20(?:[x\u00d7](\d+)){0,1}/,
+	critmultreg : /(?:\/[x\u00d7]|\/|[x\u00d7])(\d+)/,
+	diceDiereg : /(\d+)d(\d+)\s*(?:([\+|\-])(\d+)){0,1}/,
 	diceDieregOneGroup : /(\d+d\d+\s*(?:[\+|\-|\u2013|\u2014|\u2212|\u02d7]\d+){0,1})/g,
-	findBadNegDice : /(\d+)d([123468])([13456789])/g,   // invalid: 2nd digit not 0 or 2 actually what if it's d10-1? d101?d1012?
-	findBadCritRange : /\/(\d+)20/g
+	findBadNegDice : /(\d+)d(2|3|4|6|8|10|12|20)([1-9]+)/g,
+	findBadCritRange : /(19|18|17|16|15|14|13|12)20/g
 };
