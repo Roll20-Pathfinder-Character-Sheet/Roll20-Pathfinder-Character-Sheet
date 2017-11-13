@@ -476,10 +476,14 @@ export function parseSpellRangeText  (range, area) {
 }
 
 export function replaceMissingNegatives_BadDice (str){
-    return str.replace(PFConst.findBadNegDice, '$1d$2-$3');
+    //match still returns even if 3rd plus missing
+    if (PFConst.findBadNegDice.test(str)){
+        return str.replace(PFConst.findBadNegDice, '$1d$2-$3');
+    }
+    return str;
 }
 export function replaceMissingNegatives_CritRange (str){
-    return str.replace(PFConst.findBadCritRange, '/$1-20')
+    return str.replace(PFConst.findBadCritRange, '$1-20')
 }
 export function convertDashToMinus(str){
     return str.replace(PFConst.dashtominusreg,'-');
@@ -531,24 +535,24 @@ export function getIntFromString(str,cleanedup,atStart){
  * spaces: number of spaces string took 
  * @param {string} str the string that should have /19-20x2 or x2 in it.
  * @param {boolean} cleanedup if replaceMissingNegatives_CritRange already called on string
- * @param {boolean} atStart if true only look for dice at start of str
  * @returns {{'crit':number,'critmult':number,'spaces':number}}
  */
-export function getCritFromString (str,cleanedup,atStart){
+export function getCritFromString (str,cleanedup){
     var ret={'crit':20,'critmult':2,'spaces':0},matches;
     if (!cleanedup){
-        str = replaceMissingNegatives_CritRange(str);
         str = convertDashToMinus(str);
+        str = replaceMissingNegatives_CritRange(str);
     }
+    ret.critmult=2;
     if ((matches = PFConst.critreg.exec(str))!==null){
         ret.crit = parseInt(matches[1],10);
         if (matches[2]){
             ret.critmult=parseInt(matches[2],10);
         }
-        ret.spaces =matches.length;
+        ret.spaces =matches[0].length;
     } else if ( ( matches = PFConst.critmultreg.exec(str)) !== null){
-        ret.critmult= parseInt(matches[2],10);
-        ret.spaces =matches.length;
+        ret.critmult= parseInt(matches[1],10);
+        ret.spaces =matches[0].length;
     }
     return ret;
 }
@@ -565,13 +569,13 @@ export function getDiceDieFromString (str,cleanedup,atStart){
         str = replaceMissingNegatives_BadDice(str);
         str = convertDashToMinus(str);
     }
-    matches = PFConst.diceDiereg.exec(str);
+    matches =  str.match(PFConst.diceDiereg);//  PFConst.diceDiereg.exec(str);
     if (matches){
         if (!atStart || matches.index===0){
-            ret.spaces = matches.length;
+            ret.spaces = matches[0].length + matches.index;
             ret.dice=parseInt(matches[1],10)||0;
             ret.die=parseInt(matches[2],10)||0;
-            if (matches[3] === '-'){
+            if (matches[3] && matches[3] === '-'){
                 sign=-1;
             }
             if (matches[4]){
@@ -579,7 +583,7 @@ export function getDiceDieFromString (str,cleanedup,atStart){
             }
         }
     }
-    //TAS.debug("at getDiceDieFromString parsing "+str,matches);
+    TAS.debug("x1  at getDiceDieFromString parsing "+str,matches,ret);
     return ret;
 }
 /**replaceDiceDieString puts inline roll brackets [[ ]] around 'xdy +z' dice strings (z exists or not)
