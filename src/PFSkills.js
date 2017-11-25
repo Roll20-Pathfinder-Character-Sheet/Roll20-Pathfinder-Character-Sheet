@@ -559,21 +559,24 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 		if (typeof callback === "function"){ callback();}
 	},
 	updatedAttr ,tempstr='',matches,fields;
-	if(eventInfo){
+	if(abilityBuff) {
+		tempstr = abilityBuff;
+	} else if(eventInfo){
 		tempstr = eventInfo.sourceAttribute;
 		if(tempstr.indexOf('repeating_')>=0){
 			tempstr = SWUtils.getAttributeName(tempstr);
 		}
-	} else if(abilityBuff) {
-		tempstr = abilityBuff;
 	}
+
 	if(tempstr){
-		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
-		if(matches){
-			//TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
-			updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
-		} else if (tempstr==='physical'){
+		if (tempstr==='physical'||tempstr==='acp'){
 			updatedAttr = /STR\-mod|DEX\-mod/;
+		} else {
+			matches=tempstr.match(/str|dex|con|int|wis|cha/i);
+			if(matches){
+				//TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
+				updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
+			}
 		}
 		//TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
 	}
