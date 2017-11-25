@@ -460,7 +460,11 @@ export function updateArmor (callback, silently, eventInfo) {
                     maxDex = 0;
                     minAcp = Math.min(minAcp, -6);
                 }
+            } else if (encumbranceDD===3){
+                minAcp=0;
+                acp=0;
             }
+
             
             
             currACP = parseInt(v.acp, 10) || 0;
