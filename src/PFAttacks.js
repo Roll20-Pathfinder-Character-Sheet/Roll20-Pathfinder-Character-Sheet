@@ -220,49 +220,54 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	}
 	getAttrs([maxname, modname, "buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total","condition-Sickened",rangedField, totalDamageField, 
 		attacktypeField, enhanceField, miscDmgField, abilityMultField], function (v) {
-		var maxA , ability,abilityMult,abilityTot,damageBuffs,currTotalDmg,dmgConditions,genDmgBuff=0,
-		miscDmg,enhance,totalDamage,rangedAttack,setter = {};
-		rangedAttack =  parseInt(v[rangedField],10)||0;
-		//if we are updating ranged damage then only update this if it's a ranged attack
-		if ( !rangedUpdate || rangedAttack ){
-			ability = parseInt(v[modname], 10) || 0;
-			abilityMult =  1;
-			dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0; 
-			currTotalDmg = parseInt(v[totalDamageField], 10);
-			miscDmg = parseInt(v[miscDmgField], 10) || 0;
-			enhance = parseInt(v[enhanceField], 10) || 0;
-			TAS.debug('PFAttacks update damage values are :',v);
-			if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
-				if (rangedAttack){
-					damageBuffs = (parseInt(v["buff_dmg_ranged-total"],10)||0);
-					if(v[attacktypeField].indexOf('2')>=0){
-						damageBuffs+=(parseInt(v["buff_dmg_ranged2-total"],10)||0);
-					}
-				} else if ((/melee/i).test(v[attacktypeField])){
-					damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
-					if(v[attacktypeField].indexOf('2')>=0){
-						damageBuffs+=(parseInt(v["buff_dmg_melee2-total"],10)||0);
-					}
-				}
-			}
-			genDmgBuff=parseInt(v['buff_DMG-total'],10)||0;
-			damageBuffs+=genDmgBuff;
+		var maxA , ability,abilityMult,abilityTot,damageBuffs=0,currTotalDmg,dmgConditions,genDmgBuff=0,
+		tempint,miscDmg,enhance,totalDamage,rangedAttack=0,setter = {},meleeAttack=0,secondAttack=0;
 
-			abilityMult=getDamageMult(v[abilityMultField]);
-			damageBuffs -=dmgConditions;
-			maxA = parseInt(v[maxname], 10);
-			if(!rangedAttack || isNaN(maxA)) {
-				maxA=990;
+		rangedAttack =  (/range/i).test(v[attacktypeField]);
+		if(!rangedAttack){
+			meleeAttack = (/melee/i).test(v[attacktypeField]);
+		}
+		secondAttack = (/2/).test(v[attacktypeField]);
+		ability = parseInt(v[modname], 10) || 0;
+		abilityMult =  1;
+		dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0; 
+		currTotalDmg = parseInt(v[totalDamageField], 10);
+		miscDmg = parseInt(v[miscDmgField], 10) || 0;
+		enhance = parseInt(v[enhanceField], 10) || 0;
+		//TAS.debug('PFAttacks type is :'+v[attacktypeField]+ ', update damage values are :',v);
+		//if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
+		if (rangedAttack){
+			damageBuffs = parseInt(v["buff_dmg_ranged-total"],10)||0;
+			if(secondAttack){
+				tempint = parseInt(v["buff_dmg_ranged2-total"],10)||0;
+				damageBuffs = damageBuffs + tempint;
 			}
-			abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
-			totalDamage = abilityTot + damageBuffs + miscDmg + enhance;
-			if (totalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
-				//TAS.debug("setting damage to "+totalDamage);
-				setter[totalDamageField] = totalDamage;
+		} else if (meleeAttack){
+			damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
+			if(secondAttack){
+				tempint = parseInt(v["buff_dmg_melee2-total"],10)||0;
+				damageBuffs = damageBuffs + tempint;
 			}
-			if (_.size(setter)) {
-				SWUtils.setWrapper(setter, PFConst.silentParams, resetOptionsWhenDone);
-			}
+		} else {
+			damageBuffs=0;
+		}
+		genDmgBuff = parseInt(v['buff_DMG-total'],10)||0;
+		damageBuffs+=genDmgBuff;
+
+		abilityMult=getDamageMult(v[abilityMultField])||1;
+		damageBuffs -=dmgConditions;
+		maxA = parseInt(v[maxname], 10);
+		if(!rangedAttack || isNaN(maxA)) {
+			maxA=999;
+		}
+		abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
+		totalDamage = abilityTot + damageBuffs + miscDmg + enhance;
+		if (totalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
+			//TAS.debug("setting damage to "+totalDamage);
+			setter[totalDamageField] = totalDamage;
+		}
+		if (_.size(setter)) {
+			SWUtils.setWrapper(setter, PFConst.silentParams, resetOptionsWhenDone);
 		}
 	});
 }
@@ -1597,15 +1602,20 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:attack-type", TAS.callback(function eventHandleRepeatingAttackDropdown(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+			//should do this every time api is used due to loops we can't eliminate:
+			//if (eventInfo.previousValue !== eventInfo.newValue){
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "attack-type", "attack-type-mod",
-				function(newval,oldval,changed){
-					if(changed){
-						updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval);
-					}
-				},true);
+			function(newval,oldval,changed){
+				if(changed){
+					updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval);
+				}
+			},true);
 			updateRepeatingWeaponCritAsync(null, eventInfo);
 			setRepeatingWeaponInsertMacro(null, eventInfo);
+			//if (eventInfo.previousValue.indexOf('ange')>0 || eventInfo.newValue.indexOf('ange')>0)
 			setRepeatingWeaponRangedFlag();
+			//if there is a damage buff, we need to update damage if the type changed.
+			updateRepeatingWeaponDamage(null,eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:attack", TAS.callback(function eventRepeatingWeaponAttack(eventInfo) {
