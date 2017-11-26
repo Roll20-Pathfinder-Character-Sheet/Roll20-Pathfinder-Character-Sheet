@@ -22,7 +22,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv1698-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv1699-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
@@ -33,10 +33,12 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Attack row total damage bonus fixed</li>
-				<li>Spell metamagic slot fixed - spell total appears in correct level</li>
+				<li>NPC Parse fixed</li>
+				<li>Weapon parse fixed</li>
+				<li>Dmg buff updates to attacks fixed</li>
+				<li>ACP not resetting fixed</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv1698-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv1699-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" data-i18n-title="url-link"  style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
@@ -10494,8 +10496,8 @@
 								<label class="sheet-small-label2 sheet-small-label sheet-sect sheet-items-toggle"><input title="@{repeating_item_$X_value}" type="number" name="attr_value" value="0" step="any" min="0" /><span data-i18n="value">Value</span></label>
 								<div style="display:none;">
 										<input type="text" name="attr_item-critical_compendium" value="" accept="Critical"  />
-										<input type="text" name="attr_item-meddamage_compendium" value="" accept="Single-Handed Damage"  />
-										<input type="text" name="attr_item-smalldamage_compendium" value="" accept="Double-Handed Damage"  />
+										<input type="text" name="attr_item-meddamage_compendium" value="" accept="Double-Handed Damage"  />
+										<input type="text" name="attr_item-smalldamage_compendium" value="" accept="Single-Handed Damage"  />
 										<input type="text" name="attr_item-category_compendium" value="" accept="Category"  />
 										<input type="text" name="attr_item-specialtype_compendium" value="" accept="Special"  />
 										<input type="text" name="attr_item-speed20_compendium" value="" accept="Speed 20ft."  />
@@ -14748,9 +14750,9 @@
 				</div>
 				<div style="display:table;width:100%;">
 					<div class="sheet-roll-group2">
-						{{#allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
+						{{#allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch lefttext_0 righttext_0 }}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**</div><div class="sheet-roll-cell">{{value}}</div></div>
-						{{/allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
+						{{/allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch lefttext_0 righttext_0 }}
 					</div>
 				</div>
 				<div class="sheet-roll-group">
@@ -14791,9 +14793,9 @@
 				{{#righttext_4}}<label><span class="sheet-right">{{righttext_4}}</span></label>{{/righttext_4}}
 				{{#lefttext_5}}<label><span>{{lefttext_5}}</span></label>{{/lefttext_5}}
 				{{#righttext_5}}<label><span class="sheet-right">{{righttext_5}}</span></label>{{/righttext_5}}
-				{{#allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
+				{{#allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch lefttext_0 righttext_0 }}
 				<label><span>**{{key}}**</span><span class="sheet-right">{{value}}</span></label>
-				{{/allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch }}
+				{{/allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch lefttext_0 righttext_0 }}
 				{{#lefttext_6}}<label><span>{{lefttext_6}}</span></label>{{/lefttext_6}}
 				{{#righttext_6}}<label><span class="sheet-right">{{righttext_6}}</span></label>{{/righttext_6}}
 				{{#lefttext_7}}<label><span>{{lefttext_7}}</span></label>{{/lefttext_7}}

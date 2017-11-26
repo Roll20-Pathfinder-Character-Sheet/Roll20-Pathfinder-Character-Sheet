@@ -402,8 +402,8 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateArmor (callback, silently, eventInfo) {
-    var done = function () { if (typeof callback === "function") { callback(); } },
-    params = {};
+    var done = function () { if (typeof callback === "function") { callback(); } };
+    
     getAttrs(defenseArmorFields, function (v) {
         var acp = 0, minAcp = 0, acA = 0, acS = 0, sp = 0, atk = 0, subAC = 0, subD = 0,
         subAcp = 0, nonProf = 0, subsp = 0, maxDex = 99, subE = 0,
@@ -411,9 +411,9 @@ export function updateArmor (callback, silently, eventInfo) {
         currAtkMod = 0,
         encumbranceDD = parseInt(v["max-dex-source"], 10) || 0,
         currentLoad = parseInt(v["current-load"], 10) || 0,
-        setter = {};
+        setter = {},params = {};
         try {
-            //TAS.debug("at updateArmor ",v);
+            TAS.debug("at updateArmor ",v);
             defenseArmorShieldRows.forEach(function (row) {
                 if (parseInt(v[row + "-equipped"],10) === 1) {
                     subAC = parseInt(v[row + "-acbonus"], 10) || 0;
@@ -460,7 +460,11 @@ export function updateArmor (callback, silently, eventInfo) {
                     maxDex = 0;
                     minAcp = Math.min(minAcp, -6);
                 }
+            } else if (encumbranceDD===3){
+                minAcp=0;
+                acp=0;
             }
+
             
             
             currACP = parseInt(v.acp, 10) || 0;
@@ -495,6 +499,7 @@ export function updateArmor (callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
+                TAS.notice("updateArmor setting",setter,params);
                 SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
