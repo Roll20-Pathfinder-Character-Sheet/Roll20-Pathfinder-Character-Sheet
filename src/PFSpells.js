@@ -461,6 +461,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
     var notes="",attackType="";
     setter = setter||{};
     try {
+        TAS.debug("UPDATING SPELL ATTACK: "+spellPrefix,v);
         attackType=PFUtils.findAbilityInString(v[spellPrefix + "spell-attack-type"]);
         if (v[spellPrefix + "name"]) {
             if(!noName){
@@ -495,8 +496,11 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
                 setter[weaponPrefix+"critical_dmg_type"] = v[spellPrefix+"damage-type"];
             }
         }
-        if (v[spellPrefix+"save"]){
-            notes += "Save: "+ v[spellPrefix+"save"] + " DC: " + v[spellPrefix+"savedc"];
+        if (v[spellPrefix+"save"]  ){
+            notes += "Save: "+ v[spellPrefix+"save"] ;
+            if ( !(/none/).test(v[spellPrefix+"save"])){
+                notes += " DC: " + v[spellPrefix+"savedc"]
+            }
         }
         if ( v[spellPrefix+"sr"]){
             if (notes) { notes += ", ";}
@@ -522,8 +526,12 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
     attributes = ["create-attack-entry", "range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
     commonAttributes = ["spell-attack-type","name"];
     try {
+        if (id=='DELETED'){
+            done();
+            return;
+        }
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-        idStr = SWUtils.getRepeatingIDStr(id);
+        idStr = SWUtils.getRepeatingIDStr(itemId);
         item_entry = 'repeating_spells_' + idStr;
         
         //TAS.debug("at PFSpells creatattack entry ");
@@ -544,8 +552,17 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         setter = {},
         prefix = "repeating_weapon_",
         idStr="",
+        spellexists=true,
+        deletedspell=false,
         params = {};
         try {
+            TAS.debug("PFSpells.createAttack ##### create attack linked from spell, using ",v);
+			if (_.size(v)===0){
+				spellexists=false;
+			}
+
+            TAS.debug("PFSpells.createAttack ##### spellexists = "+spellexists);
+            if (spellexists){
                 //TAS.debug("at PFSpells.createAttackEntryFromRow",v);
                 if (!PFUtils.findAbilityInString(v[item_entry + "spell-attack-type"]) && !v[item_entry + "damage-macro-text"]) {
                     TAS.warn("no attack to create for spell "+ v[item_entry+"name"] +", "+ itemId );
@@ -557,20 +574,29 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     }
                     idStr = newRowId+"_";
                     prefix += idStr;
-                    setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
+                    setter = setAttackEntryVals(item_entry, prefix,v,setter);
                     setter[prefix + "source-spell"] = itemId;
                     setter[prefix+"group"]="Spell";
                     setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
                 }
+            } else {
+                if (weaponId){
+                    setter["repeating_weapon_"+ weaponId+"_source-spell"]='DELETED';
+                    deletedspell=true;
+                    TAS.debug("seting deletedspell to "+deletedspell,setter);
+                }
+            }            
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
         } finally {
-            if (_.size(setter)>0){
+            if(deletedspell){
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            } else if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, {}, function(){
+                SWUtils.setWrapper(setter, params, function(){
                     //can do these in parallel
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
@@ -592,7 +618,8 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
-        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
+        attributes = [item_entry+"range_pick", item_entry+"range", item_entry+"range_numeric", item_entry+"damage-macro-text", item_entry+"damage-type", item_entry+"sr", item_entry+"savedc",item_entry+ "save", item_entry+"spell-attack-type", item_entry+"name"];
+        /*        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
         if (attrib){
             attributes = [item_entry+attrib];
             if ((/range/i).test(attrib)){
@@ -601,6 +628,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         } else {
             attributes = ["range_pick", "range", "range_numeric", "damage-macro-text", "damage-type", "sr", "savedc", "save", "spell-attack-type", "name"];
         }
+        */
     } catch(erro){
         TAS.error("PFSpells.updateAssociatedAttack erro",erro,id,eventInfo);
         done();
@@ -620,7 +648,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
                         var prefix = "repeating_weapon_"+currentID+"_";
                         if (v[prefix+"source-spell"]===itemId){
                             idlist.push(currentID);
-                            setter= setAttackEntryVals(item_entry, prefix,spellVal,setter);
+                            setter= setAttackEntryVals(item_entry, prefix,spellVal,setter,true);
                         }
                     });
                     if (silently) {
@@ -714,13 +742,13 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
         done();
         return;
     }
-    getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc", "spellclass-" + classIdx + "-name",
+    getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc-mod", "spellclass-" + classIdx + "-name",
         "spellclass-" + classIdx + "-SP-mod", "Concentration-" + classIdx + "-def", "Concentration-" + classIdx + "-mod"],function(vout){
         var classLevel = parseInt(vout["spellclass-" + classIdx + "-level-total"], 10) || 0,
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0,
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0,
             defMod = parseInt(vout["Concentration-" + classIdx + "-def"], 10),
-            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0,
+            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc-mod"], 10) || 0,
             classSPMisc = parseInt(vout["spellclass-" + classIdx + "-SP-mod"], 10) || 0,
             newClassName = vout["spellclass-" + classIdx + "-name"]||'',
             updateDefensiveCasting = eventInfo ? (/\-def$/i.test(eventInfo.sourceAttribute)) : false;
@@ -874,11 +902,11 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
         done();
         return;
     }
-    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc", "spellclasses_multiclassed"],function(vout){
+    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc-mod", "spellclasses_multiclassed"],function(vout){
         var abilityMod, classConcentrationMisc,multiclassed;
         try {
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0;
-            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0;
+            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc-mod"], 10) || 0;
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0;
             if (!parseInt(vout["spellclass-" + classIdx + "-level-total"],10)){
                 done();
@@ -1126,7 +1154,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         "spellclass-0-level-total", "spellclass-1-level-total", "spellclass-2-level-total", 
         "spellclass-0-SP-mod", "spellclass-1-SP-mod", "spellclass-2-SP-mod", 
         "Concentration-0-mod", "Concentration-1-mod", "Concentration-2-mod", 
-        "Concentration-0-misc", "Concentration-1-misc", "Concentration-2-misc", 
+        "Concentration-0-misc-mod", "Concentration-1-misc-mod", "Concentration-2-misc-mod", 
         "Concentration-0-def", "Concentration-1-def", "Concentration-2-def", 
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name"];
 
@@ -1233,7 +1261,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 }
             }
             if (updateConcentration || updateClassLevel||updateClass) {
-                newConcentration = casterlevel + spellAbilityMod + (parseInt(v["Concentration-" + classNum + "-misc"], 10) || 0) + (parseInt(v[prefix + "Concentration_misc"], 10) || 0);
+                newConcentration = casterlevel + spellAbilityMod + (parseInt(v["Concentration-" + classNum + "-misc-mod"], 10) || 0) + (parseInt(v[prefix + "Concentration_misc"], 10) || 0);
                 if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
                     setter[prefix + "Concentration-mod"] = newConcentration;
                 }

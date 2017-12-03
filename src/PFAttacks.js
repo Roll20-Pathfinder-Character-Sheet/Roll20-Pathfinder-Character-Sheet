@@ -511,25 +511,69 @@ export function updateAssociatedAttacksFromParents(callback){
 		}
 	});
 	getSectionIDs('repeating_weapon',function(ids){
-		var doneOne = _.after(_.size(ids),function(){
+		var doneOne , attrs=[];
+		if(_.size(ids)==0){
 			done();
-		}),
+			return;
+		} else {
+			doneOne = _.after(_.size(ids),function(){
+				done();
+			});
+		}
 		attrs = _.map(ids,function(id){
 			return ['repeating_weapon_'+id+'_source-item','repeating_weapon_'+id+'_source-spell','repeating_weapon_'+id+'_source-ability'];
 		});
 		attrs = _.flatten(attrs);
 		getAttrs(attrs,function(v){
-			_.each(ids,function(id){
-				doneOne();
-				if(v['repeating_weapon_'+id+'_source-spell']) {
-					PFInventory.createAttackEntryFromRow('repeating_item_'+v['repeating_weapon_'+id+'_source-item']+'_create-attack-entry',doneOne,true,id);
-				} else if (v['repeating_weapon_'+id+'_source-item']) {
-					PFSpells.createAttackEntryFromRow('repeating_spells_'+v['repeating_weapon_'+id+'_source-spell']+'_create-attack-entry',doneOne,true,id);
-				} else if (v['repeating_weapon_'+id+'_source-item']) {
-					PFAbility.createAttackEntryFromRow('repeating_ability_'+v['repeating_weapon_'+id+'_source-ability']+'_create-attack-entry',doneOne,true,id);
-				} else {
-					doneOne();
-				}
+			getSectionIDs('repeating_spells',function(spellIDs){
+				getSectionIDs('repeating_item',function(itemIDs){
+					getSectionIDs('repeating_ability',function(abilityIDs){
+						var setter={};
+						TAS.debug("################","Checking linked attacks. attack links, spellids, itemids, abilityids",v,spellIDs,itemIDs,abilityIDs);
+						_.each(ids,function(id){
+							if(v['repeating_weapon_'+id+'_source-item']) {
+								TAS.debug("checking "+id+" for item:"+v['repeating_weapon_'+id+'_source-item']);
+								if(v['repeating_weapon_'+id+'_source-item']!=='DELETED'){
+									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-item']+" in item list");
+									if( _.size(itemIDs>0) && _.contains(itemIDs,v['repeating_weapon_'+id+'_source-item'])){
+										PFInventory.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-item'],doneOne,true,null,id);
+									} else {
+										TAS.debug("weapon "+id+" item link is not found:"+v['repeating_weapon_'+id+'_source-item']);
+										setter['repeating_weapon_'+id+'_source-item']='DELETED';
+									}
+								}
+							} else if (v['repeating_weapon_'+id+'_source-spell']) {
+								TAS.debug("checking "+id+" for spell:"+v['repeating_weapon_'+id+'_source-spell']);
+								if(v['repeating_weapon_'+id+'_source-spell']!=='DELETED' ){
+									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-spell']+" in spell list");
+									if(_.size(spellIDs>0) && _.contains(spellIDs,v['repeating_weapon_'+id+'_source-spell'])){
+										PFSpells.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-spell'],doneOne,true,null,id);
+									} else {
+										TAS.debug("weapon "+id+" spell link is not found:"+v['repeating_weapon_'+id+'_source-spell']);
+										setter['repeating_weapon_'+id+'_source-spell']='DELETED';
+									}
+								}
+							} else if (v['repeating_weapon_'+id+'_source-ability']) {
+								TAS.debug("checking "+id+" for ability:"+v['repeating_weapon_'+id+'_source-ability']);
+								if(v['repeating_weapon_'+id+'_source-ability']!=='DELETED' ){
+									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-ability']+" in ability list");
+									if(_.size(abilityIDs>0) && _.contains(abilityIDs,v['repeating_weapon_'+id+'_source-ability'])){
+										PFAbility.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-ability'],doneOne,true,null,id);
+									} else {
+										TAS.debug("weapon "+id+" ability link is not found:"+v['repeating_weapon_'+id+'_source-ability']);
+										setter['repeating_weapon_'+id+'_source-ability']='DELETED';
+									}
+								}
+							} else {
+								TAS.debug("nothing linked to "+id);
+								doneOne();
+							}
+						});													
+						if(_.size(setter)>0){
+							SWUtils.setWrapper(setter,PFConst.silentParams);
+						}									
+					});
+				});
 			});
 		});
 	});
