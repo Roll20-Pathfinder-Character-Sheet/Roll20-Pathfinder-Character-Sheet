@@ -461,6 +461,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
     var notes="",attackType="";
     setter = setter||{};
     try {
+        TAS.debug("UPDATING SPELL ATTACK: "+spellPrefix,v);
         attackType=PFUtils.findAbilityInString(v[spellPrefix + "spell-attack-type"]);
         if (v[spellPrefix + "name"]) {
             if(!noName){
@@ -495,8 +496,11 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
                 setter[weaponPrefix+"critical_dmg_type"] = v[spellPrefix+"damage-type"];
             }
         }
-        if (v[spellPrefix+"save"]){
-            notes += "Save: "+ v[spellPrefix+"save"] + " DC: " + v[spellPrefix+"savedc"];
+        if (v[spellPrefix+"save"]  ){
+            notes += "Save: "+ v[spellPrefix+"save"] ;
+            if ( !(/none/).test(v[spellPrefix+"save"])){
+                notes += " DC: " + v[spellPrefix+"savedc"]
+            }
         }
         if ( v[spellPrefix+"sr"]){
             if (notes) { notes += ", ";}
@@ -557,7 +561,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     }
                     idStr = newRowId+"_";
                     prefix += idStr;
-                    setter = setAttackEntryVals(item_entry, prefix,v,setter,weaponId);
+                    setter = setAttackEntryVals(item_entry, prefix,v,setter);
                     setter[prefix + "source-spell"] = itemId;
                     setter[prefix+"group"]="Spell";
                     setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
@@ -592,7 +596,8 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
-        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
+        attributes = [item_entry+"range_pick", item_entry+"range", item_entry+"range_numeric", item_entry+"damage-macro-text", item_entry+"damage-type", item_entry+"sr", item_entry+"savedc",item_entry+ "save", item_entry+"spell-attack-type", item_entry+"name"];
+        /*        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
         if (attrib){
             attributes = [item_entry+attrib];
             if ((/range/i).test(attrib)){
@@ -601,6 +606,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         } else {
             attributes = ["range_pick", "range", "range_numeric", "damage-macro-text", "damage-type", "sr", "savedc", "save", "spell-attack-type", "name"];
         }
+        */
     } catch(erro){
         TAS.error("PFSpells.updateAssociatedAttack erro",erro,id,eventInfo);
         done();
@@ -620,7 +626,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
                         var prefix = "repeating_weapon_"+currentID+"_";
                         if (v[prefix+"source-spell"]===itemId){
                             idlist.push(currentID);
-                            setter= setAttackEntryVals(item_entry, prefix,spellVal,setter);
+                            setter= setAttackEntryVals(item_entry, prefix,spellVal,setter,true);
                         }
                     });
                     if (silently) {

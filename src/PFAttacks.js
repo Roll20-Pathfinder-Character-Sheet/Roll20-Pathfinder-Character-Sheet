@@ -520,12 +520,12 @@ export function updateAssociatedAttacksFromParents(callback){
 		attrs = _.flatten(attrs);
 		getAttrs(attrs,function(v){
 			_.each(ids,function(id){
-				doneOne();
-				if(v['repeating_weapon_'+id+'_source-spell']) {
+				if(v['repeating_weapon_'+id+'_source-item']) {
 					PFInventory.createAttackEntryFromRow('repeating_item_'+v['repeating_weapon_'+id+'_source-item']+'_create-attack-entry',doneOne,true,id);
-				} else if (v['repeating_weapon_'+id+'_source-item']) {
-					PFSpells.createAttackEntryFromRow('repeating_spells_'+v['repeating_weapon_'+id+'_source-spell']+'_create-attack-entry',doneOne,true,id);
-				} else if (v['repeating_weapon_'+id+'_source-item']) {
+				} else if (v['repeating_weapon_'+id+'_source-spell']) {
+					PFSpells.updateAssociatedAttack(id,doneOne,true);
+					//PFSpells.createAttackEntryFromRow('repeating_spells_'+v['repeating_weapon_'+id+'_source-spell']+'_create-attack-entry',doneOne,true,id);
+				} else if (v['repeating_weapon_'+id+'_source-ability']) {
 					PFAbility.createAttackEntryFromRow('repeating_ability_'+v['repeating_weapon_'+id+'_source-ability']+'_create-attack-entry',doneOne,true,id);
 				} else {
 					doneOne();
