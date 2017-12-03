@@ -152,7 +152,7 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
  */
 function updateConcentration (classidx, eventInfo, callback, silently) {
     //TAS.debug("at PFSpellCasterClasses.updateConcentration");
-    SWUtils.updateRowTotal(["Concentration-" + classidx, "spellclass-" + classidx + "-level-total", "Concentration-" + classidx + "-mod", "Concentration-" + classidx + "-misc"], 0, null, false, callback, silently);
+    SWUtils.updateRowTotal(["Concentration-" + classidx, "spellclass-" + classidx + "-level-total", "Concentration-" + classidx + "-mod", "Concentration-" + classidx + "-misc-mod"], 0, null, false, callback, silently);
 }
 /*********************************** SPELLS PER DAY section *************************************/
 /** updateSaveDCs - update save DCs on left  column of Spells Per Day grid

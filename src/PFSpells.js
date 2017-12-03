@@ -720,13 +720,13 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
         done();
         return;
     }
-    getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc", "spellclass-" + classIdx + "-name",
+    getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc-mod", "spellclass-" + classIdx + "-name",
         "spellclass-" + classIdx + "-SP-mod", "Concentration-" + classIdx + "-def", "Concentration-" + classIdx + "-mod"],function(vout){
         var classLevel = parseInt(vout["spellclass-" + classIdx + "-level-total"], 10) || 0,
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0,
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0,
             defMod = parseInt(vout["Concentration-" + classIdx + "-def"], 10),
-            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0,
+            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc-mod"], 10) || 0,
             classSPMisc = parseInt(vout["spellclass-" + classIdx + "-SP-mod"], 10) || 0,
             newClassName = vout["spellclass-" + classIdx + "-name"]||'',
             updateDefensiveCasting = eventInfo ? (/\-def$/i.test(eventInfo.sourceAttribute)) : false;
@@ -880,11 +880,11 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
         done();
         return;
     }
-    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc", "spellclasses_multiclassed"],function(vout){
+    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc-mod", "spellclasses_multiclassed"],function(vout){
         var abilityMod, classConcentrationMisc,multiclassed;
         try {
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0;
-            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc"], 10) || 0;
+            classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc-mod"], 10) || 0;
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0;
             if (!parseInt(vout["spellclass-" + classIdx + "-level-total"],10)){
                 done();
@@ -1132,7 +1132,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         "spellclass-0-level-total", "spellclass-1-level-total", "spellclass-2-level-total", 
         "spellclass-0-SP-mod", "spellclass-1-SP-mod", "spellclass-2-SP-mod", 
         "Concentration-0-mod", "Concentration-1-mod", "Concentration-2-mod", 
-        "Concentration-0-misc", "Concentration-1-misc", "Concentration-2-misc", 
+        "Concentration-0-misc-mod", "Concentration-1-misc-mod", "Concentration-2-misc-mod", 
         "Concentration-0-def", "Concentration-1-def", "Concentration-2-def", 
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name"];
 
@@ -1239,7 +1239,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 }
             }
             if (updateConcentration || updateClassLevel||updateClass) {
-                newConcentration = casterlevel + spellAbilityMod + (parseInt(v["Concentration-" + classNum + "-misc"], 10) || 0) + (parseInt(v[prefix + "Concentration_misc"], 10) || 0);
+                newConcentration = casterlevel + spellAbilityMod + (parseInt(v["Concentration-" + classNum + "-misc-mod"], 10) || 0) + (parseInt(v[prefix + "Concentration_misc"], 10) || 0);
                 if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
                     setter[prefix + "Concentration-mod"] = newConcentration;
                 }
