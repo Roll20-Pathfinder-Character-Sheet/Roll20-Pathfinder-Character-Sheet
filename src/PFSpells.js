@@ -526,8 +526,12 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
     attributes = ["create-attack-entry", "range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
     commonAttributes = ["spell-attack-type","name"];
     try {
+        if (id=='DELETED'){
+            done();
+            return;
+        }
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
-        idStr = SWUtils.getRepeatingIDStr(id);
+        idStr = SWUtils.getRepeatingIDStr(itemId);
         item_entry = 'repeating_spells_' + idStr;
         
         //TAS.debug("at PFSpells creatattack entry ");
@@ -548,8 +552,17 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         setter = {},
         prefix = "repeating_weapon_",
         idStr="",
+        spellexists=true,
+        deletedspell=false,
         params = {};
         try {
+            TAS.debug("PFSpells.createAttack ##### create attack linked from spell, using ",v);
+			if (_.size(v)===0){
+				spellexists=false;
+			}
+
+            TAS.debug("PFSpells.createAttack ##### spellexists = "+spellexists);
+            if (spellexists){
                 //TAS.debug("at PFSpells.createAttackEntryFromRow",v);
                 if (!PFUtils.findAbilityInString(v[item_entry + "spell-attack-type"]) && !v[item_entry + "damage-macro-text"]) {
                     TAS.warn("no attack to create for spell "+ v[item_entry+"name"] +", "+ itemId );
@@ -566,15 +579,24 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     setter[prefix+"group"]="Spell";
                     setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
                 }
+            } else {
+                if (weaponId){
+                    setter["repeating_weapon_"+ weaponId+"_source-spell"]='DELETED';
+                    deletedspell=true;
+                    TAS.debug("seting deletedspell to "+deletedspell,setter);
+                }
+            }            
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
         } finally {
-            if (_.size(setter)>0){
+            if(deletedspell){
+                SWUtils.setWrapper(setter,PFConst.silentParams,done);
+            } else if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
                 if (silently) {
                     params = PFConst.silentParams;
                 }
-                SWUtils.setWrapper(setter, {}, function(){
+                SWUtils.setWrapper(setter, params, function(){
                     //can do these in parallel
                     PFAttackOptions.resetOption(newRowId);
                     PFAttackGrid.resetCommandMacro();
