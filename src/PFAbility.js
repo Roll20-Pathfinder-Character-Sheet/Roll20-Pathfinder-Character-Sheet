@@ -613,9 +613,11 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 		attributes = [item_entry+attrib];
 		if ((/range/i).test(attrib)){
 			attributes =[item_entry+'range_pick',item_entry+'range',item_entry+'range_numeric'];
+		} else {
+			attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
 		}
 	} else {
-		attributes = ["range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save","abil-attack-type","name"];
+		attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
 	}
 	getAttrs(attributes,function(spellVal){
 		getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
