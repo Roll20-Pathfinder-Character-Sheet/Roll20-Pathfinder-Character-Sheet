@@ -22,7 +22,7 @@
 	<span class="sheet-offscreen" data-i18n="instru-a-1">Checkboxes with a label right after cause the section with same name (h2 or h3 header) to be revealed or hidden.</span>
 	<span class="sheet-offscreen" data-i18n="instru-a-0">New sheets begin on the Configuration page. Use the Settings button(config-show) to edit the sheet.</span>
 	<input type="checkbox" class="sheet-offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all"  />
-	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv1699-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
+	<input type="checkbox" class="sheet-showarrow sheet-ack-button" name="attr_attentionv170-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
 	<label class="sheet-showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
 	<br/>
 	<div role="contentinfo" class="sheet-announcements sheet-selectable" aria-label="Announces changes to sheet" data-i18n-aria-label="announcements" >
@@ -33,12 +33,11 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>NPC Parse fixed</li>
-				<li>Weapon parse fixed</li>
-				<li>Dmg buff updates to attacks fixed</li>
-				<li>ACP not resetting fixed</li>
+				<li>Linked Attacks fixed when recalc hit</li>
+				<li>Linked attacks handle if linked spell, item, or ability deleted</li>
+				<li>Concentration misc bonus now adds to concentration roll</li>
 			</ol>
-			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv1699-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
+			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv170-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
 			<label><button type="roll" class="sheet-no-decoration" data-i18n-title="url-link"  style="color:#0000FF;" name="roll_blank" value="http://tinyurl.com/Old-Announcements"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
@@ -3684,14 +3683,14 @@
 										<label class="sheet-small-label2 sheet-left" style="width:32%;"><span data-i18n="row-identification-for-macros">Row ID for macros</span>:&nbsp;<span class="sheet-selectable" name="attr_row_id"></span></label>
 										<input type="checkbox" name="attr_link_type" class="sheet-noshow" value="0" role="presentation" checked />										
 										<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="1" role="presentation" />
-										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-item-title"  data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" data-i18n-placeholder="source-item-placeholder"  /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
+										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-item-title"  data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" data-i18n-placeholder="source-item-placeholder" readonly /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
 										<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="2" role="presentation" />
-										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-spell-title"  data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" data-i18n-placeholder="source-spell-placeholder"  /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
+										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-spell-title"  data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" data-i18n-placeholder="source-spell-placeholder" readonly /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
 										<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="3" role="presentation" />
-										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-ability-title"  data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" data-i18n-placeholder="source-ability-placeholder"  /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
+										<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-ability-title"  data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" data-i18n-placeholder="source-ability-placeholder" readonly /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
 										<input type="checkbox" name="attr_link_type" class="sheet-sect3-show sheet-noshow" value="4" role="presentation" />
-										<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-main" title="@{repeating_weapon_$X_source-main}" value="" data-i18n-placeholder="source-attack-placeholder"  /><span data-i18n="source-mainhand">Mainhand ID</span></label>
-										<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-off" title="@{repeating_weapon_$X_source-off}" value="" data-i18n-placeholder="source-attack-placeholder"  /><span data-i18n="source-offhand">Offhand ID</span></label>
+										<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-main" title="@{repeating_weapon_$X_source-main}" value="" data-i18n-placeholder="source-attack-placeholder" readonly /><span data-i18n="source-mainhand">Mainhand ID</span></label>
+										<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-off" title="@{repeating_weapon_$X_source-off}" value="" data-i18n-placeholder="source-attack-placeholder" readonly /><span data-i18n="source-offhand">Offhand ID</span></label>
 										<input type="hidden" name="attr_source-main-name" />
 										<input type="hidden" name="attr_source-off-name" />
 									</div>
@@ -11352,14 +11351,14 @@
 											<label class="sheet-small-label2 sheet-left" style="width:32%;"><span data-i18n="row-identification-for-macros">Row ID for macros</span>:&nbsp;<span class="sheet-selectable" name="attr_row_id"></span></label>
 											<input type="checkbox" name="attr_link_type" class="sheet-noshow" value="0" role="presentation" checked />										
 											<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="1" role="presentation" />
-											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-item-title"  data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" data-i18n-placeholder="source-item-placeholder"  /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
+											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-item-title"  data-i18n-aria-label="source-item-title"><input type="text" name="attr_source-item" title="@{repeating_weapon_$X_source-item}" value="" data-i18n-placeholder="source-item-placeholder" readonly /><span data-i18n="source-item">Linked Item ID</span>&nbsp;<span name="attr_source-item-name"></span></label>
 											<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="2" role="presentation" />
-											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-spell-title"  data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" data-i18n-placeholder="source-spell-placeholder"  /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
+											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-spell-title"  data-i18n-aria-label="source-spell-title"><input type="text" name="attr_source-spell" title="@{repeating_weapon_$X_source-spell}" value="" data-i18n-placeholder="source-spell-placeholder" readonly /><span data-i18n="source-spell">Linked Spell ID</span>&nbsp;<span name="attr_source-spell-name"></span></label>
 											<input type="checkbox" name="attr_link_type" class="sheet-nextitem-show sheet-noshow" value="3" role="presentation" />
-											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-ability-title"  data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" data-i18n-placeholder="source-ability-placeholder"  /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
+											<label class="sheet-small-label2 sheet-nextitem" data-i18n-title="source-ability-title"  data-i18n-aria-label="source-ability-title"><input type="text" name="attr_source-ability" title="@{repeating_weapon_$X_source-ability}" value="" data-i18n-placeholder="source-ability-placeholder" readonly /><span data-i18n="source-ability">Linked ability ID</span>&nbsp;<span name="attr_source-ability-name"></span></label>
 											<input type="checkbox" name="attr_link_type" class="sheet-sect3-show sheet-noshow" value="4" role="presentation" />
-											<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-main" title="@{repeating_weapon_$X_source-main}" value="" data-i18n-placeholder="source-attack-placeholder"  /><span data-i18n="source-mainhand">Mainhand ID</span></label>
-											<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-off" title="@{repeating_weapon_$X_source-off}" value="" data-i18n-placeholder="source-attack-placeholder"  /><span data-i18n="source-offhand">Offhand ID</span></label>
+											<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-main" title="@{repeating_weapon_$X_source-main}" value="" data-i18n-placeholder="source-attack-placeholder" readonly /><span data-i18n="source-mainhand">Mainhand ID</span></label>
+											<label class="sheet-small-label2 sheet-sect3" data-i18n-title="source-attack-title"  data-i18n-aria-label="source-attack-title"><input type="text" name="attr_source-off" title="@{repeating_weapon_$X_source-off}" value="" data-i18n-placeholder="source-attack-placeholder" readonly /><span data-i18n="source-offhand">Offhand ID</span></label>
 											<input type="hidden" name="attr_source-main-name" />
 											<input type="hidden" name="attr_source-off-name" />
 										</div>

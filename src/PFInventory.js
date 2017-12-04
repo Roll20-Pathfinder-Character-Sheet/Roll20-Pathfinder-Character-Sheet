@@ -882,21 +882,24 @@ export function updateLocations (callback){
     });
 }
 /** Triggered from a button in repeating_items, it will create a repeating attack entry from the item entry
- * @param {string} source the eventItem.sourceAttribute
- * @param {string} weaponId if the row already exists, overwrite all fields but 'name'
+ * @param {string} id the id of the item row
+ * @param {string} weaponId if the row already exists, overwrite all fields but 'name' this is similar to updateAssociatedAttack
  */
-export function createAttackEntryFromRow (source, callback, silently, weaponId) {
+export function createAttackEntryFromRow (id, callback, silently, eventInfo, weaponId) {
     var done = _.once(function () {
         ////TAS.debug("leaving PFInventory.createAttackEntryFromRow");
         if (typeof callback === "function") {
             callback();
         }
     }),
-    attribList = [],
-    itemId = SWUtils.getRowId(source),
-    idStr = SWUtils.getRepeatingIDStr(itemId),
+    attribList = [],itemId,idStr,item_entry;
+    if (id === 'DELETED'){
+        done();
+        return;
+    }
+    itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");    
+    idStr = SWUtils.getRepeatingIDStr(itemId);
     item_entry = 'repeating_item_' + idStr;
-
     //TAS.debug("PFInventory.createAttackEntryFromRow: item_entry=" + item_entry + " , weapon:"+weaponId);
     attribList.push(item_entry + "name");
     commonLinkedAttributes.forEach(function (attr) {
@@ -909,61 +912,73 @@ export function createAttackEntryFromRow (source, callback, silently, weaponId) 
     getAttrs(attribList, function (v) {
         var newRowId,
         setter = {},
+        deleteditem=false,
        // silentSetter={},
         enhance = 0,
-        prof = 0,
+        prof = 0,itemexists=true,
         params = silently?PFUtils.silentParams:{};
         try {
-            //TAS.debug("weaponId is :"+weaponId);
-            if (!weaponId){
-                newRowId = generateRowID();
-            } else {
-                newRowId = weaponId;
-            }
-            //TAS.debug("the new row id is: "+newRowId);
-            //TAS.debug("v[" + item_entry + "name]=" + v[item_entry + "name"]);
-            if (v[item_entry + "name"]) {
+            if (_.size(v)===0){
+				itemexists=false;
+			}
+            if (itemexists){
+                //we should check to make sure item exists.
+                //TAS.debug("weaponId is :"+weaponId);
                 if (!weaponId){
-                    setter["repeating_weapon_" + newRowId + "_name"] = v[item_entry + "name"];
+                    newRowId = generateRowID();
+                } else {
+                    newRowId = weaponId;
                 }
-                setter["repeating_weapon_" + newRowId + "_source-item-name"] = v[item_entry + "name"];
-            }
-            commonLinkedAttributes.forEach(function (attr) {
-                //TAS.debug("v[" + item_entry + "item-" + attr + "]=" + v[item_entry + "item-" + attr]);
-                if (v[item_entry + "item-" + attr]) {
-                    setter["repeating_weapon_" + newRowId + "_" + attr] = v[item_entry + "item-" + attr];
+                //TAS.debug("the new row id is: "+newRowId);
+                //TAS.debug("v[" + item_entry + "name]=" + v[item_entry + "name"]);
+                if (v[item_entry + "name"]) {
+                    if (!weaponId){
+                        setter["repeating_weapon_" + newRowId + "_name"] = v[item_entry + "name"];
+                    }
+                    setter["repeating_weapon_" + newRowId + "_source-item-name"] = v[item_entry + "name"];
                 }
-            });
-            if ( (/melee/i).test(v[item_entry + "item-attack-type"])) {
-                setter["repeating_weapon_" + newRowId + "_damage-ability"] = "STR-mod";
-            } else if ( (/ranged/i).test(v[item_entry + "item-attack-type"])) {
-                setter["repeating_weapon_" + newRowId + "_isranged"] = 1;
+                commonLinkedAttributes.forEach(function (attr) {
+                    //TAS.debug("v[" + item_entry + "item-" + attr + "]=" + v[item_entry + "item-" + attr]);
+                    if (v[item_entry + "item-" + attr]) {
+                        setter["repeating_weapon_" + newRowId + "_" + attr] = v[item_entry + "item-" + attr];
+                    }
+                });
+                if ( (/melee/i).test(v[item_entry + "item-attack-type"])) {
+                    setter["repeating_weapon_" + newRowId + "_damage-ability"] = "STR-mod";
+                } else if ( (/ranged/i).test(v[item_entry + "item-attack-type"])) {
+                    setter["repeating_weapon_" + newRowId + "_isranged"] = 1;
+                }
+                enhance = parseInt(v[item_entry + "item-wpenhance"],10)||0;
+                if(enhance){
+                    setter["repeating_weapon_" + newRowId + "_enhance"] = enhance;
+                }
+                //TAS.debug("v[" + item_entry + "item-defense-type]=" + v[item_entry + "item-defense-type"]);
+                if (v[item_entry + "item-dmg-type"]) {
+                    setter["repeating_weapon_" + newRowId + "_type"] = v[item_entry + "item-dmg-type"];
+                }
+                //TAS.debug("v[" + item_entry + "item-proficiency]=" + v[item_entry + "item-proficiency"]);
+                prof = parseInt(v[item_entry + "item-proficiency"], 10) || 0;
+                if (prof !== 0) {
+                    prof = -4;
+                    setter["repeating_weapon_" + newRowId + "_proficiency"] = prof;
+                }
+                if (v[item_entry + "default_size"]) {
+                    setter["repeating_weapon_" + newRowId + "_default_size"] = v[item_entry + "default_size"];
+                }
+                setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
+                setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
+                setter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
+                setter["repeating_weapon_" + newRowId +"_link_type"]=PFAttacks.linkedAttackType.equipment;
+            } else if (weaponId) {
+                setter["repeating_weapon_"+ weaponId+"_source-item"]='DELETED';
+                deleteditem=true;
             }
-            enhance = parseInt(v[item_entry + "item-wpenhance"],10)||0;
-            if(enhance){
-                setter["repeating_weapon_" + newRowId + "_enhance"] = enhance;
-            }
-            //TAS.debug("v[" + item_entry + "item-defense-type]=" + v[item_entry + "item-defense-type"]);
-            if (v[item_entry + "item-dmg-type"]) {
-                setter["repeating_weapon_" + newRowId + "_type"] = v[item_entry + "item-dmg-type"];
-            }
-            //TAS.debug("v[" + item_entry + "item-proficiency]=" + v[item_entry + "item-proficiency"]);
-            prof = parseInt(v[item_entry + "item-proficiency"], 10) || 0;
-            if (prof !== 0) {
-                prof = -4;
-                setter["repeating_weapon_" + newRowId + "_proficiency"] = prof;
-            }
-            if (v[item_entry + "default_size"]) {
-                setter["repeating_weapon_" + newRowId + "_default_size"] = v[item_entry + "default_size"];
-            }
-            setter["repeating_weapon_" + newRowId + "_default_damage-dice-num"] = v[item_entry + "damage-dice-num"]||0;
-            setter["repeating_weapon_" + newRowId + "_default_damage-die"] = v[item_entry + "damage-die"]||0;
-            setter["repeating_weapon_" + newRowId + "_source-item"] = itemId;
-            setter["repeating_weapon_" + newRowId +"_link_type"]=PFAttacks.linkedAttackType.equipment;
         } catch (err) {
             TAS.error("PFInventory.createAttackEntryFromRow", err);
         } finally {
-            if (_.size(setter)>0){
+            if (deleteditem){
+                SWUtils.setWrapper(setter, PFConst.silentParam,done);
+            } else if (_.size(setter)>0){
                 setter[item_entry + "create-attack-entry"] = 0;
                 //TAS.debug("PFInventory.createAttackEntryFromRow creating new attack", setter);                
                 SWUtils.setWrapper(setter, PFConst.silentParams, function(){
@@ -1721,7 +1736,7 @@ function registerEventHandlers  () {
     on("change:repeating_item:create-attack-entry", TAS.callback(function eventcreateAttackEntryFromRow(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            createAttackEntryFromRow(eventInfo.sourceAttribute);
+            createAttackEntryFromRow( null,null,false,eventInfo);
         }
     }));
     on("change:repeating_item:set-as-armor", TAS.callback(function eventcreateArmorEntryFromRow(eventInfo) {
