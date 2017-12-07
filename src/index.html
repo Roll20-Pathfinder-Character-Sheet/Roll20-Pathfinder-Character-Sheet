@@ -13796,7 +13796,7 @@
 					{{#duration}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="duration">Duration</span>:**&nbsp;{{duration}}</div></div>{{/duration}}
 					{{#sr}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="spell-resistance">Spell Resistance</span>:**&nbsp;{{sr}}</div></div>{{/sr}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#saving_throw}}<div class="sheet-roll-row">
 							<div class="sheet-roll-cell">**<span data-i18n="save-effect">Save</span>:**&nbsp;{{saving_throw}}</div>
@@ -14109,7 +14109,7 @@
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-groupi">
 						{{^no_attack_roll}}{{#attack}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-atk">**{{^attack1name}}<span data-i18n="attack">Attack</span>{{/attack1name}}{{#attack1name}}{{attack1name}}{{/attack1name}}**</div><div class="sheet-roll-cell sheet-left">{{attack}}{{^vsother}}{{#vs}}&nbsp;{{#vsac}}<span class="sheet-vs" data-i18n="versus-armor-class">vs AC</span>{{/vsac}}{{#vstouch}}<span class="sheet-vs" data-i18n="versus-touch">vs Touch</span>{{/vstouch}}{{#vsff}}<span class="sheet-vs" data-i18n="versus-flat-footed">vs FF</span>{{/vsff}}{{#vsfft}}<span class="sheet-vs" data-i18n="versus-flat-footed-touch">vs FF Touch</span>{{/vsfft}}{{#vscmd}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-defense">vs CMD</span>{{/vscmd}}{{#vscmb}}<span class="sheet-vs" data-i18n="versus-combat-maneuver-bonus">vs CMB</span>{{/vscmb}}{{/vs}}{{/vsother}}</div></div>{{/attack}}{{/no_attack_roll}}
 						{{^no_damage}}{{#damage}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-dmg">**<span data-i18n="damage">Damage</span>**</div><div class="sheet-roll-cell">{{^attack}}+{{/attack}}{{damage}}</div></div>{{/damage}}{{/no_damage}}
@@ -14248,7 +14248,7 @@
 					<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-atk" data-i18n-title="dual_precision-abbrv" data-i18n-aria-label="dual_precision-abbrv">{{#dual_precision_dmg_type}}**{{dual_precision_dmg_type}}**{{/dual_precision_dmg_type}}{{^dual_precision_dmg_type}}**<span data-i18n="dual_precision-abbrv">Extra Dmg</span>**{{/dual_precision_dmg_type}}</div><div class="sheet-roll-cell">{{dual_precision_dmg}}</div></div>
 					</div>{{/dual_precision_dmg}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#type}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="type">Type</span>**:</div><div class="sheet-roll-cell">{{type}}</div></div>{{/type}}
 						{{#allprops() font color accessible rounded header_image character_name character_id name_link subtitle attack damage crit_confirm crit_damage description attack2 damage2 crit_confirm2 crit_damage2 attack3 damage3 crit_confirm3 crit_damage3 attack4 damage4 crit_confirm4 crit_damage4 attack5 damage5 crit_confirm5 crit_damage5 attack6 damage6 crit_confirm6 crit_damage6 attack7 damage7 crit_confirm7 crit_damage7 attack8 attack9 damage8 damage9 crit_confirm8 crit_confirm9 crit_damage8 crit_damage9 melee_notes ranged_notes CMB_notes attack_notes type weapon_notes generic_note buff_note condition_note precision_dmg1 precision_dmg1_type precision_dmg2 precision_dmg2_type critical_dmg1 critical_dmg1_type critical_dmg2 critical_dmg2_type precision_dmg21 critical_dmg21 precision_dmg22 critical_dmg22 precision_dmg31 critical_dmg31 precision_dmg32 critical_dmg32 precision_dmg41 critical_dmg41 precision_dmg42 critical_dmg42 precision_dmg51 critical_dmg51 precision_dmg52 critical_dmg52 precision_dmg61 critical_dmg61 precision_dmg62 critical_dmg62 precision_dmg71 critical_dmg71 precision_dmg72 critical_dmg72 precision_dmg81 critical_dmg81 precision_dmg82 critical_dmg82 precision_dmg91 critical_dmg91 precision_dmg92 critical_dmg92 attack1name attack2name attack3name attack4name attack5name attack6name attack7name attack8name attack9name vs vsac vstouch vsff vsfft vscmd vscmb vsother no_attack_roll no_damage dual_precision_dmg dual_precision_dmg_type spelltracking1 spelltracking2 spelltracking3 spelltracking4 spelltracking5 spelltracking6 spelldescription1 spelldescription2 spelldescription3 spelldescription4 spelldescription5 spelldescription6 abilitytracking1 abilitytracking2 abilitytracking3 abilitytracking4 abilitytracking5 abilitytracking6 abilitydescription1 abilitydescription2 abilitydescription3 abilitydescription4 abilitydescription5 abilitydescription6 itemtracking1 itemtracking2 itemtracking3 itemtracking4 itemtracking5 itemtracking6 itemdescription1 itemdescription2 itemdescription3 itemdescription4 itemdescription5 itemdescription6 misctracking1 misctracking2 misctracking3 misctracking4 misctracking5 misctracking6 miscdescription1 miscdescription2 miscdescription3 miscdescription4 miscdescription5 miscdescription6}}
@@ -14466,7 +14466,7 @@
 				<div class="sheet-roll-group">
 					{{#buttons}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{buttons}}</div></div>{{/buttons}}
 				</div>					
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#allprops() font spellfail showdefenses showsaves showspecialdefenses buttons ac touch flat_footed cmd fort ref will color accessible rounded header_image character_name character_id name_link subtitle defensive-abilities_notes dr_notes resistances_notes immunities_notes weaknesses_notes sr0_notes armor_notes save_notes cmd_notes defense_notes description generic_note buff_note condition_note }}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**:</div><div class="sheet-roll-cell">{{value}}</div></div>
@@ -14577,7 +14577,7 @@
 					{{#source}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">**<span data-i18n="source">Source</span>** {{source}}{{#casterlevel}} ({{casterlevel}}){{/casterlevel}}</div></div>{{/source}}
 					{{#cust_category}}<div class="sheet-roll-row sheet-roll-description"><div class="sheet-roll-cell">{{cust_category}}</div></div>{{/cust_category}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#hasfrequency}}{{#frequency}}
 							<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="frequency">Frequency</span>**</div>
@@ -14728,7 +14728,7 @@
 					</span>
 					{{#subtitle}}<span class="sheet-subtitle">{{subtitle}}</span>{{/subtitle}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#check}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="check"></span>:**</div><div class="sheet-roll-cell">{{check}}</div></div>{{/check}}
 						{{#class}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="class"></span>:**</div><div class="sheet-roll-cell">{{class}}</div></div>{{/class}}
@@ -14747,7 +14747,7 @@
 					{{#lefttext_5}}<div class="sheet-roll-row"><div class="sheet-roll-cell">{{lefttext_5}}</div></div>{{/lefttext_5}}
 					{{#righttext_5}}<div class="sheet-roll-row"><div class="sheet-roll-cell sheet-right">{{righttext_5}}</div></div>{{/righttext_5}}
 				</div>
-				<div style="display:table;width:100%;">
+				<div class="sheet-roll-table-inner">
 					<div class="sheet-roll-group2">
 						{{#allprops() font color accessible rounded header_image character_name name character_id name_link subtitle check init_notes description untrained class generic_note buff_note condition_note righttext_1 lefttext_1 righttext_2 lefttext_2 righttext_3 lefttext_3 righttext_4 lefttext_4 righttext_5 lefttext_5 righttext_6 lefttext_6 righttext_7 lefttext_7 righttext_8 lefttext_8 righttext_9 lefttext_9 righttext_10 lefttext_10 whisper switch lefttext_0 righttext_0 }}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**{{key}}**</div><div class="sheet-roll-cell">{{value}}</div></div>
