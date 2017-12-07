@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.7,
+	version: 1.71,
 	announcementVersionAttr: 'attentionv170-show',
 
 	/***************************************Lists of Fields ************************************************************/
