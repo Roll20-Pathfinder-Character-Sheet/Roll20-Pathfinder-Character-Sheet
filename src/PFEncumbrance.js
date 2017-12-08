@@ -554,7 +554,10 @@ export function updateModifiedSpeed  (callback) {
             if (slowed !== (parseInt(v['condition-Slowed'],10)||0)   ){
                 setter['condition-Slowed']=slowed;
             }
-            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)   ){
+            if (origRunMult > runMult){
+                cannotRun=1;//for flag even if can run
+            }
+            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)  ){
                 setter.run_cond_applied=cannotRun;
             }
         } catch (err) {
@@ -615,7 +618,7 @@ function registerEventHandlers  () {
             updateModifiedSpeed();
         }
     }));
-    on("change:current-load change:armor3-equipped change:armor3-type", TAS.callback(function eventUpdateSpeedAuto(eventInfo) {
+    on("change:is_dwarf change:current-load change:armor3-equipped change:armor3-type", TAS.callback(function eventUpdateSpeedAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateModifiedSpeed();
