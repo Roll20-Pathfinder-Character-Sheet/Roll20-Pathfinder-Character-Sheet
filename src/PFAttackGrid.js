@@ -1,6 +1,5 @@
 'use strict';
 import _ from 'underscore';
-import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -270,7 +269,6 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
         }
         return;
     }
-    TAS.debug("PFAttackGrid.updateAttacks",attypes,fields);
     getAttrs(fields,function(vout){
         var v={},setter={},params={};
         try{
@@ -289,6 +287,7 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
                 if(silently){
                     params = PFConst.silentParams;
                 }
+                TAS.debug("PFAttackGrid.updateAttacks setting",setter);
                 SWUtils.setWrapper(setter,params,callback);
             } else {
                 if(typeof(callback)==="function"){
@@ -304,30 +303,30 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
  * @param {string} buffType buff column without 'buff_' or '-total'
  * @param {*} eventInfo 
  */
-export function updateAttackGrid(buffType,eventInfo){
+export function updateAttackGrid(buffType,eventInfo,silently){
     switch(buffType.toLowerCase()){
         case 'melee':
-            updateAttacks(null, null, ['melee','melee2']);
+            updateAttacks(null, silently, ['melee','melee2']);
             break;
         case 'ranged':
-            updateAttacks(null, null, ['ranged','ranged2']);
+            updateAttacks(null, silently, ['ranged','ranged2']);
             break;
         case 'cmb':
-            updateAttacks(null, null, ['CMB','CMB2']);
+            updateAttacks(null, silently, ['CMB','CMB2']);
             break;
         case 'melee2':
-            updateAttackAsync('melee2');
+            updateAttackAsync('melee2',null, silently);
             break;        
         case 'ranged2':
-            updateAttackAsync('ranged2');
+            updateAttackAsync('ranged2',null, silently);
             break;
         case 'cmb2':
-            updateAttackAsync('CMB2');
+            updateAttackAsync('CMB2',null, silently);
             break;
     }
 }
-export function recalculateMelee(dummy1,dummy2,eventInfo){
-    updateAttacks(null, null, ['melee','melee2','CMB','CMB2']);
+export function recalculateMelee(dummy1,silently,eventInfo){
+    updateAttacks(null, silently, ['melee','melee2','CMB','CMB2']);
 }
 
 

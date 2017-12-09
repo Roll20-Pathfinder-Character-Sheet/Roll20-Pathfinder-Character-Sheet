@@ -1,6 +1,5 @@
 'use strict';
 import _ from 'underscore';
-import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
@@ -261,6 +260,7 @@ function applyTemplate(name){
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	}
+	//reset dropdown
 	SWUtils.setWrapper({'template_to_add':'','add_template':0},PFConst.silentParams);
 }
 

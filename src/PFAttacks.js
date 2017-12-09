@@ -525,7 +525,7 @@ export function updateAssociatedAttacksFromParents(callback){
 		});
 		attrs = _.flatten(attrs);
 		getAttrs(attrs,function(v){
-			ids=ids.map(function(id){return id.toLowerCase();});
+			ids=_.map(ids,function(id){return id.toLowerCase();});
 			getSectionIDs('repeating_spells',function(spellIDs){
 				spellIDs = _.map(spellIDs,function(id){return id.toLowerCase();});
 				getSectionIDs('repeating_item',function(itemIDs){
@@ -1690,12 +1690,7 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:damage-ability", TAS.callback(function eventHandleRepeatingDamageDropdown(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod",
-				function(newval,oldval,changed){
-					if(changed){
-						updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
-					}
-				},true);
+			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod");
 		}
 	}));
 	on("change:repeating_weapon:damage", TAS.callback(function eventRepeatingWeaponDamage(eventInfo) {
