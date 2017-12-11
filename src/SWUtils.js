@@ -1,6 +1,5 @@
 'use strict';
 import _ from 'underscore';
-import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as ExExp from './ExExp';
 TAS.config({
@@ -12,7 +11,21 @@ TAS.config({
 if (process.env.NODE_ENV !== 'production') {
   TAS.debugMode();
 }
+/********************* SWUTILS  (sheetworker utils) **********************************
+ * These general utilites are for sheetworker use, they have no dependency on pathfinder rules or
+ * the pathfinder sheet or constants
+ * except for evaluateAndSetNumber which appends "_error" to a field name and sets it if an error is encountered
+ * 
+ * In addition this provides wrapper / interface to ExExp which we kept mostly as-is so that if
+ * the ExtendedExpressions author made updates we could drop it in
+ *
+ ********************************************************************************/
 
+/** Wrapper to setAttrs, prints out if NaN is ever set as a debugging tool
+ * @param {Map} a first param sent to setAttrs
+ * @param {Map} b second param sent to setAttrs
+ * @param {function} c third param sent to setAttrs
+ */
 export function setWrapper(a,b,c){
 	var bad=false;
 	_.each(a,function(v,k){
@@ -24,13 +37,16 @@ export function setWrapper(a,b,c){
 	});
 	setAttrs(a,b,c);
 }
-
+/** wrapper for getAttrs
+ * @param {[string]} a first param to getAttrs
+ * @param {function} cb second param to getAttrs
+ */
 export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 	getAttrs(a,function(vals){
 		cb(vals);
 	});
 });
-/**Calls getTranslationByKey, if error encountered returns string passed in
+/** wrapper for getTranslationByKey, if error encountered returns string passed in
  * @param {string} str 
  */
 export function getTranslated (str){
@@ -43,21 +59,21 @@ export function getTranslated (str){
 			}
 		}
 	} catch(e){
+		TAS.error("getTranslationByKey erorr translating: "+str,e);
 		tempstr=str[0].toUpperCase()+str.slice(1);
 	} finally {
 		return tempstr;
 	}
 }
 
-
-/* for interaction with ExExp, and some basic utils that have nothing to do with Pathfinder rules. */
 /** Determines if string can be evaluated to a number
  * ensures:  no macro calls, dropdowns, or keep highest/lowest more than 1
  * allows: floor, abs, kh1, kl1,  ceil, round, max, min
+ * you must call this AFTER calling findAndReplaceFields so all variables are replaced with numbers
  *@param {string} preeval string to examine
  *@returns {boolean} true if string will evaluate to a number.
  */
-function validNumericStr (preeval) {
+function validNumericStr(preeval) {
 	var anyIllegal = preeval.match(/\||\?|&|\{|\}|k[h,l][^1]/);
 	if (anyIllegal) {
 		return false;
@@ -69,18 +85,21 @@ function validNumericStr (preeval) {
 	}
 	return true;
 }
-/** searches a string for @{attribute} and replaces those with their values, passes result to the callback
- * if error then passes null
- * recursive: if replace str also has @{attribute} references then calls this function again
+/** searches a string for any @{attribute} and replaces with values of those attributes
+ * passes result to the callback
+ * if error encountered then passes null
+ * recursive: if replace str also has @{attribute} references then call this function again
  * @param {string} stringToSearch = string containing one or more @{fieldname}
- * @param {function(string)} callback when done passes resultant string to callback
+ * @param {function(string)} callback when done passes resulting string to callback
  */
 export function findAndReplaceFields(stringToSearch, callback) {
 	var fieldnames ;
 	if (typeof callback !== "function") {
+		TAS.error("findAndReplaceFields called with no callback function");
 		return;
 	}
 	if (!stringToSearch) {
+		TAS.warn("findAndReplaceFields called with no string, return null");
 		callback(null);
 		return;
 	}
@@ -111,6 +130,7 @@ export function findAndReplaceFields(stringToSearch, callback) {
 				TAS.error("SWUtils.findAndReplaceFields err2", err2);
 				evalstr = null;
 			} finally {
+				//if more matches then call recursively
 				if (innermatches) {
 					findAndReplaceFields(evalstr,callback);
 				} else {
@@ -123,12 +143,12 @@ export function findAndReplaceFields(stringToSearch, callback) {
 		callback(null);
 	}
 }
-/** Replaces kl1 and kh1 with min and max
- * example: replaces {x,y}kh1 with min(x,y)
+/** Replaces kl1 and kh1 with min and max. This ensures users can use kl1 and kh1
+ * @example replaces {x,y}kh1 with min(x,y)
  * @param {string} str the string to search
  * @returns {string} the resultant string after performing the replace
  */
-function convertKL1KH1toMinMax  (str) {
+function convertKL1KH1toMinMax(str) {
 	var matches;
 	//TAS.debug("at convertKL1KH1toMinMax for "+str) ;
 	if (str) {
@@ -147,7 +167,10 @@ function convertKL1KH1toMinMax  (str) {
 	}
 	return str;
 }
-
+/** Ensures every isntance of begin brack has amatching end brack. ONLY counts amount of them
+ * does not ensure they are nested correctly
+ * @param {string} str the equation to pass in
+ */
 function validateMatchingParens(str){
 	if ((str.match(/\(/g) || []).length !== (str.match(/\)/g) || []).length || 
 		(str.match(/\{/g) || []).length !== (str.match(/\}/g) || []).length ||
@@ -158,7 +181,8 @@ function validateMatchingParens(str){
 }
 
 /** Reads in the string, evaluates it to a single number, passes that number to a callback
- * calls callback with: the number, 0 (if exprStr empty), or null if an error is encountered
+ * if expression is blank then pass 0 back
+ * If error is encountered then call errcallback
  *@param {string} exprStr A string containing a mathematical expression, possibly containing references to fields such as @{myfield}
  *@param {function(Number)} callback a function taking one parameter - always Number, could be 0 but never null or undefined
  *@param {function} errcallback function called if it cannot evaluate to a number
@@ -173,9 +197,9 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 		callback(0);
 		return;
 	}
+	//quick shortcut, if the string is just a number then pass it back
 	value = Number(exprStr);
 	if (!isNaN(value)) {
-		TAS.callback("the vlaue is "+value+" returning");
 		callback(value);
 		return;
 	}
@@ -198,17 +222,21 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 			replacedStr = replacedStr.replace(/\[[^\]]+\]/g,'');
 			replacedStr = convertKL1KH1toMinMax(replacedStr);
 			//TAS.debug("replacedStr is now "+replacedStr);
-			if (replacedStr === "" || replacedStr === null || replacedStr === undefined || !validNumericStr(replacedStr)) {
+			if ( !validNumericStr(replacedStr)){
 				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
+				errcallback(null);
+			}
+			if (replacedStr === "" || replacedStr === null || replacedStr === undefined) {
 				callback(0);
 				return;
 			}
-			//if only number left.
+			//shortcut (same as above), if end result is a number then send that back
 			evaluated = Number(replacedStr);
 			if (!isNaN(evaluated) && isFinite(replacedStr)) {
 				callback(evaluated);
 				return;
 			}
+			//finally try to evaluate the equation to a number
 			evaluated = ExExp.handleExpression(replacedStr);
 			//TAS.debug("At SWUtils evaluate expressions, it is: "+replacedStr+", which evaluates to "+ evaluated);
 			if (!isNaN(evaluated)) {
@@ -223,18 +251,15 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 		}
 	});
 }
-/** evaluateAndSetNumber
- * Examines the string in readField, and tests to see if it is a number
- * if it's a number immediately write it to writeField.
- * if not, then replace any @{field} references with numbers, and then evaluate it
- * as a mathematical expression till we find a number.
+/** Evaluates equation in readField, set the value to writeField 
+ * if we cannot, then set readField_error attribute to 1 to indicate an error 
+ * TODO: move this to PFUtilsAsync! (because it sets error value it is a PF specific function)
  *
  * @param {string} readField= field to read containing string to parse
  * @param {string} writeField= field to write to
  * @param {number} defaultVal= optional, default to set if we cannot evaluate the field. If not supplied assume 0
  * @param {function(newval, oldval, ischanged)} callback - function(newval, oldval, ischanged)
  * @param {boolean} silently if true set new val with {silent:true}
- * @param {boolean} dontSetErrorFlag if true and we could not evaluate, then set attribute named writeField+"_error" to 1
  * @param {function(newval, oldval, ischanged)} errcallback  call if there was an error parsing string function(newval, oldval, ischanged)
  */
 export function evaluateAndSetNumber(readField, writeField, defaultVal, callback, silently, errcallback) {
@@ -302,7 +327,8 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 	});
 }
 /** Evaluates expression in exprStr, and adds addVal to it, then sets to writeField. This allows you to 
- * evaluate an expression and add something else to it
+ * evaluate an expression and add something else to it before writing. 
+ * Used in pathfinder sheet for buffs to custom attributes
  * @param {function} callback  when done
  * @param {boolean} silently if call setAttrs with silent:true
  * @param {string} exprStr  string to evaluate
@@ -338,7 +364,7 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 		done();
 	});
 }
-/** Calls evaluateAndAdd if you don't have the values of the 3 attributes
+/** Calls evaluateAndAdd if you don't have the value to add yet (addVal)
  * 
  * @param {function} callback 
  * @param {boolean} silently 
@@ -403,7 +429,13 @@ export function evaluateAndAddToTotAsync(callback,silently,readField,writeField,
 		evaluateAndAddToTot(callback,silently,v[readField],writeField,v[writeField],totField,v[totField]);
 	});	
 }
-
+/** Gets value of a dropdown. If 'dual' then 0, or if it starts with a 0 then retrun 0
+ * if blank then return ''
+ * otherwise return the value
+ * @param {string} fieldToFind the VALUE of the dropdown attribute
+ * @param {function} synchrousFindAttributeFunc optional, pass the fieldToFind to this and return the result.
+ * 
+ */
 function getDropdownSetting(fieldToFind,synchrousFindAttributeFunc){
 	var foundField = "";
 	//TAS.debug("finding dropdown values are ",values);
@@ -453,6 +485,16 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
 		callback(foundField);
 	});
 }
+/** Doesn't merely set a dropdown value but also adds that value to a total field
+ * 
+ * @param {Number} newVal new value to set
+ * @param {string} writeField the attributename representing the numeric val of the dropdown (usually dropdownname-mod)
+ * @param {Number} currVal current value of writeField
+ * @param {string} totField total field attributename
+ * @param {Number} totVal current totField value
+ * @param {function} callback optional call when done
+ * @param {boolean} silently whether to call setAttr silently or not
+ */
 function setDropdownAndAddToTot(newVal,writeField,currVal,totField,totVal,callback,silently){
 	var done = function(){ 
 		if(typeof callback==="function"){
@@ -474,6 +516,8 @@ function setDropdownAndAddToTot(newVal,writeField,currVal,totField,totVal,callba
 	setter[totField] = totVal;
 	setWrapper(setter,params,callback);
 }
+/** calls setDropdownAndAddToTot if you don't have the number values yet, gets them then calls it
+*/
 export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchrousFindAttributeFunc,callback,silently){
 	getAttrs([readField,writeField,totField],function(v){
 		var foundField='',newVal=0,currVal=0,totVal=0;
@@ -496,13 +540,14 @@ export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchr
 	});
 }
 
-/** Looks at a dropdown value, and sets writeField(s) with the number to which selected option refers.
+/** Looks at a dropdown value, and sets writeField with the number to which selected option refers.
  * calls getDropdownValue
+ * @example if readField = attribute_dropdown, and user selected the 'STR-mod' option, then set writeField with the value of STR-mod attribute
  * @param {string} readField the dropdown field
- * @param {string_or_Array} writeFields Field(s) to write the value to
- * @param {function} synchrousFindAttributeFunc takes value of @readField and says what the lookup field is.
- * @param {function(int)} callback (optional) if we need to update the field, call this function
- *         with the value we set as the only parameter.
+ * @param {string_or_Array} writeField Field to which to write the numerica value represented by readField
+ * @param {function} synchrousFindAttributeFunc optional takes value of @readField and says what the lookup field is.
+ *         necessary if your dropdown values have @{} around the names
+ * @param {function(newval,old,changed)} callback (optional) call with what we set to writeField or not
  * @param {boolean} silently if true call setAttrs with {silent:true}
  */
 export function setDropdownValue (readField, writeField, synchrousFindAttributeFunc, callback, silently) {
@@ -542,8 +587,9 @@ export function setDropdownValue (readField, writeField, synchrousFindAttributeF
 		});
 	});
 }
+
 /** getRowTotal return newvalue, currentvalue, allvalues in callback. Summed up floats and round total to int. 
- * THIS IS PROBABLY SLOWER THAN DOING IT YOURSELF, just wrote to make things simpler.
+ * THIS IS SLOWER THAN DOING IT YOURSELF, just wrote to make things simpler.
  * @param {Array} fields array of field names to be added up, EXCEPT the first field which is ignored (at index 0) which is the total current value
  * @param {number} bonus a number that is added to the other fields.
  * @param {Array} penalties array of fieldnames whose values are to be subtracted from the total
@@ -600,6 +646,7 @@ export function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, 
 	});
 }
 /** Adds up numbers and puts it in the first field of the fields array.
+ * THIS IS SLOWER THAN DOING IT YOURSELF, 
  * All numbers are added up as FLOATS, and then FLOOR is used to round the sum down
  * @param {Array} fields array of field names to be added up, EXCEPT the first field. fields[0] MUST be the total field
  * @param {number} bonus a number that is added to the other fields.
@@ -630,9 +677,9 @@ export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback
 		}
 	}, done);
 }
-/** Escapes special chars for regex
+/** Escapes special chars for regex, so that a regex string can be turned into a RegExp object
  *@param {string} str the string to examine
- *@param {boolean} escapeSpaces if we should replace any space with \s* (caller can use it for matching purposes)
+ *@param {boolean} escapeSpaces if we should replace any tab or space with \s* 
  *@returns {string} resultant string after search and replace
  */
 export function escapeForRegExp  (str, escapeSpaces) {
@@ -647,7 +694,8 @@ export function escapeForRegExp  (str, escapeSpaces) {
 	}
 	return tempstr;
 }
-/** Escapes special chars for macros - to create sub queries - this is not used currently
+/** Escapes special chars for macros - to create sub queries
+ * TODO: to make recursive should also escape & to &amp; for sub sub queries etc
  *@param {string} str the string to examine
  *@returns {string} resultant string after search and replace
  */
@@ -676,8 +724,8 @@ export function escapeForRollTemplate  (str) {
 	if (!str){return str;}
 	return str.replace(/\{\{/g, '&#123;&#123;');
 }
-/** escapes string so it can be used in API button
- *if it finds [name](link) in a string it will remove the [ and ] and the (link)
+/** escapes string so it can be used in API button, esp for name fields users may put links in
+ * if it finds [name](link) in a string it will remove the [ and ] and the (link)
  * replaces [ and ] with escaped versions everywhere else.
  *@param {string} str the string we want to use inside a link button
  *@returns {string} safe to use new name for button
@@ -704,8 +752,8 @@ export function escapeForChatLinkButton (str){
 	retstr = escapeForMacroCall(retstr);
 	return retstr;
 }
-/** not used but will be faster than current using split'_' for arbitrary maybe not for 3... need to test
- * no creation or deletion of strings
+/** TEST FUNCTION not tested completely: to attempt to parse strings faster than using split() 
+ * would be used to find portions of string like 'repeating_section_id_attrname'
  * @param {*} str 
  * @param {*} pat 
  * @param {*} n 
@@ -719,7 +767,7 @@ export function nthIndex (str,pat,n){
 }
 
 /** returns id portion of a source Attribute or repeating row attribute name
- * @param {string} sourceAttribute from eventInfo object
+ * @param {string} sourceAttribute from eventInfo object should be repeating_section_id_attributename
  * @returns {string} the id portion of string, or blank.
  */
 export function getRowId  (sourceAttribute) {
@@ -732,8 +780,8 @@ export function getRowId  (sourceAttribute) {
 	return "";
 }
 /** Returns attribute name not including repeating_section_id_****
- * 
- * @param {string} source 
+ * if there is no id (if called in context of event on a row) then returns string after repeating_section_
+ * @param {string} source from eventInfo.sourceAttribute should be repeating_section_id_attributename
  */
 export function getAttributeName  (source) {
 	var itemId="", attrib="";
@@ -741,10 +789,15 @@ export function getAttributeName  (source) {
 	itemId = getRowId(source);
 	if (itemId) {
 		attrib = source.substring(source.indexOf(itemId) + itemId.length + 1, source.length);
+	} else if (source.indexOf('repeating_')===0) {
+		source=source.slice(10);
+		if (source.indexOf('_')>0){
+			attrib=source.slice(source.indexOf('_')+1);
+		}
 	}
 	return attrib;
 }
-/** getRepeatingIDStr - if id is not empty, then returns the ID with an underscore on the right. else returns empty string
+/** if !id return '', else return id_ (with underscore at end)
  * this is used so the same function can be written for loops from getIDs or direct from the event with no ID
  *@param {string} id the id of the row or blank
  *@returns {string} id_  or blank
@@ -761,8 +814,8 @@ export function getRepeatingIDStr  (id) {
  * // returns ["ace","acf","ade","adf","bce","bcf","bde","bdf"]
  * @example cartesianAppend(["pre_"] , ["a","b","c"], ["_post"] );
  * //returns ["pre_a_post","pre_b_post","pre_c_post"]
- * @param {Array} [...] Arrays of strings
- * @returns {Array} of all values in other arrays
+ * @param {[String]} [...] Arrays of strings can use multiple arrays
+ * @returns {[String]} of all values in other arrays
  */
 export function cartesianAppend () {
 	return _.reduce(arguments, function (a, b) {
@@ -773,7 +826,8 @@ export function cartesianAppend () {
 		}), true);
 	}, [[]]);
 }
-/** Concatenates cartesian product of all arrays together returns one flattened NEW array.
+/** cartesian product of all arrays together returns one flattened NEW array.
+ * necessary in case an array has other arrays as elements
  * @param {Array} [...] Arrays
  * @returns {Array} cartesian product of all arrays (concatenated nothing else)
  */
@@ -813,6 +867,10 @@ export function splitByCommaIgnoreParens(str){
 	ret = trimBoth(ret);
 	return _.uniq(ret);
 }
+/** deletes EVERY ROW of a repeating section!
+ * @param {function} callback optional when done
+ * @param {string} section name after repeating_
+ */
 export function deleteRepeating(callback,section){
 	var done = _.once(function(){
 		if (typeof callback === "function"){
@@ -838,6 +896,3 @@ export function deleteRepeating(callback,section){
 	});
 }
 
-
-//PFConsole.log( '   SWUtils module loaded          ' );
-//PFLog.modulecount++;
