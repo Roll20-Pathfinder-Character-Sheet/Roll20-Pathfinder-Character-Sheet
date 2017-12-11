@@ -525,10 +525,14 @@ export function updateAssociatedAttacksFromParents(callback){
 		});
 		attrs = _.flatten(attrs);
 		getAttrs(attrs,function(v){
+			ids=_.map(ids,function(id){return id.toLowerCase();});
 			getSectionIDs('repeating_spells',function(spellIDs){
+				spellIDs = _.map(spellIDs,function(id){return id.toLowerCase();});
 				getSectionIDs('repeating_item',function(itemIDs){
+					itemIDs = _.map(itemIDs,function(id){return id.toLowerCase();});
 					getSectionIDs('repeating_ability',function(abilityIDs){
 						var setter={};
+						abilityIDs = _.map(abilityIDs,function(id){return id.toLowerCase();});
 						TAS.debug("################","Checking linked attacks. attack links, spellids, itemids, abilityids",v,spellIDs,itemIDs,abilityIDs);
 						_.each(ids,function(id){
 							if(v['repeating_weapon_'+id+'_source-item']) {
@@ -538,8 +542,8 @@ export function updateAssociatedAttacksFromParents(callback){
 									if( _.size(itemIDs>0) && _.contains(itemIDs,v['repeating_weapon_'+id+'_source-item'])){
 										PFInventory.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-item'],doneOne,true,null,id);
 									} else {
-										TAS.debug("weapon "+id+" item link is not found:"+v['repeating_weapon_'+id+'_source-item']);
-										setter['repeating_weapon_'+id+'_source-item']='DELETED';
+										TAS.warn("weapon "+id+" item link is not found:"+v['repeating_weapon_'+id+'_source-item']);
+										//setter['repeating_weapon_'+id+'_source-item']='DELETED';
 									}
 								}
 							} else if (v['repeating_weapon_'+id+'_source-spell']) {
@@ -549,8 +553,8 @@ export function updateAssociatedAttacksFromParents(callback){
 									if(_.size(spellIDs>0) && _.contains(spellIDs,v['repeating_weapon_'+id+'_source-spell'])){
 										PFSpells.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-spell'],doneOne,true,null,id);
 									} else {
-										TAS.debug("weapon "+id+" spell link is not found:"+v['repeating_weapon_'+id+'_source-spell']);
-										setter['repeating_weapon_'+id+'_source-spell']='DELETED';
+										TAS.warn("weapon "+id+" spell link is not found:"+v['repeating_weapon_'+id+'_source-spell']);
+										//setter['repeating_weapon_'+id+'_source-spell']='DELETED';
 									}
 								}
 							} else if (v['repeating_weapon_'+id+'_source-ability']) {
@@ -560,8 +564,8 @@ export function updateAssociatedAttacksFromParents(callback){
 									if(_.size(abilityIDs>0) && _.contains(abilityIDs,v['repeating_weapon_'+id+'_source-ability'])){
 										PFAbility.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-ability'],doneOne,true,null,id);
 									} else {
-										TAS.debug("weapon "+id+" ability link is not found:"+v['repeating_weapon_'+id+'_source-ability']);
-										setter['repeating_weapon_'+id+'_source-ability']='DELETED';
+										TAS.warn("weapon "+id+" ability link is not found:"+v['repeating_weapon_'+id+'_source-ability']);
+										//setter['repeating_weapon_'+id+'_source-ability']='DELETED';
 									}
 								}
 							} else {
@@ -1686,12 +1690,7 @@ function registerEventHandlers () {
 	on("change:repeating_weapon:damage-ability", TAS.callback(function eventHandleRepeatingDamageDropdown(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod",
-				function(newval,oldval,changed){
-					if(changed){
-						updateRepeatingWeaponDamageDiff(eventInfo,newval,oldval);
-					}
-				},true);
+			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod");
 		}
 	}));
 	on("change:repeating_weapon:damage", TAS.callback(function eventRepeatingWeaponDamage(eventInfo) {

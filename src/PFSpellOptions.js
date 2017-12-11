@@ -181,7 +181,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     concentrationMod = parseInt(rowValues[prefix + "Concentration-mod"], 10),
     levelForConcentrate = (isNaN(spellSlot) || spellSlot === spellLevel) ? spellLevel : spellSlot,
     defDC = 15 + (levelForConcentrate * 2),
-    defMod = parseInt(rowValues["Concentration-" + classNum + "-def"], 10) || 0,
+    defMod = parseInt(toggleValues["Concentration-" + classNum + "-def"], 10) || 0,
     optionText = "{{condition_note=@{condition_spell_notes}}}",
     newValue = "";
     //TAS.debug("getOptionText, defMod: " + defMod);
