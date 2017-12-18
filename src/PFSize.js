@@ -9,39 +9,40 @@ import * as PFMigrate from './PFMigrate';
 import * as PFEncumbrance from './PFEncumbrance';
 import * as PFAttacks from './PFAttacks';
 
-
+//these use strings on the left so javascript doesn't confuse the number with array indices 
+//converts from the attack mod value to easy 0 thrrough 8
 export var sizeModToEasySizeMap={
-	 '0':4,
-	 '1':3,
-	 '2':2,
-	'-8':8,
-	 '4':1,
-	'-4':7,
-	'-2':6,
-	'-1':5,
-	 '8':0
+	 '0':4, //medium
+	 '1':3, //small
+	 '2':2, //tiny
+	'-8':8, //colossal
+	 '4':1, //diminutive
+	'-4':7, //gargantuan
+	'-2':6, //huge
+	'-1':5, //large
+	 '8':0 //fine
 },
 reverseSizeMap={
-	 '0':8,
-	 '1':4,
-	 '2':2,
-	 '3':1,
-	 '4':0,
-	'5':-1,
-	'6':-2,
-	'7':-4,
-	'8':-8
+	 '0':8, //fine
+	 '1':4, //diminutive
+	 '2':2, //tiny
+	 '3':1, //small
+	 '4':0, //medium
+	'5':-1, //large
+	'6':-2, //huge
+	'7':-4, //gargantuan
+	'8':-8 //colossal
 },
 skillSizeMap = {
-	'0':0,
-	'1':2,
-	'2':4,
-	'8':8,
-	'4':6,
-	'-8':-8,
-	'-4':-6,
-	'-2':-4,
-	'-1':-2
+	'0':0, //medium
+	'1':2, //small
+	'2':4, //tiny
+	'8':8, //diminutive
+	'4':6, //fine
+	'-8':-8, //colossal
+	'-4':-6, //gargantuan
+	'-2':-4, //huge
+	'-1':-2 //large
 },
 sizeNameMap = {
 	'colossal':-8,
@@ -55,15 +56,15 @@ sizeNameMap = {
 	 'fine':8
 },
 reverseSizeNameMap = {
-'0':'medium',
-'1':'small',
-'2':'tiny',
-'-8':'colossal',
-'4':'diminutive',
-'-4':'gargantuan',
-'-2':'huge',
-'-1':'large',
-'8':'fine'
+	'0':'medium',
+	'1':'small',
+	'2':'tiny',
+	'-8':'colossal',
+	'4':'diminutive',
+	'-4':'gargantuan',
+	'-2':'huge',
+	'-1':'large',
+	'8':'fine'
 };
 
 /** getSizeFromText - returns size mod based on size display name
@@ -226,34 +227,44 @@ export function setSize(str,setter){
 	}
 }
 
+function setSizeDisplay (v,setter){
+	var size=0,tempstr='',sizeDisplay='';
+	setter=setter||{};
+	size = parseInt(v['size'], 10) || 0;
+	tempstr=reverseSizeNameMap[String(size)];
+	sizeDisplay=SWUtils.getTranslated(tempstr);
+	if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
+		setter.size_display=sizeDisplay;
+	}
+	return setter;
+}
+
+/** Overwrites any current change to size with change to size from buffs
+ * 
+ * @param {*} levelChange 
+ * @param {*} v 
+ * @param {*} eventInfo 
+ * @param {*} setter 
+ */
 export function updateSize (levelChange,v,eventInfo,setter) {
-	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
-		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';
+	var size =  0,newSize=0, defaultSize=0,deflevel=0,newlevel=0, skillSize = 0;
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
 		size = parseInt(v['size'], 10) || 0;
-//		buffLevels=parseInt(v['buff_size-total'],10)||0;
+		newSize=defaultSize;
 		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+levelChange;
-			buffSize = reverseSizeMap[String(newlevel)];
-			if (buffSize!==size){
-				setter['size']=buffSize;
-				size = buffSize;
-			}
-		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
-			if (size!==defaultSize){
-				setter['size']=defaultSize;
-				size = defaultSize;
-			}
+			newSize = reverseSizeMap[String(newlevel)];
+		}
+		//if levelchange is 0, then we are resetting it to defaultSize
+		if (newSize!==size){
+			setter['size']=newSize;
+			size = newSize;
 		}
 
-		tempstr=reverseSizeNameMap[String(size)];
-		sizeDisplay=SWUtils.getTranslated(tempstr);
-		if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
-			setter.size_display=sizeDisplay;
-		}
+
 		skillSize = skillSizeMap[String(size)];
 		setter.size_skill = skillSize;
 		setter["CMD-size"] = (size * -1);
@@ -275,10 +286,31 @@ export function updateSizeAsync (callback, silently,dummy,eventInfo) {
 	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
 		setter = {},
-		levelChange=0;
+		levelChange=0,currSize=0,defSize=0,ddLevelChange=0;
 		try {
-			levelChange=parseInt(v['buff_size-total'],10)||0;
-			updateSize(levelChange,v,eventInfo,setter);
+			if (eventInfo.sourceAttribute==='buff_size-total'){
+				levelChange=parseInt(v['buff_size-total'],10)||0;
+				updateSize(levelChange,v,eventInfo,setter);
+			} else if (!eventInfo ||  eventInfo.sourceAttribute==='size'){
+				//max (or min) of buff size and the size the user set, if user changed the size of medium PC from Huge to Large,
+				//but there is still a +2 buff active, then ignore the user's change, cause on recalc it will be removed anyway
+				//user must remove the buff
+				currSize=parseInt(v.size,10)||0;
+				defSize=parseInt(v.default_char_size,10)||0;
+				ddLevelChange=getSizeLevelChange(currSize,defSize);
+				levelChange=parseInt(v['buff_size-total'],10)||0;
+				if(ddLevelChange>=0&&levelChange>=0){
+					levelChange=Math.max(ddLevelChange,levelChange);
+				} else if (ddLevelChange<=0 && levelChange<=0){
+					levelChange=Math.min(ddLevelChange,levelChange);
+				}
+				updateSize(levelChange,v,eventInfo,setter);
+			} else if (eventInfo.sourceAttribute==='default_char_size'){
+				//do nothing
+			} else {
+				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
+			}
+			setSizeDisplay(v,setter); //just make sure the name is set correctly even if we don't change anything, for recalc
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
