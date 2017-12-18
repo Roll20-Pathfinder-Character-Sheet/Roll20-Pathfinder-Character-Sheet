@@ -227,10 +227,9 @@ export function setSize(str,setter){
 	}
 }
 
-function setSizeDisplay (v,setter){
-	var size=0,tempstr='',sizeDisplay='';
+function setSizeDisplay (size,v,setter){
+	var tempstr='',sizeDisplay='';
 	setter=setter||{};
-	size = parseInt(v['size'], 10) || 0;
 	tempstr=reverseSizeNameMap[String(size)];
 	sizeDisplay=SWUtils.getTranslated(tempstr);
 	if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
@@ -251,47 +250,52 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
-		size = parseInt(v['size'], 10) || 0;
+		//if levelchange is 0, then we are resetting it to defaultSize
 		newSize=defaultSize;
 		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
 			newlevel = deflevel+levelChange;
 			newSize = reverseSizeMap[String(newlevel)];
 		}
-		//if levelchange is 0, then we are resetting it to defaultSize
+
+		size = parseInt(v['size'], 10) || 0;
 		if (newSize!==size){
 			setter['size']=newSize;
-			size = newSize;
+			setter["CMD-size"] = (newSize * -1);
+			skillSize = skillSizeMap[String(newSize)];
+			setter.size_skill = skillSize;
+			setter.size_skill_double = (2*skillSize);
 		}
-
-
-		skillSize = skillSizeMap[String(size)];
-		setter.size_skill = skillSize;
-		setter["CMD-size"] = (size * -1);
-		setter.size_skill_double = (2*skillSize);
+		setSizeDisplay(newSize,v,setter);
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
-		//TAS.debug("PFSize.updateSize returning with  ",setter);
+		TAS.debug("PFSize.updateSize returning with  ",setter);
 		return setter;
 	}
 }
-
-export function updateSizeAsync (callback, silently,dummy,eventInfo) {
-	var done = _.once(function () {
+/**
+ * 
+ * @param {function(Number)} callback  call with the value of the change in sizes so if 0 we know there was no change
+ * @param {*} silently 
+ * @param {*} eventInfo 
+ */
+function updateSizeAsync (callback, silently,eventInfo) {
+	var done = function (change) {
 		if (typeof callback === "function") {
-			callback();
+			callback(change);
 		}
-	});
+	};
 	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
 		setter = {},
 		levelChange=0,currSize=0,defSize=0,ddLevelChange=0;
 		try {
-			if (eventInfo.sourceAttribute==='buff_size-total'){
+			//if updating buff just overwrite the size dropdown
+			if (   eventInfo.sourceAttribute==='buff_size-total'){
 				levelChange=parseInt(v['buff_size-total'],10)||0;
 				updateSize(levelChange,v,eventInfo,setter);
-			} else if (!eventInfo ||  eventInfo.sourceAttribute==='size'){
+			} else if (!eventInfo || eventInfo.sourceAttribute==='size'){
 				//max (or min) of buff size and the size the user set, if user changed the size of medium PC from Huge to Large,
 				//but there is still a +2 buff active, then ignore the user's change, cause on recalc it will be removed anyway
 				//user must remove the buff
@@ -299,18 +303,27 @@ export function updateSizeAsync (callback, silently,dummy,eventInfo) {
 				defSize=parseInt(v.default_char_size,10)||0;
 				ddLevelChange=getSizeLevelChange(currSize,defSize);
 				levelChange=parseInt(v['buff_size-total'],10)||0;
+				//size changes do not stack so get greatest change
 				if(ddLevelChange>=0&&levelChange>=0){
 					levelChange=Math.max(ddLevelChange,levelChange);
 				} else if (ddLevelChange<=0 && levelChange<=0){
 					levelChange=Math.min(ddLevelChange,levelChange);
+				} else {
+					//buff is bigger and dropdown is smaller or vice versa who knows just keep it the same
+					levelChange=ddLevelChange;
 				}
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (eventInfo.sourceAttribute==='default_char_size'){
 				//do nothing
+				currSize=parseInt(v.size,10)||0;
+				defSize=parseInt(v.default_char_size,10)||0;
+				levelChange=getSizeLevelChange(currSize,defSize);
+				//does nothing but 
+				//updateSize(levelChange,v,eventInfo,setter);
 			} else {
 				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
 			}
-			setSizeDisplay(v,setter); //just make sure the name is set correctly even if we don't change anything, for recalc
+			
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
@@ -319,17 +332,21 @@ export function updateSizeAsync (callback, silently,dummy,eventInfo) {
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				SWUtils.setWrapper(setter, params, done);
+				SWUtils.setWrapper(setter, params, function(){done(levelChange);});
+			} else if (levelChange!==0){
+				done(levelChange);
 			} else {
-				done();
+				done(0);
 			}
 		}
 	});
 }
 function setNewSize(eventInfo){
-	updateSizeAsync(function(){
-		PFEncumbrance.updateLoadsAndLift();
-		PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+	updateSizeAsync(function(changed){
+		if (changed!==0){
+			PFEncumbrance.updateLoadsAndLift();
+			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+		}
 	},false,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
@@ -354,12 +371,20 @@ export var recalculate = TAS.callback(function PFSizeRecalculate(callback, silen
 function registerEventHandlers () {
 	//size
 	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {
+		var prevv=0,newv=0;
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+		if (eventInfo.sourceType === "player" ) {
 			setNewSize(eventInfo);
 		} else {
+			//if sheetworker then it may be a loop, so don't change size just make sure everything is using the new size.
 			applyNewSizeToSheet(eventInfo);
 		}
 	}));
+	on("change:buff_size-total", TAS.callback(function eventUpdateSize(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
+			setNewSize(eventInfo);
+		}
+	}));	
 }
 registerEventHandlers();
