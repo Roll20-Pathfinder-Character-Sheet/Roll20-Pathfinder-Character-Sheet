@@ -1644,6 +1644,7 @@ export var recalculate = TAS.callback(function callPFAttacksRecalculate(callback
 			PFAttackGrid.resetCommandMacro();
 			PFAttackOptions.recalculate();
 			updateAssociatedAttacksFromParents();
+			adjustAllDamageDiceAsync();
 			done();
 		},oldversion);
 	}  ,silently,oldversion);

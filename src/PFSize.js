@@ -296,30 +296,19 @@ function updateSizeAsync (callback, silently,eventInfo) {
 				levelChange=parseInt(v['buff_size-total'],10)||0;
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (!eventInfo || eventInfo.sourceAttribute==='size'){
-				//max (or min) of buff size and the size the user set, if user changed the size of medium PC from Huge to Large,
-				//but there is still a +2 buff active, then ignore the user's change, cause on recalc it will be removed anyway
-				//user must remove the buff
-				currSize=parseInt(v.size,10)||0;
-				defSize=parseInt(v.default_char_size,10)||0;
-				ddLevelChange=getSizeLevelChange(currSize,defSize);
+				//user must remove the buff if they want to use the dropdown
 				levelChange=parseInt(v['buff_size-total'],10)||0;
-				//size changes do not stack so get greatest change
-				if(ddLevelChange>=0&&levelChange>=0){
-					levelChange=Math.max(ddLevelChange,levelChange);
-				} else if (ddLevelChange<=0 && levelChange<=0){
-					levelChange=Math.min(ddLevelChange,levelChange);
-				} else {
-					//buff is bigger and dropdown is smaller or vice versa who knows just keep it the same
-					levelChange=ddLevelChange;
+				if (levelChange===0){
+					currSize=parseInt(v.size,10)||0;
+					defSize=parseInt(v.default_char_size,10)||0;
+					levelChange=getSizeLevelChange(currSize,defSize);						
 				}
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (eventInfo.sourceAttribute==='default_char_size'){
-				//do nothing
+				//just pass the new level diff to callback
 				currSize=parseInt(v.size,10)||0;
 				defSize=parseInt(v.default_char_size,10)||0;
 				levelChange=getSizeLevelChange(currSize,defSize);
-				//does nothing but 
-				//updateSize(levelChange,v,eventInfo,setter);
 			} else {
 				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
 			}
@@ -343,7 +332,7 @@ function updateSizeAsync (callback, silently,eventInfo) {
 }
 function setNewSize(eventInfo){
 	updateSizeAsync(function(changed){
-		if (changed!==0){
+		if (changed!==0 ){
 			PFEncumbrance.updateLoadsAndLift();
 			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 		}
@@ -377,7 +366,8 @@ function registerEventHandlers () {
 			setNewSize(eventInfo);
 		} else {
 			//if sheetworker then it may be a loop, so don't change size just make sure everything is using the new size.
-			applyNewSizeToSheet(eventInfo);
+			//this will happen every time we call with bufffs so it will be called twice
+			//applyNewSizeToSheet(eventInfo);
 		}
 	}));
 	on("change:buff_size-total", TAS.callback(function eventUpdateSize(eventInfo) {
