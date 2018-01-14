@@ -5090,3 +5090,14 @@ input.sheet-skill-macro-text {
 .sheet-psionic-show:not(:checked) ~ div .sheet-section-psionic {
     display: none !important;
 }
+/* prevents background-color from interfering with inserted images and hyperlinks*/
+.sheet-rolltemplate-pf_generic .sheet-roll-row.sheet-roll-description a,
+.sheet-rolltemplate-pf_ability .sheet-roll-row.sheet-roll-description a,
+.sheet-rolltemplate-pf_defense .sheet-roll-row.sheet-roll-description a,
+.sheet-rolltemplate-pf_attack .sheet-roll-row.sheet-roll-description a,
+.sheet-rolltemplate-pf_spell .sheet-roll-row.sheet-roll-description a,
+.sheet-rolltemplate-pf_block .sheet-roll-row.sheet-roll-description a {
+    background-color: transparent;
+    color: #0000EE;
+    text-decoration: underline;
+}
