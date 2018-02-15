@@ -14152,13 +14152,8 @@
 						{{^Concentration_chk}}{{#Concentration}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="concentration">Concentration</span>:**</div><div class="sheet-roll-cell">**+**{{Concentration}}</div></div>
 						{{#cast_defDC}}
-						<div class="sheet-roll-row">
-							<div class="sheet-roll-cell" style="text-indent:1em">
-								**<span data-i18n="cast-defensively">Cast Defensively</span>**&nbsp;
-								{{#cast_def}}**+**{{cast_def}}{{/cast_def}}
-							</div>
-							<div class="sheet-roll-cell">**<span data-i18n="difficulty-class-abbrv">DC</span>:**&nbsp;{{cast_defDC}}</div>
-						</div>
+						<div class="sheet-roll-row"><div class="sheet-roll-cell" style="text-indent:1em">**<span data-i18n="cast-defensively">Cast Defensively</span>**&nbsp;{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</div>
+						<div class="sheet-roll-cell">**<span data-i18n="difficulty-class-abbrv">DC</span>:**&nbsp;{{cast_defDC}}</div></div>
 						{{/cast_defDC}}
 						{{/Concentration}}{{/Concentration_chk}}
 					</div>
@@ -14176,10 +14171,7 @@
 						</div>
 						{{#cast_defDC}}
 						<div class="sheet-roll-row">
-							<div class="sheet-roll-cell" style="text-indent:1em">
-								**<span data-i18n="cast-defensively">Cast Defensively</span>**&nbsp;
-								{{#cast_def}}**+**{{cast_def}}{{/cast_def}}
-							</div>
+							<div class="sheet-roll-cell" style="text-indent:1em">**<span data-i18n="cast-defensively">Cast Defensively</span>**&nbsp;{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</div>
 							<div class="sheet-roll-cell">**<span data-i18n="difficulty-class-abbrv">DC</span>:**&nbsp;{{cast_defDC}}</div>
 						</div>
 						{{/cast_defDC}}
@@ -14300,34 +14292,24 @@
 				{{#targets}}<label>**<span data-i18n="effects-target">Effects/Target</span>:**<span>{{targets}}</span></label>{{/targets}}
 				{{#duration}}<label>**<span data-i18n="duration">Duration</span>:**<span>{{duration}}</span></label>{{/duration}}
 				{{#sr}}<label>**<span data-i18n="spell-resistance">Spell Resistance</span>:**<span>{{sr}}</span></label>{{/sr}}
-				{{#saving_throw}}<label>
-					**<span data-i18n="save-effect">Save</span>:** <span>{{saving_throw}}</span>
-					{{#dc}}<span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{dc}}</span></span>{{/dc}}
-				</label>
-				{{/saving_throw}}
-				{{^casterlevel_chk}}{{#casterlevel}}
+				{{#saving_throw}}<label>**<span data-i18n="save-effect">Save</span>:** <span>{{saving_throw}}</span>{{#dc}}<span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{dc}}</span></span>{{/dc}}</label>{{/saving_throw}}
+				{{^casterlevel_chk}}
+				{{#casterlevel}}
 				<label>**<span data-i18n="caster-level">Caster Level</span>:**<span class="sheet-right">{{casterlevel}}</span></label>
-				{{#sr}}{{#spellPen}}<label style="text-indent:1em">**<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>**<span>+{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
+				{{#sr}}{{#spellPen}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
 				{{/casterlevel}}{{/casterlevel_chk}}
 				{{^Concentration_chk}}{{#Concentration}}
 				<label>**<span data-i18n="concentration">Concentration</span> **<span class="sheet-right">**+**{{Concentration}}</span></label>
-				{{#cast_defDC}}<label style="text-indent:1em">
-					<span>**<span data-i18n="cast-defensively">Cast Defensively</span>:**&nbsp;{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span>
-					<span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**&nbsp;{{cast_defDC}}</span>
-				</label>{{/cast_defDC}}
+				{{#cast_defDC}}<label>**<span data-i18n="cast-defensively" style="margin-left:1em;">Cast Defensively</span>:** <span>{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span><span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{cast_defDC}}</span></span></label>{{/cast_defDC}}
 				{{/Concentration}}{{/Concentration_chk}}
 				{{#casterlevel_chk}}<h4 data-i18n="rolls">Rolls</h4>{{/casterlevel_chk}}
 				{{^casterlevel_chk}}{{#Concentration_chk}}<h4>Rolls</h4>{{/Concentration_chk}}{{/casterlevel_chk}}
 				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
-				{{#sr}}{{#spellPen}}<label style="text-indent:1em"> **<span data-i18n="overcome-spell-resistance-abbrv">Overcome SR</span>: <span>+**{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
+				{{#sr}}{{#spellPen}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>: <span>+**{{spellPen}}</span></label>{{/spellPen}}{{/sr}}
 				{{/casterlevel_chk}}
 				{{#Concentration_chk}}<label>**<span data-i18n="concentration-check">Concentration Check</span>** {{#Concentration}}**+**{{Concentration}}{{/Concentration}}<span class="sheet-right">**=**{{Concentration_chk}}</span></label>
-				{{#cast_defDC}}<label style="text-indent:1em">
-					<span>**<span data-i18n="cast-defensively">Cast Defensively</span>:**&nbsp;{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span>
-					<span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**&nbsp;{{cast_defDC}}</span>
-				</label>{{/cast_defDC}}
-				{{/Concentration_chk}}
-				{{#spell_fail_check}}
+				{{#cast_defDC}}<label>**<span data-i18n="cast-defensively" style="margin-left:1em;">Cast Defensively</span>:** <span>{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span><span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{cast_defDC}}</span></span></label>{{/cast_defDC}}
+				{{/Concentration_chk}}{{#spell_fail_check}}
 				<label>
 					<span>
 						**<span data-i18n="spell-failure-chk">Spell Failure Check</span>**
@@ -14335,9 +14317,9 @@
 					</span>
 				</label>
 				{{#spell_fail}}
-				<label style="text-indent:1em">
+				<label>
 					<span>
-						**<span data-i18n="spell-failure">Spell Failure</span> %**
+						**<span data-i18n="spell-failure" style="margin-left:1em;">Spell Failure</span> %**
 						<span class="sheet-right">**=**{{spell_fail}}</span>
 					</span>
 				</label>
