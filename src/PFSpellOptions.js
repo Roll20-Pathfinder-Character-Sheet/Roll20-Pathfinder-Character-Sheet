@@ -39,7 +39,7 @@ optionTemplates = {
     spell_fail: "{{spell_fail=@{spell-fail}}}",
     spelldamage: "{{spelldamage=@{damage-macro-text}}}",
     spelldamagetype: "{{spelldamagetype=@{damage-type}}}",
-	spellPen_chk: "{{spellPen_chk=[[ 1d20 + [[  @{SP-mod} ]] ]] }}"
+	spellPen_chk: "{{spellPen_chk=[[ 1d20 + @{casterlevel} + @{SP-mod} ]]}}"
 },
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
