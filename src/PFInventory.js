@@ -1761,6 +1761,12 @@ function registerEventHandlers  () {
             resetCommandMacro( );
         }
     }));
+    on("change:repeating_item:name", TAS.callback(function eventUpdateWornItemName(eventInfo) {
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            updateEquipmentLocation(null,null,null,eventInfo);
+        }
+    }));
     on("change:repeating_item:equip-type", TAS.callback(function eventItemEquipTypeChange(eventInfo){
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
