@@ -169,12 +169,13 @@ function updateCarriedCurrency  (callback, silently) {
         }
     };
     getAttrs(["CP", "SP", "GP", "PP", "carried-currency"], function (v) {
-        var curr = parseInt(v["carried-currency"], 10) || 0,
+        var curr = Number(v["carried-currency"]||0),
         params = {},
         carried = 0;
         try {
-            carried = ((parseInt(v["CP"], 10) || 0) + (parseInt(v["SP"], 10) || 0) + (parseInt(v["GP"], 10) || 0) + (parseInt(v["PP"], 10) || 0)) / 50;
-            //TAS.debug("curr=" + curr + ", carried=" + carried);
+            carried = (parseInt(v["CP"], 10) || 0) + (parseInt(v["SP"], 10) || 0) + (parseInt(v["GP"], 10) || 0) + (parseInt(v["PP"], 10) || 0);
+            TAS.debug("curr=" + curr + ", carried=" + carried);
+            carried = (Math.floor((carried /50 )*100))/100;
             if (curr !== carried) {
                 if (silently) {
                     params = PFConst.silentParams;
