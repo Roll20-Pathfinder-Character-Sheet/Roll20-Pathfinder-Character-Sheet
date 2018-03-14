@@ -1207,8 +1207,8 @@ export function importFromCompendium (eventInfo){
                 isArmor=1;
             }
             
-            speed30 = parseInt(v[itemprefix+'speed20_compendium'],10)||0;
-            speed20 = parseInt(v[itemprefix+'speed30_compendium'],10)||0;
+            speed20 = parseInt(v[itemprefix+'speed20_compendium'],10)||0;
+            speed30 = parseInt(v[itemprefix+'speed30_compendium'],10)||0;
             
             if (v[itemprefix+'max-dex']){
                 temp=v[itemprefix+'max-dex'];
