@@ -1283,11 +1283,11 @@ export function importFromCompendium (eventInfo){
             }
 
             if (isWeapon){
-                currType=equipMap.Weapon;
-                if(v[itemprefix+'range_compendium']&& parseInt(v[itemprefix+'range_compendium'],10)>0){
-                    setter[itemprefix+'attack-type']='@{attk-ranged}';
+                currType=equipMap.Weapon;                               
+                if (v[itemprefix+'range_compendium'] && parseInt(v[itemprefix+'range_compendium'],10)>0){
+                    setter[itemprefix+'attack-type']='attk-ranged';
                 } else {
-                    setter[itemprefix+'attack-type']='@{attk-melee}';
+                    setter[itemprefix+'attack-type']='attk-melee';
                 }
             } else if (isArmor){
                 currType=equipMap.Armor;
