@@ -1174,7 +1174,7 @@ export function importFromCompendium (eventInfo){
         itemprefix+'critical_compendium',
         itemprefix+'smalldamage_compendium',
         itemprefix+'meddamage_compendium',
-        itemprefix+'specialtype_compendium',
+        itemprefix+'damagetype_compendium',
         itemprefix+'speed20_compendium',
         itemprefix+'speed30_compendium',
         itemprefix+'weight_compendium',
@@ -1217,16 +1217,16 @@ export function importFromCompendium (eventInfo){
                     setter[itemprefix+'max-dex']=temp;
                 }
             }
-            if (v[itemprefix+'specialtype_compendium']){
-                temp = v[itemprefix+'specialtype_compendium'];
+            if (v[itemprefix+'damagetype_compendium']){
+                temp = v[itemprefix+'damagetype_compendium'];
                 temp=temp.replace(/\u2013|\u2014|-|\\u2013|\\u2014/,'');
                 if (temp){
-                    if(v[itemprefix+'item-dmg-type']){
-                        temp = v[itemprefix+'item-dmg-type'] + ' ' + v[itemprefix+'specialtype_compendium'];
+                    if(v[itemprefix+'dmg-type']){
+                        temp = v[itemprefix+'dmg-type'] + ' ' + v[itemprefix+'damagetype_compendium'];
                     } else {
-                        temp = v[itemprefix+'specialtype_compendium'];
+                        temp = v[itemprefix+'damagetype_compendium'];
                     }
-                    setter[itemprefix+'item-dmg-type']=temp;
+                    setter[itemprefix+'dmg-type']=temp;
                 }
             }
             if(v[itemprefix+'critical_compendium']){
@@ -1331,7 +1331,7 @@ export function importFromCompendium (eventInfo){
             setter[itemprefix+'critical_compendium']="";
             setter[itemprefix+'smalldamage_compendium']="";
             setter[itemprefix+'meddamage_compendium']="";
-            setter[itemprefix+'specialtype_compendium']="";
+            setter[itemprefix+'damagetype_compendium']="";
             setter[itemprefix+'speed20_compendium']="";
             setter[itemprefix+'speed30_compendium']="";
             setter[itemprefix+'weight_compendium']="";
