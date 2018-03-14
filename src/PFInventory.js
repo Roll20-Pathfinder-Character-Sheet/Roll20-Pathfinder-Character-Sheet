@@ -1171,7 +1171,8 @@ export function importFromCompendium (eventInfo){
         itemprefix+'category_compendium',
         itemprefix+'value_compendium',
         itemprefix+'range_compendium',
-        itemprefix+'critical_compendium',
+        itemprefix+'criticaldamage_compendium',
+        itemprefix+'criticalrange_compendium',
         itemprefix+'smalldamage_compendium',
         itemprefix+'meddamage_compendium',
         itemprefix+'damagetype_compendium',
@@ -1229,15 +1230,21 @@ export function importFromCompendium (eventInfo){
                     setter[itemprefix+'dmg-type']=temp;
                 }
             }
-            if(v[itemprefix+'critical_compendium']){
+            if(v[itemprefix+'criticaldamage_compendium']){
                 isWeapon=1;
-                temp = PFUtils.getCritFromString(v[itemprefix+'critical_compendium']);
+                temp = PFUtils.getCritFromString(v[itemprefix+'criticaldamage_compendium']);
+                if(temp){
+                    if(temp.critmult!==2){
+                        setter[itemprefix+'crit-multiplier']=temp.critmult;
+                    }
+                }
+            }
+            if(v[itemprefix+'criticalrange_compendium']){
+                isWeapon=1;
+                temp = PFUtils.getCritFromString(v[itemprefix+'criticalrange_compendium']);
                 if(temp){
                     if(temp.crit!==20){
                         setter[itemprefix+'crit-target']=temp.crit;
-                    }
-                    if(temp.critmult!==2){
-                        setter[itemprefix+'crit-multiplier']=temp.critmult;
                     }
                 }
             }
@@ -1328,7 +1335,8 @@ export function importFromCompendium (eventInfo){
             setter[itemprefix+'category_compendium']="";
             setter[itemprefix+'value_compendium']="";
             setter[itemprefix+'range_compendium']="";
-            setter[itemprefix+'critical_compendium']="";
+            setter[itemprefix+'criticaldamage_compendium']="";
+            setter[itemprefix+'criticalranage_compendium']="";
             setter[itemprefix+'smalldamage_compendium']="";
             setter[itemprefix+'meddamage_compendium']="";
             setter[itemprefix+'damagetype_compendium']="";
