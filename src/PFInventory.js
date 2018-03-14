@@ -1300,9 +1300,9 @@ export function importFromCompendium (eventInfo){
                         tempstr="Tower Shield";
                     } else if (speed30===30 && speed20 === 20){
                         tempstr="Light";
-                    } else if ((/heavy|stone|full|half.plate|splint|banded|iron|tatami|kusari/i).test(tempstr)){
+                    } else if ((/heavy|stone|full|half.plate|splint|banded|iron|tatami|kusari/i).test(name)){
                         tempstr="Heavy";
-                    } else if ((/medium|mountain|chainmail|breastplate|scale|kikko|steel|horn|mirror|hide|maru|armored coat/i).test(tempstr)){
+                    } else if ((/medium|mountain|chainmail|breastplate|scale|kikko|steel|horn|mirror|hide|maru|armored coat/i).test(name)){
                         tempstr="Medium";
                     } else {
                         tempstr="Light";
