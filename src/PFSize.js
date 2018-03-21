@@ -373,7 +373,7 @@ function registerEventHandlers () {
 			//applyNewSizeToSheet(eventInfo);
 		}
 	}));
-	on("change:buff_size-total", TAS.callback(function eventUpdateSize(eventInfo) {
+	on("change:size change:buff_size-total", TAS.callback(function eventUpdateSize(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
 			setNewSize(eventInfo);
