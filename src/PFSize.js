@@ -337,6 +337,9 @@ function setNewSize(eventInfo){
 			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 		}
 	},false,eventInfo);
+	// changing size back to medium would never update DamageDice
+	PFEncumbrance.updateLoadsAndLift();
+	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
 	//TAS.debug("PFSize.applyNewSizeToSheet");
