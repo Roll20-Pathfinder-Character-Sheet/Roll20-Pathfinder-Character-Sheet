@@ -292,7 +292,7 @@ function updateSizeAsync (callback, silently,eventInfo) {
 		levelChange=0,currSize=0,defSize=0,ddLevelChange=0;
 		try {
 			//if updating buff just overwrite the size dropdown
-			if (   eventInfo.sourceAttribute==='buff_size-total'){
+			if (eventInfo.sourceAttribute==='buff_size-total'){
 				levelChange=parseInt(v['buff_size-total'],10)||0;
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (!eventInfo || eventInfo.sourceAttribute==='size'){
