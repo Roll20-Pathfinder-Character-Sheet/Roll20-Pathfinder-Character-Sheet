@@ -31,7 +31,7 @@ function applyTemplate(name){
 			tempint++;
 			setter['npc-cr']=tempint;
 
-			setter = PFSize.updateSize(1,v,null,setter);
+			setter = PFSize.updateSizeAsync(1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	} else 	if (name==='giantremove'){
@@ -58,7 +58,7 @@ function applyTemplate(name){
 			tempint--;
 			setter['npc-cr']=tempint;
 
-			setter = PFSize.updateSize(-1,v,null,setter);
+			setter = PFSize.updateSizeAsync(-1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	} else if (name==='young') {
@@ -86,7 +86,7 @@ function applyTemplate(name){
 			}
 			setter['npc-cr']=tempint;
 
-			setter = PFSize.updateSize(-1,v,null,setter);
+			setter = PFSize.updateSizeAsync(-1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	} else if (name==='youngremove') {
@@ -111,7 +111,7 @@ function applyTemplate(name){
 			tempint = parseInt(v['npc-cr'],10)||0;
 			tempint++;
 			setter['npc-cr']=tempint;
-			setter = PFSize.updateSize(1,v,null,setter);
+			setter = PFSize.updateSizeAsync(1,v,null,setter);
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	} else if (name==='advanced'){

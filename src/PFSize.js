@@ -199,8 +199,12 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return {"dice":currDice,"die":currDie};
 	}
 }
-
-export function setSize(str,setter){
+/** sets the size veriables based on the string passed in
+ * 
+ * @param {string} str  the name of the size in english
+ * @param {Map<string,int>} setter to pass to setAttrs
+ */
+export function setSizeFromString(str,setter){
 	var tempstr='',sizeMap={};
 	try {
 		sizeMap = getSizeFromText(str);
@@ -265,6 +269,18 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 			skillSize = skillSizeMap[String(newSize)];
 			setter.size_skill = skillSize;
 			setter.size_skill_double = (2*skillSize);
+		} else {
+			//if the same, we may be resetting, so check each one:
+			if ((parseInt(v["CMD-size"],10)||0) !== (newSize *-1)){
+				setter["CMD-size"] = (newSize * -1);
+			}
+			skillSize = skillSizeMap[String(newSize)];
+			if ((parseInt(v.size_skill,10)||0) !== skillSize){
+				setter.size_skill = skillSize;
+			}
+			if ((parseInt(v.size_skill_double,10)||0) !== (2*skillSize)){
+				setter.size_skill_double = (2*skillSize);
+			}
 		}
 		setSizeDisplay(newSize,v,setter);
 	} catch (err) {
@@ -289,10 +305,10 @@ function updateSizeAsync (callback, silently,eventInfo) {
 	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
 		setter = {},
-		levelChange=0,currSize=0,defSize=0,ddLevelChange=0;
+		levelChange=0,currSize=0,defSize=0,ddLevelChange=0,forceResize=0;
 		try {
 			//if updating buff just overwrite the size dropdown
-			if (   eventInfo.sourceAttribute==='buff_size-total'){
+			if (eventInfo &&  eventInfo.sourceAttribute==='buff_size-total'){
 				levelChange=parseInt(v['buff_size-total'],10)||0;
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (!eventInfo || eventInfo.sourceAttribute==='size'){
@@ -302,6 +318,13 @@ function updateSizeAsync (callback, silently,eventInfo) {
 					currSize=parseInt(v.size,10)||0;
 					defSize=parseInt(v.default_char_size,10)||0;
 					levelChange=getSizeLevelChange(currSize,defSize);						
+					if (levelChange===0 ){
+						if (eventInfo){
+							if ((parseInt(eventInfo.previousValue,10)||0) !== (parseInt(eventInfo.newValue,10)||0)){
+								forceResize=(parseInt(eventInfo.newValue,10)||0) - (parseInt(eventInfo.previousValue,10)||0);
+							}
+						}
+					}
 				}
 				updateSize(levelChange,v,eventInfo,setter);
 			} else if (eventInfo.sourceAttribute==='default_char_size'){
@@ -322,8 +345,8 @@ function updateSizeAsync (callback, silently,eventInfo) {
 					params = PFConst.silentParams;
 				}
 				SWUtils.setWrapper(setter, params, function(){done(levelChange);});
-			} else if (levelChange!==0){
-				done(levelChange);
+			} else if (levelChange!==0 || forceResize !== 0){
+				done(1);
 			} else {
 				done(0);
 			}
@@ -332,7 +355,7 @@ function updateSizeAsync (callback, silently,eventInfo) {
 }
 function setNewSize(eventInfo){
 	updateSizeAsync(function(changed){
-		if (changed!==0 ){
+		if (changed ){
 			PFEncumbrance.updateLoadsAndLift();
 			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 		}
@@ -361,7 +384,8 @@ function registerEventHandlers () {
 	//size
 	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {
 		var prevv=0,newv=0;
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType );
+		TAS.debug(eventInfo);
 		if (eventInfo.sourceType === "player" ) {
 			setNewSize(eventInfo);
 		} else {
