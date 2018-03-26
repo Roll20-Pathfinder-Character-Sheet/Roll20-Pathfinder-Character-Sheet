@@ -496,9 +496,11 @@ export function convertDashToMinus(str){
 export function getCostInGP  (str){
     var temp=0,
     matches = str.match(/(\d+)/);
+    TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on number:",matches);
     if (matches) { 
         temp = parseInt(matches[1],10)||0;
         matches = str.match(/(gp|cp|sp|pp)/i);
+        TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on coins:",matches);
         if (matches){
             switch(matches[1]){
                 case 'pp':
@@ -734,10 +736,14 @@ export function getNoteAfterNumber  (str) {
 export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,setField){
     var temp=0,
         attr=v[prefix+field+'_compendium'];
+    setter=setter||{};
+    TAS.debug("PFUtils.getCompendiumFunctionSet getting " +prefix+field+"_compendium, val: "+attr);
     if (attr){
         temp= methodToCall(attr);
+        TAS.debug("on return value is:"+temp);
         if (temp) { 
             setField=setField||field;
+            TAS.debug("setting "+prefix+field+" with value "+ temp);
             setter[prefix+setField]= temp;
         }
     }

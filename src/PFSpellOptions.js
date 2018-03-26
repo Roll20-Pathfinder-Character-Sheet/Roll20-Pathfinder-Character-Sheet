@@ -9,8 +9,7 @@ import * as PFUtils from './PFUtils';
 export var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_time_notes", "toggle_spell_duration_notes", 
     "toggle_spell_saving_throw_notes", "toggle_spell_sr_notes", "toggle_spell_range_notes", "toggle_spell_targets_notes", 
     "toggle_spell_description_notes", "toggle_spell_concentration_notes", "toggle_spell_concentration_check", 
-    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", 
-    "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes"],
+    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes", "toggle_spell_spellPen_check"],
 optionTemplates = {
     school: "{{school=@{school}}}",
     casting_time: "{{casting_time=@{cast-time}}}",
@@ -39,7 +38,8 @@ optionTemplates = {
     spell_fail_check: "{{spell_fail_check=[[ 1d100cf<[[ @{spell-fail} ]]cs>[[ @{spell-fail}+1 ]] ]]}}",
     spell_fail: "{{spell_fail=@{spell-fail}}}",
     spelldamage: "{{spelldamage=@{damage-macro-text}}}",
-    spelldamagetype: "{{spelldamagetype=@{damage-type}}}"
+    spelldamagetype: "{{spelldamagetype=@{damage-type}}}",
+	spellPen_chk: "{{spellPen_chk=[[ 1d20 + @{casterlevel} + @{SP-mod} ]]}}"
 },
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
@@ -248,6 +248,9 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     }
     if (toggleValues.showcasterlevel_check) {
         optionText += optionTemplates.casterlevel_chk;//.replace("REPLACE", casterlevel)||"";
+    }
+	if (toggleValues.showspellpen_check) {
+        optionText += optionTemplates.spellPen_chk;
     }
     if (toggleValues.showcasterlevel || toggleValues.showcasterlevel_check) {
         newValue = parseInt(rowValues[prefix + "SP-mod"], 10) || 0;

@@ -23,7 +23,7 @@ classesUsingOtherSpellLists = {
     "bloodrager": "sorcerer"
 };
 
-export function resetCommandMacro (eventInfo, callback) {
+export function resetCommandMacro (dummy, eventInfo, callback) {
     //TAS.debug("at PFSpells.resetCommandMacro");
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -1654,7 +1654,7 @@ var events = {
         ['DC_misc','Concentration_misc','range','range_pick','CL_misc','SP_misc','spellclass_number','spell_level'],
     repeatingSpellEventsPlayer: {
         "change:repeating_spells:compendium_category": [importFromCompendium],
-        "change:repeating_spells:used": [updateSpellsPerDay, updatePreparedSpellState],
+        "change:repeating_spells:used": [updateSpellsPerDay, updatePreparedSpellState, resetCommandMacro],
         "change:repeating_spells:metamagic": [toggleMetaMagic],
         "change:repeating_spells:name": [updateSpell]
     },
@@ -1692,7 +1692,8 @@ function registerEventHandlers  () {
             resetCommandMacro();
             resetSpellsTotals();
         }
-	}));	
+    }));
+    
      on("change:spellmenu_groupby_school change:spellmenu_show_uses change:spellclass-0-hide_unprepared change:spellclass-1-hide_unprepared change:spellclass-2-hide_unprepared change:spellclass-0-show_domain_spells change:spellclass-1-show_domain_spells change:spellclass-2-show_domain_spells", TAS.callback(function eventOptionChange(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

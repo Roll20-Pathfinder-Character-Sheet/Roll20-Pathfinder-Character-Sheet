@@ -21,7 +21,7 @@ skillAppendNums = ["", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 miscSkillAppendNums = ["-0", "-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9"],
 coreSkillsWithFillInNames = ["Craft", "Misc-Skill", "Perform", "Profession"],
 backgroundOnlySkillsWithFillinNames = ["Artistry", "Lore"],
-skillsWithFillInNames = coreSkillsWithFillInNames.concat(backgroundOnlySkillsWithFillinNames).sort(),
+skillsWithFillInNames = coreSkillsWithFillInNames.concat(backgroundOnlySkillsWithFillinNames).concat(["CS-Misc-Skill"]).sort(),
 backgroundOnlySkills = SWUtils.cartesianAppend(backgroundOnlySkillsWithFillinNames, skillAppendNums),
 knowledgeSubSkills = ["Arcana", "Dungeoneering", "Engineering", "Geography", "History", "Local", "Nature", "Nobility", "Planes", "Religion"],
 coreSkillsWithSubSkills = coreSkillsWithFillInNames.concat(["Knowledge"]).sort(),
@@ -31,7 +31,8 @@ knowledgeSkillAppends = _.map(knowledgeSubSkills, function (subskill) {
 }),
 //for each skill array of the possible skills {"Craft":["Craft","Craft2"...],"Perform":["Perform","Perform2"...] }
 subskillArrays = _.reduce(skillsWithSubSkills, function (memo, skill) {
-	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums;
+	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : 
+		(skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums;
 	memo[skill] = SWUtils.cartesianAppend([skill], skillAppendNums);
 	return memo;
 }, {}),
@@ -58,9 +59,10 @@ knowledgeSkills = _.map(knowledgeSubSkills, function (subskill) {
 backgroundSkills = backgroundCoreSkills.concat(backgroundOnlySkills).sort(),
 allCoreSkills = adventureSkills.concat(backgroundCoreSkills).sort(),
 consolidatedSkills = ["CS-Acrobatics", "CS-Athletics", "CS-Finesse", "CS-Influence", "CS-Nature", "CS-Perception", "CS-Performance", "CS-Religion", "CS-Society", "CS-Spellcraft", "CS-Stealth", "CS-Survival"],
+consolidatedMiscSkills = ["CS-Misc-Skill-0", "CS-Misc-Skill-1", "CS-Misc-Skill-2", "CS-Misc-Skill-3", "CS-Misc-Skill-4","CS-Misc-Skill-5", "CS-Misc-Skill-6", "CS-Misc-Skill-7", "CS-Misc-Skill-8", "CS-Misc-Skill-9"],
 allNonFillInSkills = regularCoreSkills.concat(knowledgeSkills).concat(consolidatedSkills).sort(),
 nonMiscFillInSkillsInstances = SWUtils.cartesianAppend(["Craft", "Perform", "Profession", "Artistry", "Lore"], skillAppendNums),
-miscFillInSkillsInstances =SWUtils.cartesianAppend(["Misc-Skill"], miscSkillAppendNums),
+miscFillInSkillsInstances =SWUtils.cartesianAppend(["Misc-Skill"], miscSkillAppendNums).concat(consolidatedMiscSkills),
 allFillInSkillInstances = nonMiscFillInSkillsInstances.concat(miscFillInSkillsInstances).sort(),
 allTheSkills = allNonFillInSkills.concat(allFillInSkillInstances).sort(),
 coreSkillAbilityDefaults = {
@@ -137,7 +139,7 @@ events = {
  */
 function appendToSubSkills (skilllist, appendToEnd) {
 	return _.reduce(skilllist, function (memo, skill) {
-		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
+		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
 		appendArray = SWUtils.cartesianAppend([skill], appendnums, appendToEnd);
 		return memo.concat(appendArray);
 	}, []);
@@ -522,9 +524,11 @@ export function recalculateSkills (callback, silently, onlySkills) {
 				} else {
 					if (onlySkills){
 						recalcSkillTotals(consolidatedSkills, done, silently);
+						recalcSkillTotals(consolidatedMiscSkills, null, silently);
 					}else {
 						//TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
 						recalcSkillArray(consolidatedSkills, done, silently);
+						recalcSkillArray(consolidatedMiscSkills, null, silently);
 					}
 				}
 			} else {
@@ -618,7 +622,7 @@ function updateSubSkillMacroBook (background, rt, eventInfo, currMacros, isNPC, 
 	var headerString = isNPC ? npcSkillHeaderMacro : skillHeaderMacro,
 	skillPrefix = isNPC ? "NPC-" : "",
 	assembleSubSkillButtonArray = function (skill, shouldEnforce, v) {
-		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
+		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
 		subskills = SWUtils.cartesianAppend([skill], appendnums),
 		firstPass = [];
 		if (skill === "Knowledge") {
@@ -754,7 +758,8 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 	skillPrefix = isNPC ? "NPC-" : "";
 	getAttrs([skillPrefix+"skills-macro", skillPrefix+"background_skills-macro", skillPrefix+"adventure_skills-macro", 
 			skillPrefix+"artistry_skills-macro", skillPrefix+"lore_skills-macro", skillPrefix+"craft_skills-macro", skillPrefix+"knowledge_skills-macro",
-			skillPrefix+"perform_skills-macro", skillPrefix+"profession_skills-macro", skillPrefix+"misc-skill_skills-macro"], function (v) {
+			skillPrefix+"perform_skills-macro", skillPrefix+"profession_skills-macro", skillPrefix+"misc-skill_skills-macro",
+			skillPrefix+"CS-misc-skill_skills-macro"], function (v) {
 		var i = 0,
 		setter = {},
 		tempSkillArray = [],
@@ -804,9 +809,11 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 			});
 		} else {
 			//consolidated
-			getAttrs(SWUtils.cartesianAppend(consolidatedSkills, ["-ReqTrain", "-ranks"]), function (sv) {
+			tempSkillArray = consolidatedSkills;//.concat(consolidatedMiscSkills);
+			getAttrs(SWUtils.cartesianAppend(tempSkillArray, ["-ReqTrain", "-ranks"]), function (sv) {
 				var canshowarray, setter = {}, tempMacro ;
-				canshowarray = assembleSkillButtonArray(consolidatedSkills, rt, sv);
+				canshowarray = assembleSkillButtonArray(tempSkillArray, rt, sv);
+				canshowarray.push("CS-Misc-Skill");
 				tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
 				setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
 				SWUtils.setWrapper(setter,PFConst.silentParams, done);

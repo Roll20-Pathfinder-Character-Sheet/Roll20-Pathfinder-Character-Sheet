@@ -193,8 +193,7 @@ events = {
 		"Check": [PFInitiative.updateInitiative], 
 		"check_ability": [PFInitiative.updateInitiative],
 		"initiative": [PFInitiative.updateInitiative],
-		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"size": [PFSize.updateSizeAsync]
+		"speed": [PFEncumbrance.updateModifiedSpeed]
 	}
 };
 

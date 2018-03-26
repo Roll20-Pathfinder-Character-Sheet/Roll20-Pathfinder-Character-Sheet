@@ -177,9 +177,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             //flat footed : lose dex unless uncanny
             //blinded: lose dex unless uncanny
             //pinned, cowering, stunned : always lose dex
-            if (pinned || cowering || stunned || (currload===4&& (maxDexSource===0 || maxDexSource===2))) {
+            if (blinded || pinned || cowering || stunned || (currload===4&& (maxDexSource===0 || maxDexSource===2))) {
                 immobilized=1;
-            } else if (blinded || ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
+            } else if (ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
                 loseDex=1;
             }
             

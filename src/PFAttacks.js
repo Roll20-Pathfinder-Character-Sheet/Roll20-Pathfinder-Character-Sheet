@@ -808,10 +808,10 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 					//TAS.debug("PFAttacks update dice, weapon size change is "+weaponSizeDiff);
 				}
 				sizeDiff+=weaponSizeDiff;
-				//TAS.debug("PFAttacks update dice, total size change is  "+sizeDiff);
+				TAS.debug("PFAttacks update dice, total size change is  "+sizeDiff);
 				if (sizeDiff){
 					newDice= PFSize.updateDamageDice (sizeDiff,defSize,defDice,defDie);
-					//TAS.debug("###########","PFAttacks.adjustDamageDice NEW DAMAGE is:"+newDice.dice+"d"+newDice.die+", for sizeDiff:"+sizeDiff);
+					TAS.debug("###########","PFAttacks.adjustDamageDice NEW DAMAGE is:"+newDice.dice+"d"+newDice.die+", for sizeDiff:"+sizeDiff);
 					if(currDice!==newDice.dice || currDie!==newDice.die  ){
 						setter[prefix+'damage-dice-num']=newDice.dice;
 						setter[prefix+'damage-die']=newDice.die;
@@ -1269,7 +1269,7 @@ function recalcRepeatingNonMacroFields (ids,callback){
 	fields = fields.concat(SWUtils.cartesianAppend(['repeating_weapon_'],ids,sizeFieldsLU));
 	fields = fields.concat(updateCharAttrs);
 	getAttrs(fields,function(v){
-		var charAttMap={},	setter, modifyDiceGlobal=0;
+		var charAttMap={},	setter, modifyDiceGlobal=0,currSize=0;
 		//set values to int so we don't have to do it over and over per row.
 		v = _.mapObject(v,function(val,key){
 			if ((/attack\-type$/i).test(key) || (/damage\-ability$/i).test(key) || (/damage\-ability\-max$/i).test(key) || (/damage_ability_mult$/i).test(key) ){
@@ -1278,6 +1278,8 @@ function recalcRepeatingNonMacroFields (ids,callback){
 				return (parseInt(val,10)||0);
 			}
 		});
+		currSize=parseInt(v.size,10)||0;
+		modifyDiceGlobal=parseInt(v.modify_dmg_by_size,10)||0;
 		//TAS.debug("PFAttacks.recalcOtherFields has values ",v);
 		setter = _.reduce(ids,function(m,id){
 			var xtra={},useSize=0;
@@ -1287,7 +1289,7 @@ function recalcRepeatingNonMacroFields (ids,callback){
 				}
 				if(v['repeating_weapon_'+id+'_attack-type']!=='dual'){
 					xtra=getRecalculatedAttack(id,v);
-					resetWeaponSizeAndDamage(id,v.size,v,xtra,useSize);
+					resetWeaponSizeAndDamage(id,currSize,v,xtra,useSize);
 					_.extend(m,xtra);
 				}
 			} catch (erri){
@@ -1642,6 +1644,7 @@ export var recalculate = TAS.callback(function callPFAttacksRecalculate(callback
 			PFAttackGrid.resetCommandMacro();
 			PFAttackOptions.recalculate();
 			updateAssociatedAttacksFromParents();
+			adjustAllDamageDiceAsync();
 			done();
 		},oldversion);
 	}  ,silently,oldversion);
