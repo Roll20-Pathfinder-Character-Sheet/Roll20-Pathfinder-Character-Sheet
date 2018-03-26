@@ -3112,7 +3112,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			abilityScores = parseAbilityScores(v,isUndead);
 			createAbilityScoreEntries(abilityScores, setter);
 			// Size **********************************************************************
-			sizeMap = PFSize.setSize(v.size_compendium,setter);
+			sizeMap = PFSize.setSizeFromString(v.size_compendium,setter);
 
 			// Feats *********************************************************************
 			featlist = parseFeats (v["npc-feats-text"]);
