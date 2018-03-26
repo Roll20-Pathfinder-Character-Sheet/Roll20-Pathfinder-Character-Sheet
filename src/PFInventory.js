@@ -1200,7 +1200,9 @@ export function importFromCompendium (eventInfo){
             setter[prefix+'row_id']=id;
             name= v[prefix+'name'];
             PFUtils.getCompendiumIntSet(itemprefix,'range',v,setter);
-            PFUtils.getCompendiumFunctionSet(itemprefix,'value',PFUtils.getCostInGP,v,setter);
+            TAS.debug("Before calling get value",setter);
+            PFUtils.getCompendiumFunctionSet(prefix,'item-value',PFUtils.getCostInGP,v,setter,'value');
+            TAS.debug("After calling get value",setter);
             PFUtils.getCompendiumIntSet(itemprefix,'spell-fail',v,setter);
             PFUtils.getCompendiumIntSet(itemprefix,'acbonus',v,setter);
             PFUtils.getCompendiumIntSet(itemprefix,'acp',v,setter);
@@ -1628,8 +1630,8 @@ export var recalculate = TAS.callback(function PFInventoryRecalculate(callback, 
 function registerEventHandlers  () {
     var tempstr="";
     on('change:repeating_item:item-category_compendium', TAS.callback(function EventItemCompendium(eventInfo){
-        TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             importFromCompendium(eventInfo);
         }
     }));
