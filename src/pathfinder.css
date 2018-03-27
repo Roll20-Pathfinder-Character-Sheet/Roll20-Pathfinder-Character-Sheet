@@ -2165,7 +2165,9 @@ hr.sheet-skinny {
 .repcontrol_edit:hover:before,
 .repcontrol_edit:hover:after, 
 .repcontrol_add:hover:before {
-  background-color: #EFEFEF;
+/*    background-color: #EFEFEF; */
+    color: red !important;
+    box-shadow: 1px 1px 2px #333;
 }
 .repcontrol .btn{
     border: none;
