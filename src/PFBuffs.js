@@ -1918,7 +1918,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='armor';
-			setter[prefix+'b1_macro-text']='4 + (2*(floor(max((@{level}-3),0)/4)';
+			setter[prefix+'b1_macro-text']='4 + (2*(floor (max((@{level}-3),0) /4)))';
 			tempint=4;
 			if(calc){
 				if(level < 7){
