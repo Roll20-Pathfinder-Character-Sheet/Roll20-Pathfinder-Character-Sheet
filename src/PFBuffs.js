@@ -1820,7 +1820,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8))';
 			tempint=2;
 			if(calc){
 				tempint = 2+ Math.floor(level/8);
@@ -1829,7 +1829,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='saves';
 			setter[prefix+'b2_bonustype']='resistance';
-			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8))';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';			
 			setter[prefix+'description-show']='1';
@@ -1842,7 +1842,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8))';
 			tempint=1;
 			if(calc){
 				tempint = 1+ Math.floor(level/8);
@@ -1851,7 +1851,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8))';
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'battleward':
@@ -1861,7 +1861,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8))';
 			tempint=3;
 			if(calc){
 				tempint = 3+ Math.floor(level/8);
@@ -1888,7 +1888,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8))';
 			tempint=2;
 			if(calc){
 				tempint = 2 +  Math.floor(level/8);
