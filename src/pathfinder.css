@@ -1323,7 +1323,22 @@ input.sheet-tabinput {
 .sheet-tabs.sheet-custbordernav.sheet-abilitiesnav ~ .sheet-tabinput.sheet-tab11:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section11 {
 	display:none;
 }
-
+/* hover */
+.sheet-tabinput.sheet-tab0:not(:checked):hover + .sheet-tab.sheet-tab0,
+.sheet-tabinput.sheet-tab1:not(:checked):hover + .sheet-tab.sheet-tab1,
+.sheet-tabinput.sheet-tab2:not(:checked):hover + .sheet-tab.sheet-tab2,
+.sheet-tabinput.sheet-tab3:not(:checked):hover + .sheet-tab.sheet-tab3,
+.sheet-tabinput.sheet-tab4:not(:checked):hover + .sheet-tab.sheet-tab4,
+.sheet-tabinput.sheet-tab5:not(:checked):hover + .sheet-tab.sheet-tab5,
+.sheet-tabinput.sheet-tab6:not(:checked):hover + .sheet-tab.sheet-tab6,
+.sheet-tabinput.sheet-tab7:not(:checked):hover + .sheet-tab.sheet-tab7,
+.sheet-tabinput.sheet-tab8:not(:checked):hover + .sheet-tab.sheet-tab8,
+.sheet-tabinput.sheet-tab9:not(:checked):hover + .sheet-tab.sheet-tab9,
+.sheet-tabinput.sheet-tab10:not(:checked):hover + .sheet-tab.sheet-tab10,
+.sheet-tabinput.sheet-tab11:not(:checked):hover + .sheet-tab.sheet-tab11,
+.sheet-tabinput.sheet-tab99:not(:checked):hover ~ .sheet-tab.sheet-tab99 {
+    color: #e0e0e0;
+}
 /* custom tab overrides */
 .sheet-firsttab-inverse-show:not(:checked) ~ div .sheet-tabs ~ .sheet-tabinput.sheet-tab0:not(:checked) ~ .sheet-tabinput.sheet-tab99:not(:checked) ~ .sheet-section0  {
 	display: block;
