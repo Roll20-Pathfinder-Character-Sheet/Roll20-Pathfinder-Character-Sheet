@@ -5153,3 +5153,16 @@ input.sheet-skill-macro-text {
     max-height: 125px;
     overflow-y: auto;
 }
+
+/*styles sheet mode note*/
+span.sheet-mode {
+    float: right;
+    clear:right;
+    font-weight: bold;
+    font-style: italic;
+}
+
+/*hides edit-mode note*/
+.sheet-readonly-show:not(:checked) + span.sheet-mode {display: none;}
+/*hides compact-mode note*/
+.sheet-readonly-show:checked + span.sheet-mode + span.sheet-mode {display: none;}
