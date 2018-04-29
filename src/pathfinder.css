@@ -5167,8 +5167,7 @@ div.sheet-mode:hover {
 div.sheet-mode input.sheet-readonly-show {
     display: inline-block;
     opacity: 0;
-    min-width: 7em;
-    max-width: 7em;
+    width: 7em;
     height: 1.5em;
     position: absolute;
     margin: -.125em 0 0 -.5em;
