@@ -5155,11 +5155,24 @@ input.sheet-skill-macro-text {
 }
 
 /*styles sheet mode note*/
-span.sheet-mode {
+div.sheet-mode {
     float: right;
     clear:right;
     font-weight: bold;
     font-style: italic;
+}
+div.sheet-mode:hover {
+    color:red;
+}
+div.sheet-mode input.sheet-readonly-show {
+    display: inline-block;
+    opacity: 0;
+    min-width: 7em;
+    max-width: 7em;
+    height: 1.5em;
+    position: absolute;
+    margin: -.125em 0 0 -.5em;
+    z-index: 1;
 }
 
 /*hides edit-mode note*/
