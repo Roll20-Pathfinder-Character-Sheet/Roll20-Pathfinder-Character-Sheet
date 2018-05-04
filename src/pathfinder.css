@@ -3626,8 +3626,11 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_attack .sheet-dmg-x,
 .sheet-rolltemplate-pf_attack .sheet-crit-dmg,
 .sheet-rolltemplate-pf_attack .sheet-crit-dmg-x {
-    text-indent: 0.5em !important;
+/*    text-indent: 0.5em !important; */
+padding-left: 1em; /* this can create a faux indent even for textarea content ie extra damage type  */
+line-height: 1.3em; /* helps align damage type text to extra damage roll */
 }
+
 /************************************ COLORS ****************************************/
 .sheet-rolltemplate-pf_generic .sheet-roll-accessible,
 .sheet-rolltemplate-pf_ability .sheet-roll-accessible,
