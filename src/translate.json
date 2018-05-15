@@ -1,4 +1,6 @@
 {
+	"scroll-desc": "Scroll long Descriptions",
+	"scroll-desc-title": "Scroll long descriptions in roll templates.",
 	"compact-mode": "Compact Mode",
 	"edit-mode": "Edit Mode",
 	"cs-misc-skill": "Misc Skill",
