@@ -1347,8 +1347,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
-			setter[prefix+'b1_macro-text']='
-			min(3,1+floor((@{level})/6)+floor((@{level})/9))';
+			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
 			tempint=1;
 			if(calc){
 				if(level<=3){
