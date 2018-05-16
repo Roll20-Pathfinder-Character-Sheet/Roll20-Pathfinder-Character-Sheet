@@ -1350,9 +1350,9 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
 			tempint=1;
 			if(calc){
-				if(level<=3){
+				if(level<=5){
 					tempint=1;
-				} else if (level <=6){
+				} else if (level <=8){
 					tempint=2;
 				} else {
 					tempint=3;
