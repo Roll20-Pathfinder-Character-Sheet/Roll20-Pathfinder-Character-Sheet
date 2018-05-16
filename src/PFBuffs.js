@@ -1362,7 +1362,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='luck';
-			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level}-1)/3))';
+			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'shieldoffaith':
