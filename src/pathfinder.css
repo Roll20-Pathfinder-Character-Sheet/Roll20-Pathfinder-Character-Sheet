@@ -3475,6 +3475,13 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a {
     font-family: Pictos !important;
     box-shadow: none;
+    line-height: .5em;
+}
+.sheet-rolltemplate-pf_spell .sheet-pfctracking span.sheet-pictos a strong:hover, 
+.sheet-rolltemplate-pf_ability .sheet-pfctracking span.sheet-pictos a strong:hover, 
+.sheet-rolltemplate-pf_attack .sheet-pfctracking span.sheet-pictos a strong:hover, 
+.sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a strong:hover {
+    color: red;
 }
 .sheet-rolltemplate-pf_spell .sheet-pfctracking span.sheet-pictos a strong,
 .sheet-rolltemplate-pf_ability .sheet-pfctracking span.sheet-pictos a strong,
