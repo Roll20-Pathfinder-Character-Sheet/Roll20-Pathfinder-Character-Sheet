@@ -3474,11 +3474,15 @@ input[type="text"].sheet-skill-conds {
 .sheet-rolltemplate-pf_attack .sheet-pfctracking span.sheet-pictos a,
 .sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a {
     font-family: Pictos !important;
-    line-height: .5em;
+    box-shadow: none;
 }
-.sheet-pfctracking strong {
+.sheet-rolltemplate-pf_spell .sheet-pfctracking span.sheet-pictos a strong,
+.sheet-rolltemplate-pf_ability .sheet-pfctracking span.sheet-pictos a strong,
+.sheet-rolltemplate-pf_attack .sheet-pfctracking span.sheet-pictos a strong,
+.sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a strong {
     font-size: .85em;
 	vertical-align: bottom;
+    font-weight: normal;
 }
 .sheet-rolltemplate-pf_generic .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_ability .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
