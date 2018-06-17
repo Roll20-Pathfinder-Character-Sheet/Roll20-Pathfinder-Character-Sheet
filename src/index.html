@@ -14167,7 +14167,7 @@
 						</div>{{/saving_throw}}
 						{{^casterlevel_chk}}{{#casterlevel}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level">Caster Level</span>:**</div><div class="sheet-roll-cell">{{casterlevel}}</div></div>{{/casterlevel}}
-						{{#sr}}{{#spellPen}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>:**+**{{spellPen}}</div><div class="sheet-roll-cell">{{#spellPen_chk}}<span class="sheet-right">**=**{{spellPen_chk}}</span>{{/spellPen_chk}}</div></div>{{/spellPen}}{{/sr}}
+						{{#sr}}{{#spellPen_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>:**+**{{#spellPen}}{{spellPen}}{{/spellPen}}</div><div class="sheet-roll-cell"><span class="sheet-right">**=**{{spellPen_chk}}</span></div></div>{{/spellPen_chk}}{{/sr}}
 						{{/casterlevel_chk}}
 						{{^Concentration_chk}}{{#Concentration}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="concentration">Concentration</span>:**</div><div class="sheet-roll-cell">**+**{{Concentration}}</div></div>
@@ -14182,7 +14182,7 @@
 						{{^casterlevel_chk}}{{#Concentration_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="rolls">Rolls</span>**</div><div></div></div>{{/Concentration_chk}}{{/casterlevel_chk}}
 						{{#casterlevel_chk}}
 						<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}</div><div class="sheet-roll-cell">**=**{{casterlevel_chk}}</div></div>
-						{{#sr}}{{#spellPen}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>:**+**{{spellPen}}</div><div class="sheet-roll-cell">{{#spellPen_chk}}<span class="sheet-right">**=**{{spellPen_chk}}</span>{{/spellPen_chk}}</div></div>{{/spellPen}}{{/sr}}
+						{{#sr}}{{#spellPen_chk}}<div class="sheet-roll-row"><div class="sheet-roll-cell">**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>:**+**{{#spellPen}}{{spellPen}}{{/spellPen}}</div><div class="sheet-roll-cell"><span class="sheet-right">**=**{{spellPen_chk}}</span></div></div>{{/spellPen_chk}}{{/sr}}
 						{{/casterlevel_chk}}
 						{{#Concentration_chk}}
 						<div class="sheet-roll-row">
@@ -14316,7 +14316,7 @@
 				{{^casterlevel_chk}}
 				{{#casterlevel}}
 				<label>**<span data-i18n="caster-level">Caster Level</span>:**<span class="sheet-right">{{casterlevel}}</span></label>
-				{{#sr}}{{#spellPen}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{spellPen}}</span>{{#spellPen_chk}}<span class="sheet-right">**=**{{spellPen_chk}}</span>{{/spellPen_chk}}</label>{{/spellPen}}{{/sr}}
+				{{#sr}}{{#spellPen_chk}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{#spellPen}}{{spellPen}}{{/spellPen}}</span><span class="sheet-right">**=**{{spellPen_chk}}</span></label>{{/spellPen_chk}}{{/sr}}
 				{{/casterlevel}}{{/casterlevel_chk}}
 				{{^Concentration_chk}}{{#Concentration}}
 				<label>**<span data-i18n="concentration">Concentration</span> **<span class="sheet-right">**+**{{Concentration}}</span></label>
@@ -14325,7 +14325,7 @@
 				{{#casterlevel_chk}}<h4 data-i18n="rolls">Rolls</h4>{{/casterlevel_chk}}
 				{{^casterlevel_chk}}{{#Concentration_chk}}<h4>Rolls</h4>{{/Concentration_chk}}{{/casterlevel_chk}}
 				{{#casterlevel_chk}}<label>**<span data-i18n="caster-level-check">Caster Level Check</span>** {{#casterlevel}}&nbsp;+{{casterlevel}}{{/casterlevel}}<span class="sheet-right"> **=**{{casterlevel_chk}}</span></label>
-				{{#sr}}{{#spellPen}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{spellPen}}</span>{{#spellPen_chk}}<span class="sheet-right">**=**{{spellPen_chk}}</span>{{/spellPen_chk}}</label>{{/spellPen}}{{/sr}}
+				{{#sr}}{{#spellPen_chk}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{#spellPen}}{{spellPen}}{{/spellPen}}</span><span class="sheet-right">**=**{{spellPen_chk}}</span></label>{{/spellPen_chk}}{{/sr}}
 				{{/casterlevel_chk}}
 				{{#Concentration_chk}}<label>**<span data-i18n="concentration-check">Concentration Check</span>** {{#Concentration}}**+**{{Concentration}}{{/Concentration}}<span class="sheet-right">**=**{{Concentration_chk}}</span></label>
 				{{#cast_defDC}}<label>**<span data-i18n="cast-defensively" style="margin-left:1em;">Cast Defensively</span>:** <span>{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span><span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{cast_defDC}}</span></span></label>{{/cast_defDC}}
