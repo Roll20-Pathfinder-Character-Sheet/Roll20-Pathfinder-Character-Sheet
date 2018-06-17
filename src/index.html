@@ -14315,9 +14315,9 @@
 				{{#saving_throw}}<label>**<span data-i18n="save-effect">Save</span>:** <span>{{saving_throw}}</span>{{#dc}}<span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{dc}}</span></span>{{/dc}}</label>{{/saving_throw}}
 				{{^casterlevel_chk}}
 				{{#casterlevel}}
-				<label>**<span data-i18n="caster-level">Caster Level</span>:**<span class="sheet-right">{{casterlevel}}</span></label>
+				<label>**<span data-i18n="caster-level">Caster Level</span>:**<span class="sheet-right">{{casterlevel}}</span></label>{{/casterlevel}}
 				{{#sr}}{{#spellPen_chk}}<label>**<span data-i18n="overcome-spell-resistance-abbrv" style="margin-left:1em;">Overcome SR</span>**<span>+{{#spellPen}}{{spellPen}}{{/spellPen}}</span><span class="sheet-right">**=**{{spellPen_chk}}</span></label>{{/spellPen_chk}}{{/sr}}
-				{{/casterlevel}}{{/casterlevel_chk}}
+				{{/casterlevel_chk}}
 				{{^Concentration_chk}}{{#Concentration}}
 				<label>**<span data-i18n="concentration">Concentration</span> **<span class="sheet-right">**+**{{Concentration}}</span></label>
 				{{#cast_defDC}}<label>**<span data-i18n="cast-defensively" style="margin-left:1em;">Cast Defensively</span>:** <span>{{#cast_def}}**+**{{cast_def}}{{/cast_def}}</span><span class="sheet-right">**<span data-i18n="difficulty-class-abbrv">DC</span>**<span>{{cast_defDC}}</span></span></label>{{/cast_defDC}}
