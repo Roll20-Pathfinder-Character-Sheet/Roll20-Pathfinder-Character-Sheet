@@ -258,8 +258,6 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     if (toggleValues.showcasterlevel || toggleValues.showcasterlevel_check) {
         newValue = parseInt(rowValues[prefix + "SP-mod"], 10) || 0;
         if (newValue === 0) {
-            optionText += "{{spellPen=}}";
-        } else {
             optionText += optionTemplates.spellPen;//.replace("REPLACE", newValue)||"";
         }
     }
