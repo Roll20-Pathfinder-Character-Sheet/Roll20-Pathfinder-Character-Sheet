@@ -1101,6 +1101,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 case 'cl_misc':
                     updateClassLevel = true;
                     updateRange = true;
+                    updateConcentration = true;
                     break;
                 case 'spellclass_number':
                     updateClass = true;
@@ -1204,6 +1205,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 if(isNaN(currCasterLevel)){
                     updateClassLevel=true;
                     updateRange=true;
+                    updateConcentration=true;
                 } else {
                     casterlevel = currCasterLevel;
                 }
@@ -1260,7 +1262,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     setter[currDCField] = newDC;
                 }
             }
-            if (updateConcentration || updateClassLevel||updateClass) {
+            if (updateConcentration || updateClassLevel || updateClass) {
                 newConcentration = casterlevel + spellAbilityMod + (parseInt(v["Concentration-" + classNum + "-misc-mod"], 10) || 0) + (parseInt(v[prefix + "Concentration_misc"], 10) || 0);
                 if (newConcentration !== (parseInt(v[prefix + "Concentration-mod"], 10) || 0)) {
                     setter[prefix + "Concentration-mod"] = newConcentration;

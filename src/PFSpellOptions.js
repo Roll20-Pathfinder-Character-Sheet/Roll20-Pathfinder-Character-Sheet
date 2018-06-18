@@ -246,6 +246,9 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     } else {
         optionText += "{{casterlevel=}}";
     }
+    if (toggleValues.showcasterlevel) {
+        optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
+    }
     if (toggleValues.showcasterlevel_check) {
         optionText += optionTemplates.casterlevel_chk;//.replace("REPLACE", casterlevel)||"";
     }
@@ -264,6 +267,9 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     } else {
         optionText += "{{Concentration=}}";
+    }
+    if (toggleValues.showconcentration_check && toggleValues.showcasterlevel) {
+        optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     }
     if (toggleValues.showconcentration_check) {
         optionText += optionTemplates.Concentration_chk;//.replace("REPLACE", concentrationMod)||"";
