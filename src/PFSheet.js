@@ -468,6 +468,9 @@ function migrate (oldversion, callback, errorCallback) {
 				});
 				PFSpells.resetSpellsTotals();
 			}
+			if (oldversion < 1.724){
+				PFSkills.migrate(null,oldversion);
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);

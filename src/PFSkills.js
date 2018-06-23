@@ -849,7 +849,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSkills.migrate");
+		TAS.debug("leaving PFSkills.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -912,12 +912,14 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
-	migrateMacros2 = function(callback){
+	migrateMacros2 = function(callback){		
 		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
 			if(parseInt(vout.migrated_skill_speedup3,10)){
-				if (typeof callback === "function"){ callback();}
-				return;
+				if (typeof callback === "function") { 
+					callback();
+				}
+//				return;
 			}
 			fields = allTheSkills.map(function(skill){return skill+'-macro';});
 			getAttrs(fields,function(v){
@@ -926,11 +928,11 @@ export function migrate (callback, oldversion) {
 					setter=_.reduce(v,function(m,macro,attr){
 						var temp='';
 						try {
-							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<0){					
+							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<=0){					
 								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
 							}
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
+							temp=temp.replace(' + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ','');
+							temp=temp.replace(' + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ','');
 							if(temp !== v[attr]){						
 								m[attr]=temp;
 							}
