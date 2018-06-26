@@ -928,7 +928,7 @@ export function migrate (callback, oldversion) {
 					setter=_.reduce(v,function(m,macro,attr){
 						var temp='';
 						try {
-							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<=0){					
+							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<=0 || ('@{buff_check_skills-total} + @{buff_Check-total}')>=0) {
 								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
 							}
 							temp=temp.replace(' + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ','');
