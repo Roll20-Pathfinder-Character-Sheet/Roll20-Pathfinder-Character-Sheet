@@ -912,31 +912,26 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
-	migrateMacros2 = function(callback){		
+	migrateMacros2 = function(callback){        
 		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
-			if(parseInt(vout.migrated_skill_speedup3,10)){
+			if(vout.migrated_skill_speedup3*1){//this is a faster way of converting strings to numbers
 				if (typeof callback === "function") { 
 					callback();
 				}
-//				return;
+	//                return;
 			}
 			fields = allTheSkills.map(function(skill){return skill+'-macro';});
 			getAttrs(fields,function(v){
 				var setter={};
 				try{
 					setter=_.reduce(v,function(m,macro,attr){
-						var temp='';
-						try {
-							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<=0 || ('@{buff_check_skills-total} + @{buff_Check-total}')>=0) {
-								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							}
-							temp=temp.replace(' + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ','');
-							temp=temp.replace(' + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] ','');
-							if(temp !== v[attr]){						
-								m[attr]=temp;
-							}
-						} catch (ierr){
+						try {//The try/catch probably isn't needed, but it really doesn't affect the code's efficiency/speed
+							//removed the if statement, because the replace is highly specific and will not do anything to a string that doesn't have that text in it.
+							//if you still want to conditionally do this, I would use the .test() function instead (e.g. /some regex/.test(variableToTest))
+							m[attr]=macro.replace(/ \+ \[\[ @{checks\-cond} \+ @{buff_check_skills-total} \+ @{buff_Check-total} \]\]  /,"");
+							TAS.debug("removed cond and buffs macro from skill macro-text");
+						}catch (ierr){
 							TAS.error("PFBuffs.migrate add buff checks for "+attr,ierr);
 						} finally {
 							return m;
