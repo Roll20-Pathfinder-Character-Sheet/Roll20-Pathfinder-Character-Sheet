@@ -849,7 +849,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSkills.migrate");
+	//	TAS.debug("leaving PFSkills.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -928,7 +928,7 @@ export function migrate (callback, oldversion) {
 					setter=_.reduce(v,function(m,macro,attr){
 						try {
 							m[attr]=macro.replace(/ \+ \[\[ @{checks\-cond} \+ @{buff_check_skills-total} \+ @{buff_Check-total} \]\]  /,"");
-							TAS.debug("removed cond and buffs macro from skill macro-text");
+						//	TAS.debug("removed cond and buffs macro from skill macro-text");
 						}catch (ierr){
 							TAS.error("PFBuffs.migrate add buff checks for "+attr,ierr);
 						} finally {
