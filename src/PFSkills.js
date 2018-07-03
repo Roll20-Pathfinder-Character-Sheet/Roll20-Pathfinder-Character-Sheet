@@ -39,7 +39,7 @@ subskillArrays = _.reduce(skillsWithSubSkills, function (memo, skill) {
 backgroundCoreSkills = regularBackgroundSkillsPlusKnow.concat(subskillArrays["Craft"]).concat(subskillArrays["Perform"]).concat(subskillArrays["Profession"]).concat(["Misc-Skill-5", "Misc-Skill-6", "Misc-Skill-7", "Misc-Skill-8", "Misc-Skill-9"]).sort(),
 adventureSkills = regularAdventurePlusKnow.concat(["Misc-Skill-0", "Misc-Skill-1", "Misc-Skill-2", "Misc-Skill-3", "Misc-Skill-4"]).sort(),
 checkRTArray = ["-ReqTrain", "-ranks"],
-baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
+baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
 skillHeaderMacro = "{{name=^{REPLACELOWER} ^{skills} }} ",
 npcSkillHeaderMacro = "{{name=^{npc} ^{REPLACELOWER} ^{skills} }} ",
 //  1 is the normal size modifier in size_skill, 2 is size_skill_double
@@ -849,7 +849,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSkills.migrate");
+	//	TAS.debug("leaving PFSkills.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -912,29 +912,24 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
-	migrateMacros2 = function(callback){
+	migrateMacros2 = function(callback){        
 		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
-			if(parseInt(vout.migrated_skill_speedup3,10)){
-				if (typeof callback === "function"){ callback();}
-				return;
+			if(vout.migrated_skill_speedup3*1){
+				if (typeof callback === "function") { 
+					callback();
+				}
+				//return;
 			}
 			fields = allTheSkills.map(function(skill){return skill+'-macro';});
 			getAttrs(fields,function(v){
 				var setter={};
 				try{
 					setter=_.reduce(v,function(m,macro,attr){
-						var temp='';
 						try {
-							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<0){					
-								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							}
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							if(temp !== v[attr]){						
-								m[attr]=temp;
-							}
-						} catch (ierr){
+							m[attr]=macro.replace(/ \+ \[\[ @{checks\-cond} \+ @{buff_check_skills-total} \+ @{buff_Check-total} \]\]  /,"");
+						//	TAS.debug("removed cond and buffs macro from skill macro-text");
+						}catch (ierr){
 							TAS.error("PFBuffs.migrate add buff checks for "+attr,ierr);
 						} finally {
 							return m;
