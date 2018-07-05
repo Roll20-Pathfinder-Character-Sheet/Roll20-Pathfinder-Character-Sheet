@@ -1660,9 +1660,9 @@ h2.sheet-clickheader {
 
 .sheet-cssbutton + span::before {
     display: inline-block;
-    font-size: 13px;
+    font-size: 15px;
     margin: 3px 2px 2px 2px;
-    padding: 0px 2px 0 2px;
+    padding: 0px;
     font-weight: bold;
     border-radius: 5px;
     border: 1px solid #808080;
@@ -1769,6 +1769,7 @@ h2.sheet-clickheader {
     content: '1';
     vertical-align: top;	
     margin-top:.5em;
+    height: 23px;
 }
 .sheet-small-label2 .sheet-refreshbutton + span::before {
     margin-top:2px;
@@ -1838,7 +1839,8 @@ input.sheet-refreshbutton {
     content: '⛭';
     margin-top: .5em;
     vertical-align: top;	
-    padding: 2px 0 0 0 !important;
+    padding: 1px 0 0 0 !important;
+    height: 23px;
 }
 .sheet-configbutton:checked:hover + span::before {
     background-color: white !important;
@@ -1854,6 +1856,7 @@ input.sheet-refreshbutton {
 	background-repeat:no-repeat !important;
     vertical-align: top;	
     margin-top: .5em;
+    height: 23px;
 }
 .sheet-readonly-show:hover + span::before {
 	background-color:white !important;
