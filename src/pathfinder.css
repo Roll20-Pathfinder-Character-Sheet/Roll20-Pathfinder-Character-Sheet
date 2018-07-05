@@ -1785,9 +1785,11 @@ h2.sheet-clickheader {
 }
 .sheet-createattackbutton + span::before {
     content: '⚔';
-    margin-top: 5px;
     vertical-align:top;	
-    padding: 3px 0 0 0 !important;
+    padding: 3px 1px 0 0;
+}
+input[name="attr_create_twoweapon_attack"].sheet-createattackbutton + span::before {
+    padding-top: 0px;
 }
 .sheet-addarmorbutton+ span::before {
     font-family: "Pictos Three" !important;
@@ -1886,7 +1888,6 @@ input.sheet-refreshbutton {
     margin-left: 1em;
 }
 .sheet-small-label2 .sheet-createattackbutton + span::before {
-    padding: 4px;
     margin-top: 2px;
 }
 .sheet-small-label2 input[type="checkbox"].sheet-csstextbutton,
