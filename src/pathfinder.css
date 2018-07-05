@@ -2710,11 +2710,11 @@ div.sheet-feats .sheet-table-row span:last-child {
 }
 .sheet-readonly-show:checked  ~ .sheet-main .sheet-spellcaster-button,
 .sheet-readonly-show:checked  ~ .sheet-main .sheet-table-cell.sheet-spellcaster-button {
-    width: 130px;
+    width: 145px;
 }
 .sheet-readonly-show:not(:checked)  ~ .sheet-main .sheet-spellcaster-button,
 .sheet-readonly-show:not(:checked)  ~ .sheet-main .sheet-table-cell.sheet-spellcaster-button {
-    max-width: 130px;
+    max-width: 145px;
 	width:auto;
 }
 .sheet-spellclass-concentration .sheet-spellcaster-button {
