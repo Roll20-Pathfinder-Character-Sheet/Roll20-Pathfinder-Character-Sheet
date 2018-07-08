@@ -152,18 +152,20 @@ function convertKL1KH1toMinMax(str) {
 	var matches;
 	//TAS.debug("at convertKL1KH1toMinMax for "+str) ;
 	if (str) {
-		matches = str.match(/(\{[^}]+\})(kh1|kl1)(?!.*\1)/g);
-		//TAS.debug("matches are:",matches);
-		if (matches && matches.length > 0) {
-			str = _.reduce(matches, function (memo, match) {
-				var isMin = /kl1$/.test(match),
-				isMax = /kh1$/.test(match),
-				newFunc = isMin ? "min" : (isMax ? "max" : ""),
-				newMatch = match.slice(1, match.length - 4),
-				replaceStr = newFunc + "(" + newMatch + ")";
-				return memo.replace(match, replaceStr);
-			}, str);
+		do	{	
+			//TAS.debug("matches are:",matches);
+			if (matches && matches.length > 0) {
+				str = _.reduce(matches, function (memo, match) {
+					var isMin = /kl1$/.test(match),
+					isMax = /kh1$/.test(match),
+					newFunc = isMin ? "min" : (isMax ? "max" : ""),
+					newMatch = match.slice(1, match.length - 4),
+					replaceStr = newFunc + "(" + newMatch + ")";				
+					return memo.replace(match, replaceStr);
+				}, str);
+			}
 		}
+		while (matches = str.match(/(\{[^}]+\})(kh1|kl1)(?!.*\1)/g));
 	}
 	return str;
 }
