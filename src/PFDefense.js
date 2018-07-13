@@ -98,24 +98,25 @@ export function updateDefenses ( callback, silently, eventInfo) {
         currCMD = parseInt(v["CMD"], 10),
         currCMDFF = parseInt(v["FF-CMD"], 10),
         currUncanny = parseInt(v["uncanny_dodge"], 10) || 0,
-        currCMDUncanny = lockDefAbility?currUncanny:(parseInt(v["uncanny_cmd_dodge"], 10) || 0),
         acAbilityName = PFUtils.findAbilityInString(v["AC-ability"]),
         uncannyAbilityName = currUncanny?acAbilityName:PFUtils.findAbilityInString(v["FF-ability"]),
         uncannyCMDabilityName = lockDefAbility?uncannyAbilityName:PFUtils.findAbilityInString(v["CMD-ability"]),
         cmdAbilityDDvalName = lockDefAbility?acAbilityName:PFUtils.findAbilityInString(v["CMD-ability2"]),
         ability = parseInt(v["AC-ability-mod"], 10) || 0,
-        ffAbility = (currUncanny&&lockDefAbility)?ability:(parseInt(v["FF-DEX"], 10) || 0),
         cmdAbility1 = parseInt(v["CMD-STR"], 10) || 0,
         cmdAbility2 = lockDefAbility?ability:(parseInt(v["CMD-DEX"], 10) || 0),
-        cmdFFAbility2 = lockDefAbility?ffAbility:(parseInt(v["FF-CMD-DEX"], 10) || 0),
+        ffAbility = 0,
+        cmdFFAbility2 = 0,
         loseDex = 0,
         immobilized = 0,
         armorbuff = parseInt(v['buff_armor-total'],10)||0,
         shieldbuff = parseInt(v['buff_shield-total'],10)||0,
         naturalbuff = parseInt(v['buff_natural-total'],10)||0,
-        flatfootedbuff = parseInt(v['buff_flat-footed-total'],10)||0,
+        buffFFOnly = parseInt(v['buff_flat-footed-total'],10)||0,
         dodgebuff=parseInt(v['buff_dodge-total'],10)||0,
         buffac = 0,
+        ffdodge = 0,
+        ffdodgebuff = 0,
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
@@ -125,129 +126,114 @@ export function updateDefenses ( callback, silently, eventInfo) {
         params = {};
         try {
             TAS.debug("PFDefense.updateDefenses: buffs "+buffs,v);
-            
-            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
-            bufftouch=buffs+buffsTouchOnly+dodgebuff;
-            buffff=buffs+armorbuff+shieldbuff+naturalbuff+flatfootedbuff;
-            buffcmd = buffs+buffsCMDOnly+dodgebuff;
-            buffffcmd = buffs+buffsCMDOnly+flatfootedbuff;
 
-            dodge += dodgebuff;
-            //deflect ;
-            //armor += armorbuff;
-            //shield += shieldbuff;
-            //natural += naturalbuff;
-
-            //TAS.debug(v);
+            if(currUncanny){
+                ffAbility = lockDefAbility?ability:(parseInt(v["FF-DEX"], 10) || 0);
+                cmdFFAbility2 = lockDefAbility?ability:(parseInt(v["FF-CMD-DEX"], 10) || 0);
+            } else {
+                //if ability is below zero, FF dex adj must be set to negative too
+                if (ability < 0 ) {
+                    ffAbility = ability;
+                }
+                if (cmdAbility2 < 0 ) {
+                    cmdFFAbility2 = cmdAbility2;
+                }
+            }
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
-            if (acAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                tempint = Math.min(ability, maxDex);
-                if (tempint !== ability){
-                    ability=tempint;
+            if (maxDex < 99 && maxDex >= 0){
+                if (acAbilityName === "DEX-mod" && maxDex < ability ) {
+                    ability=maxDex;
                     dexModShowLimit = 1;
+                    if (lockDefAbility){
+                        cmdAbility2=maxDex;
+                        if (currUncanny){
+                            ffAbility=maxDex;
+                            cmdFFAbility2=maxDex;
+                        }
+                    }
                 }
-            }
-            if (uncannyAbilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                tempint = Math.min(ffAbility, maxDex);
-                if (tempint !== ffAbility){
-                    ffAbility=tempint;
-                    dexModShowLimit = 1;
-                }
-            }
-            if (cmdAbilityDDvalName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                tempint = Math.min(cmdAbility2, maxDex);
-                if (tempint !== cmdAbility2){
-                    cmdAbility2=tempint;
-                    dexModShowLimit = 1;
-                }
-            }
-            if (uncannyCMDabilityName === "DEX-mod" && maxDex < 99 && maxDex >= 0) {
-                tempint = Math.min(cmdFFAbility2, maxDex);
-                if (tempint !== cmdFFAbility2){
-                    cmdFFAbility2=tempint;
-                    dexModShowLimit = 1;
+                if(unlockDefAbility){
+                    if (cmdAbilityDDvalName === "DEX-mod" && maxDex < cmdAbility2) {
+                        cmdAbility2=maxDex;
+                        dexModShowLimit = 1;
+                    }
+                    if (currUncanny){
+                        if(uncannyAbilityName === "DEX-mod" && maxDex < ffAbility ) {
+                            ffAbility=maxDex;
+                            dexModShowLimit = 1;
+                        }
+                        if (uncannyCMDabilityName === "DEX-mod" && maxDex < cmdFFAbility2) {
+                            cmdFFAbility2 = maxDex;
+                            dexModShowLimit = 1;
+                        }
+                    }
                 }
             }
 
-            //if ability is below zero, FF dex adj must be set to negative too
-            //assume ffability dropdown should be None or the same as dex ability
-            //because if not then it doesn't make sense
-            if (ability < 0 && ffAbility > ability) {
-                ffAbility = ability;
-            }
-            if (cmdAbility2 < 0 && cmdFFAbility2 > cmdAbility2) {
-                cmdFFAbility2 = cmdAbility2;
-            }
-            if (unlockDefAbility ){
-                if (uncannyAbilityName && currUncanny === 0) {
-                    //TAS.debug("switching to uncanny");
-                    setter["uncanny_dodge"] = "1";
-                    setAny = 1;
-                    currUncanny = 1;
-                } else if (!uncannyAbilityName && currUncanny === 1) {
-                    //TAS.debug("switching from uncanny");
-                    setter["uncanny_dodge"] = "0";
-                    setAny = 1;
-                    currUncanny = 0;
-                }
-                if (uncannyCMDabilityName && currCMDUncanny === 0) {
-                    //TAS.debug("switching to cmd uncanny");
-                    setter["uncanny_cmd_dodge"] = "1";
-                    setAny = 1;
-                    currCMDUncanny = 1;
-                } else if (!uncannyCMDabilityName && currCMDUncanny === 1) {
-                    //TAS.debug("switching from cmd uncanny");
-                    setter["uncanny_cmd_dodge"] = "0";
-                    setAny = 1;
-                    currCMDUncanny = 0;
-                }
-            }
+
             //lose Dex: you lose your bonus (and dodge) - not the same as flat footed
             //Must be applied even if your bonus is not dex :
             //http://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9qdi
             //flat footed : lose dex unless uncanny
             //blinded: lose dex unless uncanny
             //pinned, cowering, stunned : always lose dex
-            if (pinned || cowering || stunned || (currload===4&& (maxDexSource===0 || maxDexSource===2))) {
+            if (blinded || pinned || cowering || stunned || (currload===4&& (maxDexSource===0 || maxDexSource===2))) {
                 immobilized=1;
-            } else if (blinded || ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
+            } else if (ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
                 loseDex=1;
             }
             
             if (immobilized ) {
-                if (currUncanny) {
+                if(currUncanny){currUncanny=0;}
+                noDexShowLimit = 1;
+                dodge = 0;
+                dodgebuff = 0;
+                ability = Math.min(0, ability);
+                if(lockDefAbility){
+                    cmdAbility2= ability;
+                    ffAbility= ability;
+                    cmdFFAbility2 = ability;
+                } else {
+                    cmdAbility2 = Math.min(0, cmdAbility2);
                     ffAbility = Math.min(0, ffAbility);
-                }
-                if (currCMDUncanny){
                     cmdFFAbility2 = Math.min(0, cmdFFAbility2);
                 }
-                //dexModShowLimit=1;
-                ability = Math.min(0, ability);
-                cmdAbility2 = Math.min(0, cmdAbility2);
-                dodge = 0;
-                noDexShowLimit = 1;
             } else if (loseDex) {
-                //TAS.debug("we are blinded or flat footed uncanny:"+currUncanny+", cmd uncan:"+currCMDUncanny);
-                if (!currUncanny || !currCMDUncanny) {
-                    //dexModShowLimit=1;
+                if (!currUncanny ) {
                     dodge = 0;
+                    dodgebuff = 0;                    
                     noDexShowLimit = 1;
-                } else {
-                    buffff += dodgebuff;
-                    buffffcmd += dodgebuff;
                 }
                 //set to same as flat footed (probably 0) or less than if ability already under 10.
                 ability = Math.min(ability,ffAbility);
-                cmdAbility2 = Math.min(cmdAbility2,cmdFFAbility2);
+                cmdAbility2 = lockDefAbility?ability:(Math.min(cmdAbility2,cmdFFAbility2));
             }
+            if(noDexShowLimit && dexModShowLimit){
+                dexModShowLimit=0;
+            }
+
+            if (currUncanny) {
+                ffdodge = dodge;
+                ffdodgebuff = dodgebuff;
+            }
+
             if (parseInt(v.hd_not_bab,10)){
                 bab = parseInt(v.level,10)||0;
             }
-            ac = 10 + armor + shield + natural + size + dodge + ability + deflect + miscAC + condPenalty + buffs + armorbuff + shieldbuff + naturalbuff;
-            touch = 10 + size + dodge + ability + deflect + miscAC + condPenalty + bufftouch;
-            ff = 10 + armor + shield + natural + size + ffAbility + deflect + miscAC + condPenalty + buffs + (currUncanny ? dodge : 0) + armorbuff + shieldbuff + naturalbuff + flatfootedbuff ;
-            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + dodge + deflect + miscCMD + cmdPenalty + buffcmd;
-            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + buffcmd + (currCMDUncanny ? dodge : 0) + flatfootedbuff;
+
+            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
+            bufftouch=buffs+buffsTouchOnly+dodgebuff;
+            buffff+=buffs+armorbuff+shieldbuff+naturalbuff+buffFFOnly+ffdodgebuff;
+            buffcmd = buffs+buffsCMDOnly+dodgebuff;
+            buffffcmd += buffs+buffsCMDOnly+buffFFOnly+ffdodgebuff;
+
+            ac = 10 + armor + shield + natural + ability + size + deflect + miscAC + condPenalty + dodge + buffac;
+            touch = 10 +                         ability + size + deflect + miscAC + condPenalty + dodge + bufftouch; 
+            ff = 10 + armor + shield + natural + ffAbility + size + deflect + miscAC + condPenalty + ffdodge + buffff;
+            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + dodge + buffcmd;
+            cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + ffdodge + buffffcmd;
+
+
 
             if(parseInt(v.buffsumac,10)!==buffac){
                 setter.buffsumac=buffac;
@@ -264,6 +250,9 @@ export function updateDefenses ( callback, silently, eventInfo) {
             if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
                 setter.buffsumffcmd = buffffcmd;
             }
+            
+
+ 
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }
@@ -334,10 +323,10 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
         }
     }),
     updateAndDone = _.once(function(){
-        if (!doNotCallUpdateDefenseAfter) {
-            updateDefenses(done, silently);
-        } else {
+        if (doNotCallUpdateDefenseAfter){
             done();
+        } else {
+            updateDefenses(done, silently);
         }
     }),
     dropdownLower="",
@@ -413,8 +402,8 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  *@param {eventInfo} eventInfo unused eventInfo from on method
  */
 export function updateArmor (callback, silently, eventInfo) {
-    var done = function () { if (typeof callback === "function") { callback(); } },
-    params = {};
+    var done = function () { if (typeof callback === "function") { callback(); } };
+    
     getAttrs(defenseArmorFields, function (v) {
         var acp = 0, minAcp = 0, acA = 0, acS = 0, sp = 0, atk = 0, subAC = 0, subD = 0,
         subAcp = 0, nonProf = 0, subsp = 0, maxDex = 99, subE = 0,
@@ -422,9 +411,9 @@ export function updateArmor (callback, silently, eventInfo) {
         currAtkMod = 0,
         encumbranceDD = parseInt(v["max-dex-source"], 10) || 0,
         currentLoad = parseInt(v["current-load"], 10) || 0,
-        setter = {};
+        setter = {},params = {};
         try {
-            //TAS.debug("at updateArmor ",v);
+            TAS.debug("at updateArmor ",v);
             defenseArmorShieldRows.forEach(function (row) {
                 if (parseInt(v[row + "-equipped"],10) === 1) {
                     subAC = parseInt(v[row + "-acbonus"], 10) || 0;
@@ -471,7 +460,11 @@ export function updateArmor (callback, silently, eventInfo) {
                     maxDex = 0;
                     minAcp = Math.min(minAcp, -6);
                 }
+            } else if (encumbranceDD===3){
+                minAcp=0;
+                acp=0;
             }
+
             
             
             currACP = parseInt(v.acp, 10) || 0;
@@ -506,6 +499,7 @@ export function updateArmor (callback, silently, eventInfo) {
                 if (silently) {
                     params = PFConst.silentParams;
                 }
+                TAS.notice("updateArmor setting",setter,params);
                 SWUtils.setWrapper(setter, params, done);
             } else {
                 done();
@@ -648,7 +642,7 @@ export function migrate (callback,oldversion){
  */
 export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFDefense.recalculate");
+        TAS.info("leaving PFDefense.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -666,20 +660,20 @@ export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, si
                 });
             }, silently);
         }, silently);
-    },silently);
+    },oldversion,silently);
 });
 
 function registerEventHandlers () {
     _.each(defenseDropdowns, function (write, read) {
         on("change:" + read, TAS.callback(function eventsetDefenseDropdownMod(eventInfo) {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            setDefenseDropdownMod(read,null,null,eventInfo);
+            setDefenseDropdownMod(read,null,null,eventInfo,false);
         }));
     });
     on("change:uncanny_dodge" , TAS.callback(function eventUncannyDodgeUpdate(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            setDefenseDropdownMod(null,null,null,eventInfo);
+            setDefenseDropdownMod(null,null,null,eventInfo,false);
         }
     }));
     on("change:hd_not_bab" , TAS.callback(function eventCMDSwitchHDandBAB(eventInfo) {

@@ -296,6 +296,8 @@ function setupNewSheet (callback){
 		var isNPC = parseInt(v.is_npc,10)||0,
 		isPFS = parseInt(v.set_pfs,10)||0;
 		PFMigrate.setAllMigrateFlags(function(){
+			PFSkills.migrate();
+			PFCustom.migrate();
 			if (isNPC){
 				PFNPC.setToNPC(done);
 			} else if (isPFS){
@@ -312,15 +314,15 @@ function setupNewSheet (callback){
  *@param {function} callback when done if no errors
  *@param {function} errorCallback  call this if we get an error
  */
-function upgrade (oldversion, callback, errorCallback) {
+function migrate (oldversion, callback, errorCallback) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSheet.migrate");
+		TAS.debug("leaving PFSheet.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	}),
 	errorDone = _.once(function (){
-		TAS.warn("leaving migrate ERROR UPGRADE NOT FINISHED");
+		TAS.warn("leaving PFSheet.migrate ERROR UPGRADE NOT FINISHED");
 		if (typeof errorCallback === "function") {
 			errorCallback();
 		} else {
@@ -333,7 +335,7 @@ function upgrade (oldversion, callback, errorCallback) {
 		//TAS.debug("At PFSheet.migrate from oldversion:"+oldversion);
 		if (oldversion < 1.0) {
 			doneOne=_.after(7,function(){
-				TAS.info("we finished calling all the migrates");
+				TAS.info("PFSheet.migrate we finished calling all the migrates");
 				done();
 			});
 			PFMigrate.migrateConfigFlags(TAS.callback( function (){
@@ -437,11 +439,37 @@ function upgrade (oldversion, callback, errorCallback) {
 					},oldversion);
 				},oldversion);
 			}
-			if (oldversion <= 1.66){
-				PFAttackGrid.recalculate();
-				PFInventory.migrate();
-				PFSkills.migrate();
-				PFDefense.recalculate();
+
+			if (oldversion < 1.68){
+				PFCustom.migrate(function(){
+					PFSkills.recalculate(null,null,oldversion);
+					PFDefense.recalculate(null,null,oldversion);
+					PFAttackGrid.recalculate(null,null,oldversion);
+				});
+			}
+			if (oldversion < 1.69){
+				PFSpellCasterClasses.recalculate(null,null,oldversion);
+				PFFeatures.recalculate(null,null,oldversion);
+				PFAttacks.recalculate(null,null,oldversion);
+				PFAbility.recalculate(null,null,oldversion);
+				PFInventory.recalculate(null,null,oldversion);
+				PFBuffs.recalculate(null,null,oldversion);
+				PFDefense.recalculate(null,null,oldversion);
+			}
+			if (oldversion < 1.693){
+				PFCustom.fixProfessionDropdowns(PFSkills.recalculate);
+			}
+			if (oldversion < 1.697){
+				PFAttacks.recalculate(null,null,oldversion);
+			}
+			if (oldversion < 1.72){
+				PFSize.recalculate(oldversion,function(){
+					PFAttacks.adjustAllDamageDiceAsync(null,null);
+				});
+				PFSpells.resetSpellsTotals();
+			}
+			if (oldversion < 1.724){
+				PFSkills.migrate(null,oldversion);
 			}
 		}
 	} catch (err) {
@@ -453,7 +481,7 @@ function upgrade (oldversion, callback, errorCallback) {
 }
 function recalculateParallelModules (callback, silently, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSheet.recalculateParallelModules");
+		TAS.info("leaving PFSheet.recalculateParallelModules");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -560,18 +588,6 @@ function recalculateCore (callback, silently, oldversion) {
 	//TAS.debug("at recalculateCore!!!!");
 
 }
-/** migrates sheet specific things not part of other modules
- * @param {number} oldversion the current version attribute
- * @param {function} callback when done if no errors
- * 
- * @param {} callback 
- * @param {*} oldversion 
- */
-export function migrate (callback,oldversion){
-	if (typeof callback === "function"){
-		callback();
-	}
-}
 
 /** recalculate - all pages in sheet!  
  *@param {number} oldversion the current version attribute
@@ -595,17 +611,18 @@ export function recalculate (oldversion, callback, silently) {
 		recalculateCore(callEncumbrance, silently, oldversion);
 	});
 	silently=true;
-	migrate(callRecalcCore,oldversion);
+	callRecalcCore();
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
  *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
  * */
 export function checkForUpdate (forceRecalc) {
 	var done = function () {
+		TAS.info("leaving PFSheet.checkForUpdate");
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0}, PFConst.silentParams);
 	},
 	errorDone = _.once(function (){
-		TAS.warn("leaving checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
+		TAS.warn("leaving PFSheet.checkForUpdate ERROR UPGRADE NOT FINISHED DO NOT RESET VERSION");
 		SWUtils.setWrapper({ recalc1: 0, migrate1: 0 }, { silent: true });
 	});
 	getAttrs(['PFSheet_Version', 'migrate1', 'recalc1', 'is_newsheet', 'is_v1', 'hp', 'hp_max', 'npc-hd', 'npc-hd-num',
@@ -619,7 +636,7 @@ export function checkForUpdate (forceRecalc) {
 		setUpgradeFinished = function() {
 			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
-			PFSheet_Version: String((PFConst.version.toFixed(2))) }, PFConst.silentParams, function() {
+			PFSheet_Version: String((PFConst.version.toFixed(3))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
 					recalculate(currVer, null, false);
 				}
@@ -652,10 +669,10 @@ export function checkForUpdate (forceRecalc) {
 			SWUtils.setWrapper(setter,PFConst.silentParams);		
 		}
 		if (newSheet) {
-			PFSkills.migrate();
 			setupNewSheet(done);
 		} else if (migrateSheet){
-			upgrade(currVer, setUpgradeFinished, errorDone);
+			TAS.notice("UPGRADE SHEET");
+			migrate(currVer, setUpgradeFinished, errorDone);
 		} else if (recalc) {
 			currVer = -1;
 			recalculate(currVer, done, true);

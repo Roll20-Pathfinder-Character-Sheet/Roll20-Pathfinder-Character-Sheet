@@ -27,9 +27,3 @@ PFConsole.log('      | ##       athfinder        ');
 PFConsole.log('   #  | ##    sheet version       ');
 PFConsole.log('    ### /           ' + ("0000" + PFConst.version.toFixed(2)).slice(-5) + '         ');
 PFConsole.log('                                  ');
-//PFLog.modulecount++;
-//if (PFLog.modulecount === 35) {
-//	PFConsole.log('   All ' + PFLog.modulecount + ' Modules Loaded          ');
-//} else {
-//	PFConsole.log('   ONLY ' + PFLog.modulecount + ' Modules Loaded!        ' + PFLog.r, 'background: linear-gradient(to right,yellow,white,white,yellow); color:black;text-shadow: 0 0 8px white;');
-//}

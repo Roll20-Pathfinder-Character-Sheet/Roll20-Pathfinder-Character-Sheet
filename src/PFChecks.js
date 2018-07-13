@@ -4,6 +4,8 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as PFUtils from './PFUtils';
 import * as SWUtils from './SWUtils';
+import * as PFSkills from './PFSkills';
+
 /** PFChecks.applyConditions - handles changes to skill and ability checks due to conditions AND buffs.
  * Reads in condition that affect Ability and Skill checks and updates condition fields.
  * checks-cond, Phys-skills-cond, Perception-cond.
@@ -42,7 +44,6 @@ export function applyConditions (callback, silently) {
 			if (blindedMod !== currPhysSkills || isNaN(currPhysSkills)) {
 				setter["Phys-skills-cond"] = blindedMod;
 			}
-
 			if (casterlevel !== currCaster || isNaN(currCaster)) {
 				setter["CasterLevel-Penalty"] = casterlevel;
 			}
@@ -64,21 +65,20 @@ export function applyConditions (callback, silently) {
 				skillNote+= '**'+SWUtils.getTranslated('fascinated')+'**: ';
 				skillNote+=SWUtils.getTranslated('condition-fascinated-title') + '\r\n';
 			}
-
-	
 			if(skillNote!==v.condition_skill_notes){
 				setter['condition_skill_notes'] = skillNote;
 			}
 			if(initNote!==v.condition_init_notes){
 				setter['condition_init_notes'] = initNote;				
 			}
-
-
 		} catch (err) {
 			TAS.error("PFChecks.applyConditions", err);
 		} finally {
 			if (_.size(setter) > 0) {
 				SWUtils.setWrapper(setter, {}, done);
+				if(allSkillsMod !== currAllSkills){
+					PFSkills.updateAllSkillsDiff(allSkillsMod,currAllSkills);
+				}
 			} else {
 				done();
 			}

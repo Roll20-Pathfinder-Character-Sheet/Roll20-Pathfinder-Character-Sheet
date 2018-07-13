@@ -110,7 +110,26 @@ export function findAbilityInString  (stringToSearch) {
     if (/class.5.level/i.test(stringToSearch)) {
         return "class-5-level";
     }
-    return "";
+    if (/class.0.name/i.test(stringToSearch)) {
+        return "class-0-name";
+    }
+    if (/class.1.name/i.test(stringToSearch)) {
+        return "class-1-name";
+    }
+    if (/class.2.name/i.test(stringToSearch)) {
+        return "class-2-name";
+    }
+    if (/class.3.name/i.test(stringToSearch)) {
+        return "class-3-name";
+    }
+    if (/class.4.name/i.test(stringToSearch)) {
+        return "class-4-name";
+    }
+    if (/class.5.name/i.test(stringToSearch)) {
+        return "class-5-name";
+    }
+    return stringToSearch.replace("@{","").replace("}","");
+//    return "";
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
  *@param {int} casterlevel level of caster
@@ -207,7 +226,7 @@ export function shouldNotDisplayOption  (attr, val) {
             return (!(/^y/i.test(val)));
         case 'save':
         case 'saving_throw':
-            return ((/^n/i.test(val) || /harmless/i.test(val)) && !(/and|or/i.test(val)));
+            return ((/^no/i.test(val) || /harmless/i.test(val)) && !(/and|or/i.test(val)));
         case 'spell_fail':
             return  ( (parseInt(val,10)||0) !== 0);
         default:
@@ -457,10 +476,14 @@ export function parseSpellRangeText  (range, area) {
 }
 
 export function replaceMissingNegatives_BadDice (str){
-    return str.replace(PFConst.findBadNegDice, '$1d$2-$3');
+    //match still returns even if 3rd plus missing
+    if (PFConst.findBadNegDice.test(str)){
+        return str.replace(PFConst.findBadNegDice, '$1d$2-$3');
+    }
+    return str;
 }
 export function replaceMissingNegatives_CritRange (str){
-    return str.replace(PFConst.findBadCritRange, '/$1-20')
+    return str.replace(PFConst.findBadCritRange, '$1-20')
 }
 export function convertDashToMinus(str){
     return str.replace(PFConst.dashtominusreg,'-');
@@ -473,9 +496,11 @@ export function convertDashToMinus(str){
 export function getCostInGP  (str){
     var temp=0,
     matches = str.match(/(\d+)/);
+    TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on number:",matches);
     if (matches) { 
         temp = parseInt(matches[1],10)||0;
         matches = str.match(/(gp|cp|sp|pp)/i);
+        TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on coins:",matches);
         if (matches){
             switch(matches[1]){
                 case 'pp':
@@ -512,24 +537,24 @@ export function getIntFromString(str,cleanedup,atStart){
  * spaces: number of spaces string took 
  * @param {string} str the string that should have /19-20x2 or x2 in it.
  * @param {boolean} cleanedup if replaceMissingNegatives_CritRange already called on string
- * @param {boolean} atStart if true only look for dice at start of str
  * @returns {{'crit':number,'critmult':number,'spaces':number}}
  */
-export function getCritFromString (str,cleanedup,atStart){
+export function getCritFromString (str,cleanedup){
     var ret={'crit':20,'critmult':2,'spaces':0},matches;
     if (!cleanedup){
-        str = replaceMissingNegatives_CritRange(str);
         str = convertDashToMinus(str);
+        str = replaceMissingNegatives_CritRange(str);
     }
+    ret.critmult=2;
     if ((matches = PFConst.critreg.exec(str))!==null){
         ret.crit = parseInt(matches[1],10);
         if (matches[2]){
             ret.critmult=parseInt(matches[2],10);
         }
-        ret.spaces =matches.length;
+        ret.spaces =matches[0].length;
     } else if ( ( matches = PFConst.critmultreg.exec(str)) !== null){
-        ret.critmult= parseInt(matches[2],10);
-        ret.spaces =matches.length;
+        ret.critmult= parseInt(matches[1],10);
+        ret.spaces =matches[0].length;
     }
     return ret;
 }
@@ -546,13 +571,13 @@ export function getDiceDieFromString (str,cleanedup,atStart){
         str = replaceMissingNegatives_BadDice(str);
         str = convertDashToMinus(str);
     }
-    matches = PFConst.diceDiereg.exec(str);
+    matches =  str.match(PFConst.diceDiereg);//  PFConst.diceDiereg.exec(str);
     if (matches){
         if (!atStart || matches.index===0){
-            ret.spaces = matches.length;
+            ret.spaces = matches[0].length + matches.index;
             ret.dice=parseInt(matches[1],10)||0;
             ret.die=parseInt(matches[2],10)||0;
-            if (matches[3] === '-'){
+            if (matches[3] && matches[3] === '-'){
                 sign=-1;
             }
             if (matches[4]){
@@ -560,7 +585,7 @@ export function getDiceDieFromString (str,cleanedup,atStart){
             }
         }
     }
-    //TAS.debug("at getDiceDieFromString parsing "+str,matches);
+    TAS.debug("x1  at getDiceDieFromString parsing "+str,matches,ret);
     return ret;
 }
 /**replaceDiceDieString puts inline roll brackets [[ ]] around 'xdy +z' dice strings (z exists or not)
@@ -711,10 +736,14 @@ export function getNoteAfterNumber  (str) {
 export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,setField){
     var temp=0,
         attr=v[prefix+field+'_compendium'];
+    setter=setter||{};
+    TAS.debug("PFUtils.getCompendiumFunctionSet getting " +prefix+field+"_compendium, val: "+attr);
     if (attr){
         temp= methodToCall(attr);
+        TAS.debug("on return value is:"+temp);
         if (temp) { 
             setField=setField||field;
+            TAS.debug("setting "+prefix+field+" with value "+ temp);
             setter[prefix+setField]= temp;
         }
     }

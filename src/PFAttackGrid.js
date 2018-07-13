@@ -1,6 +1,5 @@
 'use strict';
 import _ from 'underscore';
-import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -187,7 +186,7 @@ function getOneSetAttackFields (attype){
     }
     fields.push('attk-penalty');
     fields.push('buff_attack-total');
-    TAS.debug("PFAttackGrid.getOneSetAttackFields returning fields for "+attype,fields);
+    //TAS.debug("PFAttackGrid.getOneSetAttackFields returning fields for "+attype,fields);
     return fields;
 }
 /**
@@ -201,7 +200,7 @@ function getAttackFields (attypes){
     fields= _.chain(validtypes).map(function(key){return _.values(attackGridFields[key]);}).flatten().compact().uniq().reject(function(a){return a.indexOf('macro')>=0; }).value().sort();
     fields.push('attk-penalty');
     fields.push('buff_attack-total');
-    TAS.debug("PFAttackGrid.getAttackFields returning fields for ",attypes,fields);
+    //TAS.debug("PFAttackGrid.getAttackFields returning fields for ",attypes,fields);
     return fields;
 }
 /** updateAttack - updates one row of attack grid (left most column in grid)
@@ -270,7 +269,6 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
         }
         return;
     }
-    TAS.debug("PFAttackGrid.updateAttacks",attypes,fields);
     getAttrs(fields,function(vout){
         var v={},setter={},params={};
         try{
@@ -289,6 +287,7 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
                 if(silently){
                     params = PFConst.silentParams;
                 }
+                TAS.debug("PFAttackGrid.updateAttacks setting",setter);
                 SWUtils.setWrapper(setter,params,callback);
             } else {
                 if(typeof(callback)==="function"){
@@ -304,30 +303,30 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
  * @param {string} buffType buff column without 'buff_' or '-total'
  * @param {*} eventInfo 
  */
-export function updateAttackGrid(buffType,eventInfo){
+export function updateAttackGrid(buffType,eventInfo,silently){
     switch(buffType.toLowerCase()){
         case 'melee':
-            updateAttacks(null, null, ['melee','melee2']);
+            updateAttacks(null, silently, ['melee','melee2']);
             break;
         case 'ranged':
-            updateAttacks(null, null, ['ranged','ranged2']);
+            updateAttacks(null, silently, ['ranged','ranged2']);
             break;
         case 'cmb':
-            updateAttacks(null, null, ['CMB','CMB2']);
+            updateAttacks(null, silently, ['CMB','CMB2']);
             break;
         case 'melee2':
-            updateAttackAsync('melee2');
+            updateAttackAsync('melee2',null, silently);
             break;        
         case 'ranged2':
-            updateAttackAsync('ranged2');
+            updateAttackAsync('ranged2',null, silently);
             break;
         case 'cmb2':
-            updateAttackAsync('CMB2');
+            updateAttackAsync('CMB2',null, silently);
             break;
     }
 }
-export function recalculateMelee(dummy1,dummy2,eventInfo){
-    updateAttacks(null, null, ['melee','melee2','CMB','CMB2']);
+export function recalculateMelee(dummy1,silently,eventInfo){
+    updateAttacks(null, silently, ['melee','melee2','CMB','CMB2']);
 }
 
 
@@ -348,7 +347,7 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
         return;
     }
     fieldUpdated =eventInfo.sourceAttribute;
-    fields=[fieldUpdated,'ranged_2_show','cmb_2_show'];
+    fields=[fieldUpdated];
     fields = Object.keys(attackGridFields).reduce(function(m,a){
         m.push(a);
         m.push(attackGridFields[a].babdd);
@@ -357,15 +356,13 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
     },fields);
     getAttrs(fields,function(v){
         var newVal=0,setter={},silentSetter={},ranged2=0,cmb2=0;
-        TAS.debug("updateAttackBABDropdownDiffs values", v);
+        //TAS.debug("updateAttackBABDropdownDiffs values", v);
 
         newVal=parseInt(v[fieldUpdated],10)||0;
-        ranged2=parseInt(v.ranged_2_show,10)||0;
-        cmb2= parseInt(v.cmb_2_show,10)||0;
+        ranged2=1;
+        cmb2= 1;
         Object.keys(attackGridFields).filter(function(a){
-            return ((a!=='ranged2'||ranged2) &&  (a!=='CMB2'||cmb2));
-        }).filter(function(a){
-            TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
+            //TAS.debug("a is "+a +", dropdown is "+attackGridFields[a].babdd+", val is "+ v[attackGridFields[a].babdd]);
             return ( (v[attackGridFields[a].babdd]||'').toLowerCase()===fieldUpdated.toLowerCase());
         }).forEach(function(a){
             var currVal=0,diff=0;
@@ -398,7 +395,7 @@ export function migrate (callback, oldversion){
  */
 export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
-        //TAS.debug("leaving PFAttackGrid.recalculate");
+        TAS.info("leaving PFAttackGrid.recalculate");
         if (typeof callback === "function") {
             callback();
         }

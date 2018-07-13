@@ -24,23 +24,23 @@ var menuMap={
 
 /** creates a command macro button for a repeating section
  * it also extends to add old lists using "extendbysections"
- * @param {jsmap} baseAttribs object of schema:
- *  name:string ex:'abilities',
- *  template:string ex:'pf_generic',
- *  header:string ex:'header_image-pf_generic',
- *  section:string the name after 'repeating_' e.g. weapon,item, spells, etc
+ *  name:string,-- ex:'abilities',
+  * template:string,-- ex:'pf_generic',
+  * header:string,-- ex:'header_image-pf_generic',
+ * section:string the name after 'repeating_' e.g. weapon,item, spells, etc
  *  bonusField:string bonus attr to add at the end of the name attr of each row, put into parenthesis, such as Burning Hands (Sp),
  *  usesField:string used or attr name with |max if instead to print uses/max,
  *  nameField:string name of header of menu written to {{#name}}
  *  linkField:string the attr of the roll button 'roll'
  *  npclinkField:string if necessary, different link field to use if the char is an NPC
- *  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
+  *  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
  *  filterValue:string if filter should be custom (not 1/0) then fill in value ex: 'Sp', cannot be '0' (zero)
- *  groupByField:string optional name of attr to group by
- *  translateGroup: if ^{} should be placed around groupby field value
- *  translateBonus: if ^{} should be placed around bonus field value
- *  groupMap:{key:string,key:string} if instead of grouping by the groupField itself, pass the value to a map and group by the result.
- * @param {function(string)} callback Pass string for command macro as first param, or ""
+  * groupByField:string optional name of attr to group by
+  * translateGroup: if ^{} should be placed around groupby field value
+  *  translateBonus: if ^{} should be placed around bonus field value
+  *  groupMap:{key:string,key:string} --if instead of grouping by the groupField itself, pass the value to a map and group by the result.
+ * @param {{name:string,template:string,header:string,section:string ,bonusField:string, usesField:string,nameField:string,linkField:string,npclinkField:string, filterField:string ,filterValue:string, groupByField:string ,translateGroup:boolean, translateBonus:boolean, groupMap:Map<string,string>}} baseAttribs the 
+  * @param {{function(string)}} callback Pass string for command macro as first param, or ""
  */
 export function getRepeatingCommandMacro (baseAttribs,callback,header){
     var done = function (macro,origMacro) { 
@@ -58,7 +58,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
         linkField="roll",
         filterField="",
         filterValue="",
-		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag}{{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
+		baseMacro = "&{template:REPLACETEMPLATE} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{REPLACEHEADER}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle=REPLACESUBTITLE}} {{name=REPLACENPC^{REPLACENAME}}}",
         baseCommand = " [ REPLACEBUTTON ](~@{character_id}|REPLACELINK)",
         noRows = " {{description=^{none-available} }}";
     if (!baseAttribs || !baseAttribs.section || !baseAttribs.linkField){
@@ -122,7 +122,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                 }
             });
         } catch (outerError2){
-            TAS.error("PFMenus.getRepeatingCommandMacro outererror 2 assembling all attrs in rows for "+ baseAttribs.section, outerError2);
+            TAS.error("PFMenus.getRepeatingCommandMacro outerError2. While assembling all attrs in rows for "+ baseAttribs.section, outerError2);
             done("");
             return;
         }
@@ -240,8 +240,11 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                                 tempshow=parseInt(v[linePrefix+'showinmenu'],10)||0;
                                 retObj.showinmenu = retObj.showinmenu && tempshow;
                             }
-                            if (bonusField && v[linePrefix+bonusField] && v[linePrefix+bonusField]!=='not-applicable'){
+                            if (bonusField && v[linePrefix+bonusField] && !( v[linePrefix+bonusField]==='not-applicable' ||
+                                v[linePrefix+bonusField]=="0")){ //double equal 0
                                 bonus = ' (' + (baseAttribs.translateBonus?'^{':'') + v[linePrefix+bonusField] + (baseAttribs.translateBonus?'}':'') +')';
+                            } else {
+                                bonus='';
                             }
                             buttonName  = retObj.name + bonus + usesStr;
                             retObj.chatLink='['+SWUtils.escapeForRollTemplate(SWUtils.escapeForChatLinkButton(buttonName))+'](~@{character_id}|'+ linePrefix + linkField + ')';
@@ -358,15 +361,3 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
     }
 }
-/** same as resetOneCommandMacro if you do not know the npc status 
- *@param {string} section name after "repeating_"
- *@param {function} callback  when done
- */
-export function resetOneCommandMacroNoNPC (section,callback,header){
-    getAttrs(['is_npc'],function(v){
-        resetOneCommandMacro(section, (parseInt(v.is_npc,10)||0), callback,header);
-    });
-}
-
-//PFConsole.log('   PFMenus module loaded          ');
-//PFLog.modulecount++;

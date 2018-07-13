@@ -9,39 +9,40 @@ import * as PFMigrate from './PFMigrate';
 import * as PFEncumbrance from './PFEncumbrance';
 import * as PFAttacks from './PFAttacks';
 
-
+//these use strings on the left so javascript doesn't confuse the number with array indices 
+//converts from the attack mod value to easy 0 thrrough 8
 export var sizeModToEasySizeMap={
-	 '0':4,
-	 '1':3,
-	 '2':2,
-	'-8':8,
-	 '4':1,
-	'-4':7,
-	'-2':6,
-	'-1':5,
-	 '8':0
+	 '0':4, //medium
+	 '1':3, //small
+	 '2':2, //tiny
+	'-8':8, //colossal
+	 '4':1, //diminutive
+	'-4':7, //gargantuan
+	'-2':6, //huge
+	'-1':5, //large
+	 '8':0 //fine
 },
 reverseSizeMap={
-	 '0':8,
-	 '1':4,
-	 '2':2,
-	 '3':1,
-	 '4':0,
-	'5':-1,
-	'6':-2,
-	'7':-4,
-	'8':-8
+	 '0':8, //fine
+	 '1':4, //diminutive
+	 '2':2, //tiny
+	 '3':1, //small
+	 '4':0, //medium
+	'5':-1, //large
+	'6':-2, //huge
+	'7':-4, //gargantuan
+	'8':-8 //colossal
 },
 skillSizeMap = {
-	'0':0,
-	'1':2,
-	'2':4,
-	'8':8,
-	'4':6,
-	'-8':-8,
-	'-4':-6,
-	'-2':-4,
-	'-1':-2
+	'0':0, //medium
+	'1':2, //small
+	'2':4, //tiny
+	'8':8, //diminutive
+	'4':6, //fine
+	'-8':-8, //colossal
+	'-4':-6, //gargantuan
+	'-2':-4, //huge
+	'-1':-2 //large
 },
 sizeNameMap = {
 	'colossal':-8,
@@ -55,15 +56,15 @@ sizeNameMap = {
 	 'fine':8
 },
 reverseSizeNameMap = {
-'0':'medium',
-'1':'small',
-'2':'tiny',
-'-8':'colossal',
-'4':'diminutive',
-'-4':'gargantuan',
-'-2':'huge',
-'-1':'large',
-'8':'fine'
+	'0':'medium',
+	'1':'small',
+	'2':'tiny',
+	'-8':'colossal',
+	'4':'diminutive',
+	'-4':'gargantuan',
+	'-2':'huge',
+	'-1':'large',
+	'8':'fine'
 };
 
 /** getSizeFromText - returns size mod based on size display name
@@ -137,13 +138,13 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return memo;
 	  },{});
 	try {
-		TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
+		//TAS.debug("PFSize.updateDamageDice defSize:"+defaultSize+", diff:"+sizediff+", dice:"+currDice+"d"+currDie);
 		currDice=parseInt(currDice,10);
 		currDie=parseInt(currDie,10);
 		if(!(isNaN(currDice)||isNaN(currDie))){
 			dicestring=currDice+"d"+currDie;
 			currSize=sizeModToEasySizeMap[String(defaultSize)];
-			TAS.debug("currSize now : "+currSize);
+			//TAS.debug("currSize now : "+currSize);
 			if (currDice<=0 || currDie > 12 ) {return null;}
 			if (currDie===4 && currDice >24){ currDice=24;}
 			else if (currDie===6 && currDice > 16) {currDice=16;}
@@ -169,8 +170,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				newrow = currow + rowdiff;
 				newrow = Math.min(Math.max(newrow,1),20);
 				dicestring = diceSizes[newrow][0];
-				TAS.debug("PFSize "+currDice+"d"+currDie+" is currrow:"+currow+" going from size:"+
-				   currSize+" of diff:"+sizediff+", move "+rowdiff+" levels to "+ newrow+" dice is "+dicestring);
+				//TAS.debug("PFSize "+currDice+"d"+currDie+" is currrow:"+currow+" going from size:"+currSize+" of diff:"+sizediff+", move "+rowdiff+" levels to "+ newrow+" dice is "+dicestring);
 				matches=dicestring.match(/(\d+)d(\d+)/);
 				currDice=parseInt(matches[1],10);
 				currDie=parseInt(matches[2],10);
@@ -178,13 +178,19 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 				if (sizediff >0 ) {
 					currSize++;
 					sizediff--;
-					if (currow===20){break;}
+					if (currow>=20){
+						TAS.warn("PFSize.updateDamageDice increased off top of grid to row "+currow);
+						break;
+					}
 				} else {
 					currSize--;
 					sizediff++;
-					if (currow===1) {break;}
+					if (currow<=1) {
+						TAS.warn("PFSize.updateDamageDice decreased under bottom of grid to row "+currow);
+						break;
+					}
 				}
-				TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
+				//TAS.debug("updateDamageDice: currow is now"+currow+", diff still:"+sizediff);
 			}
 		}
 	} catch(err){
@@ -193,8 +199,12 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return {"dice":currDice,"die":currDie};
 	}
 }
-
-export function setSize(str,setter){
+/** sets the size veriables based on the string passed in
+ * 
+ * @param {string} str  the name of the size in english
+ * @param {Map<string,int>} setter to pass to setAttrs
+ */
+export function setSizeFromString(str,setter){
 	var tempstr='',sizeMap={};
 	try {
 		sizeMap = getSizeFromText(str);
@@ -221,43 +231,58 @@ export function setSize(str,setter){
 	}
 }
 
-export function updateSize (v,eventInfo,setter) {
-	var size =  0,buffSize=0, defaultSize=0,deflevel=0,newlevel=0,
-		buffLevels=0, skillSize = 0, tempstr='',sizeDisplay='';
+function setSizeDisplay (size,v,setter){
+	var tempstr='',sizeDisplay='';
+	setter=setter||{};
+	tempstr=reverseSizeNameMap[String(size)];
+	sizeDisplay=SWUtils.getTranslated(tempstr);
+	if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
+		setter.size_display=sizeDisplay;
+	}
+	return setter;
+}
+
+/** Overwrites any current change to size with change to size from buffs
+ * 
+ * @param {*} levelChange 
+ * @param {*} v 
+ * @param {*} eventInfo 
+ * @param {*} setter 
+ */
+export function updateSize (levelChange,v,eventInfo,setter) {
+	var size =  0,newSize=0, defaultSize=0,deflevel=0,newlevel=0, skillSize = 0;
 	try {
 		setter=setter||{};
 		defaultSize = parseInt(v.default_char_size,10)||0;
-		size = parseInt(v['size'], 10) || 0;
-		buffLevels=parseInt(v['buff_size-total'],10)||0;
-		if (buffLevels!==0 ){
+		//if levelchange is 0, then we are resetting it to defaultSize
+		newSize=defaultSize;
+		if (levelChange!==0 ){
 			deflevel = sizeModToEasySizeMap[String(defaultSize)];
-			newlevel = deflevel+buffLevels;
-			buffSize = reverseSizeMap[String(newlevel)];
-			if (buffSize!==size){
-				setter['size']=buffSize;
-				size = buffSize;
+			newlevel = deflevel+levelChange;
+			newSize = reverseSizeMap[String(newlevel)];
+		}
+
+		size = parseInt(v['size'], 10) || 0;
+		if (newSize!==size){
+			setter['size']=newSize;
+			setter["CMD-size"] = (newSize * -1);
+			skillSize = skillSizeMap[String(newSize)];
+			setter.size_skill = skillSize;
+			setter.size_skill_double = (2*skillSize);
+		} else {
+			//if the same, we may be resetting, so check each one:
+			if ((parseInt(v["CMD-size"],10)||0) !== (newSize *-1)){
+				setter["CMD-size"] = (newSize * -1);
 			}
-		} else if (eventInfo&&eventInfo.sourceAttribute.toLowerCase()==='buff_size-total'){
-			if (size!==defaultSize){
-				setter['size']=defaultSize;
-				size = defaultSize;
+			skillSize = skillSizeMap[String(newSize)];
+			if ((parseInt(v.size_skill,10)||0) !== skillSize){
+				setter.size_skill = skillSize;
+			}
+			if ((parseInt(v.size_skill_double,10)||0) !== (2*skillSize)){
+				setter.size_skill_double = (2*skillSize);
 			}
 		}
-		try {
-			tempstr=reverseSizeNameMap[String(size)];
-			if (tempstr){
-				sizeDisplay = getTranslationByKey(sizeDisplay);
-			}
-		} catch (err3){
-			sizeDisplay = tempstr;
-		}
-		if (sizeDisplay && (sizeDisplay!== v.size_display || !v.size_display)){
-			setter.size_display=sizeDisplay;
-		}
-		skillSize = skillSizeMap[String(size)];
-		setter.size_skill = skillSize;
-		setter["CMD-size"] = (size * -1);
-		setter.size_skill_double = (2*skillSize);
+		setSizeDisplay(newSize,v,setter);
 	} catch (err) {
 		TAS.error("PFSize.updateSize", err);
 	} finally {
@@ -265,41 +290,82 @@ export function updateSize (v,eventInfo,setter) {
 		return setter;
 	}
 }
-
-export function updateSizeAsync (callback, silently,eventInfo) {
-	var done = _.once(function () {
+/**
+ * 
+ * @param {function(Number)} callback  call with the value of the change in sizes so if 0 we know there was no change
+ * @param {*} silently 
+ * @param {*} eventInfo 
+ */
+function updateSizeAsync (callback, silently,eventInfo) {
+	var done = function (change) {
 		if (typeof callback === "function") {
-			callback();
+			callback(change);
 		}
-	});
+	};
 	getAttrs(["size", "size_skill","size_skill_double", "default_char_size", "CMD-size", "buff_size-total","size_display"], function (v) {
 		var params = {},
-		setter = {};
+		setter = {},
+		levelChange=0,currSize=0,defSize=0,ddLevelChange=0,forceResize=0;
 		try {
-			updateSize(v,eventInfo,setter);
+			//if updating buff just overwrite the size dropdown
+			if (eventInfo &&  eventInfo.sourceAttribute==='buff_size-total'){
+				levelChange=parseInt(v['buff_size-total'],10)||0;
+				updateSize(levelChange,v,eventInfo,setter);
+			} else if (!eventInfo || eventInfo.sourceAttribute==='size'){
+				//user must remove the buff if they want to use the dropdown
+				levelChange=parseInt(v['buff_size-total'],10)||0;
+				if (levelChange===0){
+					currSize=parseInt(v.size,10)||0;
+					defSize=parseInt(v.default_char_size,10)||0;
+					levelChange=getSizeLevelChange(currSize,defSize);						
+					if (levelChange===0 ){
+						if (eventInfo){
+							if ((parseInt(eventInfo.previousValue,10)||0) !== (parseInt(eventInfo.newValue,10)||0)){
+								forceResize=(parseInt(eventInfo.newValue,10)||0) - (parseInt(eventInfo.previousValue,10)||0);
+							}
+						}
+					}
+				}
+				updateSize(levelChange,v,eventInfo,setter);
+			} else if (eventInfo.sourceAttribute==='default_char_size'){
+				//just pass the new level diff to callback
+				currSize=parseInt(v.size,10)||0;
+				defSize=parseInt(v.default_char_size,10)||0;
+				levelChange=getSizeLevelChange(currSize,defSize);
+			} else {
+				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
+			}
+			
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
 			if (_.size(setter) > 0) {
-				TAS.debug("PFSize.updateSizeAsync, setting:",setter);
+				//TAS.debug("PFSize.updateSizeAsync, setting:",setter);
 				if (silently) {
 					params = PFConst.silentParams;
 				}
-				setAttrs(setter, params, done);
+				SWUtils.setWrapper(setter, params, function(){done(levelChange);});
+			} else if (levelChange!==0 || forceResize !== 0){
+				done(1);
 			} else {
-				done();
+				done(0);
 			}
 		}
 	});
 }
 function setNewSize(eventInfo){
-	updateSizeAsync(function(){
-		PFEncumbrance.updateLoadsAndLift();
-		PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+	updateSizeAsync(function(changed){
+		if (changed ){
+			PFEncumbrance.updateLoadsAndLift();
+			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+		}
 	},false,eventInfo);
+	// changing size back to medium would never update DamageDice
+	PFEncumbrance.updateLoadsAndLift();
+	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 }
 function applyNewSizeToSheet(eventInfo){
-	TAS.debug("PFSize.applyNewSizeToSheet");
+	//TAS.debug("PFSize.applyNewSizeToSheet");
 	PFEncumbrance.updateLoadsAndLift();
 	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
 }
@@ -308,25 +374,34 @@ export function migrate (callback){
 		callback();
 	}
 }
-export function recalculate (callback, silently, oldversion) {
+export var recalculate = TAS.callback(function PFSizeRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("Leaving PFSize.recalculate");
+		TAS.info("leaving PFSize.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
 	});
-	TAS.debug("At PFSize.recalculate");
 	updateSizeAsync(done, silently,null);
-}
+});
 function registerEventHandlers () {
 	//size
 	on("change:size change:default_char_size", TAS.callback(function eventUpdateSize(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
+		var prevv=0,newv=0;
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType );
+		TAS.debug(eventInfo);
+		if (eventInfo.sourceType === "player" ) {
 			setNewSize(eventInfo);
 		} else {
-			applyNewSizeToSheet(eventInfo);
+			//if sheetworker then it may be a loop, so don't change size just make sure everything is using the new size.
+			//this will happen every time we call with bufffs so it will be called twice
+			//applyNewSizeToSheet(eventInfo);
 		}
 	}));
+	on("change:size change:buff_size-total", TAS.callback(function eventUpdateSize(eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
+			setNewSize(eventInfo);
+		}
+	}));	
 }
 registerEventHandlers();

@@ -131,35 +131,41 @@ export function migrateRepeatingDamage (ids,callback) {
         fields.push(dmgDropdownField);
         fields.push(abilityMultField);
     });
+    fields.push("migrated_damage-multiplier");
     getAttrs(fields, function (v) {
-        var setter = {};
+        var migrated=0, setter = {};
         try {
-            //TAS.debug("migrateRepeatingDamage", "values", v);
-            _.each(ids, function (id) {
-                var dmgDropdownField = "repeating_weapon_" + id + "_damage-ability",
-                abilityMultField = "repeating_weapon_" + id + "_damage_ability_mult",
-                ability, multStr, strToSet, multval;
-                try {
-                    ability = PFUtils.findAbilityInString(v[dmgDropdownField]);
-                    multStr = findMultiplier(v[dmgDropdownField]);
-                    strToSet = "@{" + ability + "}";
-                    multval = parseFloat(multStr, 10);
-                    //multfield is blank but multstr is not.
-                    if (!(v[abilityMultField]) && multStr && ability) {
-                        if (!isNaN(multval)) {
-                            if (multval !== 1.0) {
-                                setter[abilityMultField] = multStr;
+            migrated=parseInt(v["migrated_damage-multiplier"],10)||0;
+            if(!migrated){
+                //TAS.debug("migrateRepeatingDamage", "values", v);
+                _.each(ids, function (id) {
+                    var dmgDropdownField = "repeating_weapon_" + id + "_damage-ability",
+                    abilityMultField = "repeating_weapon_" + id + "_damage_ability_mult",
+                    ability, multStr, strToSet, multval;
+                    try {
+                        ability = PFUtils.findAbilityInString(v[dmgDropdownField]);
+                        multStr = findMultiplier(v[dmgDropdownField]);
+                        strToSet = "@{" + ability + "}";
+                        multval = parseFloat(multStr, 10);
+                        //multfield is blank but multstr is not.
+                        if ((!(v[abilityMultField])) && multStr && ability) {
+                            if (!isNaN(multval)) {
+                                if (multval !== 1.0) {
+                                    setter[abilityMultField] = multStr;
+                                } else {
+                                    setter[abilityMultField] = 1;
+                                }
+                            }
+                            if (ability) {
+                                setter[dmgDropdownField] = strToSet;
                             }
                         }
-                        if (ability) {
-                            setter[dmgDropdownField] = strToSet;
-                        }
+                    } catch (errinner) {
+                        TAS.error("migrateRepeatingDamage dropdown to mult: could not migrate str " + v[dmgDropdownField] + " in attack row " + id, errinner);
                     }
-                } catch (errinner) {
-                    TAS.error("migrateRepeatingDamage dropdown to mult: could not migrate str " + v[dmgDropdownField] + " in attack row " + id, errinner);
-                }
-            });
-            setter["migrated_damage-multiplier"] = "1";
+                });
+                setter["migrated_damage-multiplier"] = "1";
+            }
         } catch (err) {
             TAS.error("migrateRepeatingDamage outer error!? SHOULD NOT HAPPEN", err);
         } finally {
@@ -793,7 +799,7 @@ export function migrateAttackDropdowns (callback,oldversion){
             setter.cmb2_bab='bab';
             setter['cmb2_bab-mod']=bab;
             setter.migrated_attack_bab_dropdowns = 1;
-            TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
+            //TAS.debug("####################","migrate attack dropdowns should be silent!",setter);
             SWUtils.setWrapper(setter,PFConst.silentParams,callback);
         } else if (typeof callback === "function"){
             callback();
@@ -824,12 +830,12 @@ export function getAllMigrateFlags (v){
     v['migrated_npc']=1;
     v['migrated_worn_equipment']=1;
     v['migrated_repeating_item_attributes']=1;
-    v['migrated_skill_macrosv1']=1;
-    v['migrated_attack_macrosv1']=1;
-    v['migrated_spells_macrosv1']=1;
-    v['migrated_feature_macrosv109']=1;
-    v['migrated_ability_macrosv112']=1;
-	v['migrated_item_macrosv1']=1;
+    //v['migrated_skill_macrosv1']=1;
+    //v['migrated_attack_macrosv1']=1;
+    //v['migrated_spells_macrosv1']=1;
+    //v['migrated_feature_macrosv109']=1;
+    //v['migrated_ability_macrosv112']=1;
+	//v['migrated_item_macrosv1']=1;
     v['migrated_hp_misc']=1;
     v['migrated_maxskill_misc']=1;
     v['migrated_featurelists_defaults']=1;
@@ -839,12 +845,14 @@ export function getAllMigrateFlags (v){
     v['migrated_whispers']=1;
     v['migrated_linked_attacks']=1;
     v['migrated_buffs_rangeddmg_abiilty']=1;
-    //v['migrated_take10_dropdown']=1; force this to migrate, for some reason it's not setting
-    v['migrated_ability_dropdowns3']=1;
-    v['migrated_attack_bab_dropdowns']=1;
     v["migrated_itemlist_newfields"]=1;
-    v['migrated_skill_speedup2']=1;
     v['migrate_fatigued_conditions']=1;
+    v['migrated_attack_bab_dropdowns']=1;
+    v['migrated_skill_dropdowns5']=1;
+    //force these to migrate, for some reason sheets using old values even for new Sheets!
+    //v['migrated_ability_dropdowns4']=1;
+    //v['migrated_take10_dropdown']=1; 
+    //v['migrated_skill_speedup3']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){

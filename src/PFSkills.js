@@ -21,7 +21,7 @@ skillAppendNums = ["", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 miscSkillAppendNums = ["-0", "-1", "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9"],
 coreSkillsWithFillInNames = ["Craft", "Misc-Skill", "Perform", "Profession"],
 backgroundOnlySkillsWithFillinNames = ["Artistry", "Lore"],
-skillsWithFillInNames = coreSkillsWithFillInNames.concat(backgroundOnlySkillsWithFillinNames).sort(),
+skillsWithFillInNames = coreSkillsWithFillInNames.concat(backgroundOnlySkillsWithFillinNames).concat(["CS-Misc-Skill"]).sort(),
 backgroundOnlySkills = SWUtils.cartesianAppend(backgroundOnlySkillsWithFillinNames, skillAppendNums),
 knowledgeSubSkills = ["Arcana", "Dungeoneering", "Engineering", "Geography", "History", "Local", "Nature", "Nobility", "Planes", "Religion"],
 coreSkillsWithSubSkills = coreSkillsWithFillInNames.concat(["Knowledge"]).sort(),
@@ -31,14 +31,15 @@ knowledgeSkillAppends = _.map(knowledgeSubSkills, function (subskill) {
 }),
 //for each skill array of the possible skills {"Craft":["Craft","Craft2"...],"Perform":["Perform","Perform2"...] }
 subskillArrays = _.reduce(skillsWithSubSkills, function (memo, skill) {
-	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums;
+	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : 
+		(skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums;
 	memo[skill] = SWUtils.cartesianAppend([skill], skillAppendNums);
 	return memo;
 }, {}),
 backgroundCoreSkills = regularBackgroundSkillsPlusKnow.concat(subskillArrays["Craft"]).concat(subskillArrays["Perform"]).concat(subskillArrays["Profession"]).concat(["Misc-Skill-5", "Misc-Skill-6", "Misc-Skill-7", "Misc-Skill-8", "Misc-Skill-9"]).sort(),
 adventureSkills = regularAdventurePlusKnow.concat(["Misc-Skill-0", "Misc-Skill-1", "Misc-Skill-2", "Misc-Skill-3", "Misc-Skill-4"]).sort(),
 checkRTArray = ["-ReqTrain", "-ranks"],
-baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
+baseGenMacro = "&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} ",
 skillHeaderMacro = "{{name=^{REPLACELOWER} ^{skills} }} ",
 npcSkillHeaderMacro = "{{name=^{npc} ^{REPLACELOWER} ^{skills} }} ",
 //  1 is the normal size modifier in size_skill, 2 is size_skill_double
@@ -58,9 +59,10 @@ knowledgeSkills = _.map(knowledgeSubSkills, function (subskill) {
 backgroundSkills = backgroundCoreSkills.concat(backgroundOnlySkills).sort(),
 allCoreSkills = adventureSkills.concat(backgroundCoreSkills).sort(),
 consolidatedSkills = ["CS-Acrobatics", "CS-Athletics", "CS-Finesse", "CS-Influence", "CS-Nature", "CS-Perception", "CS-Performance", "CS-Religion", "CS-Society", "CS-Spellcraft", "CS-Stealth", "CS-Survival"],
+consolidatedMiscSkills = ["CS-Misc-Skill-0", "CS-Misc-Skill-1", "CS-Misc-Skill-2", "CS-Misc-Skill-3", "CS-Misc-Skill-4","CS-Misc-Skill-5", "CS-Misc-Skill-6", "CS-Misc-Skill-7", "CS-Misc-Skill-8", "CS-Misc-Skill-9"],
 allNonFillInSkills = regularCoreSkills.concat(knowledgeSkills).concat(consolidatedSkills).sort(),
 nonMiscFillInSkillsInstances = SWUtils.cartesianAppend(["Craft", "Perform", "Profession", "Artistry", "Lore"], skillAppendNums),
-miscFillInSkillsInstances =SWUtils.cartesianAppend(["Misc-Skill"], miscSkillAppendNums),
+miscFillInSkillsInstances =SWUtils.cartesianAppend(["Misc-Skill"], miscSkillAppendNums).concat(consolidatedMiscSkills),
 allFillInSkillInstances = nonMiscFillInSkillsInstances.concat(miscFillInSkillsInstances).sort(),
 allTheSkills = allNonFillInSkills.concat(allFillInSkillInstances).sort(),
 coreSkillAbilityDefaults = {
@@ -115,39 +117,11 @@ consolidatedSkillAbilityDefaults = {
 	"CS-Stealth": "dex",
 	"CS-Survival": "wis"
 },
-defaultSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWER}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultSkillMacroMap = {
-	'&{template:':{'current':'pf_generic}'},
-	'@{toggle_accessible_flag}':{'current':'@{toggle_accessible_flag}'},
-	'@{toggle_rounded_flag}':{'current':'@{toggle_rounded_flag}'},
-	'{{color=':{'current':'@{rolltemplate_color}}}'},
-	'{{header_image=':{'current':'@{header_image-pf_generic-skill}}}','old':['@{header_image-pf_generic}}}']},
-	'{{character_name=':{'current':'@{character_name}}}'},
-	'{{character_id=':{'current':'@{character_id}}}'},
-	'{{subtitle}}':{'current':'{{subtitle}}'},
-	'{{name=':{'current':'^{REPLACELOWER}}}','old':['REPLACE}}','@{REPLACE-name}}}','^{REPLACE}}}']},
-	'{{Check=':{'current':'[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}','old':['[[ 1d20 + [[ @{REPLACE} ]] ]]}}'],'replacements':[{'from':'1d20','to':'@{skill-query}'}]},
-	'@{REPLACE-ut}':{'current':'@{REPLACE-ut}'},
-	'@{skill_options}':{'current':'@{skill_options}'},
-	'@{REPLACE-cond-notes}':{'current':'@{REPLACE-cond-notes}'},
-	'{{generic_note=':{'current':'@{REPLACE-note}}}'}
-},
-defaultFillInSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{REPLACELOWERREMOVENUMBER} @{REPLACE-name}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultFillInSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'^{REPLACELOWERREMOVENUMBER} (@{REPLACE-name})}}','old':['REPLACEREMOVENUMBER (@{REPLACE-name})}}','REPLACE}}','@{REPLACE-name}}}'],'replacements':[{'from':'REPLACEREMOVENUMBER','to':'^{REPLACELOWERREMOVENUMBER}'}]}
-}),
-defaultMiscSkillMacro='&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-skill}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{REPLACE}}} {{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}} @{REPLACE-ut} @{skill_options} @{REPLACE-cond-notes} {{generic_note=@{REPLACE-note}}}',
-defaultMiscSkillMacroMap = _.extend(_.clone(defaultSkillMacroMap),{
-	'{{name=':{'current':'@{REPLACE}}}','old':['Misc-Skill (@{REPLACE-name})}}']}
-}),
-defaultSkillDeletedMacroAttrs=['{{check=[[ @{skill-query} + [[ @{REPLACE} ]] ]]}}'],
-defaultSkillAttrName='REPLACE-macro',
-keysNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}'],
-valsNeedingReplacing = ['@{REPLACE-cond-notes}','@{REPLACE-ut}','{{check=','{{generic_note=','{{name='],
 globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
-	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total'],
+	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total',
+	'checks-cond','buff_Check-total','buff_check_skills-total'],
 skillNameAppends = ['', '-cs', '-ranks', '-ability', '-racial', '-trait', '-feat', '-item', '-misc-mod', '-ReqTrain', '-ut'],
 //ability based skill buffs events located in PFBuffs
 events = {
@@ -156,32 +130,6 @@ events = {
 	skillEventsPlayer: "change:REPLACE-ability change:REPLACE-ranks change:REPLACE-racial change:REPLACE-trait change:REPLACE-feat change:REPLACE-item change:REPLACE-ReqTrain"
 };
 
-function migrateMacros (callback){
-	var done = _.once(function(){
-		//TAS.debug("leaving PFSkills.migrateMacros");
-		if (typeof callback === "function"){
-			callback();
-		}
-	}),
-	doneOne = _.after(3,function(){
-		SWUtils.setWrapper({'migrated_skill_macrosv1':1},PFConst.silentParams,done);
-	});
-	try {
-		//TAS.debug("at PFSkills.migrateMacros");
-		getAttrs(['migrated_skill_macrosv1'],function(v){
-			if(! parseInt(v.migrated_skill_macrosv1,10)) {
-				//TAS.debug"migrateMacros, calling migrateStaticMacrosMult on regular skills ");
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultSkillMacro,defaultSkillMacroMap,null,allNonFillInSkills,keysNeedingReplacing,valsNeedingReplacing,false);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultFillInSkillMacro,defaultFillInSkillMacroMap,null,nonMiscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-				PFMacros.migrateStaticMacrosMult(doneOne,defaultSkillAttrName,defaultMiscSkillMacro,defaultMiscSkillMacroMap,null,miscFillInSkillsInstances,keysNeedingReplacing,valsNeedingReplacing,true);
-			} else {
-				done();
-			}
-		});
-	} catch (err){
-		done();
-	}
-}
 
 /**appendToSubSkills - util to append the string to all 10 names of one type of skill (perform, craft, knowledge, etc)
  * adds the numbers from 0-9 or 1-10 or knowledge, then appends the string , to generate all 10 versions.
@@ -191,7 +139,7 @@ function migrateMacros (callback){
  */
 function appendToSubSkills (skilllist, appendToEnd) {
 	return _.reduce(skilllist, function (memo, skill) {
-		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
+		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
 		appendArray = SWUtils.cartesianAppend([skill], appendnums, appendToEnd);
 		return memo.concat(appendArray);
 	}, []);
@@ -364,7 +312,8 @@ function setSkillVal (skill, v, setter){
 	abilityModName = '',
 	abilityName='',
 	physCond = 0,
-	perCond = 0;	
+	perCond = 0,
+	globalBuffCond=0;
 		
 	try {
 		setter = setter || {};
@@ -412,7 +361,9 @@ function setSkillVal (skill, v, setter){
 		if (skill === "Perception" || skill === "CS-Perception") {
 			perCond = parseInt(v["Perception-cond"], 10) || 0;
 		}
-		cond = allCond + physCond + perCond;
+		globalBuffCond=(parseInt(v['checks-cond'],10)||0)+(parseInt(v['buff_Check-total'],10)||0)+
+			(parseInt(v['buff_check_skills-total'],10)||0);
+		cond = allCond + physCond + perCond+globalBuffCond;
 		skillTot += ranks + cond + buffs+ (parseInt(v[abilityModName], 10) || 0) + (parseInt(v[racialNm], 10) || 0) + (parseInt(v[traitNm], 10) || 0) + (parseInt(v[featNm], 10) || 0) + (parseInt(v[itemNm], 10) || 0) + (parseInt(v[miscNm], 10) || 0);
 		if (currSkill !== skillTot) {
 			setter[skill] = skillTot;
@@ -573,9 +524,11 @@ export function recalculateSkills (callback, silently, onlySkills) {
 				} else {
 					if (onlySkills){
 						recalcSkillTotals(consolidatedSkills, done, silently);
+						recalcSkillTotals(consolidatedMiscSkills, null, silently);
 					}else {
 						//TAS.debug("PFSkills.recalculate: has consolidatedSkills skills");
 						recalcSkillArray(consolidatedSkills, done, silently);
+						recalcSkillArray(consolidatedMiscSkills, null, silently);
 					}
 				}
 			} else {
@@ -592,28 +545,44 @@ export function recalculateSkills (callback, silently, onlySkills) {
 		}
 	});
 }
+
+export function updateAllSkillsDiff (newmod,oldmod){
+	TAS.notice("PFSkills updateallskills diff updating by " +newmod+", from "+ oldmod);
+	getAttrs(allTheSkills,function(v){
+		var diff = newmod - oldmod,setter={};
+		setter= _.mapObject(v,function(val,key){
+			return (parseInt(val,10)||0)+diff;
+		});
+		TAS.debug("SPSkills.updateAllSkillsDiff setting",setter);
+		SWUtils.setWrapper(setter,PFConst.silentParams);
+	});
+}
+
 export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,silently){
 	var done=function(){
 		if (typeof callback === "function"){ callback();}
 	},
 	updatedAttr ,tempstr='',matches,fields;
-	if(eventInfo){
+	if(abilityBuff) {
+		tempstr = abilityBuff;
+	} else if(eventInfo){
 		tempstr = eventInfo.sourceAttribute;
 		if(tempstr.indexOf('repeating_')>=0){
 			tempstr = SWUtils.getAttributeName(tempstr);
 		}
-	} else if(abilityBuff) {
-		tempstr = abilityBuff;
 	}
+
 	if(tempstr){
-		matches=tempstr.match(/str|dex|con|int|wis|cha/i);
-		if(matches){
-			TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
-			updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
-		} else if (tempstr==='physical'){
+		if (tempstr==='physical'||tempstr==='acp'){
 			updatedAttr = /STR\-mod|DEX\-mod/;
+		} else {
+			matches=tempstr.match(/str|dex|con|int|wis|cha/i);
+			if(matches){
+				//TAS.debug("recalculateAbilityBasedSkills the match is: "+matches[0],matches);
+				updatedAttr= new RegExp(matches[0].toUpperCase()+'\-mod');
+			}
 		}
-		TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
+		//TAS.debug("recalculateAbilityBasedSkills updatedAttr is now "+updatedAttr);
 	}
 	if(!updatedAttr){
 		done();
@@ -622,13 +591,13 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	fields = allTheSkills.map(function(skill){
 		return skill+'-ability';
 	});
-	TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
+	//TAS.debug("recalculateAbilityBasedSkills getting all skill abilities");
 	getAttrs(fields,function(v){
 		var skillArray=[];
-		TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
+		//TAS.debug("recalculateAbilityBasedSkills skill abilities are ",fields,v);
 		skillArray = _.reduce(v,function(m,val,field){
 			if(updatedAttr.test(val)){
-				TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
+				//TAS.debug("recalculateAbilityBasedSkills field "+field+" matches and skill is "+ field.slice(0,-8));
 				m.push(field.slice(0,-8));
 			}
 			return m;
@@ -653,7 +622,7 @@ function updateSubSkillMacroBook (background, rt, eventInfo, currMacros, isNPC, 
 	var headerString = isNPC ? npcSkillHeaderMacro : skillHeaderMacro,
 	skillPrefix = isNPC ? "NPC-" : "",
 	assembleSubSkillButtonArray = function (skill, shouldEnforce, v) {
-		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
+		var appendnums = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : (skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums,
 		subskills = SWUtils.cartesianAppend([skill], appendnums),
 		firstPass = [];
 		if (skill === "Knowledge") {
@@ -789,7 +758,8 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 	skillPrefix = isNPC ? "NPC-" : "";
 	getAttrs([skillPrefix+"skills-macro", skillPrefix+"background_skills-macro", skillPrefix+"adventure_skills-macro", 
 			skillPrefix+"artistry_skills-macro", skillPrefix+"lore_skills-macro", skillPrefix+"craft_skills-macro", skillPrefix+"knowledge_skills-macro",
-			skillPrefix+"perform_skills-macro", skillPrefix+"profession_skills-macro", skillPrefix+"misc-skill_skills-macro"], function (v) {
+			skillPrefix+"perform_skills-macro", skillPrefix+"profession_skills-macro", skillPrefix+"misc-skill_skills-macro",
+			skillPrefix+"CS-misc-skill_skills-macro"], function (v) {
 		var i = 0,
 		setter = {},
 		tempSkillArray = [],
@@ -839,9 +809,11 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 			});
 		} else {
 			//consolidated
-			getAttrs(SWUtils.cartesianAppend(consolidatedSkills, ["-ReqTrain", "-ranks"]), function (sv) {
+			tempSkillArray = consolidatedSkills;//.concat(consolidatedMiscSkills);
+			getAttrs(SWUtils.cartesianAppend(tempSkillArray, ["-ReqTrain", "-ranks"]), function (sv) {
 				var canshowarray, setter = {}, tempMacro ;
-				canshowarray = assembleSkillButtonArray(consolidatedSkills, rt, sv);
+				canshowarray = assembleSkillButtonArray(tempSkillArray, rt, sv);
+				canshowarray.push("CS-Misc-Skill");
 				tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
 				setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
 				SWUtils.setWrapper(setter,PFConst.silentParams, done);
@@ -877,7 +849,7 @@ export function resetCommandMacro (eventInfo, callback) {
  */
 export function migrate (callback, oldversion) {
 	var done = _.once(function () {
-		//TAS.debug("leaving PFSkills.migrate");
+	//	TAS.debug("leaving PFSkills.migrate");
 		if (typeof callback === "function") {
 			callback();
 		}
@@ -940,29 +912,24 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
-	migrateMacros2 = function(callback){
-		getAttrs(['migrated_skill_speedup2'],function(vout){
+	migrateMacros2 = function(callback){        
+		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
-			if(parseInt(vout.migrated_skill_speedup2,10)===1){
-				if (typeof callback === "function"){ callback();}
-				return;
+			if(vout.migrated_skill_speedup3*1){
+				if (typeof callback === "function") { 
+					callback();
+				}
+				//return;
 			}
 			fields = allTheSkills.map(function(skill){return skill+'-macro';});
 			getAttrs(fields,function(v){
 				var setter={};
 				try{
 					setter=_.reduce(v,function(m,macro,attr){
-						var temp='';
 						try {
-							if (macro.indexOf('@{buff_check_skills-total} + @{buff_Check-total}')<0){					
-								temp=macro.replace(/\@\{skill\-query\} \+ (\[\[[^\]]+\]\])/,'@{skill-query} + $1 + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							}
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							temp=temp.replace('+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]] + [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]','+ [[ @{checks-cond} + @{buff_check_skills-total} + @{buff_Check-total} ]]');
-							if(temp !== v[attr]){						
-								m[attr]=temp;
-							}
-						} catch (ierr){
+							m[attr]=macro.replace(/ \+ \[\[ @{checks\-cond} \+ @{buff_check_skills-total} \+ @{buff_Check-total} \]\]  /,"");
+						//	TAS.debug("removed cond and buffs macro from skill macro-text");
+						}catch (ierr){
 							TAS.error("PFBuffs.migrate add buff checks for "+attr,ierr);
 						} finally {
 							return m;
@@ -971,7 +938,7 @@ export function migrate (callback, oldversion) {
 				} catch (err){
 					TAS.error("PFSkills.migrate skill speedup",err);
 				} finally {
-					setter.migrated_skill_speedup2=1;
+					setter.migrated_skill_speedup3=1;
 					setAttrs(setter,PFConst.silentParams,callback);
 				}
 			});
@@ -1018,9 +985,7 @@ export function migrate (callback, oldversion) {
 	//TAS.debug("at PFSkills.migrate");
 	migrateTake10Dropdown(doneOne);
 	migrateOldClassSkillValue(doneOne);
-	migrateMacros(function(){
-		migrateMacros2(doneOne);
-	});
+	migrateMacros2(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
 	
 }
@@ -1161,5 +1126,3 @@ function registerEventHandlers () {
 	}));
 }
 registerEventHandlers();
-//PFConsole.log('   PFSkills module loaded         ' );
-//PFLog.modulecount++;

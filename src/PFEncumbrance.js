@@ -1,18 +1,33 @@
 'use strict';
 import _ from 'underscore';
-import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
 
-// Returns the carrying capacity for a given strength score and load type
-// Will recursively calculate for strength scores over 29
-function getCarryingCapacity (str, load) {
+
+var load = {
+'Light':0,
+'Medium':1,
+'Heavy':2,
+'Overloaded':3,
+'OverDouble':4
+}
+
+/** Returns the carrying capacity for a given strength score and load type
+ * Will recursively calculate for strength scores over 29
+ * @param {int} str strength score
+ * @param {int} loadToFind load val from load param
+ */
+function getCarryingCapacity (str, loadToFind) {
     var l,
     m,
     h,
     r;
+    if(str>=30){
+        return (getCarryingCapacity(str - 10, loadToFind)*4);        
+    } 
+    //https://www.reddit.com/r/Pathfinder_RPG/comments/1k5hsf/carry_capacity_how_is_it_calculated/
     switch (str) {
         case 0:
             l = 0;
@@ -165,26 +180,27 @@ function getCarryingCapacity (str, load) {
             h = 1400;
             break;
         default:
-            l = getCarryingCapacity(str - 10, "light") * 4;
-            m = getCarryingCapacity(str - 10, "medium") * 4;
-            h = getCarryingCapacity(str - 10, "heavy") * 4;
+            return 0;
             break;
     }
-    switch (load) {
-        case "light":
-            r = l;
+    switch (loadToFind) {
+        case load.Light:
+            return l;
             break;
-        case "medium":
-            r = m;
+        case load.Medium:
+            return m;
             break;
-        case "heavy":
-            r = h;
+        case load.Heavy:
+            return h;
             break;
     }
-    return r;
+    return 0;
 }
 
-/* updateCurrentLoad-updates the current load radio button */
+/** updateCurrentLoad-updates the current load radio button
+ * @param {function} callback when done
+ * @param {boolean} silently 
+ */
 function updateCurrentLoad (callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
@@ -209,7 +225,7 @@ function updateCurrentLoad (callback, silently) {
             ignoreEncumbrance =  (maxDexSource===1 || maxDexSource===3)?1:0;
             curr = parseInt(v["current-load"], 10) || 0;
             if (ignoreEncumbrance){
-                newLoad=0;
+                newLoad=load.Light;
             } else {
                 
                 carried = parseInt(v["carried-total"], 10) || 0;
@@ -221,19 +237,19 @@ function updateCurrentLoad (callback, silently) {
                 //TAS.debug"current-load=" + curr + ", carried-total=" + carried + ", load-light=" + light + ", load-medium=" + medium);
                 if (carried <= light) {
                     //TAS.debug("light load");
-                    newLoad = 0;
+                    newLoad = load.Light;
                 } else if (carried <= medium) {
                     //TAS.debug("medium load");
-                    newLoad = 1;
+                    newLoad = load.Medium;
                 } else if (carried <= heavy) {
                     //TAS.debug("heavy load");
-                    newLoad = 2;
+                    newLoad = load.Heavy;
                 } else if (carried <= max) {
                     //TAS.debug"over heavy but under max");
-                    newLoad = 3;
+                    newLoad = load.Overloaded;
                 } else if (carried > max) {
                     //TAS.debug"maximum load");
-                    newLoad = 4;
+                    newLoad = load.OverDouble;
                 }
             }
             if (curr !== newLoad){
@@ -253,8 +269,9 @@ function updateCurrentLoad (callback, silently) {
         }
     });
 }
-/* updateLoadsAndLift
- * updates the load and lift numbers
+/** updates the load and lift numbers
+ * @param {function} callback when done
+ * @param {boolean} silently 
  */
 export function updateLoadsAndLift (callback, silently) {
     var done = _.once(function () {
@@ -309,9 +326,9 @@ export function updateLoadsAndLift (callback, silently) {
             loadMult = parseInt(v["load-multiplier"], 10) || 0;
             mult = 1;
             misc = parseInt(v["load-misc"], 10) || 0;
-            l = getCarryingCapacity(str + strMod, "light") + misc;
-            m = getCarryingCapacity(str + strMod, "medium") + misc;
-            h = getCarryingCapacity(str + strMod, "heavy") + misc;
+            l = getCarryingCapacity(str + strMod, load.Light) + misc;
+            m = getCarryingCapacity(str + strMod, load.Medium) + misc;
+            h = getCarryingCapacity(str + strMod, load.Heavy) + misc;
             if (loadMult < 1) {
                 loadMult = 1;
             }
@@ -429,30 +446,26 @@ export function updateLoadsAndLift (callback, silently) {
         }
     });
 }
-/* updateModifiedSpeed
- * updates the modified speed and run values  */
+/** updates the modified speed and run values
+ *  do not round to 5 since if it's 2.5, then double move allows one more square.
+ * always updates silently
+ * @param {function} callback when done
+ */
 export function updateModifiedSpeed  (callback) {
-    var done = _.once(function () {
-        if (typeof callback === "function") {
-            callback();
-        }
-    }),
-    attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
-        "race", "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","condition-Slowed","run_cond_applied",
+    var attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
+        "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","condition-Slowed","run_cond_applied",
     	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
     });
     getAttrs(attribList, function (v) {
-        var currSpeed = parseInt(v["speed-modified"], 10) || 0,
-        currRun = parseInt(v["speed-run"], 10) || 0,
-        currLoad = parseInt(v["current-load"], 10) || 0,
+        var currLoad = parseInt(v["current-load"], 10) || 0,
         base = parseInt(v["speed-base"], 10) || 0,
         speedDropdown = parseInt(v["max-dex-source"], 10) || 0,
         origRunMult = isNaN(parseInt(v["run-mult"], 10)) ? 4 : parseInt(v["run-mult"], 10),
         buff = parseInt(v["buff_speed-total"],10)||0,
-        halfSpeed = 0,
+        slowed = 0,
         cannotRun=0,
         newSpeed = base,
         runMult = origRunMult,
@@ -466,17 +479,23 @@ export function updateModifiedSpeed  (callback) {
         setter = {};
         try {
             base = base + buff;
-            newSpeed = newSpeed + buff ;
-            if(parseInt(v['condition-Entangled'],10)===2 || parseInt(v['condition-Exhausted'],10)===3){
-                halfSpeed=1;
-                base = Math.floor(base/10)*5; //we actually modify old base due to calcs below
-                newSpeed = base;
+            //speed penalties stack: http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#special-movement-rules
+            if(parseInt(v['condition-Entangled'],10)===2 ) {
+                slowed=1;
+                base = base/2;  //Math.floor(base/10)*5; 
                 cannotRun=1;
-            } else if (parseInt(v['condition-Fatigued'],10)===1 ){
+            }
+            if(parseInt(v['condition-Exhausted'],10)===3){
+                slowed=1;
+                base = base/2;
+                cannotRun=1;
+            } 
+            newSpeed = base ;
+            if (parseInt(v['condition-Fatigued'],10)===1 ){
                 cannotRun=1;
             }
             if (buff < 0){
-                halfSpeed=1;
+                slowed=1;
             }
 
              //TAS.debug("speed-modified=" + currSpeed + ", speed-run=" + currRun + ", current-load=" + currLoad + ", speed-base=" + base + ", load-heavy=" + heavy + ", carried-total=" + carried);
@@ -488,29 +507,21 @@ export function updateModifiedSpeed  (callback) {
                 armor3Equipped=parseInt(v["armor3-equipped"] ,10)||0;
                 //dwarf base speed not lowered but run multiplier can be.
                 isDwarf = parseInt(v.is_dwarf,10)||0;
-                if (!isDwarf){
-                    isDwarf = typeof v.race === "undefined" ? false : v.race.toLowerCase().indexOf("dwarf") >= 0;
-                    if (isDwarf){
-                        setter["is_dwarf"]=1;
-                    }
-                }
-                if (speedDropdown === 0 || speedDropdown === 1) {
-                    if (armor3Equipped){
-                        if (v["armor3-type"] === "Heavy"){armorLoad = 2;}
-                        else if (v["armor3-type"] === "Medium" ){ armorLoad = 1;}
-                    }
+                if (armor3Equipped && (speedDropdown === 0 || speedDropdown === 1)) {
+                    if (v["armor3-type"] === "Heavy"){armorLoad = 2;}
+                    else if (v["armor3-type"] === "Medium" ){ armorLoad = 1;}
                 }
                 combinedLoad = Math.max(armorLoad,currLoad);
-                if (combinedLoad===4){
+                if (combinedLoad===load.OverDouble){
                     newSpeed = 0;
                     newRun=0;
-                    runMult=0;
-                } else if (combinedLoad === 3){
-                    newSpeed = 5;
-                    newRun=0;
-                    runMult=0;
-                } else if (combinedLoad === 2 || combinedLoad === 1) {
-                    if (!isDwarf){
+                    cannotRun=1;
+                } else if (!isDwarf && combinedLoad > load.Light){
+                    if (combinedLoad === load.Overloaded){
+                        newSpeed = 2.5;
+                        newRun=0;
+                        cannotRun=1;
+                    } else if (combinedLoad === load.Heavy || combinedLoad === load.Medium) {
                         if (base <= 5) {
                             newSpeed = 5;
                         } else if (base % 15 === 0) {
@@ -520,35 +531,42 @@ export function updateModifiedSpeed  (callback) {
                         } else {
                             newSpeed = ((base + 10) * 2 / 3) - 5;
                         }
+                        if (combinedLoad === load.Heavy){
+                            runMult--;
+                        }
                     }
-                    runMult--;
-                } else {
-                    newSpeed = base;
                 }
             }
             if(cannotRun){
                 runMult=0;
             }
+            if (slowed){
+                //round to 3 decimal places
+                newSpeed = Math.floor(newSpeed*1000)/1000;
+            }
             newRun = newSpeed * runMult;
-            if (currSpeed !== newSpeed) {
+            if (newSpeed !== (parseInt(v["speed-modified"], 10)||0) ) {
                 setter["speed-modified"] = newSpeed;
             }
-            if (currRun !== newRun) {
+            if (newRun !== (parseInt(v["speed-run"], 10)||0) ) {
                 setter["speed-run"] = newRun;
             }
-            if (halfSpeed !== (parseInt(v['condition-Slowed'],10)||0)   ){
-                setter['condition-Slowed']=halfSpeed;
+            if (slowed !== (parseInt(v['condition-Slowed'],10)||0)   ){
+                setter['condition-Slowed']=slowed;
             }
-            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)   ){
+            if (origRunMult > runMult){
+                cannotRun=1;//for flag even if can run
+            }
+            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)  ){
                 setter.run_cond_applied=cannotRun;
             }
         } catch (err) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
         } finally {
             if (_.size(setter) > 0) {
-                SWUtils.setWrapper(setter, PFConst.silentParams, done);
-            } else {
-                done();
+                SWUtils.setWrapper(setter, PFConst.silentParams, callback);
+            } else if (typeof callback === "function") {
+                callback();    
             }
         }
     });
@@ -572,7 +590,7 @@ export function migrate (callback){
 }
 export var recalculate = TAS.callback(function PFEncumbranceRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
-        //TAS.debug("leaving PFEncumbrance.recalculate");
+        TAS.info("leaving PFEncumbrance.recalculate");
         if (typeof callback === "function") {
             callback();
         }
@@ -600,7 +618,7 @@ function registerEventHandlers  () {
             updateModifiedSpeed();
         }
     }));
-    on("change:current-load change:armor3-equipped change:armor3-type", TAS.callback(function eventUpdateSpeedAuto(eventInfo) {
+    on("change:is_dwarf change:current-load change:armor3-equipped change:armor3-type", TAS.callback(function eventUpdateSpeedAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateModifiedSpeed();
@@ -627,5 +645,3 @@ function registerEventHandlers  () {
     }));    
 }
 registerEventHandlers();
-//PFConsole.log( '   PFEncumbrance module loaded    ' );
-//PFLog.modulecount++;

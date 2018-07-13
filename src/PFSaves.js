@@ -10,7 +10,7 @@ import * as PFUtils  from './PFUtils';
 export var saveTypes = ["Fort", "Ref", "Will"];
 var events = {
 	saveEventsAuto: "change:saves-cond change:total-REPLACE change:REPLACE-ability-mod change:REPLACE-misc-mod",
-	saveEventsPlayer: "change:REPLACE-trait change:REPLACE-enhance change:REPLACE-resist"
+	saveEventsPlayer: "change:REPLACE-trait change:REPLACE-resist"
 };
 
 export function applyConditions (callback, silently) {
@@ -56,7 +56,7 @@ export function applyConditions (callback, silently) {
  * @save = type of save: Fort, Ref, Will  (first character capitalized)
  */
 export function updateSave (save, callback, silently) {
-	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-enhance", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total", "buff_saves-total"];
+	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total", "buff_saves-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
 export function updateSaves(callback,silently){
@@ -74,7 +74,7 @@ export function updateSaves(callback,silently){
 }
 export var recalculate = TAS.callback(function PFSavesRecalculate(callback, silently, oldversion) {
 	var done = _.once(function () {
-		TAS.debug("leaving PFSaves.recalculate");
+		TAS.info("leaving PFSaves.recalculate");
 		if (typeof callback === "function") {
 			callback();
 		}
