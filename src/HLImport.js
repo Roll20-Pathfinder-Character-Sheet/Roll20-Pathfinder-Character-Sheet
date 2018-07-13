@@ -434,15 +434,15 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 	{
 		var name = special._name;
 		var repeatPrefix = "repeating_ability",row,classSource = -1;
-		var cleanName = name.replace(/ x[0-9]+$/,"").replace(/\(([^\)]+)\)/g,"").trim();
+		var cleanName = name.replace(/ x[0-9]+$/,"").replace(/\(([^\)]*)\)/g,"").trim();
 		if (_.contains(skipList,cleanName))
 			return;
-		var multiList = _.filter(specNameList, function(spec) { return (spec.replace(/\(([^\)]+)\)/g,"").trim() === cleanName); });
+		var multiList = _.filter(specNameList, function(spec) { return (spec.replace(/\(([^\)]*)\)/g,"").trim() === cleanName); });
 		if (multiList.length > 1)
 		{
 			skipList.push(cleanName);
-			var parenList = _.map(multiList, function(item) { return item.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")",""); });
-			name = name.replace(/\(([^\)]+)\)/,"("+_.uniq(parenList).join(", ")+")");
+			var parenList = _.map(multiList, function(item) { return item.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")",""); });
+			name = name.replace(/\(([^\)]*)\)/,"("+_.uniq(parenList).join(", ")+")");
 		}
 		row = getOrMakeClassRowID(featureList, name);
 		repeatPrefix = "repeating_ability_" + row;
@@ -492,7 +492,7 @@ export function importClasses (attrs, classes,hitdice)
 		if (i > 0)
 			attrs["class"+i+"_show"] = 1;
 
-		classList[classObj._name.replace(/\(([^\)]+)\)/g,"").replace("(","").replace(")","").trim()] = classObj;
+		classList[classObj._name.replace(/\(([^\)]*)\)/g,"").replace("(","").replace(")","").trim()] = classObj;
 		attrs["class-"+i+"-name"] = classObj._name;
 		attrs["class-"+i+"-level"] = classObj._level;
 
@@ -526,7 +526,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 		if (spellClassIndex >= 3)
 			return spellClassesList;
 
-		var spellClassName = spellClass._name.replace(/\(([^\)]+)\)/g,"").replace("(","").replace(")","").trim();
+		var spellClassName = spellClass._name.replace(/\(([^\)]*)\)/g,"").replace("(","").replace(")","").trim();
 		var classIndex = _.indexOf(Object.keys(classes),_.find(Object.keys(classes),function(className)
 		{
 			if (className.toLowerCase().indexOf(spellClassName.toLowerCase()) !== -1)
@@ -781,7 +781,7 @@ export function buildArchetypeArray (classes)
 			archetypes[className] = [];
 			return;
 		}
-		var archeString = classObj._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+		var archeString = classObj._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 		var archeList = archeString.split(",");
 		archeList = _.map(archeList,function(arche) { return arche.trim(); });
 		archetypes[className] = archeList;
@@ -857,15 +857,15 @@ export function importSkills (attrs,skills,size,ACP)
 			if (craft === 1)
 			{
 				skillAttrPrefix = "craft";
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["craft-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["craft-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				craft++;
 			}
 			else if (craft <= 10)
 			{
 				skillAttrPrefix = "craft" + craft;
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["craft"+craft+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["craft"+craft+"-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				craft++;
 			}
 			else
@@ -873,7 +873,7 @@ export function importSkills (attrs,skills,size,ACP)
 				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
 						attrs[skillAttrPrefix+"-name"] = skill._name;
 					misc++;
 				}
@@ -886,15 +886,15 @@ export function importSkills (attrs,skills,size,ACP)
 			if (perform === 1)
 			{
 				skillAttrPrefix = "perform";
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["perform-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["perform-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				perform++;
 			}
 			else if (perform <= 10)
 			{
 				skillAttrPrefix = "perform" + perform;
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["perform"+perform+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["perform"+perform+"-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				perform++;
 			}
 			else
@@ -902,7 +902,7 @@ export function importSkills (attrs,skills,size,ACP)
 				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
-					if (skill._name.match(/\(([^\)]+)\)/) !== null)
+					if (skill._name.match(/\(([^\)]*)\)/) !== null)
 						attrs[skillAttrPrefix+"-name"] = skill._name;
 					misc++;
 				}
@@ -915,15 +915,15 @@ export function importSkills (attrs,skills,size,ACP)
 			if (profession === 1)
 			{
 				skillAttrPrefix = "profession";
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["profession-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["profession-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				profession++;
 			}
 			else if (profession <= 10)
 			{
 				skillAttrPrefix = "profession" + profession;
-				if (skill._name.match(/\(([^\)]+)\)/) !== null)
-					attrs["profession"+profession+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				if (skill._name.match(/\(([^\)]*)\)/) !== null)
+					attrs["profession"+profession+"-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				profession++;
 			}
 			else
@@ -931,7 +931,7 @@ export function importSkills (attrs,skills,size,ACP)
 				if (misc <= 10)
 				{
 					skillAttrPrefix = "misc-skill-" + misc;
-					if (skill._name.match(/\(([^\)]+)\)/) !== null)
+					if (skill._name.match(/\(([^\)]*)\)/) !== null)
 						attrs[skillAttrPrefix+"-name"] = skill._name;
 					misc++;
 				}
@@ -941,7 +941,7 @@ export function importSkills (attrs,skills,size,ACP)
 		}
 		else if (skill._name.indexOf("Knowledge") !== -1)
 		{
-			switch(skill._name.match(/\(([^\)]+)\)/g)[0])
+			switch(skill._name.match(/\(([^\)]*)\)/g)[0])
 			{
 				case "(arcana)":
 				case "(dungeoneering)":
@@ -966,13 +966,13 @@ export function importSkills (attrs,skills,size,ACP)
 			if (artistry === 1)
 			{
 				skillAttrPrefix = "artistry";
-				attrs["artistry-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				attrs["artistry-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				artistry++;
 			}
 			else if (artistry <= 10)
 			{
 				skillAttrPrefix = "artistry" + artistry;
-				attrs["artistry"+artistry+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				attrs["artistry"+artistry+"-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				artistry++;
 			}
 			else
@@ -992,13 +992,13 @@ export function importSkills (attrs,skills,size,ACP)
 			if (lore === 1)
 			{
 				skillAttrPrefix = "lore";
-				attrs["lore-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				attrs["lore-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				lore++;
 			}
 			else if (lore <= 10)
 			{
 				skillAttrPrefix = "lore" + lore;
-				attrs["lore"+lore+"-name"] = skill._name.match(/\(([^\)]+)\)/)[0].replace("(","").replace(")","");
+				attrs["lore"+lore+"-name"] = skill._name.match(/\(([^\)]*)\)/)[0].replace("(","").replace(")","");
 				lore++;
 			}
 			else
@@ -1312,6 +1312,7 @@ export function importCharacter (characterObj)
 		characterObj.weaknesses.special = arrayify(characterObj.weaknesses.special);
 		attrs["weaknesses"] = buildList(characterObj.weaknesses.special, "_shortname");
 	}
+
 	if (!_.isUndefined(characterObj.languages.language))
 	{
 		characterObj.languages.language = arrayify(characterObj.languages.language);
