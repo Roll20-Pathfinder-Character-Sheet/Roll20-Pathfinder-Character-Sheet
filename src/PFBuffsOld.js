@@ -174,7 +174,8 @@ function updateBuffTotal (col,ids,v,setter){
 		setter = setter || {};
 		if(buffToTotExceptions[col]){
 			totcol=buffToTotExceptions[col];
-		}
+		}		
+		PFSkills.recalculateSkills();
 		TAS.notice("Updating "+col+" the total is "+totcol,buffToTotExceptions,v);
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 		ids = ids.filter(function(id){

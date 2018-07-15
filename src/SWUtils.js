@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!TheAaronSheet';
@@ -149,23 +150,20 @@ export function findAndReplaceFields(stringToSearch, callback) {
  * @returns {string} the resultant string after performing the replace
  */
 function convertKL1KH1toMinMax(str) {
-	var matches;
-	//TAS.debug("at convertKL1KH1toMinMax for "+str) ;
-	if (str) {
-		matches = str.match(/(\{[^}]+\})(kh1|kl1)(?!.*\1)/g);
-		//TAS.debug("matches are:",matches);
-		if (matches && matches.length > 0) {
-			str = _.reduce(matches, function (memo, match) {
-				var isMin = /kl1$/.test(match),
-				isMax = /kh1$/.test(match),
-				newFunc = isMin ? "min" : (isMax ? "max" : ""),
-				newMatch = match.slice(1, match.length - 4),
-				replaceStr = newFunc + "(" + newMatch + ")";
-				return memo.replace(match, replaceStr);
-			}, str);
-		}
-	}
-	return str;
+    const minMaxConverter = {
+        kl:'min',
+        kh:'max'
+    }
+    //TAS.debug("at convertKL1KH1toMinMax for "+str) ;
+    if (str) {
+        while (/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/.test(str)){    
+            str = str.replace(/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/g,(match,p1,p2,p3)=>{
+                return p1+minMaxConverter[p3]+'('+p2+')';				
+            });
+    TAS.log('str: '+str);
+        }
+    }
+    return str;
 }
 /** Ensures every isntance of begin brack has amatching end brack. ONLY counts amount of them
  * does not ensure they are nested correctly
@@ -895,4 +893,3 @@ export function deleteRepeating(callback,section){
 		}
 	});
 }
-

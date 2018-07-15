@@ -399,7 +399,7 @@ function getSpellTotals  (ids, v, setter) {
                     //if (prepped !== 0){
                     //    setter[prefix + "-spells-prepared"] =0;
                     //}
-                    if (perday !== 0){
+                    if (perday === 0){
                         setter[prefix + "-spells-per-day"] = 0;
                     }
                 }
