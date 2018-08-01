@@ -1826,7 +1826,7 @@
 										<span class="sheet-table-header">/</span>
 										<span class="sheet-table-header" data-i18n-title="max-hp-title"  data-i18n-aria-label="max-hp-title" data-i18n="maximum-abbrv">Max</span>
 									</div>
-									<div class="sheet-table-row">
+									<div class="sheet-table-row" style="line-height: 1rem;">
 										<span class="sheet-icon sheet-pictos">k</span>
 										<span class="sheet-table-cell"><input type="number" title="@{HP}" name="attr_HP" value="0"></span>
 										<span class="sheet-divider">/</span>
@@ -1835,23 +1835,23 @@
 								</div>
 								<div class="sheet-table" style="margin-top:0.2rem;">
 									<div class="sheet-table-group-head">
-										<span class="sheet-table-header" style="width:4em;" data-i18n-title="recalculate-hit-points-title"  data-i18n-aria-label="recalculate-hit-points-title" data-i18n="reset">Reset</span>
-										<span class="sheet-table-header" data-i18n-title="temporary-hit-points-title"  data-i18n-aria-label="temporary-hit-points-title" data-i18n="temporary-hit-points-abbrv">Temp HP</span>
+										<span class="sheet-table-header" style="width:4em;padding-top:1.8rem;" data-i18n-title="recalculate-hit-points-title"  data-i18n-aria-label="recalculate-hit-points-title" data-i18n="reset">Reset</span>
+										<span class="sheet-table-header" style="padding-top:1.8rem;" data-i18n-title="temporary-hit-points-title"  data-i18n-aria-label="temporary-hit-points-title" data-i18n="temporary-hit-points-abbrv">Temp HP</span>
 										<span class="sheet-table-header">&nbsp;</span>
-										<span class="sheet-table-header" style="width:4em;" data-i18n-title="temporary-hit-points-maximum-title"  data-i18n-aria-label="temporary-hit-points-maximum-title" data-i18n="maximum-abbrv">Max</span>
-										<span class="sheet-table-header" data-i18n-title="nonlethal-damage-title"  data-i18n-aria-label="nonlethal-damage-title" data-i18n="nonlethal-damage">Nonlethal Damage</span>
+										<span class="sheet-table-header" style="width:4em;padding-top:1.8rem;" data-i18n-title="temporary-hit-points-maximum-title"  data-i18n-aria-label="temporary-hit-points-maximum-title" data-i18n="maximum-abbrv">Max</span>
+										<span class="sheet-table-header" style="line-height:1.5rem;" data-i18n-title="nonlethal-damage-title"  data-i18n-aria-label="nonlethal-damage-title" data-i18n="nonlethal-damage">Nonlethal Damage</span>
 									</div>
 									<div class="sheet-table-row">
 										<span class="sheet-table-cell sheet-small-label" style="width:4em;">
 											<input type="checkbox" class="sheet-cssbutton sheet-maxhealbutton" name="attr_HP_reset" value="1" data-i18n-title="recalculate-hit-points"  data-i18n-aria-label="recalculate-hit-points"><span></span>
 											<br/>
-											<span data-i18n-title="recalculate-hit-points" data-i18n-aria-label="recalculate-hit-points" data-i18n="maximum-abbrv">Max</span>
+											<span data-i18n-title="recalculate-hit-points" data-i18n-aria-label="recalculate-hit-points" data-i18n="maximum-abbrv" style="margin-left: -0.75rem;">Max</span>
 										</span>
-										<span class="sheet-table-cell"><input type="number" title="@{HP-temp}" name="attr_HP-temp" value="0"></span>
-										<span class="sheet-divider">/</span>
-										<span class="sheet-table-cell" style="width:4em;"><input class="sheet-calc" readonly type="number" title="@{HP-temp|max}" name="attr_HP-temp_max" value="0"></span>
+										<span class="sheet-table-cell" style="vertical-align:top;"><input type="number" title="@{HP-temp}" name="attr_HP-temp" value="0"></span>
+										<span class="sheet-divider" style="vertical-align:top;padding-top:0.8rem;">/</span>
+										<span class="sheet-table-cell" style="width:4em;vertical-align:top;"><input class="sheet-calc" readonly type="number" title="@{HP-temp|max}" name="attr_HP-temp_max" value="0"></span>
 										<input type="checkbox" class="sheet-warn-show sheet-noshow" name="attr_condition-Staggered" value="1" style="display:none">
-										<span class="sheet-table-cell sheet-highlight"><input type="number" title="@{non-lethal-damage}" name="attr_non-lethal-damage" value="0" min="0"></span>
+										<span class="sheet-table-cell sheet-highlight" style="vertical-align:top;"><input type="number" title="@{non-lethal-damage}" name="attr_non-lethal-damage" value="0" min="0"></span>
 									</div>
 								</div>
 								<div class="sheet-table">
