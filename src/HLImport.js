@@ -1191,7 +1191,7 @@ export function importCharacter (characterObj)
 	
 	// "Specials" could include items, so we need to filter them out
 	var itemNames = _.map(items, function(obj) { return obj._name; });
-	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special)), function(obj) { return _.contains(itemNames, obj._name); });
+	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special),arrayify(characterObj.defensive.special)), function(obj) { return _.contains(itemNames, obj._name); });
 
 	importItems(items,resources,armorPenalties,armor,weapons);
 	
