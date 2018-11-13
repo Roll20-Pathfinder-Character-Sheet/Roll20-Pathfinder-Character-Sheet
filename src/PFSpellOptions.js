@@ -286,10 +286,10 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     if (toggleValues.showspellnotes) {
         optionText += optionTemplates.spellnotes.replace("REPLACE", "@{spell-class-"+classNum+"-spells-notes}")||"";
     }
-    if (toggleValues.showspell_fail_check && parseInt(rowValues['spell-fail'],10) > 0) {
+    if (toggleValues.showspell_fail_check) {
         //TAS.debug("adding spellfailure "+optionTemplates.spell_fail_check +" for id "+ id);
-        optionText += optionTemplates.spell_fail_check||"";
-        optionText += optionTemplates.spell_fail||"";
+        optionText += optionTemplates.spell_fail_check;
+        optionText += optionTemplates.spell_fail;
     }
     if (toggleValues.showdamage ){
         if(rowValues[prefix+"damage-macro-text"]){
