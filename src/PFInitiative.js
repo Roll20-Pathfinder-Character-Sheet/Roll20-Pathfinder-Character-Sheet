@@ -16,7 +16,7 @@ export function updateInitiative (callback, silently,force) {
 			//http://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9tga
 			SWUtils.updateRowTotal(["init", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total","buff_check_ability-total"], 0, ["condition-Deafened"], false, callback, silently);
 		} else {
-			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff-Check-total","buff_check_ability-total"], 0, ["condition-Deafened"], false, callback, silently);
+			SWUtils.updateRowTotal(["init", "init-ability-mod", "init-trait", "init-misc-mod","checks-cond","buff_initiative-total","buff_Check-total","buff_check_ability-total"], 0, ["condition-Deafened"], false, callback, silently);
 		}
 	});
 }

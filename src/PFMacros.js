@@ -87,4 +87,78 @@ export function getTracking(macrostr){
         return trackArray;
     }
 }
+//checkScrollDesc tests repeating macro-text for scroll_desc and adds it if missing
+export function checkScrollDesc() {
+        getSectionIDs("repeating_ability", function(ids) {
+            var fields = _.map(ids, function(id) {
+                return "repeating_ability_" + id + "_macro-text"
+            });
+            getAttrs(fields, function(values) {
+                _.each(ids, function(rowid, i) {
+                    var macroText = values["repeating_ability_" + rowid + "_macro-text"];					
+                    if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+                        macroText = macroText.replace(/(&{template:[^}]+})/g,'$1 {{scroll_desc=@{scroll-desc}}}');
+                        setAttrs({
+                            ["repeating_ability_" + rowid + "_macro-text"]: macroText
+                        })
+                        TAS.debug("macro-text updated for repeating_ability_" + rowid + "_macro-text:" + macroText);
+                    }
+                });
+            });
+        });
+        
+        getSectionIDs("repeating_weapon", function(ids) {
+            var fields = _.map(ids, function(id) {
+                return "repeating_weapon_" + id + "_macro-text"
+            });
+            getAttrs(fields, function(values) {
+                _.each(ids, function(rowid, i) {
+                    var macroText = values["repeating_weapon_" + rowid + "_macro-text"];
+                    if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+                        macroText = macroText.replace(/(&{template:[^}]+})/g,'$1 {{scroll_desc=@{scroll-desc}}}');
+                        setAttrs({
+                            ["repeating_weapon_" + rowid + "_macro-text"]: macroText
+                        })
+                        TAS.debug("macro-text updated for repeating_weapon_" + rowid + "_macro-text:" + macroText);
+                    }
+                });
+            });
+        });
+    
+        getSectionIDs("repeating_spells", function(ids) {
+            var fields = _.map(ids, function(id) {
+                return "repeating_spells_" + id + "_macro-text"
+            });
+            getAttrs(fields, function(values) {
+                _.each(ids, function(rowid, i) {
+                    var macroText = values["repeating_spells_" + rowid + "_macro-text"];
+                    if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+                        macroText = macroText.replace(/(&{template:[^}]+})/g,'$1 {{scroll_desc=@{scroll-desc}}}');
+                        setAttrs({
+                            ["repeating_spells_" + rowid + "_macro-text"]:macroText
+                        })
+                        TAS.debug("macro-text updated for repeating_spells_" + rowid + "_macro-text:" + macroText);
+                    }
+                });
+            });
+        });
+
+        getSectionIDs("repeating_spells", function(ids) {
+            var fields = _.map(ids, function(id) {
+                return "repeating_spells_" + id + "_npc-macro-text"
+            });
+            getAttrs(fields, function(values) {
+                _.each(ids, function(rowid, i) {
+                    var macroText = values["repeating_spells_" + rowid + "_npc-macro-text"];
+                    if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+                        macroText = macroText.replace(/(&{template:[^}]+})/g,'$1 {{scroll_desc=@{scroll-desc}}}');
+                        setAttrs({
+                            ["repeating_spells_" + rowid + "_npc-macro-text"]:macroText
+                        })
+                        TAS.debug("macro-text updated for repeating_spells_" + rowid + "_npc-macro-text:" + macroText);
+                    }
+                });
+            });
+        });	
+    }
 

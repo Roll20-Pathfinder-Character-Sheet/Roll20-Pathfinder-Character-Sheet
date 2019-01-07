@@ -535,15 +535,20 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 			callback();
 		}
 	}),
-	attribList = [],
-	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : ""),
-	//idStr = SWUtils.getRepeatingIDStr(itemId),
-	item_entry = 'repeating_ability_' + itemId + '_',
-	slaPrefix = item_entry , //'repeating_ability_' + idStr,
+	attribList = [],itemId,item_entry,slaPrefix,
 	attributes = ["range_numeric","damage-macro-text","damage-type","abil-sr","savedc","save","abil-attack-type", "name"]
 	;
+	if(id=='DELETED'){
+		done();
+		return;
+	}
+	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
+	item_entry = 'repeating_ability_' +  SWUtils.getRepeatingIDStr(itemId);
+	slaPrefix = item_entry ;
 	if(!itemId){
 		TAS.warn("Cannot create usable attack entry from SLA since we cannot identify the row id");
+		done();
+		return;
 	}
 	attributes.forEach(function(attr){
 		attribList.push(slaPrefix +  attr);
@@ -555,34 +560,46 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 		setter = {},
 		prefix = "repeating_weapon_",
 		idStr="",
+		abilityexists=true,
+		deletedability=false,
 		params = {};
 		try {
-			//TAS.debug("at PFAbility.createAttackEntryFromRow",v);
-			if (!PFUtils.findAbilityInString(v[slaPrefix + "abil-attack-type"]) && !v[slaPrefix+"damage-macro-text"]){
-				TAS.warn("no attack to create for ability "+ v[slaPrefix+"name"] +", "+ itemId );
-			} else {
-				if (!weaponId){
-					newRowId = generateRowID();
-				} else {
-					newRowId = weaponId;
-				}
-				idStr = newRowId+"_";
-				prefix += idStr;
-				setter = setAttackEntryVals(slaPrefix, prefix,v,setter,weaponId);
-				setter[prefix + "source-ability"] = itemId;
-				setter[prefix+"group"]="Special";
-				setter[prefix+'link_type']=PFAttacks.linkedAttackType.ability;
+			if (_.size(v)===0){
+				abilityexists=false;
 			}
+			if (abilityexists)	{		
+				//TAS.debug("at PFAbility.createAttackEntryFromRow",v);
+				if (!PFUtils.findAbilityInString(v[slaPrefix + "abil-attack-type"]) && !v[slaPrefix+"damage-macro-text"]){
+					TAS.warn("no attack to create for ability "+ v[slaPrefix+"name"] +", "+ itemId );
+				} else {
+					if (!weaponId){
+						newRowId = generateRowID();
+					} else {
+						newRowId = weaponId;
+					}
+					idStr = newRowId+"_";
+					prefix += idStr;
+					setter = setAttackEntryVals(slaPrefix, prefix,v,setter,weaponId);
+					setter[prefix + "source-ability"] = itemId;
+					setter[prefix+"group"]="Special";
+					setter[prefix+'link_type']=PFAttacks.linkedAttackType.ability;
+				}
+			} else if (weaponId) {
+				setter["repeating_weapon_"+ weaponId+"_source-ability"]='DELETED';
+				deletedability=true;
+			}            
 		} catch (err) {
 			TAS.error("PFAbility.createAttackEntryFromRow", err);
 		} finally {
-			if (_.size(setter)>0){
+			if (deletedability){
+				SWUtils.setWrapper(setter, params, done);
+			} else if (_.size(setter)>0){
 				setter[slaPrefix + "create-attack-entry"] = 0;
 				if (silently) {
 					params = PFConst.silentParams;
 				}
 				//TAS.debug("PFAbility.createAttackEntryFromRow setting:",setter);
-				SWUtils.setWrapper(setter, {}, function(){
+				SWUtils.setWrapper(setter, params, function(){
 					//can do these in parallel
 					//TAS.debug("PFAbility.createAttackEntryFromRow came back from setter ");
 					PFAttackOptions.resetOption(newRowId);
@@ -613,9 +630,11 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 		attributes = [item_entry+attrib];
 		if ((/range/i).test(attrib)){
 			attributes =[item_entry+'range_pick',item_entry+'range',item_entry+'range_numeric'];
+		} else {
+			attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
 		}
 	} else {
-		attributes = ["range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save","abil-attack-type","name"];
+		attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
 	}
 	getAttrs(attributes,function(spellVal){
 		getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set

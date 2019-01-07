@@ -9,8 +9,7 @@ import * as PFUtils from './PFUtils';
 export var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_time_notes", "toggle_spell_duration_notes", 
     "toggle_spell_saving_throw_notes", "toggle_spell_sr_notes", "toggle_spell_range_notes", "toggle_spell_targets_notes", 
     "toggle_spell_description_notes", "toggle_spell_concentration_notes", "toggle_spell_concentration_check", 
-    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", 
-    "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes"],
+    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes", "toggle_spell_spellPen_check"],
 optionTemplates = {
     school: "{{school=@{school}}}",
     casting_time: "{{casting_time=@{cast-time}}}",
@@ -39,17 +38,16 @@ optionTemplates = {
     spell_fail_check: "{{spell_fail_check=[[ 1d100cf<[[ @{spell-fail} ]]cs>[[ @{spell-fail}+1 ]] ]]}}",
     spell_fail: "{{spell_fail=@{spell-fail}}}",
     spelldamage: "{{spelldamage=@{damage-macro-text}}}",
-    spelldamagetype: "{{spelldamagetype=@{damage-type}}}"
+    spelldamagetype: "{{spelldamagetype=@{damage-type}}}",
+	spellPen_chk: "{{spellPen_chk=[[ 1d20 + @{casterlevel} + @{SP-mod} ]]}}"
 },
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
 /* non repeating */
-var optionHelperAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
+var optionHelperAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def", "spell-fail"],
 optionTogglesPlusOptionAttrs = optionToggles.concat(optionHelperAttrs),
 /* repeating*/
-repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", 
-    "savedc", "SP-mod", "range_pick", "range", "spell_level", "spellclass", "casterlevel", "components", "spellclass_number",
-    "damage-macro-text", "damage-type"],
+repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", "savedc", "SP-mod", "range_pick", "range", "spell_level", "spellclass", "casterlevel", "components", "spellclass_number", "damage-macro-text", "damage-type"],
 repeatingOptionHelperAttrs = ["spellclass_number", "SP_misc", "CL_misc", "Concentration_misc", "slot", "spell-attack-type"],
 repeatingOptionAttrsToGet = repeatingOptionAttrs.concat(repeatingOptionHelperAttrs),
 rowattrToOptionToggleMap = {
@@ -162,6 +160,8 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
         }
     });
 }
+
+
 /** getOptionText - resets entire @{spell_options} text for a spell row
  * if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
  *@param {string} id of row or null
@@ -170,7 +170,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
  *@param {object} rowValues values from getAttrs of row attributes
  *@returns {string}
  */
-export function getOptionText (id, eventInfo, toggleValues, rowValues) {
+export function getOptionText (id, eventInfo, toggleValues, rowValues) {   
     var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     customConcentration = parseInt(rowValues[prefix + "Concentration_misc"], 10) || 0,
     customCasterlevel = parseInt(rowValues[prefix + "CL_misc"], 10) || 0,
@@ -181,7 +181,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     concentrationMod = parseInt(rowValues[prefix + "Concentration-mod"], 10),
     levelForConcentrate = (isNaN(spellSlot) || spellSlot === spellLevel) ? spellLevel : spellSlot,
     defDC = 15 + (levelForConcentrate * 2),
-    defMod = parseInt(rowValues["Concentration-" + classNum + "-def"], 10) || 0,
+    defMod = parseInt(toggleValues["Concentration-" + classNum + "-def"], 10) || 0,
     optionText = "{{condition_note=@{condition_spell_notes}}}",
     newValue = "";
     //TAS.debug("getOptionText, defMod: " + defMod);
@@ -239,21 +239,24 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         } else {
             optionText += "{{spellPen=}}";
         }
-
     }
     if (toggleValues.showcasterlevel && customCasterlevel) {
         optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
     } else {
         optionText += "{{casterlevel=}}";
     }
+    if (toggleValues.showcasterlevel) {
+        optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
+    }
     if (toggleValues.showcasterlevel_check) {
         optionText += optionTemplates.casterlevel_chk;//.replace("REPLACE", casterlevel)||"";
+    }
+    if (toggleValues.showspellpen_check) {
+        optionText += optionTemplates.spellPen_chk;
     }
     if (toggleValues.showcasterlevel || toggleValues.showcasterlevel_check) {
         newValue = parseInt(rowValues[prefix + "SP-mod"], 10) || 0;
         if (newValue === 0) {
-            optionText += "{{spellPen=}}";
-        } else {
             optionText += optionTemplates.spellPen;//.replace("REPLACE", newValue)||"";
         }
     }
@@ -261,6 +264,9 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     } else {
         optionText += "{{Concentration=}}";
+    }
+    if (toggleValues.showconcentration_check && toggleValues.showcasterlevel) {
+        optionText += optionTemplates.Concentration;//.replace("REPLACE", concentrationMod)||"";
     }
     if (toggleValues.showconcentration_check) {
         optionText += optionTemplates.Concentration_chk;//.replace("REPLACE", concentrationMod)||"";
@@ -275,14 +281,13 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     }
     if (toggleValues.showdescription) {
         optionText += optionTemplates.description;//.replace("REPLACE", "@{description}")||"";
-    } 
+    }
     if (toggleValues.showspellnotes) {
         optionText += optionTemplates.spellnotes.replace("REPLACE", "@{spell-class-"+classNum+"-spells-notes}")||"";
     }
-    if (toggleValues.showspell_fail_check && parseInt(rowValues['spell-fail'],10) > 0) {
-        //TAS.debug("adding spellfailure "+optionTemplates.spell_fail_check +" for id "+ id);
-        optionText += optionTemplates.spell_fail_check||"";
-        optionText += optionTemplates.spell_fail||"";
+    if (toggleValues.showspell_fail_check) {
+        optionText += optionTemplates.spell_fail_check;
+        optionText += optionTemplates.spell_fail;
     }
     if (toggleValues.showdamage ){
         if(rowValues[prefix+"damage-macro-text"]){
@@ -323,7 +328,7 @@ export function resetOption (id, eventInfo) {
         optionText = "",
         setter = {};
         TAS.debug("PFSPellOptions.resetOption id : "+id,toggleValues);
-        optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";
+        optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";        
         //TAS.debug("resetOption","About to set",setter);
         setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
         SWUtils.setWrapper(setter, {

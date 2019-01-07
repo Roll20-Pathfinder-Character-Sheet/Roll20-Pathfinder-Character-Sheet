@@ -193,8 +193,7 @@ events = {
 		"Check": [PFInitiative.updateInitiative], 
 		"check_ability": [PFInitiative.updateInitiative],
 		"initiative": [PFInitiative.updateInitiative],
-		"speed": [PFEncumbrance.updateModifiedSpeed],
-		"size": [PFSize.updateSizeAsync]
+		"speed": [PFEncumbrance.updateModifiedSpeed]
 	}
 };
 
@@ -1111,7 +1110,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='str';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='4+(2*floor((@{level}-1)/10))';
+			setter[prefix+'b1_macro-text']='4 + min(4,2*(floor(@{level}/11)+floor(@{level}/20)))';
 			if(calc===1){
 				if(level<11){
 					tempint=4;
@@ -1127,7 +1126,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='con';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='4+(2*floor((@{level}-1)/10))';
+			setter[prefix+'b2_macro-text']='4 + min(4,2*(floor(@{level}/11)+floor(@{level}/20)))';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
@@ -1137,7 +1136,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='morale';
-			setter[prefix+'b4_macro-text']='2+floor((@{level}-1)/10)';
+			setter[prefix+'b4_macro-text']='2 + min(4,(floor(@{level}/11)+floor(@{level}/20)))';
 			tempint = tempint / 2;
 			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
@@ -1151,23 +1150,23 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='melee';
 			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='2+(floor((@{level}-1)/10))';
+			setter[prefix+'b1_macro-text']='2 + min(2,(floor(@{level}/11)+floor(@{level}/20)))';
 			if(calc===1){
 				if(level<11){
-					tempint=4;
+					tempint=2;
 				} else if (level===20){
-					tempint=8;
+					tempint=4;
 				} else {
-					tempint=6;
+					tempint=3;
 				}
 			} else {
-				tempint=4;
+				tempint=2;
 			}
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg_melee';
 			setter[prefix+'b2_bonustype']='untyped';
-			setter[prefix+'b2_macro-text']='2+(floor((@{level}-1)/10))';
+			setter[prefix+'b2_macro-text']='2 + min(2,(floor(@{level}/11)+floor(@{level}/20)))';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'b3-show']=1;
 			setter[prefix+'b3_bonus']='ac';
@@ -1177,13 +1176,13 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b4-show']=1;
 			setter[prefix+'b4_bonus']='will';
 			setter[prefix+'b4_bonustype']='untyped';
-			setter[prefix+'b4_macro-text']='2+floor((@{level}-1)/10)';
-			tempint = tempint / 2;
+			setter[prefix+'b4_macro-text']='2 + min(2,(floor(@{level}/11)+floor(@{level}/20)))';
+			tempint = tempint;
 			setter[prefix+'b4_val']=tempint;
 			setter[prefix+'b5-show']=1;
 			setter[prefix+'b5_bonus']='hptemp';
 			setter[prefix+'b5_hide']=1;
-			setter[prefix+'b5_macro-text']='@{level}*(2+floor((@{level}-1)/10))';
+			setter[prefix+'b5_macro-text']='@{level}*(2+(floor(@{level}/11)+floor(@{level}/20)))';
 			tempint = tempint * level;
 			setter[prefix+'b5_val']=tempint;
 			setter[prefix+'add_note_to_roll']='skill';
@@ -1348,12 +1347,12 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
-			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level}-1)/3))';
+			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
 			tempint=1;
 			if(calc){
-				if(level<=3){
+				if(level<=5){
 					tempint=1;
-				} else if (level <=6){
+				} else if (level <=8){
 					tempint=2;
 				} else {
 					tempint=3;
@@ -1363,7 +1362,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='luck';
-			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level}-1)/3))';
+			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'shieldoffaith':
@@ -1805,10 +1804,10 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='enhancement';
-			setter[prefix+'b1_macro-text']='1+floor(@{level}/4)';
+			setter[prefix+'b1_macro-text']='min(5,1+floor((@{level})/8)+floor((@{level})/12)+floor((@{level})/20))';
 			tempint=1;
 			if(calc){
-				tempint = 1+ Math.floor(level/4);
+				tempint = 1+ Math.floor(level/8);
 			}
 			setter[prefix+'b1_val']=tempint;
 			setter[prefix+'description-show']='1';			
@@ -1821,7 +1820,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8))';
 			tempint=2;
 			if(calc){
 				tempint = 2+ Math.floor(level/8);
@@ -1830,7 +1829,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='saves';
 			setter[prefix+'b2_bonustype']='resistance';
-			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b2_macro-text']='2 + (floor(@{level}/8))';
 			setter[prefix+'b2_val']=tempint;
 			setter[prefix+'add_note_to_roll']='save';			
 			setter[prefix+'description-show']='1';
@@ -1843,7 +1842,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='morale';
-			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='1 + (floor(@{level}/8))';
 			tempint=1;
 			if(calc){
 				tempint = 1+ Math.floor(level/8);
@@ -1852,7 +1851,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='morale';
-			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8)';
+			setter[prefix+'b2_macro-text']='1 + (floor(@{level}/8))';
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'battleward':
@@ -1862,7 +1861,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='3 + (floor(@{level}/8))';
 			tempint=3;
 			if(calc){
 				tempint = 3+ Math.floor(level/8);
@@ -1889,7 +1888,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='ac';
 			setter[prefix+'b1_bonustype']='deflection';
-			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8)';
+			setter[prefix+'b1_macro-text']='2 + (floor(@{level}/8))';
 			tempint=2;
 			if(calc){
 				tempint = 2 +  Math.floor(level/8);
@@ -1919,7 +1918,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='armor';
-			setter[prefix+'b1_macro-text']='4 + (2*(floor(max((@{level}-3),0)/4)';
+			setter[prefix+'b1_macro-text']='4 + (2*(floor (max((@{level}-3),0) /4)))';
 			tempint=4;
 			if(calc){
 				if(level < 7){

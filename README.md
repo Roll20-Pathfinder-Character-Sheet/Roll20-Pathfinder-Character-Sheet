@@ -1,5 +1,9 @@
 # Pathfinder Character Sheet for Roll20.net
 
+## Build
+dev: npm run build 
+prod: npm run prod
+
 ## Editing
 In order to edit complete the following sections
 ### Install Git (If you don't have it already)

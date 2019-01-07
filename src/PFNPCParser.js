@@ -164,10 +164,7 @@ function parseNPChp (hpstring, abilityMod) {
 			hparray.basehp = PFUtils.getAvgHP(hparray.hdice1, hparray.hdie1);
 			//check total, if does not match, change 'misc' attr
 			calcHP = hparray.basehp + dice.plus;
-			if (hparray.hp<=0){
-				TAS.warn("parseNPChp, hp is null! why!? str is:"+hpstring);
-				hparray=calcHP;
-			} else if (calcHP !== hparray.hp) {
+			if (calcHP !== hparray.hp) {
 				TAS.warn("parseNPChp, hp not adding right, should be:" + hparray.hp + " but getNPCHP returns " + calcHP,hparray);
 				hparray.misc += (hparray.hp - calcHP);
 			}
@@ -559,7 +556,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 		note: ""
 	};
 	try {
-		//TAS.debug"parseAttack: "+atkstr);
+		TAS.debug("parseAttack: "+atkstr);
 		if (addgroups) {
 			//retobj.name += "Group " + groupidx + ": ";
 			retobj.group = 'Full attack ' + groupidx;
@@ -640,15 +637,16 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 			}
 		}
 		//skip past name
-		//CB how the hell does this work? i wrote it and i cant' even tell
-		matches = atkstr.match(/\s*([^0-9\/\+\-\(]+)/);
+		atkstr=SWUtils.trimBoth(atkstr);
+		matches = atkstr.match(/^[a-z\s]+/i);
+		//matches = atkstr.match(/\s*([^0-9\/\+\-\(]+)/);
 		if (matches && matches[0]) {
 			if (matches.index) {
 				tempidx = matches.index;
 			}
 			atkstr = atkstr.slice(tempidx + matches[0].length);
 		}
-		//TAS.debug("PFNPCParse atkstr is now "+atkstr);
+		TAS.debug("PFNPCParse atkstr is now "+atkstr);
 		if (atkstr) {
 			//after name split rest by parenthesis
 			// format: name   attack bonus ( damage ) plus additional
@@ -716,13 +714,25 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 				//damage dice and die
 				tempstr = SWUtils.trimBoth(tempstr);
 				dice = PFUtils.getDiceDieFromString(tempstr,true,true);
+				TAS.debug("##### Attack dice parse of "+tempstr+" is ",dice);
 				if(dice && dice.dice){
 					retobj.dmgdice=dice.dice;
 					retobj.dmgdie=dice.die;
 					retobj.dmgbonus=dice.plus;
-					bonus = tempstr.slice(dice.spaces);//no plus 1 why?
+					tempstr = tempstr.slice(dice.spaces);//no plus 1 why?
 				}
-				bonus = SWUtils.trimBoth(bonus);
+
+				//look for crit
+				TAS.debug("PFParseAttack e3:"+tempstr);
+				if (tempstr){
+					//--does not find dash in crit check for different types of minus
+					var critter=PFUtils.getCritFromString(tempstr,true);
+					TAS.debug("PFParseAttack e4:"+tempstr+", crits:",critter);
+					retobj.crit=critter.crit;
+					retobj.critmult=critter.critmult;
+					tempstr = tempstr.slice(critter.spaces);
+				}
+				bonus = SWUtils.trimBoth(tempstr);
 
 				//any text after damage is 'plus' or damage type
 				if (bonus) {
@@ -748,34 +758,6 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 						} else {
 							retobj.plus = tempstr;
 						}
-					}
-					//TAS.debug("PFParseAttack e3:"+bonus);
-					if (bonus){
-						matches = bonus.match(/\s|\//g);
-						if (matches) {
-							countspaces = matches.length - 1;
-						}
-						//TAS.debug("PFParseAttack e4:"+bonus+", matches:",matches);
-						//--does not find dash in crit check for different types of minus
-						matches = bonus.match(/(x\d+)|(\/\d+\-??20)|([+\-]??\d+)/ig);
-						_.each(matches, function (match, index) {
-							bonus = bonus.slice(match.length);
-							if (/^[+\-]/.test(match)) {
-								retobj.dmgbonus = (parseInt(match, 10) || 0);
-							} else if (/^[x\u00d7]\d+/.test(match)) {
-								match = match.slice(1);
-								retobj.critmult = parseInt(match, 10) || 2;
-							} else if (/^\d+/.test(match)) {
-								//minus missing
-								retobj.dmgbonus = ((-1) * (parseInt(match, 10) || 0));
-							} else if (match.indexOf('20') >= 0) {
-								match = match.replace('20', '').replace('-', '').replace('/', '');
-								if (match && match.length > 0) {
-									retobj.crit = parseInt(match, 10) || 20;
-								}
-							}
-						});
-						bonus = bonus.slice(countspaces);
 					}
 					if (bonus && bonus.length > 0) {
 						retobj.dmgtype += bonus;
@@ -818,6 +800,7 @@ function parseAttack (atkstr, atktypestr, addgroups, groupidx, isUndead) {
 		retobj.note = origStr + " , error: ";
 		retobj.note += err;
 	} finally {
+		TAS.debug("parse attack returning parse of "+atkstr,retobj);
 		return retobj;
 	}
 }
@@ -848,9 +831,10 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 			atkstr = atkstr.slice(1);
 		}
 		atkstr = SWUtils.trimBoth(atkstr);
+		atkstr = PFUtils.convertDashToMinus(atkstr);
 		atkstr = PFUtils.replaceMissingNegatives_BadDice(atkstr);
 		atkstr = PFUtils.replaceMissingNegatives_CritRange(atkstr);
-		atkstr = PFUtils.convertDashToMinus(atkstr);
+		//TAS.debug("########","Now the attack is ",atkstr);
 		atkarrayout = atkstr.split(/\bor\b/i);
 		if (atkarrayout.length > 1) {
 			addgroups = true;
@@ -3128,7 +3112,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			abilityScores = parseAbilityScores(v,isUndead);
 			createAbilityScoreEntries(abilityScores, setter);
 			// Size **********************************************************************
-			sizeMap = PFSize.setSize(v.size_compendium,setter);
+			sizeMap = PFSize.setSizeFromString(v.size_compendium,setter);
 
 			// Feats *********************************************************************
 			featlist = parseFeats (v["npc-feats-text"]);
@@ -3395,7 +3379,7 @@ on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventI
 		});
 	}
 }));
-
+/*
 on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo) {
 	if (eventInfo.sourceType === "player" ) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -3412,9 +3396,10 @@ on("sheet:compendium-drop", TAS.callback(function eventCompendiumDrop(eventInfo)
 						setter.light_dimradius=tempint;
 					}
 				}
-				setDefaultToken(setter);
+				//setDefaultToken(setter);
 			});
 		});
 	}
 }));
 
+*/
