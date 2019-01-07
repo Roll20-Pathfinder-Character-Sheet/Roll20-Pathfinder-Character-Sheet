@@ -765,7 +765,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                     return prefix + field;
                 });
                 return memo.concat(row);
-            }, ['spellclass-0-name']);
+            }, ['spellclass-0-name', 'spellclass-1-name', 'spellclass-2-name']);
             getAttrs(fields, function (v) {
                 var doneOneRow = _.after(_.size(ids),done),
                 classNumSetter = {},
