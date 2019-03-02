@@ -1046,7 +1046,7 @@ function registerEventHandlers () {
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMiscFieldUpdate(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			//updateMiscAndSkillValAsync(skill);
+			//updateMiscAndSkillValAsync(skill);						
 			TAS.debug("calling evalute for "+skill);
 			SWUtils.evaluateAndAddToTotAsync(null,null,skill+'-misc',skill+'-misc-mod',skill);
 		}));

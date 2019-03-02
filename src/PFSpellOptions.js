@@ -44,12 +44,10 @@ optionTemplates = {
 optionTemplateRegexes = PFUtils.getOptionsCompiledRegexMap(optionTemplates);
 
 /* non repeating */
-var optionHelperAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def","spell-fail"],
+var optionHelperAttrs = ["Concentration-0-def", "Concentration-1-def", "Concentration-2-def", "spell-fail"],
 optionTogglesPlusOptionAttrs = optionToggles.concat(optionHelperAttrs),
 /* repeating*/
-repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", 
-    "savedc", "SP-mod", "range_pick", "range", "spell_level", "spellclass", "casterlevel", "components", "spellclass_number",
-    "damage-macro-text", "damage-type"],
+repeatingOptionAttrs = ["school", "cast-time", "duration", "save", "sr", "range_numeric", "targets", "description", "Concentration-mod", "savedc", "SP-mod", "range_pick", "range", "spell_level", "spellclass", "casterlevel", "components", "spellclass_number", "damage-macro-text", "damage-type"],
 repeatingOptionHelperAttrs = ["spellclass_number", "SP_misc", "CL_misc", "Concentration_misc", "slot", "spell-attack-type"],
 repeatingOptionAttrsToGet = repeatingOptionAttrs.concat(repeatingOptionHelperAttrs),
 rowattrToOptionToggleMap = {
@@ -162,6 +160,8 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
         }
     });
 }
+
+
 /** getOptionText - resets entire @{spell_options} text for a spell row
  * if the field to update is one that is set by updateSpellOption, then need to set {{key=}} so it can find correct one to replace.
  *@param {string} id of row or null
@@ -170,7 +170,7 @@ export function updateSpellOption (eventInfo, fieldUpdated) {
  *@param {object} rowValues values from getAttrs of row attributes
  *@returns {string}
  */
-export function getOptionText (id, eventInfo, toggleValues, rowValues) {
+export function getOptionText (id, eventInfo, toggleValues, rowValues) {   
     var prefix = "repeating_spells_" + SWUtils.getRepeatingIDStr(id),
     customConcentration = parseInt(rowValues[prefix + "Concentration_misc"], 10) || 0,
     customCasterlevel = parseInt(rowValues[prefix + "CL_misc"], 10) || 0,
@@ -239,7 +239,6 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         } else {
             optionText += "{{spellPen=}}";
         }
-
     }
     if (toggleValues.showcasterlevel && customCasterlevel) {
         optionText += optionTemplates.casterlevel;//.replace("REPLACE", casterlevel)||"";
@@ -252,7 +251,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     if (toggleValues.showcasterlevel_check) {
         optionText += optionTemplates.casterlevel_chk;//.replace("REPLACE", casterlevel)||"";
     }
-	if (toggleValues.showspellpen_check) {
+    if (toggleValues.showspellpen_check) {
         optionText += optionTemplates.spellPen_chk;
     }
     if (toggleValues.showcasterlevel || toggleValues.showcasterlevel_check) {
@@ -282,14 +281,13 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     }
     if (toggleValues.showdescription) {
         optionText += optionTemplates.description;//.replace("REPLACE", "@{description}")||"";
-    } 
+    }
     if (toggleValues.showspellnotes) {
         optionText += optionTemplates.spellnotes.replace("REPLACE", "@{spell-class-"+classNum+"-spells-notes}")||"";
     }
-    if (toggleValues.showspell_fail_check && parseInt(rowValues['spell-fail'],10) > 0) {
-        //TAS.debug("adding spellfailure "+optionTemplates.spell_fail_check +" for id "+ id);
-        optionText += optionTemplates.spell_fail_check||"";
-        optionText += optionTemplates.spell_fail||"";
+    if (toggleValues.showspell_fail_check) {
+        optionText += optionTemplates.spell_fail_check;
+        optionText += optionTemplates.spell_fail;
     }
     if (toggleValues.showdamage ){
         if(rowValues[prefix+"damage-macro-text"]){
@@ -330,7 +328,7 @@ export function resetOption (id, eventInfo) {
         optionText = "",
         setter = {};
         TAS.debug("PFSPellOptions.resetOption id : "+id,toggleValues);
-        optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";
+        optionText = getOptionText(id, eventInfo, toggleValues, v)||"{{condition_note=@{condition_spell_notes}}}";        
         //TAS.debug("resetOption","About to set",setter);
         setter["repeating_spells_" + SWUtils.getRepeatingIDStr(id) + "spell_options"] = optionText;
         SWUtils.setWrapper(setter, {

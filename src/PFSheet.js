@@ -33,6 +33,7 @@ import * as PFClassRaceGrid from './PFClassRaceGrid';
 import * as PFConditions from './PFConditions';
 import * as PFHorror from './PFHorror';
 import * as PFOccult from './PFOccult';
+import * as PFMacros from './PFMacros';
 
 function expandAll  () {
 	getAttrs(["expandall"], function (v) {
@@ -439,7 +440,6 @@ function migrate (oldversion, callback, errorCallback) {
 					},oldversion);
 				},oldversion);
 			}
-
 			if (oldversion < 1.68){
 				PFCustom.migrate(function(){
 					PFSkills.recalculate(null,null,oldversion);
@@ -470,6 +470,12 @@ function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.724){
 				PFSkills.migrate(null,oldversion);
+			}
+			if (oldversion < 1.731){
+				PFMacros.checkScrollDesc();
+			}
+			if (oldversion < 1.732){
+				PFMacros.checkBaseAttacks();
 			}
 		}
 	} catch (err) {
@@ -773,4 +779,3 @@ function registerEventHandlers () {
 	});
 }
 registerEventHandlers();
-
