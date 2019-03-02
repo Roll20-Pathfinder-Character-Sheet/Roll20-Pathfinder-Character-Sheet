@@ -474,6 +474,9 @@ function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.731){
 				PFMacros.checkScrollDesc();
 			}
+			if (oldversion < 1.732){
+				PFMacros.checkBaseAttacks();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);

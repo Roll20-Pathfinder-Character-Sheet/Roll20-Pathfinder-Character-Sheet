@@ -225,7 +225,7 @@ export function importFeats (attrs,feats,featIDList,resources)
 		else
 			attrs[repeatPrefix+"_"+row+"_name"] = feat._name;
 		attrs[repeatPrefix+"_"+row+"_description"] = feat.description;
-		attrs[repeatPrefix+"_"+row+"_rule_category"] = "feats";
+		attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "feats";
 		skipList.push(feat._name);
 		if (_.contains(Object.keys(resources),feat._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[feat._name]._max;
@@ -403,7 +403,7 @@ export function importTraits (attrs,traits,traitIDList,resources)
 			delete traitIDList[row];
 		attrs[repeatPrefix+"_"+row+"_name"] = trait._name;
 		attrs[repeatPrefix+"_"+row+"_description"] = trait.description;
-		attrs[repeatPrefix+"_"+row+"_rule_category"] = "traits";
+		attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "traits";
 		if (_.contains(Object.keys(resources),trait._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[trait._name]._max;
 	});
@@ -419,8 +419,8 @@ export function importSLAs (attrs,SLAs,SLAsIDList,resources)
 			delete SLAsIDList[row];
 		attrs[repeatPrefix+"_"+row+"_name"] = SLA._name;
 		attrs[repeatPrefix+"_"+row+"_description"] = SLA.description;
-		attrs[repeatPrefix+"_"+row+"_rule_category"] = "spell-like-abilities";
-		attrs[repeatPrefix+"_"+row+"_ability_type"] = "Sp";
+		attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "spell-like-abilities";
+		attrs[repeatPrefix+"_"+row+"_tabcat2"] = attrs[repeatPrefix+"_"+row+"_ability_type"] = "Sp";
 		if (_.contains(Object.keys(resources),SLA._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[SLA._name]._max;
 	});
@@ -452,9 +452,9 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 		{
 			// Import if it has a "specsource", assume it's a class feature
 			if (special.specsource)
-				attrs[repeatPrefix+"_rule_category"] = "class-features";
+				attrs[repeatPrefix+"_tabcat"] = attrs[repeatPrefix+"_rule_category"] = "class-features";
 			else
-				attrs[repeatPrefix+"_rule_category"] = "racial-traits";
+				attrs[repeatPrefix+"_tabcat"] = attrs[repeatPrefix+"_rule_category"] = "racial-traits";
 		}
 		classSource = getClassSource(arrayify(special.specsource),archetypes);
 		attrs[repeatPrefix+"_name"] = name;
@@ -470,7 +470,7 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 			attrs[repeatPrefix+"_max-calculation"] = resources[special._name]._max;
 			
 		if (!_.isUndefined(special._type))
-			attrs[repeatPrefix+"_ability_type"] = special._type.substr(0,2);
+			attrs[repeatPrefix+"_tabcat2"] = attrs[repeatPrefix+"_ability_type"] = special._type.substr(0,2);
 	});
 }
 
