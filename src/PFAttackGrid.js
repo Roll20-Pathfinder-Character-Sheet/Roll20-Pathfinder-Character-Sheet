@@ -4,7 +4,6 @@ import TAS from 'exports-loader?TAS!TheAaronSheet';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
-import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
 import * as PFMenus from './PFMenus';
 
@@ -100,13 +99,13 @@ export var attackGridFields = {
         "bab": "cmb2_bab-mod"
     }
 };
-var attkpenaltyAddToFields = [ "acp-attack-mod", "condition-Drained"],
-attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Sickened", "condition-Wounds"],
+
+var attkpenaltyAddToFields = ["acp-attack-mod", "condition-Drained"],
+attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Sickened", "woundsPenaltyTotal"],
 attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
 groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
         '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
-
 
 /** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
  *@param {function} callback optional call when done
@@ -409,6 +408,16 @@ export var recalculate = TAS.callback(function callPFAttackGridRecalculate (call
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
 });
+export function getWoundsTotal(v) {
+    getAttrs(["condition-Wounds", "wounds_gritty_mode", "has_endurance_feat", "wound_threshold-show", "woundsPenaltyTotal"], function(v) {
+        var woundPenalty = PFUtils.getWoundPenalty((parseInt(v["condition-Wounds"], 10) || 0), (parseInt(v.has_endurance_feat, 10) || 0), (parseInt(v.wounds_gritty_mode, 10) || 0)),
+        wounds = ((parseInt(v["wound_threshold-show"], 10) || 0) * woundPenalty)
+        setAttrs({
+            woundsPenaltyTotal : Math.abs(wounds)
+        });
+        recalculate();
+    });
+}
 function registerEventHandlers () {
     var tempString='';
     _.each(attackGridFields, function (attackFields, attack) {
@@ -436,8 +445,9 @@ function registerEventHandlers () {
             updateAttacks(null,null,null,eventInfo);
         }
     }));
-    on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
+    on("change:acp-attack-mod change:condition-wounds change:wounds_gritty_mode change:has_endurance_feat change:wound_threshold-show", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        getWoundsTotal();
         applyConditions();
     }));
 
