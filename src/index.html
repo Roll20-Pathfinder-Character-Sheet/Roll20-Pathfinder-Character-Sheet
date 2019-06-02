@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Added a header image checkbox to toggle setting all header images on/off (will not change header images that are already set to a custom URL).</li>
 				<li>Fix for maxDex not being applied to AC for any ability other than DEX. (AC-ability drop-down selector).</li>
 				<li>Fix for damage_macro resetting to default value with a sheet close/re-open.</li>
 				<li>Added localization list sorting for Skills and Conditions.</li>
@@ -13737,7 +13738,7 @@
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_spell" value="" title="@{header_image-pf_spell}" checked /></span>
 				<span class="sheet-divider"></span>
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[default](http://imgur.com/9yjOsAD.png)" title="@{header_image-pf_spell}" /></span>
-				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/9yjOsAD.png" style="padding-top:0.125em;"></span>
+				<span class="sheet-table-cell sheet-nontable-name"><img src="http://imgur.com/9yjOsAD.png"></span>
 				<span class="sheet-divider"></span>				
 				<span class="sheet-table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[custom](@{header_image-pf_spell-url})" title="@{header_image-pf_spell}" /><textarea class="sheet-macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_spell-url" title="@{header_image-pf_spell-url}">http://imgur.com/9yjOsAD.png</textarea></span>
 			</div>

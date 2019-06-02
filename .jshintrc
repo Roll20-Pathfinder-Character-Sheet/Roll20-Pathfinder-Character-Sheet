@@ -14,5 +14,6 @@
     "regexdash"     : true,    // Tolerate unescaped last dash i.e. `[-...]`
     "-W086": true, //Expected a 'break' statement before 'default' (switch statements)
     "-W119": true,    //import error use esversion:6, since that causes other errors
-    "-W097": true     //use the function form of use strict
+    "-W097": true,     //use the function form of use strict
+    "esversion": 6
 }
