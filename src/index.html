@@ -39,7 +39,8 @@
 			</h2>
 			<ol>
 				<li>Repeating Abilities and Equipment items are now set to "Show" (listed on chat menu) by default.</li>
-				<li>Added a header image checkbox to toggle setting all header images on/off (will not change header images that are already set to a custom URL). Option added to the game's sheet setting to use header images for roll templates as the default. Reminder: simple roll templates will override this and will not display header images.</li>
+				<li>Added a "Show" column toggle for Abiities and Equipment that affects the Show option of all repeating rows that follow.</li>  
+				<li>Added a header image column toggle that affects all header images on/off (will not change header images that are already set to a custom URL). Option also added to the game's sheet setting to use header images for roll templates as the default. Reminder: simple roll templates will override this and thus will not display header images.</li>
 				<li>Fix for maxDex not being applied to AC for any ability other than DEX. (AC-ability drop-down selector).</li>
 				<li>Fix for damage_macro resetting to default value with a sheet close/re-open.</li>
 				<li>Added localization list sorting for Skills and Conditions.</li>
@@ -8120,6 +8121,7 @@
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_abilities-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_abilities-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_abilities-column-show" value="1" /><span></span>
+					<label class="sheet-small-label2" style="width: 2.5em;margin: 0 0 0 -0.75em;"><input type="checkbox" name="attr_showinmenu_all_abilities" title="@{showinmenu_all_abilities}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>
 					<input class="sheet-deletebutton sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_ability_btn" value="1" data-i18n-title="delete-ability" data-i18n-aria-label="delete-ability-must-confirm-next-checkbox" /><span></span><label class="sheet-deletesect sheet-allrows-note"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_ability" data-i18n-aria-label="confirm-delete-ability" data-i18n-title="confirm-delete-ability" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
@@ -10718,6 +10720,7 @@
 					<input type="checkbox" class="sheet-minimize-show sheet-cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_item-min-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-lock-show sheet-cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_item-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="sheet-split-column-show sheet-cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_item-column-show" value="1" /><span></span>
+					<label class="sheet-small-label2" style="width: 2.5em;margin: 0 0 0 -0.75em;"><input type="checkbox" name="attr_showinmenu_all_items" title="@{showinmenu_all_items}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>				
 					<input class="sheet-deletebutton sheet-cssbutton sheet-deletesect-show" type="checkbox" name="attr_delete_repeating_item_btn" value="1" data-i18n-title="delete-item" data-i18n-aria-label="delete-item-must-confirm-next-checkbox" /><span></span><label class="sheet-deletesect sheet-allrows-note"><input type="checkbox" class="sheet-selectedlabel-check" name="attr_delete_repeating_item" data-i18n-aria-label="confirm-delete-item" data-i18n-title="confirm-delete-item" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
 					<span class="sheet-compendium-note sheet-hide-readonly" >
 						<span class="sheet-compendium-icon">i</span>
