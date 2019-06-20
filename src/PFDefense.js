@@ -139,9 +139,11 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     cmdFFAbility2 = cmdAbility2;
                 }
             }
+            //changed "DEX-mod" to "acAbilityName" on each IF test below. 
+            //maxDex logic applies regardless of the ability picked for AC-ability not just DEX
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if (maxDex < 99 && maxDex >= 0){
-                if (acAbilityName === "DEX-mod" && maxDex < ability ) {
+                if (acAbilityName === acAbilityName && maxDex < ability ) {
                     ability=maxDex;
                     dexModShowLimit = 1;
                     if (lockDefAbility){
@@ -153,16 +155,16 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     }
                 }
                 if(unlockDefAbility){
-                    if (cmdAbilityDDvalName === "DEX-mod" && maxDex < cmdAbility2) {
+                    if (cmdAbilityDDvalName === acAbilityName && maxDex < cmdAbility2) {
                         cmdAbility2=maxDex;
                         dexModShowLimit = 1;
                     }
                     if (currUncanny){
-                        if(uncannyAbilityName === "DEX-mod" && maxDex < ffAbility ) {
+                        if(uncannyAbilityName === acAbilityName && maxDex < ffAbility ) {
                             ffAbility=maxDex;
                             dexModShowLimit = 1;
                         }
-                        if (uncannyCMDabilityName === "DEX-mod" && maxDex < cmdFFAbility2) {
+                        if (uncannyCMDabilityName === acAbilityName && maxDex < cmdFFAbility2) {
                             cmdFFAbility2 = maxDex;
                             dexModShowLimit = 1;
                         }

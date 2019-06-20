@@ -12,6 +12,7 @@ import * as PFDefense from './PFDefense';
 import * as PFAttackOptions from  './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttacks from './PFAttacks';
+import * as PFInventory from './PFInventory';
 
 var locationNamesOld = ["Belt", "Body", "Chest", "Eyes", "Feet", "Hands", "Head", "Headband", "Neck", "Ring1", "Ring2", "Shoulders", "Wrist"],
 wornSlotTypes = locationNamesOld.concat(["Armor3","Shield3"]),
@@ -1801,6 +1802,18 @@ function registerEventHandlers  () {
             });
         }
     }));
+// toggles the chat menu Show option for all repeating items    
+    on("change:showinmenu_all_items", function() {
+        getSectionIDs("repeating_item", function(idArray) {
+            const fieldNames = idArray.map(id => `repeating_item_${id}_showinmenu`);
+            getAttrs(['showinmenu_all_items'], function(values) {  
+                const toggle = +values['showinmenu_all_items']||0;
+                const settings = fieldNames.reduce((obj, item) => (obj[item] = toggle, obj) ,{});
+                setAttrs(settings);
+                PFInventory.recalculate();
+            });
+        });
+    });
 }
 registerEventHandlers();
 //PFConsole.log('   PFInventory module loaded      ' );

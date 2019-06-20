@@ -13,6 +13,7 @@ import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFFeatures from './PFFeatures';
 import * as PFAttacks from './PFAttacks';
+import * as PFAbility from './PFAbility';
 
 var optionFields= ['is_sp','hasposrange','hasuses','hasattack','abil-attacktypestr'],
 optionRepeatingHelperFields =['ability_type','range_numeric','frequency','abil-attack-type'],
@@ -906,7 +907,6 @@ function registerEventHandlers () {
 	macroEvent = "remove:repeating_ability ",
 	singleEvent = "change:repeating_ability:";
 
-
 	on("remove:repeating_ability", TAS.callback(function eventRemoveAbility(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		PFAttacks.removeLinkedAttack(null,PFAttacks.linkedAttackType.ability,SWUtils.getRowId(eventInfo.sourceAttribute));
@@ -997,6 +997,17 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setTypeTab(null,null,null,eventInfo);
 	}));
-
+// toggles the chat menu Show option for all repeating abilities	
+	on("change:showinmenu_all_abilities", function() {
+		getSectionIDs("repeating_ability", function(idArray) {
+			const fieldNames = idArray.map(id => `repeating_ability_${id}_showinmenu`);
+			getAttrs(['showinmenu_all_abilities'], function(values) {  
+				const toggle = +values['showinmenu_all_abilities']||0;
+				const settings = fieldNames.reduce((obj, item) => (obj[item] = toggle, obj) ,{});
+				setAttrs(settings);
+				PFAbility.recalculate();
+			});
+		});
+	});
 }
 registerEventHandlers();
