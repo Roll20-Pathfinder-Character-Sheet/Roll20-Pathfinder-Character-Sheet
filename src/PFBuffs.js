@@ -52,7 +52,7 @@ totColumns = _.values(buffToTot).concat(['dodge']).sort(),
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
 	'deflection','dodge'];
-//these have only their own type, enhancement, or untyped	
+//these have only their own type, enhancement, or untyped
 var	armorcols=['armor','shield','natural'],
 //map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
@@ -548,7 +548,7 @@ function assembleRows (ids,v,col){
 			valArray= buffsPerRow.reduce(function(im,n){
 				var innerPrefix=prefix+n,
 				bonusField=innerPrefix+'_bonus',vals={};
-				try{
+				try {
 					//TAS.debug("assembleRows looking at "+ bonusField  +" = " + v[bonusField] + " show is "+ v[innerPrefix+'-show']);
 					if(v[bonusField] && parseInt(v[innerPrefix+'-show'],10)===1){ 
 						if (!col || v[bonusField]===col || relatedBuffsL.indexOf(v[bonusField])>=0) {
@@ -614,12 +614,14 @@ function updateBuffTotal (col,rows,v,setter){
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 		if (affectedBuffs[col]){
 			columns=columns.concat(affectedBuffs[col]);
+// TAS.info('vince~~~~~~~~~~Columns are set to: '+columns +'~~~~~~~~');
 		}
 		rows = rows.filter(function(row){
+// TAS.info('vince~~~~~~~~~~"columns.indexOf(row.bonus)": '+columns.indexOf(row.bonus) +'~~~~~~~~');
 			if(columns.indexOf(row.bonus)>=0){
 				return 1;
 			}
-			return 0;
+				return 0;
 		});
 		if (rows && _.size(rows)){
 			TAS.debug("PFBUFFS ROWS NOW:",rows);
@@ -648,11 +650,15 @@ function updateBuffTotal (col,rows,v,setter){
 				//}
 				//stack all rows
 				bonuses = rows.reduce(function(m,row){
+// TAS.info('vince~~~~~~~~~~"row.bonus": '+row.bonus +'~~~~~~~~');
 					if(row.bonus===col){
+// TAS.info('vince~~~~~~~~~~COL is set to: '+col +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~Row val is set to: '+row.val +'~~~~~~~~');
 						if (row.val<0){
 							m.penalty = (m.penalty||0) + row.val;
 						} else if(stackingTypes.includes(row.bonusType)) { // || stackArmor ) {
 							m[row.bonusType] = (m[row.bonusType]||0) + row.val;
+// TAS.info('vince~~~~~~~~~~Row bonus type is set to: '+row.bonusType + ':' +m[row.bonusType] +'~~~~~~~~');
 						} else {
 							m[row.bonusType] = Math.max((m[row.bonusType]||0),row.val);
 						}
@@ -661,16 +667,23 @@ function updateBuffTotal (col,rows,v,setter){
 				},{});
 				//subtract any nonstacking parent buffs affecting it:
 				if(_.size(columns)>1){
+// TAS.info('vince~~~~~~~~~~Columns: '+columns +'~~~~~~~~');
 					bonuses = rows.reduce(function(m,row){
+// TAS.info('vince~~~~~~~~~~"stackingTypes.indexOf(row.bonusType)": '+stackingTypes.indexOf(row.bonusType) +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~"affectedBuffs[col].indexOf(row.bonus)": '+affectedBuffs[col].indexOf(row.bonus) +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~"row.val": '+row.val +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~"m[row.bonusType]": '+m[row.bonusType] +'~~~~~~~~');
 						if (stackingTypes.indexOf(row.bonusType)<0 && 
 							affectedBuffs[col].indexOf(row.bonus)>=0 &&
-							row.val >0 && m[row.bonusType]>0){
+							row.val >0 && 
+							m[row.bonusType]>0){
 								if(row.val < m[row.bonusType]){
 									m[row.bonusType] -= row.val;
 								} else {
 									m[row.bonusType]=0;
 								}
 						}
+// TAS.info('vince~~~~~~~~~~m: '+m +'~~~~~~~~');
 						return m;
 					},bonuses);
 				}
@@ -701,6 +714,7 @@ function updateBuffTotal (col,rows,v,setter){
 						bonuses.dodge=0;
 					}
 					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
+// TAS.info('vince~~~~~~~~~~"A. sums.sum": '+sums.sum +'~~~~~~~~');
 						m+=bonus;
 						return m;
 					},0);
@@ -709,6 +723,7 @@ function updateBuffTotal (col,rows,v,setter){
 					//if only enhance then is ok to use above
 					TAS.debug("PFBUFFS ac bonsuses  ",bonuses,otherCharBonuses[col]);
 					sums.sum = _.reduce(bonuses,function(m,bonus,bonusType){
+// TAS.info('vince~~~~~~~~~~"B. sums.sum": '+sums.sum +'~~~~~~~~');
 						if (bonus>0){
 							m+=bonus;
 						}
@@ -762,10 +777,13 @@ function updateBuffTotal (col,rows,v,setter){
 
 		totalcol=buffToTot[col];
 		if(totalcol){
+// TAS.info('vince~~~~~~~~~~totalcol is: '+totalcol +'~~~~~~~~');
 			if ( parseInt(v['buff_'+totalcol+'-total'],10)!==sums.sum){
 				setter['buff_'+totalcol+'-total']=sums.sum;
+// TAS.info('vince~~~~~~~~~~C. sums.sum: '+sums.sum +'~~~~~~~~');
 			}
 			tempInt = parseInt(v['buff_'+totalcol+'_exists'],10)||0;
+// TAS.info('vince~~~~~~~~~~tempInt: '+tempInt +'~~~~~~~~');
 			if (sums.sum !== 0 && tempInt===0){
 				setter['buff_'+totalcol+'_exists']=1;
 			} else if (sums.sum===0 && tempInt===1){
@@ -812,17 +830,24 @@ function updateBuffTotalAsync (col, callback,silently){
 			try {
 				fields = SWUtils.cartesianAppend(['repeating_buff2_'],ids,buffRowAttrs);
 				//columns = concat(buffsAffectingOthers[col]||[]).concat(affectedBuffs[col]||[]);
+// TAS.info('vince~~~~~~~~~~fields: '+fields +'~~~~~~~~');
 				columnsToGet=[col];
 				columnsToUpdate=[col];
+// TAS.info('vince~~~~~~~~~~columnsToGet: '+columnsToGet +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~columnsToUpdate: '+columnsToUpdate +'~~~~~~~~');
 				if(buffsAffectingOthers[col]){
 					columnsToGet=columnsToGet.concat(buffsAffectingOthers[col]);
 					columnsToUpdate=columnsToUpdate.concat(buffsAffectingOthers[col]);
+// TAS.info('vince~~~~~~~~~~"buffsAffectingOthers columnsToGet": '+columnsToGet +'~~~~~~~~');
+// TAS.info('vince~~~~~~~~~~"buffsAffectingOthers columnsToUpdate": '+columnsToUpdate +'~~~~~~~~');
 				}
 				if(affectedBuffs[col]){
 					columnsToGet = columnsToGet.concat(affectedBuffs[col]);
+// TAS.info('vince~~~~~~~~~~"affectedBuffs columnsToGet": '+columnsToGet +'~~~~~~~~');
 				}
 				totals = columnsToUpdate.map(function(b){return buffToTot[b];});
 				if (col==='ac'){
+// TAS.info('vince~~~~~~~~~~"col=ac" push dodge total: '+totals.push('dodge') +'~~~~~~~~');
 					totals.push('dodge')
 				}
 				totfields = totals.map(function(t){return 'buff_'+t+'-total'}).concat(
