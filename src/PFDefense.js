@@ -67,6 +67,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         buffs = parseInt(v["buff_AC-total"], 10) || 0,
         buffsTouchOnly = parseInt(v["buff_Touch-total"], 10) || 0,
         buffsCMDOnly = parseInt(v["buff_CMD-total"], 10) || 0,
+ //     buffsFFcmdOnlyDropDodge = parseInt(v["buff_ffCMD-nododge"], 10) || 0,
         armor = parseInt(v["AC-armor"], 10) || 0,
         shield = parseInt(v["AC-shield"], 10) || 0,
         natural = parseInt(v["AC-natural"], 10) || 0,
@@ -121,7 +122,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
-        buffcmd = 0,
+        buffcmd = 0,        
         setAny = 0,
         setter = {},
         params = {};
@@ -230,7 +231,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
             }
 
             buffac =     buffs + armorbuff + shieldbuff + naturalbuff + dodgebuff;
-            bufftouch =  buffsTouchOnly + dodgebuff;
+            bufftouch =  buffs + buffsTouchOnly + dodgebuff;
             buffff +=    buffs + armorbuff + shieldbuff + naturalbuff + buffFFOnly + ffdodgebuff;
             buffcmd =    buffs + buffsCMDOnly + dodgebuff;
             buffffcmd += buffs + buffsCMDOnly + buffFFOnly + ffdodgebuff;
@@ -238,9 +239,11 @@ export function updateDefenses ( callback, silently, eventInfo) {
             ac =    10 + armor + shield + natural +   ability + size + deflect + miscAC + condPenalty +   dodge + buffac;
             touch = 10 +                              ability + size + deflect + miscAC + condPenalty +   dodge + bufftouch;
             ff =    10 + armor + shield + natural + ffAbility + size + deflect + miscAC + condPenalty + ffdodge + buffff;
-            cmd =   10 + bab + cmdAbility1 +   cmdAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty +   dodge +   buffcmd;
+            cmd =   10 + bab + cmdAbility1 +   cmdAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + dodge + buffcmd;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + ffdodge + buffffcmd;
-
+//          cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + ffdodge + buffffcmd - buffsFFcmdOnlyDropDodge;
+// added '- buffsFFcmdOnlyDropDodge' to prevent cmd(type:dodge) buff from being included with cmdff
+// need to prevent buffsFFcmdOnlyDropDodge from being included in the cmdff calc when the cmd(type:dodge) buff is unchecked...
             if(parseInt(v.buffsumac,10)!==buffac){
                 setter.buffsumac=buffac;
             }
@@ -256,7 +259,6 @@ export function updateDefenses ( callback, silently, eventInfo) {
             if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
                 setter.buffsumffcmd = buffffcmd;
             }
- 
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }
