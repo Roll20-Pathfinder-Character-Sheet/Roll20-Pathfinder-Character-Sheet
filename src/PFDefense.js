@@ -7,6 +7,7 @@ import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
 import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
+import { consolidatedMiscSkills } from './PFSkills';
 
 export var defenseDropdowns = {
     "AC-ability": "AC-ability-mod",
@@ -36,7 +37,7 @@ events = {
 
 /** updateDefenses updates the top grid of AC, Touch AC, Flat Footed AC, CMD, Flat Footed CMD
  * http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#combat-maneuver-defense
- * Any penalties to a creature's AC also apply to its CMD
+ * Any PENALTIES(note: max Dex is not a penalty) to a creature's AC also apply to its CMD
  *@param {function} callback optional call when done
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
@@ -66,6 +67,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         buffs = parseInt(v["buff_AC-total"], 10) || 0,
         buffsTouchOnly = parseInt(v["buff_Touch-total"], 10) || 0,
         buffsCMDOnly = parseInt(v["buff_CMD-total"], 10) || 0,
+ //     buffsFFcmdOnlyDropDodge = parseInt(v["buff_ffCMD-nododge"], 10) || 0,
         armor = parseInt(v["AC-armor"], 10) || 0,
         shield = parseInt(v["AC-shield"], 10) || 0,
         natural = parseInt(v["AC-natural"], 10) || 0,
@@ -120,7 +122,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
-        buffcmd = 0,
+        buffcmd = 0,        
         setAny = 0,
         setter = {},
         params = {};
@@ -139,31 +141,33 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     cmdFFAbility2 = cmdAbility2;
                 }
             }
+            //changed "DEX-mod" to "acAbilityName" on each IF test below. 
+            //maxDex logic applies regardless of the ability picked for AC-ability not just DEX
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if (maxDex < 99 && maxDex >= 0){
-                if (acAbilityName === "DEX-mod" && maxDex < ability ) {
+                if (acAbilityName === acAbilityName && maxDex < ability ) {
                     ability=maxDex;
                     dexModShowLimit = 1;
                     if (lockDefAbility){
-                        cmdAbility2=maxDex;
+//                      cmdAbility2=maxDex;
                         if (currUncanny){
                             ffAbility=maxDex;
-                            cmdFFAbility2=maxDex;
+//                          cmdFFAbility2=maxDex;
                         }
                     }
                 }
                 if(unlockDefAbility){
-                    if (cmdAbilityDDvalName === "DEX-mod" && maxDex < cmdAbility2) {
-                        cmdAbility2=maxDex;
+                    if (cmdAbilityDDvalName === acAbilityName && maxDex < cmdAbility2) {
+//                      cmdAbility2=maxDex;
                         dexModShowLimit = 1;
                     }
                     if (currUncanny){
-                        if(uncannyAbilityName === "DEX-mod" && maxDex < ffAbility ) {
+                        if(uncannyAbilityName === acAbilityName && maxDex < ffAbility ) {
                             ffAbility=maxDex;
                             dexModShowLimit = 1;
                         }
-                        if (uncannyCMDabilityName === "DEX-mod" && maxDex < cmdFFAbility2) {
-                            cmdFFAbility2 = maxDex;
+                        if (uncannyCMDabilityName === acAbilityName && maxDex < cmdFFAbility2) {
+//                          cmdFFAbility2 = maxDex;
                             dexModShowLimit = 1;
                         }
                     }
@@ -201,7 +205,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
             } else if (loseDex) {
                 if (!currUncanny ) {
                     dodge = 0;
-                    dodgebuff = 0;                    
+//                    dodgebuff = 0;
                     noDexShowLimit = 1;
                 }
                 //set to same as flat footed (probably 0) or less than if ability already under 10.
@@ -217,24 +221,29 @@ export function updateDefenses ( callback, silently, eventInfo) {
                 ffdodgebuff = dodgebuff;
             }
 
+            else if (!currUncanny) {
+                ffdodge = 0;
+                ffdodgebuff = 0;
+            }
+
             if (parseInt(v.hd_not_bab,10)){
                 bab = parseInt(v.level,10)||0;
             }
 
-            buffac=buffs+armorbuff+shieldbuff+naturalbuff+dodgebuff;
-            bufftouch=buffs+buffsTouchOnly+dodgebuff;
-            buffff+=buffs+armorbuff+shieldbuff+naturalbuff+buffFFOnly+ffdodgebuff;
-            buffcmd = buffs+buffsCMDOnly+dodgebuff;
-            buffffcmd += buffs+buffsCMDOnly+buffFFOnly+ffdodgebuff;
+            buffac =     buffs + armorbuff + shieldbuff + naturalbuff + dodgebuff;
+            bufftouch =  buffs + buffsTouchOnly + dodgebuff;
+            buffff +=    buffs + armorbuff + shieldbuff + naturalbuff + buffFFOnly + ffdodgebuff;
+            buffcmd =    buffs + buffsCMDOnly + dodgebuff;
+            buffffcmd += buffs + buffsCMDOnly + buffFFOnly + ffdodgebuff;
 
-            ac = 10 + armor + shield + natural + ability + size + deflect + miscAC + condPenalty + dodge + buffac;
-            touch = 10 +                         ability + size + deflect + miscAC + condPenalty + dodge + bufftouch; 
-            ff = 10 + armor + shield + natural + ffAbility + size + deflect + miscAC + condPenalty + ffdodge + buffff;
-            cmd = 10 + bab + cmdAbility1 + cmdAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + dodge + buffcmd;
+            ac =    10 + armor + shield + natural +   ability + size + deflect + miscAC + condPenalty +   dodge + buffac;
+            touch = 10 +                              ability + size + deflect + miscAC + condPenalty +   dodge + bufftouch;
+            ff =    10 + armor + shield + natural + ffAbility + size + deflect + miscAC + condPenalty + ffdodge + buffff;
+            cmd =   10 + bab + cmdAbility1 +   cmdAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + dodge + buffcmd;
             cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + ffdodge + buffffcmd;
-
-
-
+//          cmdFF = 10 + bab + cmdAbility1 + cmdFFAbility2 + (-1 * size) + deflect + miscCMD + cmdPenalty + ffdodge + buffffcmd - buffsFFcmdOnlyDropDodge;
+// added '- buffsFFcmdOnlyDropDodge' to prevent cmd(type:dodge) buff from being included with cmdff
+// need to prevent buffsFFcmdOnlyDropDodge from being included in the cmdff calc when the cmd(type:dodge) buff is unchecked...
             if(parseInt(v.buffsumac,10)!==buffac){
                 setter.buffsumac=buffac;
             }
@@ -250,9 +259,6 @@ export function updateDefenses ( callback, silently, eventInfo) {
             if(parseInt(v.buffsumffcmd,10)!==buffffcmd){
                 setter.buffsumffcmd = buffffcmd;
             }
-            
-
- 
             if (ac !== currAC || isNaN(currAC)) {
                 setter["AC"] = ac;
             }

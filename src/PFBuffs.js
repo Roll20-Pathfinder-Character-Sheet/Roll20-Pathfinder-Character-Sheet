@@ -52,8 +52,11 @@ totColumns = _.values(buffToTot).concat(['dodge']).sort(),
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
 	'insight','luck','morale','profane','racial','resistance','sacred','size','trait',
 	'deflection','dodge'];
-//these have only their own type, enhancement, or untyped	
+//these have only their own type, enhancement, or untyped
 var	armorcols=['armor','shield','natural'],
+
+//buffsFFcmdOnlyTemp = '',
+
 //map of buffs to other buffs that affect it. left is "parent" buff that is substracted from right
 buffsAffectingOthers = {
 	'ac':['cmd','touch','flatfooted'],
@@ -548,7 +551,7 @@ function assembleRows (ids,v,col){
 			valArray= buffsPerRow.reduce(function(im,n){
 				var innerPrefix=prefix+n,
 				bonusField=innerPrefix+'_bonus',vals={};
-				try{
+				try {
 					//TAS.debug("assembleRows looking at "+ bonusField  +" = " + v[bonusField] + " show is "+ v[innerPrefix+'-show']);
 					if(v[bonusField] && parseInt(v[innerPrefix+'-show'],10)===1){ 
 						if (!col || v[bonusField]===col || relatedBuffsL.indexOf(v[bonusField])>=0) {
@@ -608,10 +611,11 @@ function updateBuffTotal (col,rows,v,setter){
 	isWorn=1,
 	//stackArmor=0,
 	columns=[col];
+
 	try {
 		//TAS.debug("total sync for "+col,rows,v);
 		setter = setter || {};
-		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
+		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;		
 		if (affectedBuffs[col]){
 			columns=columns.concat(affectedBuffs[col]);
 		}
@@ -619,7 +623,7 @@ function updateBuffTotal (col,rows,v,setter){
 			if(columns.indexOf(row.bonus)>=0){
 				return 1;
 			}
-			return 0;
+				return 0;
 		});
 		if (rows && _.size(rows)){
 			TAS.debug("PFBUFFS ROWS NOW:",rows);
@@ -664,7 +668,8 @@ function updateBuffTotal (col,rows,v,setter){
 					bonuses = rows.reduce(function(m,row){
 						if (stackingTypes.indexOf(row.bonusType)<0 && 
 							affectedBuffs[col].indexOf(row.bonus)>=0 &&
-							row.val >0 && m[row.bonusType]>0){
+							row.val >0 && 
+							m[row.bonusType]>0){
 								if(row.val < m[row.bonusType]){
 									m[row.bonusType] -= row.val;
 								} else {
@@ -693,7 +698,7 @@ function updateBuffTotal (col,rows,v,setter){
 						sums.pen=bonuses.penalty;
 						bonuses.penalty=0;
 					}
-					//if ac,touch,cmd,flatfooted, copy dodge  out
+					//if ac,touch,cmd,flatfooted, copy dodge out
 					if(col==='ac' && bonuses.dodge){
 						if(col==='ac'){
 							totaldodge += bonuses.dodge;
@@ -759,6 +764,14 @@ function updateBuffTotal (col,rows,v,setter){
 				setter['buff_dodge_exists']=0;
 			}
 		}
+
+//section added below to prevent cmd(type:dodge) buff from being included with cmdff 
+//		if(col==='cmd' && bonuses.dodge!==0){
+//TAS.info('column is CMD, setting buffsFFcmdOnlyTemp to dodge buff:'+bonuses.dodge);
+//				buffsFFcmdOnlyTemp = bonuses.dodge
+//				setter['buff_ffCMD-nododge']=buffsFFcmdOnlyTemp;
+//TAS.info('buff_ffCMD-nododge now set same as dodge buff:'+buffsFFcmdOnlyTemp);
+//		}
 
 		totalcol=buffToTot[col];
 		if(totalcol){

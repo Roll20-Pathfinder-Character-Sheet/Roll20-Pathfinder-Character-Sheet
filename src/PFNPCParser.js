@@ -3069,7 +3069,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				cr = SWUtils.trimBoth(cr);
 				setter["npc-cr"] = cr;
 			}
-			setter["PC-Whisper"] = "/w gm";
+//			setter["PC-Whisper"] = "/w gm";
 			//Creature Race and Type *****************************************************
 			//undead means use CHA instead of CON
 			if (v.type_compendium) {
