@@ -38,21 +38,8 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>fix for AC buff not being applied to Touch AC.</li>
-				<li>known issue: buff for cmd(type:dodge) is erroneously applied to FF CMD</li>
-				<li>fix for AC-misc not being applied to Touch AC.</li>
-				<li>fix for Extra Crit Damage does not display line breaks like Extra Damage. Extra Crit Damage type field does not accept line breaks.</li>
-				<li>fix for Spell Points; @{spellclass-1-spell-points-per-day|max} value had a typo preventing a proper calculation.</li>
-				<li>change for NPC/Monster compendium/hl import; pc rolls were set to private/whispered regardless of sheet.json settings when parsing from compendium. Now honors sheet settings</li>
-				<li>updated translation list sorting for conditions and skills (removed erroneous spaces used in translation.json)</li>
-				<li>fix for maxDex being applied to CMD</li>
-				<li>fix for AC buff's not being applied to FF AC and FF CMD</li>
-				<li>Added "#Cast" to repeating spells.</li>
-				<li>Added a "Show" column toggle for Abilities and Equipment that affects the Show option of all repeating rows that follow.</li>  
-				<li>Added a header image column toggle that affects all header images on/off (will not change header images that are already set to a custom URL). Option also added to the game's sheet setting to use header images for roll templates as the default. Reminder: simple roll templates will override this and thus will not display header images.</li>
-				<li>Fix for maxDex not being applied to AC for any ability other than DEX. (AC-ability drop-down selector).</li>
-				<li>Fix for damage_macro resetting to default value with a sheet close/re-open.</li>
-				<li>Added localization list sorting for Skills and Conditions.</li>
+				<li>HeroLab importer update. Fixed bug that prevented item import when encountering unexpected damage entry.(James W.)</li>
+				<li>Fixed title text for customd1 and customd2 button rolls.</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv172-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -13269,7 +13256,7 @@
 							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined"  name="attr_customd1-name" title="@{customd1-name}"  /></span>
 							<div class="sheet-custom-roll-inner">
 								<div class="sheet-custom-buttons">
-									<button type="roll" name="roll_customd1_roll" class="sheet-command-button" value="@{PC-whisper} @{customd1}" title="%{selected|customd1}">&nbsp;<span name="attr_customd1-name" /></button>
+									<button type="roll" name="roll_customd1_roll" class="sheet-command-button" value="@{PC-whisper} @{customd1}" title="%{selected|customd1_roll}">&nbsp;<span name="attr_customd1-name" /></button>
 									<br>
 									<button type="roll" name="roll_NPC-customd1_roll" class="sheet-command-button" value="@{NPC-whisper} @{customd1}" title="%{selected|NPC-customd1}"><span data-i18n="npc">NPC</span>&nbsp;<span name="attr_customd1-name" /></button>
 								</div>
@@ -13280,7 +13267,7 @@
 							<span ><input class="sheet-entry-custom-header" type="text" value="" data-i18n-placeholder="user-defined"  name="attr_customd2-name" title="@{customd2-name}"  /></span>
 							<div class="sheet-custom-roll-inner">
 							<div class="sheet-custom-buttons">
-								<button type="roll" name="roll_customd2_roll" class="sheet-command-button" value="@{PC-whisper} @{customd2}" title="%{selected|customd2}">&nbsp;<span name="attr_customd2-name" /></button>
+								<button type="roll" name="roll_customd2_roll" class="sheet-command-button" value="@{PC-whisper} @{customd2}" title="%{selected|customd2_roll}">&nbsp;<span name="attr_customd2-name" /></button>
 								<br>
 								<button type="roll" name="roll_NPC-customd2_roll" class="sheet-command-button" value="@{NPC-whisper} @{customd2}" title="%{selected|NPC-customd2}"><span data-i18n="npc">NPC</span>&nbsp;<span name="attr_customd2-name" /></button>
 							</div>
