@@ -56,19 +56,19 @@ export function setRowIds (section) {
 }
 /* toggles default header images */
 const header_images = {
-    'header_image-pf_spell': "[default](http://imgur.com/9yjOsAD.png)",
-    'header_image-pf_attack-melee': "[default](http://i.imgur.com/AGq5VBG.png)",
-    'header_image-pf_attack-dual': "[default](http://i.imgur.com/Eh243RO.png)",
-    'header_image-pf_attack-ranged': "[default](http://imgur.com/58j2e8P.png)",
-    'header_image-pf_attack-cmb': "[default](http://i.imgur.com/Si4vfts.png)",
-    'header_image-pf_defense': "[default](http://imgur.com/02fV6wh.png)",
-    'header_image-pf_generic': "[default](http://imgur.com/phw1eFB.png)",
-    'header_image-pf_ability': "[default](http://i.imgur.com/UxYSva8.png)",
-    'header_image-pf_block': "[default](http://imgur.com/nBnv4DL.png)",
-    'header_image-pf_generic-skill': "[default](http://imgur.com/8dCkRtG.png)",
-    'header_image-pf_generic-init': "[default](http://i.imgur.com/pjS6HVJ.png)",
-    'header_image-pf_block-item': "[default](http://i.imgur.com/4FgQuqS.png)",
-    'header_image-pf_block-check': "[default](http://i.imgur.com/a6O3ZGB.png)"
+    'header_image-pf_spell': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_spell.png)",
+    'header_image-pf_attack-melee': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_melee.png)",
+    'header_image-pf_attack-dual': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_dual.png)",
+    'header_image-pf_attack-ranged': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_ranged.png)",
+    'header_image-pf_attack-cmb': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_cmb.png)",
+    'header_image-pf_defense': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_defense.png)",
+    'header_image-pf_generic': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png)",
+    'header_image-pf_ability': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_ability.png)",
+    'header_image-pf_block': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block.png)",
+    'header_image-pf_generic-skill': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png)",
+    'header_image-pf_generic-init': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic_initiative.png)",
+    'header_image-pf_block-item': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_item.png)",
+    'header_image-pf_block-check': "[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_ability_check.png)"
 };
 const header_image_names = Object.keys(header_images);
 on("change:header_images_toggle", function () {

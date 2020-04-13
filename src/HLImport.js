@@ -288,7 +288,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 	
 				if (!_.isUndefined(item.itempower))
 					_.each(arrayify(item.itempower), function(itemPower) { itemsList.push(itemPower._name); });
-					
+
 				// check if this is a weapon
 				var weaponCompareName = item._name;
 				// If this is a shield (but not a klar), the attack name will be "Heavy/light shield bash"
@@ -318,7 +318,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 						if (!_.isUndefined(weaponObj._damage))
 						{
 							var weaponDice = weaponObj._damage.match(/\d+d\d+/);
-							if (weaponDice.length > 0)
+							if (!_.isNull(weaponDice) && weaponDice.length > 0)
 							{
 								attrs[repeatPrefix+"_item-damage-dice-num"] = parseNum(weaponDice[0].split("d")[0]);
 								attrs[repeatPrefix+"_item-damage-die"] = parseNum(weaponDice[0].split("d")[1]);
