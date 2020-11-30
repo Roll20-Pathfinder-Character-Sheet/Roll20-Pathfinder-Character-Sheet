@@ -392,7 +392,7 @@ function registerEventHandlers () {
     abilitymods.forEach(function(attr){
         on("change:"+attr, TAS.callback(function eventAbilityModUpdate(eventInfo){
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType === "api"){
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 propagateAbilityModsAsync(null,null,eventInfo.sourceAttribute);
             }
         }));

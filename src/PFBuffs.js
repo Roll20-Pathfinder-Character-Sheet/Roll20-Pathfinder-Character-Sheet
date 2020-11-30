@@ -2142,7 +2142,7 @@ function registerEventHandlers () {
 		}));
 	});
 	on('change:repeating_buff2:add_note_to_roll',TAS.callback(function PFBuffs_addnote(eventInfo){
-		if (eventInfo.sourceType === "player" ){
+		if (eventInfo.sourceType === "player") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			addNoteAsync(null,eventInfo);
 		}
@@ -2213,7 +2213,7 @@ function registerEventHandlers () {
 		_.each(functions, function (methodToCall) {
 			on(eventToWatch, TAS.callback(function eventBuffTotalNoParam(eventInfo) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" || eventInfo.sourceType === "api") {
+				if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 					methodToCall(null,false,null, eventInfo);
 				}
 			}));
@@ -2221,7 +2221,7 @@ function registerEventHandlers () {
 	});
 	on('change:merge_buffs_now', TAS.callback(function eventMergeBuffs(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player"){
+		if (eventInfo.sourceType === "player") {
 			getAttrs(['merge_buffs_now'],function(v){
 				if(parseInt(v.merge_buffs_now),10){
 					mergeOldIntoNewBuffs(updateAllBuffTotalsAsync);
@@ -2233,7 +2233,7 @@ function registerEventHandlers () {
 
 	custombuffs.forEach(function(buff){
 		on('change:buff_'+buff+'-total',TAS.callback(function customBuffTotal(eventInfo){
-			if(eventInfo.sourceType==='sheetworker'||eventInfo.sourceType==='api'){
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
 				SWUtils.evaluateAndAddAsync(null,null,buff,PFConst.customEquationMacros[buff],'buff_'+buff+'-total');		
 			}

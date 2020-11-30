@@ -988,33 +988,29 @@ span.sheet-entry-custom-header {
 }
 .sheet-pf-wrapper span.sheet-note-a::after {
     content: '⒜';
-    font-family: monospace;
-    font-size: 11px;
-    font-weight: normal;
+    font-family: ui-monospace;
+    font-size: 12px;
     position: absolute;
     margin: -1px 0 0 1px;
 }
 .sheet-pf-wrapper span.sheet-note-b::after {
     content: '⒝';
-    font-family: monospace;
-    font-size: 11px;
-    font-weight: normal;
+    font-family: ui-monospace;
+    font-size: 12px;
     position: absolute;
     margin: -1px 0 0 1px;
 }
 .sheet-pf-wrapper span.sheet-note-c::after {
     content: '⒞';
-    font-family: monospace;
-    font-size: 11px;
-    font-weight: normal;
+    font-family: ui-monospace;
+    font-size: 12px;
     position: absolute;
     margin: -1px 0 0 1px;
 }
 .sheet-pf-wrapper span.sheet-note-d::after {
     content: '⒟';
-    font-family: monospace;
-    font-size: 11px;
-    font-weight: normal;
+    font-family: ui-monospace;
+    font-size: 12px;
     position: absolute;
     margin: -1px 0 0 1px;
 }
@@ -2410,7 +2406,7 @@ input.sheet-highlight[readonly]
 }
 .sheet-small-label2 {
     display: inline-block;
-    margin: .3em .124em .3em .125em;
+    margin: .1em .124em .1em .125em;
     height: 3em;
     min-height: 3em;
     vertical-align: top;
@@ -2663,6 +2659,16 @@ div.sheet-feats .sheet-table-row span:last-child {
 .sheet-table-cell.sheet-repeating-rollbutton {
     vertical-align: top;
 }
+.sheet-divider-subtext {
+    display:block; 
+    text-align:center; 
+    font-size:1.1rem; 
+    font-style:italic; 
+    font-weight:bold; 
+    color:Black; 
+    margin-top:-1.7em;
+}
+
 .sheet-divider,
 .sheet-divider-lg,
 .sheet-divider-db,
@@ -2690,7 +2696,7 @@ div.sheet-feats .sheet-table-row span:last-child {
 .sheet-divider-db-lg {
     display: inline-block;
     margin-left: -.125em;
-    margin-top: 1em;
+    margin-top: .65em;
 }
 .sheet-table-name,
 .sheet-nontable-name {
@@ -2799,6 +2805,7 @@ span.sheet-entry-wide textarea {
 }
 .sheet-nontable-repeating .sheet-divider-db-lg {
     vertical-align: middle;
+    line-height: 1em;
 }
 .sheet-entry-vlong {
     width: 13em;
@@ -3490,6 +3497,14 @@ input[type="text"].sheet-skill-conds {
     vertical-align: top;
     overflow: hidden;
 }
+.sheet-rolltemplate-pf_generic .sheet-roll-cell:first-child,
+.sheet-rolltemplate-pf_ability .sheet-roll-cell:first-child,
+.sheet-rolltemplate-pf_defense .sheet-roll-cell:first-child,
+.sheet-rolltemplate-pf_attack .sheet-roll-cell:first-child,
+.sheet-rolltemplate-pf_spell .sheet-roll-cell:first-child,
+.sheet-rolltemplate-pf_block .sheet-roll-cell:first-child {
+    word-break: break-word;
+}
 .sheet-rolltemplate-pf_spell .sheet-pfctracking,
 .sheet-rolltemplate-pf_ability .sheet-pfctracking,
 .sheet-rolltemplate-pf_attack .sheet-pfctracking,
@@ -3629,7 +3644,6 @@ input[type="text"].sheet-skill-conds {
     float: left;
     line-height: 1.4em;
     padding-top: 0;
-    margin-top: -0.2rem;
 }
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible label.sheet-dmg-x span:last-child {
     line-height: 1em;

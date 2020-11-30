@@ -289,7 +289,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         optionText += optionTemplates.spell_fail_check;
         optionText += optionTemplates.spell_fail;
     }
-    if (toggleValues.showdamage ){
+    if (toggleValues.showdamage ) {
         if(rowValues[prefix+"damage-macro-text"]){
             optionText += optionTemplates.spelldamage;//.replace("REPLACE",(rowValues[prefix+"damage-macro-text"])||"");
         } else {
@@ -298,10 +298,10 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
         if (rowValues["damage-type"]){
             optionText += optionTemplates.spelldamagetype;//.replace("REPLACE", rowValues["damage-type"]||"");
         } else {
-            optionText += "{{spelldamagetype=}}";
+            optionText += "{{spelldamagetype=@{damage-type}}}";
         }
     } else {
-        optionText += "{{spelldamage=}}{{spelldamagetype=}}";
+        optionText += "{{spelldamage=}}{{spelldamagetype=@{damage-type}}}";
     }
     //TAS.debug("PFSpell.resetOption returning "+optionText);
     return optionText;

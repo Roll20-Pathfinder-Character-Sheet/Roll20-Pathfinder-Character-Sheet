@@ -188,7 +188,7 @@ export function resetCommandMacro (dummy, eventInfo, callback) {
                             } catch (maperr){
                                 TAS.error("PFSpells.resetCommandMacro error creating link name:",maperr);
                             } finally {
-                                spellObj.pcChatLink = spellName+"(~@{character_id}|repeating_spells_" + spellObj.id + "_roll)";
+                                spellObj.pcChatLink = spellName+"(~@{character_name}|repeating_spells_" + spellObj.id + "_roll)";
                                 spellObj.npcChatLink = spellName+"(~@{character_id}|repeating_spells_" + spellObj.id + "_npc-roll)";
                                 return spellObj;
                             }
