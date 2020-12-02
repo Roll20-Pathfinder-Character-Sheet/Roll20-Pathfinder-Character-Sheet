@@ -2862,7 +2862,7 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-hide-readonly sheet-left-border"><input title="@{attk_melee_crit_conf}" type="number" name="attr_attk_melee_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee_desc} :condition" type="text" name="attr_attk_melee_desc" value="" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee-Attack-macro" title="@{Melee-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee-attack}}} {{check=[[ 1d20 + [[ @{attk-melee} + @{toggle_global_attack_macro_insert} + @{toggle_global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee_desc}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
@@ -2914,7 +2914,7 @@
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{melee_buffs}" name="attr_melee_buffs" type="text" value="(@{buff_Melee-total}+@{buff_attack-total})" class="sheet-number" disabled /></span>
 								<span class="sheet-divider">+</span>
-								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" max="0" class="sheet-calc" readonly /></span>
+								<span class="sheet-table-cell"><input title="@{attk-penalty}" type="number" name="attr_attk-penalty" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-table-cell sheet-hide-readonly sheet-left-border"><input title="@{attk_melee2_crit_conf}" type="number" name="attr_attk_melee2_crit_conf" value="0" /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><input title="@{attk_melee2_note}" type="text" name="attr_attk_melee2_note" value="Weapon Finesse" data-i18n-placeholder="alternate-ability-melee-desc"  /></span>
 								<span class="sheet-table-cell sheet-hide-readonly"><textarea class="sheet-skill-macro-text" name="attr_Melee2-Attack-macro" title="@{Melee2-Attack-macro}">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_attack-melee}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{melee2-attack}}} {{check=[[ 1d20 + [[ @{attk-melee2} + @{toggle_global_attack_macro_insert} + @{toggle_global_melee_macro_insert} ]] ]]}} {{description=@{attk_melee2_note}}} {{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}</textarea></span>
