@@ -283,7 +283,6 @@ export function updateAbilityScores (callback, silently) {
     });
 }
 
-
 export function applyConditions (callback, silently, eventInfo) {
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {}, silentSetter={}, params = {}, tempInt=0,

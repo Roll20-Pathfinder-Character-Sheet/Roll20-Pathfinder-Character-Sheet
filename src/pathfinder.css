@@ -4308,6 +4308,7 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-secondary-table-name:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-divider:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-divider-lg:not(.sheet-show-readonly),
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-desc:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-desc-show:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-desc-showlabel:not(.sheet-show-readonly),
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-repeating-fields .sheet-macro-text-show:not(.sheet-show-readonly),
