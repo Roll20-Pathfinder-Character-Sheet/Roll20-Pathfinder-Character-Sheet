@@ -981,7 +981,8 @@ span.sheet-entry-custom-header {
 	padding: .2em .25em .5em .25em;
 }
 
-.sheet-pf-wrapper span.sheet-super::after  {
+.sheet-pf-wrapper span.sheet-super::after,
+.sheet-pf-wrapper h2.sheet-super::after  {
     font-weight: normal;
     color: black;
     font-family: 'Roboto Mono', monospace;
@@ -990,16 +991,20 @@ span.sheet-entry-custom-header {
     position: absolute;
     margin: -1px 0 0 1px;
 }
-.sheet-pf-wrapper span.sheet-note-a::after {
+.sheet-pf-wrapper span.sheet-note-a::after,
+.sheet-pf-wrapper h2.sheet-note-a::after {
     content: '(a)';
 }
-.sheet-pf-wrapper span.sheet-note-b::after {
+.sheet-pf-wrapper span.sheet-note-b::after,
+.sheet-pf-wrapper h2.sheet-note-b::after {
     content: '(b)';
 }
-.sheet-pf-wrapper span.sheet-note-c::after {
+.sheet-pf-wrapper span.sheet-note-c::after,
+.sheet-pf-wrapper h2.sheet-note-c::after {
     content: '(c)';
 }
-.sheet-pf-wrapper span.sheet-note-d::after {
+.sheet-pf-wrapper span.sheet-note-d::after,
+.sheet-pf-wrapper h2.sheet-note-d::after {
     content: '(d)';
 }
 .sheet-text-tight {
