@@ -82,7 +82,7 @@ h4,h5,h6 {
 }
 .sheet-pf-wrapper {
     width: 100%;
-    min-width: 100%;
+    min-width: 800px;
     margin-top: -1em;
 }
 /* standalone generic toggles */
