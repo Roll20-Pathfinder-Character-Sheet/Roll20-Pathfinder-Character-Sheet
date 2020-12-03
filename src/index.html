@@ -14169,11 +14169,11 @@
 	</div>
 	<div data-i18n-aria-label="footnotes-aria" class="sheet-footnotes sheet-left" aria-label="Footnote information">
 		<hr style="border-color:#a9a9a9;">
-		<ul style="list-style:none;margin-left:1.5em;text-indent:-1.5em;">
-			<li data-i18n="footnote-a">⒜ Evaluated at edit time, must evaluate to number. No queries. Extended Expressions allowed.</li>
-			<li data-i18n="footnote-b">⒝ Evaluated at roll time in chat. Queries allowed. Must put [[brackets]] around rolls.</li>
-			<li data-i18n="footnote-c">⒞ Evaluated at roll time in chat. Queries allowed. Must evaluate to number. No [[brackets]] needed.</li>
-			<li data-i18n="footnote-d">⒟ Sent to roll template.</li>
+		<ul style="list-style: none;margin: -1.5rem 0 -1rem 1.5rem;">
+			<li data-i18n="footnote-a">(a) Evaluated at edit time. Must evaluate to number. No queries or rolls. Extended Expressions allowed. Must use ID number to refer to row value. Can refer to (a) expressions or number attributes only.</li>
+			<li data-i18n="footnote-b">(b) Evaluated at roll time. May output string or number. Queries and rolls allowed. Must put [[brackets]] around rolls. Can refer to (a),(b),(c) expressions.</li>
+			<li data-i18n="footnote-c">(c) Evaluated at roll time. Must evaluate to number. Queries and rolls allowed. [[Brackets]] automatically placed around expression. Can refer to (a) or (c) expressions or number attributes only (or (b) if it evaluates to a number).</li>
+			<li data-i18n="footnote-d">(d) The actual roll. Sent to chat. Evaluated at roll time. Can refer to any of above.</li>
 		</ul>
     </div>
 	<div data-i18n-aria-label="footer-aria" class="sheet-footer" aria-label="Help links and footer information">

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Noto+Sans|Roboto+Mono&display=swap');
+
 html,
 .sheet-pf-wrapper,
 .sheet-rolltemplate-pf_generic,
@@ -177,7 +179,6 @@ input[readonly], input[disabled] {
     clear: both;
 }
 
-
 .sheet-inline-textarea,
 .sheet-macro-text-inline,
 .sheet-skill-macro-text {
@@ -236,6 +237,7 @@ input[readonly], input[disabled] {
     display:inline !important;
     vertical-align: bottom;
 }
+
 .sheet-kinetic-sect .sheet-linked-fields {
     width: 10em;
 }
@@ -297,7 +299,6 @@ button[type="roll"]:not(.sheet-command-button) {
 	cursor:pointer;
 }
 
-
 button[type="roll"].sheet-no-decoration {
 	background:none;
 	border:none;
@@ -330,7 +331,7 @@ h1,h2,h3,h4,
 .sheet-table-header,
 .sheet-text-button,
 .sheet-tab {
-    font-family: Lucida Grande, Trebuchet MS, Candara, Arial, sans-serif;
+    font-family: "Noto Sans", sans-serif;
 }
 .sheet-panel-name {
     font-family: tahoma, arial black, sans-serif;
@@ -347,8 +348,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_attack,
 .sheet-rolltemplate-pf_spell,
 .sheet-rolltemplate-pf_block {
-	--sheet-pf-specfont: Lucida Grande, Trebuchet MS, Candara, Arial, sans-serif;
-	--sheet-pf-header-specfont: Lucida Grande, Trebuchet MS, Candara, Arial, sans-serif;
+	--sheet-pf-specfont: "Noto Sans", sans-serif;
+	--sheet-pf-header-specfont: "Noto Sans JP", sans-serif;
 }
 .sheet-rolltemplate-pf_generic .sheet-font-11,
 .sheet-rolltemplate-pf_ability .sheet-font-11,
@@ -980,44 +981,31 @@ span.sheet-entry-custom-header {
 	padding: .2em .25em .5em .25em;
 }
 
-.sheet-super::after  {
-    margin-left: .25em;
-    font-size: 1.6rem;
+.sheet-pf-wrapper span.sheet-super::after  {
     font-weight: normal;
     color: black;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    letter-spacing: -.08em;
+    position: absolute;
+    margin: -1px 0 0 1px;
 }
 .sheet-pf-wrapper span.sheet-note-a::after {
-    content: '⒜';
-    font-family: ui-monospace;
-    font-size: 12px;
-    position: absolute;
-    margin: -1px 0 0 1px;
+    content: '(a)';
 }
 .sheet-pf-wrapper span.sheet-note-b::after {
-    content: '⒝';
-    font-family: ui-monospace;
-    font-size: 12px;
-    position: absolute;
-    margin: -1px 0 0 1px;
+    content: '(b)';
 }
 .sheet-pf-wrapper span.sheet-note-c::after {
-    content: '⒞';
-    font-family: ui-monospace;
-    font-size: 12px;
-    position: absolute;
-    margin: -1px 0 0 1px;
+    content: '(c)';
 }
 .sheet-pf-wrapper span.sheet-note-d::after {
-    content: '⒟';
-    font-family: ui-monospace;
-    font-size: 12px;
-    position: absolute;
-    margin: -1px 0 0 1px;
+    content: '(d)';
 }
 .sheet-text-tight {
-    font-size: .65em;
-    font-weight: bold;
-    letter-spacing: -.07em;
+    font-size: .75em;
+    font-family: 'Roboto Mono', monospace;
+    margin: 0 0 0 -3px;
     }
 
 /******************************* API COMMAND BUTTONS *************************************/
@@ -2094,10 +2082,13 @@ hr.sheet-skinny {
     clear: both;
 }
 .sheet-footnotes {
-    display: table;	
     width: 100%;
-	text-align: center;
-	font-size: 1.2rem;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    list-style: none;
+    text-indent: -2.5em;
+    white-space: pre-line;
+    line-height: 1em;
 }
 .sheet-compendium-note {
 	float:right;
