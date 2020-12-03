@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Noto+Sans|Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Noto+Sans|Roboto+Mono|Open+Sans|Lato&display=swap');
 
 html,
 .sheet-pf-wrapper,
@@ -364,8 +364,8 @@ h1,h2,h3,h4,
 .sheet-rolltemplate-pf_spell .sheet-font-1.sheet-roll-accessible,
 .sheet-rolltemplate-pf_block .sheet-font-1.sheet-roll-accessible,
 .sheet-accessible:checked ~ .sheet-pf-wrapper {
-    --sheet-pf-specfont: Verdana, Trebuchet MS, Tahoma, sans-serif;
-	--sheet-pf-header-specfont: Verdana, Trebuchet MS, Tahoma, sans-serif;
+    --sheet-pf-specfont: 'Open Sans', sans-serif;
+	--sheet-pf-header-specfont: 'Lato', sans-serif;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-font-12,
