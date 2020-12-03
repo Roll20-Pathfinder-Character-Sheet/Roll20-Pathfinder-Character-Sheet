@@ -4268,7 +4268,8 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
     margin: .125em;
     clear: none;
     float: left;
-	height: auto;
+    height: auto;
+    overflow: hidden;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section > .sheet-h2-section .sheet-h3-section:not(.sheet-wide-readonly).sheet-section-oldslas {
     width: calc(100% - .25em);
@@ -4498,7 +4499,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	margin: 0.2rem;
 	width: calc(50% - 4px);
 	float: left;
-	min-height: 16em;
+	min-height: 16.7em;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section .sheet-col .sheet-h2-section.sheet-half-readonly,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-half-readonly {
@@ -4680,7 +4681,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-h3-section.sheet-domains.sheet-wide-readonly {
 	padding-bottom: 0.5em;
-	margin: 0 0 0 -0.2rem;
+	margin: 0;
 	min-width: calc(100% - 1px);
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-attacks .sheet-h2-section.sheet-advanced-macros {
@@ -4867,10 +4868,16 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: 100%;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main  .sheet-section-spells .sheet-col.sheet-col1 {
-	margin: 0.2rem 0.2rem 0.2rem -0.4rem; 
+	margin: 0.2rem 0.2rem 0.2rem -0.2rem; 
 	width: 50%;
 	float:left;
 }
+
+.sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-section-spells .sheet-col.sheet-col1:last-child {
+    margin: 0;
+    width: calc(50% - .4rem);
+  }
+
 .sheet-readonly-show:not(:checked) ~ .sheet-main  .sheet-section-spells .sheet-col.sheet-col2 {
     margin: 0.2rem; 
 	width: calc(50% - 4px);
