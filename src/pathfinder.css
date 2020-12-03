@@ -5139,7 +5139,9 @@ textarea.sheet-macro-text-inline,
 textarea.sheet-macro-text, 
 textarea.sheet-skill-macro-text ,
 input.sheet-skill-macro-text {
-    font-family: lucida console, consolas, monospace;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1em;
+    line-height: 1.1em;
 }
 .sheet-accessible:checked ~ .sheet-pf-wrapper input.sheet-macro-text-inline,
 .sheet-accessible:checked ~ .sheet-pf-wrapper textarea.sheet-macro-text-inline,
@@ -5148,7 +5150,9 @@ input.sheet-skill-macro-text {
 .sheet-accessible:checked ~ .sheet-pf-wrapper .sheet-inline-textarea, 
 .sheet-accessible:checked ~ .sheet-pf-wrapper textarea.sheet-skill-macro-text,
 .sheet-accessible:checked ~ .sheet-pf-wrapper input.sheet-skill-macro-text {
-    font-family: lucida sans typewriter, miriam fixed, lucida console, consolas, monospace;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1em;
+    line-height: 1.1em;
 }
 
 
