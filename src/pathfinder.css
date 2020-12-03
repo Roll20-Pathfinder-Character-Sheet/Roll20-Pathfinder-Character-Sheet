@@ -5160,6 +5160,7 @@ input.sheet-skill-macro-text {
 .sheet-skills .sheet-divider,
 /* turn config page on /off */
 .sheet-config-show:checked ~ .sheet-pfsheet,
+.sheet-config-show:checked ~ .sheet-footnotes,
 .sheet-config-show:not(:checked) ~ .sheet-section-config,
 /* config page toggles override all others: */
 .sheet-kineticist-show:not(:checked) ~ .sheet-kineticist,
