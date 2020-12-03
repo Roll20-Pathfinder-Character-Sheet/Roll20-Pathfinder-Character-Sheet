@@ -2569,22 +2569,22 @@ input[type="text"][name="attr_source-ability"]
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-h2-section.sheet-armor-shield {
 	width:calc(100% - 4px);
-	display:inline-table;
+	display:inline-block;
 	margin-top:0;
 }
 .sheet-h2-section.sheet-armor-shield {
 	width:calc(70% - 4px);
-	display:inline-table;
+	display:inline-block;
 	margin-top:0;
 }
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-h2-section.sheet-armor-penalties {
 	width:calc(100% - 4px);
-	display:inline-table;
+	display:inline-block;
 }
 .sheet-h2-section.sheet-armor-penalties {
 	width:calc(30% - 4px);
-	display:inline-table;
+	display:inline-block;
 }
 
 
