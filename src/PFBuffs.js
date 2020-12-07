@@ -22,26 +22,26 @@ export var
 //values in the bonus dropdown
 buffColumns = [
 	'ac', 'armor', 'attack', 'casterlevel', 'cha', 'cha_skills', 'check', 'check_ability', 'check_skills',
-	'cmb', 'cmd', 'con', 'con_skills',  'dex', 'dex_skills', 'dmg', 'dmg_melee', 'dmg_ranged',
+	'cmb', 'cmd', 'con', 'con_skills', 'dex', 'dex_skills', 'dmg', 'dmg_melee', 'dmg_ranged',
 	'flatfooted', 'fort', 'hptemp', 'initiative', 'int', 'int_skills', 'melee', 'natural',
 	'ranged', 'ref', 'saves', 'shield', 'size', 'speed', 'str', 'str_skills', 'touch',
-	'will', 'wis', 'wis_skills',  'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
+	'will', 'wis', 'wis_skills', 'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
 	'kineticblast','dmg_kineticblast',
 	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
 	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
 buffToTot = {
-	'ac':'AC',	'armor':'armor',	'attack':'attack',	'casterlevel':'CasterLevel',
-	'cha':'CHA',	'cha_skills':'CHA_skills',
-	'check':'Check',	'check_ability':'check_ability',	'check_skills':'check_skills',
-	'cmb':'CMB',	'cmd':'CMD',	'con':'CON',	'con_skills':'CON_skills',
-	'dex':'DEX',	'dex_skills':'DEX_skills',
-	'dmg':'DMG',	'dmg_melee':'dmg_melee',	'dmg_ranged':'dmg_ranged',
-	'flatfooted':'flat-footed',	'fort':'Fort',	'hptemp':'HP-temp',	'initiative':'Initiative',
-	'int':'INT',	'int_skills':'INT_skills',	'melee':'Melee',
-	'natural':'natural',	'ranged':'Ranged',	'ref':'Ref',	'saves':'saves',
-	'shield':'shield',	'size':'size',	'speed':'speed',	'str':'STR',	'str_skills':'STR_skills',
-	'touch':'Touch',	'will':'Will',	'wis':'WIS',	'wis_skills':'WIS_skills',
+	'ac':'AC', 'armor':'armor',	'attack':'attack', 'casterlevel':'CasterLevel',
+	'cha':'CHA', 'cha_skills':'CHA_skills',
+	'check':'Check', 'check_ability':'check_ability',	'check_skills':'check_skills',
+	'cmb':'CMB', 'cmd':'CMD',	'con':'CON', 'con_skills':'CON_skills',
+	'dex':'DEX', 'dex_skills':'DEX_skills',
+	'dmg':'DMG', 'dmg_melee':'dmg_melee',	'dmg_ranged':'dmg_ranged',
+	'flatfooted':'flat-footed',	'fort':'Fort', 'hptemp':'HP-temp',	'initiative':'Initiative',
+	'int':'INT', 'int_skills':'INT_skills',	'melee':'Melee',
+	'natural':'natural', 'ranged':'Ranged',	'ref':'Ref', 'saves':'saves',
+	'shield':'shield', 'size':'size',	'speed':'speed', 'str':'STR',	'str_skills':'STR_skills',
+	'touch':'Touch', 'will':'Will',	'wis':'WIS', 'wis_skills':'WIS_skills',
 	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
 	'kineticblast':'kineticblast','dmg_kineticblast':'dmg_kineticblast',
 	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
@@ -106,7 +106,7 @@ buffTotFields = _.chain(totColumns).map(function(totstr){
 		}
 	}).flatten().value(),
 //map of buffs to another map of bonus type to other fields on sheet of same bonus and type
-otherCharBonuses ={
+otherCharBonuses = {
 	'str':{'inherent':'STR-inherent','enhancement':'STR-enhance'},
 	'dex':{'inherent':'DEX-inherent','enhancement':'DEX-enhance'},
 	'con':{'inherent':'CON-inherent','enhancement':'CON-enhance'},
@@ -149,7 +149,7 @@ events = {
 	buffTotalNonAbilityEvents: {
 		"Fort": [PFSaves.updateSave],
 		"Will": [PFSaves.updateSave],
-		"Ref": [PFSaves.updateSave],
+		"Ref":  [PFSaves.updateSave],
 		"STR_skills":[PFSkills.recalculateAbilityBasedSkills],
 		"DEX_skills":[PFSkills.recalculateAbilityBasedSkills],
 		"CON_skills":[PFSkills.recalculateAbilityBasedSkills],
