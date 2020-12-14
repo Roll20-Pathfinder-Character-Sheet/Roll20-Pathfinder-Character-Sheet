@@ -129,13 +129,13 @@ charHelperFields = {
 //reverse otherCharBonuses: fields on sheet that affect buffs (all leaf nodes of otherCharBonuses)
 charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.values(v);}).flatten().uniq().value().sort(),
 //note fields
-buffNoteFields =['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes','buff_defense_notes'],
+buffNoteFields = ['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes','buff_defense_notes'],
 //the buff field prefixes for each row
-buffsPerRow=['b1','b2','b3','b4','b5','b6'],
+buffsPerRow = ['b1','b2','b3','b4','b5','b6'],
 //bonus types that aways stack don't need to use max (penalty is fake type used internally)
-stackingTypes =['untyped','circumstance','dodge','penalty'],
+stackingTypes = ['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types use this to hide the type dropdown
-bonusesWithNoTypes=['size','hptemp'],
+bonusesWithNoTypes = ['size','hptemp'],
 //all attributes on a buff row, to make getAttrs easier when totalling
 buffRowAttrs = ['_b1-show','_b1_val','_b1_bonus','_b1_bonustype',
 	'_b2-show','_b2_val','_b2_bonus','_b2_bonustype',
@@ -668,8 +668,7 @@ function updateBuffTotal (col,rows,v,setter){
 					bonuses = rows.reduce(function(m,row){
 						if (stackingTypes.indexOf(row.bonusType)<0 && 
 							affectedBuffs[col].indexOf(row.bonus)>=0 &&
-							row.val >0 && 
-							m[row.bonusType]>0){
+							row.val >0 && m[row.bonusType]>0){
 								if(row.val < m[row.bonusType]){
 									m[row.bonusType] -= row.val;
 								} else {

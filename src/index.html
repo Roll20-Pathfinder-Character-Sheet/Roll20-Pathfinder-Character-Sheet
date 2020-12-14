@@ -45,7 +45,8 @@
 				<li>Fix for Spell Damage type not displaying when show Spell Damage was enabled from the Spell Options.</li>
 				<li>Updated to google fonts; "Noto Sans" for general text and "Roboto Mono" for macro-text.</li>
 				<li>Added FF CMD to the Defense Stats chat menu output.</li>
-				<li>Small adjustment to damage dice text alignment on attack rows.</li>
+				<li>Removed Enhancement column from Saves grid.</li>
+				<li>Adjusted damage dice text alignment on attack rows.</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv172-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -2120,7 +2121,7 @@
 							<span class="sheet-table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
 							<span class="sheet-table-header sheet-divider"></span>
 							<span class="sheet-table-header" data-i18n="buff">Buff</span>
-							<span class="sheet-table-header sheet-extra-sect" data-i18n="invalid">Invalid</span>
+							<span class="sheet-table-header sheet-extra-sect"></span>
 							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-d" data-i18n="macro">Macro</span>
 							<span class="sheet-table-header sheet-entry-15p-shrink sheet-super sheet-note-b" data-i18n="roll">Roll</span>
 						</div>
@@ -2156,7 +2157,7 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{fort_buffs}" type="number" name="attr_fort_buffs" value="(@{buff_Fort-total}+@{buff_saves-total})" class="sheet-number sheet-calc" disabled /></span>
-								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Fort-enhance}" type="number" name="attr_Fort-enhance" value="0" /></span>
+								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Fort-enhance}" type="hidden" name="attr_Fort-enhance" value="0" /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{fort-save-macro-text}" name="attr_fort-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{fortitude}}} {{^{save}=@{fort-macro-text}}} @{toggle_save_notes} {{buff_note=@{buff_save_notes}}} {{condition_note=@{condition_save_notes}}} {{condition_note=@{condition_save_notes}}}</textarea></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{fort-macro-text}" name="attr_fort-macro-text">[[ 1d20 + [[ @{Fort} ]] ]]</textarea></span>
 							</div>
@@ -2191,7 +2192,7 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{ref_buffs}" type="number" name="attr_ref_buffs" value="(@{buff_Ref-total}+@{buff_saves-total})" class="sheet-number sheet-calc" disabled /></span>
-								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Ref-enhance}" type="number" name="attr_Ref-enhance" value="0" /></span>
+								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Ref-enhance}" type="hidden" name="attr_Ref-enhance" value="0" /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{ref-save-macro-text}" name="attr_ref-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{reflex}}} {{^{save}=@{ref-macro-text}}} @{toggle_save_notes} {{buff_note=@{buff_save_notes}}} {{condition_note=@{condition_save_notes}}} {{condition_note=@{condition_save_notes}}}</textarea></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{ref-macro-text}" name="attr_ref-macro-text">[[ 1d20 + [[ @{Ref} ]] ]]</textarea></span>
 							</div>
@@ -2226,7 +2227,7 @@
 								<span class="sheet-table-cell"><input title="@{saves-cond}" type="number" name="attr_saves-cond" value="0" class="sheet-calc" readonly /></span>
 								<span class="sheet-divider">+</span>
 								<span class="sheet-table-cell"><input title="@{will_buffs}" type="number" name="attr_will_buffs" value="(@{buff_Will-total}+@{buff_saves-total})" class="sheet-number sheet-calc" disabled /></span>
-								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Will-enhance}" type="number" name="attr_Will-enhance" value="0" /></span>
+								<span class="sheet-table-cell sheet-extra-sect"><input title="@{Will-enhance}" type="hidden" name="attr_Will-enhance" value="0" /></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{will-save-macro-text}" name="attr_will-save-macro-text">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{willpower}}} {{^{save}=@{will-macro-text}}} @{toggle_save_notes} {{buff_note=@{buff_save_notes}}} {{condition_note=@{condition_save_notes}}} {{condition_note=@{condition_save_notes}}}</textarea></span>
 								<span class="sheet-table-cell"><textarea class="sheet-skill-macro-text" title="@{will-macro-text}" name="attr_will-macro-text">[[ 1d20 + [[ @{Will} ]] ]]</textarea></span>
 							</div>

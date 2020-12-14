@@ -59,7 +59,7 @@ export function updateSave (save, callback, silently) {
 	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total", "buff_saves-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
-export function updateSaves(callback,silently){
+export function updateSaves (callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
