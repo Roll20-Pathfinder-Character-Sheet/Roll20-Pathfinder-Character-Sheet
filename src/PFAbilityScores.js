@@ -283,7 +283,6 @@ export function updateAbilityScores (callback, silently) {
     });
 }
 
-
 export function applyConditions (callback, silently, eventInfo) {
     getAttrs(["STR-cond", "DEX-cond", "condition-Helpless","condition-Paralyzed", "condition-Exhausted", "condition-Fatigued", "condition-Entangled", "condition-Grappled"], function (v) {
         var setter = {}, silentSetter={}, params = {}, tempInt=0,
@@ -392,7 +391,7 @@ function registerEventHandlers () {
     abilitymods.forEach(function(attr){
         on("change:"+attr, TAS.callback(function eventAbilityModUpdate(eventInfo){
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType === "api"){
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 propagateAbilityModsAsync(null,null,eventInfo.sourceAttribute);
             }
         }));

@@ -125,7 +125,7 @@ function updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval,callback){
 	var diff= (newval||0) - (oldval||0);
 	if(diff!==0){
 		getAttrs(["repeating_weapon_total-attack"],function(v){
-			var curr = parseInt(v["repeating_weapon_total-attack"],10)||0;
+			var curr = parseInt(v["repeating_weapon_total-attack"],10) || 0;
 			curr+= diff;
 			setAttrs({"repeating_weapon_total-attack":curr},PFConst.silentParams,callback);
 		});
@@ -212,8 +212,8 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	enhanceField = "repeating_weapon_" + idStr + "enhance",
 	miscDmgField = "repeating_weapon_" + idStr + "damage-mod",
 	abilityMultField = "repeating_weapon_" + idStr + "damage_ability_mult",
-	attacktypeField = "repeating_weapon_"+ idStr+"attack-type",
-	rangedField = "repeating_weapon_"+idStr+"isranged";
+	attacktypeField = "repeating_weapon_" + idStr + "attack-type",
+	rangedField = "repeating_weapon_" + idStr + "isranged";
 	//TAS.debug("at PFAttacks.updateRepeatingWeaponDamage evnetinfo: ",eventInfo);
 	if (eventInfo && eventInfo.sourceAttribute.toLowerCase().indexOf('buff_dmg_range')>=0){
 		rangedUpdate=true;
@@ -222,7 +222,6 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		attacktypeField, enhanceField, miscDmgField, abilityMultField], function (v) {
 		var maxA , ability,abilityMult,abilityTot,damageBuffs=0,currTotalDmg,dmgConditions,genDmgBuff=0,
 		tempint,miscDmg,enhance,totalDamage,rangedAttack=0,setter = {},meleeAttack=0,secondAttack=0;
-
 		rangedAttack =  (/range/i).test(v[attacktypeField]);
 		if(!rangedAttack){
 			meleeAttack = (/melee/i).test(v[attacktypeField]);
@@ -237,24 +236,24 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		//TAS.debug('PFAttacks type is :'+v[attacktypeField]+ ', update damage values are :',v);
 		//if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
 		if (rangedAttack){
-			damageBuffs = parseInt(v["buff_dmg_ranged-total"],10)||0;
+			damageBuffs = parseInt(v["buff_dmg_ranged-total"], 10) || 0;
 			if(secondAttack){
-				tempint = parseInt(v["buff_dmg_ranged2-total"],10)||0;
+				tempint = parseInt(v["buff_dmg_ranged2-total"], 10) || 0;
 				damageBuffs = damageBuffs + tempint;
 			}
 		} else if (meleeAttack){
 			damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
 			if(secondAttack){
-				tempint = parseInt(v["buff_dmg_melee2-total"],10)||0;
+				tempint = parseInt(v["buff_dmg_melee2-total"], 10) || 0;
 				damageBuffs = damageBuffs + tempint;
 			}
 		} else {
 			damageBuffs=0;
 		}
-		genDmgBuff = parseInt(v['buff_DMG-total'],10)||0;
+		genDmgBuff = parseInt(v['buff_DMG-total'], 10) || 0;
 		damageBuffs+=genDmgBuff;
 
-		abilityMult=getDamageMult(v[abilityMultField])||1;
+		abilityMult=getDamageMult(v[abilityMultField]) || 1;
 		damageBuffs -=dmgConditions;
 		maxA = parseInt(v[maxname], 10);
 		if(!rangedAttack || isNaN(maxA)) {
@@ -417,7 +416,8 @@ function setRepeatingWeaponRangedFlag(id){
 }
 
 function getRecalculatedDamageOnly (id,v){
-	var prefix = 'repeating_weapon_' + SWUtils.getRepeatingIDStr(id),
+	var idStr = SWUtils.getRepeatingIDStr(id),
+		prefix = "repeating_weapon_" + idStr,
 		damagetype= v[prefix+'damage-ability'],
 		isRanged=0,enhance=0,abilitydmg=0,abilityMult=1,
 		currTotalDmg=0,dmgMacroMod=0,maxAbility=999,
@@ -434,14 +434,14 @@ function getRecalculatedDamageOnly (id,v){
 				localsetter[prefix+ "total-damage"] = 0;
 			}
 		} else {
-			isRanged= (parseInt(v[prefix+'isranged'],10)||0);
-			enhance = (parseInt(v[prefix+ "enhance"], 10) || 0);
-			abilitydmg = parseInt(v[prefix+ "damage-ability-mod"], 10) || 0;
-			currTotalDmg = parseInt(v[prefix+ "total-damage"], 10);
-			dmgMacroMod = parseInt(v[prefix+ "damage-mod"], 10) || 0;
+			isRanged= (parseInt(v[prefix+'isranged'],10) ||0);
+			enhance = (parseInt(v[prefix+ "enhance"], 10) ||0);
+			abilitydmg = (parseInt(v[prefix+ "damage-ability-mod"], 10) ||0);
+			currTotalDmg = (parseInt(v[prefix+ "total-damage"], 10) ||0);
+			dmgMacroMod = (parseInt(v[prefix+ "damage-mod"], 10) ||0);
 			if(v[prefix+'attack-type'].indexOf('2')>=0){
-				rangedBuff+= (parseInt(v['buff_dmg_ranged2-total'],10)||0);
-				meleeBuffs+= (parseInt(v['buff_dmg_melee2-total'],10)||0);
+				rangedBuff+= (parseInt(v['buff_dmg_ranged2-total'],10) ||0);
+				meleeBuffs+= (parseInt(v['buff_dmg_melee2-total'],10) ||0);
 			} 
 			if(isRanged){
 				damageBuffs+=rangedBuff;
@@ -512,7 +512,7 @@ export function updateAssociatedAttacksFromParents(callback){
 	});
 	getSectionIDs('repeating_weapon',function(ids){
 		var doneOne , attrs=[];
-		if(_.size(ids)==0){
+		if(_.size(ids)===0){
 			done();
 			return;
 		} else {
@@ -585,7 +585,7 @@ export function updateAssociatedAttacksFromParents(callback){
 
 function  getRecalculatedAttack (id,v,setter){
 	var prefix = 'repeating_weapon_'+id+'_',
-		isRanged=v[prefix+"isranged"]||0,
+		isRanged = v[prefix+ "isranged"] || 0,
 		enhance = v[prefix+ "enhance"] || 0,
 		masterwork = v[prefix+ "masterwork"] || 0,
 		attkTypeMod = v[prefix+ "attack-type-mod"] || 0,
@@ -600,7 +600,7 @@ function  getRecalculatedAttack (id,v,setter){
 		currCritBonus = v[prefix+ "crit_conf_mod"] || 0,
 		critConfirmBonus = v[prefix+ "crit_confirm"] || 0,
 		attkType = v[prefix+ "attack-type"],
-		damageBuffs = v['buff_DMG-total']||0, 
+		damageBuffs = v['buff_DMG-total'] || 0, 
 		attkTypeForGrid='',
 		attackTypeCritBonusField='',
 		attackTypeCritBonus =0,
@@ -923,8 +923,8 @@ function resetWeaponSizeAndDamage (id,currCharSize,v,setter,useSizeMod){
 export function setDualWieldVals (params,setter,id,updMode){
 	var fields,numAttacks=1,currAttack=1,totAttacks=2,
 	macroText='',
-	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro}  ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
-	macroIterOffhand = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ]]}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value}  + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
+	macroIter = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} ]]}} {{typeREPLACEITER=@{typeREPLACEITER}}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro}  ]] + @{iterative_attackREPLACEITER_value} + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro}) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
+	macroIterOffhand = '{{attackREPLACEITER=[[ 1d20cs>[[ @{repeating_weapon_REPLACEHAND_crit-target} ]] + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value} ]]}} {{damageREPLACEITER=[[ @{repeating_weapon_REPLACEHAND_damage-dice-num}d@{repeating_weapon_REPLACEHAND_damage-die} + @{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ]]}} {{typeREPLACEITER=@{typeREPLACEITER}}} {{crit_confirmREPLACEITER=[[ 1d20 + [[ @{repeating_weapon_REPLACEHAND_attack_macro} ]] + @{iterative_attackREPLACEITER_value}  + @{repeating_weapon_REPLACEHAND_crit_conf_mod} ]]}} {{crit_damageREPLACEITER=[[ [[ @{repeating_weapon_REPLACEHAND_damage-dice-num} * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]] ]]d@{repeating_weapon_REPLACEHAND_damage-die} + ((@{repeating_weapon_REPLACEHAND_damage_macro} REPLACEMULT ) * [[ @{repeating_weapon_REPLACEHAND_crit-multiplier} - 1 ]]) ]]}} {{precision_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_precision_dmg_macro}}} {{critical_dmgREPLACEITER1=@{repeating_weapon_REPLACEHAND_critical_dmg_macro}}} {{precision_dmgREPLACEITER2=@{global_precision_dmg_macro}}} {{critical_dmgREPLACEITER2=@{global_critical_dmg_macro}}} {{attackREPLACEITERname=@{iterative_attackREPLACEITER_name}}} ',
 	replaceMultStr ='- [[ ceil(@{repeating_weapon_REPLACEHAND_damage-ability-mod}/2) ]] ',
 	tempInt=0,
 	currMacro='',
@@ -993,6 +993,8 @@ export function setDualWieldVals (params,setter,id,updMode){
 			'&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{header_image=@{header_image-pf_attack-dual}}} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} ' +		
 			'{{attack=[[ 1d20cs>[[ @{repeating_weapon_' + params.mainhand_id + '_crit-target} ]] + [[@{repeating_weapon_' + params.mainhand_id + '_attack_macro} ]] + @{attack-mod} ]]}} ' +
 			'{{damage=[[@{repeating_weapon_' + params.mainhand_id + '_damage-dice-num}d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + @{repeating_weapon_' + params.mainhand_id + '_damage_macro} ]]}} ' +
+//  	'{{type=@{repeating_weapon_' + params.mainhand_id + '_type}}} ' +
+			'{{type=@{type}}} ' +
 			'{{crit_confirm=[[ 1d20 + [[ @{repeating_weapon_' + params.mainhand_id + '_attack_macro} ]] + @{attack-mod} ]]}} ' +
 			'{{crit_damage=[[ [[ @{repeating_weapon_' + params.mainhand_id + '_damage-dice-num} * (@{repeating_weapon_' + params.mainhand_id + '_crit-multiplier} - 1) ]]d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + ((@{repeating_weapon_' + params.mainhand_id + '_damage_macro} ) * [[ @{repeating_weapon_' + params.mainhand_id + '_crit-multiplier} - 1 ]]) ]]}} ' +
 			'{{precision_dmg1=@{repeating_weapon_' + params.mainhand_id + '_precision_dmg_macro}}} {{precision_dmg1_type=@{repeating_weapon_' + params.mainhand_id + '_precision_dmg_type}}} ' +
@@ -1320,7 +1322,7 @@ function recalcRepeatingMacroFields (ids,callback){
 	fields;
 	fields =_.chain(ids)
 		.map(function(id){
-			var prefix = "repeating_weapon_" + id + "_";
+			var prefix = 'repeating_weapon_'+id+'_';
 			return [prefix + "damage",prefix + "attack",prefix + "damage-mod",prefix + "attack-mod"];
 		})
 		.flatten()
@@ -1329,7 +1331,7 @@ function recalcRepeatingMacroFields (ids,callback){
 		try{
 			_.each(ids,function (id) {
 				var doneWithField =_.after(4,doneWithCalculatedFields),
-				prefix = "repeating_weapon_" + id + "_";
+				prefix = 'repeating_weapon_'+id+'_';
 				if((!v[prefix + "damage"] || v[prefix + "damage"]==="0"|| v[prefix + "damage"]==="+0") && parseInt(v[prefix+"damage-mod"],10)===0){
 					doneWithField();
 				} else {
