@@ -530,12 +530,12 @@ export function clearBuffTotals (callback,silently){
 	});
 }
 
-/** Gets list of buffs from the buff rows for  so we don't have to keep looping through the ids.
- * Returns between 0 to 6 "rows" for each id , each correspondes to b1..b6 buffs.
+/** Gets list of buffs from the buff rows for so we don't have to keep looping through the ids.
+ * Returns between 0 to 6 "rows" for each id, each correspondes to b1..b6 buffs.
  * only returns buffs where -show is 1 and _val is != 0 (i.e. ones that exist for totalling)
  * @param {[string]} ids ids for list
  * @param {Map<string,string>} v from getAttrs
- * @param {string} col  optional, buff to limit on. If supplied, only returns buffs where bonus =col, plus any related buffs 
+ * @param {string} col optional, buff to limit on. If supplied, only returns buffs where bonus =col, plus any related buffs 
  * @returns {[{'bonus':string,'bonusType':string,'val':Number}]} array of entries from rows
  */
 function assembleRows (ids,v,col){
@@ -601,16 +601,16 @@ function assembleRows (ids,v,col){
  * @param {Map<string,string>} setter map to write to for setAttrs, optional
  * @returns {Map<string,string>} setter or new map for setAttrs
  */
-function updateBuffTotal (col,rows,v,setter){
-	var isAbility=0,
+function updateBuffTotal(col,rows,v,setter) {
+	var isAbility = 0,
 	bonuses = {},
-	sums={'sum':0,'pen':0},
-	tempInt=0,
-	totaldodge=0,tempdodge=0,
-	totalcol='',
-	isWorn=1,
+	sums = {'sum':0,'pen':0},
+	tempInt = 0,
+	totaldodge = 0, tempdodge = 0,
+	totalcol = '',
+	isWorn = 1,
 	//stackArmor=0,
-	columns=[col];
+	columns = [col];
 
 	try {
 		//TAS.debug("total sync for "+col,rows,v);
@@ -679,13 +679,13 @@ function updateBuffTotal (col,rows,v,setter){
 					},bonuses);
 				}
 				if(!( (col==='armor' && bonuses.armor > 0) || (col==='shield' && bonuses.shield > 0) )) {
-					//subtract charsheet fields that overlap:
+					//subtract charsheet fields (charField) that overlap:
 					_.each(otherCharBonuses[col],function(charField,bonusType){
-						TAS.debug("PFBUFFS ################## type:"+bonusType+", comparing to "+charField);
+								TAS.debug("PFBUFFS ################## type:"+bonusType+", comparing to "+charField);
 						if(bonuses[bonusType]){
 							tempInt = parseInt(v[charField],10)||0;
 							if(bonuses[bonusType] <= tempInt){
-								bonuses[bonusType]=0;
+								bonuses[bonusType] = 0;
 							} else {
 								bonuses[bonusType] -= tempInt;
 							}
@@ -764,13 +764,13 @@ function updateBuffTotal (col,rows,v,setter){
 			}
 		}
 
-//section added below to prevent cmd(type:dodge) buff from being included with cmdff 
-//		if(col==='cmd' && bonuses.dodge!==0){
-//TAS.info('column is CMD, setting buffsFFcmdOnlyTemp to dodge buff:'+bonuses.dodge);
-//				buffsFFcmdOnlyTemp = bonuses.dodge
-//				setter['buff_ffCMD-nododge']=buffsFFcmdOnlyTemp;
-//TAS.info('buff_ffCMD-nododge now set same as dodge buff:'+buffsFFcmdOnlyTemp);
-//		}
+		//section added below to prevent cmd(type:dodge) buff from being included with cmdff 
+		//		if(col==='cmd' && bonuses.dodge!==0){
+		//TAS.info('column is CMD, setting buffsFFcmdOnlyTemp to dodge buff:'+bonuses.dodge);
+		//				buffsFFcmdOnlyTemp = bonuses.dodge
+		//				setter['buff_ffCMD-nododge']=buffsFFcmdOnlyTemp;
+		//TAS.info('buff_ffCMD-nododge now set same as dodge buff:'+buffsFFcmdOnlyTemp);
+		//		}
 
 		totalcol=buffToTot[col];
 		if(totalcol){
@@ -799,10 +799,10 @@ function updateBuffTotal (col,rows,v,setter){
 		}
 	} catch(err){
 		TAS.error("PFBuffs.updateBuffTotal",err);
-	} finally {
+		} finally {
 		TAS.debug("######################","PFBuffs setting ",setter);
 		return setter;
-	}
+		}
 }
 /** update total for given buff. calls assembleRows, updateBuffTotal for the column.
  * @param {string} col the bonus/buff to calculate
