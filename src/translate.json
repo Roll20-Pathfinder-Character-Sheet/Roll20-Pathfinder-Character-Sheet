@@ -851,7 +851,7 @@
 	"encumbrance-above-title": "A character can lift as much as his maximum load over his head",
 	"encumbrance-based-on": "Encumbrance based on",
 	"encumbrance-drag-push-title": "A character can generally push or drag along the ground as much as five times his maximum load",
-	"encumbrance-heavy-title": "Over the medium load and up to this weight, the character is heavily encumbered",
+	"encumbrance-heavy-title": "Over the medium load and up to this weight, the character is heavily encumbered. At this weight or greater the character is overloaded (loses any Dexterity bonus to AC and can move only 5 feet per round (as a full-round action)).",
 	"encumbrance-light-title": "At this weight of carried equipment or less, the character is unencumbered",
 	"encumbrance-max-title": "At this weight or greater the character is immobilized",
 	"encumbrance-medium-title": "Over the light load and up to this weight, the character is moderately encumbered",

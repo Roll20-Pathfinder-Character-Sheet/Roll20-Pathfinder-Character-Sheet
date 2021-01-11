@@ -47,6 +47,7 @@
 				<li>Added FF CMD to the Defense Stats chat menu output.</li>
 				<li>Removed Enhancement column from Saves grid.</li>
 				<li>Adjusted damage dice text alignment on attack rows.</li>
+				<li>Removed the Max column from Encumbrance|Loads. Max is already considered for the Lift Off the Ground calculation.</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv172-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="sheet-cheat"></div>
@@ -10565,9 +10566,9 @@
 							<span class="sheet-table-name sheet-secondary-table-name" data-i18n="current-load">Current Load</span>
 							<div class="sheet-table-row">
 								<span class="sheet-table-config-row-name sheet-secondary-table-name sheet-show-readonly sheet-inverse-readonly" style="width:10%;" data-i18n="current-load">Current Load</span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="0" name="attr_current-load" checked>&nbsp;<span data-i18n="light">Light</span></label></span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="1" name="attr_current-load">&nbsp;<span data-i18n="medium">Medium</span></label></span>
-								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load">&nbsp;<span data-i18n="heavy">Heavy</span></label></span>					
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="0" name="attr_current-load" checked>&nbsp;<span data-i18n-title="encumbrance-light-title" data-i18n-aria-label="encumbrance-light-title" data-i18n="light">Light</span></label></span>
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="1" name="attr_current-load">&nbsp;<span data-i18n-title="encumbrance-medium-title" data-i18n-aria-label="encumbrance-medium-title" data-i18n="medium">Medium</span></label></span>
+								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load">&nbsp;<span data-i18n-title="encumbrance-heavy-title" data-i18n-aria-label="encumbrance-heavy-title" data-i18n="heavy">Heavy</span></label></span>					
 								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="3" name="attr_current-load">&nbsp;<span data-i18n-title="over-heavy-encumbrance-title" data-i18n-aria-label="over-heavy-encumbrance-title" data-i18n="over">Over</span></label></span>					
 								<span class="sheet-table-cell" style="width:10%;"><label class="sheet-center"><input title="@{current-load}" type="radio" value="4" name="attr_current-load">&nbsp;<span data-i18n-title="maximum-encumbrance-title" data-i18n-aria-label="maximum-encumbrance-title" data-i18n="maximum-abbrv">Max</span></label></span>					
 							</div>
@@ -10611,7 +10612,6 @@
 									<span class="sheet-table-header" data-i18n-title="encumbrance-light-title"  data-i18n-aria-label="encumbrance-light-title" data-i18n="light">Light</span>
 									<span class="sheet-table-header" data-i18n-title="encumbrance-medium-title"  data-i18n-aria-label="encumbrance-medium-title" data-i18n="medium">Medium</span>
 									<span class="sheet-table-header" data-i18n-title="encumbrance-heavy-title"  data-i18n-aria-label="encumbrance-heavy-title" data-i18n="heavy">Heavy</span>
-									<span class="sheet-table-header" data-i18n-title="encumbrance-max-title"  data-i18n-aria-label="encumbrance-max-title" data-i18n="maximum-abbrv">Max</span>
 								</div>
 							</div>
 							<div class="sheet-table-group">
@@ -10619,7 +10619,8 @@
 									<span class="sheet-table-cell"><input title="@{load-light}" type="number" name="attr_load-light" value="33" class="sheet-calc" readonly /></span>
 									<span class="sheet-table-cell"><input title="@{load-medium}" type="number" name="attr_load-medium" value="66" class="sheet-calc" readonly /></span>
 									<span class="sheet-table-cell"><input title="@{load-heavy}" type="number" name="attr_load-heavy" value="100" class="sheet-calc" readonly /></span>
-									<span class="sheet-table-cell"><input title="@{load-max}" type="number" name="attr_load-max" value="200" class="sheet-calc" readonly /></span>
+									<!-- max hidden since max is only used for the lift off the ground value-->
+									<input title="@{load-max}" type="hidden" name="attr_load-max" value="200" class="sheet-calc" readonly />
 								</div>
 							</div>
 						</div>

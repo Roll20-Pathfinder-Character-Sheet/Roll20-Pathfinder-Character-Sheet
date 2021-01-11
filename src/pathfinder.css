@@ -4716,7 +4716,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 	width:50%;
 }
 .sheet-lift-modifiers, .sheet-lift {
-	width:33%;
+	width:33.3%;
 }
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-equipment .sheet-h2-section.sheet-other-items {
 	width:100%;
