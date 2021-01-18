@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Updated the Hero Lab instructions. For some reason the converted JSON using codebeautify.org was causing errors.</li>
 				<li>Attack damage type, Spell attack damage type, and Ability attack damage type is now displayed on the same row as the damage rolled.</li>
 				<li>Fix for open Descriptions fields from being displayed if the sheet was set to compact mode.</li>
 				<li>Fix for NPC Concentration checks rolling 1d00 instead of 1d20.</li>
@@ -13945,13 +13946,10 @@
 				<span class="sheet-table-row">
 					<span class="sheet-table-data sheet-left" style="vertical-align:top;">
 						<span data-i18n="character-import-desc">
-							<strong>Hero Lab XML Import </strong><br/>Used to import characters from Hero Lab via XML files.<br/>
-							<strong>Step 1:</strong> Save the character as an XML file in Hero Lab (File -> Save Custom Output).<br/>
-							<strong>Step 2:</strong> Use Code Beautify's XML to JSON converter (link below) to convert the contents of the XML file to JSON (paste contents of XML file from a text editor into the text area labelled "Xml Input", set "Result mode" to text, click "XML to JSON", then copy the text from the text area on the right).<br/>
-							<strong>Step 3:</strong> Paste the JSON into the text field below these instructions.<br/><strong>Step 4:</strong> Profit!<br/>Code Beautify: 
+							<b>Hero Lab XML Import </b><br>Used to import characters from Hero Lab via XML files<br><b>Step 1:</b> Save the character as an XML file in Hero Lab (File -> Save Custom Output)<br><b>Step 2:</b> Open the XML file in a plain-text editor. Copy and paste the contents into www.ConvertJSON.com (XML to JSON converter linked below). Paste into the left window labeled <b>'Xml Data'</b>, click <b>'Convert XML to JSON'</b>  to convert the the XML file to JSON, then copy the text from the right window.<br><b>Step 3:</b> Paste the JSON into the text field directly below these instructions<br><b>Step 4:</b> Click outside of the textarea to parse. If the import was successful, the textarea will clear with no errors.
 						</span>
-					</span>
-					<input type="text" style="width:75%; border:none; cursor:help; height:1.4em;" value="http://codebeautify.org/xmltojson" />
+					</span><br><button type="roll" class="sheet-no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://www.convertjson.com/xml-to-json.htm"><b style="font-size:1.1rem;">www.convertjson.com</b></button>&nbsp;
+					<button type="roll" class="sheet-no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/y5wcljsf"><b data-i18n="more-info" style="font-size:1.1rem;">More info on the wiki.</b></button>					
 					<span class="sheet-table-data" style="width:50%;">
 						<textarea class="sheet-both" name="attr_herolab_import" title="Hero Lab import"></textarea><br>
 					</span>
