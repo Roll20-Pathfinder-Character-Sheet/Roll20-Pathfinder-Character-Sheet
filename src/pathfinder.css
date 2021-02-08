@@ -631,12 +631,21 @@ input[type="text"].sheet-number,
 .sheet-sect-buff .sheet-linked-fields input[type="number"] {
     width: 3.5em;
 }
-/* narrow only when in readonly mode:  */
+
+/* narrow only when in readonly/compact mode:  */
 .sheet-readonly-show:not(:checked) ~ .sheet-main input[type=number].sheet-narrow-numbers-readonly,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly input[type=number],
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly .sheet-number, 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-narrow-numbers-readonly input[type=text].sheet-number{
 	width: 2.5em;
+}
+
+/* reduce header text in readonly/compact mode */
+.sheet-readonly-show:not(:checked) ~.sheet-main .sheet-table-header,
+.sheet-readonly-show:not(:checked) ~.sheet-main .sheet-small-label2 span:not(.sheet-autoexpand),
+.sheet-readonly-show:not(:checked) ~.sheet-main .sheet-table-cell.sheet-small-label span {
+    font-size: 1rem;
+    padding: 0;
 }
 
 .sheet-buff-row {
@@ -650,6 +659,7 @@ input[type="text"].sheet-number,
 .sheet-table-header,
 .sheet-small-label2 span:not(.sheet-autoexpand) {
     cursor: help;
+    font-size: 1.125rem;
 }
 
 .sheet-h2-section {
@@ -2079,6 +2089,7 @@ hr.sheet-skinny {
 .sheet-iterative_attack_section .sheet-table-row .sheet-table-cell:first-child {
     text-align: left;
     padding-top: .5em;
+    white-space: nowrap;
 }
 .sheet-footer {
     text-align: center;
@@ -2420,7 +2431,7 @@ input.sheet-highlight[readonly]
 .sheet-small-label2 span:not(.sheet-autoexpand) {
     padding: 0 .07em 0 .07em;
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.125rem;
     font-style: italic;
     font-weight: bold;
     color: Black;
@@ -2429,6 +2440,7 @@ input.sheet-highlight[readonly]
     overflow-x: visible;
     white-space: nowrap;
 }
+
 .sheet-text-button,
 button.sheet-text-button {
     border: 0;
@@ -2573,7 +2585,6 @@ input[type="text"][name="attr_source-ability"]
     padding-right: .5em;
 }
 
-
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:not(:checked) ~ .sheet-section-defenses .sheet-h2-section.sheet-armor-shield {
 	width:calc(100% - 4px);
 	display:inline-block;
@@ -2593,7 +2604,6 @@ input[type="text"][name="attr_source-ability"]
 	width:calc(30% - 4px);
 	display:inline-block;
 }
-
 
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons {
   width: calc(50% - 4px);
@@ -2735,6 +2745,7 @@ div.sheet-feats .sheet-table-row span:last-child {
 .sheet-table-cell.sheet-spellcaster-button {
     text-align: left;
 }
+/*
 .sheet-readonly-show:checked  ~ .sheet-main .sheet-spellcaster-button,
 .sheet-readonly-show:checked  ~ .sheet-main .sheet-table-cell.sheet-spellcaster-button {
     width: 14.5rem;
@@ -2748,7 +2759,7 @@ div.sheet-feats .sheet-table-row span:last-child {
 	max-width:14.4rem !important;
 	width:14.4rem !important;
 }
-	
+*/
 button[type="roll"].sheet-spellcaster-button {
     font-size: 1.4rem;
     white-space: nowrap;
@@ -4329,7 +4340,7 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
     height: auto;
 }
 
-/* readonly mode toggles */
+/* readonly/compact mode toggles */
 .sheet-readonly-show:checked ~ .sheet-main .sheet-show-readonly.sheet-inverse-readonly,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-hide-readonly,
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-cheat:not(.sheet-show-readonly),

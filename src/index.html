@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Small layout adjustments to the spell class sections.</li>
 				<li>Fixed no hover text on attack rolls.</li>
 				<li>Fixed macro names for 10th craft and 1st lore skills.(thanks Tranquwil)</li>
 				<li>Further adjustments needed for Damage Type and Extra Damage displayed in the roll template.</li>
@@ -8850,7 +8851,7 @@
 											</button>
 										</span>
 										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-divider sheet-hide-readonly">=</span>
+										<span class="sheet-divider sheet-hide-readonly" style="padding-right: 5px;">=</span>
 										<span class="sheet-table-cell sheet-entry-vshort sheet-hide-readonly">
 											<select title="@{spellclass-0} Choose or enter manually" name="attr_spellclass-0" class="sheet-select-small sheet-select-class">
 												<option value="-1" data-i18n="select-class-or-manual-default" selected>&#8226;Select Class or enter other manually</option>
@@ -8905,46 +8906,50 @@
 									</div>
 								</div>
 							</div>
-							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration" >
+							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration sheet-narrow-numbers" >
 								<span class="sheet-table-name" data-i18n="spellcasting-ability">Spellcasting Ability</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="check">Check</span>
-									<span class="sheet-table-header" data-i18n="total">Total</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
-									<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
-									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-									<span class="sheet-table-header sheet-table-rightcell" aria-label="empty spacer cell" role="presentation"></span>
+									<div class="sheet-table-row">
+										<span class="sheet-table-header" data-i18n="check">Check</span>
+										<span class="sheet-table-header" data-i18n="total">Total</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
+										<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
+										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+										<span class="sheet-table-header sheet-table-rightcell" aria-label="empty spacer cell" role="presentation"></span>
+									</div>
 								</div>
-								<div class="sheet-table-row">
-									<span class="sheet-table-cell sheet-spellcaster-button" style="min-width:14.4rem;"><button class="sheet-spellcaster-button" style="min-width:16.4rem;" title="%{selected|Concentration-Check-0}" type="roll" name="roll_Concentration-Check-0" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{check=[[ 1d20 + [[ @{Concentration-0} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-0-def}}} {{lefttext_6=@{Concentration-0-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
-									<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-0}" type="number" name="attr_Concentration-0" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">=</span>
-									<span class="sheet-table-cell sheet-ability-column" >
-										<select class="sheet-select-small" title="@{Concentration-0-ability}" name="attr_Concentration-0-ability">
-											<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
-											<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-											<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-											<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-											<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-											<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-											<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-										</select>
-									</span>
-									<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-0-mod}" type="number" name="attr_Concentration-0-mod" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">+</span>
-									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
-										<input type="checkbox" name="attr_Concentration-0-misc-mod_error" class="sheet-error-mshow" value="1" />
-										<textarea title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
-										<input type="number" name="attr_Concentration-0-misc-mod" title="@{Concentration-0-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-									</span>
-									<span class="sheet-table-cell"></span>
+								<div class="sheet-table-group">
+									<div class="sheet-table-row">
+										<span class="sheet-table-cell sheet-spellcaster-button"><button class="sheet-spellcaster-button" title="%{selected|Concentration-Check-0}" type="roll" name="roll_Concentration-Check-0" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-0-name} @{spellclass-0-level}**}} {{check=[[ 1d20 + [[ @{Concentration-0} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-0-def}}} {{lefttext_6=@{Concentration-0-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
+										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-0}" type="number" name="attr_Concentration-0" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider" style="padding: 0 5px 0 5px;">=</span>
+										<span class="sheet-table-cell sheet-ability-column" >
+											<select class="sheet-select-small" title="@{Concentration-0-ability}" name="attr_Concentration-0-ability">
+												<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
+												<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+												<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+												<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+												<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+												<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+												<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+											</select>
+										</span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-0-mod}" type="number" name="attr_Concentration-0-mod" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider">+</span>
+										<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-0-level-total}" type="number" name="attr_spellclass-0-level-total" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider sheet-advanced-spell-option">+</span>
+										<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+											<input type="checkbox" name="attr_Concentration-0-misc-mod_error" class="sheet-error-mshow" value="1" />
+											<textarea title="@{Concentration-0-misc}" type="number" name="attr_Concentration-0-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
+											<input type="number" name="attr_Concentration-0-misc-mod" title="@{Concentration-0-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+										</span>
+										<span class="sheet-table-cell"></span>
 								</div>
+							</div>
 							</div>
 							<div class="sheet-h3-section sheet-table sheet-spellclass-roll-adj">
 								<span class="sheet-table-name">Roll adjustments</span>
@@ -9321,7 +9326,7 @@
 											</button>
 										</span>
 										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{spellclass-1-level-total}" type="number" name="attr_spellclass-1-level-total" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-divider sheet-hide-readonly">=</span>
+										<span class="sheet-divider sheet-hide-readonly" style="padding-right: 5px">=</span>
 										<span class="sheet-table-cell sheet-entry-vshort sheet-hide-readonly">
 											<select title="@{spellclass-1} Choose or enter manually" name="attr_spellclass-1" class="sheet-select-small spellclass-1">
 												<option value="-1" data-i18n="select-class-or-manual-default" selected>&#8226;Select Class or enter other manually</option>
@@ -9376,46 +9381,50 @@
 									</div>
 								</div>
 							</div>
-							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration" >
+							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration sheet-narrow-numbers" >
 								<span class="sheet-table-name" data-i18n="spellcasting-ability">Spellcasting Ability</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="check">Check</span>
-									<span class="sheet-table-header" data-i18n="total">Total</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
-									<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
-									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-									<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
+									<div class="sheet-table-row">
+										<span class="sheet-table-header" data-i18n="check">Check</span>
+										<span class="sheet-table-header" data-i18n="total">Total</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
+										<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
+										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+										<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
+									</div>
 								</div>
-								<div class="sheet-table-row">
-									<span class="sheet-table-cell sheet-spellcaster-button" style="min-width:14.4rem;"><button class="sheet-spellcaster-button" style="min-width:16.4rem;" title="%{selected|Concentration-Check-1}" type="roll" name="roll_Concentration-Check-1" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-1-name} @{spellclass-1-level}**}} {{check=[[ 1d20 + [[ @{Concentration-1} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-1-def}}} {{lefttext_6=@{Concentration-1-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
-									<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-1}" type="number" name="attr_Concentration-1" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">=</span>
-									<span class="sheet-table-cell sheet-ability-column" >
-										<select class="sheet-select-small" title="@{Concentration-1-ability}" name="attr_Concentration-1-ability">
-											<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
-											<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-											<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-											<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-											<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-											<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-											<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-										</select>
-									</span>
-									<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-1-mod}" type="number" name="attr_Concentration-1-mod" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">+</span>
-									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-1-level-total}" type="number" name="attr_spellclass-1-level-total" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
-										<input type="checkbox" name="attr_Concentration-1-misc-mod_error" class="sheet-error-mshow" value="1" />
-										<textarea title="@{Concentration-1-misc}" type="number" name="attr_Concentration-1-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
-										<input type="number" name="attr_Concentration-1-misc-mod" title="@{Concentration-1-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-									</span>
-									<span class="sheet-table-cell"></span>
+								<div class="sheet-table-group">
+									<div class="sheet-table-row">
+										<span class="sheet-table-cell sheet-spellcaster-button"><button class="sheet-spellcaster-button" title="%{selected|Concentration-Check-1}" type="roll" name="roll_Concentration-Check-1" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-1-name} @{spellclass-1-level}**}} {{check=[[ 1d20 + [[ @{Concentration-1} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-1-def}}} {{lefttext_6=@{Concentration-1-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
+										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-1}" type="number" name="attr_Concentration-1" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider" style="padding: 0 5px 0 5px;">=</span>
+										<span class="sheet-table-cell sheet-ability-column" >
+											<select class="sheet-select-small" title="@{Concentration-1-ability}" name="attr_Concentration-1-ability">
+												<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
+												<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+												<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+												<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+												<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+												<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+												<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+											</select>
+										</span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-1-mod}" type="number" name="attr_Concentration-1-mod" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider">+</span>
+										<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-1-level-total}" type="number" name="attr_spellclass-1-level-total" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider sheet-advanced-spell-option">+</span>
+										<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+											<input type="checkbox" name="attr_Concentration-1-misc-mod_error" class="sheet-error-mshow" value="1" />
+											<textarea title="@{Concentration-1-misc}" type="number" name="attr_Concentration-1-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
+											<input type="number" name="attr_Concentration-1-misc-mod" title="@{Concentration-1-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+										</span>
+										<span class="sheet-table-cell"></span>								
 								</div>
+							</div>
 							</div>
 							<div class="sheet-h3-section sheet-table sheet-spellclass-roll-adj">
 								<span class="sheet-table-name">Roll adjustments</span>
@@ -9792,7 +9801,7 @@
 											</button>
 										</span>
 										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{spellclass-2-level-total}" type="number" name="attr_spellclass-2-level-total" value="0" class="sheet-calc" readonly /></span>
-										<span class="sheet-divider sheet-hide-readonly">=</span>
+										<span class="sheet-divider sheet-hide-readonly" style="padding-right: 5px">=</span>
 										<span class="sheet-table-cell sheet-entry-vshort sheet-hide-readonly">
 											<select title="@{spellclass-2} Choose or enter manually" name="attr_spellclass-2" class="sheet-select-small spellclass-2">
 												<option value="-1" data-i18n="select-class-or-manual-default" selected>&#8226;Select Class or enter other manually</option>
@@ -9847,45 +9856,49 @@
 									</div>
 								</div>
 							</div>
-							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration" >
+							<div class="sheet-h3-section sheet-table sheet-spellclass-concentration sheet-narrow-numbers" >
 								<span class="sheet-table-name" data-i18n="spellcasting-ability">Spellcasting Ability</span>
 								<div class="sheet-table-group-head">
-									<span class="sheet-table-header" data-i18n="check">Check</span>
-									<span class="sheet-table-header" data-i18n="total">Total</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
-									<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
-									<span class="sheet-divider sheet-table-header"></span>
-									<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
-									<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
-									<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-									<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
+									<div class="sheet-table-row">
+										<span class="sheet-table-header" data-i18n="check">Check</span>
+										<span class="sheet-table-header" data-i18n="total">Total</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-ability-column" style="width:6em;" data-i18n="ability">Ability</span>
+										<span class="sheet-table-header" data-i18n="modifier-abbrv">Mod</span>
+										<span class="sheet-divider sheet-table-header"></span>
+										<span class="sheet-table-header sheet-hide-readonly" data-i18n-title="effective-caster-level" data-i18n-aria-label="effective-caster-level" data-i18n="caster-level">Caster Level</span>
+										<span class="sheet-divider sheet-table-header sheet-advanced-spell-option"></span>
+										<span class="sheet-table-header sheet-advanced-spell-option"><span class="sheet-super sheet-note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
+										<span class="sheet-table-header sheet-table-rightcell"aria-label="empty spacer cell" role="presentation"></span>
+									</div>
 								</div>
-								<div class="sheet-table-row">
-									<span class="sheet-table-cell sheet-spellcaster-button" style="min-width:14.4rem;"><button class="sheet-spellcaster-button" style="min-width:16.4rem;" title="%{selected|Concentration-Check-2}" type="roll" name="roll_Concentration-Check-2" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-2-name} @{spellclass-2-level}**}} {{check=[[ 1d20 + [[ @{Concentration-2} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-2-def}}} {{lefttext_6=@{Concentration-2-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
-									<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-2}" type="number" name="attr_Concentration-2" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">=</span>
-									<span class="sheet-table-cell sheet-ability-column" >
-										<select class="sheet-select-small" title="@{Concentration-2-ability}" name="attr_Concentration-2-ability">
-											<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
-											<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
-											<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
-											<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
-											<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
-											<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
-											<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
-										</select>
-									</span>
-									<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-2-mod}" type="number" name="attr_Concentration-2-mod" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider">+</span>
-									<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-2-level-total}" type="number" name="attr_spellclass-2-level-total" value="0" class="sheet-calc" readonly /></span>
-									<span class="sheet-divider sheet-advanced-spell-option">+</span>
-									<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
-										<input type="checkbox" name="attr_Concentration-2-misc-mod_error" class="sheet-error-mshow" value="1" />
-										<textarea title="@{Concentration-2-misc}" type="number" name="attr_Concentration-2-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
-										<input type="number" name="attr_Concentration-2-misc-mod" title="@{Concentration-2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
-									</span>
-									<span class="sheet-table-cell"></span>
+								<div class="sheet-table-group">
+									<div class="sheet-table-row">
+										<span class="sheet-table-cell sheet-spellcaster-button"><button class="sheet-spellcaster-button" title="%{selected|Concentration-Check-2}" type="roll" name="roll_Concentration-Check-2" value="@{PC-whisper} &{template:pf_generic} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{concentration-check}}} {{class=**@{spellclass-2-name} @{spellclass-2-level}**}} {{check=[[ 1d20 + [[ @{Concentration-2} ]] ]]}} {{^{defensive-casting-bonus-abbrv}=@{Concentration-2-def}}} {{lefttext_6=@{Concentration-2-miscnote}}}">&nbsp;<span style="vertical-align:middle;" data-i18n="concentration-check">Concentration</span>&nbsp;</button></span>
+										<span class="sheet-table-cell sheet-left sheet-number"><input title="@{Concentration-2}" type="number" name="attr_Concentration-2" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider" style="padding: 0 5px 0 5px;">=</span>
+										<span class="sheet-table-cell sheet-ability-column" >
+											<select class="sheet-select-small" title="@{Concentration-2-ability}" name="attr_Concentration-2-ability">
+												<option value="0" data-i18n="select-one-default" selected>&#8226;Select One</option>
+												<option value="STR-mod" data-i18n="strength-abbrv">STR</option>
+												<option value="DEX-mod" data-i18n="dexterity-abbrv">DEX</option>
+												<option value="CON-mod" data-i18n="constitution-abbrv">CON</option>
+												<option value="INT-mod" data-i18n="intelligence-abbrv">INT</option>
+												<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
+												<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
+											</select>
+										</span>
+										<span class="sheet-table-cell sheet-number sheet-left"><input title="@{Concentration-2-mod}" type="number" name="attr_Concentration-2-mod" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider">+</span>
+										<span class="sheet-table-cell sheet-number sheet-hide-readonly"><input title="@{spellclass-2-level-total}" type="number" name="attr_spellclass-2-level-total" value="0" class="sheet-calc" readonly /></span>
+										<span class="sheet-divider sheet-advanced-spell-option">+</span>
+										<span class="sheet-table-cell sheet-linked-tablecell advanced-spell-option">
+											<input type="checkbox" name="attr_Concentration-2-misc-mod_error" class="sheet-error-mshow" value="1" />
+											<textarea title="@{Concentration-2-misc}" type="number" name="attr_Concentration-2-misc" class="sheet-macro-text-inline sheet-linked-cellfield sheet-highlight" ></textarea>
+											<input type="number" name="attr_Concentration-2-misc-mod" title="@{Concentration-2-misc-mod}" value="0" class="sheet-calc sheet-narrow-numbers sheet-highlight" readonly />
+										</span>
+										<span class="sheet-table-cell"></span>
+									</div>
 								</div>
 							</div>
 							<div class="sheet-h3-section sheet-table sheet-spellclass-roll-adj">
