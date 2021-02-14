@@ -3735,7 +3735,6 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
 }
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi .sheet-roll-row .sheet-roll-cell.sheet-dmg, .sheet-rolltemplate-pf_attack .sheet-roll-groupi .sheet-roll-row .sheet-roll-cell.sheet-dmg + .sheet-roll-cell {
     padding-bottom: 0;
-    vertical-align: bottom;
 }
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi .sheet-roll-row .sheet-roll-cell.sheet-dmg-x, .sheet-rolltemplate-pf_attack .sheet-roll-groupi .sheet-roll-row .sheet-roll-cell.sheet-dmg-x + .sheet-roll-cell {
     padding-top: 0;
@@ -4225,7 +4224,7 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
     color: White;
     background-color: Black;
     border-color: Black;
-    min-width: 1em;
+    min-width: 1.5rem;
     text-align: center;
     display: inline-block;
     margin-left: 0.1rem;
@@ -4240,8 +4239,9 @@ line-height: 1.3em; /* helps align damage type text to extra damage roll */
     color: black;
     background-color: transparent;
     border: none;
-    font-size: 1em;
+    font-size: 1.2rem;
     font-weight: normal;
+    margin: 0;
 }
 
 /*green*/
