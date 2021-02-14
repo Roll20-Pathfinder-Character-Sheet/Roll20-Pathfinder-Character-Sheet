@@ -205,7 +205,6 @@ export function resetCommandMacro (dummy, eventInfo, callback) {
                             .value();
                         })
                         .value();
-
                         
                         //TAS.debug("#############################");
                         //TAS.debug(spellsByClass);
@@ -481,7 +480,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
             setter[weaponPrefix + "range"]=v[spellPrefix+"range_numeric"];
         }
         if (v[spellPrefix+"range"] && v[spellPrefix+"range_pick"]==="see_text" ){
-            notes += "Range:" + v[spellPrefix+"range"];
+            notes += "Range: " + v[spellPrefix+"range"];
         }
         
         if (v[spellPrefix +"damage-macro-text"]){
@@ -504,7 +503,14 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
         }
         if ( v[spellPrefix+"sr"]){
             if (notes) { notes += ", ";}
-            notes += "Spell resist:"+ v[spellPrefix+"sr"];
+            notes += "Spell resist: "+ v[spellPrefix+"sr"];
+        }
+// include a link in the notes so it can be cast from chat
+        if (v[spellPrefix + "name"]) {
+            if (notes) {
+                notes += "";
+            }
+            notes += "\n**Cast Spell:** [" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
         }
         if (notes){
             setter[weaponPrefix+"notes"]=notes;
