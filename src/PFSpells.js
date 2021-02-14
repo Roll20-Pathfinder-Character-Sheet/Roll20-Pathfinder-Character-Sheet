@@ -463,7 +463,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
         TAS.debug("UPDATING SPELL ATTACK: "+spellPrefix,v);
         attackType=PFUtils.findAbilityInString(v[spellPrefix + "spell-attack-type"]);
         if (v[spellPrefix + "name"]) {
-            if(!noName){
+            if (!noName) {
                 setter[weaponPrefix + "name"] = v[spellPrefix + "name"];
             }
             setter[weaponPrefix + "source-spell-name"] = v[spellPrefix + "name"];
@@ -496,16 +496,16 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
             }
         }
         if (v[spellPrefix+"save"]  ){
-            notes += "Save: "+ v[spellPrefix+"save"] ;
+            notes += "\n**Save:** " + v[spellPrefix + "save"];
             if ( !(/none/).test(v[spellPrefix+"save"])){
-                notes += " DC: " + v[spellPrefix+"savedc"]
+                notes += " **DC:** " + v[spellPrefix+"savedc"]
             }
         }
         if ( v[spellPrefix+"sr"]){
-            if (notes) { notes += ", ";}
-            notes += "Spell resist: "+ v[spellPrefix+"sr"];
+            if (notes) { notes += "";}
+            notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
         }
-// include a link in the notes so it can be cast from chat
+// include a link in the weapon notes to cast the spell from chat
         if (v[spellPrefix + "name"]) {
             if (notes) {
                 notes += "";
