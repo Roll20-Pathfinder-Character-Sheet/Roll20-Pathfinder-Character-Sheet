@@ -38,7 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Creating a spell attack (ie "Spell's row>Attack & dmg>Create Atk") now includes a link in the "Weapon Notes" to cast the spell from chat.</li>
+				<li>Creating a spell attack or ability attack now includes a link in the "Weapon Notes" to execute the associated spell or ability from chat.</li>
 				<li>Fixed; hyperlinks used in the Attack>Extra Damage, "Type" field, were not clickable.</li>
 				<li>Adjusted roll template header font-size and line-height.</li>
 				<li>Fixed inline rolls within spell descriptions and weapon notes to appear as rolls and not plain text.</li>
@@ -8408,6 +8408,10 @@
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-short">
+											<input type="checkbox" name="attr_update_attack_entry" value="1" class="sheet-cssbutton sheet-refreshbutton" data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry"><span></span>
+											<span data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry" data-i18n="update">Update</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-short">
 											<select class="sheet-select-small" title="@{repeating_ability_$X_abil-attack-type}" name="attr_abil-attack-type">
 												<option value="0" data-i18n="none-default" selected>&#8226;None</option>
 												<option value="attk-melee" data-i18n="touch">Touch</option>
@@ -10252,7 +10256,7 @@
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_level_notes" value="1" title="@{toggle_spell_level_notes}" checked /><b data-i18n-title="options-spell-level-title"  data-i18n-aria-label="options-spell-level-title" data-i18n="spell-level"> Spell Level</b></label></span>
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_casting_time_notes" value="1" title="@{toggle_spell_casting_time_notes}" checked /><b data-i18n-title="options-spell-casting-time-title"  data-i18n-aria-label="options-spell-casting-time-title" data-i18n="casting-time"> Casting Time</b></label></span>
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_components_notes" value="1" title="@{toggle_spell_components_notes}" checked /><b data-i18n-title="options-spell-comp-title"  data-i18n-aria-label="options-spell-comp-title" data-i18n="spell-components"> Components</b></label></span>
-						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_range_notes" value="1" title="@{toggle_spell_range_notes}" checked /><b data-i18n-title="options-range-title"  data-i18n-aria-label="options-range-title" data-i18n="range"> Range</b></label></span>
+						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_range_notes" value="1" title="@{toggle_spell_range_notes}" checked /><b data-i18n-title="options-spell-range-title"  data-i18n-aria-label="options-spell-range-title" data-i18n="range"> Range</b></label></span>
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_targets_notes" value="1" title="@{toggle_spell_targets_notes}" checked /><b data-i18n-title="options-spell-target-title"  data-i18n-aria-label="options-spell-target-title" data-i18n="target"> Target</b></label></span>
 					</div>
 					<div class="sheet-table-row">
@@ -10272,9 +10276,9 @@
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_damage_notes" value="1" title="@{toggle_spell_damage_notes}" checked /><b data-i18n-title="options-spell-damage-title"  data-i18n-aria-label="options-spell-damage-title" data-i18n="spell-damage"> Spell Damage</b></label></span>						
 					</div>
 					<div class="sheet-table-row">		
-						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_spellnotes_notes" value="1" title="@{toggle_spell_spellnotes_notes}" checked /><b data-i18n-title="options-spells-notes-title"  data-i18n-aria-label="options-spells-notes-title" data-i18n="spells-notes"> Spells Notes</b></label></span>
+						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_spell_spellnotes_notes" value="1" title="@{toggle_spell_spellnotes_notes}" checked /><b data-i18n-title="options-spell-notes-title"  data-i18n-aria-label="options-spell-notes-title" data-i18n="spells-notes"> Spells Notes</b></label></span>
 						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_spellmenu_groupby_school" value="1" title="@{spellmenu_groupby_school}" /><b data-i18n-title="group-by-school-desc"  data-i18n-aria-label="group-by-school-desc" data-i18n="group-by-school"> Group by school</b></label></span>
-						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_spellmenu_show_uses" value="1" title="@{spellmenu_show_uses}" /><b data-i18n-title="show-uses-spell-desc"  data-i18n-aria-label="show-uses-spell-desc" data-i18n="show-uses"> Show Uses</b></label></span>
+						<span class="sheet-table-cell sheet-small-label"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_spellmenu_show_uses" value="1" title="@{spellmenu_show_uses}" /><b data-i18n-title="show-uses-spell-desc" data-i18n-aria-label="show-uses-spell-desc" data-i18n="show-uses"> Show Uses</b></label></span>
 						<span class="sheet-table-cell sheet-small-label">&nbsp;</span>
 						<span class="sheet-table-cell sheet-small-label">&nbsp;</span>
 						<span class="sheet-table-cell sheet-small-label">&nbsp;</span>
@@ -10479,8 +10483,12 @@
 									</div>
 									<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 										<label class="sheet-small-label2" style="width:5em;">
-											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
-											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
+											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-spell-attack-entry"  data-i18n-aria-label="create-spell-attack-entry"><span></span>
+											<span data-i18n-title="create-spell-attack-entry" data-i18n-aria-label="create-spell-attack-entry" data-i18n="create-attack" >Create Attack</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-short">
+											<input type="checkbox" name="attr_update_attack_entry" value="1" class="sheet-cssbutton sheet-refreshbutton" data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry"><span></span>
+											<span data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry" data-i18n="update">Update</span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-short">
 											<select class="sheet-select-small" title="@{repeating_spells_$X_spell-attack-type}" name="attr_spell-attack-type">
@@ -12175,8 +12183,12 @@
 											</div>
 											<div class="sheet-attack-damage sheet-non-table sheet-sect sheet-expand">
 												<label class="sheet-small-label2" style="width:5em;">
-													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
-													<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
+													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-spell-attack-entry"  data-i18n-aria-label="create-spell-attack-entry"><span></span>
+													<span data-i18n-title="create-spell-attack-entry" data-i18n-aria-label="create-spell-attack-entry" data-i18n="create-attack" >Create Attack</span>
+												</label>
+												<label class="sheet-small-label2 sheet-entry-short">
+													<input type="checkbox" name="attr_refresh-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="refresh-attack-entry"  data-i18n-aria-label="refresh-attack-entry"><span></span>
+													<span data-i18n-title="refresh-attack-entry" data-i18n-aria-label="refresh-attack-entry" data-i18n="refresh-attack" >Refresh Attack</span>
 												</label>
 												<label class="sheet-small-label2 sheet-entry-short">
 													<select class="sheet-select-small" title="@{repeating_spells_$X_spell-attack-type}" name="attr_spell-attack-type">
@@ -13052,6 +13064,10 @@
 										<label class="sheet-small-label2 sheet-entry-short">
 											<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-attack-entry"  data-i18n-aria-label="create-attack-entry"><span></span>
 											<span data-i18n-title="create-attack-entry" data-i18n-aria-label="create-attack-entry" data-i18n="create-attack" >Create Attack</span>
+										</label>
+										<label class="sheet-small-label2 sheet-entry-short">
+											<input type="checkbox" name="attr_update_attack_entry" value="1" class="sheet-cssbutton sheet-refreshbutton" data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry"><span></span>
+											<span data-i18n-title="update-attack-entry" data-i18n-aria-label="update-attack-entry" data-i18n="update">Update</span>
 										</label>
 										<label class="sheet-small-label2 sheet-entry-short">
 											<select class="sheet-select-small" title="@{repeating_ability_$X_abil-attack-type}" name="attr_abil-attack-type">

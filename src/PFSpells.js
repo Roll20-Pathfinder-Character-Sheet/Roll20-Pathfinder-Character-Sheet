@@ -505,7 +505,7 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
             if (notes) { notes += "";}
             notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
         }
-// include a link in the weapon notes to cast the spell from chat
+// include a link in the weapon notes to execute the spell from chat
         if (v[spellPrefix + "name"]) {
             if (notes) {
                 notes += "";
@@ -529,7 +529,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         }
     }),
     attribList = [], itemId='',idStr='',item_entry='',
-    attributes = ["create-attack-entry", "range_pick","range","range_numeric","damage-macro-text","damage-type","sr","savedc","save"],
+    attributes = ["create-attack-entry", "range_pick", "range", "range_numeric", "damage-macro-text", "damage-type", "sr", "savedc", "save"],
     commonAttributes = ["spell-attack-type","name"];
     try {
         if (id=='DELETED'){

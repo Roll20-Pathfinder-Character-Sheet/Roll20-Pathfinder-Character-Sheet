@@ -516,6 +516,13 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			if (notes) { notes += ", ";}
 			notes += "Spell resist:"+ v[spellPrefix+"abil-sr"];
 		}
+		// include a link in the weapon notes to execute the ability from chat
+		if (v[spellPrefix + "name"]) {
+			if (notes) {
+				notes += "";
+			}
+			notes += "\n**Cast Spell:** [" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
+		}
 		if (notes){
 			setter[weaponPrefix+"notes"]=notes;
 		}
