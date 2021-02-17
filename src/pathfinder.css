@@ -2033,6 +2033,10 @@ h2.sheet-clickheader {
     margin-top: 0.2rem;
 }
 
+.sheet-attack-damage > .sheet-small-label2 .sheet-refreshbutton+span::before {
+    padding: .35rem 0 0 0;
+}
+
 .sheet-table-cell.sheet-small-label.sheet-cssbutton-cell {
     padding-top: 1em;
 }

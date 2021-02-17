@@ -1668,7 +1668,7 @@ var events = {
     },
     repeatingSpellMenuUpdatePlayer:
         ['name','spellclass_number','spell_level','slot','used','school','metamagic','isDomain','isMythic'],
-    repeatingSpellAttackEventsPlayer: ["range_pick", "range", "damage-macro-text", "damage-type", "save", "spell-attack-type", "name"],
+    repeatingSpellAttackEventsPlayer: ["range_pick", "range", "damage-macro-text", "damage-type", "save", "spell-attack-type", "name", "update_attack_entry"],
     repeatingSpellAttackEventsAuto: ["range_numeric", "sr", "savedc"]
 };
 function registerEventHandlers  () {

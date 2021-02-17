@@ -44,7 +44,7 @@ otherCommandMacros = {
 	'su':" [^{supernatural-abilities-menu}](~@{character_id}|NPCPREFIXsu_button)"
 },
 events = {
-	attackEventsSLA:["damage-macro-text","damage-type","abil-sr","save","abil-attack-type","name","range_numeric"],
+	attackEventsSLA: ["damage-macro-text", "damage-type", "abil-sr", "save", "abil-attack-type", "name", "range_numeric", "update_attack_entry"],
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
 };
 
