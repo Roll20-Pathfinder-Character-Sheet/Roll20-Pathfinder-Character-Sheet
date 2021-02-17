@@ -639,12 +639,17 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 		if ((/range/i).test(attrib)){
 			attributes =[item_entry+'range_pick',item_entry+'range',item_entry+'range_numeric'];
 		} else {
-			attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
+			attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "update_attack_entry"];
 		}
 	} else {
-		attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
+		attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "update_attack_entry"];
 	}
 	getAttrs(attributes,function(spellVal){
+		//resets the update button
+		setAttrs({
+			[item_entry + "update_attack_entry"]: 0
+		});
+
 		getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
 			var spellsourcesFields=[];
 			spellsourcesFields = _.reduce(idarray,function(memo,currentID){

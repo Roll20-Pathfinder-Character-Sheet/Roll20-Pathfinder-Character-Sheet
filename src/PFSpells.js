@@ -624,7 +624,7 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
-        attributes = [item_entry+"range_pick", item_entry+"range", item_entry+"range_numeric", item_entry+"damage-macro-text", item_entry+"damage-type", item_entry+"sr", item_entry+"savedc",item_entry+ "save", item_entry+"spell-attack-type", item_entry+"name"];
+        attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "spell-attack-type", item_entry + "name", item_entry + "update_attack_entry"];
         /*        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
         if (attrib){
             attributes = [item_entry+attrib];
@@ -641,6 +641,11 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         return;
     }
     getAttrs(attributes,function(spellVal){
+    //resets the update button
+        setAttrs ({
+            [item_entry + "update_attack_entry"] : 0
+        });
+
         getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
             var spellsourcesFields=[];
             spellsourcesFields = _.reduce(idarray,function(memo,currentID){
