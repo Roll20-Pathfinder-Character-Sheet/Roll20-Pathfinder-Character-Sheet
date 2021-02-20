@@ -620,11 +620,12 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         if (typeof callback === "function") {
             callback();
         }
-    }),itemId='',item_entry='',attrib='',attributes=[];
+    }),
+    itemId='', item_entry='', attrib='', attributes=[];
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
-        attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "spell-attack-type", item_entry + "name", item_entry + "update_attack_entry"];
+        attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "spell-attack-type", item_entry + "name", item_entry + "update_attack_entry", "include_link"];
         /*        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
         if (attrib){
             attributes = [item_entry+attrib];
@@ -641,10 +642,32 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         return;
     }
     getAttrs(attributes,function(spellVal){
-    //resets the update button
-        setAttrs ({
-            [item_entry + "update_attack_entry"] : 0
-        });
+    
+    //sync to match settings>sheet config>attacks>Include link toggle
+    var tempSetting = spellVal["include_link"];
+    TAS.debug("Checking repeating_spells Link Setting :" + tempSetting);
+
+        getSectionIDs("repeating_spells", function (ids) {
+            var fieldarray = [];
+            _.each(ids, function (id) {
+                var idStr = SWUtils.getRepeatingIDStr(id),
+                    prefix = "repeating_spells_" + idStr;
+                fieldarray.push(prefix + "update_attack_entry");
+            });
+            getAttrs(fieldarray, function (v) {
+                var setter = {};
+                _.each(ids, function (id) {
+                    var idStr = SWUtils.getRepeatingIDStr(id),
+                        prefix = "repeating_spells_" + idStr,
+                        tempSetting = parseInt(v[prefix + "update_attack_entry"], 10) || 0,
+                        setter = {};
+                        setter[prefix + "update_attack_entry"] = tempSetting;
+                });
+                if (_.size(setter)) {
+                    SWUtils.setWrapper(setter, PFConst.silentParams);
+                }
+            });
+        }); 
 
         getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
             var spellsourcesFields=[];
@@ -1742,7 +1765,8 @@ function registerEventHandlers  () {
         }
     }));
     tempstr = _.reduce(events.repeatingSpellAttackEventsPlayer,function(memo,attr){
-        memo+="change:repeating_spells:"+attr+" ";
+        memo += "change:repeating_spells:"+attr+" ";
+        memo += "change:include_link ";
         return memo;
     },"");
     on(tempstr,	TAS.callback(function eventupdateAssociatedSpellAttack(eventInfo) {
@@ -1754,7 +1778,8 @@ function registerEventHandlers  () {
         }
     }));
     tempstr = _.reduce(events.repeatingSpellAttackEventsAuto,function(memo,attr){
-        memo+="change:repeating_spells:"+attr+" ";
+        memo += "change:repeating_spells:"+attr+" ";
+        memo += "change:include_link ";
         return memo;
     },"");
     on(tempstr,	TAS.callback(function eventupdateAssociatedSpellAttack(eventInfo) {

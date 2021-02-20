@@ -32,7 +32,7 @@ Download the latest release from https://git-for-windows.github.io/ and install 
 Curl allows us to download The Arron Sheet, instead of maintaining our own copy
 1. go to https://curl.haxx.se/dlwiz/?type=bin and pick the correct version (pick 'any' if you are unsure)
 2. unzip and save to a directory on your computer
-3. add the directory to your computer's PATH variable. 
+3. add the directory to your computer's PATH variable. https://windowsreport.com/edit-windows-path-environment-variable/
 
 ### Building
 Run `npm run build` to build the project, the output will show up in a new folder called dist
