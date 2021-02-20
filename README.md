@@ -1,6 +1,6 @@
 # Pathfinder Character Sheet for Roll20.net
 ## Editing
-Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific sheet sections or by function(s). It is necessary to minimally install git, node.js, and npm. In order to edit complete the following sections;
+Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific sheet sections or by function(s). It is necessary to minimally install git, node.js, and npm. In order to edit the sheet locally, complete the following sections;
 ### Install Git (If you don't have it already)
 Download the latest version and install it.
 #### Windows
@@ -24,10 +24,10 @@ https://git-scm.com/download/linux
 4. Run `nvm alias default 6.9.5`
 5. Run `nvm use 6.9.5`
 
-### Dependancies
+### Dependencies
 **NPM** (https://www.npmjs.com/get-npm) is distributed with Node.js - which means that when you download Node.js, you automatically get npm installed on your computer.
 
-### Install curl executable (If you don't have it already)
+### Install Curl executable (If you don't have it already)
 **Curl** allows us to download The Arron Sheet (https://github.com/shdwjk/TheAaronSheet), instead of maintaining our own copy.
 1. Go to https://curl.haxx.se/dlwiz/?type=bin and pick the correct version.
 2. Unzip and save to a directory on your computer
@@ -42,8 +42,8 @@ Use css, translation.json, and sheet.json included in the "src" folder.
 ------
 ## Specific instructions for setting up with Visual Studio Code
 ### Install git 
-1. If you already have Github for Windows, you do not need to install **git** separately. If you do not have it, you must download/install it or else download git as noted above. You may also have both side by side.
-2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable.More specefic instructions;
+1. If you already have Github for Windows, you do not need to install **git** separately. If you do not have it, you must download/install it or else download git as noted above. You may also have both side-by-side.
+2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable.More specific instructions;
 (note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
 
 ### Visual Studio Code and Node.js integration
