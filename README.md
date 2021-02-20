@@ -36,7 +36,9 @@ Curl allows us to download The Arron Sheet, instead of maintaining our own copy
 
 ### Build/Compile Commands
 Run `npm run build` Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
+
 Run `npm run prod` Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+
 Use css, translation.json, and sheet.json included in the "src" folder.
 
 ------
