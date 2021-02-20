@@ -1,6 +1,6 @@
 # Pathfinder Character Sheet for Roll20.net
 ## Editing
-Unlike most character sheets found on the Roll20's repo (https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific sheet sections or by function(s). It is necessary to minimally install git, node.js, and npm. In order to edit complete the following sections;
+Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific sheet sections or by function(s). It is necessary to minimally install git, node.js, and npm. In order to edit complete the following sections;
 ### Install Git (If you don't have it already)
 Download the latest version and install it.
 #### Windows
@@ -9,7 +9,7 @@ Download the latest version and install it.
 https://git-scm.com/download/linux
 
 ### Install Node.js using NVM
-(SKIP these steps you are going to setup Visual Studio Code. 'NVM' commands will not be necessary.  See specific instructions below.)
+- SKIP these steps if you are going to setup Visual Studio Code. See specific instructions below.
 #### Windows
 1. Download and install latest version of Node Version Manager(NVM): https://github.com/coreybutler/nvm-windows/releases
 2. Open a **NEW** shell (Right click -> Open Git Bash Here/Git GUI Here) You can not use one which was opened before NVM is installed.
