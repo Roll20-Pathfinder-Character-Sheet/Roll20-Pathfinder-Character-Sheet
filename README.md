@@ -41,13 +41,12 @@ Use css, translation.json, and sheet.json included in the "src" folder.
 
 ------
 ## Specific instructions for setting up with Visual Studio Code
-### git 
+### Install git 
 1. If you already have Github for Windows, you do not need to install **git** separately. If you do not have it, you must download/install it or else download git as noted above. You may also have both side by side.
 2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable.More specefic instructions;
 (note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
 
 ### Visual Studio Code and Node.js integration
-You do not need to use 'nvm' commands this way.
 1. Download and install [Visual Studio Code](https://code.visualstudio.com/Download)
 2. Install Node for your platform: https://code.visualstudio.com/Docs/runtimes/nodejs 
 (note: if you need nvm then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
@@ -67,7 +66,7 @@ You do not need to use 'nvm' commands this way.
 
 **CTRL-Shift-P opens a terminal prompt at top** it also has better intellisense than the terminal window due to the picklist it generates as you type.
 Much easier to fork from github's web interface first.
-Then use the URL of your fork as the url of the repository I think this can be done using the git `clone` command
+Then use the URL of your fork as the url of the repository. I think this can be done using the git `clone` command
 some help: https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/
 
 # Module Breakdown
