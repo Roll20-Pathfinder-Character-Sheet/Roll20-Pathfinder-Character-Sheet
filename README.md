@@ -1,23 +1,19 @@
 # Pathfinder Character Sheet for Roll20.net
-
-## Build
-dev: npm run build 
-prod: npm run prod
-
 ## Editing
-In order to edit complete the following sections
-### Install Git (If you don't have it already)
+The Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific section of the sheet or by function. In order to edit complete the following sections;
+### Install Git (If you don't have it already) or Install 
 #### Windows
 Download the latest release from https://git-for-windows.github.io/ and install it
 
-### Install Node 6.9.5 (Any node >6.9 should work)
+### Install Node (skip if you are going to setup Visual Studio Code for editing. See Below.)
 #### Windows
-1. Download and install the latest setup from https://github.com/coreybutler/nvm-windows/releases
+1. Download and install latest version of Node Version Manager(NVM) from https://github.com/coreybutler/nvm-windows/releases
 2. Open a new git bash (you can not use one which was opened before nvm is installed)
-3. Run `nvm install 6.9.5`
-4. Run `nvm use node 6.9.5`
+3. Run `nvm install latest`
+4. Run `nvm list available` Note the version you want to use. Latest version should be fine. 
+4. Run `nvm use node <include version#>`
 
-#### Linux/Mac
+#### Linux/Mac (adjust node version as needed)
 1. Run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
 2. Close and reopen your terminal
 3. Run `nvm install 6.9.5`
@@ -45,7 +41,7 @@ Use css, translation.json, and sheet.json included in the "src" folder.
 ## Specific instructions for Windows w/ Visual Studio Code
 ### git 
 1. if you already have Github for windows you do not need to install git separately. If you do not have it, then you must still download it or else download git as above. You can also have both side by side
-2. Add Github for windows to the PATH variable(https://windowsreport.com/edit-windows-path-environment-variable/) using these instructions;
+2. Add Github for windows to the PATH variable (https://windowsreport.com/edit-windows-path-environment-variable/) using these instructions;
 (there is only a 'cmd' directory, no bin directory, contrary to what this says): http://www.chambaud.com/2013/07/08/adding-git-to-path-when-using-github-for-windows/
 
 ### VS Code and Node.js integration
