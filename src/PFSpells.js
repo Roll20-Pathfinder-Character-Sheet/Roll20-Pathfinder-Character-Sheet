@@ -11,6 +11,7 @@ import * as PFSpellOptions from './PFSpellOptions';
 import * as PFAttackOptions from './PFAttackOptions';
 import * as PFAttackGrid from './PFAttackGrid';
 import * as PFAttacks from './PFAttacks';
+import on from '../stubs/on/index';
 export var
 //spell levels for repeating spell sections
 spellLevels = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
@@ -335,7 +336,7 @@ function updateSpellsPerDay(dummy,eventInfo,callback,silently){
     });
 }
 
-function getSpellTotals  (ids, v, setter) {
+function getSpellTotals (ids, v, setter) {
     var doNotProcess=0,
         casterTypeMap = {'spontaneous':1, 'prepared':2},
         casterTypes = [0,0,0],
@@ -456,7 +457,7 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
     });
 }
 /* ******************************** REPEATING SPELL FUNCTIONS ********************************** */
-function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
+function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
     var notes="",attackType="";
     setter = setter||{};
     try {
@@ -495,22 +496,38 @@ function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
                 setter[weaponPrefix+"critical_dmg_type"] = v[spellPrefix+"damage-type"];
             }
         }
-        if (v[spellPrefix+"save"]  ){
+        if (v[spellPrefix+"save"]){
             notes += "\n**Save:** " + v[spellPrefix + "save"];
             if ( !(/none/).test(v[spellPrefix+"save"])){
                 notes += " **DC:** " + v[spellPrefix+"savedc"]
             }
         }
-        if ( v[spellPrefix+"sr"]){
-            if (notes) { notes += "";}
-            notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
-        }
-// include a link in the weapon notes to execute the spell from chat
-        if (v[spellPrefix + "name"]) {
-            if (notes) {
+        if (v[spellPrefix+"sr"]){
+            if (notes) { 
                 notes += "";
             }
-            notes += "\n**Cast Spell:** [" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
+            notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
+        }
+    
+        // include a link in the weapon notes to execute the spell from chat        
+        var toggle_attack_entry = v[spellPrefix+"toggle_attack_entry"];
+        if (toggle_attack_entry === 1) {
+            if (v[spellPrefix + "name"]){
+                if (notes){
+                    notes += "";
+                }
+                notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
+                TAS.debug("~~~~~~INCLUDE LINK IN WEAPON NOTES: " + toggle_attack_entry);
+            }
+        }
+        if (toggle_attack_entry !== 1) {
+            if (v[spellPrefix + "name"]) {
+                if (notes){
+                    notes += "";
+                }
+                notes += "";
+                TAS.debug("~~~~~~DO NOT INCLUDE LINK IN WEAPON NOTES: " + toggle_attack_entry);
+            }
         }
         if (notes){
             setter[weaponPrefix+"notes"]=notes;
@@ -530,7 +547,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
     }),
     attribList = [], itemId='',idStr='',item_entry='',
     attributes = ["create-attack-entry", "range_pick", "range", "range_numeric", "damage-macro-text", "damage-type", "sr", "savedc", "save"],
-    commonAttributes = ["spell-attack-type","name"];
+    commonAttributes = ["spell-attack-type", "name", "toggle_attack_entry"];
     try {
         if (id=='DELETED'){
             done();
@@ -563,9 +580,9 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         params = {};
         try {
             TAS.debug("PFSpells.createAttack ##### create attack linked from spell, using ",v);
-			if (_.size(v)===0){
-				spellexists=false;
-			}
+            if (_.size(v)===0){
+                spellexists=false;
+            }
 
             TAS.debug("PFSpells.createAttack ##### spellexists = "+spellexists);
             if (spellexists){
@@ -580,7 +597,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     }
                     idStr = newRowId+"_";
                     prefix += idStr;
-                    setter = setAttackEntryVals(item_entry, prefix,v,setter);
+                    setter = setAttackEntryVals(item_entry, prefix, v, setter);
                     setter[prefix + "source-spell"] = itemId;
                     setter[prefix+"group"]="Spell";
                     setter[prefix+'link_type']=PFAttacks.linkedAttackType.spell;
@@ -625,8 +642,9 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
     try {
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         item_entry = 'repeating_spells_' + SWUtils.getRepeatingIDStr(itemId);
-        attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "spell-attack-type", item_entry + "name", item_entry + "update_attack_entry", "include_link"];
-        /*        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
+        attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "spell-attack-type", item_entry + "name", item_entry + "toggle_attack_entry"];
+        /*
+        attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
         if (attrib){
             attributes = [item_entry+attrib];
             if ((/range/i).test(attrib)){
@@ -642,33 +660,6 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
         return;
     }
     getAttrs(attributes,function(spellVal){
-    
-    //sync to match settings>sheet config>attacks>Include link toggle
-    var tempSetting = spellVal["include_link"];
-    TAS.debug("Checking repeating_spells Link Setting :" + tempSetting);
-
-        getSectionIDs("repeating_spells", function (ids) {
-            var fieldarray = [];
-            _.each(ids, function (id) {
-                var idStr = SWUtils.getRepeatingIDStr(id),
-                    prefix = "repeating_spells_" + idStr;
-                fieldarray.push(prefix + "update_attack_entry");
-            });
-            getAttrs(fieldarray, function (v) {
-                var setter = {};
-                _.each(ids, function (id) {
-                    var idStr = SWUtils.getRepeatingIDStr(id),
-                        prefix = "repeating_spells_" + idStr,
-                        tempSetting = parseInt(v[prefix + "update_attack_entry"], 10) || 0,
-                        setter = {};
-                        setter[prefix + "update_attack_entry"] = tempSetting;
-                });
-                if (_.size(setter)) {
-                    SWUtils.setWrapper(setter, PFConst.silentParams);
-                }
-            });
-        }); 
-
         getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
             var spellsourcesFields=[];
             spellsourcesFields = _.reduce(idarray,function(memo,currentID){
@@ -1072,8 +1063,6 @@ function updateSpellSlot (id, eventInfo, callback) {
 function getUpdateType (eventInfo){
 
 }
-
-
 
 /** updates a spell
  *@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
@@ -1684,6 +1673,20 @@ export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback,
     });
     migrate(callUpdateSpells);
 });
+//sync local to global setting to include link in weapon notes for spell attacks
+function updateIncludeLink(callback) {
+    getSectionIDs('repeating_spells', function (ids) {
+        _.each(ids, function (id) {
+            getAttrs(["repeating_spells_" + id + "_toggle_attack_entry", "include_link"], function (values) {
+                var include_link = parseInt([values.include_link])||0;
+                setAttrs({
+                    ["repeating_spells_" + id + "_toggle_attack_entry"] : include_link
+                });
+                TAS.debug("~~~~~~SYNCING LOCAL LINK TO GLOBAL LINK SETTING");
+            });
+        });
+    });
+}
 var events = {
     //events for spell repeating rows
     repeatingSpellUpdatesPlayer : 
@@ -1696,8 +1699,8 @@ var events = {
     },
     repeatingSpellMenuUpdatePlayer:
         ['name','spellclass_number','spell_level','slot','used','school','metamagic','isDomain','isMythic'],
-    repeatingSpellAttackEventsPlayer: ["range_pick", "range", "damage-macro-text", "damage-type", "save", "spell-attack-type", "name", "update_attack_entry"],
-    repeatingSpellAttackEventsAuto: ["range_numeric", "sr", "savedc"]
+    repeatingSpellAttackEventsPlayer: ["range_pick", "range", "damage-macro-text", "damage-type", "save", "spell-attack-type", "name"],
+    repeatingSpellAttackEventsAuto: ["range_numeric", "sr", "savedc", "toggle_attack_entry"]
 };
 function registerEventHandlers  () {
     var tempstr="";
@@ -1766,7 +1769,6 @@ function registerEventHandlers  () {
     }));
     tempstr = _.reduce(events.repeatingSpellAttackEventsPlayer,function(memo,attr){
         memo += "change:repeating_spells:"+attr+" ";
-        memo += "change:include_link ";
         return memo;
     },"");
     on(tempstr,	TAS.callback(function eventupdateAssociatedSpellAttack(eventInfo) {
@@ -1779,7 +1781,6 @@ function registerEventHandlers  () {
     }));
     tempstr = _.reduce(events.repeatingSpellAttackEventsAuto,function(memo,attr){
         memo += "change:repeating_spells:"+attr+" ";
-        memo += "change:include_link ";
         return memo;
     },"");
     on(tempstr,	TAS.callback(function eventupdateAssociatedSpellAttack(eventInfo) {
@@ -1789,6 +1790,9 @@ function registerEventHandlers  () {
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateAssociatedAttack(null,null,null,eventInfo);
         }
-    }));    
+    }));
+    on("change:include_link", function() {
+        updateIncludeLink(); 
+    });
 }
 registerEventHandlers();

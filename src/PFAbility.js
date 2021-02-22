@@ -44,7 +44,7 @@ otherCommandMacros = {
 	'su':" [^{supernatural-abilities-menu}](~@{character_id}|NPCPREFIXsu_button)"
 },
 events = {
-	attackEventsSLA: ["damage-macro-text", "damage-type", "abil-sr", "save", "abil-attack-type", "name", "range_numeric", "update_attack_entry"],
+	attackEventsSLA: ["damage-macro-text", "damage-type", "abil-sr", "save", "abil-attack-type", "name", "range_numeric", "toggle_attack_entry"],
 	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
 };
 
@@ -516,12 +516,12 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			if (notes) { notes += ", ";}
 			notes += "Spell resist:"+ v[spellPrefix+"abil-sr"];
 		}
-		// include a link in the weapon notes to execute the ability from chat
+// include a link in the weapon notes to execute the spell from chat
 		if (v[spellPrefix + "name"]) {
 			if (notes) {
 				notes += "";
 			}
-			notes += "\n**Cast Spell:** [" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
+			notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
 		}
 		if (notes){
 			setter[weaponPrefix+"notes"]=notes;
@@ -639,39 +639,37 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 		if ((/range/i).test(attrib)){
 			attributes = [item_entry + 'range_pick', item_entry + 'range', item_entry + 'range_numeric', "include_link"];
 		} else {
-			attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "update_attack_entry", "include_link"];
+			attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "toggle_attack_entry", "include_link"];
 		}
 	} else {
-		attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "update_attack_entry", "include_link"];
+		attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "toggle_attack_entry", "include_link"];
 	}
 	getAttrs(attributes,function(spellVal){
 
-    //sync to match settings>sheet config>attacks>Include link toggle
+//sync to match settings>sheet config>attacks>Include link toggle
     var tempSetting = spellVal["include_link"];
     TAS.debug("Checking repeating_ability Link Setting :" + tempSetting);
-
 				getSectionIDs("repeating_ability_", function (ids) {
 					var fieldarray = [];
 					_.each(ids, function (id) {
 						var idStr = SWUtils.getRepeatingIDStr(id),
 							prefix = "repeating_ability_" + idStr;
-							fieldarray.push(prefix + "update_attack_entry");
+							fieldarray.push(prefix + "toggle_attack_entry");
 					});
 						getAttrs(fieldarray, function (v) {
 							var setter = {};
 								_.each(ids, function (id) {
 									var idStr = SWUtils.getRepeatingIDStr(id),
 											prefix = "repeating_ability_" + idStr,
-											tempSetting = parseInt(v[prefix + "update_attack_entry"], 10) || 0,
+											tempSetting = parseInt(v[prefix + "toggle_attack_entry"], 10) || 0,
 											setter = {};
-											setter[prefix + "update_attack_entry"] = tempSetting;
+											setter[prefix + "toggle_attack_entry"] = tempSetting;
 									});
 								if (_.size(setter)) {
 									SWUtils.setWrapper(setter, PFConst.silentParams);
 								}
 							});
 				});
-
 		getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
 			var spellsourcesFields=[];
 			spellsourcesFields = _.reduce(idarray,function(memo,currentID){
