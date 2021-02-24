@@ -406,7 +406,6 @@ function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.54){
 				PFBuffs.recalculate();
 			}
-
 			if (oldversion < 1.55){
 				PFAttacks.recalculate();
 				PFSkills.migrate();
@@ -476,6 +475,9 @@ function migrate (oldversion, callback, errorCallback) {
 			}
 			if (oldversion < 1.732){
 				PFMacros.checkBaseAttacks();
+			}
+			if (oldversion < 1.787) {
+				PFAbility.updateIncludeLinkVersionCheck();
 			}
 		}
 	} catch (err) {

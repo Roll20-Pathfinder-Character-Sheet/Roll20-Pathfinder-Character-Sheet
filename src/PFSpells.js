@@ -499,16 +499,15 @@ function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
         if (v[spellPrefix+"save"]){
             notes += "\n**Save:** " + v[spellPrefix + "save"];
             if ( !(/none/).test(v[spellPrefix+"save"])){
-                notes += " **DC:** " + v[spellPrefix+"savedc"]
+                notes += " **DC:** " + v[spellPrefix+"savedc"];
             }
         }
         if (v[spellPrefix+"sr"]){
-            if (notes) { 
+            if (notes) {
                 notes += "";
             }
             notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
-        }
-    
+        }    
         // include a link in the weapon notes to execute the spell from chat        
         var toggle_attack_entry = v[spellPrefix+"toggle_attack_entry"];
         if (toggle_attack_entry === 1) {
@@ -517,7 +516,6 @@ function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
                     notes += "";
                 }
                 notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
-                TAS.debug("~~~~~~INCLUDE LINK IN WEAPON NOTES: " + toggle_attack_entry);
             }
         }
         if (toggle_attack_entry !== 1) {
@@ -526,7 +524,6 @@ function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
                     notes += "";
                 }
                 notes += "";
-                TAS.debug("~~~~~~DO NOT INCLUDE LINK IN WEAPON NOTES: " + toggle_attack_entry);
             }
         }
         if (notes){
@@ -1673,16 +1670,15 @@ export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback,
     });
     migrate(callUpdateSpells);
 });
-//sync local to global setting to include link in weapon notes for spell attacks
-function updateIncludeLink(callback) {
+//sync repeaitng_spells with settings>attacks>link spells
+function updateIncludeLink() {
     getSectionIDs('repeating_spells', function (ids) {
         _.each(ids, function (id) {
-            getAttrs(["repeating_spells_" + id + "_toggle_attack_entry", "include_link"], function (values) {
-                var include_link = parseInt([values.include_link])||0;
+            getAttrs(["include_link_spells"], function (values) {
+                var include_link_spells = parseInt([values.include_link_spells]) || 0;
                 setAttrs({
-                    ["repeating_spells_" + id + "_toggle_attack_entry"] : include_link
+                    ["repeating_spells_" + id + "_toggle_attack_entry"]: include_link_spells
                 });
-                TAS.debug("~~~~~~SYNCING LOCAL LINK TO GLOBAL LINK SETTING");
             });
         });
     });
@@ -1791,8 +1787,14 @@ function registerEventHandlers  () {
             updateAssociatedAttack(null,null,null,eventInfo);
         }
     }));
-    on("change:include_link", function() {
-        updateIncludeLink(); 
+//sync repeaitng_spells with settings>attacks>link spells
+    on("change:include_link_spells", function(eventInfo) {
+        var attr;
+        TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+        attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+        if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
+            updateIncludeLink();
+        }        
     });
 }
 registerEventHandlers();
