@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Fixed; damage multiplier will no longer be applied to ability penalties.</li>
 				<li>Creating a spell attack or ability attack now includes a link in the "Weapon Notes" to execute the associated spell or ability from the attack's chat output. Including ability/spell links in attacks are optional; Settings>Sheet Configuration>Attacks>Include link...</li>
 				<li>Fixed; hyperlinks used in the Attack>Extra Damage, "Type" field, were not clickable.</li>
 				<li>Adjusted roll template header font-size and line-height.</li>
@@ -48,7 +49,7 @@
 				<li>Fixed no hover text on attack rolls.</li>
 				<li>Fixed macro names for 10th craft and 1st lore skills.(thanks Tranquwil)</li>
 				<li>Further adjustments needed for Damage Type and Extra Damage displayed in the roll template.</li>
-				<li>Updated the Hero Lab instructions. For some reason the converted JSON using codebeautify.org was causing errors. HL plug-in is the prefered method.</li>
+				<li>Updated the Hero Lab instructions. For some reason the converted JSON using codebeautify.org was causing errors. HL plug-in is the preferred method.</li>
 				<li>Attack damage type, Spell attack damage type, and Ability attack damage type is now displayed on the same row as the damage rolled.</li>
 			</ol>
 			<label class="sheet-boldlabel-check" style="margin-top:1em;display:block;"><input type="checkbox" name="attr_attentionv172-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
@@ -3410,7 +3411,7 @@
 									<label class="sheet-small-label2 sheet-narrow-numbers sheet-highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="sheet-calc" readonly /><span data-i18n="value-abbrv">val</span></label>
 								</div>
 								<span class="sheet-divider-db sheet-nondual-sect">+</span>								
-								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier:.5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
+								<label class="sheet-small-label2 sheet-narrow-numbers sheet-sect sheet-nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability multiplier: .5, 1.5, 2, etc. Penalties are not multiplied.">Mult</span></label>
 								<span class="sheet-divider-db-lg sheet-sect sheet-nondual-sect">*</span>
 								<label class="sheet-small-label2 sheet-entry-short sheet-sect sheet-nondual-sect">
 									<select class="sheet-select-small" title="@{repeating_weapon_$X_damage-ability}" name="attr_damage-ability">

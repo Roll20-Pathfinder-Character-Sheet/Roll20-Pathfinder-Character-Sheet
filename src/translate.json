@@ -684,7 +684,7 @@
 	"damage-modifier-abbrv": "Dmg Mods",
 	"damage-modifiers": "Damage Modifiers",
 	"damage-multiplier-place": "15 etc",
-	"damage-multiplier-title": "Damage ability modifier: 5, 15, 2, etc.",
+	"damage-multiplier-title": "Damage ability multiplier: .5, 1.5, 2, etc. Penalties are not multiplied.",
 	"damage-ranged-abbrv": "Rng dmg",
 	"damage-ranged-calculation-abbrv": "Ranged dmg calc",
 	"damage-reduction": "Damage Reduction",
