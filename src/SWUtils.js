@@ -273,7 +273,7 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 	},
 	errordone = function(a,b,c,currError){
 		var donesetter={};
-		////TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
+		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
 			setAttrs(donesetter,{silent:true});				

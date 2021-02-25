@@ -444,7 +444,7 @@ function updateSkillByClassChkAsync(skill){
 }
 function recalculateSkillArrayMiscFields (skills, callback){
 	var doneOneMisc = _.after(_.size(skills),callback);
-	_.each(skills, function (skill) {
+	_.each(skills, function (skill) {		
 		SWUtils.evaluateAndSetNumber(skill + "-misc", skill + "-misc-mod", 0, function () {
 			doneOneMisc();
 		}, true);

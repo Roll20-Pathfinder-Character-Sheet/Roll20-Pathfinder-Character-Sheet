@@ -1744,7 +1744,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			updateRepeatingWeaponAttackAsync(null, eventInfo);
-			updateRepeatingWeaponDamage(null, eventInfo);
+			updateRepeatingWeaponDamage();
 		}
 	}));
 	on("change:repeating_weapon:crit_confirm ", TAS.callback(function eventWeaponCritConfirmBonus(eventInfo) {
