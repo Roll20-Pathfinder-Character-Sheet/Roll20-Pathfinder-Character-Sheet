@@ -464,7 +464,7 @@ function recalcSkillTotals (skills,callback,silently){
 	}),
 	fields, subfields;
 	fields = globalSkillModAttrs;
-	_.each(skills,function(skill){
+	_.each(skills, function (skill) {
 		var subfields=skillNameAppends.map(function(append){return skill+append;});
 		fields = fields.concat(subfields);
 	});
