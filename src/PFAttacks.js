@@ -1683,7 +1683,7 @@ function registerEventHandlers () {
 			//if (eventInfo.previousValue.indexOf('ange')>0 || eventInfo.newValue.indexOf('ange')>0)
 			setRepeatingWeaponRangedFlag();
 			//if there is a damage buff, we need to update damage if the type changed.
-			updateRepeatingWeaponDamage(null,eventInfo);
+			updateRepeatingWeaponDamage(null, eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:attack", TAS.callback(function eventRepeatingWeaponAttack(eventInfo) {
@@ -1744,7 +1744,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			updateRepeatingWeaponAttackAsync(null, eventInfo);
-			updateRepeatingWeaponDamage();
+			updateRepeatingWeaponDamage(null, eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:crit_confirm ", TAS.callback(function eventWeaponCritConfirmBonus(eventInfo) {

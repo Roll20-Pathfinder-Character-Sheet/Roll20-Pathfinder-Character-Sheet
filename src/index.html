@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Fixed; using chatseattr or similar api script to toggle buffs that indirectly affected attack damage, was not triggering the damage recalc.</li>  
 				<li>Fixed; damage multiplier will no longer be applied to ability penalties.</li>
 				<li>Creating a spell attack or ability attack now includes a link in the "Weapon Notes" to execute the associated spell or ability from the attack's chat output. Including ability/spell links in attacks are optional; Settings>Sheet Configuration>Attacks>Include link...</li>
 				<li>Fixed; hyperlinks used in the Attack>Extra Damage, "Type" field, were not clickable.</li>
@@ -3423,9 +3424,9 @@
 										<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
 										<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 									</select>
-									<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
-									<input type="hidden" name="attr_damage-ability-mod" value="0" />
+									<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>									
 								</label>
+								<input type="number" name="attr_damage-ability-mod" value="0" class="sheet-hidden" />
 								<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 								<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">(</span>
 								<label class="sheet-small-label2 sheet-sect sheet-sect2 sheet-nondual-sect" style="width:1.75em;">
@@ -11481,9 +11482,9 @@
 											<option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
 											<option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
 										</select>
-										<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>
-										<input type="hidden" name="attr_damage-ability-mod" value="0" />
+										<span style="margin-left:-.75em;" data-i18n="damage-ability">Dmg Ability</span>										
 									</label>
+									<input type="number" name="attr_damage-ability-mod" value="0" class="sheet-hidden" />
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 									<span class="sheet-divider-db sheet-sect sheet-sect2 sheet-nondual-sect">(</span>
 									<label class="sheet-small-label2 sheet-sect sheet-sect2 sheet-nondual-sect" style="width:1.75em;">
