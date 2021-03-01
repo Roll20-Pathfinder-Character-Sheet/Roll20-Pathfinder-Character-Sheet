@@ -2257,7 +2257,8 @@ input.sheet-refreshbutton {
 .sheet-boldlabel-check+b:not(.sheet-offCase),
 .sheet-boldlabel-check+label b:not(.sheet-offCase),
 .sheet-condition-exists+label,
-.sheet-status-panel label b {
+.sheet-status-panel label b,
+input.sheet-narrow-numbers+b:not(.sheet-offCase) {
     display: inline;
     font-size: 1.2rem;
     line-height: 1.75em;
@@ -2316,8 +2317,7 @@ input.sheet-refreshbutton {
 }
 
 .sheet-conditions .sheet-nontable-name {
-    margin-left: -.25em;
-    margin-right: -.25em;
+    margin: -.25em -.25em 0 -.25em;
     width: calc(100% + .5em);
 }
 
@@ -3093,20 +3093,14 @@ div.sheet-feats .sheet-table-row span:last-child {
 }
 
 .sheet-nontable-name {
+    display: table-caption;
+    caption-side: top;
     width: 100%;
-}
-
-.sheet-nontable-name {
     display: block;
 }
 
 .sheet-spellclassnav~h2.sheet-nontable-name {
     margin-top: 0;
-}
-
-.sheet-table-name {
-    display: table-caption;
-    caption-side: top;
 }
 
 /* important so overrides more specific */

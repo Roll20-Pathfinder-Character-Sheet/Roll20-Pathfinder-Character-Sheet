@@ -221,7 +221,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 			replacedStr = convertKL1KH1toMinMax(replacedStr);
 			//TAS.debug("replacedStr is now "+replacedStr);
 			if ( !validNumericStr(replacedStr)){
-				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
+				TAS.warn("cannot evaluate this to number: " + exprStr +" came back with " + replacedStr);
 				errcallback(null);
 			}
 			if (replacedStr === "" || replacedStr === null || replacedStr === undefined) {

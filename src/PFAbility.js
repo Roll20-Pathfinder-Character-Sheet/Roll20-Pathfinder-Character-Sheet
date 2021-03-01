@@ -57,7 +57,7 @@ function setClassName (id,callback,eventInfo){
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix="repeating_ability_"+idStr,
 	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis', prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+	getAttrs([prefix+'CL-basis', prefix+'class-name',"character_name","race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
 		var clBase='',setter={},match;
 		try {
 			if (v[clbasisField]){
@@ -65,9 +65,13 @@ function setClassName (id,callback,eventInfo){
 					clBase =v["race"];
 				} else if (v[clbasisField]==="@{npc-hd-num}"){
 					clBase = v["race"];
-				} else if (parseInt(v[clbasisField],10)===0){
+				} else if (parseInt(v[clbasisField],10)=== 0){
 					clBase ="";
-				} else {
+				} 
+//used "(0*(@{level}))" as the value of the "other" basis selector since "0" was already used for N/A
+					else if (v[clbasisField] === "(0*(@{level}))") {
+					clBase = " ";
+				}	else {
 					match = v[prefix+"CL-basis"].match(/\d+/);
 					if (match){
 						clBase=v["class-"+match[0]+"-name"];

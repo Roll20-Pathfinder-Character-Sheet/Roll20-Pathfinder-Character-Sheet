@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Fixed; Skill "-misc" and "-misc-mod" columns were not being flaged with a red dashed border used to indicate a parsing error.</li>
 				<li>Fixed; using ChatSetAttr or similar API script to toggle buffs that indirectly affected attack damage failed to trigger the damage recalculation.</li>  
 				<li>Fixed; damage multiplier will no longer be applied to ability penalties.</li>
 				<li>Creating a spell attack or ability attack now includes a link in the "Weapon Notes" to execute the associated spell or ability from the attack's chat output. Including ability/spell links in attacks are optional; Settings>Sheet Configuration>Attacks>Include link...</li>
@@ -243,7 +244,7 @@
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="disabled"><input type="checkbox" title="@{condition-Disabled}" class="sheet-boldlabel-check" name="attr_condition-Disabled" value="1" /><b><span data-i18n-title="condition-disabled-title"  data-i18n-aria-label="condition-disabled-title" data-i18n="disabled">Disabled</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="drowning"><input type="checkbox" title="@{condition-Drowning}" class="sheet-boldlabel-check" name="attr_condition-Drowning" value="1" /><b><span data-i18n-title="condition-drowning-title"  data-i18n-aria-label="condition-drowning-title" data-i18n="drowning">Drowning</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="dying"><input type="checkbox" title="@{condition-Dying}" class="sheet-boldlabel-check" name="attr_condition-Dying" value="1" /><b><span data-i18n-title="condition-dying-title"  data-i18n-aria-label="condition-dying-title" data-i18n="dying">Dying</span></b></label>
-				<label class="sheet-option-condition sheet-left" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" class="sheet-narrow-numbers" /><b><span data-i18n-title="condition-energy-drained-title"  data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
+				<label class="sheet-option-condition sheet-left" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" class="sheet-narrow-numbers sheet-boldlabel-check" /><b><span data-i18n-title="condition-energy-drained-title" data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="entangled"><input type="checkbox" title="@{condition-Entangled}" class="sheet-boldlabel-check" name="attr_condition-Entangled" value="2" /><b><span data-i18n-title="condition-entangled-title"  data-i18n-aria-label="condition-entangled-title" data-i18n="entangled">Entangled</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="exhausted"><input type="checkbox" title="@{condition-Exhausted}" class="sheet-boldlabel-check" name="attr_condition-Exhausted" value="3" /><b><span data-i18n-title="condition-exhausted-title"  data-i18n-aria-label="condition-exhausted-title" data-i18n="exhausted">Exhausted</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="fascinated"><input type="checkbox" title="@{condition-Fascinated}" class="sheet-boldlabel-check" name="attr_condition-Fascinated" value="4" /><b><span data-i18n-title="condition-fascinated-title"  data-i18n-aria-label="condition-fascinated-title" data-i18n="fascinated">Fascinated</span></b></label>
@@ -8215,6 +8216,7 @@
 										<option value="@{class-4-level}" data-i18n="5-ordinal-class">5th Class</option>
 										<option value="@{class-5-level}" data-i18n="6-ordinal-class">6th Class</option>
 										<option value="@{npc-hd-num}" data-i18n="race-hd-default">Race only</option>
+										<option value="(0*(@{level}))" data-i18n="other">Other</option>
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>
@@ -12867,6 +12869,7 @@
 										<option value="@{class-4-level}" data-i18n="5-ordinal-class">5th Class</option>
 										<option value="@{class-5-level}" data-i18n="6-ordinal-class">6th Class</option>
 										<option value="@{npc-hd-num}" data-i18n="race-hd-default">Race only</option>
+										<option value="((0*@{level}))" data-i18n="other">Other</option>
 									</select>
 									<span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="source" >Source</span>
 								</label>

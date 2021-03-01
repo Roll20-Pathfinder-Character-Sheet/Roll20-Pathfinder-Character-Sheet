@@ -499,7 +499,6 @@ function recalcSkillArray (skills, callback, silently) {
 		recalcSkillTotals(skills,done,silently);
 	};
 	recalculateSkillArrayMiscFields(skills,doneMisc)
-
 }
 
 export function recalculateSkills (callback, silently, onlySkills) {
@@ -1046,9 +1045,12 @@ function registerEventHandlers () {
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMiscFieldUpdate(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			//updateMiscAndSkillValAsync(skill);						
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+	//tests that -misc field can evalutate to a number.
+				SWUtils.evaluateAndSetNumber(skill + '-misc', skill + '-misc-mod', 0);
+			}
 			TAS.debug("calling evalute for "+skill);
-			SWUtils.evaluateAndAddToTotAsync(null,null,skill+'-misc',skill+'-misc-mod',skill);
+			SWUtils.evaluateAndAddToTotAsync(null, null, skill + '-misc', skill + '-misc-mod', skill);
 		}));
 		on("change:" + skill + "-cs", TAS.callback(function eventClassSkillCheckbox(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
