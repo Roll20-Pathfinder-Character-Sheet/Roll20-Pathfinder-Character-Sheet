@@ -38,6 +38,7 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Fixed; enabling the Energy Drain condition by applying negative levels also changes the appearence of "Energy Drain" label.</li>  
 				<li>Fixed; Skill "-misc" and "-misc-mod" columns were not being flaged with a red dashed border used to indicate a parsing error.</li>
 				<li>Abilities; added "Other" as a Source basis option. "Other" includes full Level Basis options.</li>
 				<li>Fixed; using ChatSetAttr or similar API script to toggle buffs that indirectly affected attack damage failed to trigger the damage recalculation.</li>  
@@ -233,7 +234,7 @@
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="disabled"><input type="checkbox" title="@{condition-Disabled}" class="sheet-boldlabel-check" name="attr_condition-Disabled" value="1" /><b><span data-i18n-title="condition-disabled-title"  data-i18n-aria-label="condition-disabled-title" data-i18n="disabled">Disabled</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="drowning"><input type="checkbox" title="@{condition-Drowning}" class="sheet-boldlabel-check" name="attr_condition-Drowning" value="1" /><b><span data-i18n-title="condition-drowning-title"  data-i18n-aria-label="condition-drowning-title" data-i18n="drowning">Drowning</span></b></label>
 				<label class="sheet-option-condition sheet-extra-sect sheet-left" data-i18n-list-item="dying"><input type="checkbox" title="@{condition-Dying}" class="sheet-boldlabel-check" name="attr_condition-Dying" value="1" /><b><span data-i18n-title="condition-dying-title"  data-i18n-aria-label="condition-dying-title" data-i18n="dying">Dying</span></b></label>
-				<label class="sheet-option-condition sheet-left" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" class="sheet-narrow-numbers sheet-boldlabel-check" /><b><span data-i18n-title="condition-energy-drained-title" data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
+				<label class="sheet-option-condition sheet-left" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" class="sheet-narrow-numbers sheet-boldlabel-check" /><input type="checkbox" name="attr_condition-Drained-toggle" class="sheet-noshow sheet-boldlabel-check" value="1" /><b><span data-i18n-title="condition-energy-drained-title" data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="entangled"><input type="checkbox" title="@{condition-Entangled}" class="sheet-boldlabel-check" name="attr_condition-Entangled" value="2" /><b><span data-i18n-title="condition-entangled-title"  data-i18n-aria-label="condition-entangled-title" data-i18n="entangled">Entangled</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="exhausted"><input type="checkbox" title="@{condition-Exhausted}" class="sheet-boldlabel-check" name="attr_condition-Exhausted" value="3" /><b><span data-i18n-title="condition-exhausted-title"  data-i18n-aria-label="condition-exhausted-title" data-i18n="exhausted">Exhausted</span></b></label>
 				<label class="sheet-option-condition sheet-left" data-i18n-list-item="fascinated"><input type="checkbox" title="@{condition-Fascinated}" class="sheet-boldlabel-check" name="attr_condition-Fascinated" value="4" /><b><span data-i18n-title="condition-fascinated-title"  data-i18n-aria-label="condition-fascinated-title" data-i18n="fascinated">Fascinated</span></b></label>
@@ -3156,7 +3157,7 @@
 							<span class="sheet-table-cell sheet-small-label sheet-nowrap"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_attack_CMB_notes" value="1" title="@{toggle_attack_CMB_notes}" checked><b data-i18n-title="options-attacks-cmb-title"  data-i18n-aria-label="options-attacks-cmb-title" data-i18n="combat-maneuver-bonus-notes"> CMB Notes</b></label></span>
 							<span class="sheet-table-cell sheet-small-label sheet-nowrap"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_attack_attack_notes" value="1" title="@{toggle_attack_attack_notes}" checked><b data-i18n-title="options-attacks-attack-title"  data-i18n-aria-label="options-attacks-attack-title" data-i18n="attack-notes"> Attack Notes</b></label></span>
 							<span class="sheet-table-cell sheet-small-label sheet-nowrap"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_attack_header_image" value="1" title="@{toggle_attack_header_image}" checked><b data-i18n-title="options-attacks-header-title"  data-i18n-aria-label="options-attacks-header-title" data-i18n="header-image">Header Image</b></label></span>
-							<span class="sheet-table-cell sheet-small-label sheet-nowrap"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_attack_accessible" value="@{var_accessible_flag}" title="@{toggle_attack_accessible}"><b data-i18n-title="options-attacks-accessible-title"  data-i18n-aria-label="options-attacks-accessible-title" data-i18n="simple-template">Simple Template</b></label></span>
+							<span class="sheet-table-cell sheet-small-label sheet-nowrap"><label><input type="checkbox" class="sheet-boldlabel-check" name="attr_toggle_attack_accessible" value="@{var_accessible_flag}" title="@{toggle_attack_accessible}"><b data-i18n-title="options-attacks-accessible-title"  data-i18n-aria-label="options-attacks-accessible-title" data-i18n="simple-template">Simple Template</b></label></span>							
 						</div>
 					</div>
 				</div>
@@ -13471,11 +13472,12 @@
 					</span>
 				</div>
 				<div class="sheet-table-row">
-					<span class="sheet-table-config-row-name"  ></span>
+					<span class="sheet-table-config-row-name"></span>
 					<span class="sheet-table-cell sheet-left">
 						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_accessible_flag" value="@{var_accessible_flag}" title="@{toggle_accessible_flag}" /><b><span data-i18n="use-simple-templates">Use Other Simple Templates</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
+						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_metrics" value="1" title="@{use_metrics}" /><b><span data-i18n-title="options-use-metrics-title" data-i18n-aria-label="options-use-metrics-title" data-i18n="use-metrics">Use Metrics</span></b>
 					</span>					
 				</div>
 				<div class="sheet-table-row">

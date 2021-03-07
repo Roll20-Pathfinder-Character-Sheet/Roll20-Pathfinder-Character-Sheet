@@ -25,7 +25,7 @@ function getCarryingCapacity (str, loadToFind) {
     h,
     r;
     if(str>=30){
-        return (getCarryingCapacity(str - 10, loadToFind)*4);        
+        return (getCarryingCapacity(str - 10, loadToFind)*4);
     } 
     //https://www.reddit.com/r/Pathfinder_RPG/comments/1k5hsf/carry_capacity_how_is_it_calculated/
     switch (str) {
@@ -181,18 +181,14 @@ function getCarryingCapacity (str, loadToFind) {
             break;
         default:
             return 0;
-            break;
     }
     switch (loadToFind) {
         case load.Light:
             return l;
-            break;
         case load.Medium:
             return m;
-            break;
         case load.Heavy:
             return h;
-            break;
     }
     return 0;
 }
@@ -207,8 +203,9 @@ function updateCurrentLoad (callback, silently) {
             callback();
         }
     };
-    getAttrs(["load-light", "load-medium", "load-heavy", "load-max", "current-load", "carried-total","max-dex-source"], function (v) {
-        var curr = 0,
+    getAttrs(["load-light", "load-medium", "load-heavy", "load-max", "current-load", "carried-total", "max-dex-source", "use_metrics"], function (v) {
+        var use_metrics = 1,
+        curr = 0,
         carried = 0,
         light = 0,
         medium = 0,
@@ -220,8 +217,15 @@ function updateCurrentLoad (callback, silently) {
         setter = {},
         params = {};
         try {
+    //metric multiplier lb to kg           
+            use_metrics = parseInt(v["use_metrics"], 10) || 0;
+            if (use_metrics === 1) {
+                use_metrics = 0.454;
+            } else {
+                use_metrics = 1;
+            }
             //TAS.debug("at updateCurrentLoad",v);
-            maxDexSource=parseInt(v["max-dex-source"],10)||0;
+            maxDexSource = parseInt(v["max-dex-source"],10)||0;
             ignoreEncumbrance =  (maxDexSource===1 || maxDexSource===3)?1:0;
             curr = parseInt(v["current-load"], 10) || 0;
             if (ignoreEncumbrance){
@@ -281,8 +285,9 @@ export function updateLoadsAndLift (callback, silently) {
     });
     getAttrs(["STR", "size", "size-multiplier", "legs", "load-light", "load-medium", "load-heavy", "load-max",
     "lift-above-head", "lift-off-ground", "lift-drag-and-push", "load-str-bonus", "load-multiplier", 
-    "total-load-multiplier", "load-misc"], function (v) {
-        var str = 10,
+    "total-load-multiplier", "load-misc", "use_metrics"], function (v) {
+        var use_metrics = 1,
+        str = 10,
         size = 1,
         sizeMult = 1,
         currSizeMult = 1,
@@ -308,6 +313,15 @@ export function updateLoadsAndLift (callback, silently) {
         setter = {},
         params = {};
         try {
+    //metric multiplier lb to kg           
+            use_metrics = parseInt(v["use_metrics"], 10) || 0;
+            if (use_metrics === 1) {
+                use_metrics = 0.454;
+            }
+            else {
+                use_metrics = 1;
+            }
+            TAS.debug("~~~~~~current use_metrics value: "+use_metrics);
             str = parseInt(v["STR"], 10) || 0;
             size = parseInt(v["size"], 10) || 0;
             sizeMult = parseInt(v["size-multiplier"], 10) || 0;
@@ -411,26 +425,26 @@ export function updateLoadsAndLift (callback, silently) {
             if (currTotalLoadMult !== mult) {
                 setter["total-load-multiplier"] = mult;
             }
-            if (light !== l) {
-                setter["load-light"] = l;
+            if (light !== Math.round(l * use_metrics)) {
+                setter["load-light"] = Math.round(l*use_metrics);
             }
-            if (medium !== m) {
-                setter["load-medium"] = m;
+            if (medium !== Math.round(m * use_metrics)) {
+                setter["load-medium"] = Math.round(m*use_metrics);
             }
-            if (heavy !== h) {
-                setter["load-heavy"] = h;
+            if (heavy !== Math.round(h * use_metrics)) {
+                setter["load-heavy"] = Math.round(h*use_metrics);
             }
-            if (max !== (h*2)){
-                setter["load-max"] = (h*2);
+            if (max !== Math.round((h * 2) * use_metrics)) {
+                setter["load-max"] = Math.round((h*2)*use_metrics);
             }
-            if (aboveHead !== a) {
-                setter["lift-above-head"] = a;
+            if (aboveHead !== Math.round(a * use_metrics)) {
+                setter["lift-above-head"] = Math.round(a*use_metrics);
             }
-            if (offGround !== o) {
-                setter["lift-off-ground"] = o;
+            if (offGround !== Math.round(o * use_metrics)) {
+                setter["lift-off-ground"] = Math.round(o*use_metrics);
             }
-            if (drag !== d) {
-                setter["lift-drag-and-push"] = d;
+            if (drag !== Math.round(d * use_metrics)) {
+                setter["lift-drag-and-push"] = Math.round(d*use_metrics);
             }
         } catch (err) {
             TAS.error("updateLoadsAndLift", err);
@@ -624,11 +638,16 @@ function registerEventHandlers  () {
             updateModifiedSpeed();
         }
     }));
-
     on('change:load-light change:carried-total', TAS.callback(function eventUpdateCurrentLoad(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateCurrentLoad();
+        }
+    }));
+    on("change:use_metrics", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateLoadsAndLift();
         }
     }));
     on("change:size-multiplier change:legs change:load-str-bonus change:load-multiplier change:load-misc", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {

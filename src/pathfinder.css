@@ -3085,6 +3085,7 @@ div.sheet-feats .sheet-table-row span:last-child {
 
 .sheet-table-name,
 .sheet-nontable-name {
+    display: table-caption;
     text-align: center;
     font-weight: bold;
     color: White;

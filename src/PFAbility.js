@@ -68,7 +68,7 @@ function setClassName (id,callback,eventInfo){
 				} else if (parseInt(v[clbasisField],10)=== 0){
 					clBase ="";
 				} 
-//used "(0*(@{level}))" as the value of the "other" basis selector since "0" was already used for N/A
+	//used "(0*(@{level}))" as the value of the "other" basis selector since "0" was already used for N/A
 					else if (v[clbasisField] === "(0*(@{level}))") {
 					clBase = " ";
 				}	else {
@@ -961,7 +961,7 @@ function registerEventHandlers () {
 		return m;
 	},macroEvent);
 	on (macroEvent, TAS.callback(function eventRepeatingAbilityCommandMacroUpdate(eventInfo){
-		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFFeatures.resetTopCommandMacro(null,eventInfo);
 			resetCommandMacro();
