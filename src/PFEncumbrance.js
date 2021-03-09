@@ -5,7 +5,6 @@ import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
 
-
 var load = {
 'Light':0,
 'Medium':1,
@@ -13,20 +12,19 @@ var load = {
 'Overloaded':3,
 'OverDouble':4
 }
-
 /** Returns the carrying capacity for a given strength score and load type
  * Will recursively calculate for strength scores over 29
  * @param {int} str strength score
  * @param {int} loadToFind load val from load param
  */
-function getCarryingCapacity (str, loadToFind) {
+function getCarryingCapacity(str, loadToFind) {
     var l,
     m,
     h,
     r;
     if(str>=30){
-        return (getCarryingCapacity(str - 10, loadToFind)*4);
-    } 
+        return (getCarryingCapacity(str - 10, loadToFind) * 4);
+    }
     //https://www.reddit.com/r/Pathfinder_RPG/comments/1k5hsf/carry_capacity_how_is_it_calculated/
     switch (str) {
         case 0:
@@ -197,15 +195,14 @@ function getCarryingCapacity (str, loadToFind) {
  * @param {function} callback when done
  * @param {boolean} silently 
  */
-function updateCurrentLoad (callback, silently) {
+function updateCurrentLoad(callback, silently) {
     var done = function () {
         if (typeof callback === "function") {
             callback();
         }
     };
-    getAttrs(["load-light", "load-medium", "load-heavy", "load-max", "current-load", "carried-total", "max-dex-source", "use_metrics"], function (v) {
-        var use_metrics = 1,
-        curr = 0,
+    getAttrs(["use_metrics", "load-light", "load-medium", "load-heavy", "load-max", "current-load", "carried-total", "max-dex-source"], function (v) {
+        var curr = 0,
         carried = 0,
         light = 0,
         medium = 0,
@@ -217,13 +214,12 @@ function updateCurrentLoad (callback, silently) {
         setter = {},
         params = {};
         try {
-    //metric multiplier lb to kg           
-            use_metrics = parseInt(v["use_metrics"], 10) || 0;
-            if (use_metrics === 1) {
-                use_metrics = 0.454;
-            } else {
-                use_metrics = 1;
+        //metric multiplier to convert lbs to kgs
+            let use_metrics = 1;
+            if (parseInt(v["use_metrics"]) > 0) {
+                use_metrics = 0.45;
             }
+            TAS.debug("~~~~~~updateCurrentLoad current use_metrics value: " + use_metrics);
             //TAS.debug("at updateCurrentLoad",v);
             maxDexSource = parseInt(v["max-dex-source"],10)||0;
             ignoreEncumbrance =  (maxDexSource===1 || maxDexSource===3)?1:0;
@@ -231,13 +227,11 @@ function updateCurrentLoad (callback, silently) {
             if (ignoreEncumbrance){
                 newLoad=load.Light;
             } else {
-                
-                carried = parseInt(v["carried-total"], 10) || 0;
-                light = parseInt(v["load-light"], 10) || 0;
-                medium = parseInt(v["load-medium"], 10) || 0;
-                heavy = parseInt(v["load-heavy"], 10) || 0;
+                carried = parseFloat(v["carried-total"]) || 0;
+                light = parseFloat(v["load-light"]) || 0;
+                medium = parseFloat(v["load-medium"]) || 0;
+                heavy = parseFloat(v["load-heavy"]) || 0;
                 max = heavy * 2;
-            
                 //TAS.debug"current-load=" + curr + ", carried-total=" + carried + ", load-light=" + light + ", load-medium=" + medium);
                 if (carried <= light) {
                     //TAS.debug("light load");
@@ -273,6 +267,7 @@ function updateCurrentLoad (callback, silently) {
         }
     });
 }
+
 /** updates the load and lift numbers
  * @param {function} callback when done
  * @param {boolean} silently 
@@ -286,8 +281,7 @@ export function updateLoadsAndLift (callback, silently) {
     getAttrs(["STR", "size", "size-multiplier", "legs", "load-light", "load-medium", "load-heavy", "load-max",
     "lift-above-head", "lift-off-ground", "lift-drag-and-push", "load-str-bonus", "load-multiplier", 
     "total-load-multiplier", "load-misc", "use_metrics"], function (v) {
-        var use_metrics = 1,
-        str = 10,
+        var str = 10,
         size = 1,
         sizeMult = 1,
         currSizeMult = 1,
@@ -313,15 +307,6 @@ export function updateLoadsAndLift (callback, silently) {
         setter = {},
         params = {};
         try {
-    //metric multiplier lb to kg           
-            use_metrics = parseInt(v["use_metrics"], 10) || 0;
-            if (use_metrics === 1) {
-                use_metrics = 0.454;
-            }
-            else {
-                use_metrics = 1;
-            }
-            TAS.debug("~~~~~~current use_metrics value: "+use_metrics);
             str = parseInt(v["STR"], 10) || 0;
             size = parseInt(v["size"], 10) || 0;
             sizeMult = parseInt(v["size-multiplier"], 10) || 0;
@@ -343,6 +328,25 @@ export function updateLoadsAndLift (callback, silently) {
             l = getCarryingCapacity(str + strMod, load.Light) + misc;
             m = getCarryingCapacity(str + strMod, load.Medium) + misc;
             h = getCarryingCapacity(str + strMod, load.Heavy) + misc;
+        //metric multiplier to convert lbs to kgs
+            let use_metrics = 1;
+            if (parseInt(v["use_metrics"]) > 0) {
+                use_metrics = 0.45;
+                l = getCarryingCapacity(str + strMod, load.Light);
+                m = getCarryingCapacity(str + strMod, load.Medium);
+                h = getCarryingCapacity(str + strMod, load.Heavy);
+                l *= use_metrics;
+                m *= use_metrics;
+                h *= use_metrics;
+        //rounding to 2 decimal places after metric multiplier conversion        
+                l = Math.round(l * 100)/100;
+                m = Math.round(m * 100)/100;
+                h = Math.round(h * 100)/100;
+                l += misc;
+                m += misc;
+                h += misc;
+            TAS.debug("~~~~~~getCarryingCapacity METRIC current use_metrics value: " + use_metrics);
+            }
             if (loadMult < 1) {
                 loadMult = 1;
             }
@@ -425,26 +429,26 @@ export function updateLoadsAndLift (callback, silently) {
             if (currTotalLoadMult !== mult) {
                 setter["total-load-multiplier"] = mult;
             }
-            if (light !== Math.round(l * use_metrics)) {
-                setter["load-light"] = Math.round(l*use_metrics);
+            if (light !== l) {
+                setter["load-light"] = l;
             }
-            if (medium !== Math.round(m * use_metrics)) {
-                setter["load-medium"] = Math.round(m*use_metrics);
+            if (medium !== m) {
+                setter["load-medium"] = m;
             }
-            if (heavy !== Math.round(h * use_metrics)) {
-                setter["load-heavy"] = Math.round(h*use_metrics);
+            if (heavy !== h) {
+                setter["load-heavy"] = h;
             }
-            if (max !== Math.round((h * 2) * use_metrics)) {
-                setter["load-max"] = Math.round((h*2)*use_metrics);
+            if (max !== (h * 2)) {
+                setter["load-max"] = (h * 2);
             }
-            if (aboveHead !== Math.round(a * use_metrics)) {
-                setter["lift-above-head"] = Math.round(a*use_metrics);
+            if (aboveHead !== a) {
+                setter["lift-above-head"] = a;
             }
-            if (offGround !== Math.round(o * use_metrics)) {
-                setter["lift-off-ground"] = Math.round(o*use_metrics);
+            if (offGround !== o) {
+                setter["lift-off-ground"] = o;
             }
-            if (drag !== Math.round(d * use_metrics)) {
-                setter["lift-drag-and-push"] = Math.round(d*use_metrics);
+            if (drag !== d) {
+                setter["lift-drag-and-push"] = d;
             }
         } catch (err) {
             TAS.error("updateLoadsAndLift", err);
@@ -599,8 +603,6 @@ export function migrate (callback){
             done();
         }
     });
-
-
 }
 export var recalculate = TAS.callback(function PFEncumbranceRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
@@ -644,16 +646,18 @@ function registerEventHandlers  () {
             updateCurrentLoad();
         }
     }));
-    on("change:use_metrics", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
-        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-            updateLoadsAndLift();
-        }
-    }));
     on("change:size-multiplier change:legs change:load-str-bonus change:load-multiplier change:load-misc", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api"){
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
             updateLoadsAndLift();
+        }
+    }));
+    //changing the metric option triggers weight recalcs
+    on("change:use_metrics", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            updateLoadsAndLift();
+            updateCurrentLoad();
         }
     }));
     on("change:STR change:size", TAS.callback(function eventUpdateLoadsAndLiftAuto(eventInfo) {
