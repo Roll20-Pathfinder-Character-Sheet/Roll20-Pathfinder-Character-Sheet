@@ -10519,6 +10519,7 @@
 			<div class="sheet-section6 sheet-section sheet-section-equipment" role="region" aria-label="Euipment" data-i18n-aria-label="equipment">
 				<div class="sheet-cheat sheet-show-readonly sheet-inverse-readonly"></div>
 				<h1 class="sheet-selected-tabtitle" data-i18n="equipment">Equipment</h1>
+				<input type="checkbox" class="sheet-use-metrics sheet-noshow" name="attr_use_metrics" value="1" />
 				<div class="sheet-col sheet-col1 sheet-equipment">
 					<div class="sheet-cheat"></div>
 					<input class="sheet-showarrow sheet-h2arrow" type="checkbox" name="attr_currency-show" data-i18n-aria-label="currency" data-i18n-title="showsect-cmd"  value="1" checked />
@@ -10550,7 +10551,7 @@
 					<h2 class="sheet-clickheader sheet-showsect"><label data-i18n-title="showsect-cmd"  data-i18n-aria-label="showsect-cmd" data-i18n="encumbrance">Encumbrance</label></h2>
 					<div class="sheet-h2-section sheet-current-loads">
 						<div class="sheet-table sheet-wide-numbers sheet-carried-totals">
-							<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name" data-i18n="carried-weight">Carried Weight</span>
+							<span class="sheet-table-name sheet-show-readonly sheet-secondary-table-name sheet-weight-used" data-i18n="carried-weight">Carried Weight</span>
 							<div class="sheet-table-row">
 								<span class="sheet-table-header" data-i18n-title="carried-currency" data-i18n-aria-label="carried-currency" data-i18n="currency">Currency</span>
 								<span class="sheet-table-header sheet-hide-readonly"></span>
@@ -10616,8 +10617,8 @@
 							</div>
 						</div>
 						<div class="sheet-table sheet-sect sheet-wide-numbers sheet-lift">
-							<span class="sheet-table-name sheet-show-readonly sheet-inverse-readonly sheet-secondary-table-name" data-i18n="loads-and-lift">Loads and Lift</span>
-							<span class="sheet-table-name sheet-secondary-table-name sheet-hide-readonly" data-i18n="loads">Loads</span>
+							<span class="sheet-table-name sheet-show-readonly sheet-inverse-readonly sheet-secondary-table-name sheet-weight-used" data-i18n="loads-and-lift">Loads and Lift</span>
+							<span class="sheet-table-name sheet-secondary-table-name sheet-hide-readonly sheet-weight-used" data-i18n="loads">Loads</span>
 							<div class="sheet-table-group-head">
 								<div class="sheet-table-row">
 									<span class="sheet-table-header" data-i18n-title="encumbrance-light-title"  data-i18n-aria-label="encumbrance-light-title" data-i18n="light">Light</span>
@@ -10636,7 +10637,7 @@
 							</div>
 						</div>
 						<div class="sheet-table sheet-sect sheet-wide-numbers sheet-lift">
-							<span class="sheet-table-name sheet-secondary-table-name" data-i18n="lift">Lift</span>
+							<span class="sheet-table-name sheet-secondary-table-name sheet-weight-used" data-i18n="lift">Lift</span>
 							<div class="sheet-table-group-head">
 								<div class="sheet-table-row">
 									<span class="sheet-table-header" data-i18n-title="encumbrance-above-title"  data-i18n-aria-label="encumbrance-above-title" data-i18n="above-head">Above Head</span>
@@ -10812,7 +10813,7 @@
 								<input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc sheet-entry-wide" readonly="">
 								<span name="attr_item_total_weight" class="sheet-autoexpand"></span>
 							</label>
-							<span data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv" title="Weight in pounds" aria-label="Weight in pounds">lbs</span>
+							<span class="sheet-weight-used" style="margin-left:-5px;"></span>
 							<label class="sheet-small-label2 sheet-autoexpand">
 								<input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc sheet-entry-wide" readonly="">
 								<span name="attr_item-total-value" class="sheet-autoexpand"></span>
@@ -11045,8 +11046,8 @@
 							<label class="sheet-small-label2 sheet-autoexpand">
 								<input title="@{item_total_weight}" type="number" name="attr_item_total_weight" value="0" class="sheet-calc sheet-entry-wide" readonly="">
 								<span name="attr_item_total_weight" class="sheet-autoexpand"></span>
-							</label>
-							<span data-i18n-title="pounds-title" data-i18n-aria-label="pounds-title" data-i18n="pounds-abbrv" title="Weight in pounds" aria-label="Weight in pounds">lbs</span>
+							</label>							
+							<span class="sheet-weight-used" style="margin-left:-5px;"></span>
 							<label class="sheet-small-label2 sheet-autoexpand">
 								<input title="@{item-total-value}" type="number" name="attr_item-total-value" value="0" class="sheet-calc sheet-entry-wide" readonly="">
 								<span name="attr_item-total-value" class="sheet-autoexpand"></span>
@@ -13477,7 +13478,7 @@
 						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_toggle_accessible_flag" value="@{var_accessible_flag}" title="@{toggle_accessible_flag}" /><b><span data-i18n="use-simple-templates">Use Other Simple Templates</span></b>
 					</span>
 					<span class="sheet-table-cell sheet-left">
-						<input type="checkbox" class="sheet-selectedlabel-check" name="attr_use_metrics" value="1" title="@{use_metrics}" /><b><span data-i18n-title="options-use-metrics-title" data-i18n-aria-label="options-use-metrics-title" data-i18n="use-metrics">Use Metrics</span></b>
+						<input type="checkbox" class="sheet-selectedlabel-check sheet-use-metrics" name="attr_use_metrics" value="1" title="@{use_metrics}" /><b><span data-i18n-title="options-use-metrics-title" data-i18n-aria-label="options-use-metrics-title" data-i18n="use-metrics">Use Metrics</span></b>
 					</span>
 				</div>
 				<div class="sheet-table-row">

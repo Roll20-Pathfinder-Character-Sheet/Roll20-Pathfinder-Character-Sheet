@@ -810,6 +810,15 @@ also need 1 more level in selector or base css will override border */
     width: 100%;
     padding-top: .25em;
 }
+/* used to signify imperial/metric toggle */
+input[type="checkbox"].sheet-use-metrics:not(:checked) ~ div > div .sheet-weight-used::after {
+    content: '(lbs)';
+    margin-left: 5px;
+}
+input[type="checkbox"].sheet-use-metrics:checked ~ div > div .sheet-weight-used::after {
+    content: '(kgs)';
+    margin-left: 5px;
+}
 
 .sheet-nontable-name.sheet-secondary-table-name,
 .sheet-table-name.sheet-secondary-table-name {
