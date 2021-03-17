@@ -149,9 +149,8 @@ export function updateRepeatingItems(callback, silently, attrToUpdate) {
         //metric multiplier lbs to kgs
             let use_metrics = 1;
             if (a['use_metrics'] > 0) {
-                use_metrics = 0.45;
+                use_metrics = 0.454;
             }
-            TAS.debug("~~~~~~item_total_weight current use_metrics value: "+use_metrics);
             if(attrToUpdate.weight){
                 a.S['item_total_weight'] = ((Math.floor(m['item-weight'])*use_metrics)*100)/100;
             }
@@ -186,9 +185,8 @@ function updateCarriedCurrency  (callback, silently) {
         //metric multiplier to convert lbs to kgs
             let use_metrics = 1;
             if (parseInt(v["use_metrics"]) > 0) {
-                use_metrics = 0.45;
+                use_metrics = 0.454;
             }
-            TAS.debug("~~~~~~current use_metrics value: " + use_metrics);
             carried = (parseInt(v["CP"], 10) || 0) + (parseInt(v["SP"], 10) || 0) + (parseInt(v["GP"], 10) || 0) + (parseInt(v["PP"], 10) || 0);
             TAS.debug("coin curr=" + curr + ", coin carried=" + carried);
             carried = (Math.floor(((carried/50)*use_metrics)*100))/100;
@@ -226,9 +224,8 @@ function updateCarriedTotal(callback, silently) {
         //metric multiplier to convert lbs to kgs
             let use_metrics = 1;
             if (parseInt(v["use_metrics"]) > 0) {
-                use_metrics = 0.45;
+                use_metrics = 0.454;
             }
-            TAS.debug("~~~~~~current use_metrics value: " + use_metrics);
             curr = Math.floor(100 * parseFloat(v["carried-total"]) || 0);
             carried = Math.floor((parseFloat(v["carried-currency"]) || 0) * 100 + (parseFloat(v["item_total_weight"]) || 0) * 100 + (parseFloat(v["carried-misc"]) || 0) * 100) ; // Fix bad javascript math
             TAS.debug("carried curr=" + curr + ", carried total=" + carried);

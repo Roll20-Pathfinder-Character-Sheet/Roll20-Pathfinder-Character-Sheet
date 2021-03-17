@@ -217,9 +217,8 @@ function updateCurrentLoad(callback, silently) {
         //metric multiplier to convert lbs to kgs
             let use_metrics = 1;
             if (parseInt(v["use_metrics"]) > 0) {
-                use_metrics = 0.45;
+                use_metrics = 0.454;
             }
-            TAS.debug("~~~~~~updateCurrentLoad current use_metrics value: " + use_metrics);
             //TAS.debug("at updateCurrentLoad",v);
             maxDexSource = parseInt(v["max-dex-source"],10)||0;
             ignoreEncumbrance =  (maxDexSource===1 || maxDexSource===3)?1:0;
@@ -331,7 +330,7 @@ export function updateLoadsAndLift (callback, silently) {
         //metric multiplier to convert lbs to kgs
             let use_metrics = 1;
             if (parseInt(v["use_metrics"]) > 0) {
-                use_metrics = 0.45;
+                use_metrics = 0.454;
                 l = getCarryingCapacity(str + strMod, load.Light);
                 m = getCarryingCapacity(str + strMod, load.Medium);
                 h = getCarryingCapacity(str + strMod, load.Heavy);
@@ -345,7 +344,6 @@ export function updateLoadsAndLift (callback, silently) {
                 l += misc;
                 m += misc;
                 h += misc;
-            TAS.debug("~~~~~~getCarryingCapacity METRIC current use_metrics value: " + use_metrics);
             }
             if (loadMult < 1) {
                 loadMult = 1;
@@ -472,7 +470,7 @@ export function updateLoadsAndLift (callback, silently) {
 export function updateModifiedSpeed  (callback) {
     var attribList = ["current-load", "speed-base", "speed-modified", "speed-run",
         "is_dwarf", "max-dex-source", "run-mult", "buff_speed-total","condition-Slowed","run_cond_applied",
-    	"condition-Entangled", "condition-Fatigued","condition-Exhausted" ];    
+    	"condition-Entangled", "condition-Fatigued", "condition-Exhausted"];
     _.each(PFDefense.defenseArmorShieldRows, function (row) {
         attribList.push(row + "-equipped");
         attribList.push(row + "-type");
@@ -484,7 +482,7 @@ export function updateModifiedSpeed  (callback) {
         origRunMult = isNaN(parseInt(v["run-mult"], 10)) ? 4 : parseInt(v["run-mult"], 10),
         buff = parseInt(v["buff_speed-total"],10)||0,
         slowed = 0,
-        cannotRun=0,
+        cannotRun= 0,
         newSpeed = base,
         runMult = origRunMult,
         newRun = base * runMult,
@@ -526,20 +524,26 @@ export function updateModifiedSpeed  (callback) {
                 //dwarf base speed not lowered but run multiplier can be.
                 isDwarf = parseInt(v.is_dwarf,10)||0;
                 if (armor3Equipped && (speedDropdown === 0 || speedDropdown === 1)) {
-                    if (v["armor3-type"] === "Heavy"){armorLoad = 2;}
-                    else if (v["armor3-type"] === "Medium" ){ armorLoad = 1;}
+                    if (v["armor3-type"] === "Heavy") {
+                        armorLoad = 2;
+                    }
+                    else if (v["armor3-type"] === "Medium") {
+                        armorLoad = 1;
+                    }
                 }
                 combinedLoad = Math.max(armorLoad,currLoad);
-                if (combinedLoad===load.OverDouble){
+                if (combinedLoad===load.OverDouble) {
                     newSpeed = 0;
                     newRun=0;
                     cannotRun=1;
-                } else if (!isDwarf && combinedLoad > load.Light){
-                    if (combinedLoad === load.Overloaded){
+                } 
+                else if (!isDwarf && combinedLoad > load.Light) {
+                    if (combinedLoad === load.Overloaded) {
                         newSpeed = 2.5;
                         newRun=0;
                         cannotRun=1;
-                    } else if (combinedLoad === load.Heavy || combinedLoad === load.Medium) {
+                    } 
+                    else if (combinedLoad === load.Heavy || combinedLoad === load.Medium) {
                         if (base <= 5) {
                             newSpeed = 5;
                         } else if (base % 15 === 0) {
@@ -549,16 +553,16 @@ export function updateModifiedSpeed  (callback) {
                         } else {
                             newSpeed = ((base + 10) * 2 / 3) - 5;
                         }
-                        if (combinedLoad === load.Heavy){
+                        if (combinedLoad === load.Heavy) {
                             runMult--;
                         }
                     }
                 }
             }
-            if(cannotRun){
+            if(cannotRun) {
                 runMult=0;
             }
-            if (slowed){
+            if (slowed) {
                 //round to 3 decimal places
                 newSpeed = Math.floor(newSpeed*1000)/1000;
             }
@@ -569,13 +573,13 @@ export function updateModifiedSpeed  (callback) {
             if (newRun !== (parseInt(v["speed-run"], 10)||0) ) {
                 setter["speed-run"] = newRun;
             }
-            if (slowed !== (parseInt(v['condition-Slowed'],10)||0)   ){
+            if (slowed !== (parseInt(v['condition-Slowed'],10)||0) ) {
                 setter['condition-Slowed']=slowed;
             }
-            if (origRunMult > runMult){
+            if (origRunMult > runMult) {
                 cannotRun=1;//for flag even if can run
             }
-            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0)  ){
+            if (cannotRun !== (parseInt(v.run_cond_applied,10)||0) ) {
                 setter.run_cond_applied=cannotRun;
             }
         } catch (err) {

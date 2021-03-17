@@ -1248,6 +1248,7 @@
 	"maximum-dexterity-title": "Maximum Dexterity to AC limited due to armor or encumbrance",
 	"maximum-encumbrance-title": "Maximum encumbrance: 2x heavy, immobilized",
 	"medium": "Medium",
+	"medium-abbrv": "Med",
 	"medium-abbrv-default": "•Medium",
 	"medium-armor": "Medium Armor",
 	"melee": "Melee",

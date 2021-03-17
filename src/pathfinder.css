@@ -814,10 +814,38 @@ also need 1 more level in selector or base css will override border */
 input[type="checkbox"].sheet-use-metrics:not(:checked) ~ div > div .sheet-weight-used::after {
     content: '(lbs)';
     margin-left: 5px;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
 }
 input[type="checkbox"].sheet-use-metrics:checked ~ div > div .sheet-weight-used::after {
     content: '(kgs)';
     margin-left: 5px;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+input[type="checkbox"].sheet-use-metrics:not(:checked)~div>div .sheet-distance-used::after,
+input[type="checkbox"].sheet-use-metrics:not(:checked)~div>div span .sheet-distance-used::after {
+    content: '(ft)';
+    margin-left: 2px;
+    font-weight: normal;
+    font-style: normal;
+    font-size: .85rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+input[type="checkbox"].sheet-use-metrics:checked~div>div .sheet-distance-used::after,
+input[type="checkbox"].sheet-use-metrics:checked~div>div span .sheet-distance-used::after {
+    content: '(m)';
+    margin-left: 2px;
+    font-weight: normal;
+    font-style: normal;
+    font-size: .85rem;
+    font-family: 'Roboto Mono', monospace;
 }
 
 .sheet-nontable-name.sheet-secondary-table-name,

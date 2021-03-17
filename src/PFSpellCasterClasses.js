@@ -9,7 +9,6 @@ import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
 import * as PFSpells from './PFSpells';
 
-
 //the 3 spell classes at top of spells page
 
 /**  returns whether a base spell level is filled in or not
@@ -41,6 +40,7 @@ export function ifSpellClassExists (spellclassidx, callback, noExistCallback) {
         }
     });
 }
+
 /**  sets {spellclasses_multiclassed} to 1 if more than one spellclass-X-exists is 1
  *@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
  *@param {eventinfo} eventInfo  unused eventinfo from 'on' method
@@ -96,7 +96,6 @@ function udpateAllSpellMenu (callback, eventInfo){
     });
 }
 
-
 /** updates the ranges at the top for this spellcasting class
  *@param {int} spellclassidx 0,1,2 the spell casting tab
  *@param {eventinfo} eventInfo unused eventinfo from 'on' method
@@ -115,16 +114,17 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
     closeField = prefix + "-close",
     medField = prefix + "-medium",
     longField = prefix + "-long";
-    getAttrs([lvlField, closeField, medField, longField], function (v) {
-        var level = (parseInt(v[lvlField], 10) || 0),
+    getAttrs(["use_metrics", lvlField, closeField, medField, longField], function (v) {
+        var use_metrics = parseInt(v["use_metrics"]) || 0,
+        level = parseInt(v[lvlField], 10) || 0,
         closeRng = parseInt(v[closeField], 10) || 0,
         medRng = parseInt(v[medField], 10) || 0,
         longRng = parseInt(v[longField], 10) || 0,
         ranges = {},
         setter = {},
         params = {};
-        try {
-            ranges = PFUtils.calculateSpellRanges(level);
+        try {            
+            ranges = PFUtils.calculateSpellRanges(level, use_metrics);
             if (force || ranges.close !== closeRng || ranges.medium !== medRng || ranges["long"] !== longRng) {
                 setter[closeField] = ranges.close;
                 setter[medField] = ranges.medium;
@@ -154,6 +154,7 @@ function updateConcentration (classidx, eventInfo, callback, silently) {
     //TAS.debug("at PFSpellCasterClasses.updateConcentration");
     SWUtils.updateRowTotal(["Concentration-" + classidx, "spellclass-" + classidx + "-level-total", "Concentration-" + classidx + "-mod", "Concentration-" + classidx + "-misc-mod"], 0, null, false, callback, silently);
 }
+
 /*********************************** SPELLS PER DAY section *************************************/
 /** updateSaveDCs - update save DCs on left  column of Spells Per Day grid
  *@param {int} classidx 0,1,2 the spellclass
@@ -196,6 +197,7 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
         }
     });
 }
+
 /** updateBonusSpells - updates Bonus Spells for the class
  * Uses attribute, not the attribute-mod. So it does not change with ability damage or penalties.
  *@param {number} classidx 0,1,2 the spellclass
@@ -258,6 +260,7 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
         }
     });
 }
+
 /** updates max spells per day for a given class. ALWAYS SILENT
  * 
  * @param {*} classidx 
@@ -297,6 +300,7 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
     });
     //SWUtils.updateRowTotal(["spellclass-" + classidx + "-level-" + spelllvl + "-spells-per-day_max", "spellclass-" + classidx + "-level-" + spelllvl + "-class", "spellclass-" + classidx + "-level-" + spelllvl + "-bonus", "spellclass-" + classidx + "-level-" + spelllvl + "-misc"], 0, [], false, callback, silently);
 }
+
 /**  applyConditions - for condition deafened update {SpellFailureNote} on DEFENSE PAGE
  * note drain should have already been applied
  *@param {function} callback - to call when done.
@@ -331,6 +335,7 @@ export function applyConditions (callback, silently) {
         done();
     });
 }
+
 function recalcOneClass (spellClassIdx, callback, silently) {
     var done = _.once(function () {
         //TAS.debug("leaving PFSpells.recalculate.recalcOneClass");
@@ -351,6 +356,7 @@ function recalcOneClass (spellClassIdx, callback, silently) {
     updateCasterRanges(spellClassIdx, null, false, doneOne, silently);
     updateBonusSpells(spellClassIdx, null, doneOne, silently);
 }
+
 /** updates {spellclass-X-level-total}, sets minimum of 1 if {spellclass-X-level} is > 0
  *@param {int} spellclassidx 0,1,2 the spell casting tab
  *@param {eventInfo} eventInfo unused eventinfo from 'on' method
@@ -425,24 +431,26 @@ function updateCasterLevel (spellclassidx, eventInfo, classlevel, callback, sile
         }
     });
 }
-/** updates all 3 caster class levels, usually due to change in buffs or debuffs 
-*@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
+
+/** updates all 3 caster class levels, usually due to change in buffs or debuffs
+ *@param {nothing} dummy - only here so eventhandlers can call it, since spellclass index is in this position.
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ */
 function updateCasterLevels (dummy, eventInfo, callback, silently) {
     updateCasterLevel(0, eventInfo, 0, callback, silently);
     updateCasterLevel(1, eventInfo, 0, callback, silently);
     updateCasterLevel(2, eventInfo, 0, callback, silently);
 }
+
 /** sets {spellclass-X-name} and {spellclass-X-level} from the class dropdown {spellclass-X}
-* called when the class dropdown is changed.
-*@param {int} spellclassidx 0,1,2 the spell casting tab
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
+ *@param {int} spellclassidx 0,1,2 the spell casting tab
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ * called when the class dropdown is changed.
+ */
 export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -505,13 +513,14 @@ export function setCasterClassFromDropdown (spellclassidx, eventInfo, callback, 
         }
     });
 }
+
 /** update level on SPELL page when updated on CLASS page, but not vice versa
-*@param {int} classidx 0..6 the row on the CLASS GRID starting with 0 to grab level from, or 6 if {npc-hd-num}
-*@param {eventinfo} eventInfo unused eventinfo from 'on' method
-*@param {bool} force if true update no matter if new ranges are same or not.
-*@param {function} callback - to call when done.
-*@param {bool} silently if true update with PFConst.silentParams
-*/
+ *@param {eventinfo} eventInfo unused eventinfo from 'on' method
+ *@param {bool} force if true update no matter if new ranges are same or not.
+ *@param {function} callback - to call when done.
+ *@param {bool} silently if true update with PFConst.silentParams
+ *@param {int} classidx 0..6 the row on the CLASS GRID starting with 0 to grab level from, or 6 if {npc-hd-num}
+ */
 export function updateCasterFromClassLevel (classidx, eventInfo, force, callback, silently) {
     var done = _.once(function () {
         if (typeof callback === "function") {
@@ -560,11 +569,13 @@ export function updateCasterFromClassLevel (classidx, eventInfo, force, callback
         });
     });
 }
+
 export function migrate (callback, oldversion){
     if (typeof callback==="function"){
         callback();
     }
 }
+
 export var recalculate = TAS.callback(function PFSpellCasterClassesRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
         TAS.info("leaving PFSpellCasterClasses.recalculate");
@@ -696,7 +707,13 @@ function registerEventHandlers () {
                 udpateAllSpellMenu(null,eventInfo);
             }
         }));
-        
+        //changing the metric option triggers range recalcs
+        on('change:use_metrics', TAS.callback(function eventUpdateSpellRanges(eventInfo) {
+            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                updateCasterRanges(numberIdx, eventInfo, true, null, true);
+            }
+        }));        
     }); //end of spell classes
 }
 registerEventHandlers();

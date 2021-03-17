@@ -564,7 +564,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 	attribList = [],itemId,item_entry,slaPrefix,
 	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"]
 	;
-	if(id=='DELETED'){
+	if (id=='DELETED'){
 		done();
 		return;
 	}
