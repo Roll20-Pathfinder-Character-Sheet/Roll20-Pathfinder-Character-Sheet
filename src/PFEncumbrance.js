@@ -562,17 +562,13 @@ export function updateModifiedSpeed (callback) {
                         } else if (combinedLoad === load.Heavy || combinedLoad === load.Medium) {
                             if (base < 3) {    
                                 newSpeed = 1.5;
-                                                                TAS.debug("~>~>~>~>~>~ (base < 3) base: " + base + " ~>~>~>~>~>~");
                             } else if (base >= 3 && base < 6.5) {
                                 newSpeed = 3;
-                                                                TAS.debug("~>~>~>~>~>~ (base >= 3 && base < 6.5) base: " + base + " ~>~>~>~>~>~");
                             } else if (base >= 6.5 && base < 7.5) {
                                 newSpeed = 4.5;
-                                                                TAS.debug("~>~>~>~>~>~ (base >= 6.5 && base < 7.5) base: " + base + " ~>~>~>~>~>~");
                             } else {
                                 //newSpeed = ((base + 3) * 2 / 3) - 1.5;
                                 newSpeed = Math.ceil(Math.ceil((base / 3) * 2) / 1.5) * 1.5;
-                                                                TAS.debug("~>~>~>~>~>~ base: " + base + " ~>~>~>~>~>~");
                             }
                             if (combinedLoad === load.Heavy) {
                                 runMult--;
