@@ -101,7 +101,7 @@ h6 {
 
 .sheet-pf-wrapper {
     width: 100%;
-    min-width: 800px;
+    min-width: 860px;
     margin-top: -1em;
 }
 
@@ -248,9 +248,9 @@ input[disabled] {
 .sheet-linked-fields .sheet-macro-text-inline.sheet-linked-cellfield,
 .sheet-linked-tablecell select.sheet-linked-cellfield,
 .sheet-linked-tablecell .sheet-macro-text-inline.sheet-linked-cellfield {
-    width: calc(100% - 3.5em);
+    width: calc(97% - 3.5em);
     max-width: calc(100% - 3.5em);
-    vertical-align: bottom;
+    vertical-align: inherit;
 }
 
 .sheet-linked-tablecell-short select.sheet-linked-cellfield,
@@ -866,7 +866,7 @@ input[type="checkbox"].sheet-use-metrics:checked~div>div span .sheet-distance-us
 .sheet-linked-custom,
 .sheet-linked-custom-wideinputs {
     display: inline-block;
-    width: calc(33.3% - 3px);
+    width: calc(31.3% - 3px);
     margin: .125em 0 .125em 0;
     padding: .5em;
     text-align: left;
@@ -891,7 +891,7 @@ input[type="checkbox"].sheet-use-metrics:checked~div>div span .sheet-distance-us
 .sheet-linked-custom .sheet-macro-text-inline,
 .sheet-kinetic-sect .sheet-linked-tablecell .sheet-macro-text-inline,
 .sheet-kinetic-sect .sheet-linked-tablecell select.sheet-linked-cellfield {
-    width: calc(100% - 7em);
+    width: calc(98% - 7em);
     vertical-align: bottom;
     /*	display:inline; */
 }
@@ -1274,8 +1274,8 @@ button[type=roll].sheet-command-button::before {
     background: #4a6486;
     color: White;
     font-weight: bold;
-    font-size: 1.3rem;
-    padding: .4em .3em .1em .3em;
+    font-size: 1.2rem;
+    padding: .4em .2em .1em .2em;
     vertical-align: bottom;
     margin-left: -0.4rem;
     margin-right: 0;
@@ -1332,7 +1332,7 @@ input.sheet-tabinput {
 }
 
 .sheet-mainnav~.sheet-tab.sheet-wider-tab {
-    width: 11%;
+    width: 10%;
 }
 
 .sheet-mainnav~.sheet-tabinput.sheet-wider-tab {
@@ -1341,7 +1341,7 @@ input.sheet-tabinput {
 }
 
 .sheet-buffnav2~.sheet-tab {
-    width: 7%;
+    width: 6%;
 }
 
 .sheet-buffnav2~.sheet-tabinput {
@@ -1432,7 +1432,7 @@ input.sheet-tabinput {
 }
 
 .sheet-abilitiesnav~.sheet-tab.sheet-wider-tab {
-    width: 12%;
+    width: 11%;
 }
 
 .sheet-abilitiesnav~.sheet-tabinput.sheet-wider-tab {
@@ -1459,7 +1459,7 @@ input.sheet-tabinput {
 }
 
 .sheet-equipmentnav~.sheet-tab {
-    width: 8%;
+    width: 7.125%;
 }
 
 .sheet-equipmentnav~.sheet-divider-db-lg {
@@ -1473,7 +1473,7 @@ input.sheet-tabinput {
 }
 
 .sheet-equipmentnav~.sheet-tab.sheet-wider-tab {
-    width: 11%;
+    width: 10%;
 }
 
 .sheet-equipmentnav~.sheet-tabinput.sheet-wider-tab {
@@ -3000,7 +3000,7 @@ input[type="text"][name="attr_source-ability"] {
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons {
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: left;
 }
 
@@ -3011,7 +3011,7 @@ input[type="text"][name="attr_source-ability"] {
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section .sheet-col .sheet-h2-section.sheet-ability-buttons,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section .sheet-col .sheet-h2-section.sheet-section-mythic {
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: left;
 }
 
@@ -5134,7 +5134,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section>.sheet-h2-section .sheet-h3-section:not(.sheet-wide-readonly),
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section:not(.sheet-section-npc)>.sheet-h2-section.sheet-repeating-sect:not(.sheet-wide-readonly) {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-npc>.sheet-h2-section,
@@ -5185,7 +5185,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section .sheet-col .sheet-h2-section.sheet-ability-scores,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section .sheet-col .sheet-h2-section.sheet-ability-scores {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: left;
     min-height: 16.7em;
 }
@@ -5193,7 +5193,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section .sheet-col .sheet-h2-section.sheet-half-readonly,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section .sheet-col .sheet-h2-section.sheet-half-readonly {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section .sheet-col .sheet-h2-section.sheet-class-grid,
@@ -5201,7 +5201,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section .sheet-col .sheet-h2-section.sheet-class-grid,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section .sheet-col .sheet-h2-section.sheet-experience {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-h2-section.sheet-ability-scores {
@@ -5225,7 +5225,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-core .sheet-h2-section.sheet-experience {
     min-width: 19em;
     margin: 0.2rem;
-    /*	width: calc(50% - 4px);*/
+    /*	width: calc(50% - 6px);*/
     display: inline-block;
     min-height: 6.45em;
 }
@@ -5249,7 +5249,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .sheet-readonly-show:not(:checked)~.sheet-main~.sheet-section-core .sheet-h2-section.sheet-hit-points,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-core .sheet-h2-section.sheet-hit-points {
-    max-width: calc(50% - 4px);
+    max-width: calc(50% - 6px);
     width: auto;
     flex-grow: 2;
 }
@@ -5302,7 +5302,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-core .sheet-h2-section.sheet-initiative,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-core .sheet-wounds-show:checked~.sheet-h2-section.sheet-initiative,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-core .sheet-wounds-show:not(:checked)~.sheet-h2-section.sheet-initiative {
-    max-width: calc(50% - 4px);
+    max-width: calc(50% - 6px);
     margin: 0.2rem;
     width: auto;
     flex-grow: 2;
@@ -5336,7 +5336,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     display: block;
     margin: 0.2rem 0.2rem 0 0;
     float: right;
-    width: calc(30% - 4px);
+    width: calc(30% - 6px);
     min-height: 17em;
 }
 
@@ -5365,12 +5365,12 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section-defenses .sheet-h2-section.sheet-defense-grid {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-attacks .sheet-h2-section.sheet-attack-grid {
     /*margin: 0.2rem;
-	width: calc(50% - 4px);*/
+	width: calc(50% - 6px);*/
     min-width: 24em;
     min-height: 13em;
 }
@@ -5460,12 +5460,12 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 /* inventory page only */
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-currency,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-equipment .sheet-col.sheet-col1 .sheet-h2-section.sheet-current-loads {
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: left;
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-equipment .sheet-loads-and-lift {
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: right;
 }
 
@@ -5506,7 +5506,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section-equipment .sheet-col.sheet-col2 {
     margin: 0.2rem 0 0.2rem 0;
-    width: calc(60% - 4px);
+    width: calc(60% - 8px);
     float: right;
 }
 
@@ -5623,7 +5623,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-spells .sheet-col.sheet-col2 {
     margin: 0.2rem;
-    width: calc(50% - 4px);
+    width: calc(50% - 6px);
     float: right;
 }
 
@@ -5642,7 +5642,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 /*
 .sheet-readonly-show:not(:checked) ~ .sheet-main .sheet-tab99:checked ~ .sheet-section-skills .sheet-skilllist {
     margin: 0.2rem;
-	width: calc(50% - 4px);
+	width: calc(50% - 6px);
 }*/
 
 /**************** tabs expand */
@@ -5667,7 +5667,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-skills .sheet-h2-section.sheet-skill-options,
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section-skills .sheet-h2-section.sheet-skill-options {
     float: right;
-    width: calc(60% - 4px);
+    width: calc(60% - 8px);
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:checked~.sheet-section-spells .sheet-spellclassnav~.sheet-tab:not(.sheet-tab99) {

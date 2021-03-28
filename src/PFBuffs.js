@@ -1359,7 +1359,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='attack';
 			setter[prefix+'b1_bonustype']='luck';
-			setter[prefix+'b1_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
+			setter[prefix+'b1_macro-text']='min(3, max(1, floor(@{level}/3)))';
 			tempint=1;
 			if(calc){
 				if(level<=5){
@@ -1374,7 +1374,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b2-show']=1;
 			setter[prefix+'b2_bonus']='dmg';
 			setter[prefix+'b2_bonustype']='luck';
-			setter[prefix+'b2_macro-text']='min(3,1+floor((@{level})/6)+floor((@{level})/9))';
+			setter[prefix+'b2_macro-text']='min(3, max(1, floor(@{level}/3))))';
 			setter[prefix+'b2_val']=tempint;
 			break;
 		case 'shieldoffaith':
@@ -1816,7 +1816,7 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'b1-show']=1;
 			setter[prefix+'b1_bonus']='armor';
 			setter[prefix+'b1_bonustype']='enhancement';
-			setter[prefix+'b1_macro-text']='min(5,1+floor((@{level})/8)+floor((@{level})/12)+floor((@{level})/20))';
+			setter[prefix + 'b1_macro-text'] = 'min(5,floor(@{level}/4))';
 			tempint=1;
 			if(calc){
 				tempint = 1+ Math.floor(level/8);
