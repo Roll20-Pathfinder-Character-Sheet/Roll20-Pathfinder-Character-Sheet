@@ -496,13 +496,11 @@ export function updateModifiedSpeed (callback) {
         setter = {};
         try {
             if (use_metrics > 0) {
-                TAS.debug("~>~>~>~>~>~ Base value updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                 base = parseFloat(v["speed-base"]) || 0;
                 buff = parseFloat(v["buff_speed-total"]) || 0;
                 newSpeed = base;
                 newRun = base * runMult;
             } else {
-                TAS.debug("~>~>~>~>~>~ Base value updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                 base = parseInt(v["speed-base"], 10) || 0;
                 buff = parseInt(v["buff_speed-total"], 10) || 0;
                 newSpeed = base;
@@ -554,7 +552,6 @@ export function updateModifiedSpeed (callback) {
                 } else if (!isDwarf && combinedLoad > load.Light) {
                     //metric multiplier ft to m
                     if (use_metrics > 0) {
-                        TAS.debug("~>~>~>~>~>~ combinedLoad>load.Light - updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                         if (combinedLoad === load.Overloaded) {
                             newSpeed = 0.75;
                             newRun = 0;
@@ -575,7 +572,6 @@ export function updateModifiedSpeed (callback) {
                             }
                         }
                     } else {
-                        TAS.debug("~>~>~>~>~>~ combinedLoad>load.Light - updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                         if (combinedLoad === load.Overloaded) {
                             newSpeed = 2.5;
                             newRun = 0;
@@ -599,7 +595,6 @@ export function updateModifiedSpeed (callback) {
                 }
             }
             if (use_metrics > 0) {
-                TAS.debug("~>~>~>~>~>~ newSpeed - updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                     if (cannotRun) {
                         runMult = 0;
                     }
@@ -624,7 +619,6 @@ export function updateModifiedSpeed (callback) {
                         setter.run_cond_applied = cannotRun;
                     }
             } else {
-                TAS.debug("~>~>~>~>~>~ newSpeed - updateModifiedSpeed - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
                     if (cannotRun) {
                         runMult = 0;
                     }

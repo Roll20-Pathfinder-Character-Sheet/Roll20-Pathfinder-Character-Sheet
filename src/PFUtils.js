@@ -141,7 +141,6 @@ export function calculateSpellRanges (casterlevel, use_metrics) {
         //metric multiplier ft to m
         if (use_metrics > 0) {
             use_metrics = 0.3048;
-            TAS.debug("~>~>~>~>~>~ PFUtils.calculateSpellRanges - use_metrics: " + use_metrics + " ~>~>~>~>~>~");
         }
         else{
             use_metrics = 1;

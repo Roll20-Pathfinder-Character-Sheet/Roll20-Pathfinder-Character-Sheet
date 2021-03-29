@@ -773,10 +773,8 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc-mod", "spellclass-" + classIdx + "-name",
         "spellclass-" + classIdx + "-SP-mod", "Concentration-" + classIdx + "-def", "Concentration-" + classIdx + "-mod", "use_metrics"],function(vout){
             
-            var use_metrics = parseInt(vout["use_metrics"]) || 0;
-            TAS.debug("~>~>~>~>~>~ updateSpellsCasterLevelRelated use_metrics: " + use_metrics + " ~>~>~>~>~>~");
-
-        var classLevel = parseInt(vout["spellclass-" + classIdx + "-level-total"], 10) || 0,
+        var use_metrics = parseInt(vout["use_metrics"]) || 0,
+            classLevel = parseInt(vout["spellclass-" + classIdx + "-level-total"], 10) || 0,
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0,
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0,
             defMod = parseInt(vout["Concentration-" + classIdx + "-def"], 10),
@@ -1311,7 +1309,6 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
 
             use_metrics = parseInt(v["use_metrics"]) || 0;
-            TAS.debug("~>~>~>~>~>~ updateSpell use_metrics: " + use_metrics + " ~>~>~>~>~>~");
             if ( updateRange || updateClassLevel || updateClass) {                
                 newRange = PFUtils.findSpellRange(v[prefix + "range"], currChosenRange, casterlevel, use_metrics) || 0;
                 if (newRange !== currRange) {

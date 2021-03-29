@@ -100,9 +100,9 @@ h6 {
 }
 
 .sheet-pf-wrapper {
-    width: 100%;
-    min-width: 860px;
-    margin-top: -1em;
+  width: 100%;
+  min-width: 822px;
+  margin-top: -1rem;
 }
 
 /* standalone generic toggles */
@@ -834,7 +834,7 @@ input[type="checkbox"].sheet-use-metrics:not(:checked)~div>div span .sheet-dista
     margin-left: 2px;
     font-weight: normal;
     font-style: normal;
-    font-size: .85rem;
+    font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
 }
 
@@ -844,8 +844,23 @@ input[type="checkbox"].sheet-use-metrics:checked~div>div span .sheet-distance-us
     margin-left: 2px;
     font-weight: normal;
     font-style: normal;
-    font-size: .85rem;
+    font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
+}
+
+/* hide base-speed*/
+span.sheet-show input.sheet-input-feet,
+span.sheet-show input.sheet-input-meters {
+    display: none;
+}
+
+/* show base-speed in feet at step="5" */
+input[type="checkbox"].sheet-use-metrics:not(:checked)~div>div span.sheet-show input.sheet-input-feet {
+    display: inline-block;
+}
+/* show base-speed in meters at step="1.5" */
+input[type="checkbox"].sheet-use-metrics:checked~div>div span.sheet-show input.sheet-input-meters {
+    display: inline-block;
 }
 
 .sheet-nontable-name.sheet-secondary-table-name,
@@ -1187,7 +1202,10 @@ span.sheet-entry-custom-header {
 .sheet-text-tight {
     font-size: .75em;
     font-family: 'Roboto Mono', monospace;
-    margin: 0 0 0 -3px;
+    margin-left: -3px;
+    position: relative;
+    background-color: cornsilk;
+    padding: 2px 1px 2px 1px;
 }
 
 /******************************* API COMMAND BUTTONS *************************************/
@@ -1217,6 +1235,18 @@ button[type=roll].sheet-spellcaster-button {
 .sheet-skills .sheet-table-row .sheet-table-cell:first-child {
     font-size: 1.6rem;
     padding-left: 0;
+}
+
+.sheet-skills .sheet-table-row.sheet-adventure,
+.sheet-skills .sheet-table-row.sheet-bg,
+.sheet-skills .sheet-table-row.sheet-adventure textarea,
+.sheet-skills .sheet-table-row.sheet-bg textarea,
+.sheet-table-row.sheet-adventure input,
+.sheet-skills .sheet-table-row.sheet-bg input,
+.sheet-table-row.sheet-adventure select,
+.sheet-skills .sheet-table-row.sheet-bg select {
+    font-size: 1.2rem;
+    margin: 1px 2px 0 2px;
 }
 
 .sheet-skills button[type=roll] {
@@ -2125,16 +2155,12 @@ input[name="attr_create_twoweapon_attack"].sheet-createattackbutton+span::before
 }
 
 .sheet-cssbutton-label {
-    margin-left: -3em;
     font-weight: bold;
     font-size: 1rem;
     font-style: italic;
     vertical-align: bottom;
     cursor: help;
-}
-
-.sheet-small-label2 .sheet-cssbutton-label {
-    margin-left: -.25em;
+    line-height: 1em;
 }
 
 input.sheet-configbutton,
@@ -2326,6 +2352,7 @@ input.sheet-narrow-numbers+b:not(.sheet-offCase) {
     font-size: 1.2rem;
     line-height: 1.5em;
     padding: 0.1rem .65rem 0.1rem .25rem;
+    cursor: help;
 }
 
 .sheet-corerules .sheet-table-row .sheet-table-cell {
@@ -2793,10 +2820,13 @@ input.sheet-highlight[readonly] .sheet-highlight input:disabled,
     display: inline-block;
     margin: .1em .124em .1em .125em;
     height: 3em;
-    min-height: 3em;
     vertical-align: top;
     text-align: center;
     position: relative;
+}
+
+.sheet-core-details .sheet-small-label2 {
+    height: 1em;
 }
 
 .sheet-nontable-repeating .sheet-linked-fields {
@@ -3285,8 +3315,8 @@ input[type="number"].sheet-entry-wide {
 .sheet-minimize-show:checked~.sheet-repeating-fields .sheet-small-label2,
 .sheet-split-column-show:checked~.sheet-repeating-fields .sheet-small-label2,
 .sheet-counted:not(:checked)~.sheet-small-label2 {
-    margin-left: 0;
-    margin-right: 0.2rem;
+    margin: 0 0.2rem 0 0;
+    max-width: 22%;
 }
 
 .sheet-split-column-show:checked~.sheet-repeating-fields .sheet-nontable-repeating .sheet-counted {
@@ -3366,7 +3396,7 @@ input[type="number"].sheet-entry-wide {
 
 .sheet-minimize-show:checked~.sheet-repeating-fields .sheet-entry-20p-shrink,
 .sheet-counted:not(:checked)~.sheet-entry-20p-shrink {
-    width: 15%;
+    width: 20%;
 }
 
 .sheet-split-column-show:checked~.sheet-repeating-fields .sheet-entry-20p,
@@ -3798,7 +3828,10 @@ span.sheet-table-cell.sheet-linked-tablecell.sheet-extra-sect {
 .sheet-unchained-show:checked~.sheet-bg-show:checked~.sheet-tab1:checked~.sheet-skills .sheet-bg:not(.sheet-adventure),
 .sheet-unchained-show:checked~.sheet-bg-show:checked~.sheet-tab1:checked~.sheet-skills .sheet-bg-only,
 /* bg background tab turn off adventure skills */
-.sheet-unchained-show:checked~.sheet-bg-show:checked~.sheet-tab2:checked~.sheet-skills .sheet-adventure:not(.sheet-bg) {
+.sheet-unchained-show:checked~.sheet-bg-show:checked~.sheet-tab2:checked~.sheet-skills .sheet-adventure:not(.sheet-bg),
+/* hide show more option*/
+.sheet-readonly-show:not(:checked)~.sheet-main .sheet-selectedlabel-check:not(.sheet-show-readonly),
+.sheet-readonly-show:not(:checked)~.sheet-main .sheet-selectedlabel-check+b:not(.sheet-show-readonly) {
     display: none;
 }
 
@@ -5314,6 +5347,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     display: inline-block;
     vertical-align: bottom;
     padding: 0.4rem;
+    max-height: 4rem;
 }
 
 .sheet-h2-section.sheet-speeds {
@@ -5324,6 +5358,14 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     margin: 0.2rem;
     width: calc(100% - 4px);
     display: block;
+}
+
+.sheet-speeds .sheet-narrow-numbers-readonly input[type=number] {
+    width: auto;
+}
+
+.sheet-readonly-show:not(:checked)~.sheet-main .sheet-speeds .sheet-narrow-numbers-readonly input[type=number] {
+    width: auto;
 }
 
 /* defense page */
@@ -5633,6 +5675,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-spells .sheet-col.sheet-col2 .sheet-h3-section {
     width: 100%;
     display: block;
+    overflow-x: auto;
 }
 
 .sheet-readonly-show:not(:checked)~.sheet-main .sheet-tab99:not(:checked)~.sheet-section-skills .sheet-skilllist {
@@ -5835,7 +5878,6 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: auto;
     min-width: 3.5em;
     max-width: 99%;
-    max-height: 1em;
 }
 
 .sheet-small-label2.sheet-autoexpand input {
@@ -5927,6 +5969,9 @@ input.sheet-skill-macro-text {
     font-family: 'Roboto Mono', monospace;
     font-size: 1.2rem;
     line-height: 1.2rem;
+    min-height: auto;
+    height: 1.5em;
+    vertical-align: inherit;
 }
 
 .sheet-accessible:checked~.sheet-pf-wrapper input.sheet-macro-text-inline,
@@ -5940,7 +5985,6 @@ input.sheet-skill-macro-text {
     font-size: 1.2rem;
     line-height: 1.2rem;
 }
-
 
 /*skill too crowded*/
 .sheet-skills .sheet-divider,
@@ -5998,6 +6042,10 @@ input.sheet-skill-macro-text {
 .sheet-psionic-show:not(:checked)~.sheet-section-psionic,
 .sheet-psionic-show:not(:checked)~div .sheet-section-psionic {
     display: none !important;
+}
+
+.sheet-readonly-show:not(:checked)~.sheet-main .sheet-section-spellclass .sheet-col button[type="roll"] {
+    font-size: .95em;
 }
 
 /* prevents background-color from interfering with inserted images*/
