@@ -40,8 +40,8 @@
 			<ol>
 				<li>Added a metric option to sheet settings>sheet configuration>accessibility. This option will show auto-calculated totals for weight and distance as metric(kilograms and meters). This option DOES NOT convert user input for weight and distance. Ensure you have entered metric-based values.</li>
 				<li>Updated common buff macros for Divine Favor and Magic Vestment.(thank you EtienneLamoureux)</li>
-				<li>Fixed; enabling the Energy Drain condition by applying negative levels also changes the appearence of "Energy Drain" label.</li>  
-				<li>Fixed; Skill "-misc" and "-misc-mod" columns were not being flaged with a red dashed border used to indicate a parsing error.</li>
+				<li>Fixed; enabling the Energy Drain condition by applying negative levels also changes the appearance of "Energy Drain" label.</li>  
+				<li>Fixed; Skill "-misc" and "-misc-mod" columns were not being flagged with a red dashed border used to indicate a parsing error.</li>
 				<li>Abilities; added "Other" as a Source basis option. "Other" includes full Level Basis options.</li>
 				<li>Fixed; using ChatSetAttr or similar API script to toggle buffs that indirectly affected attack damage failed to trigger the damage recalculation.</li>  
 				<li>Fixed; damage multiplier will no longer be applied to ability penalties.</li>
@@ -3452,7 +3452,7 @@
 									<input class="sheet-number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" />
 									<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 									<span class="sheet-sect2 sheet-distance-used" data-i18n="range">Range</span>
-									<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
+									<span class="sheet-sect-inverse sheet-distance-used" data-i18n="reach-small">Reach</span>
 								</label>
 								<label class="sheet-small-label2 sheet-sect2 sheet-narrow-numbers sheet-ammo sheet-nondual-sect">
 									<input type="number" name="attr_ammo" title="@{repeating_weapon_$X_ammo}" value="0" />
@@ -11516,7 +11516,7 @@
 										<input class="sheet-number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" />
 										<input type="checkbox" class="sheet-noshow sheet-sect2-show sheet-sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 										<span class="sheet-sect2 sheet-distance-used" data-i18n="range">Range</span>
-										<span class="sheet-sect-inverse" data-i18n="reach-small">Reach</span>
+										<span class="sheet-sect-inverse sheet-distance-used" data-i18n="reach-small">Reach</span>
 									</label>
 									<input type="checkbox" class="sheet-nextitem-show sheet-noshow" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
 									<label class="sheet-small-label2 sheet-sect2 sheet-narrow-numbers sheet-ammo sheet-nondual-sect">
@@ -12199,10 +12199,6 @@
 												<label class="sheet-small-label2" style="width:5em;">
 													<input type="checkbox" name="attr_create-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="create-spell-attack-entry" data-i18n-aria-label="create-spell-attack-entry"><span></span>
 													<span data-i18n-title="create-spell-attack-entry" data-i18n-aria-label="create-spell-attack-entry" data-i18n="create-attack" >Create Attack</span>
-												</label>
-												<label class="sheet-small-label2">
-													<input type="checkbox" name="attr_refresh-attack-entry" value="1" class="sheet-cssbutton sheet-createattackbutton" data-i18n-title="refresh-attack-entry" data-i18n-aria-label="refresh-attack-entry"><span></span>
-													<span data-i18n-title="refresh-attack-entry" data-i18n-aria-label="refresh-attack-entry" data-i18n="refresh-attack" >Refresh Attack</span>
 												</label>
 												<label class="sheet-small-label2 sheet-entry-short">
 													<select class="sheet-select-small" title="@{repeating_spells_$X_spell-attack-type}" name="attr_spell-attack-type">
