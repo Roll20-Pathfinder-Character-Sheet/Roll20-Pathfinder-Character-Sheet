@@ -207,5 +207,5 @@
 			"descriptiontranslationkey": "options-use-metrics-title"
 		}
 	],
-	"legacy": true
+	"legacy": "true"
 }

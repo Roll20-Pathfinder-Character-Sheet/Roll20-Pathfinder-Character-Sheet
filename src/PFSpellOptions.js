@@ -9,7 +9,7 @@ import * as PFUtils from './PFUtils';
 export var optionToggles = ["toggle_spell_school_notes", "toggle_spell_casting_time_notes", "toggle_spell_duration_notes", 
     "toggle_spell_saving_throw_notes", "toggle_spell_sr_notes", "toggle_spell_range_notes", "toggle_spell_targets_notes", 
     "toggle_spell_description_notes", "toggle_spell_concentration_notes", "toggle_spell_concentration_check", 
-    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes", "toggle_spell_spellPen_check"],
+    "toggle_spell_casterlevel_notes", "toggle_spell_casterlevel_check", "toggle_spell_level_notes", "toggle_spell_components_notes", "toggle_spell_spellnotes_notes", "toggle_spell_spell_fail_check", "toggle_spell_damage_notes", "toggle_spell_spellPen_check", "toggle_spell_dc_notes"],
 optionTemplates = {
     school: "{{school=@{school}}}",
     casting_time: "{{casting_time=@{cast-time}}}",
@@ -56,6 +56,7 @@ rowattrToOptionToggleMap = {
     components: "toggle_spell_components_notes",
     duration: "toggle_spell_duration_notes",
     save: "toggle_spell_saving_throw_notes",
+    dc: "toggle_spell_dc_notes",
     sr: "toggle_spell_sr_notes",
     range: "toggle_spell_range_notes",
     targets: "toggle_spell_targets_notes",
@@ -206,7 +207,7 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     if (toggleValues.showcomponents) {
         optionText += optionTemplates.components;//.replace("REPLACE", SWUtils.escapeForRollTemplate(rowValues[prefix + "components"]))||"";
     }
-    if (toggleValues.showsaving_throw) {
+    if (toggleValues.showsaving_throw && toggleValues.showdc) { //checks to see if DC should be included
         newValue = rowValues[prefix + "save"] || "";
         if (PFUtils.shouldNotDisplayOption('saving_throw', newValue)) {
             optionText += "{{saving_throw=}}";
@@ -214,6 +215,15 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
             optionText += optionTemplates.saving_throw;//.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)||"");
         }
         optionText += optionTemplates.dc;//.replace("REPLACE", parseInt(rowValues[prefix + "savedc"], 10) || 0);
+    }
+    else {
+        newValue = rowValues[prefix + "save"] || "";
+        if (PFUtils.shouldNotDisplayOption('saving_throw', newValue)) {
+            optionText += "{{saving_throw=}}";
+        } else {
+            optionText += optionTemplates.saving_throw; //.replace("REPLACE", SWUtils.escapeForRollTemplate(newValue)||"");
+        }
+        optionText += "{{dc=}}"; //.replace("REPLACE", parseInt(rowValues[prefix + "savedc"], 10) || 0);
     }
     if (toggleValues.showrange) {
         optionText += optionTemplates.range_pick;//.replace("REPLACE", rowValues[prefix + "range_pick"] || "blank")||"";
@@ -271,13 +281,21 @@ export function getOptionText (id, eventInfo, toggleValues, rowValues) {
     if (toggleValues.showconcentration_check) {
         optionText += optionTemplates.Concentration_chk;//.replace("REPLACE", concentrationMod)||"";
     }
-    if (toggleValues.showconcentration || toggleValues.showconcentration_check) {
+    if ((toggleValues.showconcentration || toggleValues.showconcentration_check) && toggleValues.showdc) { //checks to see if DC should be included
         if (defMod > 0) {
             optionText += optionTemplates.cast_def.replace("REPLACE", defMod)||"";
         } else {
             optionText += "{{cast_def=}}";
         }
         optionText += optionTemplates.cast_defDC.replace("REPLACE", defDC)||"";
+    }
+    else { 
+        if (defMod > 0) {
+            optionText += optionTemplates.cast_def.replace("REPLACE", defMod) || "";
+        } else {
+            optionText += "{{cast_def=}}";
+        }
+        optionText += "{{cast_defDC=}}";
     }
     if (toggleValues.showdescription) {
         optionText += optionTemplates.description;//.replace("REPLACE", "@{description}")||"";
