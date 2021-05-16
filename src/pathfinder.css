@@ -4081,15 +4081,15 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 /* damage type */
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi>.sheet-roll-row div:first-child>span {
     margin-left: .25em;
-    white-space: nowrap;
+/*  white-space: nowrap; */
     position: inherit;
 }
-
+/*
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi>.sheet-roll-row div:first-child {
     position: absolute;
     width: 65%;
 }
-
+*/
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg>span:first-child,
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg> :not(span:last-child) {
     display: inline-flex;
@@ -4858,7 +4858,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     background-color: white;
 }
 
-.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-atk,
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-atk.sheet-atk, /*doubled up the class to increase speceficity*/
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-confirm,
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi>.sheet-roll-row:first-child,
 .sheet-rolltemplate-pf_spell .sheet-roll-groupi>.sheet-roll-row:first-child,
