@@ -3154,14 +3154,16 @@
 				<div class="h2-section damage-grid" style="margin-top:0.25em;">
 					<div class="table">
 						<div class="table-row">
-							<span class="table-cell">Melee Dmg mod:</span>
-							<span class="table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="calc number" disabled /></span>
-							<span class="table-cell">Alt Melee Dmg mod:</span>
-							<span class="table-cell"><input type="text" title="@{DMG2-mod}" name="attr_DMG2-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}+@{buff_dmg_melee2-total}-@{condition-Sickened})" class="calc number" disabled /></span>
-							<span class="table-cell">Ranged dmg mod:</span>
-							<span class="table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}-@{condition-Sickened})" class="calc number" disabled /></span>
-							<span class="table-cell">Alt Ranged dmg mod:</span>
-							<span class="table-cell"><input type="text" title="@{DMG_ranged2-mod}" name="attr_DMG_ranged2-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}+@{buff_DMG_ranged2-total}-@{condition-Sickened})" class="calc number" disabled /></span>
+							<span class="table-cell table-row-name hide-readonly" data-i18n="buff-cond-damage-mods">Buff/Cond Damage Mods</span>
+							<span class="table-cell hide-readonly">&nbsp;</span>
+							<span class="table-cell table-header" data-i18n="melee">Melee</span>
+							<span class="table-cell"><input type="text" title="@{DMG-mod}" name="attr_DMG-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}-@{condition-Sickened})" class="calc number center" disabled /></span>
+							<span class="table-cell table-header" data-i18n="melee2">Alt Melee</span>
+							<span class="table-cell"><input type="text" title="@{DMG2-mod}" name="attr_DMG2-mod" value="(@{buff_DMG-total}+@{buff_dmg_melee-total}+@{buff_dmg_melee2-total}-@{condition-Sickened})" class="calc number center" disabled /></span>
+							<span class="table-cell table-header" data-i18n="ranged">Ranged</span>
+							<span class="table-cell"><input type="text" title="@{DMG_ranged-mod}" name="attr_DMG_ranged-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}-@{condition-Sickened})" class="calc number center" disabled /></span>
+							<span class="table-cell table-header" data-i18n="ranged2">Alt Ranged</span>
+							<span class="table-cell"><input type="text" title="@{DMG_ranged2-mod}" name="attr_DMG_ranged2-mod" value="(@{buff_DMG-total}+@{buff_DMG_ranged-total}+@{buff_DMG_ranged2-total}-@{condition-Sickened})" class="calc number center" disabled /></span>
 							<div style="display:none;"><input title="@{dmg-penalty}" type="text" name="attr_dmg-penalty" value="@{condition-Sickened}" disabled readonly class="number calc" /></div>
 						</div>
 					</div>
@@ -3904,23 +3906,23 @@
 										<span data-i18n="number-fill-in-skills-show">Number of craft, perform, profession to show:</span>
 										<br>
 										<select name="attr_custom_skill_num_show" title="@{custom_skill_num_show}">
-										<option name="attr_custom_skill_num_show" value="1" selected>•1</option>
-										<option name="attr_custom_skill_num_show" value="2">&nbsp;2</option>
-										<option name="attr_custom_skill_num_show" value="3">&nbsp;3</option>
-										<option name="attr_custom_skill_num_show" value="6">&nbsp;6</option>
-										<option name="attr_custom_skill_num_show" value="10">10</option>
+											<option value="1" selected>•1</option>
+											<option value="2">&nbsp;2</option>
+											<option value="3">&nbsp;3</option>
+											<option value="6">&nbsp;6</option>
+											<option value="10">10</option>
 										</select>
 									</span>
 									<span class="table-cell left small-label" style="vertical-align:middle;">
 										<span data-i18n="number-misc-skills-show">Number of Misc skills to show:</span>									
 										<br>
 										<select name="attr_misc_skill_num_show" title="@{misc_skill_num_show}">
-										<option name="attr_misc_skill_num_show" value="1" selected >&nbsp;1</option>
-										<option name="attr_misc_skill_num_show" value="2">&nbsp;2</option>
-										<option name="attr_misc_skill_num_show" value="3" >&nbsp;3</option>
-										<option name="attr_misc_skill_num_show" value="6">&nbsp;6</option>
-										<option name="attr_misc_skill_num_show" value="10">10</option>
-									</select>
+											<option value="1" selected >&nbsp;1</option>
+											<option value="2">&nbsp;2</option>
+											<option value="3" >&nbsp;3</option>
+											<option value="6">&nbsp;6</option>
+											<option value="10">10</option>
+										</select>
 									</span>
 								</div>
 							</div>
