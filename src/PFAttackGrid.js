@@ -436,6 +436,18 @@ function registerEventHandlers () {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttackAsync(attack);
             }
+        }));  
+        on("change:" + attackFields.size, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                recalculate();
+            }
+        }));
+        on("change:" + attackFields.size, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
+            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                recalculate();
+            }
         }));
     });
 
@@ -461,8 +473,6 @@ function registerEventHandlers () {
         if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType==="api"){
             updateAttackBABDropdownDiffs(null,null,eventInfo);
         }
-    }));
-
-    
+    }));    
 }
 registerEventHandlers();

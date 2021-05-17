@@ -44,8 +44,8 @@ otherCommandMacros = {
 	'su':" [^{supernatural-abilities-menu}](~@{character_id}|NPCPREFIXsu_button)"
 },
 events = {
-	attackEventsSLA:["damage-macro-text","damage-type","abil-sr","save","abil-attack-type","name","range_numeric"],
-	commandMacroFields:["name","used","used_max","showinmenu","ability_type","frequency","rule_category"]
+	attackEventsSLA: ["damage-macro-text", "damage-type", "abil-sr", "save", "abil-attack-type", "name", "range_numeric", "toggle_attack_entry"],
+	commandMacroFields: ["name", "used", "used_max", "showinmenu", "ability_type", "frequency", "rule_category", "toggle_attack_entry"]
 };
 
 function setClassName (id,callback,eventInfo){
@@ -57,7 +57,7 @@ function setClassName (id,callback,eventInfo){
 	idStr = SWUtils.getRepeatingIDStr(id),
 	prefix="repeating_ability_"+idStr,
 	clbasisField=prefix+"CL-basis";
-	getAttrs([prefix+'CL-basis', prefix+'class-name',"race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
+	getAttrs([prefix+'CL-basis', prefix+'class-name',"character_name","race","class-0-name","class-1-name","class-2-name","class-3-name","class-4-name","class-5-name"],function(v){
 		var clBase='',setter={},match;
 		try {
 			if (v[clbasisField]){
@@ -65,9 +65,13 @@ function setClassName (id,callback,eventInfo){
 					clBase =v["race"];
 				} else if (v[clbasisField]==="@{npc-hd-num}"){
 					clBase = v["race"];
-				} else if (parseInt(v[clbasisField],10)===0){
+				} else if (parseInt(v[clbasisField],10)=== 0){
 					clBase ="";
-				} else {
+				} 
+	//used "(0*(@{level}))" as the value of the "other" basis selector since "0" was already used for N/A
+					else if (v[clbasisField] === "(0*(@{level}))") {
+					clBase = " ";
+				}	else {
 					match = v[prefix+"CL-basis"].match(/\d+/);
 					if (match){
 						clBase=v["class-"+match[0]+"-name"];
@@ -490,7 +494,6 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 				setter[weaponPrefix+"range"] = 0;
 			}
 		}
-
 		if (v[spellPrefix +"damage-macro-text"]){
 			setter[weaponPrefix+"precision_dmg_macro"] = v[spellPrefix+"damage-macro-text"];
 			if(attackType){
@@ -506,15 +509,37 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			}else {
 				setter[weaponPrefix+"critical_dmg_type"]="";
 			}
+		}		
+		if (v[spellPrefix+"save"]){
+			if (notes) {
+				notes += ", ";
+			}
+			notes += "\n**Save:** " + v[spellPrefix + "save"] + " **DC:** [[@{" + spellPrefix + "savedc}]]";
 		}
 
-		if (v[spellPrefix+"save"]){
-			if (notes) { notes += ", ";}
-			notes += "Save: "+ v[spellPrefix+"save"] + " DC: [[@{" + spellPrefix + "savedc}]]";
-		}
 		if ( v[spellPrefix+"abil-sr"]){
-			if (notes) { notes += ", ";}
-			notes += "Spell resist:"+ v[spellPrefix+"abil-sr"];
+			if (notes) {
+				notes += ", ";
+			}
+			notes += "\n**Spell Resistance:** " + v[spellPrefix + "abil-sr"];
+		}
+		// include a link in the weapon notes to execute the spell from chat        
+		var toggle_attack_entry = v[spellPrefix + "toggle_attack_entry"];
+		if (toggle_attack_entry === 1) {
+			if (v[spellPrefix + "name"]) {
+				if (notes) {
+					notes += "";
+				}
+				notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
+			}
+		}
+		if (toggle_attack_entry !== 1) {
+			if (v[spellPrefix + "name"]) {
+				if (notes) {
+					notes += "";
+				}
+				notes += "";
+			}
 		}
 		if (notes){
 			setter[weaponPrefix+"notes"]=notes;
@@ -537,9 +562,9 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 		}
 	}),
 	attribList = [],itemId,item_entry,slaPrefix,
-	attributes = ["range_numeric","damage-macro-text","damage-type","abil-sr","savedc","save","abil-attack-type", "name"]
+	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"]
 	;
-	if(id=='DELETED'){
+	if (id=='DELETED'){
 		done();
 		return;
 	}
@@ -621,21 +646,21 @@ export function updateAssociatedAttack (id, callback, silently, eventInfo) {
 			callback();
 		}
 	}),
-	itemId = "", item_entry = "",attrib = "", attributes=[];
+	itemId = "", item_entry = "", attrib = "", attributes=[];
 	itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
 	item_entry = 'repeating_ability_' + SWUtils.getRepeatingIDStr(itemId);
 	attrib = (eventInfo ? SWUtils.getAttributeName(eventInfo.sourceAttribute) : "");
 	attributes=[];
 	//TAS.debug("at PF Spell like abilities updateAssociatedAttack: for row" + id   );
 	if (attrib){
-		attributes = [item_entry+attrib];
+		attributes = [item_entry + attrib];
 		if ((/range/i).test(attrib)){
-			attributes =[item_entry+'range_pick',item_entry+'range',item_entry+'range_numeric'];
+			attributes = [item_entry + 'range_pick', item_entry + 'range', item_entry + 'range_numeric'];
 		} else {
-			attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
+			attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "toggle_attack_entry"];
 		}
 	} else {
-		attributes = [item_entry+"range_pick",item_entry+"range",item_entry+"range_numeric",item_entry+"damage-macro-text",item_entry+"damage-type",item_entry+"sr",item_entry+"savedc",item_entry+"save",item_entry+"abil-attack-type",item_entry+"name"];
+		attributes = [item_entry + "range_pick", item_entry + "range", item_entry + "range_numeric", item_entry + "damage-macro-text", item_entry + "damage-type", item_entry + "sr", item_entry + "savedc", item_entry + "save", item_entry + "abil-attack-type", item_entry + "name", item_entry + "toggle_attack_entry"];
 	}
 	getAttrs(attributes,function(spellVal){
 		getSectionIDs("repeating_weapon", function (idarray) { // get the repeating set
@@ -902,6 +927,26 @@ export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback
 		done();
 	}
 });
+//sync repeaitng_ability with settings>attacks>link spells
+function updateIncludeLink() {
+	getSectionIDs('repeating_ability', function (ids) {
+		_.each(ids, function (id) {
+			getAttrs(["include_link_abilities"], function (values) {
+				var include_link_abilities = parseInt([values.include_link_abilities]) || 0;
+				setAttrs({
+					["repeating_ability_" + id + "_toggle_attack_entry"]: include_link_abilities
+				});
+			});
+		});
+	});
+}
+//trigger updateIncludeLink when updating the sheet version
+export function updateIncludeLinkVersionCheck() {
+		setAttrs({			
+			"include_link_abilities": 1,
+			"include_link_spells": 1
+		});
+}
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",
@@ -916,7 +961,7 @@ function registerEventHandlers () {
 		return m;
 	},macroEvent);
 	on (macroEvent, TAS.callback(function eventRepeatingAbilityCommandMacroUpdate(eventInfo){
-		if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (/used_max/i).test(eventInfo.sourceAttribute)) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFFeatures.resetTopCommandMacro(null,eventInfo);
 			resetCommandMacro();
@@ -980,7 +1025,7 @@ function registerEventHandlers () {
 			}
 	}));
 	eventToWatch = _.reduce(events.attackEventsSLA,function(memo,attr){
-		memo+="change:repeating_ability:"+attr+" ";
+		memo += "change:repeating_ability:" + attr + " ";
 		return memo;
 	},"");
 	on(eventToWatch, TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
@@ -989,6 +1034,12 @@ function registerEventHandlers () {
 			updateAssociatedAttack(null,null,null,eventInfo);
 		}
 	}));
+		on("change:repeating_ability:toggle_attack_entry", TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				updateAssociatedAttack(null, null, null, eventInfo);
+			}
+		}));
 	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setRuleTab(null,null,null,eventInfo);
@@ -997,7 +1048,7 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setTypeTab(null,null,null,eventInfo);
 	}));
-// toggles the chat menu Show option for all repeating abilities	
+	// toggles the chat menu Show option for all repeating abilities	
 	on("change:showinmenu_all_abilities", function() {
 		getSectionIDs("repeating_ability", function(idArray) {
 			const fieldNames = idArray.map(id => `repeating_ability_${id}_showinmenu`);
@@ -1009,5 +1060,14 @@ function registerEventHandlers () {
 			});
 		});
 	});
+	//sync repeaitng_spells with settings>attacks>link spells
+    on("change:include_link_abilities", function (eventInfo) {
+    	var attr;
+    	TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+    	attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+    	if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
+    		updateIncludeLink();
+    	}
+    });
 }
 registerEventHandlers();

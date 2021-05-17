@@ -221,7 +221,7 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 			replacedStr = convertKL1KH1toMinMax(replacedStr);
 			//TAS.debug("replacedStr is now "+replacedStr);
 			if ( !validNumericStr(replacedStr)){
-				TAS.warn("cannot evaluate this to number: " + exprStr+" came back with " + replacedStr);
+				TAS.warn("cannot evaluate this to number: " + exprStr +" came back with " + replacedStr);
 				errcallback(null);
 			}
 			if (replacedStr === "" || replacedStr === null || replacedStr === undefined) {
@@ -273,7 +273,7 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 	},
 	errordone = function(a,b,c,currError){
 		var donesetter={};
-		////TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
+		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
 			setAttrs(donesetter,{silent:true});				

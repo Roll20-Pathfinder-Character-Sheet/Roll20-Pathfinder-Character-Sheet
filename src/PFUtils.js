@@ -16,7 +16,7 @@ NO asynchronous FUNCTIONS SHOULD GO HERE
  *@param {string} stringToSearch the value of the dropdown option selected
  *@returns {string} the attribute referenced by a dropdown option value.
  */
-export function findAbilityInString  (stringToSearch) {
+export function findAbilityInString (stringToSearch) {
     if (!stringToSearch) {
         return "";
     }
@@ -133,25 +133,34 @@ export function findAbilityInString  (stringToSearch) {
 }
 /** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
  *@param {int} casterlevel level of caster
+ *@param {int} use_metrics metric flag
  *@returns {jsobject} mapping like this: {close:int,medium:int,long:int}
  */
-export function calculateSpellRanges  (casterlevel) {
+export function calculateSpellRanges (casterlevel, use_metrics) {
     casterlevel = casterlevel || 0;
+        //metric multiplier ft to m
+        if (use_metrics > 0) {
+            use_metrics = 0.3048;
+        }
+        else{
+            use_metrics = 1;
+        }
     return {
-        close: 25 + (5 * (Math.floor(casterlevel / 2))),
-        medium: 100 + (10 * casterlevel),
-        "long": 400 + (40 * casterlevel)
+        close: Math.round((25 + (5 * (Math.floor(casterlevel / 2))))*use_metrics),
+        medium: Math.round((100 + (10 * casterlevel))*use_metrics),
+        "long": Math.round((400 + (40 * casterlevel))*use_metrics)
     };
 }
 /**findSpellRange -  calculates range number based on spell settings
  * @param {int} customRangeVal value that is in the custom range field, for "per level" or "custom" choices
  * @param {string} rangeDropdown selected value from spell range dropdown
  * @param {int} casterlevel the level of caster
+ * @param {int} use_metrics metric flag
  * @returns {int_or_""} the spell range
  */
-export function findSpellRange  (customRangeVal, rangeDropdown, casterlevel) {
+export function findSpellRange (customRangeVal, rangeDropdown, casterlevel, use_metrics) {
     var newRange = 0,
-    ranges = calculateSpellRanges(casterlevel);
+    ranges = calculateSpellRanges(casterlevel, use_metrics);
     casterlevel = casterlevel || 0;
     rangeDropdown=rangeDropdown||'blank';
     if (rangeDropdown[0] === "{") {

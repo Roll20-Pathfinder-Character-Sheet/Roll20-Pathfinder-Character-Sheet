@@ -444,7 +444,7 @@ function updateSkillByClassChkAsync(skill){
 }
 function recalculateSkillArrayMiscFields (skills, callback){
 	var doneOneMisc = _.after(_.size(skills),callback);
-	_.each(skills, function (skill) {
+	_.each(skills, function (skill) {		
 		SWUtils.evaluateAndSetNumber(skill + "-misc", skill + "-misc-mod", 0, function () {
 			doneOneMisc();
 		}, true);
@@ -464,7 +464,7 @@ function recalcSkillTotals (skills,callback,silently){
 	}),
 	fields, subfields;
 	fields = globalSkillModAttrs;
-	_.each(skills,function(skill){
+	_.each(skills, function (skill) {
 		var subfields=skillNameAppends.map(function(append){return skill+append;});
 		fields = fields.concat(subfields);
 	});
@@ -499,7 +499,6 @@ function recalcSkillArray (skills, callback, silently) {
 		recalcSkillTotals(skills,done,silently);
 	};
 	recalculateSkillArrayMiscFields(skills,doneMisc)
-
 }
 
 export function recalculateSkills (callback, silently, onlySkills) {
@@ -1046,9 +1045,12 @@ function registerEventHandlers () {
 		}));
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMiscFieldUpdate(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			//updateMiscAndSkillValAsync(skill);						
+			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+	//tests that -misc field can evalutate to a number.
+				SWUtils.evaluateAndSetNumber(skill + '-misc', skill + '-misc-mod', 0);
+			}
 			TAS.debug("calling evalute for "+skill);
-			SWUtils.evaluateAndAddToTotAsync(null,null,skill+'-misc',skill+'-misc-mod',skill);
+			SWUtils.evaluateAndAddToTotAsync(null, null, skill + '-misc', skill + '-misc-mod', skill);
 		}));
 		on("change:" + skill + "-cs", TAS.callback(function eventClassSkillCheckbox(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

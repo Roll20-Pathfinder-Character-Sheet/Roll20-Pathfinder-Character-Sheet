@@ -178,6 +178,33 @@
 			"type": "checkbox",
 			"value": "1",
 			"descriptiontranslationkey":"toggle-horror-adventures-long"
+		},
+		{
+			"attribute": "include_link_abilities",
+			"displayname": " Include link to Ability Attacks",
+			"displaytranslationkey": "include-link-abilities",
+			"type": "checkbox",
+			"value": "1",
+			"description": "When creating an Ability - based attack, include a link to the ability in the weapon notes.",
+			"descriptiontranslationkey": "options-attacks-include-link-abilities"
+		},
+		{
+			"attribute": "include_link_spells",
+			"displayname": " Include link to Spell Attacks",
+			"displaytranslationkey": "include-link-spells",
+			"type": "checkbox",
+			"value": "1",
+			"description": "When creating a Spell-based attack, include a link to the spell in the weapon notes.",
+			"descriptiontranslationkey": "options-attacks-include-link-spells"
+		},
+		{
+			"attribute": "use_metrics",
+			"displayname": " Use Metrics",
+			"displaytranslationkey": "use-metrics",
+			"type": "checkbox",
+			"value": "1",
+			"description": "Show auto-calculated totals for weight and distance as metric. This option DOES NOT convert user input for weight and distance. Ensure you have entered metric-based values.",
+			"descriptiontranslationkey": "options-use-metrics-title"
 		}
 	]
 }

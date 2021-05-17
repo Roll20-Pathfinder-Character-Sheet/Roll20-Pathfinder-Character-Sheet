@@ -259,6 +259,11 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		if(!rangedAttack || isNaN(maxA)) {
 			maxA=999;
 		}
+		//Multiplier only applies to an Ability bonus.
+		if (ability<=0) {
+			abilityMult=1
+			TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + ability);
+		}
 		abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
 		totalDamage = abilityTot + damageBuffs + miscDmg + enhance;
 		if (totalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -454,6 +459,11 @@ function getRecalculatedDamageOnly (id,v){
 			}
 			abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
 			damageBuffs -= dmgConditions;
+			//Multiplier only applies to an Ability bonus.
+			if (abilitydmg <= 0) {
+				abilityMult = 1
+				TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + abilitydmg);
+			}
 			abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
 			newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 			if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
@@ -644,6 +654,11 @@ function  getRecalculatedAttack (id,v,setter){
 		maxAbility=parseInt(maxAbility,10);
 		if(!isRanged || isNaN(maxAbility)) {
 			maxAbility=999;
+		}
+		//Multiplier only applies to an Ability bonus.
+		if (abilitydmg <= 0) {
+			abilityMult = 1
+			TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + abilitydmg);
 		}
 		abilityTotDmg = Math.min(Math.floor(abilityMult * abilitydmg), maxAbility);
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
@@ -1668,7 +1683,7 @@ function registerEventHandlers () {
 			//if (eventInfo.previousValue.indexOf('ange')>0 || eventInfo.newValue.indexOf('ange')>0)
 			setRepeatingWeaponRangedFlag();
 			//if there is a damage buff, we need to update damage if the type changed.
-			updateRepeatingWeaponDamage(null,eventInfo);
+			updateRepeatingWeaponDamage(null, eventInfo);
 		}
 	}));
 	on("change:repeating_weapon:attack", TAS.callback(function eventRepeatingWeaponAttack(eventInfo) {
