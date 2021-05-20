@@ -152,7 +152,7 @@ export function updateRepeatingItems(callback, silently, attrToUpdate) {
                 use_metrics = 0.454;
             }
             if(attrToUpdate.weight){
-                a.S['item_total_weight'] = ((Math.floor(m['item-weight'])*use_metrics)*100)/100;
+                a.S['item_total_weight'] = Math.floor(m['item-weight'] * use_metrics * 100) / 100;
             }
             if (attrToUpdate.hp){
                 a.S['item-total-hp'] = m['item-hp'];
@@ -190,6 +190,7 @@ function updateCarriedCurrency  (callback, silently) {
             carried = (parseInt(v["CP"], 10) || 0) + (parseInt(v["SP"], 10) || 0) + (parseInt(v["GP"], 10) || 0) + (parseInt(v["PP"], 10) || 0);
             TAS.debug("coin curr=" + curr + ", coin carried=" + carried);
             carried = (Math.floor(((carried/50)*use_metrics)*100))/100;
+            
             if (curr !== carried) {
                 if (silently) {
                     params = PFConst.silentParams;
