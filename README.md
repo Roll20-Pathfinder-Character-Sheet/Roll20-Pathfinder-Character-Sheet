@@ -71,7 +71,6 @@ some help: https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integ
 
 ### Errors/Issues
 - Error: Cannot find module 'webpack': you may need link globally installed package to your project using `npm link webpack-cli`.
-- Module not found: Error: Can't resolve 'TheAaronSheet': package.json looks for a local copy of TAS here "node_modules/TheAaronSheet.js" Grab a current copy of TAS from `https://raw.githubusercontent.com/shdwjk/TheAaronSheet/master/TheAaronSheet.js` and save it as "TheAaronSheet.js" in local the node_modules/ directory.
 
 # Module Breakdown
 Each "page" or section of the Pathfinder sheet has one or more modules associated with it. For instance, the core page has PFAbilityScores, PFInitiative, PFClassRaceGrid etc. The Defense page has PFDefense, PFSaves. The Attacks page has PFAttacks, spells page PFSpells, etc.
