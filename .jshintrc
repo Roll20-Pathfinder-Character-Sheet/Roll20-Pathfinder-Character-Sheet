@@ -7,13 +7,14 @@
     "asi": true,
     "plusplus": false,
     "onevar": true,
-    "bitwise"       : true,   // Prohibit bitwise operators (&, |, ^, etc.)
+    "bitwise" : true,   // Prohibit bitwise operators (&, |, ^, etc.)
     "sub":true,
-    "immed"         : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
-    "regexp"        : false,   // Prohibit `.` and `[^...]` in regular expressions.
-    "regexdash"     : true,    // Tolerate unescaped last dash i.e. `[-...]`
+    "immed" : true,   // Require immediate invocations to be wrapped in parens e.g. `( function(){}() );`
+    "regexp" : false,   // Prohibit `.` and `[^...]` in regular expressions.
+    "regexdash" : true,    // Tolerate unescaped last dash i.e. `[-...]`
     "-W086": true, //Expected a 'break' statement before 'default' (switch statements)
     "-W119": true,    //import error use esversion:6, since that causes other errors
     "-W097": true,     //use the function form of use strict
-    "esversion": 6
+    "esversion": 6,
+    "node": true
 }
