@@ -3217,20 +3217,20 @@
 						<div class="table-name secondary-table-name show-readonly" data-i18n="additional-damage">Extra Damage</div>
 						<div class="table-row">
 							<span class="table-cell small-label" >
+								<input style="height:2.15em;" type="text" name="attr_global_precision_dmg_type" title="@{global_precision_dmg_type}" value="" data-i18n-placeholder="damage-type-or-description" />
+								<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
+							</span>
+							<span class="table-cell small-label" >
 								<textarea class="macro-text-inline both" name="attr_global_precision_dmg_macro" title="@{global_precision_dmg_macro}" value="" data-i18n-placeholder="full-macro-place" ></textarea>
 								<span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
 							</span>
-							<span class="table-cell small-label" >
-								<input style="height:2.15em;" type="text" name="attr_global_precision_dmg_type" title="@{global_precision_dmg_type}" value="" data-i18n-placeholder="damage-type-or-description" />
+							<span class="table-cell small-label">
+								<input style="height:2.15em;" type="text" name="attr_global_critical_dmg_type" title="@{global_critical_dmg_type}" value="" data-i18n-placeholder="damage-type-or-description" />
 								<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 							</span>
 							<span class="table-cell small-label" >
 								<textarea class="macro-text-inline both" name="attr_global_critical_dmg_macro" title="@{global_critical_dmg_macro}" value="" data-i18n-placeholder="full-macro-place" ></textarea>
 								<span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
-							</span>
-							<span class="table-cell small-label" >
-								<input style="height:2.15em;" type="text" name="attr_global_critical_dmg_type" title="@{global_critical_dmg_type}" value="" data-i18n-placeholder="damage-type-or-description" />
-								<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 							</span>
 						</div>
 					</div>
@@ -3519,21 +3519,21 @@
 									</div>									
 									<div class="extra-damage center">
 										<label class="small-label2" style="width:23.85%;">
-											<span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
-											<textarea class="macro-text-inline both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
-										</label>
-										<label class="small-label2" style="width:23.85%;">
 											<span class="nondual-sect" data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 											<span class="dual-sect" data-i18n-title="extra-damage-condition" data-i18n-aria-label="extra-damage-condition" title="Extra Damage type" data-i18n="rake-rend-etc">Condition</span>
 											<textarea class="macro-text-inline both" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" data-i18n-placeholder="damage-type-or-description" placeholder="Dmg type / Description"></textarea>
-										</label>
-										<label class="small-label2 nondual-sect" style="width:23.85%;">
-											<span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
-											<textarea class="macro-text-inline both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
+										</label>										
+										<label class="small-label2" style="width:23.85%;">
+											<span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
+											<textarea class="macro-text-inline both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
 										</label>
 										<label class="small-label2 nondual-sect" style="width:23.85%;">
 											<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 											<textarea class="macro-text-inline both" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" data-i18n-placeholder="damage-type-or-description" placeholder="Dmg type / Description"></textarea>
+										</label>										
+										<label class="small-label2 nondual-sect" style="width:23.85%;">
+											<span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
+											<textarea class="macro-text-inline both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
 										</label>
 									</div>
 									<div class="table iterative_attack_section">
@@ -15257,8 +15257,8 @@
 					{{#name}}{{name}}{{/name}}
 				</h3>
 				{{#subtitle}}<h4>{{subtitle}}</h4>{{/subtitle}}
-				{{#check}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="check"></span>:** {{check}}</span></label>{{/check}}
-				{{#class}}<label style="display:inline-block;"><span class="sheet-right">**<span data-i18n="class"></span>:** {{class}}</span></label>{{/class}}
+				{{#check}}<label>**<span data-i18n="check"></span>:**<span class="sheet-right">{{check}}</span></label>{{/check}}
+				{{#class}}<label>**<span data-i18n="class"></span>:**<span class="sheet-right">{{class}}</span></label>{{/class}}
 				{{#lefttext_1}}<label><span>{{lefttext_1}}</span></label>{{/lefttext_1}}
 				{{#righttext_1}}<label><span class="sheet-right">{{righttext_1}}</span></label>{{/righttext_1}}
 				{{#lefttext_2}}<label><span>{{lefttext_2}}</span></label>{{/lefttext_2}}

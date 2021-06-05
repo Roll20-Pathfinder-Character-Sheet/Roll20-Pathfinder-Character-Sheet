@@ -3917,11 +3917,14 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     border-width: 0.1rem;
     border-style: solid;
     border-spacing: 0;
+    /*
     border-collapse: collapse;
+    */
     -moz-box-shadow: 0.2rem 0.2rem 0.5rem Black;
     -webkit-box-shadow: 0.2rem 0.2rem 0.5rem Black;
     box-shadow: 0.2rem 0.2rem 0.5rem Black;
     overflow: hidden;
+    border-radius: 6px;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-roll-header,
@@ -3968,6 +3971,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_spell div.sheet-roll-accessible,
 .sheet-rolltemplate-pf_block div.sheet-roll-accessible {
     width: 100%;
+    overflow: hidden;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-roll-tablerounded,
@@ -4065,13 +4069,10 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .sheet-roll-cell,
 .sheet-rolltemplate-pf_spell .sheet-roll-cell,
 .sheet-rolltemplate-pf_block .sheet-roll-cell {
-    display: table-cell;
-    padding: 0.3rem 0.2rem 0.1rem 0.3rem;
-    line-height: 1.1em;
-    text-align: left;
-    font-size: 1.3rem;
-    vertical-align: top;
-    overflow: hidden;
+	line-height: 1.1em;
+	font-size: 1.3rem;
+	overflow: hidden;
+	display: inline-block;
 }
 
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi>.sheet-roll-row:nth-child(2) {
@@ -4160,11 +4161,11 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_spell .sheet-roll-groupi .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_attack .sheet-roll-groupc .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_spell .sheet-roll-groupc .sheet-roll-row .sheet-roll-cell:last-child {
-    text-align: right;
-    padding: 0.1rem 0.1rem 0.1rem 0;
-    min-width: 5.65rem;
-    position: relative;
-    z-index: 1;
+	text-align: right;
+	padding: 0.1rem 0.1rem 0.1rem 0;
+	position: relative;
+	z-index: 1;
+	float: right;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-right,
@@ -4252,7 +4253,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible .sheet-roll-header,
 .sheet-rolltemplate-pf_spell .sheet-roll-accessible .sheet-roll-header,
 .sheet-rolltemplate-pf_block .sheet-roll-accessible .sheet-roll-header {
-    margin: 0.2rem 0 0.1rem 0;
+    margin: 0 0 0.2rem 0;
     font-size: 1.3rem;
     line-height: 1.75rem;
     display: block;
@@ -4277,17 +4278,14 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible>label,
 .sheet-rolltemplate-pf_spell .sheet-roll-accessible>label,
 .sheet-rolltemplate-pf_block .sheet-roll-accessible>label {
-    max-width: 99%;
     line-height: 1.4em;
-    font-size: 1.3rem;
     margin: 0 .2em 0 .2em;
-    clear: both;
 }
 
-.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg-x span:first-child {
-    float: left;
-    line-height: 1.4em;
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg-x span:first-child {    
+    display: inline-grid;
     padding-top: 0;
+    margin: -1px 0 0 0;
 }
 
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible label.sheet-dmg-x span:last-child {
@@ -4302,6 +4300,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_block .sheet-roll-accessible>label span {
     line-height: 1em;
     font-size: 1.3rem;
+    display: inline-block;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-roll-accessible .sheet-right,
