@@ -1048,15 +1048,30 @@ function registerEventHandlers () {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setTypeTab(null,null,null,eventInfo);
 	}));
-	// toggles the chat menu Show option for all repeating abilities	
-	on("change:showinmenu_all_abilities", function() {
-		getSectionIDs("repeating_ability", function(idArray) {
-			const fieldNames = idArray.map(id => `repeating_ability_${id}_showinmenu`);
-			getAttrs(['showinmenu_all_abilities'], function(values) {  
-				const toggle = +values['showinmenu_all_abilities']||0;
-				const settings = fieldNames.reduce((obj, item) => (obj[item] = toggle, obj) ,{});
-				setAttrs(settings);
-				PFAbility.recalculate();
+	// toggles the chat menu Show option for all repeating abilities
+	on("change:showinmenu_all_abilities", function () {
+		getSectionIDs("repeating_ability", function (idArrayAbility) {
+			getSectionIDs("repeating_mythic-ability", function (idArrayMythicAbility) {
+				getSectionIDs("repeating_mythic-feat", function (idArrayMythicFeat) {
+					const fieldNamesAbility = idArrayAbility.map(id => `repeating_ability_${id}_showinmenu`),
+						fieldNamesMythicAbility = idArrayMythicAbility.map(id => `repeating_mythic-ability_${id}_showinmenu`),
+						fieldNamesMythicFeat = idArrayMythicFeat.map(id => `repeating_mythic-feat_${id}_showinmenu`);
+					getAttrs(['showinmenu_all_abilities'], function (values) {
+						const toggle = +values['showinmenu_all_abilities'] || 0,
+							settings = {};
+						fieldNamesAbility.forEach(field => { // loop through the showinmenus array 
+							settings[field] = toggle; // assign the toggle value to each row's attribute 
+						});
+						fieldNamesMythicAbility.forEach(field => {
+							settings[field] = toggle;
+						});
+						fieldNamesMythicFeat.forEach(field => {
+							settings[field] = toggle;
+						});
+						setAttrs(settings);
+						PFAbility.recalculate();
+					});
+				});
 			});
 		});
 	});

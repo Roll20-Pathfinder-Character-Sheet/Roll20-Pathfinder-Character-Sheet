@@ -39,6 +39,7 @@
 			</h2>
 			<ol>
 				<li>Small adjustments to the regular roll template.</li>
+				<li>Fixed; the 'Show' in chat menu column option, was not toggling Mythic Abilities and Feats.</li>
 				<li>Inverted the order of fields for extra damage to match roll template output. Type then macro.</li>
 				<li>Fixed; 3-column layout of NPC skills list.</li>
 				<li>Fixed; fractional item weight was being rounded down.</li>
@@ -8204,7 +8205,8 @@
 								<input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<span style="display:none;" class="small-label2 repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
 								<span class="small-label2 repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
-								<label class="small-label2" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
+								<label class="small-label2"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
+								<label class="small-label2 entry-20p-shrink"><input title="@{repeating_ability_$X_name}" type="text" name="attr_name" data-i18n-placeholder="name" accept="Name" /><span data-i18n="name">Name</span></label>
 								<label class="small-label2 entry-12p-shrink">
 									<select class="select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
@@ -8243,7 +8245,6 @@
 									<input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="calc" readonly />
 									<span class="nowrap" data-i18n="source-name">Source Name</span>
 								</label>
-								<label class="small-label2 entry-20p-shrink"><input title="@{repeating_ability_$X_name}" type="text" name="attr_name" data-i18n-placeholder="name"  accept="Name" /><span data-i18n="name">Name</span></label>
 								<label class="small-label2 exspsu-dropdown">
 									<select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
 										<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
@@ -12859,7 +12860,8 @@
 								<input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
 								<span class="small-label2 repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_ability_$X_npc-roll}" value="@{NPC-Whisper} @{macro-text}"></button></span>
 								<span style="display:none;" class="small-label2 repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_ability_$X_roll}" value="@{PC-Whisper} @{macro-text}"></button></span>
-								<label class="small-label2" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
+								<label class="small-label2"><input type="checkbox" name="attr_showinmenu" title="@{repeating_ability_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
+								<label class="small-label2 entry-20p-shrink"><input title="@{repeating_ability_$X_name}" type="text" name="attr_name" data-i18n-placeholder="name" accept="Name" /><span data-i18n="name">Name</span></label>
 								<label class="small-label2 entry-12p-shrink">
 									<select class="select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category" >
 										<option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
@@ -12898,7 +12900,6 @@
 									<input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="calc" readonly />
 									<span class="nowrap" data-i18n="source-name">Source Name</span>
 								</label>
-								<label class="small-label2 entry-20p-shrink"><input title="@{repeating_ability_$X_name}" type="text" name="attr_name" data-i18n-placeholder="name"  accept="Name" /><span data-i18n="name">Name</span></label>
 								<label class="small-label2 exspsu-dropdown">
 									<select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
 										<option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>

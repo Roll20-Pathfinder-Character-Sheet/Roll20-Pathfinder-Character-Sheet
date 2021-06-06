@@ -3333,10 +3333,11 @@ spellclass-concentration spellcaster-button {
     margin-left: -2.25em;
     width: 2em;
 }
-
+/*
 .charsheet .split-column-show:checked~.repeating-fields .small-label2 {
     height: auto;
 }
+*/
 
 .charsheet .split-column-show:checked~.repeating-fields .small-label2 span:not(.autoexpand) {
     margin: 0 -.2em 0 -.2em;
@@ -3421,7 +3422,7 @@ spellclass-concentration spellcaster-button {
 .charsheet .readonly-show:not(:checked)~.main .entry-15p-shrink,
 .charsheet .split-column-show:checked~.repeating-fields .entry-15p,
 .charsheet .split-column-show:checked~.repeating-fields .entry-15p-shrink {
-    width: 20%;
+    width: auto;
 }
 
 .charsheet .entry-12p,
@@ -3436,7 +3437,7 @@ spellclass-concentration spellcaster-button {
 
 .charsheet .readonly-show:not(:checked)~.main .entry-12p-shrink,
 .charsheet .split-column-show:checked~.repeating-fields .entry-12p-shrink {
-    width: 10%;
+    width: auto;
 }
 
 .charsheet .entry-10p-shrink {
