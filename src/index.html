@@ -56,7 +56,7 @@
 			</ol>
 			<label class="boldlabel-check"><input type="checkbox" name="attr_attentionv172-show" value="1">&nbsp;<b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="cheat"></div>
-			<label><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000FF;" name="roll_blank" value="https://tinyurl.com/PFCommunityOld"><b data-i18n="announcements-old">Old Announcements</b></button></label>
+			<label><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000FF;" name="roll_blank" value="https://tinyurl.com/PFCommunityOld"><b data-i18n="announcements-old">Old Announcements</b></button></label>
 		</div>
 	</div>
 	<div class="cheat"></div>
@@ -1467,7 +1467,7 @@
 					<label class="small-label2 autoexpand"><input title="@{homeland}" type="text" name="attr_homeland" data-i18n-placeholder="details-homeland" /><span data-i18n="homeland">Homeland</span><span name="attr_homeland" class="autoexpand"></span></label>
 					<label class="small-label2 autoexpand"><input title="@{occupation}" type="text" name="attr_occupation" data-i18n-placeholder="details-occupation" /><span data-i18n="occupation">Occupation</span><span name="attr_occupation" class="autoexpand"></span></label>
 					<label class="small-label2 autoexpand"><input data-i18n-title="vision-title" data-i18n-aria-label="vision-title" type="text" name="attr_vision" data-i18n-placeholder="vision-details" /><span data-i18n="vision-senses">Vision and Senses</span><span name="attr_vision" class="autoexpand"></span></label>
-					<label class="small-label2 autoexpand"><input title="@{languages}" type="text" name="attr_languages" value="" data-i18n-placeholder="details-languages"  class="entry-wide" style="width:100%;" /><span data-i18n="languages">Languages</span><span name="attr_languages" class="autoexpand"></span></label>
+					<label class="small-label2 autoexpand"><input title="@{languages}" type="text" name="attr_languages" value="" data-i18n-placeholder="details-languages"  class="entry-wide" /><span data-i18n="languages">Languages</span><span name="attr_languages" class="autoexpand"></span></label>
 					<input title="@{CMD-size}" type="hidden" name="attr_CMD-size" value="0">
 					<input title="@{size_skill_double}" type="hidden" name="attr_size_skill_double" value="0">
 					<span class="cheat"></span>
@@ -1746,7 +1746,7 @@
 										<span class="table-header" data-i18n-title="willpower-save-abbrv" data-i18n-aria-label="will-save" data-i18n="willpower-abbrv">Will</span>
 									</div>
 									<div class="table-row">
-										<span class="table-cell" data-i18n-title="type-or-sub-type"  style="padding-left:0.5em;"><b><span data-i18n="type">Type</span></b></span>
+										<span class="table-cell" data-i18n-title="type-or-sub-type" style="padding-left:0.5em;"><b><span data-i18n="type">Type</span></b></span>
 										<span class="table-cell left" style="padding-left:0.5em;"><span title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type"  class="left"></span></span>
 										<span class="table-cell"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /></span>
 										<span class="table-cell"><input title="@{npc-hd}" type="text" name="attr_npc-hd" value="" class="number" /></span>
@@ -2019,7 +2019,7 @@
 										<label class="showsect macro-text-showlabel hide-readonly super note-d" data-i18n="macro-text">Macro Text</label>
 										<input type="checkbox" class="showarrow init-notes-show" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:0.25em;">
 										<label class="showsect init-notes-showlabel" data-i18n="notes">Notes</label>								
-										<div class="macro-text hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:0.25em; background-color:inherit; font-weight:bold;">
+										<div class="macro-text hide-readonly">
 											<h3 class="super note-d" data-i18n="full-macro">Full Macro:</h3>
  											<textarea class="macro-text-inline" name="attr_init-macro-text" title="@{init-macro-text}" data-i18n-placeholder="full-macro-place" >&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options} {{buff_note=@{buff_init_notes}}} {{condition_note=@{condition_init_notes}}}</textarea>
  											<br>
@@ -2030,9 +2030,6 @@
 											<textarea class="inline-textarea" name="attr_init_notes" title="@{init_notes}" data-i18n-placeholder="initiative-notes" ></textarea>
 											<input type="hidden" name="attr_var_init_notes" value="{{description=@{init_notes}}}" disabled />
 											<input type="hidden" name="attr_init_options" value="@{toggle_init_notes}" disabled />
-											<br class="show-readonly inverse-readonly"/>
-											<label class="center small-label" style="width:100%;">
-											</label>
 										</div>
 									</div>
 								</div>
@@ -2102,9 +2099,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="hide-readonly" style="width:100%;margin-top:0.25em;text-align:center;">
-							<textarea class="inline-textarea" name="attr_speed-notes" title="@{speed-notes}" data-i18n-placeholder="speed-notes"  style="margin-top:0; margin-bottom:0; height:2.5rem;"></textarea>
-							<label class="center small-label"><span data-i18n="speed-notes">Speed Notes</span></label>
+						<div class="hide-readonly center">
+							<textarea class="inline-textarea" name="attr_speed-notes" title="@{speed-notes}" data-i18n-placeholder="speed-notes"></textarea>
+							<label class="small-label"><span data-i18n="speed-notes">Speed Notes</span></label>
 						</div>
 					</div>
 				</div>
@@ -2261,14 +2258,15 @@
 							<label class="showsect all-saves-macro-showlabel hide-readonly super note-d" data-i18n="all-saves-macro">All Saves Macro</label>
 							<input type="checkbox" class="showarrow save-notes-show" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_save-notes-show" value="1" style="margin-left:0.25em;" aria-label="Click to expand">
 							<label class="showsect save-notes-showlabel" data-i18n="notes">Notes</label>        
-							<div class="macro-text hide-readonly" style="width:100%; height:auto; clear:both; padding-bottom:0.25em; background-color:inherit;">
+							<div class="macro-text hide-readonly">
 								<textarea class="macro-text-inline" name="attr_all_saves-macro" data-i18n-title="all-saves-macro-title" >&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-save}=@{will-macro-text}}} @{toggle_save_notes} {{buff_note=@{buff_save_notes}}} {{condition_note=@{condition_save_notes}}} {{condition_note=@{condition_save_notes}}}</textarea>
 							</div>        
-							<div class="save-notes" style="vertical-align:top; width:100%; height:auto; clear:both;">
-								<div class="show-readonly inverse-readonly" style="margin-top:1em;">&nbsp;</div> <!-- add whitespace in compact mode -->
-								<span class="table-cell" style="width:100%;">
-								<textarea class="inline-textarea" title="@{Save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes-place" ></textarea></span>
-								<span class="table-cell nowrap"><label><input type="checkbox" class="selectedlabel-check" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}"><b data-i18n-title="options-defenses-save-title" data-i18n-aria-label="options-defenses-save-title" data-i18n="include-save-notes">Include Save Notes in roll</b></label></span>	
+							<div class="save-notes">
+								<label>
+									<input type="checkbox" class="selectedlabel-check" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}" />
+									<b data-i18n-title="options-defenses-save-title" data-i18n-aria-label="options-defenses-save-title" data-i18n="include-save-notes">Include Save Notes in roll</b>
+								</label>
+								<textarea class="inline-textarea" title="@{Save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes-place" ></textarea>
 							</div>
 						</div>
 					</div>
@@ -2645,7 +2643,7 @@
 						<div class="table-row">
 							<span class="table-cell right nowrap"><span data-i18n-title="maximum-dexterity-title" data-i18n-aria-label="maximum-dexterity-title" data-i18n="maximum-dexterity-bonus-abbrv">Max Dex</span>:&nbsp;<input title="@{max-dex}" type="number" name="attr_max-dex" value="99" class="calc" style="max-width:3em;" readonly /></span>
 							<label class="table-rollbuttoncell">
-								<button style="width:100%;" class="nowrap" type="roll" title="%{selected|Spell-Fail-Check)" name="roll_Spell-Fail-Check" value="@{PC-whisper} @{spell-fail-macro}">&nbsp;
+								<button  class="nowrap" type="roll" title="%{selected|Spell-Fail-Check)" name="roll_Spell-Fail-Check" value="@{PC-whisper} @{spell-fail-macro}">&nbsp;
 									<span style="vertical-align:middle;" data-i18n="spell-failure">Spell Fail</span>&nbsp;
 									<span style="vertical-align:middle;" title="@{spell-fail}" name="attr_spell-fail"></span>
 									<span>%</span>
@@ -3216,7 +3214,7 @@
 				<input class="showarrow h2arrow" type="checkbox" name="attr_attack-options-show" data-i18n-aria-label="macro-options" data-i18n-title="showsect-cmd" value="1" checked />
 				<h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="extra-damage-or-attack-modifiers">Extra Damage or Attack Modifiers</label></h2>
 				<div class="h2-section extra-damage-section" style="margin-top:0.5em;">
-					<div class="table extra-damage options named" style="width:100%;">
+					<div class="table extra-damage options named" >
 						<div class="table-name secondary-table-name show-readonly" data-i18n="additional-damage">Extra Damage</div>
 						<div class="table-row">
 							<span class="table-cell small-label" >
@@ -3718,14 +3716,14 @@
 											</span>
 										</div>
 									</div>
-									<div class="advanced-macros nondual-sect" style="width:100%;height:auto;clear:both;">
+									<div class="advanced-macros nondual-sect">
 										<div class="center repeating-hidesect">
 											<div class="insertmacrocell" style="width:48.5%">
 												<input class="textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
 												<label class="small-label2">
 													<span class="super note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
 													<input type="hidden" name="attr_var_attack_macro_insert" value="[[ @{attack_macro_insert} ]] [Macro]" />
-													<textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place"  title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
+													<textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
 												</label>
 											</div>
 											<div class="insertmacrocell" style="width:48.5%">
@@ -3733,13 +3731,13 @@
 												<label class="small-label2">
 													<span class="super note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
 													<input type="hidden" name="attr_var_damage_macro_insert" value="[[ @{damage_macro_insert} ]] [Macro]" />
-													<textarea class="macro-text-inline both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place"  title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
+													<textarea class="macro-text-inline both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
 												</label>
 											</div>
 										</div>
 									</div>
-									<div class="macro-text" style="width:100%;height:auto;clear:both;">
-										<label class="small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:0.2rem;padding-right:0.2rem;">
+									<div class="macro-text">
+										<label class="small-label2" style="width:100%;">
 											<h3 class="super note-d" data-i18n="full-macro">Full Macro:</h3>
 											<div class="cheat"></div>
 											<textarea class="macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
@@ -6689,7 +6687,7 @@
 						<div class="misc-skill-2 table-row adventure bg" data-i18n-list-item="miscellaneous-03"><!--used to keep these sections from collapsing on each other when hidden--></div>
 						<div class="table-row misc adventure" data-i18n-list-item="miscellaneous-04">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-0-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-0-macro}" name="roll_Misc-Skill-0-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{Misc-Skill-0-name}" name="attr_Misc-Skill-0-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{Misc-Skill-0-name}" name="attr_Misc-Skill-0-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{Misc-Skill-0}" type="number" name="attr_Misc-Skill-0" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-0-ranks}" type="number" name="attr_Misc-Skill-0-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-0-cs}" type="checkbox" name="attr_Misc-Skill-0-cs" value="3" /></span>
@@ -6722,7 +6720,7 @@
 						</div>
 						<div class="table-row misc adventure misc-skill-2" data-i18n-list-item="miscellaneous-05">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-1-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-1-macro}" name="roll_Misc-Skill-1-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{Misc-Skill-1-name}" name="attr_Misc-Skill-1-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{Misc-Skill-1-name}" name="attr_Misc-Skill-1-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{Misc-Skill-1}" type="number" name="attr_Misc-Skill-1" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-1-ranks}" type="number" name="attr_Misc-Skill-1-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-1-cs}" type="checkbox" name="attr_Misc-Skill-1-cs" value="3" /></span>
@@ -6755,7 +6753,7 @@
 						</div>
 						<div class="table-row misc adventure misc-skill-3" data-i18n-list-item="miscellaneous-06">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-2-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-2-macro}" name="roll_Misc-Skill-2-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{Misc-Skill-2-name}" name="attr_Misc-Skill-2-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{Misc-Skill-2-name}" name="attr_Misc-Skill-2-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{Misc-Skill-2}" type="number" name="attr_Misc-Skill-2" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-2-ranks}" type="number" name="attr_Misc-Skill-2-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-2-cs}" type="checkbox" name="attr_Misc-Skill-2-cs" value="3" /></span>
@@ -6788,7 +6786,7 @@
 						</div>
 						<div class="table-row misc adventure misc-skill-6" data-i18n-list-item="miscellaneous-07">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-3-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-3-macro}" name="roll_Misc-Skill-3-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-3-name}" type="text" name="attr_Misc-Skill-3-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-3-name}" type="text" name="attr_Misc-Skill-3-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-3}" type="number" name="attr_Misc-Skill-3" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-3-ranks}" type="number" name="attr_Misc-Skill-3-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-3-cs}" type="checkbox" name="attr_Misc-Skill-3-cs" value="3" /></span>
@@ -6821,7 +6819,7 @@
 						</div>
 						<div class="table-row misc adventure misc-skill-6" data-i18n-list-item="miscellaneous-08">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-4-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-4-macro}" name="roll_Misc-Skill-4-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-4-name}" type="text" name="attr_Misc-Skill-4-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-4-name}" type="text" name="attr_Misc-Skill-4-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-4}" type="number" name="attr_Misc-Skill-4" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-4-ranks}" type="number" name="attr_Misc-Skill-4-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-4-cs}" type="checkbox" name="attr_Misc-Skill-4-cs" value="3" /></span>
@@ -6854,7 +6852,7 @@
 						</div>
 						<div class="table-row misc bg misc-skill-6" data-i18n-list-item="miscellaneous-09">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-5-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-5-macro}" name="roll_Misc-Skill-5-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-5-name}" type="text" name="attr_Misc-Skill-5-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-5-name}" type="text" name="attr_Misc-Skill-5-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-5}" type="number" name="attr_Misc-Skill-5" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-5-ranks}" type="number" name="attr_Misc-Skill-5-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-5-cs}" type="checkbox" name="attr_Misc-Skill-5-cs" value="3" /></span>
@@ -6887,7 +6885,7 @@
 						</div>
 						<div class="table-row misc bg misc-skill-10" data-i18n-list-item="miscellaneous-10">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-6-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-6-macro}" name="roll_Misc-Skill-6-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-6-name}" type="text" name="attr_Misc-Skill-6-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-6-name}" type="text" name="attr_Misc-Skill-6-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-6}" type="number" name="attr_Misc-Skill-6" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-6-ranks}" type="number" name="attr_Misc-Skill-6-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-6-cs}" type="checkbox" name="attr_Misc-Skill-6-cs" value="3" /></span>
@@ -6920,7 +6918,7 @@
 						</div>
 						<div class="table-row misc bg misc-skill-10" data-i18n-list-item="miscellaneous-11">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-7-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-7-macro}" name="roll_Misc-Skill-7-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-7-name}" type="text" name="attr_Misc-Skill-7-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-7-name}" type="text" name="attr_Misc-Skill-7-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-7}" type="number" name="attr_Misc-Skill-7" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-7-ranks}" type="number" name="attr_Misc-Skill-7-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-7-cs}" type="checkbox" name="attr_Misc-Skill-7-cs" value="3" /></span>
@@ -6953,7 +6951,7 @@
 						</div>
 						<div class="table-row misc bg misc-skill-10" data-i18n-list-item="miscellaneous-12">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-8-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-8-macro}" name="roll_Misc-Skill-8-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-8-name}" type="text" name="attr_Misc-Skill-8-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-8-name}" type="text" name="attr_Misc-Skill-8-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-8}" type="number" name="attr_Misc-Skill-8" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-8-ranks}" type="number" name="attr_Misc-Skill-8-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-8-cs}" type="checkbox" name="attr_Misc-Skill-8-cs" value="3" /></span>
@@ -6986,7 +6984,7 @@
 						</div>
 						<div class="table-row misc bg misc-skill-10" data-i18n-list-item="miscellaneous-13">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-9-Check}" type="roll" value="@{PC-Whisper} @{Misc-Skill-9-macro}" name="roll_Misc-Skill-9-Check"></button></span>
-							<span class="table-cell left"><input title="@{Misc-Skill-9-name}" type="text" name="attr_Misc-Skill-9-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{Misc-Skill-9-name}" type="text" name="attr_Misc-Skill-9-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-9}" type="number" name="attr_Misc-Skill-9" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-9-ranks}" type="number" name="attr_Misc-Skill-9-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{Misc-Skill-9-cs}" type="checkbox" name="attr_Misc-Skill-9-cs" value="3" /></span>
@@ -7408,7 +7406,7 @@
 						<div class="misc-skill-2 table-row consolidated" data-i18n-list-item="cs-miscellaneous-03"><!--used to keep these sections from collapsing on each other when hidden--></div>
 						<div class="table-row misc consolidated" data-i18n-list-item="cs-miscellaneous-04">
 							<span class="table-cell"><button title="%{selected|CS-Misc-Skill-0-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-0-macro}" name="roll_CS-Misc-Skill-0-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-0-name}" name="attr_CS-Misc-Skill-0-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-0-name}" name="attr_CS-Misc-Skill-0-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-0}" type="number" name="attr_CS-Misc-Skill-0" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-0-ranks}" type="number" name="attr_CS-Misc-Skill-0-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-0-cs}" type="checkbox" name="attr_CS-Misc-Skill-0-cs" value="3" /></span>
@@ -7441,7 +7439,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-2" data-i18n-list-item="cs-miscellaneous-05">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-1-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-1-macro}" name="roll_CS-Misc-Skill-1-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-1-name}" name="attr_CS-Misc-Skill-1-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-1-name}" name="attr_CS-Misc-Skill-1-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-1}" type="number" name="attr_CS-Misc-Skill-1" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-1-ranks}" type="number" name="attr_CS-Misc-Skill-1-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-1-cs}" type="checkbox" name="attr_CS-Misc-Skill-1-cs" value="3" /></span>
@@ -7474,7 +7472,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-3" data-i18n-list-item="cs-miscellaneous-06">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-2-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-2-macro}" name="roll_CS-Misc-Skill-2-Check"></button></span>
-							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-2-name}" name="attr_CS-Misc-Skill-2-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;"></span>
+							<span class="table-cell left"><input type="text" title="@{CS-Misc-Skill-2-name}" name="attr_CS-Misc-Skill-2-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;"></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-2}" type="number" name="attr_CS-Misc-Skill-2" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-2-ranks}" type="number" name="attr_CS-Misc-Skill-2-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-2-cs}" type="checkbox" name="attr_CS-Misc-Skill-2-cs" value="3" /></span>
@@ -7507,7 +7505,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-6" data-i18n-list-item="cs-miscellaneous-07">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-3-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-3-macro}" name="roll_CS-Misc-Skill-3-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-3-name}" type="text" name="attr_CS-Misc-Skill-3-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-3-name}" type="text" name="attr_CS-Misc-Skill-3-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-3}" type="number" name="attr_CS-Misc-Skill-3" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-3-ranks}" type="number" name="attr_CS-Misc-Skill-3-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-3-cs}" type="checkbox" name="attr_CS-Misc-Skill-3-cs" value="3" /></span>
@@ -7540,7 +7538,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-6" data-i18n-list-item="cs-miscellaneous-08">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-4-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-4-macro}" name="roll_CS-Misc-Skill-4-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-4-name}" type="text" name="attr_CS-Misc-Skill-4-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-4-name}" type="text" name="attr_CS-Misc-Skill-4-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-4}" type="number" name="attr_CS-Misc-Skill-4" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-4-ranks}" type="number" name="attr_CS-Misc-Skill-4-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-4-cs}" type="checkbox" name="attr_CS-Misc-Skill-4-cs" value="3" /></span>
@@ -7573,7 +7571,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-6" data-i18n-list-item="cs-miscellaneous-09">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-5-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-5-macro}" name="roll_CS-Misc-Skill-5-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-5-name}" type="text" name="attr_CS-Misc-Skill-5-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-5-name}" type="text" name="attr_CS-Misc-Skill-5-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-5}" type="number" name="attr_CS-Misc-Skill-5" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-5-ranks}" type="number" name="attr_CS-Misc-Skill-5-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-5-cs}" type="checkbox" name="attr_CS-Misc-Skill-5-cs" value="3" /></span>
@@ -7606,7 +7604,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-10" data-i18n-list-item="cs-miscellaneous-10">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-6-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-6-macro}" name="roll_CS-Misc-Skill-6-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-6-name}" type="text" name="attr_CS-Misc-Skill-6-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-6-name}" type="text" name="attr_CS-Misc-Skill-6-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-6}" type="number" name="attr_CS-Misc-Skill-6" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-6-ranks}" type="number" name="attr_CS-Misc-Skill-6-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-6-cs}" type="checkbox" name="attr_CS-Misc-Skill-6-cs" value="3" /></span>
@@ -7639,7 +7637,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-10" data-i18n-list-item="cs-miscellaneous-11">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-7-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-7-macro}" name="roll_CS-Misc-Skill-7-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-7-name}" type="text" name="attr_CS-Misc-Skill-7-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-7-name}" type="text" name="attr_CS-Misc-Skill-7-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-7}" type="number" name="attr_CS-Misc-Skill-7" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-7-ranks}" type="number" name="attr_CS-Misc-Skill-7-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-7-cs}" type="checkbox" name="attr_CS-Misc-Skill-7-cs" value="3" /></span>
@@ -7672,7 +7670,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-10" data-i18n-list-item="cs-miscellaneous-12">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-8-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-8-macro}" name="roll_CS-Misc-Skill-8-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-8-name}" type="text" name="attr_CS-Misc-Skill-8-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-8-name}" type="text" name="attr_CS-Misc-Skill-8-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-8}" type="number" name="attr_CS-Misc-Skill-8" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-8-ranks}" type="number" name="attr_CS-Misc-Skill-8-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-8-cs}" type="checkbox" name="attr_CS-Misc-Skill-8-cs" value="3" /></span>
@@ -7705,7 +7703,7 @@
 						</div>
 						<div class="table-row misc consolidated misc-skill-10" data-i18n-list-item="cs-miscellaneous-13">
 							<span class="table-cell"><button title="%{selected|Misc-Skill-9-Check}" type="roll" value="@{PC-Whisper} @{CS-Misc-Skill-9-macro}" name="roll_CS-Misc-Skill-9-Check"></button></span>
-							<span class="table-cell left"><input title="@{CS-Misc-Skill-9-name}" type="text" name="attr_CS-Misc-Skill-9-name" data-i18n-placeholder="miscellaneous-skill-abbrv"  style="width:96%;" /></span>
+							<span class="table-cell left"><input title="@{CS-Misc-Skill-9-name}" type="text" name="attr_CS-Misc-Skill-9-name" data-i18n-placeholder="miscellaneous-skill-abbrv" style="width:96%;" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-9}" type="number" name="attr_CS-Misc-Skill-9" value="0" class="calc" readonly /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-9-ranks}" type="number" name="attr_CS-Misc-Skill-9-ranks" value="0" /></span>
 							<span class="table-cell"><input title="@{CS-Misc-Skill-9-cs}" type="checkbox" name="attr_CS-Misc-Skill-9-cs" value="3" /></span>
@@ -8177,7 +8175,7 @@
 					<input type="checkbox" class="minimize-show cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_abilities-min-show" value="1" /><span></span>
 					<input type="checkbox" class="lock-show cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_abilities-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="split-column-show cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_abilities-column-show" value="1" /><span></span>
-					<label class="small-label2" style="width: 2.5em;margin: 0 0 0 -0.75em;"><input type="checkbox" name="attr_showinmenu_all_abilities" title="@{showinmenu_all_abilities}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>
+					<label class="small-label2"><input type="checkbox" name="attr_showinmenu_all_abilities" title="@{showinmenu_all_abilities}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>
 					<input class="deletebutton cssbutton deletesect-show" type="checkbox" name="attr_delete_repeating_ability_btn" value="1" data-i18n-title="delete-ability" data-i18n-aria-label="delete-ability-must-confirm-next-checkbox" /><span></span><label class="deletesect allrows-note"><input type="checkbox" class="selectedlabel-check" name="attr_delete_repeating_ability" data-i18n-aria-label="confirm-delete-ability" data-i18n-title="confirm-delete-ability" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
 					<span class="compendium-note hide-readonly" >
 						<span class="compendium-icon">i</span>
@@ -8257,7 +8255,7 @@
 								</label>
 								<label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"  ></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
 								<label class="small-label2" style="width:6em;">
-									<select class="select-small" title="@{repeating_ability_$X_frequency}" name="attr_frequency" style="width:100%;">
+									<select class="select-small" title="@{repeating_ability_$X_frequency}" name="attr_frequency" >
 										<option value="not-applicable" data-i18n="not-applicable-abbrv-default" selected >&#8226; N/A</option>
 										<option value="constant" data-i18n="constant">Constant</constant>
 										<option value="atwill" data-i18n="at-will">At Will</option>
@@ -8344,7 +8342,7 @@
 										</label>
 										<label class="divider-db-lg extra-sect">|</label>
 										<label class="small-label2">
-											<select style="width:100%;" class="select-small select-spelllvl" title="@{repeating_ability_$X_spell_level-basis}" name="attr_spell_level-basis" >
+											<select  class="select-small select-spelllvl" title="@{repeating_ability_$X_spell_level-basis}" name="attr_spell_level-basis" >
 												<option value="floor(@{casterlevel}/2)" data-i18n="half-caster-level-abbrv-selected" selected>&#8226;&#189; Lvl/HD</option>
 												<option value="@{casterlevel}" data-i18n="full-caster-level-abbrv" >Lvl/HD</option>
 												<option value="0" data-i18n="custom-level-abbrv">Custom Lvl</option>
@@ -10380,9 +10378,9 @@
 									<input title="@{repeating_spells_$X_cast}" type="number" name="attr_cast" value="0">
 									<span style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-cast">#Cast</span>
 								</label>
-								<label class="small-label2 entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" data-i18n-placeholder="spell-name"  accept="Name"><span data-i18n="name">Name</span></label>
-								<label class="small-label2 sect spell-multiclassed" style="width:3em;">
-									<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
+								<label class="small-label2 entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" data-i18n-placeholder="spell-name" accept="Name"><span data-i18n="name">Name</span></label>
+								<label class="small-label2 entry-short sect spell-multiclassed">
+									<select class="select-small" title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" >
 										<option value="0" data-i18n="1-ordinal-spellclass" selected >1st Spellcasting Class</option>
 										<option value="1" data-i18n="2-ordinal-spellclass" >2nd Spellcasting Class</option>
 										<option value="2" data-i18n="3-ordinal-spellclass" >3rd Spellcasting Class</option>
@@ -10532,7 +10530,7 @@
 										</label>											
 									</div>
 									<textarea class="desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-									<div class="macro-text"  style="background:white;">
+									<div class="macro-text" style="background:white;">
 										<span style="display:inline-block;margin-top:0.25em;"><span data-i18n="options">Options</span>:</span>
 										<input class="calc" style="width:90%;float:right;margin:0.2rem;" type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" readonly/>
 										<textarea class="macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options} </textarea>
@@ -10798,7 +10796,7 @@
 					<input type="checkbox" class="minimize-show cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_item-min-show" value="1" /><span></span>
 					<input type="checkbox" class="lock-show cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_item-expand-show" value="1" /><span></span>
 					<input type="checkbox" class="split-column-show cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_item-column-show" value="1" /><span></span>
-					<label class="small-label2" style="width: 2.5em;margin: 0 0 0 -0.75em;"><input type="checkbox" name="attr_showinmenu_all_items" title="@{showinmenu_all_items}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>				
+					<label class="small-label2"><input type="checkbox" name="attr_showinmenu_all_items" title="@{showinmenu_all_items}" value="1"><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title" title="Click to display a button for this row in the appropriate command menu" aria-label="Click to display a button for this row in the appropriate command menu" style="font-size: 0.85em;">Show</span></label>				
 					<input class="deletebutton cssbutton deletesect-show" type="checkbox" name="attr_delete_repeating_item_btn" value="1" data-i18n-title="delete-item" data-i18n-aria-label="delete-item-must-confirm-next-checkbox" /><span></span><label class="deletesect allrows-note"><input type="checkbox" class="selectedlabel-check" name="attr_delete_repeating_item" data-i18n-aria-label="confirm-delete-item" data-i18n-title="confirm-delete-item" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
 					<span class="compendium-note hide-readonly" >
 						<span class="compendium-icon">i</span>
@@ -11224,18 +11222,18 @@
 							<div class="cheat"></div>
 							<label class="small-label2 wide-textareaparent"><textarea class="inline-textarea"  name="attr_npc-feats-text" accept="Feats" data-i18n-placeholder="npc-feats-text" title="@{npc-feats-text}"></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="feats">Feats</span></label>
 							<label class="small-label2 wide-textareaparent"><textarea class="inline-textarea"  name="attr_skills_compendium" accept="Skills" data-i18n-placeholder="skills" title="@{skills_compendium}"></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="skills">Skills</span></label>
-							<label class="small-label2 wide-textareaparent"><textarea class="inline-textarea"  name="attr_racial_mods_compendium" accept="Racial Modifiers" data-i18n-placeholder="racial-modifiers"  title="@{racial_mods_compendium}" ></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="racial-modifiers">Racial Modifiers</span></label>
-							<label class="small-label2 autoexpand"><input type="text" name="attr_languages" accept="Languages" value="" data-i18n-placeholder="languages"  title="@{languages}" /><span data-i18n="languages">Languages</span><span name="attr_languages" class="autoexpand"></span></label>
-							<label class="small-label2 autoexpand"><input type="text" name="attr_SQ_compendium" accept="SQ" value="" data-i18n-placeholder="special-qualities-place"  title="@{SQ_compendium}" /><span data-i18n="special-qualities">Special Qualities</span><span name="attr_SQ_compendium" class="autoexpand"></span></label>
+							<label class="small-label2 wide-textareaparent"><textarea class="inline-textarea"  name="attr_racial_mods_compendium" accept="Racial Modifiers" data-i18n-placeholder="racial-modifiers" title="@{racial_mods_compendium}" ></textarea><span data-i18n-title="npc-statblock-textarea-instructions" data-i18n-aria-label="npc-statblock-textarea-instructions" data-i18n="racial-modifiers">Racial Modifiers</span></label>
+							<label class="small-label2 autoexpand"><input type="text" name="attr_languages" accept="Languages" value="" data-i18n-placeholder="languages" title="@{languages}" /><span data-i18n="languages">Languages</span><span name="attr_languages" class="autoexpand"></span></label>
+							<label class="small-label2 autoexpand"><input type="text" name="attr_SQ_compendium" accept="SQ" value="" data-i18n-placeholder="special-qualities-place" title="@{SQ_compendium}" /><span data-i18n="special-qualities">Special Qualities</span><span name="attr_SQ_compendium" class="autoexpand"></span></label>
 							<hr/>
-							<label class="small-label2 autoexpand"><input type="text" name="attr_environment" accept="Environment" value="" data-i18n-placeholder="environment"  title="@{environment}" /><span data-i18n="environment">Environment</span><span name="attr_environment" class="autoexpand"></span></label>
-							<label class="small-label2 autoexpand"><input type="text" name="attr_organization" accept="Organization" value="" data-i18n-placeholder="organization"  title="@{organization}" /><span data-i18n="organization">Organization</span><span name="attr_organization" class="autoexpand"></span></label>
-							<label class="small-label2 autoexpand"><input type="text" name="attr_other_items_treasure" accept="Treasure" value="" data-i18n-placeholder="treasure"  title="@{treasure}" /><span data-i18n="treasure">Treasure</b><span name="attr_other_items_treasure" class="autoexpand"></span></label>
+							<label class="small-label2 autoexpand"><input type="text" name="attr_environment" accept="Environment" value="" data-i18n-placeholder="environment" title="@{environment}" /><span data-i18n="environment">Environment</span><span name="attr_environment" class="autoexpand"></span></label>
+							<label class="small-label2 autoexpand"><input type="text" name="attr_organization" accept="Organization" value="" data-i18n-placeholder="organization" title="@{organization}" /><span data-i18n="organization">Organization</span><span name="attr_organization" class="autoexpand"></span></label>
+							<label class="small-label2 autoexpand"><input type="text" name="attr_other_items_treasure" accept="Treasure" value="" data-i18n-placeholder="treasure" title="@{treasure}" /><span data-i18n="treasure">Treasure</b><span name="attr_other_items_treasure" class="autoexpand"></span></label>
 							<hr/>
 						</div>
 						<div class="table">
 							<div class="table-row">
-								<span class="table-cell small-label left" style="width:100%;height:auto;">
+								<span class="table-cell small-label left" style="width:100%;">
 									<span data-i18n="special-abilities-and-content">Special Abilities and Content </span>
 									<textarea class="desc" name="attr_content_compendium" accept="Content" data-i18n-placeholder="special-abilities-and-content-place"></textarea>
 								</span>
@@ -11783,14 +11781,14 @@
 												</span>
 											</div>
 										</div>
-										<div class="advanced-macros nondual-sect" style="width:100%;height:auto;clear:both;">
+										<div class="advanced-macros nondual-sect">
 											<div class="center repeating-hidesect">
 												<div class="insertmacrocell" style="width:48.5%">
 													<input class="textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
 													<label class="small-label2">
 														<span class="super note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
 														<input type="hidden" name="attr_var_attack_macro_insert" value="[[ @{attack_macro_insert} ]] [Macro]" />
-														<textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place"  title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
+														<textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
 													</label>
 												</div>
 												<div class="insertmacrocell" style="width:48.5%">
@@ -11798,13 +11796,13 @@
 													<label class="small-label2">
 														<span class="super note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
 														<input type="hidden" name="attr_var_damage_macro_insert" value="[[ @{damage_macro_insert} ]] [Macro]" />
-														<textarea class="macro-text-inline both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place"  title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
+														<textarea class="macro-text-inline both" name="attr_damage_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_damage_macro_insert}">0</textarea>
 													</label>
 												</div>
 											</div>
 										</div>
-										<div class="macro-text" style="width:100%;height:auto;clear:both;">
-											<label class="small-label2" style="width:100%;height:auto;margin-left:0;margin-right:0;padding-left:0.2rem;padding-right:0.2rem;">
+										<div class="macro-text">
+											<label class="small-label2" style="width:100%;">
 												<h3 class="super note-d" data-i18n="full-macro">Full Macro:</h3>
 												<div class="cheat"></div>
 												<textarea class="macro-text" title="@{repeating_weapon_$X_macro-text}" name="attr_macro-text">&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} {{attack=[[ 1d20cs>[[ @{crit-target} ]] + @{attack_macro} ]]}} {{damage=[[@{damage-dice-num}d@{damage-die} + @{damage_macro}]]}} {{crit_confirm=[[ 1d20 + @{attack_macro} + [[ @{crit_conf_mod} ]] ]]}} {{crit_damage=[[ [[ @{damage-dice-num} * (@{crit-multiplier} - 1) ]]d@{damage-die} + ((@{damage_macro}) * [[ @{crit-multiplier} - 1 ]]) ]]}} {{type=@{type}}} {{weapon_notes=@{notes}}} @{iterative_attacks} @{macro_options} {{vs=@{vs}}} {{vs@{vs}=@{vs}}} {{precision_dmg1=@{precision_dmg_macro}}} {{precision_dmg1_type=@{precision_dmg_type}}} {{precision_dmg2=@{global_precision_dmg_macro}}} {{precision_dmg2_type=@{global_precision_dmg_type}}} {{critical_dmg1=@{critical_dmg_macro}}} {{critical_dmg1_type=@{critical_dmg_type}}} {{critical_dmg2=@{global_critical_dmg_macro}}} {{critical_dmg2_type=@{global_critical_dmg_type}}} {{attack1name=@{iterative_attack1_name}}}</textarea>
@@ -12081,8 +12079,8 @@
 											<span style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-cast">#Cast</span>
 										</label>
 										<label class="small-label2 entry-25p"><input title="@{repeating_spells_$X_name}" type="text" value="" name="attr_name" data-i18n-placeholder="spell-name"  accept="Name"><span data-i18n="name">Name</span></label>
-										<label class="small-label2 sect" style="width:3em;">
-											<select title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number" style="width:100%;">
+										<label class="small-label2 entry-short sect">
+											<select class="select-small" title="@{repeating_spells_$X_spellclass_number}" name="attr_spellclass_number">
 												<option value="0" data-i18n="1-ordinal-spellclass" selected >1st Spellcasting Class</option>
 												<option value="1" data-i18n="2-ordinal-spellclass" >2nd Spellcasting Class</option>
 												<option value="2" data-i18n="3-ordinal-spellclass" >3rd Spellcasting Class</option>
@@ -12231,7 +12229,7 @@
 												</label>											
 											</div>
 											<textarea class="desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-											<div class="macro-text"  style="background:white;">
+											<div class="macro-text" style="background:white;">
 												<span style="display:inline-block;margin-top:0.25em;"><span data-i18n="options">Options</span>:</span>
 												<input class="calc" style="width:90%;float:right;margin:0.2rem;" type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" readonly/>
 												<textarea style="display:none;" class="macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
@@ -12912,7 +12910,7 @@
 								</label>
 								<label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"  ></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
 								<label class="small-label2" style="width:6em;">
-									<select class="select-small" title="@{repeating_ability_$X_frequency}" name="attr_frequency" style="width:100%;">
+									<select class="select-small" title="@{repeating_ability_$X_frequency}" name="attr_frequency" >
 										<option value="not-applicable" data-i18n="not-applicable-abbrv-default" selected >&#8226; N/A</option>
 										<option value="constant" data-i18n="constant">Constant</constant>
 										<option value="atwill" data-i18n="at-will">At Will</option>
@@ -12999,7 +12997,7 @@
 										</label>
 										<label class="divider-db-lg extra-sect">|</label>
 										<label class="small-label2">
-											<select style="width:100%;" class="select-small select-spelllvl" title="@{repeating_ability_$X_spell_level-basis}" name="attr_spell_level-basis" >
+											<select  class="select-small select-spelllvl" title="@{repeating_ability_$X_spell_level-basis}" name="attr_spell_level-basis" >
 												<option value="floor(@{casterlevel}/2)" data-i18n="half-caster-level-abbrv-selected" selected>&#8226;&#189; Lvl/HD</option>
 												<option value="@{casterlevel}" data-i18n="full-caster-level-abbrv" >Lvl/HD</option>
 												<option value="0" data-i18n="custom-level-abbrv">Custom Lvl</option>
@@ -14243,9 +14241,9 @@
 			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width:3em; height:1.4em; vertical-align:top; padding:0 0.2rem 0 0.2rem; border:none" name="attr_PFSheet_Version" value="0" class="calc number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
 		<div class="three-columns" style="margin-top:-.5em;">
-			<span><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
+			<span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
 			<span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
-			<span><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
+			<span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
 		</div>
 	</div>
 	<div role="contentinfo" aria-label="rolltemplates" class="section-roll_templates">
@@ -14253,7 +14251,7 @@
 		<rolltemplate class="sheet-rolltemplate-pf_spell">
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_spell {{#font}}font-{{font}}{{/font}} {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
-				<div class="sheet-roll-header" style="width:100%;">
+				<div class="sheet-roll-header" >
 					{{#header_image}}<span class="sheet-header-image">{{header_image}}</span>{{/header_image}}
 					<span class="sheet-left">
 						{{#character_name}}
@@ -14572,7 +14570,7 @@
 		<rolltemplate class="sheet-rolltemplate-pf_attack">
 			{{^accessible}}
 			<div class="sheet-roll-table {{#font}}font-{{font}}{{/font}} {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
-				<div class="sheet-roll-header" style="width:100%;">
+				<div class="sheet-roll-header" >
 					{{#header_image}}<span class="sheet-header-image">{{header_image}}</span>{{/header_image}}
 					<span class="sheet-left">
 						{{#character_name}}
@@ -14926,7 +14924,7 @@
 		<rolltemplate class="sheet-rolltemplate-pf_defense">
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_defense {{#font}}font-{{font}}{{/font}} {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="presentation">
-				<div class="sheet-roll-header" style="width:100%;">
+				<div class="sheet-roll-header" >
 					{{#header_image}}<span class="sheet-header-image">{{header_image}}</span>{{/header_image}}
 					<span class="sheet-left">
 						{{#character_name}}
@@ -15297,7 +15295,7 @@
 		<rolltemplate class="sheet-rolltemplate-pf_block">
 			{{^accessible}}
 			<div class="sheet-roll-table sheet-rolltemplate-pf_block {{#font}}font-{{font}}{{/font}} {{#color}}color-{{color}}{{/color}} {{#rounded}}rounded{{/rounded}}" role="menu" >
-				<div class="sheet-roll-header" style="width:100%;">
+				<div class="sheet-roll-header" >
 					{{#header_image}}<span class="sheet-header-image">{{header_image}}</span>{{/header_image}}
 					<span class="sheet-left">
 						{{#character_name}}
