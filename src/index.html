@@ -38,6 +38,9 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
+				<li>Small adjustments to the regular roll template.</li>
+				<li>Inverted the order of fields for extra damage to match roll template output. Type then macro.</li>
+				<li>Fixed; 3-column layout of NPC skills list.</li>
 				<li>Fixed; fractional item weight was being rounded down.</li>
 				<li>Fixed; changing current size was not updating the attack grid totals.</li>
 				<li>Updated the sheet to work within Roll20's CSE update.</li>
@@ -11584,21 +11587,21 @@
 										</div>									
 										<div class="extra-damage center">
 											<label class="small-label2" style="width:23.85%;">
-												<span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
-												<textarea class="macro-text-inline both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
-											</label>
-											<label class="small-label2" style="width:23.85%;">
 												<span class="nondual-sect" data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 												<span class="dual-sect" data-i18n-title="extra-damage-condition" data-i18n-aria-label="extra-damage-condition" title="Extra Damage type" data-i18n="rake-rend-etc">Condition</span>
 												<textarea class="macro-text-inline both" name="attr_precision_dmg_type" title="@{repeating_weapon_$X_precision_dmg_type}" data-i18n-placeholder="damage-type-or-description" placeholder="Dmg type / Description"></textarea>
-											</label>
-											<label class="small-label2 nondual-sect" style="width:23.85%;">
-												<span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
-												<textarea class="macro-text-inline both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
+											</label>											
+											<label class="small-label2" style="width:23.85%;">
+												<span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
+												<textarea class="macro-text-inline both" type="text" name="attr_precision_dmg_macro" title="@{repeating_weapon_$X_precision_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
 											</label>
 											<label class="small-label2 nondual-sect" style="width:23.85%;">
 												<span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
 												<textarea class="macro-text-inline both" name="attr_critical_dmg_type" title="@{repeating_weapon_$X_critical_dmg_type}" data-i18n-placeholder="damage-type-or-description" placeholder="Dmg type / Description"></textarea>
+											</label>
+											<label class="small-label2 nondual-sect" style="width:23.85%;">
+												<span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
+												<textarea class="macro-text-inline both" type="text" name="attr_critical_dmg_macro" title="@{repeating_weapon_$X_critical_dmg_macro}" data-i18n-placeholder="full-macro-place" ></textarea>
 											</label>
 										</div>
 										<div class="table iterative_attack_section">
@@ -12465,7 +12468,7 @@
 						<input type="checkbox" class="unchained-show" name="attr_unchained_skills-show" value="1" role="presentation" />
 						<input type="checkbox" class="consolidated-show" name="attr_BG-Skill-Use" value="0" role="presentation" />
 						<input type="checkbox" class="bg-show" name="attr_BG-Skill-Use" value="1" checked role="presentation" />
-						<div class="3colrow h3-section wide-readonly">
+						<div class="three-columns h3-section wide-readonly">
 							<div class="col">
 								<div class="table-row">
 									<span class="table-header"></span>
@@ -14239,10 +14242,10 @@
 		<div class="table">
 			<span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ &nbsp;&nbsp;</i>v.<input type="text" style="width:3em; height:1.4em; vertical-align:top; padding:0 0.2rem 0 0.2rem; border:none" name="attr_PFSheet_Version" value="0" class="calc number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
 		</div>
-		<div class="table" style="margin-top:-.5em;">
-			<span class="table-cell 3col"><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
-			<span class="table-cell 3col"><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
-			<span class="table-cell 3col"><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
+		<div class="three-columns" style="margin-top:-.5em;">
+			<span><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
+			<span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
+			<span><button type="roll" class="no-decoration" data-i18n-title="url-link"  style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
 		</div>
 	</div>
 	<div role="contentinfo" aria-label="rolltemplates" class="section-roll_templates">

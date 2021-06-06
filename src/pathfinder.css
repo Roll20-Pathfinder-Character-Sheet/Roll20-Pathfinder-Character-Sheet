@@ -775,16 +775,11 @@ pf-wrapper,
     margin: 0;
 }
 
-.charsheet .sheet-3colrow .sheet-col {
-    width: 33% !important;
-    margin-right: -0.5rem !important;
+.charsheet .three-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-column-gap: 1em;
 }
-
-.charsheet .sheet-3col {
-    width: 33%;
-    text-align: center;
-}
-
 /* make error row more visible (colorblind users could not see slightly darker border )
 also need 1 more level in selector or base css will override border */
 
@@ -4162,7 +4157,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .sheet-roll-groupc .sheet-roll-row .sheet-roll-cell:last-child,
 .sheet-rolltemplate-pf_spell .sheet-roll-groupc .sheet-roll-row .sheet-roll-cell:last-child {
 	text-align: right;
-	padding: 0.1rem 0.1rem 0.1rem 0;
+	padding-right: 0.25rem;
 	position: relative;
 	z-index: 1;
 	float: right;
