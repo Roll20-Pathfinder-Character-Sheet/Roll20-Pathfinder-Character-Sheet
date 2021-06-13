@@ -154,12 +154,19 @@ function convertKL1KH1toMinMax(str) {
         kl:'min',
         kh:'max'
     }
+		function replaceString() {
+			str = str.replace(/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/g, (match, p1, p2, p3) => {
+				return p1 + minMaxConverter[p3] + '(' + p2 + ')';
+			});
+		}
     //TAS.debug("at convertKL1KH1toMinMax for "+str) ;
     if (str) {
-        while (/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/.test(str)){    
-            str = str.replace(/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/g,(match,p1,p2,p3)=>{
-                return p1+minMaxConverter[p3]+'('+p2+')';				
-            });
+        while (/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/.test(str)){
+					replaceString();
+			// moved this function out of loop
+      //      str = str.replace(/([^@%]|^){((?:[^{]|[%@]{)+?)}(k[hl])\d+/g,(match,p1,p2,p3)=>{
+      //          return p1+minMaxConverter[p3]+'('+p2+')';
+      //      });
     TAS.log('str: '+str);
         }
     }
