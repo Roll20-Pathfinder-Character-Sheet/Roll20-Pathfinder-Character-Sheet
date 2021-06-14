@@ -484,17 +484,16 @@ function registerEventHandlers () {
 
 	_.each(PFConst.customEquationMacros,function(writeField,custField){
 		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
-			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');
 		}));
-	});
+	});	
 	on("change:kineticist_level", TAS.callback(function eventKineticistLevel(eventInfo){
 		if(eventInfo.sourceType==='player'){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFUtilsAsync.setDropdownValue('kineticist_level', 'kineticist_level-mod');
 		}
-	}));
-	
+	}));	
 }
 
 registerEventHandlers();
