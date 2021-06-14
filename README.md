@@ -69,6 +69,9 @@ Much easier to fork from github's web interface first.
 Then use the URL of your fork as the url of the repository. I think this can be done using the git `clone` command
 some help: https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/
 
+### Errors/Issues
+- Error: Cannot find module 'webpack': you may need link globally installed package to your project using `npm link webpack-cli`.
+
 # Module Breakdown
 Each "page" or section of the Pathfinder sheet has one or more modules associated with it. For instance, the core page has PFAbilityScores, PFInitiative, PFClassRaceGrid etc. The Defense page has PFDefense, PFSaves. The Attacks page has PFAttacks, spells page PFSpells, etc.
 
