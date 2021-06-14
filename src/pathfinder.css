@@ -3955,7 +3955,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_spell .sheet-roll-header span.sheet-left,
 .sheet-rolltemplate-pf_block .sheet-roll-header span.sheet-left {
     padding: 2px;
-    vertical-align: -webkit-baseline-middle;
+    vertical-align: baseline;
 }
 
 .sheet-rolltemplate-pf_generic div.sheet-roll-accessible,
@@ -4001,7 +4001,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_block .sheet-header-image {
   float: right;
   padding: 2px;
-  vertical-align: -webkit-baseline-middle;
+  vertical-align: baseline;
   min-width: 3rem;
 }
 
