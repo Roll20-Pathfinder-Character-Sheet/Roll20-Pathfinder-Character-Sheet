@@ -393,15 +393,15 @@ function registerEventHandlers () {
 	}));
 	//tokenbar link does not consistantly have previousValue and newValue
 	//needed a way to trigger sheetworker to recalc for changes to HP from tokenbar
-	on("change:HP change:non-lethal-damage", function() {
-			TAS.debug("~~~ UPDATE HP ALREADY ~~~");
-			getAttrs(["HP"], function (v) {
-				if (v.HP) {
-					setAttrs ({
-						HP : parseInt(v.HP)||0
-					});
-				}
-			});
+	on("change:HP change:non-lethal-damage", function () {
+		TAS.debug("~~~ UPDATE HP ALREADY ~~~");
+		getAttrs(["HP"], function (v) {
+			if (v.HP) {
+				setAttrs({
+					HP: parseInt(v.HP) || 0
+				});
+			}
+		});
 	});
 	on("change:wound_threshold-show", TAS.callback(function eventResetConditionWounds(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
