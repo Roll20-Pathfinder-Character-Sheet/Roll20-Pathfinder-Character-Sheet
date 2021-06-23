@@ -137,9 +137,15 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 export function updateCurrHPLookup () {
 	getAttrs(["HP", "HP-temp", "non-lethal-damage", "wound_threshold-show", "HP-ability", "HP-ability-mod", "condition-Staggered"], function (v) {
 		//TAS.debug("PFHealth.updateCurrHPLookup",v);
-		updateCurrHP(parseInt(v["HP"], 10) || 0, parseInt(v["HP-temp"], 10) || 0, 
-		 parseInt(v["non-lethal-damage"], 10) || 0, parseInt(v["wound_threshold-show"],10)||0, 
-		  v["HP-ability"], parseInt(v["HP-ability-mod"], 10) || 0,parseInt( v["condition-Staggered"],10)||0);
+		updateCurrHP(
+			parseInt(v["HP"], 10) || 0,
+			parseInt(v["HP-temp"], 10) || 0,
+			parseInt(v["non-lethal-damage"], 10) || 0,
+			parseInt(v["wound_threshold-show"], 10) || 0,
+			v["HP-ability"],
+			parseInt(v["HP-ability-mod"], 10) || 0,
+			parseInt( v["condition-Staggered"], 10) || 0
+		);
 	});
 }
 /** updateMaxHPLookup
@@ -381,9 +387,22 @@ function registerEventHandlers () {
 	on("change:HP change:non-lethal-damage", TAS.callback(function eventUpdateHPCurr(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			TAS.debug("~~~ previousValue: " + eventInfo.previousValue + " newValue: " + eventInfo.newValue + " ~~~");
 			updateCurrHPLookup(eventInfo);
 		}
 	}));
+	//tokenbar link does not consistantly have previousValue and newValue
+	//needed a way to trigger sheetworker to recalc for changes to HP from tokenbar
+	on("change:HP change:non-lethal-damage", function() {
+			TAS.debug("~~~ UPDATE HP ALREADY ~~~");
+			getAttrs(["HP"], function (v) {
+				if (v.HP) {
+					setAttrs ({
+						HP : parseInt(v.HP)||0
+					});
+				}
+			});
+	});
 	on("change:wound_threshold-show", TAS.callback(function eventResetConditionWounds(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {

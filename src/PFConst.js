@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.793,
+	version: 1.794,
 	announcementVersionAttr: 'attentionv172-show',
 
 	/***************************************Lists of Fields ************************************************************/
@@ -123,7 +123,13 @@ export default {
 		"customa9": "customa9-mod_max",
 		"customa10": "customa10-mod",
 		"customa11": "customa11-mod",
-		"customa12": "customa12-mod"
+		"customa12": "customa12-mod",
+		"customa4-mod": "0",
+		"customa5-mod": "0",
+		"customa6-mod": "0",
+		"customa7-mod": "0",
+		"customa8-mod": "0",
+		"customa9-mod": "0"
 	},
 
 	//the 3 spell classes at top of spells page

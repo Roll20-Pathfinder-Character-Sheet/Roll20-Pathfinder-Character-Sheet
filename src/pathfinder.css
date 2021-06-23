@@ -180,6 +180,21 @@
     font-style: normal;
 }
 
+.charsheet .not-selectable {
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    display: inline-block;
+    vertical-align: bottom;
+    height: 1.75em;
+}
+
+.charsheet .not-selectable::after {
+    content: ':';
+} 
+
 .charsheet .selectable,
 .charsheet input[type="text"],
 .charsheet input[type="number"],
@@ -230,11 +245,6 @@
     resize: both;
 }
 
-.charsheet .skill-macro-text {
-    height: 1.85em;
-    resize: both;
-}
-
 .charsheet .half {
     height: 3em;
 }
@@ -276,8 +286,7 @@
 .charsheet .linked-tablecell.small-label2 textarea,
 .charsheet .linked-tablecell.small-label2 .divider-db-lg,
 .charsheet .linked-tablecell.small-label2 .divider-db {
-    display: inline !important;
-    vertical-align: bottom;
+    display: inline;
 }
 
 .charsheet .kinetic-sect .linked-fields {
@@ -697,10 +706,10 @@ pf-wrapper,
 .charsheet .narrow-numbers input[type="number"],
 .charsheet .narrow-numbers input[type="text"].number,
 .charsheet .narrow-numbers .number {
-  min-width: 2.5rem;
-  width: 2.5rem;
-  padding: 2px;
-  margin: 2px;
+    min-width: 2.5rem;
+    max-width: 3.25rem;
+    padding: 2px;
+    margin: 2px 0 2px 0;
 }
 
 .charsheet .calc.narrow-numbers {
@@ -912,9 +921,8 @@ also need 1 more level in selector or base css will override border */
 .charsheet .linked-custom .macro-text-inline,
 .charsheet .kinetic-sect .linked-tablecell .macro-text-inline,
 .charsheet .kinetic-sect .linked-tablecell select.linked-cellfield {
-    width: calc(98% - 7em);
+    width: calc(94% - 7em);
     vertical-align: bottom;
-    /*	display:inline; */
 }
 
 .charsheet .readonly-show:not(:checked)~.main .tab99:not(:checked)~.section>.notes {
@@ -2886,6 +2894,7 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .repeating-id .small-label2 span.selectable,
 .charsheet span[name="attr_row_id"].selectable,
+.charsheet input.selectable.calc,
 .charsheet input[name="attr_mainhand_id"].entry-long,
 .charsheet input[name="attr_offhand_id"].entry-long,
 .charsheet input[type="text"][name="attr_source-main"],
@@ -2893,14 +2902,24 @@ also need 1 more level in selector or base css will override border */
 .charsheet input[type="text"][name="attr_source-item"],
 .charsheet input[type="text"][name="attr_source-spell"],
 .charsheet input[type="text"][name="attr_source-ability"] {
-    background-color: #ECECEC;
-    padding: .25em 0.2rem .25em 0.2rem;
-    height: 1.825em;
+    display: inline-block;
+    height: 2rem;
+    background-color: #fbf5d0;
+    color: #5f5207;
+    margin: 0;
+    padding: .125rem;
+    white-space: nowrap;
+    width: 12em;
+    border-radius: 4px;
+    border: 1px solid lightgrey;
+    text-align: center;
+    box-sizing: content-box;
 }
 
 .charsheet .repeating-id {
-    display: block;
-    clear: left;
+    display: inline-block;
+    height: auto;
+    padding: .25em;
     margin: .25em;
 }
 
@@ -2912,22 +2931,13 @@ also need 1 more level in selector or base css will override border */
     font-style: normal;
     color: initial;
     white-space: nowrap;
+    height: auto;
 }
 
-.charsheet .repeating-id .small-label2 span.selectable {
-    border: 1pt solid lightgrey;
-}
-
-/*not necessary?
-small-label2 > * {
-    max-width: 100%;
-}*/
 .charsheet .small-label2>input:not(.cssbutton),
 .charsheet .small-label2>select,
 .charsheet .small-label2>.calc {
     display: block;
-    height: 1.825em;
-    /* otherwise defaults from base.css hardcode it too tall */
     position: relative;
 }
 
@@ -3139,9 +3149,10 @@ small-label2 > * {
 
 .charsheet .divider-lg,
 .charsheet .divider-db-lg {
-    width: .75em;
-    font-size: 1.125em;
-    font-weight: bold;
+   width: 1em;
+   white-space: nowrap;
+   font-size: 1.125em;
+   font-weight: bold;
 }
 
 .charsheet .divider,
@@ -3321,8 +3332,8 @@ spellclass-concentration spellcaster-button {
 .charsheet .minimize-show:checked~.repeating-fields .small-label2,
 .charsheet .split-column-show:checked~.repeating-fields .small-label2,
 .charsheet .counted:not(:checked)~.small-label2 {
-    margin: 0 0.2rem 0 0;
-    max-width: 22%;
+    margin: 0;
+    min-width: 4em;
 }
 
 .charsheet .split-column-show:checked~.repeating-fields .nontable-repeating .counted {
@@ -3505,12 +3516,6 @@ spellclass-concentration spellcaster-button {
     width: 9em;
 }
 
-.charsheet .minimize-show:checked~.repeating-fields .entry-med,
-.charsheet .split-column-show:checked~.repeating-fields .entry-med,
-.charsheet .counted:not(:checked)~.small-label2entry-med {
-    width: 7em;
-}
-
 .charsheet .minimize-show:checked~.repeating-fields .entry-short,
 .charsheet .split-column-show:checked~.repeating-fields .entry-short,
 .charsheet .counted:not(:checked)~.small-label2entry-short {
@@ -3653,17 +3658,6 @@ spellclass-concentration spellcaster-button {
     font-size: 1rem;
 }
 
-.charsheet .nontable-repeating .linked-fields label input {
-    max-width: inherit;
-    margin: 0 3px 0 3px;
-}
-
-/*
-items labelsmall-label2small-label {
-    max-width: max-content;
-    width: 21%;
-}
-*/
 .charsheet span.table-cell.linked-tablecellextra-sect {
     text-align: right;
 }
@@ -6054,10 +6048,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
   font-family: 'Roboto Mono', monospace;
   font-size: 1rem;
   line-height: 2rem;
-  height: 2.75rem;
   padding: 2px;
   box-sizing: border-box;
   vertical-align: inherit;
+  word-break: break-all;
 }
 
 .charsheet .accessible:checked~.pf-wrapper input.macro-text-inline,

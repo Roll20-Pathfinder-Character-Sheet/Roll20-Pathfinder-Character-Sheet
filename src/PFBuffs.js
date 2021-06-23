@@ -1053,7 +1053,7 @@ function reEvaluateCustomMacros(callback,silently){
 			buffsPerRow.forEach(function(b){
 				if (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10) && 
 					parseInt(v['repeating_buff2_'+id+'_' + b + '-show'],10) ) {
-						SWUtils.evaluateAndSetNumber('repeating_buff2_'+id+'_' +b + "_macro-text", 'repeating_buff2_'+id+'_' + b+'_val',0,buffDone,true);
+						SWUtils.evaluateAndSetNumber('repeating_buff2_'+id+'_' +b+ '_macro-text', 'repeating_buff2_'+id+'_' +b+'_val',0,buffDone,true);
 				} else {
 					buffDone();
 				}
@@ -2049,7 +2049,7 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 });
 function registerEventHandlers () {
 	var custombuffs=['customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
-	'customa10','customa11','customa12'	];
+	'customa10','customa11','customa12'];
 
 	on("change:add_common_buff",TAS.callback(function eventAddCommonBuff(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
@@ -2083,8 +2083,8 @@ function registerEventHandlers () {
 	buffsPerRow.forEach(function(b){
 		var prefix = "change:repeating_buff2:" + b ;
 		on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0,null,false);
+				TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
+				SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0,null,false);
 		}));
 		on(prefix + "_bonustype", TAS.callback(function PFBuffs_updateBuffbonustype(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
@@ -2226,8 +2226,7 @@ function registerEventHandlers () {
 					mergeOldIntoNewBuffs(updateAllBuffTotalsAsync);
 				}
 			});
-		}
-		
+		}		
 	}));
 
 	custombuffs.forEach(function(buff){
