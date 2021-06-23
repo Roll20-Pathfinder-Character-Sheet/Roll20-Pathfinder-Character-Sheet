@@ -136,7 +136,7 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 /* updateCurrHPLookup - looks up data and calls updateCurrHP */
 export function updateCurrHPLookup () {
 	getAttrs(["HP", "HP-temp", "non-lethal-damage", "wound_threshold-show", "HP-ability", "HP-ability-mod", "condition-Staggered"], function (v) {
-		//TAS.debug("PFHealth.updateCurrHPLookup",v);
+		//TAS.debug("PFHealth.updateCurrHPLookup",v);		
 		updateCurrHP(
 			parseInt(v["HP"], 10) || 0,
 			parseInt(v["HP-temp"], 10) || 0,
@@ -146,6 +146,13 @@ export function updateCurrHPLookup () {
 			parseInt(v["HP-ability-mod"], 10) || 0,
 			parseInt( v["condition-Staggered"], 10) || 0
 		);
+		//tokenbar link does not work properly with eventInfo(previousValue and newValue)
+		//this block of redundant code triggers sheetworker to detect HP changes from tokenbar
+		if (v.HP) {
+			SWUtils.setWrapper({
+				'HP': parseInt(v["HP"], 10) || 0
+			});
+		}
 	});
 }
 /** updateMaxHPLookup
@@ -350,14 +357,13 @@ function registerEventHandlers () {
 			});
 		}
 	}));
-	//hp************************************************************************
+	//HP~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	on("change:hp-ability-mod change:level change:total-hp change:total-mythic-hp change:hp-formula-mod ", TAS.callback(function eventUpdateHPPlayerMisc(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
 			updateMaxHPLookup();
 		}
 	}));
-
 	on("change:mythic-adventures-show", TAS.callback(function eventUpdateHPPlayer(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
@@ -387,22 +393,9 @@ function registerEventHandlers () {
 	on("change:HP change:non-lethal-damage", TAS.callback(function eventUpdateHPCurr(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			TAS.debug("~~~ previousValue: " + eventInfo.previousValue + " newValue: " + eventInfo.newValue + " ~~~");
 			updateCurrHPLookup(eventInfo);
 		}
 	}));
-	//tokenbar link does not consistantly have previousValue and newValue
-	//needed a way to trigger sheetworker to recalc for changes to HP from tokenbar
-	on("change:HP change:non-lethal-damage", function () {
-		TAS.debug("~~~ UPDATE HP ALREADY ~~~");
-		getAttrs(["HP"], function (v) {
-			if (v.HP) {
-				setAttrs({
-					HP: parseInt(v.HP) || 0
-				});
-			}
-		});
-	});
 	on("change:wound_threshold-show", TAS.callback(function eventResetConditionWounds(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
