@@ -509,26 +509,25 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			}else {
 				setter[weaponPrefix+"critical_dmg_type"]="";
 			}
-		}		
+		}
 		if (v[spellPrefix+"save"]){
 			if (notes) {
 				notes += ", ";
 			}
 			notes += "\n**Save:** " + v[spellPrefix + "save"] + " **DC:** [[@{" + spellPrefix + "savedc}]]";
 		}
-
 		if ( v[spellPrefix+"abil-sr"]){
 			if (notes) {
 				notes += ", ";
 			}
 			notes += "\n**Spell Resistance:** " + v[spellPrefix + "abil-sr"];
 		}
-		// include a link in the weapon notes to execute the spell from chat        
+		// include a link in the weapon notes to execute the spell from chat
 		var toggle_attack_entry = v[spellPrefix + "toggle_attack_entry"];
 		if (toggle_attack_entry === 1) {
 			if (v[spellPrefix + "name"]) {
 				if (notes) {
-					notes += "";
+					notes += ", ";
 				}
 				notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
 			}
@@ -541,8 +540,8 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 				notes += "";
 			}
 		}
-		if (notes){
-			setter[weaponPrefix+"notes"]=notes;
+		if (notes) {
+			setter[weaponPrefix + "notes"] = notes;
 		}
 	} catch (err){
 		TAS.error("PFAbility.setAttackEntryVals",err);

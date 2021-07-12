@@ -38,8 +38,9 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Fixed; custom attributes changes using a linked tokenbar and/or API was not consistantly triggering buff recalcs.</li>
-				<li>Small edit to help better select/copy rowID text.</li>
+				<li>Known Issue: weapon notes can be reset to it's default state for linked attacks that have been generated from an Ability/Spell when the "Include link..." sheet setting is enabled and the Ability/Spell is later edited, or the "Include link..." option is toggled. Working on a fix ASAP.</li>
+				<li>Fixed; custom attributes changes(customa4-9 -mod) and HP from a tokenbar were not triggering buff recalcs consistently.</li>
+				<li>Small adjustment to help select and copy the rowID text.</li>
 				<li>Fixed; kineticistburn linked to a tokenbar was not triggering buffs recalculations.</li>
 				<li>Small adjustments to the regular roll template.</li>
 				<li>Fixed; the 'Show' in chat menu column option, was not toggling Mythic Abilities and Feats.</li>
@@ -294,8 +295,9 @@
 							<option value="consecrate" data-i18n="buff-consecrate">Consecrate (if undead)</option>
 							<option value="crushingdespair" data-i18n="buff-crushing-despair">Crushing Despair</option>
 							<option value="curse" data-i18n="buff-curse">Curse</option>
+							<option value="deadlyaim" data-i18n="buff-deadly-aim">Deadly Aim</option>
 							<option value="deathknell" data-i18n="buff-death-knell">Death Knell</option>
-							<option value="descrate" data-i18n="buff-desecrate">Desecrate (if undead)</option>
+							<option value="descrate" data-i18n="buff-desecrate">Desecrate (if undead)</option>							
 							<option value="divinefavor" data-i18n="buff-divine-favor">Divine Favor</option>
 							<option value="elementaloverflow" data-i18n="buff-elemental-overflow">Elemental Overflow</option>
 							<option value="enlargeperson" data-i18n="buff-enlarge-person">Enlarge Person</option>
@@ -308,6 +310,7 @@
 							<option value="inspiregreatness" data-i18n="buff-inspire-greatness">Inspire Greatness</option>
 							<option value="magearmor" data-i18n="buff-mage-armor">Mage Armor</option>
 							<option value="magicvestment" data-i18n="buff-magic-vestment">Magic Vestment</option>
+							<option value="powerattack" data-i18n="buff-power-attack">Power Attack</option>
 							<option value="prayer" data-i18n="buff-prayer">Prayer</option>
 							<option value="prayerdebuff" data-i18n="buff-prayer-debuff">Prayer (Debuff)</option>
 							<option value="rage" data-i18n="buff-rage">Rage</option>

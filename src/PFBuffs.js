@@ -1097,7 +1097,7 @@ function reEvaluateCustomMacros(callback,silently){
  */
 function getCommonBuffEntries(name,v,onByDefault){
 	var id,prefix='',setter={},
-	calc=0,conmod=0,speed=0,level=0,tempint=0;
+	calc=0,conmod=0,speed=0,level=0,tempint=0,bab=0;
 	if(!name){
 		return setter;
 	}
@@ -1109,7 +1109,8 @@ function getCommonBuffEntries(name,v,onByDefault){
 		conmod=parseInt(v['CON-mod'],10);
 		speed=parseInt(v['speed-base'],10);
 		level=parseInt(v['level'],10);
-		if(! ( isNaN(conmod) || isNaN(speed) || isNaN(level))){
+		bab = parseInt(v['bab'], 10);
+		if(! ( isNaN(conmod) || isNaN(speed) || isNaN(level) || isNaN(bab))){
 			calc=1;
 		}
 	}
@@ -1979,6 +1980,46 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'description-show']='1';
 			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{kineticist_level-mod}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
+			break;
+		case 'powerattack':
+			setter[prefix+'name']=SWUtils.getTranslated('buff-power-attack');
+			setter[prefix+'bufftype']='other';
+			setter[prefix+'tabcat']='other';
+			setter[prefix+'b1-show']=1;
+			setter[prefix+'b1_bonus']='melee';
+			setter[prefix+'b1_bonustype']='untyped';
+			setter[prefix+'b1_macro-text']='-1-floor(@{bab}/4)';
+			tempint=1;
+			if (calc) {
+				tempint=1 + Math.floor(bab/4);
+			}
+			setter[prefix+'b1_val']=-tempint;
+			setter[prefix+'b2-show']=1;
+			setter[prefix+'b2_bonus']='dmg_melee';
+			setter[prefix+'b2_bonustype']='untyped';
+			setter[prefix+'b2_macro-text']='2+2*floor(@{bab}/4)';
+			setter[prefix+'b2_val']=2 * tempint;
+			setter[prefix+'notes']=SWUtils.getTranslated('buff-power-attack-note');
+			break;
+		case 'deadlyaim':
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-deadly-aim');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'ranged';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
+			if (calc) {
+				tempint = 1 + Math.floor(bab / 4);
+			}
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'dmg_ranged';
+			setter[prefix + 'b2_bonustype'] = 'untyped';
+			setter[prefix + 'b2_macro-text'] = '2+2*floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-deadly-aim-note');
 			break;
 	}
 		
