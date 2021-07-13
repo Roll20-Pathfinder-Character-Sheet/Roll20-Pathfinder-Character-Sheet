@@ -134,11 +134,11 @@ function setRuleTab (callback,silently,id,eventInfo){
 				}
 			}
 			if( v[prefix + 'rule_category'] === 'class-features' && 
-				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{class-0-level}';
 					params={};
 			} else if (v[prefix + 'rule_category'] === 'racial-traits' && 
-				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{level}';
 					params={};
 			}
@@ -561,9 +561,8 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 		}
 	}),
 	attribList = [],itemId,item_entry,slaPrefix,
-	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"]
-	;
-	if (id=='DELETED'){
+	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"];
+	if (id==='DELETED'){
 		done();
 		return;
 	}

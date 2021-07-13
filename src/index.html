@@ -38,7 +38,8 @@
 				<span data-i18n="new-features">New Features and Updates</span>
 			</h2>
 			<ol>
-				<li>Known Issue: weapon notes can be reset to it's default state for linked attacks that have been generated from an Ability/Spell when the "Include link..." sheet setting is enabled and the Ability/Spell is later edited, or the "Include link..." option is toggled. Working on a fix ASAP.</li>
+				<li>Added common buff options for Power Attack, Deadly Aim, and Combat Expertise. Power Attack includes a new buff to handle the power attack damage. 'Power Attack Dmg' This was done so that the buff's bonus can be passed to each attack where the damage multiplier can be applied per attack to handle two-handed, off-hand, etc. (thank you player-03 for your help)</li>
+				<li>Known Issue: linked attacks that have been generated from an Ability or Spell will have their 'Weapon Notes' reset to their 'sheet generated notes' if the "Include link..." sheet setting is toggled or the linked Ability or Spell is edited.</li>
 				<li>Fixed; custom attributes changes(customa4-9 -mod) and HP from a tokenbar were not triggering buff recalcs consistently.</li>
 				<li>Small adjustment to help select and copy the rowID text.</li>
 				<li>Fixed; kineticistburn linked to a tokenbar was not triggering buffs recalculations.</li>
@@ -225,6 +226,7 @@
 					<input type="checkbox" class="buff-exists" name="attr_buff_customa9_exists" value="1" role="presentation" /><label class="small-label2" ><input title="@{buff_customa9-total}" name="attr_buff_customa9-total" type="number" value="0" class="calc" readonly /><span class="nowrap-over" >customa9|max</span></label>
 					<input type="checkbox" class="buff-exists" name="attr_buff_kineticblast_exists" value="1" role="presentation" /><label class="small-label2" data-i18n-aria-label="buff-kinetic-blast-title"><input title="@{buff_kineticblast-total}" name="attr_buff_kineticblast-total" type="number" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n-title="buff-kinetic-blast-title" data-i18n="blast">blast</span></label>
 					<input type="checkbox" class="buff-exists" name="attr_buff_dmg_kineticblast_exists" value="1" role="presentation" /><label class="small-label2" data-i18n-aria-label="buff-kinetic-blast-damage-title"><input title="@{buff_dmg_kineticblast-total}" name="attr_buff_dmg_kineticblast-total" type="number" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n-title="buff-kinetic-blast-damage-title" data-i18n="blast-damage-abbrv">Blast Dmg</span></label>
+					<input type="checkbox" class="buff-exists" name="attr_buff_dmg_power_attack_exists" value="1" role="presentation" /><label class="small-label2" data-i18n-aria-label="buff-power-attack-damage-title"><input title="@{buff_dmg_power_attack-total}" name="attr_buff_dmg_power_attack-total" type="number" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n-title="buff-power-attack-damage-title" data-i18n="power-attack-abbrv">PwrAttk</span></label>
 					<span class="panel-name" data-i18n="current-buffs">Current Buffs</span>
 				</div>
 			</div>
@@ -292,6 +294,7 @@
 							<option value="bless" data-i18n="buff-bless">Bless</option>
 							<option value="blessingoffervor" data-i18n="buff-blessing-of-fervor">Blessing of Fervor</option>
 							<option value="boneward" data-i18n="buff-bone-ward">Bone Ward</option>
+							<option value="combatexpertise" data-i18n="buff-combat-expertise">Combat Expertise</option>
 							<option value="consecrate" data-i18n="buff-consecrate">Consecrate (if undead)</option>
 							<option value="crushingdespair" data-i18n="buff-crushing-despair">Crushing Despair</option>
 							<option value="curse" data-i18n="buff-curse">Curse</option>
@@ -426,6 +429,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>
@@ -519,6 +523,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>
@@ -612,6 +617,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>
@@ -705,6 +711,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>
@@ -798,6 +805,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>
@@ -890,6 +898,7 @@
 											<option value="dmg_kineticblast" data-i18n="kinetic-blast-damage-abbrv">Kinetic Blast</option>
 											<option value="dmg_melee2" data-i18n="melee2-damage">melee damage</option>
 											<option value="dmg_ranged2" data-i18n="ranged2-damage">rng damage</option>
+											<option value="dmg_power_attack" data-i18n="power-attack-damage">Power Attack Dmg</option>
 											<option value="ac" class="option-header" data-i18n="armor-class-abbrv">ac</option>
 											<option value="armor" class="option-header" data-i18n="armor">armor</option>
 											<option value="shield" class="option-header" data-i18n="shield">shield</option>

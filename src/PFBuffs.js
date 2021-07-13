@@ -26,7 +26,7 @@ buffColumns = [
 	'flatfooted', 'fort', 'hptemp', 'initiative', 'int', 'int_skills', 'melee', 'natural',
 	'ranged', 'ref', 'saves', 'shield', 'size', 'speed', 'str', 'str_skills', 'touch',
 	'will', 'wis', 'wis_skills', 'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
-	'kineticblast','dmg_kineticblast',
+	'kineticblast','dmg_kineticblast', 'dmg_power_attack',
 	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
 	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
@@ -43,7 +43,7 @@ buffToTot = {
 	'shield':'shield', 'size':'size',	'speed':'speed', 'str':'STR',	'str_skills':'STR_skills',
 	'touch':'Touch', 'will':'Will',	'wis':'WIS', 'wis_skills':'WIS_skills',
 	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
-	'kineticblast':'kineticblast','dmg_kineticblast':'dmg_kineticblast',
+	'kineticblast': 'kineticblast', 'dmg_kineticblast': 'dmg_kineticblast', 'dmg_power_attack': 'dmg_power_attack',
 	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
 	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
 	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
@@ -182,6 +182,7 @@ events = {
 		"dmg_melee": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_ranged2": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_melee2": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_power_attack": [PFAttacks.updateRepeatingWeaponDamages],
 		"saves": [PFSaves.updateSaves],
 		"attack": [PFAttackGrid.updateAttacks],
 		"AC": [PFDefense.updateDefenses],
@@ -1982,25 +1983,25 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{kineticist_level-mod}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
 			break;
 		case 'powerattack':
-			setter[prefix+'name']=SWUtils.getTranslated('buff-power-attack');
-			setter[prefix+'bufftype']='other';
-			setter[prefix+'tabcat']='other';
-			setter[prefix+'b1-show']=1;
-			setter[prefix+'b1_bonus']='melee';
-			setter[prefix+'b1_bonustype']='untyped';
-			setter[prefix+'b1_macro-text']='-1-floor(@{bab}/4)';
-			tempint=1;
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-power-attack');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'melee';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
 			if (calc) {
-				tempint=1 + Math.floor(bab/4);
+				tempint = 1 + Math.floor(bab/4);
 			}
-			setter[prefix+'b1_val']=-tempint;
-			setter[prefix+'b2-show']=1;
-			setter[prefix+'b2_bonus']='dmg_melee';
-			setter[prefix+'b2_bonustype']='untyped';
-			setter[prefix+'b2_macro-text']='2+2*floor(@{bab}/4)';
-			setter[prefix+'b2_val']=2 * tempint;
-			setter[prefix+'notes']=SWUtils.getTranslated('buff-power-attack-note');
-			break;
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'dmg_power_attack';
+			setter[prefix + 'b2_bonustype'] = 'untyped';
+			setter[prefix + 'b2_macro-text'] = '2+2*floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-power-attack-note');
+		break;
 		case 'deadlyaim':
 			setter[prefix + 'name'] = SWUtils.getTranslated('buff-deadly-aim');
 			setter[prefix + 'bufftype'] = 'other';
@@ -2021,6 +2022,26 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix + 'b2_val'] = 2 * tempint;
 			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-deadly-aim-note');
 			break;
+		case 'combatexpertise':
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-combat-expertise');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'melee';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
+			if (calc) {
+				tempint = 1 + Math.floor(bab/4);
+			}
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'ac';
+			setter[prefix + 'b2_bonustype'] = 'dodge';
+			setter[prefix + 'b2_macro-text'] = '1+floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-combat-expertise-note');
+		break;
 	}
 		
 	return setter;

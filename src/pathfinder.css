@@ -2909,7 +2909,7 @@ also need 1 more level in selector or base css will override border */
     margin: 0;
     padding: .125rem;
     white-space: nowrap;
-    width: 12em;
+    max-width: 20ch;
     border-radius: 4px;
     border: 1px solid lightgrey;
     text-align: center;
