@@ -40,27 +40,9 @@
 			<ol>
 				<li>Added common buff options for Power Attack, Deadly Aim, and Combat Expertise. Power Attack includes a new buff to handle the power attack damage. 'Power Attack Dmg' This was done so that the buff's bonus can be passed to each attack where the damage multiplier can be applied per attack to handle two-handed, off-hand, etc. (thank you player-03 for your help)</li>
 				<li>Fixed; Tokenbar changes to HP should now trigger sheet events as expected.</li>
+				<li>Added more emphasis to most of the "total" read-only fields</li>
 				<li>Small adjustemnts to the rowID fields to make them easier to select and copy.</li>
-				<li>Known Issue: linked attacks that have been generated from an Ability or Spell will have their 'Weapon Notes' reset to their 'sheet generated notes' if the "Include link..." sheet setting is toggled or the linked Ability or Spell is edited.</li>
-				<li>Fixed; custom attributes changes(customa4-9 -mod) and HP from a tokenbar were not triggering buff recalcs consistently.</li>
-				<li>Small adjustment to help select and copy the rowID text.</li>
-				<li>Fixed; kineticistburn linked to a tokenbar was not triggering buffs recalculations.</li>
-				<li>Small adjustments to the regular roll template.</li>
-				<li>Fixed; the 'Show' in chat menu column option, was not toggling Mythic Abilities and Feats.</li>
-				<li>Inverted the order of fields for extra damage to match roll template output. Type then macro.</li>
-				<li>Fixed; 3-column layout of NPC skills list.</li>
-				<li>Fixed; fractional item weight was being rounded down.</li>
-				<li>Fixed; changing current size was not updating the attack grid totals.</li>
-				<li>Updated the sheet to work within Roll20's CSE update.</li>
-				<li>Fixed; Spell Options show 'DC' toggle.</li>
-				<li>Added a metric option to sheet settings>sheet configuration>accessibility. This option will show auto-calculated totals for weight and distance as metric(kilograms and meters). This option DOES NOT convert user input for weight and distance. Ensure you have entered metric-based values.</li>
-				<li>Updated common buff macros for Divine Favor and Magic Vestment.(thank you EtienneLamoureux)</li>
-				<li>Fixed; enabling the Energy Drain condition by applying negative levels also changes the appearance of "Energy Drain" label.</li>  
-				<li>Fixed; Skill "-misc" and "-misc-mod" columns were not being flagged with a red dashed border used to indicate a parsing error.</li>
-				<li>Abilities; added "Other" as a Source basis option. "Other" includes full Level Basis options.</li>
-				<li>Fixed; using ChatSetAttr or similar API script to toggle buffs that indirectly affected attack damage failed to trigger the damage recalculation.</li>
-				<li>Fixed; damage multiplier will no longer be applied to ability penalties.</li>
-				<li>Creating a spell attack or ability attack now includes a link in the "Weapon Notes" to execute the associated spell or ability from the attack's chat output. Including ability/spell links in attacks are optional; Settings>Sheet Configuration>Attacks>Include link...</li>
+				<li>Known Issue: linked attacks that have be			en generated from an Ability or Spell will have their 'Weapon Notes' reset to their 'sheet generated notes' if the "Include link..." sheet setting is toggled or the linked Ability or Spell is edited.</li>
 			</ol>
 			<label class="boldlabel-check"><input type="checkbox" name="attr_attentionv172-show" value="1"> <b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
 			<div class="cheat"></div>
