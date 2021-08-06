@@ -221,7 +221,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	getAttrs([maxname, modname, "buff_DMG-total", "buff_dmg_melee-total", "buff_dmg_ranged-total", "buff_dmg_melee2-total", "buff_dmg_ranged2-total", "buff_dmg_power_attack-total", "condition-Sickened", rangedField, totalDamageField,
 		attacktypeField, enhanceField, miscDmgField, abilityMultField], function (v) {
 		var maxA, ability, abilityMult, abilityTot, damageBuffs=0, currTotalDmg, dmgConditions, genDmgBuff=0,
-		tempint, miscDmg, enhance, totalDamage, rangedAttack=0, setter = {}, meleeAttack=0, secondAttack=0, damagePowerAttack;
+		tempint, miscDmg, enhance, totalDamage, rangedAttack=0, setter = {}, meleeAttack=0, secondAttack=0, damagePowerAttack=0;
 		rangedAttack =  (/range/i).test(v[attacktypeField]);
 		if(!rangedAttack){
 			meleeAttack = (/melee/i).test(v[attacktypeField]);
@@ -237,9 +237,11 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		//if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
 		if (rangedAttack){
 			damageBuffs = parseInt(v["buff_dmg_ranged-total"], 10) || 0;
+			damagePowerAttack = 0;
 			if(secondAttack){
 				tempint = parseInt(v["buff_dmg_ranged2-total"], 10) || 0;
 				damageBuffs = damageBuffs + tempint;
+				damagePowerAttack = 0;
 			}
 		} else if (meleeAttack){
 			damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
@@ -451,6 +453,7 @@ function getRecalculatedDamageOnly (id,v){
 				meleeBuffs+= (parseInt(v['buff_dmg_melee2-total'],10) ||0);
 			} 
 			if(isRanged){
+				damagePowerAttack = 0;
 				damageBuffs+=rangedBuff;
 				maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10);
 				if(isNaN(maxAbility)){
@@ -638,12 +641,15 @@ function  getRecalculatedAttack (id,v,setter){
 		} else if (isRanged){
 			localsetter[prefix+"isranged"]=0;
 			isRanged=0;
+			damagePowerAttack = 0;
 		}
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
 		if (isRanged){
 			damageBuffs +=  (v['buff_dmg_ranged-total']||0);
+			damagePowerAttack = 0;
 			if(attkType.indexOf('2')>=0){
 				damageBuffs +=  (v['buff_dmg_ranged2-total']||0);
+				damagePowerAttack = 0;
 			}
 		} else {
 			damageBuffs +=  (v['buff_dmg_melee-total']||0);
