@@ -1272,6 +1272,12 @@ also need 1 more level in selector or base css will override border */
     font-size: 1.6rem;
     padding-left: 0;
 }
+/* emphasize ranks column */
+.charsheet .skills div span.table-cell:nth-child(4) {
+    background-color: #556677;
+    min-width: 3.5em;
+    padding: 0 2px 2px 2px;
+}
 
 .charsheet .skills .table-row.adventure,
 .charsheet .skills .table-row.bg,
@@ -2983,6 +2989,7 @@ also need 1 more level in selector or base css will override border */
 /* webkit (chrome) needs different css firefox centers perfectly, not chrome.must make it equal to 1.825 */
 .charsheet .small-label2>input[type="checkbox"]:not(.cssbutton),
 .charsheet .small-label2>input[type="radio"]:not(.cssbutton) {
+    margin: auto;
     width: 3rem;
     height: 1.5rem;
     border: none;
