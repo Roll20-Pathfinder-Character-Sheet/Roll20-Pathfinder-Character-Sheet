@@ -67,7 +67,7 @@ export function resetCommandMacro (callback, eventInfo){
 function showMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':1,
-		'extra_fields_skills_show':1,
+		'skill_onetimecolumns_show':1,
 		'extra_fields_saves_show':1,
 		'extra_fields_spells_show':1,
 		'extra_fields_defense_show':1,
@@ -81,7 +81,7 @@ function showMiscFields () {
 function hideMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':0,
-		'extra_fields_skills_show':0,
+		'skill_onetimecolumns_show':0,
 		'extra_fields_saves_show':0,
 		'extra_fields_spells_show':0,
 		'extra_fields_defense_show':0,
