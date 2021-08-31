@@ -544,10 +544,10 @@ function registerEventHandlers () {
 			attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
 			if ( eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || (eventInfo.sourceType === "sheetworker"  && attr==='used_max')) {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				attr='repeating_'+section+'_showinmenu';
-				getAttrs([attr,'is_npc'],function(v){
+				var show = 'repeating_'+section+'_showinmenu';
+				getAttrs([show,'is_npc'],function(v){
 					var isNPC=parseInt(v.is_npc,10)||0;
-					if (parseInt(v[attr],10)===1){
+					if (parseInt(v[show],10)===1 || attr==='showinmenu'){
 						PFMenus.resetOneCommandMacro(section,isNPC);
 					}
 				});

@@ -1068,6 +1068,7 @@ function registerEventHandlers () {
 						});
 						setAttrs(settings);
 						PFAbility.recalculate();
+						PFFeatures.recalculate();
 					});
 				});
 			});
