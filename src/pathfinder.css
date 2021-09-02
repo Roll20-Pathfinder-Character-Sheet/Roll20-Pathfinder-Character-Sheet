@@ -1806,7 +1806,6 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .showarrow.npc-details-show+.showsect::before {
     color: White;
-    padding-top: .5em;
     padding-left: .5em;
 }
 
@@ -1874,6 +1873,7 @@ also need 1 more level in selector or base css will override border */
     padding-left: 1em;
     width: 90%;
     text-align: left;
+    vertical-align: revert;
 }
 
 .charsheet .showarrow.npc-details-show+.showsect.npc-header .table-cell:last-child {
@@ -1883,20 +1883,44 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .table.npc-header {
-    margin: 0;
-    display: inline-table;
+    margin: 0 0 0 -.75rem;
     color: White;
     background-color: black;
-    /*margin-right:-2em;*/
     line-height: 1em;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .charsheet .table.npc-header .table-cell input {
     color: White !important;
     background-color: black !important;
     font-weight: bold;
-    vertical-align: text-top;
     white-space: nowrap;
+    line-height: 1em;
+}
+
+.charsheet .npc-statblock-row {
+    display: inline-flex;
+    height: 3rem;
+    align-items: center;
+    width: inherit;
+    margin-bottom: 6px;
+}
+
+.charsheet .npc-statblock-row .small-label2>.calc {
+    display: inline-block;
+}
+
+.charsheet .npc-statblock-row span.small-label2 span {
+    font-size: 1em;
+    font-style: normal;
+    margin: 0 2px 0 0;
+    vertical-align: middle;
+}
+
+.charsheet .npc-statblock-row span.small-label2 span+input {
+    display: inline-block;
 }
 
 .charsheet .sect.expand .attack-damage,
@@ -6012,7 +6036,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .small-label2.autoexpand input {
     position: absolute;
     overflow: hidden;
-    height: 1.5em;
+    height: 1.75em;
     top: .3em;
     text-align: center;
 }
