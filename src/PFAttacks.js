@@ -17,14 +17,14 @@ import * as PFSize from './PFSize';
 
 /** module for repeating_weapon section  */
 /* **********************************ATTACKS PAGE ********************************** */
-export var damageRowAttrsLU=["_damage-ability-max","_damage-ability","_damage-ability-mod","_damage-mod","_damage_ability_mult","_enhance","_total-damage","_attack-type","_isranged"],
+export var damageRowAttrsLU = ["_damage-ability-max", "_damage-ability", "_damage-ability-mod", "_damage-mod", "_damage_ability_mult", "_enhance", "_total-damage", "_attack-type", "_isranged", "buff_dmg_power_attack-total"],
 updateRowAttrsLU=["_attack-mod","_attack-type","_attack-type-mod","_crit_conf_mod","_crit_confirm",
 	"_isranged","_masterwork","_proficiency","_total-attack",
 	"_attack-type_macro_insert","_damage-type_macro_insert"].concat(damageRowAttrsLU),
 sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
 updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf",
 	"buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total",
-	"condition-Sickened","size","default_char_size","modify_dmg_by_size"],
+	"condition-Sickened", "size", "default_char_size", "modify_dmg_by_size", "buff_dmg_power_attack-total"],
 linkedAttackType = { 'equipment':1, 'spell':2, 'ability':3,  'weapon':4};
 
 
@@ -218,10 +218,10 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	if (eventInfo && eventInfo.sourceAttribute.toLowerCase().indexOf('buff_dmg_range')>=0){
 		rangedUpdate=true;
 	}
-	getAttrs([maxname, modname, "buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total","condition-Sickened",rangedField, totalDamageField, 
+	getAttrs([maxname, modname, "buff_DMG-total", "buff_dmg_melee-total", "buff_dmg_ranged-total", "buff_dmg_melee2-total", "buff_dmg_ranged2-total", "buff_dmg_power_attack-total", "condition-Sickened", rangedField, totalDamageField,
 		attacktypeField, enhanceField, miscDmgField, abilityMultField], function (v) {
-		var maxA , ability,abilityMult,abilityTot,damageBuffs=0,currTotalDmg,dmgConditions,genDmgBuff=0,
-		tempint,miscDmg,enhance,totalDamage,rangedAttack=0,setter = {},meleeAttack=0,secondAttack=0;
+		var maxA, ability, abilityMult, abilityTot, damageBuffs=0, currTotalDmg, dmgConditions, genDmgBuff=0,
+		tempint, miscDmg, enhance, totalDamage, rangedAttack=0, setter = {}, meleeAttack=0, secondAttack=0, damagePowerAttack=0;
 		rangedAttack =  (/range/i).test(v[attacktypeField]);
 		if(!rangedAttack){
 			meleeAttack = (/melee/i).test(v[attacktypeField]);
@@ -232,17 +232,20 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0; 
 		currTotalDmg = parseInt(v[totalDamageField], 10);
 		miscDmg = parseInt(v[miscDmgField], 10) || 0;
-		enhance = parseInt(v[enhanceField], 10) || 0;
+		enhance = parseInt(v[enhanceField], 10) || 0;		
 		//TAS.debug('PFAttacks type is :'+v[attacktypeField]+ ', update damage values are :',v);
 		//if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
 		if (rangedAttack){
 			damageBuffs = parseInt(v["buff_dmg_ranged-total"], 10) || 0;
+			damagePowerAttack = 0;
 			if(secondAttack){
 				tempint = parseInt(v["buff_dmg_ranged2-total"], 10) || 0;
 				damageBuffs = damageBuffs + tempint;
+				damagePowerAttack = 0;
 			}
 		} else if (meleeAttack){
 			damageBuffs = parseInt(v["buff_dmg_melee-total"], 10) || 0;
+			damagePowerAttack = parseInt(v["buff_dmg_power_attack-total"], 10) || 0;
 			if(secondAttack){
 				tempint = parseInt(v["buff_dmg_melee2-total"], 10) || 0;
 				damageBuffs = damageBuffs + tempint;
@@ -264,7 +267,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 			abilityMult=1
 			TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + ability);
 		}
-		abilityTot = Math.floor(Math.min(abilityMult * ability, maxA));
+		abilityTot = Math.floor(Math.min(abilityMult * (ability + damagePowerAttack), maxA));
 		totalDamage = abilityTot + damageBuffs + miscDmg + enhance;
 		if (totalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
 			//TAS.debug("setting damage to "+totalDamage);
@@ -430,6 +433,7 @@ function getRecalculatedDamageOnly (id,v){
 		meleeBuffs = v["buff_dmg_melee-total"]||0, 
 		rangedBuff = v["buff_dmg_ranged-total"]||0,
 		damageBuffs = v['buff_DMG-total']||0,
+		damagePowerAttack = v["buff_dmg_power_attack-total"]||0,
 		abilityTotDmg=0,
 		newTotalDamage=0,
 		localsetter={};
@@ -449,6 +453,7 @@ function getRecalculatedDamageOnly (id,v){
 				meleeBuffs+= (parseInt(v['buff_dmg_melee2-total'],10) ||0);
 			} 
 			if(isRanged){
+				damagePowerAttack = 0;
 				damageBuffs+=rangedBuff;
 				maxAbility = parseInt(v[prefix+ "damage-ability-max"], 10);
 				if(isNaN(maxAbility)){
@@ -464,7 +469,7 @@ function getRecalculatedDamageOnly (id,v){
 				abilityMult = 1
 				TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + abilitydmg);
 			}
-			abilityTotDmg = Math.floor(Math.min(abilityMult * abilitydmg, maxAbility));
+			abilityTotDmg = Math.floor(Math.min(abilityMult * (abilitydmg + damagePowerAttack), maxAbility));
 			newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 			if (newTotalDamage !== currTotalDmg || isNaN(currTotalDmg)) {
 				localsetter[prefix+ "total-damage"] = newTotalDamage;
@@ -492,6 +497,7 @@ export function updateRepeatingWeaponDamages(callback,silently,eventInfo) {
 		fields.push("buff_dmg_melee2-total");
 		fields.push("buff_dmg_ranged2-total");
 		fields.push("condition-Sickened");
+		fields.push("buff_dmg_power_attack-total");
 		getAttrs(fields,function(v){
 			var setter;
 			//replace with int versions
@@ -499,6 +505,7 @@ export function updateRepeatingWeaponDamages(callback,silently,eventInfo) {
 			v["buff_dmg_ranged-total"]=parseInt(v["buff_dmg_ranged-total"],10)||0;
 			v["buff_dmg_melee-total"]=parseInt(v["buff_dmg_melee-total"],10)||0;
 			v["condition-Sickened"]= parseInt(v["condition-Sickened"],10)||0;
+			v["buff_dmg_power_attack-total"] = parseInt(v["buff_dmg_power_attack-total"], 10)||0;
 			setter = _.reduce(ids,function(m,id){
 				var xtra=getRecalculatedDamageOnly(id,v);
 				_.extend(m,xtra);
@@ -610,7 +617,8 @@ function  getRecalculatedAttack (id,v,setter){
 		currCritBonus = v[prefix+ "crit_conf_mod"] || 0,
 		critConfirmBonus = v[prefix+ "crit_confirm"] || 0,
 		attkType = v[prefix+ "attack-type"],
-		damageBuffs = v['buff_DMG-total'] || 0, 
+		damageBuffs = v['buff_DMG-total'] || 0,
+		damagePowerAttack = v["buff_dmg_power_attack-total"] || 0,
 		attkTypeForGrid='',
 		attackTypeCritBonusField='',
 		attackTypeCritBonus =0,
@@ -633,12 +641,15 @@ function  getRecalculatedAttack (id,v,setter){
 		} else if (isRanged){
 			localsetter[prefix+"isranged"]=0;
 			isRanged=0;
+			damagePowerAttack = 0;
 		}
 		abilityMult=getDamageMult(v[prefix+ "damage_ability_mult"]);
 		if (isRanged){
 			damageBuffs +=  (v['buff_dmg_ranged-total']||0);
+			damagePowerAttack = 0;
 			if(attkType.indexOf('2')>=0){
 				damageBuffs +=  (v['buff_dmg_ranged2-total']||0);
+				damagePowerAttack = 0;
 			}
 		} else {
 			damageBuffs +=  (v['buff_dmg_melee-total']||0);
@@ -660,7 +671,7 @@ function  getRecalculatedAttack (id,v,setter){
 			abilityMult = 1
 			TAS.debug("~~~~~~ Multiplier only applies to an Ability bonus. Current Ability-Mod: " + abilitydmg);
 		}
-		abilityTotDmg = Math.min(Math.floor(abilityMult * abilitydmg), maxAbility);
+		abilityTotDmg = Math.min(Math.floor(abilityMult * (abilitydmg + damagePowerAttack)), maxAbility);
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		TAS.debug("###########################",
 			"getRecalculatedAttack attackType:"+ attkType + ", ability:"+ 

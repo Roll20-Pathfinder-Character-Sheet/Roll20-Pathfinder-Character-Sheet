@@ -47,6 +47,7 @@ function expandAll  () {
 			SWUtils.setWrapper({
 				"expandall": "0",
 				pagetab: "99",
+				buffs_tab: "99",
 				abilities_tab: "99",
 				"npc-abilities_tab": "99",
 				skills_tab: "99",
@@ -54,7 +55,7 @@ function expandAll  () {
 				spells_tab: "99",
 				npc_spellclass_tab: "99",
 				equipment_tab: "99",
-				'sheet-conditions-show':1,
+				'conditions-show':1,
 				'buffstop-show':1,
 				'command-buttons-show':1,
 				'NPC-command-buttons-show':1,
@@ -69,12 +70,16 @@ function expandAll  () {
 				'macro-text-show':1,
 				'notes-show':1,
 				'saves-show':1,
+				'all-saves-macro-show':1,
+				'save-notes-show':1,
 				'defense-values-show':1,
 				'armor-shield-show':1,
 				'sanity-show':1,
 				'defense-notes-show':1,
 				'attack-bonuses-show':1,
 				'atkm2_show':1,
+				'ranged_2_show':1,
+				'cmb_2_show':1,
 				'attack-notes-show':1,
 				'attack-options-show':1,
 				'two-weapon-show':1,
@@ -95,6 +100,7 @@ function expandAll  () {
 				'feats-show':1,
 				'mythic-info-show':1,
 				'psionic-info-show':1,
+				'burn-show':1,
 				'abilities-show':1,
 				'spellclasses-show':1,
 				'spellclass-0-show':1,
@@ -128,6 +134,7 @@ function expandAll  () {
 				'npc-offense-show':1,
 				'npc-speed-show':1,
 				'npc-repeating-weapons-show':1,
+				'npc-spells-show':1,
 				'npc-spell-like-abilities-show':1,
 				'npc-tactics-show':1,
 				'npc-statistics-show':1,
@@ -204,7 +211,7 @@ function expandAll  () {
 				'npc-special-abilities-column-show':0,
 				'extra_fields_san_show':1,
 				'extra_fields_attacks_show':1,
-				'extra_fields_skills_show':1,
+				'skill_onetimecolumns_show':1,
 				'extra_fields_saves_show':1,
 				'extra_fields_spells_show':1,
 				'extra_fields_caster_show':1,
@@ -222,6 +229,7 @@ function expandAll  () {
 						var prefix = rsection + "_" + id + "_";
 						switch (section) {
 							case 'weapon':
+								memo[prefix + "misc-show"] = 1;
 								memo[prefix + "add-damage-show"] = 1;
 								memo[prefix + "iterative-attacks-show"] = 1;
 								memo[prefix + "advmacro-text-show"] = 1;
@@ -261,9 +269,10 @@ function expandAll  () {
 								memo[prefix + "misc-show"] = 1;
 								memo[prefix + "showextrafields"] = 1;
 								memo[prefix + "range-show"] = 1;
+								memo[prefix + "attack-show"] = 1;
 								break;
 						}
-						memo[prefix + "row-show"] = 0;
+						memo[prefix + "row-show"] = 1;
 						memo[prefix + "ids-show"] = 1;
 						if (section !== 'buff' && section!=='buff2'){
 							memo[prefix + "macro-text-show"] = 1;

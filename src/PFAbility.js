@@ -134,11 +134,11 @@ function setRuleTab (callback,silently,id,eventInfo){
 				}
 			}
 			if( v[prefix + 'rule_category'] === 'class-features' && 
-				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{class-0-level}';
 					params={};
 			} else if (v[prefix + 'rule_category'] === 'racial-traits' && 
-				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']=="0")){
+				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{level}';
 					params={};
 			}
@@ -509,26 +509,25 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 			}else {
 				setter[weaponPrefix+"critical_dmg_type"]="";
 			}
-		}		
+		}
 		if (v[spellPrefix+"save"]){
 			if (notes) {
 				notes += ", ";
 			}
 			notes += "\n**Save:** " + v[spellPrefix + "save"] + " **DC:** [[@{" + spellPrefix + "savedc}]]";
 		}
-
 		if ( v[spellPrefix+"abil-sr"]){
 			if (notes) {
 				notes += ", ";
 			}
 			notes += "\n**Spell Resistance:** " + v[spellPrefix + "abil-sr"];
 		}
-		// include a link in the weapon notes to execute the spell from chat        
+		// include a link in the weapon notes to execute the spell from chat
 		var toggle_attack_entry = v[spellPrefix + "toggle_attack_entry"];
 		if (toggle_attack_entry === 1) {
 			if (v[spellPrefix + "name"]) {
 				if (notes) {
-					notes += "";
+					notes += ", ";
 				}
 				notes += "\n[" + v[spellPrefix + "name"] + "]" + "(~@{character_name}|" + spellPrefix + "roll)";
 			}
@@ -541,8 +540,8 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 				notes += "";
 			}
 		}
-		if (notes){
-			setter[weaponPrefix+"notes"]=notes;
+		if (notes) {
+			setter[weaponPrefix + "notes"] = notes;
 		}
 	} catch (err){
 		TAS.error("PFAbility.setAttackEntryVals",err);
@@ -562,9 +561,8 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 		}
 	}),
 	attribList = [],itemId,item_entry,slaPrefix,
-	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"]
-	;
-	if (id=='DELETED'){
+	attributes = ["range_numeric", "damage-macro-text", "damage-type", "abil-sr", "savedc", "save", "abil-attack-type", "name", "toggle_attack_entry"];
+	if (id==='DELETED'){
 		done();
 		return;
 	}
@@ -1070,6 +1068,7 @@ function registerEventHandlers () {
 						});
 						setAttrs(settings);
 						PFAbility.recalculate();
+						PFFeatures.recalculate();
 					});
 				});
 			});

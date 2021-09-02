@@ -26,7 +26,7 @@ buffColumns = [
 	'flatfooted', 'fort', 'hptemp', 'initiative', 'int', 'int_skills', 'melee', 'natural',
 	'ranged', 'ref', 'saves', 'shield', 'size', 'speed', 'str', 'str_skills', 'touch',
 	'will', 'wis', 'wis_skills', 'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
-	'kineticblast','dmg_kineticblast',
+	'kineticblast','dmg_kineticblast', 'dmg_power_attack',
 	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
 	'customa10','customa11','customa12'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
@@ -43,7 +43,7 @@ buffToTot = {
 	'shield':'shield', 'size':'size',	'speed':'speed', 'str':'STR',	'str_skills':'STR_skills',
 	'touch':'Touch', 'will':'Will',	'wis':'WIS', 'wis_skills':'WIS_skills',
 	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
-	'kineticblast':'kineticblast','dmg_kineticblast':'dmg_kineticblast',
+	'kineticblast': 'kineticblast', 'dmg_kineticblast': 'dmg_kineticblast', 'dmg_power_attack': 'dmg_power_attack',
 	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
 	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
 	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
@@ -182,6 +182,7 @@ events = {
 		"dmg_melee": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_ranged2": [PFAttacks.updateRepeatingWeaponDamages],
 		"dmg_melee2": [PFAttacks.updateRepeatingWeaponDamages],
+		"dmg_power_attack": [PFAttacks.updateRepeatingWeaponDamages],
 		"saves": [PFSaves.updateSaves],
 		"attack": [PFAttackGrid.updateAttacks],
 		"AC": [PFDefense.updateDefenses],
@@ -1053,7 +1054,7 @@ function reEvaluateCustomMacros(callback,silently){
 			buffsPerRow.forEach(function(b){
 				if (parseInt(v['repeating_buff2_'+id+'_enable_toggle'],10) && 
 					parseInt(v['repeating_buff2_'+id+'_' + b + '-show'],10) ) {
-						SWUtils.evaluateAndSetNumber('repeating_buff2_'+id+'_' +b + "_macro-text", 'repeating_buff2_'+id+'_' + b+'_val',0,buffDone,true);
+						SWUtils.evaluateAndSetNumber('repeating_buff2_'+id+'_' +b+ '_macro-text', 'repeating_buff2_'+id+'_' +b+'_val',0,buffDone,true);
 				} else {
 					buffDone();
 				}
@@ -1097,7 +1098,7 @@ function reEvaluateCustomMacros(callback,silently){
  */
 function getCommonBuffEntries(name,v,onByDefault){
 	var id,prefix='',setter={},
-	calc=0,conmod=0,speed=0,level=0,tempint=0;
+	calc=0,conmod=0,speed=0,level=0,tempint=0,bab=0;
 	if(!name){
 		return setter;
 	}
@@ -1109,7 +1110,8 @@ function getCommonBuffEntries(name,v,onByDefault){
 		conmod=parseInt(v['CON-mod'],10);
 		speed=parseInt(v['speed-base'],10);
 		level=parseInt(v['level'],10);
-		if(! ( isNaN(conmod) || isNaN(speed) || isNaN(level))){
+		bab = parseInt(v['bab'], 10);
+		if(! ( isNaN(conmod) || isNaN(speed) || isNaN(level) || isNaN(bab))){
 			calc=1;
 		}
 	}
@@ -1980,6 +1982,66 @@ function getCommonBuffEntries(name,v,onByDefault){
 			setter[prefix+'add_note_to_roll']='defense';
 			setter[prefix+'notes']= "**:"+SWUtils.getTranslated('buff-elemental-overflow') + "** [[({1d1,{1d0,(@{kineticist_level-mod}-2)d1}kh1}kl1)*5*@{kineticistburn}]]**%** " +  SWUtils.getTranslated('buff-elemental-overflow-note');
 			break;
+		case 'powerattack':
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-power-attack');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'melee';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
+			if (calc) {
+				tempint = 1 + Math.floor(bab/4);
+			}
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'dmg_power_attack';
+			setter[prefix + 'b2_bonustype'] = 'untyped';
+			setter[prefix + 'b2_macro-text'] = '2+2*floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-power-attack-note');
+		break;
+		case 'deadlyaim':
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-deadly-aim');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'ranged';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
+			if (calc) {
+				tempint = 1 + Math.floor(bab / 4);
+			}
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'dmg_ranged';
+			setter[prefix + 'b2_bonustype'] = 'untyped';
+			setter[prefix + 'b2_macro-text'] = '2+2*floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-deadly-aim-note');
+			break;
+		case 'combatexpertise':
+			setter[prefix + 'name'] = SWUtils.getTranslated('buff-combat-expertise');
+			setter[prefix + 'bufftype'] = 'other';
+			setter[prefix + 'tabcat'] = 'other';
+			setter[prefix + 'b1-show'] = 1;
+			setter[prefix + 'b1_bonus'] = 'melee';
+			setter[prefix + 'b1_bonustype'] = 'untyped';
+			setter[prefix + 'b1_macro-text'] = '-1-floor(@{bab}/4)';
+			tempint = 1;
+			if (calc) {
+				tempint = 1 + Math.floor(bab/4);
+			}
+			setter[prefix + 'b1_val'] = -tempint;
+			setter[prefix + 'b2-show'] = 1;
+			setter[prefix + 'b2_bonus'] = 'ac';
+			setter[prefix + 'b2_bonustype'] = 'dodge';
+			setter[prefix + 'b2_macro-text'] = '1+floor(@{bab}/4)';
+			setter[prefix + 'b2_val'] = 2 * tempint;
+			setter[prefix + 'notes'] = SWUtils.getTranslated('buff-combat-expertise-note');
+		break;
 	}
 		
 	return setter;
@@ -2049,7 +2111,7 @@ export var recalculate = TAS.callback(function recalculateBuffs(callback, silent
 });
 function registerEventHandlers () {
 	var custombuffs=['customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
-	'customa10','customa11','customa12'	];
+	'customa10','customa11','customa12'];
 
 	on("change:add_common_buff",TAS.callback(function eventAddCommonBuff(eventInfo){
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
@@ -2083,8 +2145,8 @@ function registerEventHandlers () {
 	buffsPerRow.forEach(function(b){
 		var prefix = "change:repeating_buff2:" + b ;
 		on(prefix + "_macro-text", TAS.callback(function eventBuffMacroText(eventInfo) {
-			TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0,null,false);
+				TAS.debug("caught " + eventInfo.sourceAttribute + " for column " + b + ", event: " + eventInfo.sourceType);
+				SWUtils.evaluateAndSetNumber('repeating_buff2_'+b+'_macro-text', 'repeating_buff2_'+b+'_val',0,null,false);
 		}));
 		on(prefix + "_bonustype", TAS.callback(function PFBuffs_updateBuffbonustype(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType ==="api") {
@@ -2226,8 +2288,7 @@ function registerEventHandlers () {
 					mergeOldIntoNewBuffs(updateAllBuffTotalsAsync);
 				}
 			});
-		}
-		
+		}		
 	}));
 
 	custombuffs.forEach(function(buff){

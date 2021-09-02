@@ -9,6 +9,7 @@ import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFBuffs from './PFBuffs';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFSkills from './PFSkills';
+import { buffColumns } from './PFBuffsOld';
 
 export function resetCommandMacro (callback, eventInfo){
     getAttrs(['customd1','customd2','customd3','customd4','customd5','customd6',
@@ -66,7 +67,7 @@ export function resetCommandMacro (callback, eventInfo){
 function showMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':1,
-		'extra_fields_skills_show':1,
+		'skill_onetimecolumns_show':1,
 		'extra_fields_saves_show':1,
 		'extra_fields_spells_show':1,
 		'extra_fields_defense_show':1,
@@ -80,7 +81,7 @@ function showMiscFields () {
 function hideMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':0,
-		'extra_fields_skills_show':0,
+		'skill_onetimecolumns_show':0,
 		'extra_fields_saves_show':0,
 		'extra_fields_spells_show':0,
 		'extra_fields_defense_show':0,
@@ -484,10 +485,11 @@ function registerEventHandlers () {
 
 	_.each(PFConst.customEquationMacros,function(writeField,custField){
 		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');
 		}));
-	});	
+	});
+
 	on("change:kineticist_level", TAS.callback(function eventKineticistLevel(eventInfo){
 		if(eventInfo.sourceType==='player'){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
