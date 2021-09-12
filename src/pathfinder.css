@@ -1902,25 +1902,43 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .npc-statblock-row {
     display: inline-flex;
-    height: 3rem;
-    align-items: center;
+    height: 3.5rem;
+    align-items: start;
     width: inherit;
-    margin-bottom: 6px;
+    margin: 2px 0 2px 0;
+    padding: 2px 2px 2px 2px;
 }
 
-.charsheet .npc-statblock-row .small-label2>.calc {
+.charsheet .npc-statblock-row .small-label2>.calc,
+.charsheet .npc-statblock-row .small-label2>input[type="number"] {
     display: inline-block;
+    width: 2em;
+    margin: 0;
+    padding: 0;
+    line-height: 2em;
+    text-align: center;
 }
 
+.charsheet .npc-statblock-row button[type="roll"].command-button {
+    height: 2em;
+}
+
+.charsheet .npc-statblock-row span.small-label2,
 .charsheet .npc-statblock-row span.small-label2 span {
     font-size: 1em;
     font-style: normal;
-    margin: 0 2px 0 0;
-    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
 }
 
 .charsheet .npc-statblock-row span.small-label2 span+input {
     display: inline-block;
+}
+
+.charsheet .npc-statblock-row .small-label2 span:not(.autoexpand) {
+    font-style: normal;
+    font-size: 1.3rem;
+    margin: 0 2px 0 2px;
 }
 
 .charsheet .sect.expand .attack-damage,
