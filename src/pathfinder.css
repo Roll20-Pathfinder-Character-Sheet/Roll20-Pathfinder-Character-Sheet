@@ -1632,7 +1632,7 @@ also need 1 more level in selector or base css will override border */
     display: block !important;
 }
 
-/* extra abiliites tab: hide old .sections */
+/* extra abilities tab: hide old .sections */
 .charsheet .tabs.custbordernav.abilitiesnav~.tabinput.tab0:not(:checked)~.tabinput.tab99:not(:checked)~.section0,
 .charsheet .tabs.custbordernav.abilitiesnav~.tabinput.tab1:not(:checked)~.tabinput.tab99:not(:checked)~.section1,
 .charsheet .tabs.custbordernav.abilitiesnav~.tabinput.tab2:not(:checked)~.tabinput.tab99:not(:checked)~.section2,
@@ -4929,7 +4929,8 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     background-color: white;
 }
 
-.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-atk.sheet-atk, /*doubled up the class to increase speceficity*/
+ /*doubled up the class to increase specificity*/
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-atk.sheet-atk,
 .sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-confirm,
 .sheet-rolltemplate-pf_attack .sheet-roll-groupi>.sheet-roll-row:first-child,
 .sheet-rolltemplate-pf_spell .sheet-roll-groupi>.sheet-roll-row:first-child,
@@ -6178,7 +6179,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .racial-traits-show:not(:checked)~.section-racial-traits,
 .charsheet .racial-traits-show:not(:checked)~div .section-racial-traits,
 .charsheet .traits-show:not(:checked)~.section-traits,
-.charsheet .traits-show:not(:checked)~div .ection-traits,
+.charsheet .traits-show:not(:checked)~div .section-traits,
 .charsheet .featlist-show:not(:checked)~.section-featlist,
 .charsheet .featlist-show:not(:checked)~div .section-featlist,
 .charsheet .classfeatures-show:not(:checked)~.section-classfeatureslist,
