@@ -4,9 +4,28 @@
     display: list-item;
 }
 
+.charsheet summary > * {
+    display: inline;
+}
+
 .charsheet summary:hover {
     color: red;
     cursor: pointer;
+}
+
+.charsheet summary + .popover-box {
+    background-color: #ffffee;
+    border-radius: 6px;
+    border: 2px solid grey;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0 0 0 1em;
+    max-width: 39em;
+    padding: 2px;
+    position: absolute;
+    top: -1em;
+    width: max-content;
+    z-index: 1;
 }
 
 .charsheet html,
@@ -1223,6 +1242,11 @@ also need 1 more level in selector or base css will override border */
     letter-spacing: -.08em;
     position: absolute;
     margin: -1px 0 0 1px;
+}
+
+.charsheet .pf-wrapper .small-label2 span.super::after {
+    position: inherit;
+    margin: -5px -5px 0 0;
 }
 
 .charsheet .pf-wrapper span.note-a::after,
