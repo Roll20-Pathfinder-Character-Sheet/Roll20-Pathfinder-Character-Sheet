@@ -19,11 +19,11 @@
     border: 2px solid grey;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 0 0 0 1em;
-    max-width: 39em;
+    margin: 0 0 0 1.1em;
+    max-width: 40em;
     padding: 2px;
     position: absolute;
-    top: -1em;
+    top: 0;
     width: max-content;
     z-index: 1;
 }
@@ -1942,9 +1942,25 @@ also need 1 more level in selector or base css will override border */
     line-height: 2em;
     text-align: center;
 }
-
+/*npc buttons*/
 .charsheet .npc-statblock-row button[type="roll"].command-button {
-    height: 2em;
+    height: 2.5rem;
+    background-color: #eee;
+    border-bottom-width: .2rem;
+    border-right-width: .2rem;
+}
+
+.charsheet .npc-statblock-row button[type="roll"].command-button > span {
+    color: #000;
+}
+
+.charsheet .npc-statblock-row button[type="roll"].command-button:hover {
+    background-color: #fff;
+}
+
+.charsheet .npc-statblock-row button[type="roll"].command-button:hover > span {
+    color: #f00;
+    cursor: pointer;
 }
 
 .charsheet .npc-statblock-row span.small-label2,
