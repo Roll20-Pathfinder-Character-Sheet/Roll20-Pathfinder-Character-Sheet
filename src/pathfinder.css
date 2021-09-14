@@ -62,28 +62,29 @@
 }
 
 .charsheet label {
+    color: initial;
     display: inline-block;
     font-size: inherit;
     line-height: 1em;
     margin-bottom: initial;
     padding-right: initial;
-    width: initial;
-    color: initial;
     position: relative;
+    width: initial;
 }
 
 .charsheet select {
-    width: initial;
+    cursor: pointer;
     margin: initial;
-    padding: initial;
     padding-top: 0;
+    padding: initial;
+    width: initial;
 }
 
 .charsheet textarea {
     height: initial;
-    resize: initial;
     overflow-x: hidden;
     overflow-y: auto;
+    resize: initial;
 }
 
 .charsheet button,
@@ -1942,6 +1943,12 @@ also need 1 more level in selector or base css will override border */
     line-height: 2em;
     text-align: center;
 }
+
+.charsheet .npc-statblock-row .small-label2>input:not(.cssbutton)::placeholder {
+    font-size: 1rem;
+    color: darkgray;
+}
+
 /*npc buttons*/
 .charsheet .npc-statblock-row button[type="roll"].command-button {
     height: 2.5rem;
