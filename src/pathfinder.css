@@ -2,30 +2,34 @@
 
 .charsheet summary {
     display: list-item;
+    opacity: .35;
+    font-size: 1.5rem;
 }
 
 .charsheet summary > * {
     display: inline;
 }
 
-.charsheet summary:hover {
-    color: red;
-    cursor: pointer;
+.charsheet div.npc-statblock-row:hover + details summary {
+    opacity: 1;
 }
 
-.charsheet summary + .popover-box {
+.charsheet summary:hover,
+.charsheet details:hover {
+    color: #f00;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.charsheet summary + .details-box {
+    align-items: baseline;
     background-color: #ffffee;
     border-radius: 6px;
-    border: 2px solid grey;
-    flex-wrap: wrap;
+    border: 1px solid grey;
+    color: initial;
+    display: inline-flex;
     justify-content: space-around;
-    margin: 0 0 0 1.1em;
-    max-width: 40em;
-    padding: 2px;
-    position: absolute;
-    top: 0;
-    width: max-content;
-    z-index: 1;
+    padding: 3px;
 }
 
 .charsheet html,

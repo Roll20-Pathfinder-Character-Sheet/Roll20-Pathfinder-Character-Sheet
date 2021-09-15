@@ -11411,62 +11411,60 @@
                     <div class="npc-statblock-row">
                         <span class="small-label2"><span data-i18n="armor-class-abbrv">AC</span><input type="number" title="@{AC}" name="attr_AC" value="10" class="calc" readonly /></span>
                         <span class="small-label2"><span data-i18n="touch-armor-class-abbrv">Touch</span><input title="@{Touch}" type="number" name="attr_Touch" value="10" class="calc" readonly /></span>
-                        <span class="small-label2"><span data-i18n="flat-footed-armor-class-abbrv">Flat-Footed</span><input title="@{Flat-Footed}" type="number" name="attr_Flat-Footed" value="10" class="calc" readonly /></span>
-                        <!--popover-box-->
-                        <span class="small-label2">
-                            <details>
-                                <summary data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
-                                <div class="popover-box">
-                                    <span class="small-label2 right">(</span>
-                                    <span class="small-label2">
-                                        <input title="@{armor3-acbonus}" type="number" name="attr_armor3-acbonus" value="0" />
-                                        <label style="text-align:center;">
-                                            <input title="@{armor3-equipped}" type="checkbox" class="boldlabel-check" name="attr_armor3-equipped" value="1" style="width:1rem; height:1rem;" checked />
-                                            <b title="Equipped" style="font-size:85%;" data-i18n="armor">Armor</b>
-                                        </label>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{shield3-acbonus}" type="number" name="attr_shield3-acbonus" value="0" />
-                                        <label style="text-align:center;">
-                                            <input title="@{shield3-equipped}" type="checkbox" class="boldlabel-check" name="attr_shield3-equipped" value="1" style="width:1rem; height:1rem;" checked />
-                                            <b title="Equipped" style="font-size:85%;" data-i18n="shield">Shield</b>
-                                        </label>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" />
-                                        <span data-i18n="deflect">Deflect</span>
-                                    </span>
-                                    <input type="checkbox" name="attr_nodex-toggle" class="warn-mshow hidden" value="1" />
-                                    <input type="checkbox" name="attr_maxdex-toggle" class="warn-show hidden" value="1" />
-                                    <span class="small-label2 highlight">
-                                        <input title="@{AC-ability-mod}" type="number" name="attr_AC-ability-display" value="0" class="calc" readonly />
-                                        <span data-i18n="dexterity-abbrv">Dex</span>
-                                    </span>
-                                    <span class="small-label2 highlight">
-                                        <input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" />
-                                        <span data-i18n="dodge">Dodge</span>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" />
-                                        <span data-i18n="natural">Natural</span>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" />
-                                        <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{buff_AC-total}" name="attr_buff_AC-total" type="number" value="0" class="calc" readonly />
-                                        <span data-i18n="buff">Buff</span>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" max="0" class="calc" readonly />
-                                        <span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
-                                    </span>
-                                    <span class="small-label2 left">)</span>
-                                </div>
-                            </details>
-                        </span>
+                        <span class="small-label2"><span data-i18n="flat-footed-armor-class-abbrv">Flat-Footed</span><input title="@{Flat-Footed}" type="number" name="attr_Flat-Footed" value="10" class="calc" readonly /></span>                        
                     </div>
+                    <!--details-box-->
+                    <details>
+                        <summary style="margin: -2rem 0 0 27.25rem;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
+                        <div class="details-box">
+                            <span class="small-label2 right">(</span>
+                            <span class="small-label2">
+                                <input title="@{armor3-acbonus}" type="number" name="attr_armor3-acbonus" value="0" />
+                                <label style="text-align:center;">
+                                    <input title="@{armor3-equipped}" type="checkbox" class="boldlabel-check" name="attr_armor3-equipped" value="1" style="width:1rem; height:1rem;" checked />
+                                    <b title="Equipped" style="font-size:85%;" data-i18n="armor">Armor</b>
+                                </label>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{shield3-acbonus}" type="number" name="attr_shield3-acbonus" value="0" />
+                                <label style="text-align:center;">
+                                    <input title="@{shield3-equipped}" type="checkbox" class="boldlabel-check" name="attr_shield3-equipped" value="1" style="width:1rem; height:1rem;" checked />
+                                    <b title="Equipped" style="font-size:85%;" data-i18n="shield">Shield</b>
+                                </label>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{AC-deflect}" type="number" name="attr_AC-deflect" value="0" />
+                                <span data-i18n="deflect">Deflect</span>
+                            </span>
+                            <input type="checkbox" name="attr_nodex-toggle" class="warn-mshow hidden" value="1" />
+                            <input type="checkbox" name="attr_maxdex-toggle" class="warn-show hidden" value="1" />
+                            <span class="small-label2 highlight">
+                                <input title="@{AC-ability-mod}" type="number" name="attr_AC-ability-display" value="0" class="calc" readonly />
+                                <span data-i18n="dexterity-abbrv">Dex</span>
+                            </span>
+                            <span class="small-label2 highlight">
+                                <input title="@{AC-dodge}" type="number" name="attr_AC-dodge" value="0" />
+                                <span data-i18n="dodge">Dodge</span>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" />
+                                <span data-i18n="natural">Natural</span>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" />
+                                <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{buff_AC-total}" name="attr_buff_AC-total" type="number" value="0" class="calc" readonly />
+                                <span data-i18n="buff">Buff</span>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{AC-penalty}" type="number" name="attr_AC-penalty" value="0" max="0" class="calc" readonly />
+                                <span data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
+                            </span>
+                            <span class="small-label2 left">)</span>
+                        </div>
+                    </details>
                     <div class="npc-statblock-row">
                         <span class="small-label2">
                             <span data-i18n="hit-points-abbrv">HP</span>
@@ -11476,51 +11474,49 @@
                         <span class="small-label2">
                             <input type="number" title="@{HP|max}" name="attr_HP_max" value="0" class="calc" readonly />
                         </span>
-                        <!--popover-box-->
-                        <span class="small-label2">
-                            <details>
-                                <summary data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
-                                <div class="popover-box">
-                                    <span class="small-label2 right">(</span>
-                                    <span class="small-label2" data-i18n-title="racial-bonus">
-                                        <input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" />
-                                    </span>
-                                    <span class="small-label2">
-                                        <span data-i18n="dice-abbrv">d</span>
-                                    </span>
-                                    <span class="small-label2">
-                                        <input title="@{npc-hd} racial HD" type="number" name="attr_npc-hd" value="" />
-                                        <span data-i18n="hit-die-abbrv">HDie</span>
-                                    </span>
-                                    <span class="small-label2">+</span>
-                                    <span class="small-label2">
-                                        <input title="@{hp_ability_bonus}" type="number" name="attr_hp_ability_bonus" value="0" class="calc" readonly />
-                                        <span data-i18n="constitution-abbrv">Con</span>
-                                    </span>
-                                    <span class="small-label2">+</span>
-                                    <input type="checkbox" name="attr_HP-formula-mod_error" class="error-mshow hidden" value="1" />
-                                    <span class="small-label2 highlight" style="width:28%;">
-                                        <input title="@{HP-formula-macro-text}" type="text" name="attr_HP-formula-macro-text" value="" data-i18n-placeholder="equation-macro-place" />
-                                        <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
-                                    </span>
-                                    <span class="small-label2 highlight">
-                                        <input title="@{HP-formula-mod}" type="number" name="attr_HP-formula-mod" value="0" class="calc" readonly />
-                                        <span data-i18n="modifier-abbrv">Mod</span>
-                                    </span>
-                                    <span class="small-label2 left">)</span>
-                                </div>
-                            </details>
-                        </span>
-                        <span class="small-label2"><input type="number" title="@{HP-temp}" name="attr_HP-temp" value="0" /><span data-i18n="temporary-hit-points-abbrv">Temp hp</span></span>
+                        <span class="small-label2" style="margin-left:4em;"><input type="number" title="@{HP-temp}" name="attr_HP-temp" value="0" /><span data-i18n="temporary-hit-points-abbrv">Temp hp</span></span>
                         <span class="small-label2"><input type="number" title="@{non-lethal-damage}" name="attr_non-lethal-damage" value="0" min="0" /><span data-i18n="nonlethal">Nonlthal</span></span>
 						<span class="small-label2">
-						    <label class="small-label2 autoexpand">
-						        <input type="text" title="@{npc-heal-conditions}" name="attr_npc-heal-conditions" value="" title="@{npc-heal-conditions}" placeholder="---" />
+                            <label class="small-label2 autoexpand">
+                                <input type="text" title="@{npc-heal-conditions}" name="attr_npc-heal-conditions" value="" title="@{npc-heal-conditions}" placeholder="---" />
                                 <span name="attr_npc-heal-conditions" class="autoexpand"></span>
-						    </label>
-						    <span data-i18n="heal-conditions">Heal Conditions</span>
-						</span>
+                            </label>
+                            <span data-i18n="heal-conditions">Heal Conditions</span>
+                        </span>
                     </div>
+                    <!--details-box-->
+                    <details>
+                        <summary style="margin: -2.1rem 0 0 11.5rem;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
+                        <div class="details-box">
+                            <span class="small-label2 right">(</span>
+                            <span class="small-label2" data-i18n-title="racial-bonus">
+                                <input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" />
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="dice-abbrv">d</span>
+                            </span>
+                            <span class="small-label2">
+                                <input title="@{npc-hd} racial HD" type="number" name="attr_npc-hd" value="" />
+                                <span data-i18n="hit-die-abbrv">HDie</span>
+                            </span>
+                            <span class="small-label2">+</span>
+                            <span class="small-label2">
+                                <input title="@{hp_ability_bonus}" type="number" name="attr_hp_ability_bonus" value="0" class="calc" readonly />
+                                <span data-i18n="constitution-abbrv">Con</span>
+                            </span>
+                            <span class="small-label2">+</span>
+                            <input type="checkbox" name="attr_HP-formula-mod_error" class="error-mshow hidden" value="1" />
+                            <span class="small-label2 highlight" style="width:28%;">
+                                <input title="@{HP-formula-macro-text}" type="text" name="attr_HP-formula-macro-text" value="" data-i18n-placeholder="equation-macro-place" />
+                                <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
+                            </span>
+                            <span class="small-label2 highlight">
+                                <input title="@{HP-formula-mod}" type="number" name="attr_HP-formula-mod" value="0" class="calc" readonly />
+                                <span data-i18n="modifier-abbrv">Mod</span>
+                            </span>
+                            <span class="small-label2 left">)</span>
+                        </div>
+                    </details>
                     <div class="npc-statblock-row">
                         <span class="small-label2"><button class="command-button" title="%{selected|NPC-Fort-Save}" type="roll" name="roll_NPC-Fort-Save" value="@{NPC-whisper} @{fort-save-macro-text} {{name=^{npc} ^{fortitude}}}"> <span data-i18n="fortitude-abbrv">Fort</span> <span name="attr_Fort"></span></button></span>
                         <span class="small-label2">+</span>
