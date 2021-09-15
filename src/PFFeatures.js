@@ -258,7 +258,7 @@ export function convertNameToLevel (name){
 		return '';
 	}
 }
-/** Converts the 4 "old" feature lists into array of objecs for repeating_ability
+/** Converts the 4 "old" feature lists into array of objects for repeating_ability
  * 
  * @param {function([{}])} callback 
  * @param {function} errorcallback 

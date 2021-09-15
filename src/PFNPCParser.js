@@ -243,7 +243,7 @@ function parseNPCAC (acstring, cmdStr, abilityMod, sizeMod) {
 		if (matches && matches[1]) {
 			acMap.ff = parseInt(matches[1], 10);
 		}
-		//get modifiers compendium has all negatives as "1" intead of "-1"
+		//get modifiers compendium has all negatives as "1" instead of "-1"
 		matches = acstring.match(/([+\-]??\d+)\s*?Deflect[,\i\s]/i);
 		if (matches && matches[1]) {
 			acMap.deflect = parseInt(matches[1], 10);
@@ -297,7 +297,7 @@ function parseNPCAC (acstring, cmdStr, abilityMod, sizeMod) {
 		}
 		//check total for any other (untyped, Luck, Sacred/Profane, Circumstance, Enhancement, Insight, Morale)
 		//touch - if touch does not add up put difference in misc. (AC not match we'll put in a buff row)
-		// we need to track a seperate ac misc buff/penalty. we can put it in buffs.
+		// we need to track a separate ac misc buff/penalty. we can put it in buffs.
 		tempnum = acMap.dodge + acMap.dex + acMap.deflect + acMap.size + 10;
 		if (acMap.touch !== tempnum) {
 			acMap.misc = (acMap.touch - tempnum);
@@ -354,7 +354,7 @@ function parseSpeed (speedstr) {
 	return retobj;
 }
 /* getAtkNameFromStr get names of an attack or special attack
- * { Name :(full str up to first parens) , abilityName (without pluses the base ability ), basename (ability name lower case no spces)}
+ * { Name :(full str up to first parens) , abilityName (without pluses the base ability ), basename (ability name lower case no spaces)}
  * for instance: Mwk Longsword +6/+1 would be : {name:Mwk longsword +6/+1, abilityName:Longsword, basename: longsword}
  */
 function getAtkNameFromStr (abilitystr) {
@@ -1243,7 +1243,7 @@ function parseSpecialAbilities (str) {
 					spObj.DCability= PFDB.specialAttackDCAbilityBase[spObj.basename];
 					//TAS.debug"parseSpecialAbilities setting DC ability to "+spObj.DCability+" based on "+ spObj.basename);
 				}
-				//bfore dc could be 'must make a', 'fails a'
+				//before dc could be 'must make a', 'fails a'
 				matches = spObj.description.match(/DC (\d+) (Will|Fort|Ref)[a-zA-Z]* save/i);
 				if (matches){
 					if(matches[1]){
@@ -1676,7 +1676,7 @@ function setCasterFields (casterObj, classidx,attrs,setter) {
 		} else {
 			setter["spellclass-" + classidx + "-name"] = casterObj.classname;
 			//should add class here ? setter['class-'+what+'-name']
-			setter["spellclass-" + classidx + "-level"] = casterObj.CL;//if they have hit dice, this will make it increase? not if we don'tdo class-x-level
+			setter["spellclass-" + classidx + "-level"] = casterObj.CL;//if they have hit dice, this will make it increase? not if we don't do class-x-level
 			setter["spellclass-" + classidx + "-level-total"] = casterObj.CL;
 			if ((/wizard|cleric|druid|paladin|ranger|investigator|shaman|witch|alchemist|warpriest/i).test(casterObj.classname)){
 				setter["spellclass-" + classidx + "-casting_type"] =2;//prepared
@@ -2413,7 +2413,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 	} catch (errouter) {
 		TAS.error("at createskillEntries OUTER error", errouter);
 	} finally {
-		TAS.info("leaving creaeskills:",setter);
+		TAS.info("leaving createskills:",setter);
 		return setter;
 	}
 }
@@ -2951,7 +2951,7 @@ function combineSpecialAbilities (sa1, sa2) {
 			existingSA = _.findWhere(sa2, { 'name': sa.name });
 			if (existingSA) {
 				_.each(_.keys(existingSA),function(key){
-					//TAS.debug("combining abilties: "+sa[key]+ " plus "+ existingSA[key]);
+					//TAS.debug("combining abilities: "+sa[key]+ " plus "+ existingSA[key]);
 					if (key==='description'){
 						sa.description = ((sa.description) ? (sa.description + ", ") : "") + (existingSA.description||"");
 					} else if (key === 'shortdesc'){
@@ -3280,7 +3280,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				//TAS.debug("before parseSpecialAbilities attrnum:"+_.size(setter));
 				specAbilObj = parseSpecialAbilities(v.content_compendium);
 				
-				//TAS.debug("returned from parse special ablities with", specAbilObj);
+				//TAS.debug("returned from parse special abilities with", specAbilObj);
 				if (specAbilObj) {
 					if (specAbilObj.description && _.size(specAbilObj.description) > 0) {
 						npcdesc = _.reduce(specAbilObj.description, function (memo, line) {

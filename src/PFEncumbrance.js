@@ -721,7 +721,7 @@ function registerEventHandlers  () {
             updateLoadsAndLift();
         }
     }));
-    //changing the metric option triggers weight recalcs
+    //changing the metric option triggers weight recalc
     on("change:use_metrics", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

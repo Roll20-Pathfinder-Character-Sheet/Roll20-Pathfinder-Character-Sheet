@@ -766,7 +766,7 @@ function updateWornArmorAndShield(location, sourceAttribute, callback) {
         attribList.push(wornSlotField);
         //TAS.debug("PFInventory.updateWornArmorAndShield fields ", attribList);
     } catch (err) {
-        TAS.error("PFInventory.updateWornArmorAndShield error before getattrs", err);
+        TAS.error("PFInventory.updateWornArmorAndShield error before getAttrs", err);
         done();
         return;
     }
@@ -833,7 +833,7 @@ function updateWornArmorAndShield(location, sourceAttribute, callback) {
                 } else {
                     setter[defenseItem] = "";
                 }
-                //if we hit "set as armor or shield" on a peice of armor / shield equipment, make sure to slot it.
+                //if we hit "set as armor or shield" on a piece of armor / shield equipment, make sure to slot it.
                 //do it silently so we don't loop 
                 equipType = parseInt(w[item_entry + "equip-type"],10);
                 actualLocation= parseInt(w[item_entry+"location"],10);
@@ -1737,7 +1737,7 @@ function registerEventHandlers() {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         updateCarriedTotal();
     }));
-    //changing the metric option triggers weight recalcs
+    //changing the metric option triggers weight recalc
     on('change:use_metrics', TAS.callback(function eventUpdateCarriedTotal(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);

@@ -10,7 +10,7 @@ import * as PFEncumbrance from './PFEncumbrance';
 import * as PFAttacks from './PFAttacks';
 
 //these use strings on the left so javascript doesn't confuse the number with array indices 
-//converts from the attack mod value to easy 0 thrrough 8
+//converts from the attack mod value to easy 0 through 8
 export var sizeModToEasySizeMap={
 	 '0':4, //medium
 	 '1':3, //small
@@ -199,7 +199,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return {"dice":currDice,"die":currDie};
 	}
 }
-/** sets the size veriables based on the string passed in
+/** sets the size variables based on the string passed in
  * 
  * @param {string} str  the name of the size in english
  * @param {Map<string,int>} setter to pass to setAttrs
@@ -333,7 +333,7 @@ function updateSizeAsync (callback, silently,eventInfo) {
 				defSize=parseInt(v.default_char_size,10)||0;
 				levelChange=getSizeLevelChange(currSize,defSize);
 			} else {
-				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
+				TAS.warn("Called updateSizeAsync with unexpected event:",eventInfo);
 			}
 			
 		} catch (err) {
@@ -393,7 +393,7 @@ function registerEventHandlers () {
 			setNewSize(eventInfo);
 		} else {
 			//if sheetworker then it may be a loop, so don't change size just make sure everything is using the new size.
-			//this will happen every time we call with bufffs so it will be called twice
+			//this will happen every time we call with buffs so it will be called twice
 			//applyNewSizeToSheet(eventInfo);
 		}
 	}));

@@ -69,7 +69,7 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
     });
 }
 
-function udpateAllSpellMenu (callback, eventInfo){
+function updateAllSpellMenu (callback, eventInfo){
     getAttrs(['spellclass-0-exists','spellclass-1-exists','spellclass-2-exists',
         'spellclass-0-name','spellclass-1-name','spellclass-2-name','allspells_macro','NPC-allspells_macro'],function(v){
         var macroStr='',npcMacroStr='',tempStr='';
@@ -591,7 +591,7 @@ export var recalculate = TAS.callback(function PFSpellCasterClassesRecalculate(c
             }
         }),
         doneOne = _.after(3, function(){ 
-            udpateAllSpellMenu(callback);
+            updateAllSpellMenu(callback);
         });
         //TAS.debug("at PFSpellCasterClasses.recalculate.recalcTopSection");
         _.each(PFConst.spellClassIndexes, function (spellClassIdx) {
@@ -704,7 +704,7 @@ function registerEventHandlers () {
         on("change:spellclass-0-exists change:spellclass-1-exists change:spellclass-2-exists",TAS.callback(function eventSpellClassExists(eventInfo){
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-                udpateAllSpellMenu(null,eventInfo);
+                updateAllSpellMenu(null,eventInfo);
             }
         }));
         //changing the metric option triggers range recalcs

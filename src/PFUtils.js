@@ -209,7 +209,7 @@ export function isOptionTemplateReversed  (spellOptionKey) {
     return spellOptionKey === "range_pick";
 }
 /** getOptionsCompiledRegexMap - finds {{key=*}} in a string to search rolltemplate macros
- * uses lookahead and lookbehind  to ensure must be preceeded by start or }} , followed by end or {{ 
+ * uses lookahead and lookbehind  to ensure must be preceded by start or }} , followed by end or {{ 
  * @param {jsobj map} options map {} of key , only key looked at.
  * @returns {jsobj map} of key to "{{key=*}}" but as a compiled regex 
  */
@@ -632,7 +632,7 @@ export function getSpecialAbilityTypeFromString (str){
 /** returns string after first comma ( that is after an opening parenthesis )
  * or after first comma if there is no opening parenthesis
  * @param {string} str the string to split
- * @param {boolean} putOutside if true then return whateever is before first comma and after opening paren.
+ * @param {boolean} putOutside if true then return whatever is before first comma and after opening paren.
  *      if false, then return everything up to first paren then between 1st and 2nd comma. why? who the hell knows?
  * @returns {?} ?
  */

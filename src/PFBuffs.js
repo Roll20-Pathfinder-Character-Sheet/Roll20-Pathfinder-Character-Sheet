@@ -132,7 +132,7 @@ charBonusFields = _.chain(otherCharBonuses).values().map(function(v){return _.va
 buffNoteFields = ['buff_attack_notes','buff_save_notes','buff_init_notes','buff_skill_notes','buff_defense_notes'],
 //the buff field prefixes for each row
 buffsPerRow = ['b1','b2','b3','b4','b5','b6'],
-//bonus types that aways stack don't need to use max (penalty is fake type used internally)
+//bonus types that always stack don't need to use max (penalty is fake type used internally)
 stackingTypes = ['untyped','circumstance','dodge','penalty'],
 //these buff columns dont have bonus types use this to hide the type dropdown
 bonusesWithNoTypes = ['size','hptemp'],
@@ -532,7 +532,7 @@ export function clearBuffTotals (callback,silently){
 }
 
 /** Gets list of buffs from the buff rows for so we don't have to keep looping through the ids.
- * Returns between 0 to 6 "rows" for each id, each correspondes to b1..b6 buffs.
+ * Returns between 0 to 6 "rows" for each id, each corresponds to b1..b6 buffs.
  * only returns buffs where -show is 1 and _val is != 0 (i.e. ones that exist for totalling)
  * @param {[string]} ids ids for list
  * @param {Map<string,string>} v from getAttrs
@@ -865,7 +865,7 @@ function updateBuffTotalAsync (col, callback,silently){
 					//fields.push('use_piecemeal_armor');	
 				}
 			} catch (outerr){
-				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getattrs",outerr);
+				TAS.error("PFBUffs.updateBuffTotalAsync2 "+col+" error before getAttrs",outerr);
 				done();
 				return;
 			}
@@ -889,7 +889,7 @@ function updateBuffTotalAsync (col, callback,silently){
 						clearBuffTotals();
 					}
 				} catch (errou){
-					TAS.error("PFBuffs.updateBuffTotalAsync errrou on col "+col,errou);
+					TAS.error("PFBuffs.updateBuffTotalAsync errou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
 						if (silently){
@@ -969,7 +969,7 @@ function updateAllBuffTotalsAsync (callback,silently,eventInfo){
 					setter=updateBuffTotal(col,rows,v,setter);
 				});
 			} catch (errou){
-				TAS.error("PFBuffs.updateAllBuffTotalsAsync2 errrou on col ",errou);
+				TAS.error("PFBuffs.updateAllBuffTotalsAsync2 errou on col ",errou);
 			} finally {
 				if (_.size(setter)){
 					//TAS.debug("######################","PFBuffs.updateAllBuffTotalsAsync2 setting ",setter);
@@ -1067,7 +1067,7 @@ function reEvaluateCustomMacros(callback,silently){
 	};
 
 	getSectionIDs("repeating_buff", function (ids) {
-		//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
+		//TAS.debug("PFBuffs.recalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
 		var fields;
 		try {
 			if (_.size(ids) > 0) {

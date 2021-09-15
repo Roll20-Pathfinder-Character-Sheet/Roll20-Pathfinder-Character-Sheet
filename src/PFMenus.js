@@ -36,7 +36,7 @@ var menuMap={
   *  filterField:string optional attr to pass to _.filter or _.pick , if 1 then display, if 0 then don't , ex:'showinmenu'
  *  filterValue:string if filter should be custom (not 1/0) then fill in value ex: 'Sp', cannot be '0' (zero)
   * groupByField:string optional name of attr to group by
-  * translateGroup: if ^{} should be placed around groupby field value
+  * translateGroup: if ^{} should be placed around group by field value
   *  translateBonus: if ^{} should be placed around bonus field value
   *  groupMap:{key:string,key:string} --if instead of grouping by the groupField itself, pass the value to a map and group by the result.
  * @param {{name:string,template:string,header:string,section:string ,bonusField:string, usesField:string,nameField:string,linkField:string,npclinkField:string, filterField:string ,filterValue:string, groupByField:string ,translateGroup:boolean, translateBonus:boolean, groupMap:Map<string,string>}} baseAttribs the 

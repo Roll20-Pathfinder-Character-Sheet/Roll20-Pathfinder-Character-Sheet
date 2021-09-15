@@ -5,13 +5,13 @@ import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
 
-/****************************ASYNCRHOUNOUS UTILITIES ***********************************
+/****************************ASYNCHRONOUS UTILITIES ***********************************
  ***************************************************************************************/
 /** Looks at a dropdown selected value, finds the matching attribute value #, and then
  * sets the writeFields with that number.
  *
- * @param {string} from the dropdpown fieldname
- * @param {string} to fielname to which we write the numeric value of the 'from' dropdown selection
+ * @param {string} from the dropdown fieldname
+ * @param {string} to fieldname to which we write the numeric value of the 'from' dropdown selection
  * @param {function(new,old,changed)} callback - the function to call when done with the numeric value of the dropdown setting
  * @param {boolean} silently if quiet or not
  * @param {string} useFindAbility true if @{} around values in the dropdown

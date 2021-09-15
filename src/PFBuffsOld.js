@@ -223,7 +223,7 @@ function updateBuffTotal (col,ids,v,setter){
 					m += row;
 					return m;
 				},0);
-				TAS.debug("calcuatling "+ col+" sum is "+sums.sum);
+				TAS.debug("calculating "+ col+" sum is "+sums.sum);
 			}
 		}
 		//TAS.debug("PFBuffsOldNOW totals are: ",sums);
@@ -291,7 +291,7 @@ function updateBuffTotalAsync (col, callback,silently){
 						setter['buff_'+col+'_penalty_exists']=0;
 					}
 				} catch (errou){
-					TAS.error("PFBuffsOld.updateBuffTotalAsync errrou on col "+col,errou);
+					TAS.error("PFBuffsOld.updateBuffTotalAsync errou on col "+col,errou);
 				} finally {
 					if (_.size(setter)){
 						TAS.debug("######################","PFBuffsOld setting ",setter);
@@ -349,7 +349,7 @@ function updateAllBuffTotalsAsync (callback,silently){
 					setter=updateBuffTotal(col,ids,v,setter,useBonuses);
 				});
 			} catch (errou){
-				TAS.error("PFBuffsOld.updateAllBuffTotalsAsync errrou on col ",errou);
+				TAS.error("PFBuffsOld.updateAllBuffTotalsAsync errou on col ",errou);
 			} finally {
 				if (_.size(setter)){
 					TAS.debug("######################","PFBuffsOldsetting ",setter);
@@ -437,7 +437,7 @@ export function reEvaluateCustomMacros(callback,silently){
 	};
 
 	getSectionIDs("repeating_buff", function (ids) {
-		//TAS.debug("pfbuffsrecalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
+		//TAS.debug("PFBuffs.recalculate there are " + _.size(ids) + " rows and " + numColumns + " columns");
 		try {
 			if (_.size(ids) > 0) {
 				_.each(buffColumns, function (col) {
@@ -470,10 +470,10 @@ export function migrate (outerCallback) {
 			}
 		}),
 		migrated = function(){
-			SWUtils.setWrapper({'migrated_buffs_rangeddmg_abiilty':1},PFConst.silentParams,done);
+			SWUtils.setWrapper({'migrated_buffs_rangeddmg_ability':1},PFConst.silentParams,done);
 		};
-		getAttrs(['migrated_buffs_rangeddmg_abiilty'],function(vout){
-			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_abiilty,10)||0;
+		getAttrs(['migrated_buffs_rangeddmg_ability'],function(vout){
+			var wasmigrated=parseInt(vout.migrated_buffs_rangeddmg_ability,10)||0;
 			if (!wasmigrated){
 				getSectionIDs('repeating_buff',function(ids){
 					var fields;

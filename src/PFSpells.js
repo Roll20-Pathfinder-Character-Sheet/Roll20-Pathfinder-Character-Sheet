@@ -1695,7 +1695,7 @@ export var recalculate = TAS.callback(function callPFSpellsRecalculate(callback,
     migrate(callUpdateSpells);
 });
 
-//sync repeaitng_spells with settings>attacks>link spells
+//sync repeating_spells with settings>attacks>link spells
 function updateIncludeLink() {
     getSectionIDs('repeating_spells', function (ids) {
         _.each(ids, function (id) {
@@ -1822,7 +1822,7 @@ function registerEventHandlers () {
             updateAssociatedAttack(null,null,null,eventInfo);
         }
     }));
-//sync repeaitng_spells with settings>attacks>link spells
+//sync repeating_spells with settings>attacks>link spells
     on("change:include_link_spells", function(eventInfo) {
         var attr;
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);

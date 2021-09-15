@@ -844,7 +844,7 @@ export function getAllMigrateFlags (v){
     v['migrated_abilityflags109']=1;
     v['migrated_whispers']=1;
     v['migrated_linked_attacks']=1;
-    v['migrated_buffs_rangeddmg_abiilty']=1;
+    v['migrated_buffs_rangeddmg_ability']=1;
     v["migrated_itemlist_newfields"]=1;
     v['migrate_fatigued_conditions']=1;
     v['migrated_attack_bab_dropdowns']=1;

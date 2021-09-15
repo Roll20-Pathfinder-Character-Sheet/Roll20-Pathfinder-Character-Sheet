@@ -786,6 +786,7 @@ pf-wrapper,
 /* reduce header text in readonly/compact mode */
 .charsheet .readonly-show:not(:checked)~.main .table-header,
 .charsheet .readonly-show:not(:checked)~.main .small-label2 span:not(.autoexpand),
+.charsheet .readonly-show:not(:checked) ~ .main .npc-statblock-row .small-label2 span:not(.autoexpand),
 .charsheet .readonly-show:not(:checked)~.main .table-cell.small-label span {
     font-size: 1rem;
     padding: 0;
@@ -877,7 +878,7 @@ also need 1 more level in selector or base css will override border */
     padding-top: .25em;
 }
 /* used to signify imperial/metric toggle */
-.charsheet input[type="checkbox"].use-metrics:not(:checked)~div>div .weight-used::after {
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div .weight-used::after {
     content: '(lbs)';
     margin-left: 5px;
     font-weight: normal;
@@ -885,7 +886,7 @@ also need 1 more level in selector or base css will override border */
     font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
 }
-.charsheet input[type="checkbox"].use-metrics:checked~div>div .weight-used::after {
+.charsheet input[type="checkbox"].use-metrics:checked ~ div .weight-used::after {
     content: '(kgs)';
     margin-left: 5px;
     font-weight: normal;
@@ -894,8 +895,8 @@ also need 1 more level in selector or base css will override border */
     font-family: 'Roboto Mono', monospace;
 }
 
-.charsheet input[type="checkbox"].use-metrics:not(:checked)~div>div .distance-used::after,
-.charsheet input[type="checkbox"].use-metrics:not(:checked)~div>div span .distance-used::after {
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div .distance-used::after,
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div span .distance-used::after {
     content: '(ft)';
     margin: 0 -5px 0 0;
     padding-left: 1px;
@@ -906,8 +907,8 @@ also need 1 more level in selector or base css will override border */
     font-family: 'Roboto Mono', monospace;
 }
 
-.charsheet input[type="checkbox"].use-metrics:checked~div>div .distance-used::after,
-.charsheet input[type="checkbox"].use-metrics:checked~div>div span .distance-used::after {
+.charsheet input[type="checkbox"].use-metrics:checked ~ div .distance-used::after,
+.charsheet input[type="checkbox"].use-metrics:checked ~ div span .distance-used::after {
     content: '(m)';
     margin: 0 -5px 0 0;
     padding-left: 1px;
@@ -920,17 +921,17 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* hide base-speed*/
-.charsheet span.shown input.input-feet,
-.charsheet span.shown input.input-meters {
+.charsheet input.input-feet,
+.charsheet input.input-meters {
     display: none;
 }
 
 /* show base-speed in feet at step="5" */
-.charsheet input[type="checkbox"].use-metrics:not(:checked)~div>div span.shown input.input-feet {
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div input.input-feet {
     display: inline-block;
 }
 /* show base-speed in meters at step="1.5" */
-.charsheet input[type="checkbox"].use-metrics:checked~div>div span.shown input.input-meters {
+.charsheet input[type="checkbox"].use-metrics:checked ~ div input.input-meters {
     display: inline-block;
 }
 
@@ -1715,7 +1716,6 @@ also need 1 more level in selector or base css will override border */
     border-radius: 0.7rem;
 }
 
-
 .charsheet .h2-section.current-loads,
 .charsheet .h2-section.loads-and-lift,
 .charsheet .h2-section.currency {
@@ -1930,11 +1930,8 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .npc-statblock-row {
     display: inline-flex;
-    height: 3.5rem;
     align-items: start;
     width: inherit;
-    margin: 2px 0 2px 0;
-    padding: 2px 2px 2px 2px;
 }
 
 .charsheet .npc-statblock-row .small-label2>.calc,

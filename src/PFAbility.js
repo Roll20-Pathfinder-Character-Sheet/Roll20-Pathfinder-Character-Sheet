@@ -126,7 +126,7 @@ function setRuleTab (callback,silently,id,eventInfo){
 		//if users changed the rule then change the tab we're checked on
 		if(eventInfo ) {
 			if (ruleForTab!=='-1'){  
-				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilites_tab) ){
+				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilities_tab) ){
 					setter.abilities_tab = ruleForTab;
 				}
 				if( v['npc-abilities_tab'] !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v['npc-abilities_tab']) ){
@@ -316,7 +316,7 @@ function getTopOfMenu (callback,isNPC){
 						if(otherCommandMacros[type]){
 							addlMacros += otherCommandMacros[type].replace("NPCPREFIX",prefix);
 						} else if (type) {
-							TAS.warn("cound not find top macro for "+type);
+							TAS.warn("could not find top macro for "+type);
 						}
 					});
 				}
@@ -440,7 +440,7 @@ export function importFromCompendium (callback,eventInfo){
 					setter[prefix+'ability-basis']= '@{CHA-mod}';
 					
 				} else if ( v[prefix+'name']){
-					abilname = v[prefix+'name'].tolowercase();
+					abilname = v[prefix + 'name'].toLowerCase();
 					abilname = abilname.match(/^[^(]+/);
 					if(PFDB.specialAttackDCAbilityBase[abilname]){
 						ability_basis= PFDB.specialAttackDCAbilityBase[abilname];
@@ -925,7 +925,7 @@ export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback
 		done();
 	}
 });
-//sync repeaitng_ability with settings>attacks>link spells
+//sync repeating_ability with settings>attacks>link spells
 function updateIncludeLink() {
 	getSectionIDs('repeating_ability', function (ids) {
 		_.each(ids, function (id) {
@@ -1057,7 +1057,7 @@ function registerEventHandlers () {
 					getAttrs(['showinmenu_all_abilities'], function (values) {
 						const toggle = +values['showinmenu_all_abilities'] || 0,
 							settings = {};
-						fieldNamesAbility.forEach(field => { // loop through the showinmenus array 
+						fieldNamesAbility.forEach(field => { // loop through the showinmenu array 
 							settings[field] = toggle; // assign the toggle value to each row's attribute 
 						});
 						fieldNamesMythicAbility.forEach(field => {
@@ -1074,7 +1074,7 @@ function registerEventHandlers () {
 			});
 		});
 	});
-	//sync repeaitng_spells with settings>attacks>link spells
+	//sync repeating_spells with settings>attacks>link spells
     on("change:include_link_abilities", function (eventInfo) {
     	var attr;
     	TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);

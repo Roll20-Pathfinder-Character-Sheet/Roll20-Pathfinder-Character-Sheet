@@ -138,7 +138,7 @@ function updateRepeatingWeaponAttackQuick(eventInfo,newval,oldval,callback){
  * @param {number} overrideValue optional = if overrideAttr then this should be a number usually int but it won't check
  */
 export function updateRepeatingWeaponAttackAsync(id, eventInfo) {
-	//is it faster to not do the idstr each time? try it with ?:
+	//is it faster to not do the idStr each time? try it with ?:
 	var resetOptionsWhenDone = function () {
 		PFAttackOptions.resetOption(id, eventInfo);
 	},
@@ -214,7 +214,7 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 	abilityMultField = "repeating_weapon_" + idStr + "damage_ability_mult",
 	attacktypeField = "repeating_weapon_" + idStr + "attack-type",
 	rangedField = "repeating_weapon_" + idStr + "isranged";
-	//TAS.debug("at PFAttacks.updateRepeatingWeaponDamage evnetinfo: ",eventInfo);
+	//TAS.debug("at PFAttacks.updateRepeatingWeaponDamage evenetinfo: ",eventInfo);
 	if (eventInfo && eventInfo.sourceAttribute.toLowerCase().indexOf('buff_dmg_range')>=0){
 		rangedUpdate=true;
 	}
@@ -555,7 +555,7 @@ export function updateAssociatedAttacksFromParents(callback){
 							if(v['repeating_weapon_'+id+'_source-item']) {
 								TAS.debug("checking "+id+" for item:"+v['repeating_weapon_'+id+'_source-item']);
 								if(v['repeating_weapon_'+id+'_source-item']!=='DELETED'){
-									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-item']+" in item list");
+									TAS.debug("looking for "+v['repeating_weapon_'+id+'_source-item']+" in item list");
 									if( _.size(itemIDs>0) && _.contains(itemIDs,v['repeating_weapon_'+id+'_source-item'])){
 										PFInventory.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-item'],doneOne,true,null,id);
 									} else {
@@ -566,7 +566,7 @@ export function updateAssociatedAttacksFromParents(callback){
 							} else if (v['repeating_weapon_'+id+'_source-spell']) {
 								TAS.debug("checking "+id+" for spell:"+v['repeating_weapon_'+id+'_source-spell']);
 								if(v['repeating_weapon_'+id+'_source-spell']!=='DELETED' ){
-									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-spell']+" in spell list");
+									TAS.debug("looking for "+v['repeating_weapon_'+id+'_source-spell']+" in spell list");
 									if(_.size(spellIDs>0) && _.contains(spellIDs,v['repeating_weapon_'+id+'_source-spell'])){
 										PFSpells.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-spell'],doneOne,true,null,id);
 									} else {
@@ -577,7 +577,7 @@ export function updateAssociatedAttacksFromParents(callback){
 							} else if (v['repeating_weapon_'+id+'_source-ability']) {
 								TAS.debug("checking "+id+" for ability:"+v['repeating_weapon_'+id+'_source-ability']);
 								if(v['repeating_weapon_'+id+'_source-ability']!=='DELETED' ){
-									TAS.debug("lpoking for "+v['repeating_weapon_'+id+'_source-ability']+" in ability list");
+									TAS.debug("looking for "+v['repeating_weapon_'+id+'_source-ability']+" in ability list");
 									if(_.size(abilityIDs>0) && _.contains(abilityIDs,v['repeating_weapon_'+id+'_source-ability'])){
 										PFAbility.createAttackEntryFromRow(v['repeating_weapon_'+id+'_source-ability'],doneOne,true,null,id);
 									} else {
@@ -974,7 +974,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 		//TAS.debug("prefix is "+prefix);
 		if(updMode) {
 			currMacro = params['macro-text'];
-			TAS.debug("currmacro is ",currMacro);
+			TAS.debug("currMacro is ",currMacro);
 			if(currMacro){
 				TAS.debug("about to call gettracking");
 				tempMacroArray=PFMacros.getTracking(currMacro);

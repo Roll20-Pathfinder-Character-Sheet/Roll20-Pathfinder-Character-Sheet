@@ -1046,7 +1046,7 @@ function registerEventHandlers () {
 		on("change:" + skill + "-misc", TAS.callback(function eventSkillMiscFieldUpdate(eventInfo) {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-	//tests that -misc field can evalutate to a number.
+	//tests that -misc field can evaluate to a number.
 				SWUtils.evaluateAndSetNumber(skill + '-misc', skill + '-misc-mod', 0);
 			}
 			TAS.debug("calling evalute for "+skill);
@@ -1104,7 +1104,7 @@ function registerEventHandlers () {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 				var rt = skill.slice(0, -4) + "ReqTrain",
 				r = skill.slice(0, -4) + "ranks";
-				//if we changed name on a skill that isn't choosable don't bother.
+				//if we changed name on a skill that isn't choose-able don't bother.
 				getAttrs(["enforce_requires_training", rt, r, "unchained_skills-show", "BG-Skill-Use", "artistry_skills-macro", "lore_skills-macro", "craft_skills-macro", "knowledge_skills-macro", "perform_skills-macro", "profession_skills-macro", "misc-skill_skills-macro", "is_npc", "include_skill_totals", "NPC-craft_skills-macro", "NPC-knowledge_skills-macro", "NPC-perform_skills-macro", "NPC-profession_skills-macro", "NPC-misc-skill_skills-macro"], function (v) {
 					var isrt = parseInt(v.enforce_requires_training, 10),
 					bg = 0,

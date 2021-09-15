@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   TAS.debugMode();
 }
 /********************* SWUTILS  (sheetworker utils) **********************************
- * These general utilites are for sheetworker use, they have no dependency on pathfinder rules or
+ * These general utilities are for sheetworker use, they have no dependency on pathfinder rules or
  * the pathfinder sheet or constants
  * except for evaluateAndSetNumber which appends "_error" to a field name and sets it if an error is encountered
  * 
@@ -60,7 +60,7 @@ export function getTranslated (str){
 			}
 		}
 	} catch(e){
-		TAS.error("getTranslationByKey erorr translating: "+str,e);
+		TAS.error("getTranslationByKey error translating: "+str,e);
 		tempstr=str[0].toUpperCase()+str.slice(1);
 	} finally {
 		return tempstr;
@@ -172,7 +172,7 @@ function convertKL1KH1toMinMax(str) {
     }
     return str;
 }
-/** Ensures every isntance of begin brack has amatching end brack. ONLY counts amount of them
+/** Ensures every instance of begin brack has a matching end brack. ONLY counts amount of them
  * does not ensure they are nested correctly
  * @param {string} str the equation to pass in
  */
@@ -354,7 +354,7 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 		params={}, setter={};
 		newVal = parseInt(newVal,10)||0;
 		newPlus = newVal + addn;
-		//TAS.debug("SWUTILS.EVALAUTE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
+		//TAS.debug("SWUTILS.EVALUATE AND ADD "+exprStr+" IS "+ newVal +" so add "+ addn+" to get "+newPlus);
 		if(newPlus !== curr){
 			setter[writeField]=newPlus;
 			if(silently){
@@ -365,7 +365,7 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 			done();
 		}
 	},function(){
-		TAS.warn("SWUtils.evaluateAndAdd error returend evaluating "+exprStr);
+		TAS.warn("SWUtils.evaluateAndAdd error returned evaluating "+exprStr);
 		done();
 	});
 }
@@ -388,7 +388,7 @@ export function evaluateAndAddAsync(callback,silently,readField,writeField,addFi
  * @param {function} callback  when done
  * @param {boolean} silently if rrue call setAttrs for totField with silent:true
  * @param {string} exprStr  string to evaluate
- * @param {string} writeField field to write with evaluated result SILENTLY nomatter what (so we don't loop)
+ * @param {string} writeField field to write with evaluated result SILENTLY no matter what (so we don't loop)
  * @param {string|number} currVal current value of expression
  * @param {string} totField total field to apply difference to
  * @param {string|number} totVal current total value
@@ -549,7 +549,7 @@ export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchr
  * calls getDropdownValue
  * @example if readField = attribute_dropdown, and user selected the 'STR-mod' option, then set writeField with the value of STR-mod attribute
  * @param {string} readField the dropdown field
- * @param {string_or_Array} writeField Field to which to write the numerica value represented by readField
+ * @param {string_or_Array} writeField Field to which to write the numerical value represented by readField
  * @param {function} synchrousFindAttributeFunc optional takes value of @readField and says what the lookup field is.
  *         necessary if your dropdown values have @{} around the names
  * @param {function(newval,old,changed)} callback (optional) call with what we set to writeField or not
