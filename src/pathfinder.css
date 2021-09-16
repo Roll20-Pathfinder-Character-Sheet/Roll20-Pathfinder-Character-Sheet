@@ -1655,6 +1655,38 @@ also need 1 more level in selector or base css will override border */
 .charsheet .tabs.custbordernav~.tabinput.tab11:checked~.repeating-fields .custnavsection-new:not(:checked)~.custnavsection-11:not(:checked)~.custrepeating-border {
     display: none;
 }
+/* abilities tabs */
+.charsheet .abilities .selected-tabtitle.tab0,
+.charsheet .abilities .selected-tabtitle.tab1,
+.charsheet .abilities .selected-tabtitle.tab2,
+.charsheet .abilities .selected-tabtitle.tab3,
+.charsheet .abilities .selected-tabtitle.tab4,
+.charsheet .abilities .selected-tabtitle.tab5,
+.charsheet .abilities .selected-tabtitle.tab6,
+.charsheet .abilities .selected-tabtitle.tab7,
+.charsheet .abilities .selected-tabtitle.tab8,
+.charsheet .abilities .selected-tabtitle.tab9,
+.charsheet .abilities .selected-tabtitle.tab10,
+.charsheet .abilities .selected-tabtitle.tab11,
+.charsheet .abilities .selected-tabtitle.tab99 {
+    display: none;
+}
+
+.charsheet .abilities .tabinput.tab0:checked ~ .selected-tabtitle.tab0,
+.charsheet .abilities .tabinput.tab1:checked ~ .selected-tabtitle.tab1,
+.charsheet .abilities .tabinput.tab2:checked ~ .selected-tabtitle.tab2,
+.charsheet .abilities .tabinput.tab3:checked ~ .selected-tabtitle.tab3,
+.charsheet .abilities .tabinput.tab4:checked ~ .selected-tabtitle.tab4,
+.charsheet .abilities .tabinput.tab5:checked ~ .selected-tabtitle.tab5,
+.charsheet .abilities .tabinput.tab6:checked ~ .selected-tabtitle.tab6,
+.charsheet .abilities .tabinput.tab7:checked ~ .selected-tabtitle.tab7,
+.charsheet .abilities .tabinput.tab8:checked ~ .selected-tabtitle.tab8,
+.charsheet .abilities .tabinput.tab9:checked ~ .selected-tabtitle.tab9,
+.charsheet .abilities .tabinput.tab10:checked ~ .selected-tabtitle.tab10,
+.charsheet .abilities .tabinput.tab11:checked ~ .selected-tabtitle.tab11,
+.charsheet .abilities .tabinput.tab99:checked ~ .selected-tabtitle.tab99 {
+    display: inline-block;
+}
 
 /* if all pressed show all */
 .charsheet .tabs.custbordernav~.tabinput.tab99:checked~.repeating-fields .custrepeating-border {
@@ -1908,6 +1940,15 @@ also need 1 more level in selector or base css will override border */
     padding-right: 1em;
     width: 6em;
     min-width: 6em;
+}
+
+/* NPC/Monster */
+
+.section-npc.npc-only {
+    background-color: whitesmoke;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0 1em 0 1em;
 }
 
 .charsheet .table.npc-header {
