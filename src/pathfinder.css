@@ -1297,7 +1297,8 @@ also need 1 more level in selector or base css will override border */
     font-size: 1.4rem;
 }
 
-.charsheet button[type="roll"].command-button:hover {
+.charsheet button[type="roll"].command-button:hover,
+.charsheet button[type="roll"].command-button:focus {
     color: #f00;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
@@ -1945,10 +1946,12 @@ also need 1 more level in selector or base css will override border */
 /* NPC/Monster */
 
 .section-npc.npc-only {
-    background-color: whitesmoke;
     border: 2px solid black;
     border-radius: 10px;
     padding: 0 1em 0 1em;
+    display: inline-flex;
+    flex-direction: column;
+    width: inherit;
 }
 
 .charsheet .table.npc-header {
@@ -2949,6 +2952,8 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .offscreen {
+    top: 0;
+    left: 0;
     position: absolute !important;
     clip: rect(0.1rem, 0.1rem, 0.1rem, 0.1rem);
     overflow: hidden !important;
@@ -3539,7 +3544,7 @@ spellclass-concentration spellcaster-button {
 
 /*** when collapsed (sheet-counted unchecked) shrink width
   * if split, then widen width (so it is more than 1/2 wide)
-  * split should override collapse/minimize 
+  * split should override collapse/minimize
   * without -shrink should .expand on split but not collapse
   */
 .charsheet .entry-60p,
@@ -3781,9 +3786,9 @@ spellclass-concentration spellcaster-button {
 }
 
 .charsheet .monster-indicator {
-    width: 100%;
-    display: block;
-    margin-top: -1em;
+    display: flex;
+    justify-content: center;
+    margin-top: -2em;
     text-align: center;
 }
 
@@ -4462,7 +4467,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     margin: 0 .2em 0 .2em;
 }
 
-.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg-x span:first-child {    
+.sheet-rolltemplate-pf_attack .sheet-roll-accessible>label.sheet-dmg-x span:first-child {
     display: inline-grid;
     padding-top: 0;
     margin: -1px 0 0 0;
@@ -5276,7 +5281,9 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .charsheet .readonly-show:not(:checked)~.main .repeating-fields .armor-attributes:not(.show-readonly),
 .charsheet .readonly-show:not(:checked)~.main .repeating-fields .armor-attributes-showlabel:not(.show-readonly),
 .charsheet .readonly-show:not(:checked)~.main .repeating-fields .weapon-attributes:not(.show-readonly),
-.charsheet .readonly-show:not(:checked)~.main .repeating-fields .weapon-attributes-showlabel:not(.show-readonly) {
+.charsheet .readonly-show:not(:checked)~.main .repeating-fields .weapon-attributes-showlabel:not(.show-readonly),
+.charsheet .readonly-show:not(:checked) ~ .main .hide-readonly ~ .npc-header.showsect::before,
+.charsheet .readonly-show:not(:checked) ~ .main .hide-readonly ~ .npc-header.showsect::after {
     display: none !important;
 }
 
@@ -5418,7 +5425,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     top: 10.25em;
 }
 
-/* repeating .sections take up half on "all" view 
+/* repeating .sections take up half on "all" view
 also if multiple repeating sects inside h2 they are 100% wide and only h2 is narrow.
 */
 .charsheet .readonly-show:not(:checked)~.main .section .half-readonly,
@@ -5699,7 +5706,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .charsheet .readonly-show:not(:checked)~.main .section-attacks .h2-section.advanced-macros {
-    /*margin: 0.2rem; 
+    /*margin: 0.2rem;
 	width: calc(100% - 4px);*/
     border: none;
 }
@@ -5777,7 +5784,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: 100%;
 }
 
-/* .col 2 worn items 
+/* .col 2 worn items
 .charsheet .worn-items {
     max-width: 100%;
 }
@@ -6304,10 +6311,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 /*styles sheet mode note*/
 .charsheet div.mode {
-    float: right;
-    clear: right;
-    font-weight: bold;
+    display: flex;
+    flex-direction: row-reverse;
     font-style: italic;
+    font-weight: bold;
+    grid-area: 1/2/1/2;
 }
 
 .charsheet div.mode:hover {
