@@ -6167,6 +6167,16 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     text-align: center;
 }
 
+.charsheet .npc-details .small-label2.autoexpand input,
+.charsheet .npc-defense .small-label2.autoexpand input,
+.charsheet .npc-offense .small-label2.autoexpand input,
+.charsheet .npc-tactics .small-label2.autoexpand input,
+.charsheet .npc-statistics .small-label2.autoexpand input,
+.charsheet .npc-ecology .small-label2.autoexpand input,
+.charsheet .npc-desc .small-label2.autoexpand input {
+    height: auto;
+}
+
 .charsheet .small-label2.autoexpand span.autoexpand {
     visibility: hidden;
     width: 100%;

@@ -11615,77 +11615,82 @@
                     <h3 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n="speed-space-reach">Speed</label></h3>
                     <div class="h3-section table wide-readonly">
                         <div class="npc-statblock-row">
-                            <span class="small-label2">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="speed" data-i18n-title="speed-base-title">Speed</span>
                                 <input class="input-feet distance-used" title="@{speed-base}" type="number" step="5" min="0" name="attr_speed-base" value="0" />
                                 <input class="input-meters distance-used" title="@{speed-base}" type="number" step="1.5" min="0" name="attr_speed-base" value="0" />
                                 <span></span>
                             </span>
-                            <span class="small-label2" data-i18n-title="speed-title">
+                            <span class="small-label2 entry-med" data-i18n-title="speed-title">
                                 <span data-i18n="encumbered-abbrv" data-i18n-title="speed-title">Encum</span>
-                                <input class="input-feet input-meters" title="@{speed-modified}" type="number" name="attr_speed-modified" value="0" class="calc" readonly />
+                                <input class="input-feet input-meters distance-used" title="@{speed-modified}" type="number" name="attr_speed-modified" value="0" class="calc" readonly />
                                 <span></span>
                             </span>
-                            <span class="small-label2">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="multiplier-abbrv" data-i18n-title="speed-multiplier-title">Mult</span>
                                 <input title="@{run-mult}" type="number" name="attr_run-mult" value="4" />
                             </span>
-                            <span class="small-label2">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="run" data-i18n-title="speed-run-title">Run</span>
-                                <input class="input-feet input-meters" title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="calc" readonly />
+                                <input class="input-feet input-meters distance-used" title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="calc" readonly />
                                 <span></span>
                             </span>
-                            <span class="small-label2">
+                        </div>
+                        <div class="npc-statblock-row">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="burrow-speed">Burrow</span>
                                 <input class="input-feet distance-used" title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" />
                                 <input class="input-meters distance-used" title=" @{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="1.5" />
                                 <span></span>
                             </span>
-                            <span class="small-label2">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="climb">Climb</span>
                                 <input class="input-feet distance-used" title="@{speed-climb}" type="number" step="5" min="0" name="attr_speed-climb" value="0" />
                                 <input class="input-meters distance-used" title="@{speed-climb}" type="number" step="1.5" min="0" name="attr_speed-climb" value="0" />
                                 <span></span>
                             </span>
-                            <span class="small-label2">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="fly">Fly</span>
                                 <input class="input-feet distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="5" />
                                 <input class="input-meters distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="1.5" />
                                 <span></span>
                             </span>
-                            <span class="small-label2 entry-med" data-i18n-title="maneuverability">
+                            <label class="small-label2 autoexpand" style="margin: 3px 0 0 5px;">
                                 <input title="@{speed-fly-maneuverability}" type="text" name="attr_speed-fly-maneuverability" data-i18n-placeholder="maneuverability" />
+                                <span class="autoexpand" name="attr_speed-fly-maneuverability" style="min-width:7em;"></span>
+                            </label>
+                        </div>
+                        <div class="npc-statblock-row">
+                            <span class="small-label2 entry-med">
+                              <span data-i18n="swim-speed">Swim</span>
+                              <input class="input-feet distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5" />
+                              <input class="input-meters distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="1.5" />
+                              <span></span>
+                            </span>
+                            <span class="small-label2 entry-med">
+                              <span data-i18n="miscellaneous-abbrv">Misc</span>
+                              <input class="input-feet distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5" />
+                              <input class="input-meters distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="1.5" />
+                              <span></span>
                             </span>
                             <span class="small-label2">
-                                <span data-i18n="swim-speed">Swim</span>
-                                <input class="input-feet distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5" />
-                                <input class="input-meters distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="1.5" />
-                                <span></span>
-                            </span>
-                            <span class="small-label2">
-                                <span data-i18n="miscellaneous-abbrv">Misc</span>
-                                <input class="input-feet distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5" />
-                                <input class="input-meters distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="1.5" />
-                                <span></span>
-                            </span>
-                            <span class="small-label2"><input title="@{speed-notes}" type="text" name="attr_speed-notes" data-i18n-placeholder="speed-notes" />
+                                <input title="@{speed-notes}" type="text" name="attr_speed-notes" data-i18n-placeholder="speed-notes" />
                                 <span data-i18n="speed-notes">Speed Notes</span>
                             </span>
                         </div>
-                    </div>
-                    <div class="h3-section table sect">
                         <div class="npc-statblock-row">
-                            <span class="small-label2 sect entry-short">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="space">Space</span>
-                                <input class="input-feet input-meters" title="@{space}" type="text" name="attr_space" value="0" />
+                                <input class="input-feet input-meters distance-used" title="@{space}" type="text" name="attr_space" value="0" />
                                 <span></span>
                             </span>
-                            <span class="small-label2 sect entry-short">
+                            <span class="small-label2 entry-med">
                                 <span data-i18n="reach">Reach</span>
-                                <input class="input-feet input-meters" title=" @{reach}" type="text" name="attr_reach" value="0" />
+                                <input class="input-feet input-meters distance-used" title=" @{reach}" type="text" name="attr_reach" value="0" />
                                 <span></span>
                             </span>
-                            <span class="small-label2 sect"><input title="@{reach-notes}" type="text" name="attr_reach-notes" data-i18n-placeholder="reach-notes" />
+                            <span class="small-label2">
+                                <input title="@{reach-notes}" type="text" name="attr_reach-notes" data-i18n-placeholder="reach-notes" />
                                 <span data-i18n="reach-notes">Reach Notes</span>
                             </span>
                         </div>
@@ -12573,27 +12578,52 @@
                 <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="statistics">STATISTICS</label></h2>
                 <hr class="npc-hr npchead-bottom" />
                 <div class="h2-section npc-statistics noborder-readonly wide-readonly">
-                    <div class="h3-section wide-readonly">
-                        <div class="table">
-                            <div class="table-row">
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-STR-Check}" type="roll" name="roll_NPC-STR-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="strength-abbrv">STR</span> <span name="attr_STR"></span></button></span>
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-DEX-Check}" type="roll" name="roll_NPC-DEX-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="dexterity-abbrv">DEX</span> <span name="attr_DEX"></span></button></span>
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-CON-Check}" type="roll" name="roll_NPC-CON-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{constitution}}} {{check=[[ 1d20 + [[ @{CON-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="constitution-abbrv">CON</span> <span name="attr_CON"></span></button></span>
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-INT-Check}" type="roll" name="roll_NPC-INT-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intelligence}}} {{check=[[ 1d20 + [[ @{INT-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="intelligence-abbrv">INT</span> <span name="attr_INT"></span></button></span>
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-WIS-Check}" type="roll" name="roll_NPC-WIS-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{wisdom}}} {{check=[[ 1d20 + [[ @{WIS-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="wisdom-abbrv">WIS</span> <span name="attr_WIS"></span></button></span>
-                                <span class="table-cell table-rollbuttoncell"><button title="%{selected|NPC-CHA-Check}" type="roll" name="roll_NPC-CHA-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{charisma}}} {{check=[[ 1d20 + [[ @{CHA-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="charisma-abbrv">CHA</span> <span name="attr_CHA"></span></button></span>
-                                <span class="table-cell divider"></span>
-                                <span class="table-cell small-label number"><input title="@{bab}" type="number" name="attr_bab" value="0" class="calc" readonly /><br><span data-i18n="base-attack-bonus-abbrv">BAB</span></span>
-                                <span class="table-cell divider"></span>
-                                <span class="table-cell table-rollbuttoncell"><button type="roll" title="%{selected|NPC-CMB-Check}" name="roll_NPC-CMB-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} ]] ]]}}"> <span data-i18n="combat-maneuver-bonus-abbrv">CMB</span> <span name="attr_CMB"></span></button></span>
-                                <span class="table-cell small-label number"><input title="@{attk-CMB-misc}" type="number" name="attr_attk-CMB-misc" value="0" /><br><span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-                                <span class="table-cell divider"></span>
-                                <span class="table-cell small-label number"><input title="@{CMD}" type="number" name="attr_CMD" value="10" class="calc" readonly /><br><span data-i18n="combat-maneuver-defense-abbrv">CMD</span></span>
-                                <span class="table-cell small-label number"><input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" /><br><span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-                                <span class="table-cell small-label" style="width:15%;"><input title="@{cmd-notes}" type="text" name="attr_CMD-notes" data-i18n-placeholder="combat-maneuver-defense-notes-place"><br><span data-i18n="combat-maneuver-defense-notes">CMD Notes</span></span>
-                            </div>
+                    <div class="h2-section wide-readonly">
+                        <div class="npc-statblock-row">
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-STR-Check}" type="roll" name="roll_NPC-STR-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="strength-abbrv">STR</span> <span name="attr_STR"></span></button></span>
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-DEX-Check}" type="roll" name="roll_NPC-DEX-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="dexterity-abbrv">DEX</span> <span name="attr_DEX"></span></button></span>
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-CON-Check}" type="roll" name="roll_NPC-CON-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{constitution}}} {{check=[[ 1d20 + [[ @{CON-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="constitution-abbrv">CON</span> <span name="attr_CON"></span></button></span>
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-INT-Check}" type="roll" name="roll_NPC-INT-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{intelligence}}} {{check=[[ 1d20 + [[ @{INT-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="intelligence-abbrv">INT</span> <span name="attr_INT"></span></button></span>
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-WIS-Check}" type="roll" name="roll_NPC-WIS-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{wisdom}}} {{check=[[ 1d20 + [[ @{WIS-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="wisdom-abbrv">WIS</span> <span name="attr_WIS"></span></button></span>
+                            <span class="small-label2"><button class="command-button" title="%{selected|NPC-CHA-Check}" type="roll" name="roll_NPC-CHA-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{charisma}}} {{check=[[ 1d20 + [[ @{CHA-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="charisma-abbrv">CHA</span> <span name="attr_CHA"></span></button></span>
                         </div>
-                        <label class="small-label2 autoexpand"><input type="text" title="@{languages}" value="" name="attr_languages" data-i18n-placeholder="languages" /><span data-i18n="languages">Languages</span><span class="autoexpand" name="attr_languages"></span></label>
+                        <div class="npc-statblock-row">
+                          <span class="small-label2">
+                            <span data-i18n="base-attack-bonus-abbrv">BAB</span>
+                            <input title="@{bab}" type="number" name="attr_bab" value="0" class="calc" readonly />
+                          </span>
+                          <span class="small-label2">
+                            <button class="command-button" type="roll" title="%{selected|NPC-CMB-Check}" name="roll_NPC-CMB-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{combat-maneuver-bonus-abbrv}}} {{check=[[ 1d20 + [[ @{CMB} ]] ]]}}">
+                              <span data-i18n="combat-maneuver-bonus-abbrv">CMB</span>
+                              <span name="attr_CMB"></span>
+                            </button>
+                          </span>
+                          <span class="small-label2 entry-med">
+                            <input title="@{attk-CMB-misc}" type="text" name="attr_attk-CMB-misc" value="0" />
+                            <span class="super note-a"></span>
+                          </span>
+                          <span class="small-label2">
+                            <span data-i18n="combat-maneuver-defense-abbrv">CMD</span>
+                            <input title="@{CMD}" type="number" name="attr_CMD" value="10" class="calc" readonly />
+                          </span>
+                          <span class="small-label2 entry-med">
+                            <input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="0" />
+                            <span class="super note-a"></span>
+                          </span>
+                          <span class="small-label2 entry-long">
+                            <span data-i18n="combat-maneuver-defense-notes">CMD Notes</span>
+                            <input title="@{cmd-notes}" type="text" name="attr_CMD-notes" data-i18n-placeholder="combat-maneuver-defense-notes-place">
+                          </span>
+                        </div>
+                        <div class="npc-statblock-row">
+                            <span class="small-label2">
+                              <span data-i18n="languages">Languages</span>
+                            </span>
+                            <label class="small-label2 autoexpand">
+                            <input type="text" title="@{languages}" value="" name="attr_languages" data-i18n-placeholder="languages" />
+                            <span style="min-width: 8em;" class="autoexpand" name="attr_languages"></span>
+                          </label>
+                        </div>
                         <input class="sect-show-inverse noshow" type="checkbox" name="attr_is_v1" value="1" />
                         <div class="sect-inverse">
                             <div class="small-label"><span class="left" data-i18n="special-attacks">Special Attacks</span><br><textarea class="inline-textarea" title="@{npc-special-attacks}" name="attr_npc-special-attacks" data-i18n-placeholder="npc-special-attacks-place"></textarea></div>
