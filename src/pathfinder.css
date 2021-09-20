@@ -22,14 +22,15 @@
 }
 
 .charsheet summary + .details-box {
-    align-items: baseline;
+    align-items: center;
     background-color: #ffffee;
     border-radius: 6px;
     border: 1px solid grey;
     color: initial;
     display: inline-flex;
     justify-content: space-around;
-    padding: 3px;
+    margin-top: 4px;
+    padding: 0 2px 7px 2px;
 }
 
 .charsheet html,
@@ -1966,6 +1967,18 @@ also need 1 more level in selector or base css will override border */
     margin: 0;
 }
 
+/* padding npc section */
+.charsheet .npc-details,
+.charsheet .npc-defense,
+.charsheet .npc-offense,
+.charsheet .npc-tactics,
+.charsheet .npc-abilities,
+.charsheet .npc-racial-abilities,
+.charsheet .npc-statistics,
+.charsheet .npc-ecology {
+    padding: 0 1em 0 1em;
+}
+
 .charsheet .table.npc-header .table-cell input {
     background-color: black !important;
     color: White !important;
@@ -1989,6 +2002,7 @@ also need 1 more level in selector or base css will override border */
     align-items: start;
     display: inline-flex;
     flex-wrap: wrap;
+    height: 2.75em;
     width: inherit;
 }
 
@@ -2041,6 +2055,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .npc-statblock-row .small-label2 span:not(.autoexpand) {
+    cursor: default;
     font-size: 1.3rem;
     font-style: normal;
     margin: 0 2px 0 2px;
@@ -6167,6 +6182,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     text-align: center;
 }
 
+/* fix height of autoexpand fields in npc section */
 .charsheet .npc-details .small-label2.autoexpand input,
 .charsheet .npc-defense .small-label2.autoexpand input,
 .charsheet .npc-offense .small-label2.autoexpand input,

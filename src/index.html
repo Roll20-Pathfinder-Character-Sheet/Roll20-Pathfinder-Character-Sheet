@@ -11608,12 +11608,12 @@
                 <!--OFFENSE-->
                 <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="offense">OFFENSE</label></h2>
                 <hr class="npc-hr npchead-bottom" />
-                <div class="h2-section npc-offense  noborder-readonly wide-readonly" role="region" aria-label="npc-offense">
+                <div class="h2-section npc-offense noborder-readonly wide-readonly" role="region" aria-label="npc-offense">
                     <div class="cheat"></div>
                     <input type="checkbox" class="use-metrics noshow" name="attr_use_metrics" value="1" />
                     <input class="showarrow h3arrow" type="checkbox" name="attr_npc-speed-show" data-i18n-aria-label="speed" data-i18n-title="showsect-cmd" value="1" checked />
                     <h3 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n="speed-space-reach">Speed</label></h3>
-                    <div class="h3-section table wide-readonly">
+                    <div class="h3-section noborder-readonly wide-readonly">
                         <div class="npc-statblock-row">
                             <span class="small-label2 entry-med">
                                 <span data-i18n="speed" data-i18n-title="speed-base-title">Speed</span>
@@ -12558,7 +12558,7 @@
                 <!--TACTICS-->
                 <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="tactics">TACTICS</label></h2>
                 <hr class="npc-hr npchead-bottom" />
-                <div class="h2-section npc-tactics">
+                <div class="h2-section npc-tactics noborder-readonly">
                     <h3 style="display:block;" data-i18n="before-combat">Before Combat</h3>
                     <textarea class="inline-textarea" title="@{npc-before-combat}" name="attr_npc-before-combat" data-i18n-placeholder="before-combat-place"></textarea>
                     <h3 style="display:block;" data-i18n="during-combat">During Combat</h3>
@@ -12578,7 +12578,7 @@
                 <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="statistics">STATISTICS</label></h2>
                 <hr class="npc-hr npchead-bottom" />
                 <div class="h2-section npc-statistics noborder-readonly wide-readonly">
-                    <div class="h2-section wide-readonly">
+                    <div class="h2-section noborder-readonly wide-readonly">
                         <div class="npc-statblock-row">
                             <span class="small-label2"><button class="command-button" title="%{selected|NPC-STR-Check}" type="roll" name="roll_NPC-STR-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{strength}}} {{check=[[ 1d20 + [[ @{STR-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="strength-abbrv">STR</span> <span name="attr_STR"></span></button></span>
                             <span class="small-label2"><button class="command-button" title="%{selected|NPC-DEX-Check}" type="roll" name="roll_NPC-DEX-Check" value="@{NPC-whisper} &{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{dexterity}}} {{check=[[ 1d20 + [[ @{DEX-mod} + @{checks-cond} + @{buff_Check-total} + @{buff_check_ability-total} ]] ]]}}"> <span data-i18n="dexterity-abbrv">DEX</span> <span name="attr_DEX"></span></button></span>
@@ -12611,8 +12611,11 @@
                             <span class="super note-a"></span>
                           </span>
                           <span class="small-label2 entry-long">
+                            <label class="small-label2 autoexpand">
+                                <input title="@{cmd-notes}" type="text" name="attr_CMD-notes" data-i18n-placeholder="combat-maneuver-defense-notes-place" />
+                                <span style="min-width: 6em;" class="autoexpand" name="attr_CMD-notes"></span>
+                            </label>
                             <span data-i18n="combat-maneuver-defense-notes">CMD Notes</span>
-                            <input title="@{cmd-notes}" type="text" name="attr_CMD-notes" data-i18n-placeholder="combat-maneuver-defense-notes-place">
                           </span>
                         </div>
                         <div class="npc-statblock-row">
@@ -12798,13 +12801,13 @@
                     <div class="cheat"></div>
                     <input class="showarrow h3arrow" type="checkbox" name="attr_skill-notes-show" data-i18n-aria-label="skill-notes" data-i18n-title="showsect-cmd" value="1" checked />
                     <h3 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skill-notes">Skill Notes</label></h3>
-                    <div class="h3-section table wide-readonly">
+                    <div class="h3-section table noborder-readonly wide-readonly">
                         <textarea class="sect inline-textarea" title="@{Skill-notes}" name="attr_Skill-notes" style="height:5rem;" data-i18n-placeholder="skill-notes-place"></textarea>
                     </div>
                     <div class="cheat"></div>
                     <input class="showarrow h3arrow" type="checkbox" name="attr_npc-skills-show" data-i18n-aria-label="skills" data-i18n-title="showsect-cmd" value="1" checked />
                     <h3 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="skills">Skills</label></h3>
-                    <div class="h3-section wide-readonly">
+                    <div class="h3-section noborder-readonly wide-readonly">
                         <input type="checkbox" class="unchained-show" name="attr_unchained_skills-show" value="1" role="presentation" />
                         <input type="checkbox" class="consolidated-show" name="attr_BG-Skill-Use" value="0" role="presentation" />
                         <input type="checkbox" class="bg-show" name="attr_BG-Skill-Use" value="1" checked role="presentation" />
@@ -13125,11 +13128,9 @@
                 <hr class="npc-hr npchead-top" />
                 <input class="showarrow h2arrow" type="checkbox" name="attr_npc-special-abilities-show" data-i18n-aria-label="special-abilities" data-i18n-title="showsect-cmd" value="1" checked />
                 <!--SPECIAL ABILITIES-->
-                <h2 id="special-abilities" class="clickheader showsect">
-                    <label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="special-abilities" class="upper">SPECIAL ABILITIES</label>
-                </h2>
+                <h2 id="special-abilities" class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="special-abilities" class="upper">SPECIAL ABILITIES</label></h2>
                 <hr class="npc-hr npchead-bottom" />
-                <div class="h2-section abilities repeating-sect wide-readonly" role="region" aria-label="special-abilities">
+                <div class="h2-section npc-abilities abilities repeating-sect wide-readonly" role="region" aria-label="special-abilities">
                     <div role="menubar" class="abilitiesnav tabs custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
                     <input type="checkbox" class="mythic-show" name="attr_mythic-adventures-show" value="1" role="presentation" />
                     <input type="radio" class="tabinput tab0 wider-tab" name="attr_npc-abilities_tab" value="class-features" data-i18n-title="class-features" data-i18n-aria-label="class-features" />
@@ -13476,7 +13477,7 @@
                         </fieldset>
                     </div>
                 </div>
-                <div class="h2-section repeating-sect section-racial-traits" role="region" aria-label="racial traits">
+                <div class="h2-section npc-racial-abilities repeating-sect section-racial-traits" role="region" aria-label="racial traits">
                     <span class="nontable-name secondary-table-name">( <span data-i18n="racial-traits">Racial Traits</span> )</span>
                     <input type="checkbox" class="minimize-show cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_npc-special-abilities-min-show" value="1" /><span></span>
                     <input type="checkbox" class="lock-show cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_npc-special-abilities-expand-show" value="1" /><span></span>
@@ -13536,21 +13537,36 @@
                 <!--ECOLOGY-->
                 <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="ecology">ECOLOGY</label></h2>
                 <hr class="npc-hr npchead-bottom" />
-                <div class="h2-section npc-ecology table">
-                    <div class="table-row">
-                        <span class="table-cell small-label"><textarea class="inline-textarea" title="@{environment}" name="attr_environment"></textarea><br><span data-i18n="environment">Environment</span></span>
-                        <span class="table-cell small-label"><textarea class="inline-textarea" title="@{organization}" name="attr_organization"></textarea><br><span data-i18n="organization">Organization</span></span>
-                        <span class="table-cell small-label"><textarea class="inline-textarea" title="@{other_items_treasure}" name="attr_other_items_treasure"></textarea><br><span data-i18n="treasure">Treasure</span></span>
+                <div class="h2-section npc-ecology noborder-readonly">
+                    <div class="npc-statblock-row">
+                      <span class="small-label2" style="width:100%;">
+                        <span data-i18n="environment">Environment</span>
+                        <textarea class="inline-textarea" title="@{environment}" name="attr_environment"></textarea>
+                      </span>
+                    </div>
+                    <div class="npc-statblock-row">
+                      <span class="small-label2" style="width:100%;">
+                        <span data-i18n="organization">Organization</span>
+                        <textarea class="inline-textarea" title="@{organization}" name="attr_organization"></textarea>
+                      </span>
+                    </div>
+                    <div class="npc-statblock-row">
+                      <span class="small-label2" style="width:100%;">
+                        <span data-i18n="treasure">Treasure</span>
+                        <textarea class="inline-textarea" title="@{other_items_treasure}" name="attr_other_items_treasure"></textarea>
+                      </span>
+                    </div>
+                    <div class="npc-statblock-row">
+                <!--DESCRIPTION-->
+                        <div class="h2-section npc-desc">
+                            <label class="small-label2 wide-textareaparent">
+                                <span data-i18n="description">Desscription</span>
+                                <textarea class="inline-textarea" style="overflow-y: scroll;min-height: 6em;margin-bottom: 1em;" title="@{character_description}" name="attr_character_description" data-i18n-placeholder="description"></textarea>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="cheat"></div>
-                <!--DESCRIPTION-->
-                <div class="h2-section npc-desc">
-                    <label class="small-label2 wide-textareaparent">
-                        <span data-i18n="description"></span>
-                        <textarea class="inline-textarea" title="@{character_description}" name="attr_character_description" data-i18n-placeholder="description"></textarea>
-                    </label>
-                </div>
             </div>
             <div class="section9 section section-notes" role="region" aria-label="custom attributes" data-i18n-aria-label="custom-attributes">
                 <h1 class="selected-tabtitle" data-i18n="custom-attributes">Custom attributes</h1>
