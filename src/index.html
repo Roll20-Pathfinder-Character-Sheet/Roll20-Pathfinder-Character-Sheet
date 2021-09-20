@@ -11228,9 +11228,9 @@
                     </span>
                 </div>
                 <input class="showarrow h2arrow" style="position: absolute; top: 2em;" type="checkbox" name="attr_npc-compimport-show" data-i18n-aria-label="quick-stats" data-i18n-title="showsect-cmd" value="1" aria-label="QUICK STATS">
-                <h2 class="clickheader showsect" style="position: absolute;"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="npc-statblock-header" aria-label="Click to expand">Monster statblock input section</label></h2>
+                <h2 class="clickheader showsect" style="position: absolute; margin-left: .65rem;"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="npc-statblock-header" aria-label="Click to expand">Monster statblock input section</label></h2>
                 <!--Monster Parse Box-->
-                <div class="h2-section hide-readonly" role="section" data-i18n-aria-label="npc-statblock-header" style="border-width:0.2rem;border-style:solid;border-color:black;padding:0.75em;">
+                <div class="h2-section hide-readonly monster-statblock-import" role="section" data-i18n-aria-label="npc-statblock-header">
                     <div class="compendium-drop-target Bestiary">
                     <span class="nontable-name show-readonly" data-i18n="npc-statblock-import">Statblock Import</span>
                     <div class="left">
@@ -11594,13 +11594,10 @@
                         </span>
                     </div>
                     <div class="npc-statblock-row">
-                        <span class="small-label2" style="width:57%;">
-                            <textarea class="inline-textarea both" title="@{save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes"></textarea>
-                            <span>
-                                <input type="checkbox" name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}" style="font-size:inherit;" />
-                                <span data-i18n="save-notes">Save Notes</span>
-                            </span>
-                        </span>
+                      <textarea style="min-width: 60%;" class="small-label2 inline-textarea both" title="@{save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes" placeholder=" Save Notes"></textarea>
+                      <span class="small-label2" data-i18n-title="include-save-notes">
+                        <input name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}" type="checkbox" />
+                      </span>
                     </div>
                     <span class="hide-readonly sect-inverse inspecial">
                         <a href="#special-abilities" data-i18n-title="in-special-abilities-section" data-i18n="special-qualities">Special Qualities</a>
@@ -11613,37 +11610,84 @@
                 <hr class="npc-hr npchead-bottom" />
                 <div class="h2-section npc-offense  noborder-readonly wide-readonly" role="region" aria-label="npc-offense">
                     <div class="cheat"></div>
+                    <input type="checkbox" class="use-metrics noshow" name="attr_use_metrics" value="1" />
                     <input class="showarrow h3arrow" type="checkbox" name="attr_npc-speed-show" data-i18n-aria-label="speed" data-i18n-title="showsect-cmd" value="1" checked />
                     <h3 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n="speed-space-reach">Speed</label></h3>
-                    <input type="checkbox" class="use-metrics noshow" name="attr_use_metrics" value="1" />
                     <div class="h3-section table wide-readonly">
-                        <div class="table-row">
-                            <span class="table-cell small-label">
-                                <input class="input-feet" title="@{speed-base}" type="number" step="5" min="0" name="attr_speed-base" value="0" />
-                                <input class="input-meters" title="@{speed-base}" type="number" step="1.5" min="0" name="attr_speed-base" value="0" />
-                                <br><span class="distance-used" data-i18n="base-speed">Base</span>
+                        <div class="npc-statblock-row">
+                            <span class="small-label2">
+                                <span data-i18n="speed" data-i18n-title="speed-base-title">Speed</span>
+                                <input class="input-feet distance-used" title="@{speed-base}" type="number" step="5" min="0" name="attr_speed-base" value="0" />
+                                <input class="input-meters distance-used" title="@{speed-base}" type="number" step="1.5" min="0" name="attr_speed-base" value="0" />
+                                <span></span>
                             </span>
-                            <span class="table-cell small-label"><input title="@{speed-modified} by encumbrance" type="number" name="attr_speed-modified" value="0" class="calc" readonly /><br><span data-i18n="encumbered-speed">Encumbered</span></span>
-                            <span class="table-cell small-label"><input title="@{run-mult}" type="number" name="attr_run-mult" value="4" /><br /><span data-i18n="multiplier-abbrv">Mult</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="calc" readonly /><br /><span data-i18n="run">Run</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" /><br><span data-i18n="burrow-speed">Burrow</span></span>
-                            <span class="table-cell small-label">
-                                <input class="input-feet" title="@{speed-climb}" type="number" step="5" min="0" name="attr_speed-climb" value="0" />
-                                <input class="input-meters" title="@{speed-climb}" type="number" step="1.5" min="0" name="attr_speed-climb" value="0" />
-                                <br><span data-i18n="climb">Climb</span>
+                            <span class="small-label2" data-i18n-title="speed-title">
+                                <span data-i18n="encumbered-abbrv" data-i18n-title="speed-title">Encum</span>
+                                <input class="input-feet input-meters" title="@{speed-modified}" type="number" name="attr_speed-modified" value="0" class="calc" readonly />
+                                <span></span>
                             </span>
-                            <span class="table-cell small-label"><input title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="5" /><br><span data-i18n="fly">Fly</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-fly-maneuverability}" type="text" name="attr_speed-fly-maneuverability" data-i18n-placeholder="maneuverability" /><br><span data-i18n="maneuverability">Maneuverability</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5" /><br><span data-i18n="swim-speed">Swim</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5" /><br><span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span></span>
-                            <span class="table-cell small-label"><input title="@{speed-notes}" type="text" name="attr_speed-notes" data-i18n-placeholder="speed-notes" /><br><span data-i18n="speed-notes">Speed Notes</span></span>
+                            <span class="small-label2">
+                                <span data-i18n="multiplier-abbrv" data-i18n-title="speed-multiplier-title">Mult</span>
+                                <input title="@{run-mult}" type="number" name="attr_run-mult" value="4" />
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="run" data-i18n-title="speed-run-title">Run</span>
+                                <input class="input-feet input-meters" title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="calc" readonly />
+                                <span></span>
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="burrow-speed">Burrow</span>
+                                <input class="input-feet distance-used" title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" />
+                                <input class="input-meters distance-used" title=" @{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="1.5" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="climb">Climb</span>
+                                <input class="input-feet distance-used" title="@{speed-climb}" type="number" step="5" min="0" name="attr_speed-climb" value="0" />
+                                <input class="input-meters distance-used" title="@{speed-climb}" type="number" step="1.5" min="0" name="attr_speed-climb" value="0" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="fly">Fly</span>
+                                <input class="input-feet distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="5" />
+                                <input class="input-meters distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="1.5" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2 entry-med" data-i18n-title="maneuverability">
+                                <input title="@{speed-fly-maneuverability}" type="text" name="attr_speed-fly-maneuverability" data-i18n-placeholder="maneuverability" />
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="swim-speed">Swim</span>
+                                <input class="input-feet distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5" />
+                                <input class="input-meters distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="1.5" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2">
+                                <span data-i18n="miscellaneous-abbrv">Misc</span>
+                                <input class="input-feet distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5" />
+                                <input class="input-meters distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="1.5" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2"><input title="@{speed-notes}" type="text" name="attr_speed-notes" data-i18n-placeholder="speed-notes" />
+                                <span data-i18n="speed-notes">Speed Notes</span>
+                            </span>
                         </div>
                     </div>
                     <div class="h3-section table sect">
-                        <div class="table-row">
-                            <span class="table-cell small-label sect entry-short"><input title="@{space}" type="text" name="attr_space" value="0" /><br><span data-i18n="space">Space (ft.)</span></span>
-                            <span class="table-cell small-label sect entry-short"><input title="@{reach}" type="text" name="attr_reach" value="0" /><br><span data-i18n="reach">Reach (ft.)</span></span>
-                            <span class="table-cell small-label sect"><input title="@{reach-notes}" type="text" name="attr_reach-notes" data-i18n-placeholder="reach-notes" /><br><span data-i18n="reach-notes">Reach Notes</span></span>
+                        <div class="npc-statblock-row">
+                            <span class="small-label2 sect entry-short">
+                                <span data-i18n="space">Space</span>
+                                <input class="input-feet input-meters" title="@{space}" type="text" name="attr_space" value="0" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2 sect entry-short">
+                                <span data-i18n="reach">Reach</span>
+                                <input class="input-feet input-meters" title=" @{reach}" type="text" name="attr_reach" value="0" />
+                                <span></span>
+                            </span>
+                            <span class="small-label2 sect"><input title="@{reach-notes}" type="text" name="attr_reach-notes" data-i18n-placeholder="reach-notes" />
+                                <span data-i18n="reach-notes">Reach Notes</span>
+                            </span>
                         </div>
                     </div>
                     <div class="cheat"></div>

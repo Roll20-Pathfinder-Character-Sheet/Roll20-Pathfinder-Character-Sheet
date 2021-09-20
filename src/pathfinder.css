@@ -878,7 +878,7 @@ also need 1 more level in selector or base css will override border */
     padding-top: .25em;
 }
 /* used to signify imperial/metric toggle */
-.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div .weight-used::after {
+.charsheet .weight-used::after {
     content: '(lbs)';
     margin-left: 5px;
     font-weight: normal;
@@ -886,17 +886,12 @@ also need 1 more level in selector or base css will override border */
     font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
 }
-.charsheet input[type="checkbox"].use-metrics:checked ~ div .weight-used::after {
+.charsheet .use-metrics:checked ~ div .weight-used::after {
     content: '(kgs)';
-    margin-left: 5px;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1rem;
-    font-family: 'Roboto Mono', monospace;
 }
 
-.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div .distance-used::after,
-.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div span .distance-used::after {
+.charsheet .distance-used::after,
+.charsheet input.distance-used ~ span::before {
     content: '(ft)';
     margin: 0 -5px 0 0;
     padding-left: 1px;
@@ -907,31 +902,40 @@ also need 1 more level in selector or base css will override border */
     font-family: 'Roboto Mono', monospace;
 }
 
-.charsheet input[type="checkbox"].use-metrics:checked ~ div .distance-used::after,
-.charsheet input[type="checkbox"].use-metrics:checked ~ div span .distance-used::after {
+.charsheet .use-metrics:checked ~ div .distance-used::after,
+.charsheet .use-metrics:checked ~ div input.distance-used ~ span::before {
     content: '(m)';
-    margin: 0 -5px 0 0;
-    padding-left: 1px;
-    position: relative;
-    top: -3px;
-    font-weight: normal;
+}
+
+/* npc/monster adjustment */
+.charsheet input.distance-used ~ span::before {
+    content: 'ft.';
+    margin: 1rem -.75em 0 -.75rem;
     font-style: normal;
     font-size: 1rem;
     font-family: 'Roboto Mono', monospace;
 }
 
+.charsheet .use-metrics:checked ~ div input.distance-used ~ span::before {
+    content: 'm.';
+}
+
 /* hide base-speed*/
-.charsheet input.input-feet,
-.charsheet input.input-meters {
+.charsheet .use-metrics ~ div input.input-feet,
+.charsheet .use-metrics ~ div span.small-label2 input.input-feet,
+.charsheet .use-metrics ~ div input.input-meters,
+.charsheet .use-metrics ~ div span.small-label2 input.input-meters {
     display: none;
 }
 
 /* show base-speed in feet at step="5" */
-.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div input.input-feet {
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div input.input-feet,
+.charsheet input[type="checkbox"].use-metrics:not(:checked) ~ div span input.input-feet {
     display: inline-block;
 }
 /* show base-speed in meters at step="1.5" */
-.charsheet input[type="checkbox"].use-metrics:checked ~ div input.input-meters {
+.charsheet input[type="checkbox"].use-metrics:checked ~ div input.input-meters,
+.charsheet input[type="checkbox"].use-metrics:checked ~ div span input.input-meters {
     display: inline-block;
 }
 
@@ -1945,60 +1949,70 @@ also need 1 more level in selector or base css will override border */
 
 /* NPC/Monster */
 
-.section-npc.npc-only {
-    border: 2px solid black;
+.charsheet .section-npc.npc-only {
     border-radius: 10px;
-    padding: 0 1em 0 1em;
-    display: inline-flex;
-    flex-direction: column;
-    width: inherit;
+    border: 2px solid black;
+    display: grid;
+    grid-template-rows: 1em;
 }
 
 .charsheet .table.npc-header {
-    margin: 0 0 0 -.75rem;
-    color: White;
+    align-items: center;
     background-color: black;
-    line-height: 1em;
+    color: White;
     display: inline-flex;
     flex-direction: row;
-    align-items: center;
+    line-height: 1em;
+    margin: 0;
 }
 
 .charsheet .table.npc-header .table-cell input {
-    color: White !important;
     background-color: black !important;
+    color: White !important;
     font-weight: bold;
-    white-space: nowrap;
     line-height: 1em;
+    white-space: nowrap;
+}
+
+.charsheet .monster-statblock-import {
+    border: .2rem solid black;
+	padding: 0.75em;
+	margin: 2em;
+	width: auto;
+}
+
+.charsheet .npchead-top ~ .showarrow + .showsect {
+	margin: -1.5em 0 -2em 0;
 }
 
 .charsheet .npc-statblock-row {
-    display: inline-flex;
     align-items: start;
+    display: inline-flex;
+    flex-wrap: wrap;
     width: inherit;
 }
 
 .charsheet .npc-statblock-row .small-label2>.calc,
 .charsheet .npc-statblock-row .small-label2>input[type="number"] {
     display: inline-block;
-    width: 2em;
+    line-height: 2em;
     margin: 0;
     padding: 0;
-    line-height: 2em;
     text-align: center;
+    width: 2em;
 }
 
 .charsheet .npc-statblock-row .small-label2>input:not(.cssbutton)::placeholder {
-    font-size: 1rem;
     color: darkgray;
+    font-size: 1rem;
 }
 
 /*npc buttons*/
 .charsheet .npc-statblock-row button[type="roll"].command-button {
-    height: 2.5rem;
     background-color: #eee;
     border-bottom-width: .2rem;
     border-right-width: .2rem;
+    height: 2.5rem;
 }
 
 .charsheet .npc-statblock-row button[type="roll"].command-button > span {
@@ -2016,10 +2030,10 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .npc-statblock-row span.small-label2,
 .charsheet .npc-statblock-row span.small-label2 span {
+    align-items: center;
+    display: inline-flex;
     font-size: 1em;
     font-style: normal;
-    display: inline-flex;
-    align-items: center;
 }
 
 .charsheet .npc-statblock-row span.small-label2 span+input {
@@ -2027,8 +2041,8 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .npc-statblock-row .small-label2 span:not(.autoexpand) {
-    font-style: normal;
     font-size: 1.3rem;
+    font-style: normal;
     margin: 0 2px 0 2px;
 }
 
@@ -3454,6 +3468,7 @@ spellclass-concentration spellcaster-button {
     border-width: 0.2rem;
     border-radius: 0.5rem;
     margin-bottom: 0.6rem;
+    overflow: hidden;
 }
 
 .charsheet .entry-wide,
