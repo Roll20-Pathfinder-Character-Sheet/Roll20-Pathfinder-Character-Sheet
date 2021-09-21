@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -39,12 +39,12 @@ var menuMap={
   * translateGroup: if ^{} should be placed around group by field value
   *  translateBonus: if ^{} should be placed around bonus field value
   *  groupMap:{key:string,key:string} --if instead of grouping by the groupField itself, pass the value to a map and group by the result.
- * @param {{name:string,template:string,header:string,section:string ,bonusField:string, usesField:string,nameField:string,linkField:string,npclinkField:string, filterField:string ,filterValue:string, groupByField:string ,translateGroup:boolean, translateBonus:boolean, groupMap:Map<string,string>}} baseAttribs the 
+ * @param {{name:string,template:string,header:string,section:string ,bonusField:string, usesField:string,nameField:string,linkField:string,npclinkField:string, filterField:string ,filterValue:string, groupByField:string ,translateGroup:boolean, translateBonus:boolean, groupMap:Map<string,string>}} baseAttribs the
   * @param {{function(string)}} callback Pass string for command macro as first param, or ""
  */
 export function getRepeatingCommandMacro (baseAttribs,callback,header){
-    var done = function (macro,origMacro) { 
-            if (typeof callback === "function") { callback(macro,origMacro); } 
+    var done = function (macro,origMacro) {
+            if (typeof callback === "function") { callback(macro,origMacro); }
         },
         defaultTemplate = "pf_block",
         defaultHeader="header_image-pf_block",
@@ -214,7 +214,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                                 retObj.group='AAAAAA';
                             }
                             if (retObj.group!=='AAAAAA' && baseAttribs.translateGroup && !retObj.doNotTranslate){
-                                retObj.group = '^{'+retObj.group+'}'; 
+                                retObj.group = '^{'+retObj.group+'}';
                             }
                             if (usesField){
                                 if(uses&&max){
@@ -286,7 +286,7 @@ export function getRepeatingCommandMacro (baseAttribs,callback,header){
                 if (restOfMacro){
                     totalMacro = baseMacro + restOfMacro;
                 } else {
-                    totalMacro=baseMacro + noRows; 
+                    totalMacro=baseMacro + noRows;
                 }
                 done(totalMacro,origMacro);
             }
@@ -310,7 +310,7 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         params={},
         macroName=menuName;
     try {
-        //this is here because putting it above cloning was not working, 
+        //this is here because putting it above cloning was not working,
         //so this makes sure new instance gets created each time
         params = {
             'usesField': 'used',

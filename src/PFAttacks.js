@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -38,7 +38,7 @@ function getDamageMult(str){
 	var abilityMult=1;
 	if(str){
 		abilityMult= Number(String(str).replace(',','.'));
-		if (!abilityMult) { 
+		if (!abilityMult) {
 			abilityMult =1;
 		}
 	}
@@ -229,10 +229,10 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
 		secondAttack = (/2/).test(v[attacktypeField]);
 		ability = parseInt(v[modname], 10) || 0;
 		abilityMult =  1;
-		dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0; 
+		dmgConditions =  parseInt(v["condition-Sickened"], 10) || 0;
 		currTotalDmg = parseInt(v[totalDamageField], 10);
 		miscDmg = parseInt(v[miscDmgField], 10) || 0;
-		enhance = parseInt(v[enhanceField], 10) || 0;		
+		enhance = parseInt(v[enhanceField], 10) || 0;
 		//TAS.debug('PFAttacks type is :'+v[attacktypeField]+ ', update damage values are :',v);
 		//if(v[attacktypeField] !== '0' && v[attacktypeField] !=='dual'){
 		if (rangedAttack){
@@ -306,7 +306,7 @@ function updateRepeatingWeaponCrit (id,v,setter,wasChecked){
 		newBonus = critConfirmBonus + attackTypeBonus;
 		if (newBonus !== (v[critConfirmTotalField] || 0)) {
 			setter[critConfirmTotalField] = newBonus;
-		}	
+		}
 	} catch (err){
 		TAS.error("updateRepeatingWeaponCrit: error updating crit for id  "+id,err);
 	} finally {
@@ -430,7 +430,7 @@ function getRecalculatedDamageOnly (id,v){
 		isRanged=0,enhance=0,abilitydmg=0,abilityMult=1,
 		currTotalDmg=0,dmgMacroMod=0,maxAbility=999,
 		dmgConditions = v["condition-Sickened"],
-		meleeBuffs = v["buff_dmg_melee-total"]||0, 
+		meleeBuffs = v["buff_dmg_melee-total"]||0,
 		rangedBuff = v["buff_dmg_ranged-total"]||0,
 		damageBuffs = v['buff_DMG-total']||0,
 		damagePowerAttack = v["buff_dmg_power_attack-total"]||0,
@@ -451,7 +451,7 @@ function getRecalculatedDamageOnly (id,v){
 			if(v[prefix+'attack-type'].indexOf('2')>=0){
 				rangedBuff+= (parseInt(v['buff_dmg_ranged2-total'],10) ||0);
 				meleeBuffs+= (parseInt(v['buff_dmg_melee2-total'],10) ||0);
-			} 
+			}
 			if(isRanged){
 				damagePowerAttack = 0;
 				damageBuffs+=rangedBuff;
@@ -589,10 +589,10 @@ export function updateAssociatedAttacksFromParents(callback){
 								TAS.debug("nothing linked to "+id);
 								doneOne();
 							}
-						});													
+						});
 						if(_.size(setter)>0){
 							SWUtils.setWrapper(setter,PFConst.silentParams);
-						}									
+						}
 					});
 				});
 			});
@@ -674,9 +674,9 @@ function  getRecalculatedAttack (id,v,setter){
 		abilityTotDmg = Math.min(Math.floor(abilityMult * (abilitydmg + damagePowerAttack)), maxAbility);
 		newTotalDamage = abilityTotDmg + damageBuffs + dmgMacroMod + enhance;
 		TAS.debug("###########################",
-			"getRecalculatedAttack attackType:"+ attkType + ", ability:"+ 
-			v['repeating_weapon_'+id+'_damage-ability'] + " mod:"+ 
-			v['repeating_weapon_'+id+'_damage-ability-mod'] + 
+			"getRecalculatedAttack attackType:"+ attkType + ", ability:"+
+			v['repeating_weapon_'+id+'_damage-ability'] + " mod:"+
+			v['repeating_weapon_'+id+'_damage-ability-mod'] +
 			", isranged:"+ isRanged + ", damageBuffs:"+damageBuffs +
 			", maxability:"+maxAbility + ", abilityMult:"+ abilityMult +
 			", abilitydmg:"+abilitydmg + ", ability dmg tot:"+abilityTotDmg+
@@ -698,7 +698,7 @@ function  getRecalculatedAttack (id,v,setter){
 					localsetter[prefix + "damage-type_macro_insert"] = PFAttackGrid.attackGridFields[attkTypeForGrid].damagemacro;
 				}
 			}
-		} 
+		}
 		updateRepeatingWeaponCrit(id,v,localsetter);
 		newCritBonus = critConfirmBonus + attackTypeCritBonus;
 		if (newCritBonus !== currCritBonus) {
@@ -719,10 +719,10 @@ function  getRecalculatedAttack (id,v,setter){
 	}
 }
 /**ONLY CALL IF modify_dmg_by_size = 0
- * 
- * @param {*} id 
- * @param {*} v 
- * @param {*} setter 
+ *
+ * @param {*} id
+ * @param {*} v
+ * @param {*} setter
  */
 function syncDefaultDamageDice (id,v,setter,useSizeMod,prefix){
 	if(!prefix) {
@@ -735,8 +735,8 @@ function syncDefaultDamageDice (id,v,setter,useSizeMod,prefix){
 	return setter;
 }
 /**   Called when updating damage dice  on a row
- * 
- * @param {string} id 
+ *
+ * @param {string} id
  */
 function syncDefaultDamageDiceAsync (id,eventInfo){
 	var idStr = SWUtils.getRepeatingIDStr(id),
@@ -754,7 +754,7 @@ function syncDefaultDamageDiceAsync (id,eventInfo){
 }
 export function syncAllDefaultDamageDiceAsync (){
 	getAttrs(['modify_dmg_by_size'],function(vout){
-		
+
 		getSectionIDs('repeating_weapons',function(ids){
 			var setter={},fields;
 			if(_.size(ids)){
@@ -775,12 +775,12 @@ export function syncAllDefaultDamageDiceAsync (){
 	});
 }
 /** ONLY CALL IF modify_dmg_by_size = 1.
- * 
- * @param {string} id 
- * @param {number} currCharSize 
- * @param {Map<string,string>} v 
- * @param {Map<string,string>} setter 
- * @param {object} eventInfo 
+ *
+ * @param {string} id
+ * @param {number} currCharSize
+ * @param {Map<string,string>} v
+ * @param {Map<string,string>} setter
+ * @param {object} eventInfo
  * @returns {Map<string,string>} setter
  */
 function adjustDamageDice (id,currCharSize,v,setter,prefix){
@@ -803,8 +803,8 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 				defDice=parseInt(v[prefix+'default_damage-dice-num'],10)||0;
 				defDie=parseInt(v[prefix+'default_damage-die'],10)||0;
 				//TAS.debug("PFAttacks.adjustDamageDice default is:"+defDice+"d"+defDie+", for size:"+defWeaponSize+", "+"def char size:"+defSize+", and curr char size:"+ currCharSize);
-				
-				//check for errors 
+
+				//check for errors
 				if (isNaN(defWeaponSize)){
 					defWeaponSize = defSize;
 					setter[prefix+'default_size']=defWeaponSize;
@@ -862,7 +862,7 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 				setter[prefix+'damage-die']=v[prefix+'default_damage-die'];
 				if(currNotDefault){
 					setter[prefix+'not_default_size']=0;
-				}				
+				}
 			}
 		}
 	} catch (err){
@@ -872,9 +872,9 @@ function adjustDamageDice (id,currCharSize,v,setter,prefix){
 	}
 }
 /** Only called when updating the size dropdown, default damage dice, or size affects checkbox on a row.
- * 
- * @param {string} id 
- * @param {function} callback 
+ *
+ * @param {string} id
+ * @param {function} callback
  */
 function adjustDamageDiceAsync (id,callback){
 	var idStr = SWUtils.getRepeatingIDStr(id),
@@ -922,7 +922,7 @@ export function adjustAllDamageDiceAsync (callback, eventInfo){
 							SWUtils.setWrapper(setter,PFConst.silentParams,done)
 						}
 					});
-				
+
 				}
 			});
 		}
@@ -940,7 +940,7 @@ function resetWeaponSizeAndDamage (id,currCharSize,v,setter,useSizeMod){
 }
 
 /** call when bab changes, or when name changes but how to know? must keep them in linked fields.
- * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int, 'offhand_mult':number }  } params 
+ * @param {{'mainhand_name':string,'mainhand_id':string,'mainhand_penalty':int,	'offhand_name':string,'offhand_id':string,'offhand_penalty':int,'offhand_improved':boolean,'bab':int, 'offhand_mult':number }  } params
  * @param {Map<string,any>} setter already built setter if applicable.
  * @param {String} id the id of the row
  * @param {Boolean} updMode if true then do not update names of attacks
@@ -1016,7 +1016,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 		//macroText
 		//mainhand attack:
 		macroText=
-			'&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{header_image=@{header_image-pf_attack-dual}}} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} ' +		
+			'&{template:pf_attack} @{toggle_attack_accessible} @{toggle_rounded_flag} {{header_image=@{header_image-pf_attack-dual}}} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=@{name}}} ' +
 			'{{attack=[[ 1d20cs>[[ @{repeating_weapon_' + params.mainhand_id + '_crit-target} ]] + [[@{repeating_weapon_' + params.mainhand_id + '_attack_macro} ]] + @{attack-mod} ]]}} ' +
 			'{{damage=[[@{repeating_weapon_' + params.mainhand_id + '_damage-dice-num}d@{repeating_weapon_' + params.mainhand_id + '_damage-die} + @{repeating_weapon_' + params.mainhand_id + '_damage_macro} ]]}} ' +
 //  	'{{type=@{repeating_weapon_' + params.mainhand_id + '_type}}} ' +
@@ -1069,7 +1069,7 @@ export function setDualWieldVals (params,setter,id,updMode){
 				offhandCountdown--;
 			}
 			tempStr = tempStr.replace(/REPLACEITER/g,currAttack);
-		
+
 			setter[prefix+'iterative_attack'+currAttack+'_value']=tempInt;
 			setter[prefix+'var_iterative_attack'+currAttack+'_macro'] =tempStr;
 			setter[prefix+'toggle_iterative_attack'+currAttack]="@{var_iterative_attack"+currAttack+"_macro}";
@@ -1094,16 +1094,16 @@ export function setDualWieldVals (params,setter,id,updMode){
 	}
 }
 /** Updates all existing dual wield attacks.
- * 
- * @param {function} callback 
- * @param {Map<string,string>} eventInfo 
+ *
+ * @param {function} callback
+ * @param {Map<string,string>} eventInfo
  */
 export function updateDualWieldAttacks (callback,eventInfo){
 	var done = _.once(function(){
 		if(typeof callback === 'function'){
 			callback();
 		}
-	}), 
+	}),
 	finished = _.once(function(){
 		if(eventInfo){
 			SWUtils.setWrapper({'update_twoweapon_attack':0},PFConst.silentParams,done);
@@ -1126,7 +1126,7 @@ export function updateDualWieldAttacks (callback,eventInfo){
 			ohpen=parseInt(vout.offhand_penalty,10)||0;
 			ohatks=parseInt(vout.offhand_improved,10)||0;
 			babt=parseInt(vout.bab,10)||0;
-			mult=parseFloat(vout.offhand_str_mult)||0.5;			
+			mult=parseFloat(vout.offhand_str_mult)||0.5;
 			fields = SWUtils.cartesianAppend(['repeating_weapon_'],ids,['_source-main','_source-off','_link_type','_source-main-name','_source-off-name','_macro-text','_NPC-macro-text']);
 			//TAS.debug("PFAttacks.migrateLinkedAttacks FIELDS are ",fields);
 			getAttrs(fields,function(v){
@@ -1153,7 +1153,7 @@ export function updateDualWieldAttacks (callback,eventInfo){
 								setDualWieldVals(params,setter,id,true);
 							}
 						} catch (erri){
-							
+
 						}
 					});
 				}
@@ -1191,8 +1191,8 @@ function createDualWield(v){
 }
 
 /** Creates new dual wield attack
- * 
- * @param {function} callback 
+ *
+ * @param {function} callback
  */
 export function createDualWieldAsync (callback){
 	var done = _.once(function(){
@@ -1212,7 +1212,7 @@ export function createDualWieldAsync (callback){
 			});
 		} else {
 			SWUtils.setWrapper({'create_twoweapon_attack':0},PFConst.silentParams,done);
-		}		
+		}
 	};
 	getAttrs(['create_twoweapon_attack','mainhand_id','mainhand_penalty','offhand_id','offhand_penalty','offhand_improved','bab','offhand_str_mult'],function(v){
 		try {
@@ -1277,8 +1277,8 @@ export function createDualWieldAsync (callback){
 
 /** Recalculates all other non macro fields on the repeating attacks
  * calls getRecalculatedAttack and resetWeaponSizeAndDamage
- * @param {[string]} ids 
- * @param {function} callback 
+ * @param {[string]} ids
+ * @param {function} callback
  */
 function recalcRepeatingNonMacroFields (ids,callback){
 	var done = function(){
@@ -1334,9 +1334,9 @@ function recalcRepeatingNonMacroFields (ids,callback){
 	});
 }
 /** Recalculates all attack and defense macro fields on the repeating attacks
- * 
- * @param {[string]} ids 
- * @param {function} callback 
+ *
+ * @param {[string]} ids
+ * @param {function} callback
  */
 function recalcRepeatingMacroFields (ids,callback){
 	var done = _.once(function(){
@@ -1399,7 +1399,7 @@ export function updateRepeatingAttacks(attackType){
 export function recalcRepeatingWeapon(id,callback){
 	recalcRepeatingMacroFields([id],function(){
 		recalcRepeatingNonMacroFields([id],callback);
-	});	
+	});
 }
 
 export function recalculateRepeatingWeapons (callback){
@@ -1486,7 +1486,7 @@ export function removeLinkedAttack (callback,linkType,linkid){
 				done();
 			}
 		});
-	});	
+	});
 }
 function setNewDefaults (ids,v,setter){
 	var localsetter,defaultSize;
@@ -1652,7 +1652,7 @@ export function migrate (callback, oldversion){
 			} catch (err){
 				TAS.error("PFAttacks.migrate",err);
 				done();
-			} finally {					
+			} finally {
 			}
 		});
 	});
@@ -1781,7 +1781,7 @@ function registerEventHandlers () {
 				//updateRepeatingWeaponAttacks(); //does not exist yet
 			}
 		}));
-		
+
 	});
 
 	on("change:repeating_weapon:default_damage-dice-num change:repeating_weapon:default_size change:repeating_weapon:default_damage-die change:repeating_weapon:size_affects", TAS.callback(function eventWeaponDice(eventInfo) {

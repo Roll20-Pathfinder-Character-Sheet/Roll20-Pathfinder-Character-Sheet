@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -31,7 +31,7 @@ knowledgeSkillAppends = _.map(knowledgeSubSkills, function (subskill) {
 }),
 //for each skill array of the possible skills {"Craft":["Craft","Craft2"...],"Perform":["Perform","Perform2"...] }
 subskillArrays = _.reduce(skillsWithSubSkills, function (memo, skill) {
-	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums : 
+	var appenders = (skill === "Misc-Skill") ? miscSkillAppendNums : (skill === "CS-Misc-Skill") ? miscSkillAppendNums :
 		(skill === "Knowledge") ? knowledgeSkillAppends : skillAppendNums;
 	memo[skill] = SWUtils.cartesianAppend([skill], skillAppendNums);
 	return memo;
@@ -117,7 +117,7 @@ consolidatedSkillAbilityDefaults = {
 	"CS-Stealth": "dex",
 	"CS-Survival": "wis"
 },
-globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond', 
+globalSkillModAttrs = ['enforce_requires_training', 'size_skill', 'size_skill_double', 'acp', 'Phys-skills-cond',
 	'Perception-cond', 'STR-mod','DEX-mod','CON-mod','INT-mod','WIS-mod','CHA-mod',
 	'buff_STR_skills-total','buff_DEX_skills-total','buff_CON_skills-total',
 	'buff_INT_skills-total','buff_WIS_skills-total','buff_CHA_skills-total',
@@ -146,7 +146,7 @@ function appendToSubSkills (skilllist, appendToEnd) {
 }
 /* updateMaxSkills Calculates and sets maximum skill ranks. Minimum 1 per level.
  *  divides by 2 if using consolidated skills
- * @param {event} eventInfo - from event 
+ * @param {event} eventInfo - from event
  * @callback {function} - callback when done
  */
 function updateMaxSkills (eventInfo, callback) {
@@ -155,7 +155,7 @@ function updateMaxSkills (eventInfo, callback) {
 			callback();
 		}
 	}),
-	fields=["total-skill", "total-fcskill", "INT-mod", "level", "Max-Skill-Ranks-mod", "Max-Skill-Ranks", 
+	fields=["total-skill", "total-fcskill", "INT-mod", "level", "Max-Skill-Ranks-mod", "Max-Skill-Ranks",
 	"unchained_skills-show", "BG-Skill-Use","npc-skill","npc-hd-num",
 	"class-0-skill","class-1-skill","class-2-skill","class-3-skill","class-4-skill","class-5-skill",
 	"class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level"
@@ -314,7 +314,7 @@ function setSkillVal (skill, v, setter){
 	physCond = 0,
 	perCond = 0,
 	globalBuffCond=0;
-		
+
 	try {
 		setter = setter || {};
 		abilityModName = v[abNm]; //PFUtils.findAbilityInString(v[abNm]);
@@ -356,7 +356,7 @@ function setSkillVal (skill, v, setter){
 				//if(skill==='Stealth'){TAS.notice("adjusting stealth by "+adj);}
 				skillTot += adj;
 			}
-		} 
+		}
 
 		if (skill === "Perception" || skill === "CS-Perception") {
 			perCond = parseInt(v["Perception-cond"], 10) || 0;
@@ -422,7 +422,7 @@ function setSkillValByDiff(skill,diff,v,setter){
 	setter[skill]=tot;
 	return setter;
 }
-/** when user checks class skill, +3 or -3 depending on if ranks > 0, if ranks 0 no change 
+/** when user checks class skill, +3 or -3 depending on if ranks > 0, if ranks 0 no change
  * @param {string} skill - from allTheSkills
  */
 function updateSkillByClassChkAsync(skill){
@@ -444,17 +444,17 @@ function updateSkillByClassChkAsync(skill){
 }
 function recalculateSkillArrayMiscFields (skills, callback){
 	var doneOneMisc = _.after(_.size(skills),callback);
-	_.each(skills, function (skill) {		
+	_.each(skills, function (skill) {
 		SWUtils.evaluateAndSetNumber(skill + "-misc", skill + "-misc-mod", 0, function () {
 			doneOneMisc();
 		}, true);
-	});	
+	});
 }
 /** Recalcs the array of skills but does NOT recalc the misc macro fields
- * 
- * @param {*} skills 
- * @param {*} callback 
- * @param {*} silently 
+ *
+ * @param {*} skills
+ * @param {*} callback
+ * @param {*} silently
  */
 function recalcSkillTotals (skills,callback,silently){
 	var done = _.once(function () {
@@ -480,7 +480,7 @@ function recalcSkillTotals (skills,callback,silently){
 		} else {
 			done();
 		}
-	});	
+	});
 }
 /** recalcSkillArray recalculates skill misc macro fields then totals.
  * @param {Array} skills array of skills to update.
@@ -585,7 +585,7 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 	}
 	if(!updatedAttr){
 		done();
-		return;			
+		return;
 	}
 	fields = allTheSkills.map(function(skill){
 		return skill+'-ability';
@@ -609,9 +609,9 @@ export function recalculateAbilityBasedSkills (abilityBuff,eventInfo,callback,si
 		}
 	});
 }
-/** updates the macros for only the 7 subskill rolltemplates 
+/** updates the macros for only the 7 subskill rolltemplates
  * @param {boolean} background -if background skills turned on
- * @param {boolean} rt - if Enforce Requires Training checked 
+ * @param {boolean} rt - if Enforce Requires Training checked
  * @param {event} eventInfo ?
  * @param {jsobject_map} currMacros map of parent skill button name to command macro. (knowledge, Perform, etc)
  * @param {boolean} isNPC - if sheet is NPC
@@ -729,7 +729,7 @@ function getSkillButtonMacro (name, skillArray, showBonus, isNPC) {
 	npcBaseMacro = "{{name= ^{npc} ^{" + skillTransKey + "} }} ",
 	rowbutton = "[^{REPLACELOWER}" + bonusStr + "](~@{character_id}|" + skillPrefix + "REPLACE-check) ",
 	subskillbutton = "[^{REPLACELOWER}](~@{character_id}|" + skillPrefix + "REPLACELOWERMAC_skills_buttons_macro) ",
-	baseToSend = isNPC?npcBaseMacro:baseMacro, 
+	baseToSend = isNPC?npcBaseMacro:baseMacro,
 	tempstr="";
 	try {
 		tempstr = _.reduce(skillArray, function (memo, skill, idx) {
@@ -755,7 +755,7 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 		}
 	}),
 	skillPrefix = isNPC ? "NPC-" : "";
-	getAttrs([skillPrefix+"skills-macro", skillPrefix+"background_skills-macro", skillPrefix+"adventure_skills-macro", 
+	getAttrs([skillPrefix+"skills-macro", skillPrefix+"background_skills-macro", skillPrefix+"adventure_skills-macro",
 			skillPrefix+"artistry_skills-macro", skillPrefix+"lore_skills-macro", skillPrefix+"craft_skills-macro", skillPrefix+"knowledge_skills-macro",
 			skillPrefix+"perform_skills-macro", skillPrefix+"profession_skills-macro", skillPrefix+"misc-skill_skills-macro",
 			skillPrefix+"CS-misc-skill_skills-macro"], function (v) {
@@ -911,11 +911,11 @@ export function migrate (callback, oldversion) {
 			}
 		});
 	},
-	migrateMacros2 = function(callback){        
+	migrateMacros2 = function(callback){
 		getAttrs(['migrated_skill_speedup3'],function(vout){
 			var fields;
 			if(vout.migrated_skill_speedup3*1){
-				if (typeof callback === "function") { 
+				if (typeof callback === "function") {
 					callback();
 				}
 				//return;
@@ -960,7 +960,7 @@ export function migrate (callback, oldversion) {
 					setter['skill-query']='@{skill-invest-query}+@{custom_dice}';
 				} else if (!v['skill-query'] || v['skill-query']==="0"){
 					setter['skill-query']='1d20+@{skill-invest-query}';
-				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}' && 
+				} else if (v['skill-query']!=='@{skill-invest-query}+@{custom_dice}' &&
 					v['skill-query']!=='?{Roll or Take 10/20?|1d20,1d20|10,10|20,20}+@{skill-invest-query}'	&&
 					v['skill-query']!=='1d20+@{skill-invest-query}'){
 					setter['skill-query']='1d20+@{skill-invest-query}';
@@ -986,7 +986,7 @@ export function migrate (callback, oldversion) {
 	migrateOldClassSkillValue(doneOne);
 	migrateMacros2(doneOne);
 	PFMigrate.migrateMaxSkills(doneOne);
-	
+
 }
 /* recalculate - updates ALL skills  - calls PFUtilsAsync.setDropdownValue for ability then updateSkill */
 export var recalculate = TAS.callback(function PFSkillsRecalculate(callback, silently, oldversion) {
@@ -1023,7 +1023,7 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			recalculateAbilityBasedSkills('physical',eventInfo);
 		}
-	}));		
+	}));
 	//each skill has a dropdown handler and a skill update handler
 	//concat them all up, only happens once so no big deal
 	_.each(allTheSkills, function (skill) {
@@ -1058,7 +1058,7 @@ function registerEventHandlers () {
 				updateSkillByClassChkAsync(skill);
 			}
 		}));
-		
+
 		//these always displayed if rt or not
 		if (skill.slice(0, 9) !== "Knowledge" && skill !== "Linguistics" && skill !== "Sleight-of-Hand") {
 			on("change:" + skill + "-ReqTrain change:" + skill + "-ranks", TAS.callback(function eventSkillRequiresTrainingRanks(eventInfo) {

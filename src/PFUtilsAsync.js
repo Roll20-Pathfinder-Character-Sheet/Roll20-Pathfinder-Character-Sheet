@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -25,7 +25,7 @@ export function setDropdownValue (readField, writeFields, callback, silently,use
 }
 /** calls setDropdownValue for a dropdown in a repeating section
  * @param {string} section the string between "repeating_" and "_<id>"
- * @param {string} id optional- the id of this row, blank if in context of the current row 
+ * @param {string} id optional- the id of this row, blank if in context of the current row
  * @param {string} from the attribute name of the dropdown , string after "repeating_section_id_"
  * @param {string} to the attribute to write to, string after "repeating_section_id_"
  * @param {function(new,old,changed)} callback - the function to call when done with the numeric value of the dropdown setting

@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as ExExp from './ExExp';
 TAS.config({
  logging: {
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
  * These general utilities are for sheetworker use, they have no dependency on pathfinder rules or
  * the pathfinder sheet or constants
  * except for evaluateAndSetNumber which appends "_error" to a field name and sets it if an error is encountered
- * 
+ *
  * In addition this provides wrapper / interface to ExExp which we kept mostly as-is so that if
  * the ExtendedExpressions author made updates we could drop it in
  *
@@ -48,7 +48,7 @@ export var getWrapper = TAS.callback(function callGetAttrs(a,cb){
 	});
 });
 /** wrapper for getTranslationByKey, if error encountered returns string passed in
- * @param {string} str 
+ * @param {string} str
  */
 export function getTranslated (str){
 	var tempstr='';
@@ -177,7 +177,7 @@ function convertKL1KH1toMinMax(str) {
  * @param {string} str the equation to pass in
  */
 function validateMatchingParens(str){
-	if ((str.match(/\(/g) || []).length !== (str.match(/\)/g) || []).length || 
+	if ((str.match(/\(/g) || []).length !== (str.match(/\)/g) || []).length ||
 		(str.match(/\{/g) || []).length !== (str.match(/\}/g) || []).length ||
 		(str.match(/\[/g) || []).length !== (str.match(/\]/g) || []).length ) {
 			return 0;
@@ -256,8 +256,8 @@ export function evaluateExpression (exprStr, callback, errcallback) {
 		}
 	});
 }
-/** Evaluates equation in readField, set the value to writeField 
- * if we cannot, then set readField_error attribute to 1 to indicate an error 
+/** Evaluates equation in readField, set the value to writeField
+ * if we cannot, then set readField_error attribute to 1 to indicate an error
  * TODO: move this to PFUtilsAsync! (because it sets error value it is a PF specific function)
  *
  * @param {string} readField= field to read containing string to parse
@@ -283,7 +283,7 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 		//TAS.debug("leaving set of "+ writeField+" with old:"+b+", new:"+c+" is changed:"+ c+" and curreerror:"+currError);
 		if (!currError){
 			donesetter[writeField+'_error']=1;
-			setAttrs(donesetter,{silent:true});				
+			setAttrs(donesetter,{silent:true});
 		}
 		if (typeof errcallback === "function") {
 			errcallback(a, b, c);
@@ -294,7 +294,7 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 	//TAS.debug("evaluateAndSetNumber about to get "+readField);
 	getAttrs([readField, writeField, writeField+"_error"], function (v) {
 		var params = {},
-		trueDefault=0, 
+		trueDefault=0,
 		currVal=0,
 		isError=0,
 		currError=0;
@@ -308,7 +308,7 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 				var setter={};
 				//TAS.debug("evaluateExpression returned with number "+value);
 				//Use double equals not triple here! triple results in incorrect falsey readings
-				//changed to 2 equals and flip so value2 on left. 
+				//changed to 2 equals and flip so value2 on left.
 				if (isNaN(currVal) || value != currVal) {
 					setter[writeField] = value;
 					setWrapper(setter, params, function () { done(value, currVal, true,currError)});
@@ -331,8 +331,8 @@ export function evaluateAndSetNumber(readField, writeField, defaultVal, callback
 		}
 	});
 }
-/** Evaluates expression in exprStr, and adds addVal to it, then sets to writeField. This allows you to 
- * evaluate an expression and add something else to it before writing. 
+/** Evaluates expression in exprStr, and adds addVal to it, then sets to writeField. This allows you to
+ * evaluate an expression and add something else to it before writing.
  * Used in pathfinder sheet for buffs to custom attributes
  * @param {function} callback  when done
  * @param {boolean} silently if call setAttrs with silent:true
@@ -370,12 +370,12 @@ export function evaluateAndAdd(callback,silently,exprStr,writeField,currVal,addV
 	});
 }
 /** Calls evaluateAndAdd if you don't have the value to add yet (addVal)
- * 
- * @param {function} callback 
- * @param {boolean} silently 
- * @param {string} readField 
- * @param {string} writeField 
- * @param {string} addField 
+ *
+ * @param {function} callback
+ * @param {boolean} silently
+ * @param {string} readField
+ * @param {string} writeField
+ * @param {string} addField
  */
 export function evaluateAndAddAsync(callback,silently,readField,writeField,addField){
 	getAttrs([readField,writeField,addField],function(v){
@@ -384,7 +384,7 @@ export function evaluateAndAddAsync(callback,silently,readField,writeField,addFi
 }
 /** Evaluates expression in exprStr, if different than current, add to the tot field
  * use to evaluate misc mod and quickly update what they apply to or not
- * 
+ *
  * @param {function} callback  when done
  * @param {boolean} silently if rrue call setAttrs for totField with silent:true
  * @param {string} exprStr  string to evaluate
@@ -422,24 +422,24 @@ export function evaluateAndAddToTot(callback,silently,exprStr,writeField,currVal
 	},done);
 }
 /** calls evaluateAndAddToTot if you don't have the values of the 3 attributes. perfect for misc fields
- * 
- * @param {function} callback 
- * @param {boolean} silently 
- * @param {string} readField 
- * @param {string} writeField 
- * @param {string} totField 
+ *
+ * @param {function} callback
+ * @param {boolean} silently
+ * @param {string} readField
+ * @param {string} writeField
+ * @param {string} totField
  */
 export function evaluateAndAddToTotAsync(callback,silently,readField,writeField,totField){
 	getAttrs([readField,writeField,totField],function(v){
 		evaluateAndAddToTot(callback,silently,v[readField],writeField,v[writeField],totField,v[totField]);
-	});	
+	});
 }
 /** Gets value of a dropdown. If 'dual' then 0, or if it starts with a 0 then retrun 0
  * if blank then return ''
  * otherwise return the value
  * @param {string} fieldToFind the VALUE of the dropdown attribute
  * @param {function} synchrousFindAttributeFunc optional, pass the fieldToFind to this and return the result.
- * 
+ *
  */
 function getDropdownSetting(fieldToFind,synchrousFindAttributeFunc){
 	var foundField = "";
@@ -491,7 +491,7 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
 	});
 }
 /** Doesn't merely set a dropdown value but also adds that value to a total field
- * 
+ *
  * @param {Number} newVal new value to set
  * @param {string} writeField the attributename representing the numeric val of the dropdown (usually dropdownname-mod)
  * @param {Number} currVal current value of writeField
@@ -501,7 +501,7 @@ export function getDropdownValue (readField, synchrousFindAttributeFunc, callbac
  * @param {boolean} silently whether to call setAttr silently or not
  */
 function setDropdownAndAddToTot(newVal,writeField,currVal,totField,totVal,callback,silently){
-	var done = function(){ 
+	var done = function(){
 		if(typeof callback==="function"){
 			callback();
 		}
@@ -540,7 +540,7 @@ export function setDropdownAndAddToTotAsync(readField,writeField,totField,synchr
 			TAS.error("SWUtils.setDropdownAndAddToTot for read:"+readField+",write:"+writeField+",tot:"+totField,v,err);
 			if (typeof callback==="function"){
 				callback();
-			}				
+			}
 		}
 	});
 }
@@ -593,7 +593,7 @@ export function setDropdownValue (readField, writeField, synchrousFindAttributeF
 	});
 }
 
-/** getRowTotal return newvalue, currentvalue, allvalues in callback. Summed up floats and round total to int. 
+/** getRowTotal return newvalue, currentvalue, allvalues in callback. Summed up floats and round total to int.
  * THIS IS SLOWER THAN DOING IT YOURSELF, just wrote to make things simpler.
  * @param {Array} fields array of field names to be added up, EXCEPT the first field which is ignored (at index 0) which is the total current value
  * @param {number} bonus a number that is added to the other fields.
@@ -651,7 +651,7 @@ export function getRowTotal  (fields, bonus, penalties, totalIsFloat, callback, 
 	});
 }
 /** Adds up numbers and puts it in the first field of the fields array.
- * THIS IS SLOWER THAN DOING IT YOURSELF, 
+ * THIS IS SLOWER THAN DOING IT YOURSELF,
  * All numbers are added up as FLOATS, and then FLOOR is used to round the sum down
  * @param {Array} fields array of field names to be added up, EXCEPT the first field. fields[0] MUST be the total field
  * @param {number} bonus a number that is added to the other fields.
@@ -684,7 +684,7 @@ export function updateRowTotal (fields, bonus, penalties, totalIsFloat, callback
 }
 /** Escapes special chars for regex, so that a regex string can be turned into a RegExp object
  *@param {string} str the string to examine
- *@param {boolean} escapeSpaces if we should replace any tab or space with \s* 
+ *@param {boolean} escapeSpaces if we should replace any tab or space with \s*
  *@returns {string} resultant string after search and replace
  */
 export function escapeForRegExp  (str, escapeSpaces) {
@@ -757,17 +757,17 @@ export function escapeForChatLinkButton (str){
 	retstr = escapeForMacroCall(retstr);
 	return retstr;
 }
-/** TEST FUNCTION not tested completely: to attempt to parse strings faster than using split() 
+/** TEST FUNCTION not tested completely: to attempt to parse strings faster than using split()
  * would be used to find portions of string like 'repeating_section_id_attrname'
- * @param {*} str 
- * @param {*} pat 
- * @param {*} n 
+ * @param {*} str
+ * @param {*} pat
+ * @param {*} n
  */
 export function nthIndex (str,pat,n){
 	var i;
 	for (i = 0; n > 0 && i !== -1; n -= 1) {
 		i = str.indexOf(pat,  i ? (i + 1) : i);
-	} 
+	}
 	return i;
 }
 
@@ -846,11 +846,11 @@ export function cartesianProduct  () {
 	}, [[]]);
 }
 /** trimBoth removes spaces at beginning and end of string, or of each string in an array.
- * performs a deep match, so if array is of arrays, will call trim on every string. 
+ * performs a deep match, so if array is of arrays, will call trim on every string.
  * if object is not an array or string, just return object.
  * therefore, non immutable objects are not cloned and array will contain links to them.
  *@param {Array or string} val string or array of strings
- *@returns {Array or string} same object type as passed in 
+ *@returns {Array or string} same object type as passed in
  */
 export function trimBoth (val){
 	if (Array.isArray(val)){
@@ -861,8 +861,8 @@ export function trimBoth (val){
 	}
 	return val;
 }
-/** Splits string into array, based on commas (ignoring commas between parenthesis) 
- * @param {string} str 
+/** Splits string into array, based on commas (ignoring commas between parenthesis)
+ * @param {string} str
  * @returns {[string]} array of items
  */
 export function splitByCommaIgnoreParens(str){

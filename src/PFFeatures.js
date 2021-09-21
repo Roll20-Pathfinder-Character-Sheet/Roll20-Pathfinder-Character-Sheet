@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -33,7 +33,7 @@ migrateMap  = {
 		'LU':['_name','_short-description','_used','_used_max','_showinmenu','_description','_macro-text','_npc-macro-text','_max-calculation','_level','_range','_duration','_save','_sr'],
 		'hasNPCMacro':false,
 		'classDefault':'@{level}',
-		'ruleCategory':'spell-like-abilities'},		
+		'ruleCategory':'spell-like-abilities'},
 };
 var migrateButtonMap = {
 	merge_traits_now:'trait',
@@ -61,7 +61,7 @@ events = {
 };
 
 /** resetTopCommandMacro sets orig_ability_header_macro  (macro to plug into pf_block, read by PFAbility.resetCommandMacro)
- *@param {function} callback call when done	
+ *@param {function} callback call when done
  */
 export function resetTopCommandMacro (callback){
 	var done = _.once(function () {
@@ -93,12 +93,12 @@ export function resetTopCommandMacro (callback){
 			usesRacialTraits=parseInt(v.use_racial_traits,10)||0;
 			usesSLAs = parseInt(v["use_spell-like-abilities"],10)||0;
 
-			newMacro = 
+			newMacro =
 				(usesClass?otherCommandMacros['class-ability']:"") +
 				(usesFeats?otherCommandMacros['feat'].replace(/REPLACENPC/g,prefix):"") +
 				(usesSLAs?otherCommandMacros['npc-spell-like-abilities']:"") +
-				(usesTraits?otherCommandMacros['trait']:"") + 
-				(usesRacialTraits?otherCommandMacros['racial-trait'].replace(/REPLACENPC/g,prefix):"") + 
+				(usesTraits?otherCommandMacros['trait']:"") +
+				(usesRacialTraits?otherCommandMacros['racial-trait'].replace(/REPLACENPC/g,prefix):"") +
 				(isMythic?otherCommandMacros['mythic']:"") ;
 			if (newMacro) {
 				//no space in front needed for this one
@@ -108,12 +108,12 @@ export function resetTopCommandMacro (callback){
 				setter[prefix+'orig_ability_header_macro']=newMacro;
 			}
 			if (isNPC){
-				newMacro = 
+				newMacro =
 					(usesClass?otherCommandMacros['class-ability']:"") +
 					(usesFeats?otherCommandMacros['feat'].replace(/REPLACENPC/g,''):"") +
 					(usesSLAs?otherCommandMacros['npc-spell-like-abilities']:"") +
-					(usesTraits?otherCommandMacros['trait']:"") + 
-					(usesRacialTraits?otherCommandMacros['racial-trait'].replace(/REPLACENPC/g,''):"") + 
+					(usesTraits?otherCommandMacros['trait']:"") +
+					(usesRacialTraits?otherCommandMacros['racial-trait'].replace(/REPLACENPC/g,''):"") +
 					(isMythic?otherCommandMacros['mythic']:"") ;
 				if (newMacro) {
 					//no space in front needed for this one
@@ -144,7 +144,7 @@ export function resetCommandMacro (callback){
 			callback();
 		}
 	});
-	
+
 	getAttrs(["mythic-adventures-show","use_traits","use_racial_traits","use_class_features","use_feats","use_spell-like-abilities"],function(v){
 		var featureList = [],
 		doneWithOneButton,
@@ -259,17 +259,17 @@ export function convertNameToLevel (name){
 	}
 }
 /** Converts the 4 "old" feature lists into array of objects for repeating_ability
- * 
- * @param {function([{}])} callback 
- * @param {function} errorcallback 
- * @param {string} section 
+ *
+ * @param {function([{}])} callback
+ * @param {function} errorcallback
+ * @param {string} section
  */
 export function getAbilities (callback,errorcallback,section){
 	var done = _.once(function(param){
 		if (typeof callback === "function"){
 			callback(param);
 		}
-	}), 
+	}),
 	notDone =_.once(function(){
 		if (typeof errorcallback === "function"){
 			errorcallback();
@@ -349,7 +349,7 @@ export function getAbilities (callback,errorcallback,section){
 								}
 								obj['macro-text'] = v[prefix+macrotextAttr]||'';
 								obj['rule_category']=migrateMap[section].ruleCategory;
-								
+
 								return obj;
 							} catch (errorinner) {
 								TAS.error("PFFeatures.getAbilities errorinner on " +id ,errorinner);
@@ -424,7 +424,7 @@ export function setNewDefaults (callback,section){
 		'mythic-feat':'mythic-feats',
 		'class-ability':'class-features',
 		'npc-spell-like-abilities': 'spell-like-abilities'
-	},	
+	},
 	defaultabilitytype,defaultrulecategory,defaultshow;
 	defaultshow = (section==='class-abilities'||section==='npc-spell-like-abilities')?'1':'0';
 	defaultabilitytype= (section==='npc-spell-like-abilities')?'Sp':'not-applicable';

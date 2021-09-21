@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -53,7 +53,7 @@ function clearBuffTotals (callback,silently){
 			exists =parseInt(v['buff_'+col+'_exists'],10)||0;
 			if(val ){
 				memo['buff_'+col+'-total']=0;
-			} 
+			}
 			if (exists){
 				memo['buff_'+col+'_exists']=0;
 			}
@@ -64,7 +64,7 @@ function clearBuffTotals (callback,silently){
 			exists =parseInt(v['buff_'+col+'_penalty_exists'],10)||0;
 			if(val ){
 				memo['buff_'+col+'-total_penalty']=0;
-			} 
+			}
 			if (exists){
 				memo['buff_'+col+'_penalty_exists']=0;
 			}
@@ -95,11 +95,11 @@ export function getAllRowAttrs(callback){
 			callback(ids,v);
 		});
 	});
-	
+
 }
 
-/**Sets 1 or 0 for buff_*_exists in status panel - only called by updateBuffTotalAsync. 
- * @param {function} callback 
+/**Sets 1 or 0 for buff_*_exists in status panel - only called by updateBuffTotalAsync.
+ * @param {function} callback
  */
 function resetStatuspanel (callback) {
 	var done = _.once(function () { if (typeof callback === "function") { callback(); } }),
@@ -119,13 +119,13 @@ function resetStatuspanel (callback) {
 		getExists= function(pre,post){
 			var val,exists;
 			post=post||'';
-			val = parseInt(v[pre + "-total"+post], 10) || 0; 
+			val = parseInt(v[pre + "-total"+post], 10) || 0;
 			exists = parseInt(v[pre +post+ "_exists"], 10) || 0;
 			if (val !== 0 && !exists) {
 				return 1;
 			} else if (val === 0 && exists) {
 				return 0;
-			} 
+			}
 		};
 		try {
 			setter = _.reduce(buffColumns, function (memo, col) {
@@ -174,7 +174,7 @@ function updateBuffTotal (col,ids,v,setter){
 		setter = setter || {};
 		if(buffToTotExceptions[col]){
 			totcol=buffToTotExceptions[col];
-		}		
+		}
 		PFSkills.recalculateSkills();
 		TAS.notice("Updating "+col+" the total is "+totcol,buffToTotExceptions,v);
 		isAbility=(PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
@@ -257,7 +257,7 @@ function updateBuffTotalAsync (col, callback,silently){
 		if (typeof callback === "function") {
 			callback();
 		}
-	}),	
+	}),
 	isAbility = (PFAbilityScores.abilities.indexOf(col) >= 0) && col.indexOf('skill')<9;
 
 	getSectionIDs('repeating_buff',function(ids){
@@ -307,7 +307,7 @@ function updateBuffTotalAsync (col, callback,silently){
 		} else {
 			done();
 		}
-	});	
+	});
 }
 function updateAllBuffTotalsAsync (callback,silently){
 	var done = _.once(function () {
@@ -329,7 +329,7 @@ function updateAllBuffTotalsAsync (callback,silently){
 		//fields = fields.concat(charBonusFields);
 		fields.push('use_buff_bonuses');
 		TAS.debug("############ BUFF FIELDS ARE:", fields);
-		
+
 		getAttrs(fields,function(v){
 			var useBonuses=false,
 			bonuses = {},
@@ -344,7 +344,7 @@ function updateAllBuffTotalsAsync (callback,silently){
 					TAS.debug("there are no ids with enable toggle checked");
 					clearBuffTotals(done,silently);
 					return;
-				}				
+				}
 				_.each(buffColumns,function(col){
 					setter=updateBuffTotal(col,ids,v,setter,useBonuses);
 				});
@@ -363,7 +363,7 @@ function updateAllBuffTotalsAsync (callback,silently){
 			}
 		});
 
-	});		
+	});
 }
 
 function setBuff (id, col, callback, silently) {
@@ -417,7 +417,7 @@ export function reEvaluateCustomMacros(callback,silently){
 				try {
 					getAttrs(['repeating_buff_'+id+'_buff-enable_toggle',
 					'repeating_buff_'+id+'_buff-' + col + '-show'],function(v){
-						if (parseInt(v['repeating_buff_'+id+'_buff-enable_toggle'],10) && 
+						if (parseInt(v['repeating_buff_'+id+'_buff-enable_toggle'],10) &&
 							parseInt(v['repeating_buff_'+id+'_buff-' + col + '-show'],10) ) {
 								//setBuff(id, col, rowDone, silently);
 								SWUtils.evaluateAndSetNumber('repeating_buff_'+id+'_buff-' + col + "_macro-text", 'repeating_buff_'+id+'_buff-' + col,0,rowDone,true);
@@ -495,7 +495,7 @@ export function migrate (outerCallback) {
 										setter[prefix+'DMG_ranged']=parseInt(v[prefix+'DMG'],10)||0;
 										if (parseInt(v[prefix+'DMG-show'],10)){
 											setter[prefix+'DMG_ranged-show']=1;
-										}									
+										}
 									}
 									if(v[prefix+'Check_macro-text']&&!v[prefix+'check_skills_macro-text']){
 										setter[prefix+'check_skills_macro-text']=v[prefix+'Check_macro-text'];

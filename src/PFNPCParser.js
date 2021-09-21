@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFSheet from './PFSheet';
@@ -110,7 +110,7 @@ function buildImportantFeatObj (featlist) {
 					skills = memo.skillfocuses||[];
 					skills.push(skill);
 					memo.skillfocuses = skills;
-				} 
+				}
 			} else if (feat==='weaponfinesse' || feat==='improvedcritical'){
 				attacks = memo.attacks||{};
 				attack = attacks[atktype]||{};
@@ -853,7 +853,7 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 					try {
 					//TAS.debug('parseattacks: ' + atkstr);
 						retobj = parseAttack(atkstr, atktypestr, addgroups, groupidx, cmbval);
-						//TAS.debug("parseAttacks return for this attack: ",retobj);				
+						//TAS.debug("parseAttacks return for this attack: ",retobj);
 						if (retobj) {
 							memo.push(retobj);
 						}
@@ -870,7 +870,7 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 			}
 		}, []);
 	} catch (err3){
-		TAS.error("parseAttacks",err3);		
+		TAS.error("parseAttacks",err3);
 	}
 	return attacksouter;
 }
@@ -1097,7 +1097,7 @@ function parseSpecialAttack (setter,sastr) {
 					sastr = PFUtils.removeUptoFirstComma(sastr, true);
 					sastr = 'web ' + sastr;
 					atktyp = 'ranged';
-				} 
+				}
 				isAttack = true;
 			} else if (PFDB.spAttackAttacks.test(names.basename)) {
 				isAttack = true;
@@ -1108,7 +1108,7 @@ function parseSpecialAttack (setter,sastr) {
 			sastr = names.AbilityName + ' (' + sastr + ')';
 			isAttack = true;
 		}
-		
+
 		if (isAttack) {
 			retobj = parseAttack(sastr, atktyp, false, 0);
 			retobj.specialtype = 'attack';
@@ -1184,8 +1184,8 @@ function parseSpecialAbilities (str) {
 	//need to remove newlines that are right after an (Su) this is necessary for PRD
 	str = str.replace(/\((Ex|Sp|Su)\)\s*(?:\r\n|[\n\v\f\r\x85\u2028\u2029])/ig,'($1) ');
 	//break on newlines
-	//We break 3 spaces, or on last period before a (Ex|Sp|Su) 
-	//because sometimes special abilities do not have newlines between them. 
+	//We break 3 spaces, or on last period before a (Ex|Sp|Su)
+	//because sometimes special abilities do not have newlines between them.
 	lines = str.split(/\s\s\s|\r\n|[\n\v\f\r\x85\u2028\u2029]|special abilities|\.(?=[^\.]+\((?:Ex|Sp|Su)\))/i);
 	//here is the one that grabs period before (su)
 	//	initiallines = str.split(/(?:\s\s\s|\r\n|^|[\.\n\v\f\r\x85\u2028\u2029])(?=\s*spells[:\s]|\s*[\w\s]+:|[^\.\v\r\n\x85\u2028\u2029]+(?:\(Su\):??|\(Ex\):??|\(Sp\):??))/i);
@@ -1323,7 +1323,7 @@ function parseSLAs (spLAstr) {
 					header=1;
 				} else if ((/\u2013|\u2014|-/).test(line)) {
 					row = 1;
-				} 
+				}
 				if (header){
 					if ((/CL\s*\d+/i).test(line)) {
 						matches = line.match(/CL\s*(\d+)/i);
@@ -1404,7 +1404,7 @@ function parseSLAs (spLAstr) {
 								if(matches){
 									thissla.save=matches[0]; //type of save up to first comma after it
 								}
-								
+
 							}
 							//if parenthesis, name should be only what is in parens,
 							if (sla.indexOf('(')>0){
@@ -1473,7 +1473,7 @@ function parseSpells (spellstr) {
 	spells.spellnotes = '';
 	lines = spellstr.split(/\r\n|[\n\v\f\r\x85\u2028\u2029]/);
 	spells = _.reduce(lines, function (omemo, line) {
-		var matches,spellarray,slatdivider,splittedSpells,dcstr,tempstr, 
+		var matches,spellarray,slatdivider,splittedSpells,dcstr,tempstr,
 			temparray=[],match,thislvl = {},slasOfType;
 		try {
 			if ((/C[Ll]\s*\d+/i).test(line)) {
@@ -1641,7 +1641,7 @@ function getCasterObj (spellObj, abilityScores, healthObj, isSLA, forceCleric) {
 			caster.domains = spellObj.domains;
 			spellObj.domains=null;
 		}
-		
+
 	} catch (err) {
 		TAS.error("getCasterObj error trying to create obj returning null", err);
 		caster = null;
@@ -1786,7 +1786,7 @@ function createSLAEntries (slaObj, casterObj, race,level,setter) {
 		return setter;
 	}
 	level = level||0;
-	
+
 	_.each(slaObj.spellLikeAbilities, function (perDaySLAs) {
 		var thisPerDay = parseInt(perDaySLAs.perDay, 10) || 0,
 		freqType = perDaySLAs.type;
@@ -1954,7 +1954,7 @@ function createAttacks (attacklist, attackGrid, abilityScores, importantFeats, d
 	if (!attacklist || _.size(attacklist)===0) {
 		return setter;
 	}
-	
+
 	//TAS.debug("##################","create attacks:", attacklist, attackGrid, abilityScores, importantFeats, defaultReach, exceptionReaches);
 	setter = _.reduce(attacklist, function (memo, attack) {
 		var newRowId = '', prefix = '', dmgAbilityStr=false, specCMB=false,
@@ -2039,7 +2039,7 @@ function createAttacks (attacklist, attackGrid, abilityScores, importantFeats, d
 					}
 				}
 				memo[prefix + "damage-ability-mod"] = dmgMod;
-			}			
+			}
 			if (attack.enh) {
 				memo[prefix + "enhance"] = attack.enh;
 			}
@@ -2213,9 +2213,9 @@ function createACEntries (acMap, abilityScores, importantFeats, hpMap, bab, leve
 		}
 		//has uncanny dodge
 		if (acMap.uncanny) {
-			setter["FF-ability"] = acAbility + "-mod"; 
+			setter["FF-ability"] = acAbility + "-mod";
 			setter["FF-ability-mod"] = acDexDef;
-			setter["CMD-ability"] = acAbility + "-mod"; 
+			setter["CMD-ability"] = acAbility + "-mod";
 			setter["CMD-ability"] = acDexDef;
 			setter["uncanny_dodge"] = 1;
 			setter["uncanny_cmd_dodge"] = 1;
@@ -2283,7 +2283,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 				tempAbilities = _.extend({}, PFSkills.coreSkillAbilityDefaults, racial.abilitymods);
 				/*setter = _.reduce(racial.abilitymods, function (memo, ability, skill) {
 					//CBTEST 20170601
-					///memo[skill + "-ability"] =  + ability.toUpperCase() ; //can we do without setting this? 
+					///memo[skill + "-ability"] =  + ability.toUpperCase() ; //can we do without setting this?
 					memo[skill + "-ability"] = ability+'-mod';
 					memo[skill + "-ability-mod"] = abilityScores[ability].mod;
 					return memo;
@@ -2353,7 +2353,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 					}
 				} catch (err) {
 					TAS.error("createSkillEntries", err);
-				} 
+				}
 			});
 		}
 		_.each(skills, function ( tot, skill) {
@@ -2408,7 +2408,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 				}
 			} catch (err) {
 				TAS.error("createSkillEntries inner reduce", err);
-			} 
+			}
 		});
 	} catch (errouter) {
 		TAS.error("at createskillEntries OUTER error", errouter);
@@ -2422,7 +2422,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
  * @param {number} baseInit the total initiative bonus
  * @param {Map<string,{Map<string,number>>}} abilityScores output of parseAbilityScores
  * @param {[string]} importantFeats list of attack-affecting feats this char has, IGNORED
- * @returns {Map<string,any>} setter 
+ * @returns {Map<string,any>} setter
  */
 function createInitEntries (baseInit, abilityScores, importantFeats,setter) {
 	var initMisc = 0;
@@ -2665,7 +2665,7 @@ function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, l
 		setter['ranged2_bab']='bab';
 		setter['ranged2_bab-mod']=bab;
 
-		
+
 		if(importantFeats.defensivecombattraining){
 			setter['cmb_bab']='level';
 			setter['cmb_bab-mod']=level;
@@ -2888,14 +2888,14 @@ function createFeatureEntries (abilitylist, abilityScoreMap, race, level, setter
 					memo[prefix + 'ability_type'] = '';//'not-applicable';
 				}
 				memo[prefix+"CL-basis"]="@{npc-hd-num}";
-				memo[prefix+"CL-basis-mod"]=setter.level||0;					
+				memo[prefix+"CL-basis-mod"]=setter.level||0;
 				if (creatureRace) {
 					memo[prefix + 'class-name'] = creatureRace;
 				}
 				if(ability.save){
 					memo[prefix + 'save'] = ability.save;
 				}
-				
+
 				if(ability.DCability){
 					memo[prefix+'ability-basis']='@{'+ability.DCability.toUpperCase()+'-mod}';
 					abilityMod = abilityScoreMap[ability.DCability.toLowerCase()].mod;
@@ -2922,7 +2922,7 @@ function createFeatureEntries (abilitylist, abilityScoreMap, race, level, setter
 						memo[prefix+"spell_level-misc-mod"]= tempint;
 					}
 				}
-				
+
 			} catch (ierr2) {
 				TAS.error("createFeatureEntries", ierr2);
 			} finally {
@@ -3038,7 +3038,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		importantFeats = {}, reachObj = {}, racialModsMap = {}, skillsMap = {}, attackGrid = {},
 		baseFort = 0, baseRef = 0, baseWill = 0, bab = 0, featlist=[],level=0,
 		isUndead = false, forceCleric=false, specAbilObj = {}, npcdesc = '', spellStr='',
-		tempNote = "", tempstr = "", tempInt = 0, tempFloat = 0.0, tempobj=null, 
+		tempNote = "", tempstr = "", tempInt = 0, tempFloat = 0.0, tempobj=null,
 		baseInit = 0, initMisc = 0, spellcastingclass = -1,
 		cr, attacklist, hpMod, tempArray, spellObj, casterObj,
 		matches, attackArray, classSkillArray, specialAttacks, SLAs, attackArrays,
@@ -3214,7 +3214,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 
 			//spells***************************************************
 			//TAS.debug("checking for spells");
-			
+
 			if(v['npc-spells-prepared_compendium']){
 				spellStr = v['npc-spells-prepared_compendium'];
 				forceCleric=true;
@@ -3279,7 +3279,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 			if (v.content_compendium) {
 				//TAS.debug("before parseSpecialAbilities attrnum:"+_.size(setter));
 				specAbilObj = parseSpecialAbilities(v.content_compendium);
-				
+
 				//TAS.debug("returned from parse special abilities with", specAbilObj);
 				if (specAbilObj) {
 					if (specAbilObj.description && _.size(specAbilObj.description) > 0) {

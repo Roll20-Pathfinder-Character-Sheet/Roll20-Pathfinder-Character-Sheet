@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFAbilityScores from './PFAbilityScores';
@@ -202,7 +202,7 @@ function applyTemplate(name){
 				samestr='law';
 				tempstr='Resist Acid, Cold, and Fire ';
 			}
-			
+
 			if(temphd<5){
 				tempstr+=' 5;';
 			} else if (temphd >=5 && temphd <=10){
@@ -256,7 +256,7 @@ function applyTemplate(name){
 			setter[prefix+'b2_macro-text']='@{npc-hd}';
 			setter[prefix+'b2_val']=parseInt(v['npc-hd'],10);
 			setter[prefix+'notes'] = 'vs one '+opstr+' creature';
-			
+
 			SWUtils.setWrapper(setter,PFConst.silentParams,PFSheet.recalculate);
 		});
 	}
@@ -277,4 +277,4 @@ function registerEventHandlers () {
     }));
 }
 
-registerEventHandlers();    
+registerEventHandlers();

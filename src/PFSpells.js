@@ -1,6 +1,6 @@
 'use strict';
 import _, { range } from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -56,9 +56,9 @@ export function resetCommandMacro (dummy, eventInfo, callback) {
             done();
         }
     };
-    getAttrs(["spellclass-0-casting_type", "spellclass-1-casting_type", "spellclass-2-casting_type", "spellclass-0-hide_unprepared", 
+    getAttrs(["spellclass-0-casting_type", "spellclass-1-casting_type", "spellclass-2-casting_type", "spellclass-0-hide_unprepared",
             "spellclass-1-hide_unprepared", "spellclass-2-hide_unprepared", "spellclass-0-book", "spellclass-1-book", "spellclass-2-book",
-            "spellclass-0-book-npc", "spellclass-1-book-npc", "spellclass-2-book-npc", 
+            "spellclass-0-book-npc", "spellclass-1-book-npc", "spellclass-2-book-npc",
             "spellclass-0-show_domain_spells", "spellclass-1-show_domain_spells", "spellclass-2-show_domain_spells",
             "spellmenu_groupby_school", "spellmenu_show_uses", "mythic-adventures-show"], function (configV) {
         var isPrepared = [], showDomain = [], hideUnprepared = [], groupBySchool=0, showUses=0, usesMythic=0;
@@ -206,12 +206,12 @@ export function resetCommandMacro (dummy, eventInfo, callback) {
                             .value();
                         })
                         .value();
-                        
+
                         //TAS.debug("#############################");
                         //TAS.debug(spellsByClass);
                         //TAS.debug("#############################");
-                        
-                        //was 2 sets of 3 reduces but can do this faster with 3 each loops and populating both at once 
+
+                        //was 2 sets of 3 reduces but can do this faster with 3 each loops and populating both at once
                         spellsPC={};
                         spellsNPC={};
                         rollTemplateCounter=10;
@@ -250,7 +250,7 @@ export function resetCommandMacro (dummy, eventInfo, callback) {
                                 attrs["spellclass-"+i+"-book-npc"]=tempstr;
                             } else if (!tempstr && configV["spellclass-"+i+"-book-npc"].slice(13) !== npcBaseMacro[i].slice(13)){
                                 attrs["spellclass-"+i+"-book-npc"]="";
-                            }	
+                            }
                         }
                         if (_.size(attrs) > 0) {
                             SWUtils.setWrapper(attrs, PFConst.silentParams, done);
@@ -393,7 +393,7 @@ function getSpellTotals (ids, v, setter) {
                     //    setter[prefix + "-spells-prepared"] = totalPrepped[classidx][spellLevel];
                     //}
                     if (perday !== totalPrepped[classidx][spellLevel]) {
-                        setter[prefix + "-spells-per-day"] = totalPrepped[classidx][spellLevel];						
+                        setter[prefix + "-spells-per-day"] = totalPrepped[classidx][spellLevel];
                     }
                 } else {
                     //if (prepped !== 0){
@@ -418,7 +418,7 @@ export function resetSpellsTotals  (dummy, eventInfo, callback, silently) {
         if (typeof callback === "function") {
             callback();
         }
-    }); 
+    });
     getSectionIDs("repeating_spells", function (ids) {
         var fields = ['total_spells_manually','spellclasses_multiclassed','spellclass-0-casting_type','spellclass-1-casting_type','spellclass-2-casting_type'],
         rowattrs = ['spellclass_number', 'spell_level', 'slot', 'metamagic', 'used'];
@@ -484,7 +484,7 @@ function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
         if (v[spellPrefix+"range"] && v[spellPrefix+"range_pick"]==="see_text" ){
             notes += "Range: " + v[spellPrefix+"range"];
         }
-        
+
         if (v[spellPrefix +"damage-macro-text"]){
             setter[weaponPrefix+"precision_dmg_macro"] = v[spellPrefix+"damage-macro-text"];
             if(attackType){
@@ -508,8 +508,8 @@ function setAttackEntryVals(spellPrefix, weaponPrefix, v, setter, noName) {
                 notes += "";
             }
             notes += "\n**Spell Resistance:** " + v[spellPrefix + "sr"];
-        }    
-        // include a link in the weapon notes to execute the spell from chat        
+        }
+        // include a link in the weapon notes to execute the spell from chat
         var toggle_attack_entry = v[spellPrefix+"toggle_attack_entry"];
         if (toggle_attack_entry === 1) {
             if (v[spellPrefix + "name"]){
@@ -555,7 +555,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
         itemId = id || (eventInfo ? SWUtils.getRowId(eventInfo.sourceAttribute) : "");
         idStr = SWUtils.getRepeatingIDStr(itemId);
         item_entry = 'repeating_spells_' + idStr;
-        
+
         //TAS.debug("at PFSpells creatattack entry ");
         attributes.forEach(function(attr){
             attribList.push(item_entry +  attr);
@@ -607,7 +607,7 @@ export function createAttackEntryFromRow  (id, callback, silently, eventInfo, we
                     deletedspell=true;
                     TAS.debug("seting deletedspell to "+deletedspell,setter);
                 }
-            }            
+            }
         } catch (err) {
             TAS.error("PFSpells.createAttackEntryFromRow", err);
         } finally {
@@ -754,9 +754,9 @@ function resetSpellsPrepared () {
 }
 
 /************* SPELL OPTIONS *********************/
-/** updates all spells when level or concentration or spell penetration is updated 
+/** updates all spells when level or concentration or spell penetration is updated
  *@param {int} classIdx 0..2
- *@param {object} eventInfo from on event 
+ *@param {object} eventInfo from on event
  *@param {function} callback when done
  */
 export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
@@ -772,7 +772,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     }
     getAttrs(["spellclass-" + classIdx + "-level-total", "spellclasses_multiclassed", "Concentration-" + classIdx + "-misc-mod", "spellclass-" + classIdx + "-name",
         "spellclass-" + classIdx + "-SP-mod", "Concentration-" + classIdx + "-def", "Concentration-" + classIdx + "-mod", "use_metrics"],function(vout){
-            
+
         var use_metrics = parseInt(vout["use_metrics"]) || 0,
             classLevel = parseInt(vout["spellclass-" + classIdx + "-level-total"], 10) || 0,
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0,
@@ -786,7 +786,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
             done();
             return;
         }
-        //TAS.debug("updateSpellsCasterLevelRelated,class:"+classIdx+", class values:",vout);				
+        //TAS.debug("updateSpellsCasterLevelRelated,class:"+classIdx+", class values:",vout);
         getSectionIDs("repeating_spells", function (ids) {
             var rowFieldAppnd = ['casterlevel', 'CL_misc', 'spell_class_r', 'spellclass_number', 'spellclass', 'range', 'range_numeric', 'range_pick', 'SP-mod', 'SP_misc', 'Concentration_misc', 'Concentration-mod', 'spell_options'],
             fields = _.reduce(ids, function (memo, id) {
@@ -896,7 +896,7 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
                             TAS.error("updateSpellsCasterLevelRelated innererror on id: "+id,innererror);
                         }
                     });
-                    
+
                 } catch (err){
                     TAS.error("updateSpellsCasterLevelRelated error:",err);
                 } finally {
@@ -917,9 +917,9 @@ export function updateSpellsCasterLevelRelated (classIdx, eventInfo, callback) {
     });
 }
 
-/** updates all spells when caster ability or DCs are updated 
+/** updates all spells when caster ability or DCs are updated
  *@param {int} classIdx 0..2
- *@param {map} eventInfo from on event 
+ *@param {map} eventInfo from on event
  *@param {function} callback when done
  */
 export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback) {
@@ -974,7 +974,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                         spellLevel=0;
                                         setter[prefix+"spell_level"]=0;
                                         TAS.warn("spell level was NaN for " + prefix);
-                                    } 
+                                    }
                                     if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
                                         setter[prefix + "spell_level_r"] = spellLevel;
                                     }
@@ -1004,7 +1004,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                     } else {
                                         TAS.warn("spell casterlevel is NaN for " + prefix);
                                     }
-                                    
+
                                 }
                             } catch (innererror){
                                 TAS.error("updateSpellsCasterAbilityRelated innererror on id:"+id,innererror);
@@ -1052,7 +1052,7 @@ function updateSpellSlot (id, eventInfo, callback) {
                 //TAS.debug("updating slot to " + slot);
                 setter[spellLevelRadioField] = slot;
                 setter["spells_tab"] = slot;
-            } 
+            }
         } catch (err) {
             TAS.error("PFSpells.updateSpellSlot", err);
         } finally {
@@ -1062,16 +1062,16 @@ function updateSpellSlot (id, eventInfo, callback) {
 }
 
 /**
- * 
- * @param {string} prefix 
- * @param {Map<string,object>} v 
- * @param {Map<string,string>} setter 
+ *
+ * @param {string} prefix
+ * @param {Map<string,object>} v
+ * @param {Map<string,string>} setter
  */
 function getUpdateType (eventInfo){
 }
 
 /** updates a spell
- *@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself. 
+ *@param {string} id optional, pass id if looping through list of IDs. Null if context is row itself.
  *@param {eventInfo} eventInfo ACTUALLY USED : if not present forces recalc of everything
  *@param {function} callback - to call when done.
  *@param {bool} doNotUpdateTotals - if true do NOT call resetSpellsTotals() and resetCommandMacro() at end, otherwise do.
@@ -1176,18 +1176,18 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         spellLevelField = prefix + "spell_level";
         spellLevelRadioField = prefix + "spell_level_r";
         dcMiscField = prefix + "DC_misc";
-        currDCField = prefix + "savedc";        
+        currDCField = prefix + "savedc";
     }
-    fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc", 
-        prefix + "range_pick", prefix + "range", prefix + "range_numeric", 
-        prefix + "SP-mod", prefix + "SP_misc", prefix + "Concentration_misc", prefix + "Concentration-mod", 
-        prefix + "spell_options", prefix + "used", prefix + "slot", prefix + "metamagic", spellLevelField, 
-        spellLevelRadioField, dcMiscField, currDCField, 
-        "spellclass-0-level-total", "spellclass-1-level-total", "spellclass-2-level-total", 
-        "spellclass-0-SP-mod", "spellclass-1-SP-mod", "spellclass-2-SP-mod", 
-        "Concentration-0-mod", "Concentration-1-mod", "Concentration-2-mod", 
-        "Concentration-0-misc-mod", "Concentration-1-misc-mod", "Concentration-2-misc-mod", 
-        "Concentration-0-def", "Concentration-1-def", "Concentration-2-def", 
+    fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc",
+        prefix + "range_pick", prefix + "range", prefix + "range_numeric",
+        prefix + "SP-mod", prefix + "SP_misc", prefix + "Concentration_misc", prefix + "Concentration-mod",
+        prefix + "spell_options", prefix + "used", prefix + "slot", prefix + "metamagic", spellLevelField,
+        spellLevelRadioField, dcMiscField, currDCField,
+        "spellclass-0-level-total", "spellclass-1-level-total", "spellclass-2-level-total",
+        "spellclass-0-SP-mod", "spellclass-1-SP-mod", "spellclass-2-SP-mod",
+        "Concentration-0-mod", "Concentration-1-mod", "Concentration-2-mod",
+        "Concentration-0-misc-mod", "Concentration-1-misc-mod", "Concentration-2-misc-mod",
+        "Concentration-0-def", "Concentration-1-def", "Concentration-2-def",
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "use_metrics"];
 
     //TAS.debug("PFSPells.updateSpell: getting fields",fields);
@@ -1309,7 +1309,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
 
             use_metrics = parseInt(v["use_metrics"]) || 0;
-            if ( updateRange || updateClassLevel || updateClass) {                
+            if ( updateRange || updateClassLevel || updateClass) {
                 newRange = PFUtils.findSpellRange(v[prefix + "range"], currChosenRange, casterlevel, use_metrics) || 0;
                 if (newRange !== currRange) {
                     setter[prefix + "range_numeric"] = newRange;
@@ -1559,7 +1559,7 @@ export function importFromCompendium (id, eventInfo) {
                                 if (modeLevel !== classes[i][1]){
                                     allSame=0;
                                 }
-                                
+
                             }
                         }
                         //classes example: [["sorcerer/wizard","2"],["summoner","1"],["inquisitor","3"],["magus","2"]]
@@ -1763,7 +1763,7 @@ function registerEventHandlers () {
             resetSpellsTotals();
         }
     }));
-    
+
      on("change:spellmenu_groupby_school change:spellmenu_show_uses change:spellclass-0-hide_unprepared change:spellclass-1-hide_unprepared change:spellclass-2-hide_unprepared change:spellclass-0-show_domain_spells change:spellclass-1-show_domain_spells change:spellclass-2-show_domain_spells", TAS.callback(function eventOptionChange(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -1829,7 +1829,7 @@ function registerEventHandlers () {
         attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
             updateIncludeLink();
-        }        
+        }
     });
 }
 registerEventHandlers();

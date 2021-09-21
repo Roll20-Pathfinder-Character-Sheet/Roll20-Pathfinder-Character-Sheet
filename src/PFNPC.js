@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as PFMigrate from './PFMigrate';
 import * as SWUtils from './SWUtils';
@@ -19,7 +19,7 @@ export function setToNPC (callback,eventInfo){
 		//determine if this is a new sheet. if so set default config choices:
 		if ( parseInt(v.is_newsheet,10) || (parseInt(v.PFSheet_Version,10)||0)===0 ||
 			 ( !(  v["npc-type"] || parseInt(v['npc-hd'],10)  || parseInt(v['npc-hd-num'],10) || parseInt(v['level'],10) || parseInt(v['hp'],10) || parseInt(v['hp_max'],10)  ))) {
-			SWUtils.setWrapper({ 'auto_calc_hp':1, 'autohp_percent':1, 'maxhp_lvl1':0, 'normal_macro_show': 1, 'max-dex-source':3, 
+			SWUtils.setWrapper({ 'auto_calc_hp':1, 'autohp_percent':1, 'maxhp_lvl1':0, 'normal_macro_show': 1, 'max-dex-source':3,
 				'both_whisper_show':1, 'use_traits':0 , 'use_racial_traits':0, 'tab':8, 'is_v1':1, 'npc-compimport-show':1 }, PFConst.silentParams, done);
 		} else {
 			done();

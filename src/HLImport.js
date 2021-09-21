@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import * as PFSheet from './PFSheet';
 import * as PFHealth from  './PFHealth';
@@ -102,16 +102,16 @@ export function importSaves (attrs,saves)
 	{
 		var save = saves.save[i];
 		var abbr = save._abbr;
-		
+
 		attrs[abbr] = parseNum(save._save);
 		attrs["class-0-"+abbr] = attrs["total-"+abbr] = parseNum(save._base);
 		attrs[abbr+"-resist"] = parseNum(save._fromresist);
 		attrs[abbr+"-misc"] = parseNum(save._save)-parseNum(save._base)-parseNum(save._fromresist)-parseNum(save._fromattr);
 		attrs[abbr+"-ability-mod"] = parseNum(save._fromattr);
-		
+
 		if (save.situationalmodifiers._text !== "" && saveNotes.indexOf(save.situationalmodifiers._text) === -1)
 			saveNotes = saveNotes + "\n**"+abbr+":** " + save.situationalmodifiers._text;
-			
+
 	}
 	attrs["Save-notes"] = saveNotes.trim();
 }
@@ -121,7 +121,7 @@ export function getOrMakeRowID (featIDList,name)
 {
 	var attrNames = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
-	
+
 	var attrMatch = _.find(attrNames, function(currentAttrName)
 	{
 		var attrName = currentAttrName;
@@ -146,7 +146,7 @@ export function getOrMakeItemRowID (featIDList,name)
 {
 	var attrNames = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
-	
+
 	var compareName = name.replace(/\(.*\)/,"").replace(/\+\d+/,"").toLowerCase().replace("masterwork","").trim();
 	var attrMatch = _.find(attrNames, function(currentAttrName)
 	{
@@ -185,7 +185,7 @@ export function getOrMakeClassRowID (featIDList,name)
 {
 	var attrObjs = Object.values(featIDList);
 	var rows = Object.keys(featIDList);
-	
+
 	var attrMatch = _.find(attrObjs, function(currentAttrObj)
 	{
 		var attrName = currentAttrObj.name;
@@ -219,7 +219,7 @@ export function importFeats (attrs,feats,featIDList,resources)
 		var row = getOrMakeRowID(featIDList,feat._name);
 		if (!_.isUndefined(featIDList[row]))
 			delete featIDList[row];
-		
+
 		if (taken > 1)
 			attrs[repeatPrefix+"_"+row+"_name"] = feat._name + " x" + taken;
 		else
@@ -262,7 +262,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 			var attrs = {};
 			var armorNames = _.map(armor, function(obj) { return obj._name; });
 			var weaponNames = _.map(weapons, function(obj) { return obj._name; });
-			
+
 			// List of words that indicate an item is masterwork
 			var masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"];
 			_.each(items,function(item)
@@ -271,13 +271,13 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				if (!_.isUndefined(itemIDList[row]))
 					delete itemIDList[row];
 				itemsList.push(item._name);
-				
+
 				repeatPrefix = "repeating_item_" + row;
 				attrs[repeatPrefix+"_name"] = item._name;
 				attrs[repeatPrefix+"_item-weight"] = item.weight._value;
 				attrs[repeatPrefix+"_value"] = (parseFloat(item.cost._value) / parseInt(item._quantity) );
 				attrs[repeatPrefix+"_description"] = item.description;
-	
+
 				if (_.contains(Object.keys(resources),item._name) && item._quantity === "1" && resources[item._name]._max !== "1")
 				{
 					attrs[repeatPrefix+"_qty"] = resources[item._name]._left;
@@ -285,7 +285,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				}
 				else
 					attrs[repeatPrefix+"_qty"] = item._quantity;
-	
+
 				if (!_.isUndefined(item.itempower))
 					_.each(arrayify(item.itempower), function(itemPower) { itemsList.push(itemPower._name); });
 
@@ -307,14 +307,14 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 					if (weaponObj._damage != "As Spell")
 					{
 						attrs[repeatPrefix+"_item-wpenhance"] = parseNum(weaponObj._name.match(/\+\d+/));
-						
+
 						if (!_.isUndefined(weaponObj._typetext))
 							attrs[repeatPrefix+"_item-dmg-type"] = weaponObj._typetext;
-						
+
 						// Check to see if item name includes any words that indicate this is a masterwork item
 						if ((weaponCompareName.toLowerCase().indexOf("masterwork") !== -1) || _.intersection(masterworkWords,item._name.toLowerCase().split(" ")).length > 0)
 							attrs[repeatPrefix+"_item-masterwork"] = 1;
-							
+
 						if (!_.isUndefined(weaponObj._damage))
 						{
 							var weaponDice = weaponObj._damage.match(/\d+d\d+/);
@@ -324,7 +324,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 								attrs[repeatPrefix+"_item-damage-die"] = parseNum(weaponDice[0].split("d")[1]);
 							}
 						}
-						
+
 						if (!_.isUndefined(weaponObj._crit))
 						{
 							var critArray = weaponObj._crit.split("/");
@@ -334,7 +334,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 								attrs[repeatPrefix+"_item-crit-target"] = 20;
 							attrs[repeatPrefix+"_item-crit-multiplier"] = parseNum(critArray[critArray.length-1].replace(/\D/g,""));
 						}
-						
+
 						if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue))
 							attrs[repeatPrefix+"_item-range"] = parseNum(weaponObj.rangedattack._rangeincvalue);
 					}
@@ -350,7 +350,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				if (_.contains(armorNames, armorCompareName))
 				{
 					var armorObj = armor[_.indexOf(armorNames,armorCompareName)];
-					
+
 					// Item is a shield
 					if (nameIsShield(item._name))
 					{
@@ -468,7 +468,7 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 
 		if (_.contains(Object.keys(resources),special._name))
 			attrs[repeatPrefix+"_max-calculation"] = resources[special._name]._max;
-			
+
 		if (!_.isUndefined(special._type))
 			attrs[repeatPrefix+"_tabcat2"] = attrs[repeatPrefix+"_ability_type"] = special._type.substr(0,2);
 	});
@@ -533,7 +533,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 				return true;
 			return false;
 		}));
-		
+
 		if (classIndex !== -1)
 		{
 			casterlevel = parseNum(classes[spellClassName]._casterlevel);
@@ -543,14 +543,14 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 			attrs["spellclass-"+spellClassIndex+"-level-total"] = casterlevel;
 			attrs["spellclass-"+spellClassIndex+"-name"] = classes[spellClassName]._name.replace(/\(.*\)/g,"").trim();
 			attrs["spellclass-"+spellClassIndex+"-exists"] = 1;
-			
+
 			attrs["spellclass-"+spellClassIndex+"-close"] = 25 + (5 * Math.floor(casterlevel/2));
 			attrs["spellclass-"+spellClassIndex+"-medium"] = 100 + (10 * casterlevel);
 			attrs["spellclass-"+spellClassIndex+"-long"] = 400 + (40 * casterlevel);
 
 			if (!_.isUndefined(classes[spellClassName].arcanespellfailure))
 				attrs["armor3-spell-fail"] = parseNum(classes[spellClassName].arcanespellfailure._value);
-				
+
 			// Make a guess at which ability modifier is used for this class
 			if (!_.isUndefined(classes[spellClassName]._basespelldc))
 			{
@@ -618,7 +618,7 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 			spellClassIndex++;
 		}
 	}
-	
+
 	if (spellClassIndex > 1)
 		attrs["spellclasses_multiclassed"] = 1;
 
@@ -661,7 +661,7 @@ export function importSpells (spells,spellclasses)
 				level = parseNum(spell._level);
 				repeatPrefix = "repeating_spells_";
 				spellName = spell._name.replace(/\(x\d+\)/,"").trim();
-				
+
 				// If the spell doesn't specify a class, assume its our first spellcaster
 				if (spell._class === "")
 				{
@@ -688,7 +688,7 @@ export function importSpells (spells,spellclasses)
 				}
 				// Update prefix with ID
 				repeatPrefix = repeatPrefix + rowID;
-				
+
 				attrs[repeatPrefix+"_name"] = spellName;
 				attrs[repeatPrefix+"_spell_level_r"] = attrs[repeatPrefix+"_spell_level"] = level;
 				attrs[repeatPrefix+"_spellclass_number"] = spellClass;
@@ -701,7 +701,7 @@ export function importSpells (spells,spellclasses)
 				attrs[repeatPrefix+"_DC_misc"] = parseNum(spell._dc) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._basespelldc) - level;
 				attrs[repeatPrefix+"_CL_misc"] = parseNum(spell._casterlevel) - parseNum(spellclasses[(spellClassName !== "") ? spellClassName:Object.keys(spellclasses)[0]]._casterlevel);
 				attrs[repeatPrefix+"_casterlevel"] = spell._casterlevel;
-	
+
 				if (spell._resist.toLowerCase().indexOf("yes") !== -1)
 				{
 					if (spell._resist.toLowerCase().indexOf("harmless") !== -1)
@@ -742,14 +742,14 @@ export function importSpells (spells,spellclasses)
 					attrs[repeatPrefix+"_targets"] = spell._effect;
 				else
 					attrs[repeatPrefix+"_targets"] = spell._target;
-				
+
 				school = spell._schooltext;
 				if (spell._subschooltext !== "")
 					school = school + " (" + spell._subschooltext + ")";
 				if (spell._descriptortext !== "")
 					school = school + " [" + spell._descriptortext + "]";
 				attrs[repeatPrefix+"_school"] = school;
-				
+
 				attrs[repeatPrefix+"_description"] = spell.description;
 			});
 			setAttrs(attrs, {silent: true},function(){PFSpellOptions.resetOptions();PFSpells.resetCommandMacro()});
@@ -774,7 +774,7 @@ export function calcHitDice (hitdice)
 export function buildArchetypeArray (classes)
 {
 	var archetypes = new Object();
-	
+
 	_.each(classes, function (classObj, className) {
 		if (classObj._name.indexOf("(") === -1)
 		{
@@ -803,12 +803,12 @@ export function getClassSource (sources,archetypes)
 	var intersect = _.intersection(sources,classes);
 	if (intersect.length)
 		return classes.indexOf(intersect[0]);
-		
+
 	// If not a class, check for an archetype as a source, and return the associated class
 	var className = _.find(classes, function(item) { return (_.intersection(archetypes[item],sources).length); });
 	if (className)
 		return classes.indexOf(className);
-		
+
 	return -1;
 }
 
@@ -830,7 +830,7 @@ export function importSkills (attrs,skills,size,ACP)
 
 	// Clear out all existing skills data
 	_.extend(attrs, { "acrobatics-ability":"", "acrobatics-cs":"", "acrobatics-ranks":"", "acrobatics-class":"", "acrobatics-ability-mod":"", "acrobatics-racial":"", "acrobatics-feat":"", "acrobatics-item":"", "acrobatics-size":"", "acrobatics-acp":"", "acrobatics-misc":"", "acrobatics-reqtrain":"", "artistry-ability":"", "artistry-cs":"", "artistry-ranks":"", "artistry-class":"", "artistry-ability-mod":"", "artistry-racial":"", "artistry-feat":"", "artistry-item":"", "artistry-size":"", "artistry-acp":"", "artistry-misc":"", "artistry-reqtrain":"", "artistry2-ability":"", "artistry2-cs":"", "artistry2-ranks":"", "artistry2-class":"", "artistry2-ability-mod":"", "artistry2-racial":"", "artistry2-feat":"", "artistry2-item":"", "artistry2-size":"", "artistry2-acp":"", "artistry2-misc":"", "artistry2-reqtrain":"", "artistry3-ability":"", "artistry3-cs":"", "artistry3-ranks":"", "artistry3-class":"", "artistry3-ability-mod":"", "artistry3-racial":"", "artistry3-feat":"", "artistry3-item":"", "artistry3-size":"", "artistry3-acp":"", "artistry3-misc":"", "artistry3-reqtrain":"", "appraise-ability":"", "appraise-cs":"", "appraise-ranks":"", "appraise-class":"", "appraise-ability-mod":"", "appraise-racial":"", "appraise-feat":"", "appraise-item":"", "appraise-size":"", "appraise-acp":"", "appraise-misc":"", "appraise-reqtrain":"", "bluff-ability":"", "bluff-cs":"", "bluff-ranks":"", "bluff-class":"", "bluff-ability-mod":"", "bluff-racial":"", "bluff-feat":"", "bluff-item":"", "bluff-size":"", "bluff-acp":"", "bluff-misc":"", "bluff-reqtrain":"", "climb-ability":"", "climb-cs":"", "climb-ranks":"", "climb-class":"", "climb-ability-mod":"", "climb-racial":"", "climb-feat":"", "climb-item":"", "climb-size":"", "climb-acp":"", "climb-misc":"", "climb-reqtrain":"", "craft-ability":"", "craft-cs":"", "craft-ranks":"", "craft-class":"", "craft-ability-mod":"", "craft-racial":"", "craft-feat":"", "craft-item":"", "craft-size":"", "craft-acp":"", "craft-misc":"", "craft-reqtrain":"", "craft2-ability":"", "craft2-cs":"", "craft2-ranks":"", "craft2-class":"", "craft2-ability-mod":"", "craft2-racial":"", "craft2-feat":"", "craft2-item":"", "craft2-size":"", "craft2-acp":"", "craft2-misc":"", "craft2-reqtrain":"", "craft3-ability":"", "craft3-cs":"", "craft3-ranks":"", "craft3-class":"", "craft3-ability-mod":"", "craft3-racial":"", "craft3-feat":"", "craft3-item":"", "craft3-size":"", "craft3-acp":"", "craft3-misc":"", "craft3-reqtrain":"", "diplomacy-ability":"", "diplomacy-cs":"", "diplomacy-ranks":"", "diplomacy-class":"", "diplomacy-ability-mod":"", "diplomacy-racial":"", "diplomacy-feat":"", "diplomacy-item":"", "diplomacy-size":"", "diplomacy-acp":"", "diplomacy-misc":"", "diplomacy-reqtrain":"", "disable-device-ability":"", "disable-device-cs":"", "disable-device-ranks":"", "disable-device-class":"", "disable-device-ability-mod":"", "disable-device-racial":"", "disable-device-feat":"", "disable-device-item":"", "disable-device-size":"", "disable-device-acp":"", "disable-device-misc":"", "disable-device-reqtrain":"", "disguise-ability":"", "disguise-cs":"", "disguise-ranks":"", "disguise-class":"", "disguise-ability-mod":"", "disguise-racial":"", "disguise-feat":"", "disguise-item":"", "disguise-size":"", "disguise-acp":"", "disguise-misc":"", "disguise-reqtrain":"", "escape-artist-ability":"", "escape-artist-cs":"", "escape-artist-ranks":"", "escape-artist-class":"", "escape-artist-ability-mod":"", "escape-artist-racial":"", "escape-artist-feat":"", "escape-artist-item":"", "escape-artist-size":"", "escape-artist-acp":"", "escape-artist-misc":"", "escape-artist-reqtrain":"", "fly-ability":"", "fly-cs":"", "fly-ranks":"", "fly-class":"", "fly-ability-mod":"", "fly-racial":"", "fly-feat":"", "fly-item":"", "fly-size":"", "fly-acp":"", "fly-misc":"", "fly-reqtrain":"", "handle-animal-ability":"", "handle-animal-cs":"", "handle-animal-ranks":"", "handle-animal-class":"", "handle-animal-ability-mod":"", "handle-animal-racial":"", "handle-animal-feat":"", "handle-animal-item":"", "handle-animal-size":"", "handle-animal-acp":"", "handle-animal-misc":"", "handle-animal-reqtrain":"", "heal-ability":"", "heal-cs":"", "heal-ranks":"", "heal-class":"", "heal-ability-mod":"", "heal-racial":"", "heal-feat":"", "heal-item":"", "heal-size":"", "heal-acp":"", "heal-misc":"", "heal-reqtrain":"", "intimidate-ability":"", "intimidate-cs":"", "intimidate-ranks":"", "intimidate-class":"", "intimidate-ability-mod":"", "intimidate-racial":"", "intimidate-feat":"", "intimidate-item":"", "intimidate-size":"", "intimidate-acp":"", "intimidate-misc":"", "intimidate-reqtrain":"", "linguistics-ability":"", "linguistics-cs":"", "linguistics-ranks":"", "linguistics-class":"", "linguistics-ability-mod":"", "linguistics-racial":"", "linguistics-feat":"", "linguistics-item":"", "linguistics-size":"", "linguistics-acp":"", "linguistics-misc":"", "linguistics-reqtrain":"", "lore-ability":"", "lore-cs":"", "lore-ranks":"", "lore-class":"", "lore-ability-mod":"", "lore-racial":"", "lore-feat":"", "lore-item":"", "lore-size":"", "lore-acp":"", "lore-misc":"", "lore-reqtrain":"", "lore2-ability":"", "lore2-cs":"", "lore2-ranks":"", "lore2-class":"", "lore2-ability-mod":"", "lore2-racial":"", "lore2-feat":"", "lore2-item":"", "lore2-size":"", "lore2-acp":"", "lore2-misc":"", "lore2-reqtrain":"", "lore3-ability":"", "lore3-cs":"", "lore3-ranks":"", "lore3-class":"", "lore3-ability-mod":"", "lore3-racial":"", "lore3-feat":"", "lore3-item":"", "lore3-size":"", "lore3-acp":"", "lore3-misc":"", "lore3-reqtrain":"", "knowledge-arcana-ability":"", "knowledge-arcana-cs":"", "knowledge-arcana-ranks":"", "knowledge-arcana-class":"", "knowledge-arcana-ability-mod":"", "knowledge-arcana-racial":"", "knowledge-arcana-feat":"", "knowledge-arcana-item":"", "knowledge-arcana-size":"", "knowledge-arcana-acp":"", "knowledge-arcana-misc":"", "knowledge-arcana-reqtrain":"", "knowledge-dungeoneering-ability":"", "knowledge-dungeoneering-cs":"", "knowledge-dungeoneering-ranks":"", "knowledge-dungeoneering-class":"", "knowledge-dungeoneering-ability-mod":"", "knowledge-dungeoneering-racial":"", "knowledge-dungeoneering-feat":"", "knowledge-dungeoneering-item":"", "knowledge-dungeoneering-size":"", "knowledge-dungeoneering-acp":"", "knowledge-dungeoneering-misc":"", "knowledge-dungeoneering-reqtrain":"", "knowledge-engineering-ability":"", "knowledge-engineering-cs":"", "knowledge-engineering-ranks":"", "knowledge-engineering-class":"", "knowledge-engineering-ability-mod":"", "knowledge-engineering-racial":"", "knowledge-engineering-feat":"", "knowledge-engineering-item":"", "knowledge-engineering-size":"", "knowledge-engineering-acp":"", "knowledge-engineering-misc":"", "knowledge-engineering-reqtrain":"", "knowledge-geography-ability":"", "knowledge-geography-cs":"", "knowledge-geography-ranks":"", "knowledge-geography-class":"", "knowledge-geography-ability-mod":"", "knowledge-geography-racial":"", "knowledge-geography-feat":"", "knowledge-geography-item":"", "knowledge-geography-size":"", "knowledge-geography-acp":"", "knowledge-geography-misc":"", "knowledge-geography-reqtrain":"", "knowledge-history-ability":"", "knowledge-history-cs":"", "knowledge-history-ranks":"", "knowledge-history-class":"", "knowledge-history-ability-mod":"", "knowledge-history-racial":"", "knowledge-history-feat":"", "knowledge-history-item":"", "knowledge-history-size":"", "knowledge-history-acp":"", "knowledge-history-misc":"", "knowledge-history-reqtrain":"", "knowledge-local-ability":"", "knowledge-local-cs":"", "knowledge-local-ranks":"", "knowledge-local-class":"", "knowledge-local-ability-mod":"", "knowledge-local-racial":"", "knowledge-local-feat":"", "knowledge-local-item":"", "knowledge-local-size":"", "knowledge-local-acp":"", "knowledge-local-misc":"", "knowledge-local-reqtrain":"", "knowledge-nature-ability":"", "knowledge-nature-cs":"", "knowledge-nature-ranks":"", "knowledge-nature-class":"", "knowledge-nature-ability-mod":"", "knowledge-nature-racial":"", "knowledge-nature-feat":"", "knowledge-nature-item":"", "knowledge-nature-size":"", "knowledge-nature-acp":"", "knowledge-nature-misc":"", "knowledge-nature-reqtrain":"", "knowledge-nobility-ability":"", "knowledge-nobility-cs":"", "knowledge-nobility-ranks":"", "knowledge-nobility-class":"", "knowledge-nobility-ability-mod":"", "knowledge-nobility-racial":"", "knowledge-nobility-feat":"", "knowledge-nobility-item":"", "knowledge-nobility-size":"", "knowledge-nobility-acp":"", "knowledge-nobility-misc":"", "knowledge-nobility-reqtrain":"", "knowledge-planes-ability":"", "knowledge-planes-cs":"", "knowledge-planes-ranks":"", "knowledge-planes-class":"", "knowledge-planes-ability-mod":"", "knowledge-planes-racial":"", "knowledge-planes-feat":"", "knowledge-planes-item":"", "knowledge-planes-size":"", "knowledge-planes-acp":"", "knowledge-planes-misc":"", "knowledge-planes-reqtrain":"", "knowledge-religion-ability":"", "knowledge-religion-cs":"", "knowledge-religion-ranks":"", "knowledge-religion-class":"", "knowledge-religion-ability-mod":"", "knowledge-religion-racial":"", "knowledge-religion-feat":"", "knowledge-religion-item":"", "knowledge-religion-size":"", "knowledge-religion-acp":"", "knowledge-religion-misc":"", "knowledge-religion-reqtrain":"", "perception-ability":"", "perception-cs":"", "perception-ranks":"", "perception-class":"", "perception-ability-mod":"", "perception-racial":"", "perception-feat":"", "perception-item":"", "perception-size":"", "perception-acp":"", "perception-misc":"", "perception-reqtrain":"", "perform-ability":"", "perform-cs":"", "perform-ranks":"", "perform-class":"", "perform-ability-mod":"", "perform-racial":"", "perform-feat":"", "perform-item":"", "perform-size":"", "perform-acp":"", "perform-misc":"", "perform-reqtrain":"", "perform2-ability":"", "perform2-cs":"", "perform2-ranks":"", "perform2-class":"", "perform2-ability-mod":"", "perform2-racial":"", "perform2-feat":"", "perform2-item":"", "perform2-size":"", "perform2-acp":"", "perform2-misc":"", "perform2-reqtrain":"", "perform3-ability":"", "perform3-cs":"", "perform3-ranks":"", "perform3-class":"", "perform3-ability-mod":"", "perform3-racial":"", "perform3-feat":"", "perform3-item":"", "perform3-size":"", "perform3-acp":"", "perform3-misc":"", "perform3-reqtrain":"", "profession-ability":"", "profession-cs":"", "profession-ranks":"", "profession-class":"", "profession-ability-mod":"", "profession-racial":"", "profession-feat":"", "profession-item":"", "profession-size":"", "profession-acp":"", "profession-misc":"", "profession-reqtrain":"", "profession2-ability":"", "profession2-cs":"", "profession2-ranks":"", "profession2-class":"", "profession2-ability-mod":"", "profession2-racial":"", "profession2-feat":"", "profession2-item":"", "profession2-size":"", "profession2-acp":"", "profession2-misc":"", "profession2-reqtrain":"", "profession3-ability":"", "profession3-cs":"", "profession3-ranks":"", "profession3-class":"", "profession3-ability-mod":"", "profession3-racial":"", "profession3-feat":"", "profession3-item":"", "profession3-size":"", "profession3-acp":"", "profession3-misc":"", "profession3-reqtrain":"", "ride-ability":"", "ride-cs":"", "ride-ranks":"", "ride-class":"", "ride-ability-mod":"", "ride-racial":"", "ride-feat":"", "ride-item":"", "ride-size":"", "ride-acp":"", "ride-misc":"", "ride-reqtrain":"", "sense-motive-ability":"", "sense-motive-cs":"", "sense-motive-ranks":"", "sense-motive-class":"", "sense-motive-ability-mod":"", "sense-motive-racial":"", "sense-motive-feat":"", "sense-motive-item":"", "sense-motive-size":"", "sense-motive-acp":"", "sense-motive-misc":"", "sense-motive-reqtrain":"", "sleight-of-hand-ability":"", "sleight-of-hand-cs":"", "sleight-of-hand-ranks":"", "sleight-of-hand-class":"", "sleight-of-hand-ability-mod":"", "sleight-of-hand-racial":"", "sleight-of-hand-feat":"", "sleight-of-hand-item":"", "sleight-of-hand-size":"", "sleight-of-hand-acp":"", "sleight-of-hand-misc":"", "sleight-of-hand-reqtrain":"", "spellcraft-ability":"", "spellcraft-cs":"", "spellcraft-ranks":"", "spellcraft-class":"", "spellcraft-ability-mod":"", "spellcraft-racial":"", "spellcraft-feat":"", "spellcraft-item":"", "spellcraft-size":"", "spellcraft-acp":"", "spellcraft-misc":"", "spellcraft-reqtrain":"", "stealth-ability":"", " stealth-cs":"", "stealth-ranks":"", "stealth-class":"", "stealth-ability-mod":"", "stealth-racial":"", "stealth-feat":"", "stealth-item":"", "stealth-size":"", "stealth-acp":"", "stealth-misc":"", "stealth-reqtrain":"", "survival-ability":"", "survival-cs":"", "survival-ranks":"", "survival-class":"", "survival-ability-mod":"", "survival-racial":"", "survival-feat":"", "survival-item":"", "survival-size":"", "survival-acp":"", "survival-misc":"", "survival-reqtrain":"", "swim-ability":"", "swim-cs":"", "swim-ranks":"", "swim-class":"", "swim-ability-mod":"", "swim-racial":"", "swim-feat":"", "swim-item":"", "swim-size":"", "swim-acp":"", "swim-misc":"", "swim-reqtrain":"", "use-magic-device-ability":"", "use-magic-device-cs":"", "use-magic-device-ranks":"", "use-magic-device-class":"", "use-magic-device-ability-mod":"", "use-magic-device-racial":"", "use-magic-device-feat":"", "use-magic-device-item":"", "use-magic-device-size":"", "use-magic-device-acp":"", "use-magic-device-misc":"", "use-magic-device-reqtrain":"", "misc-skill-0-ability":"", "misc-skill-0-cs":"", "misc-skill-0-ranks":"", "misc-skill-0-class":"", "misc-skill-0-ability-mod":"", "misc-skill-0-racial":"", "misc-skill-0-feat":"", "misc-skill-0-item":"", "misc-skill-0-size":"", "misc-skill-0-acp":"", "misc-skill-0-misc":"", "misc-skill-0-reqtrain":"", "misc-skill-1-ability":"", "misc-skill-1-cs":"", "misc-skill-1-ranks":"", "misc-skill-1-class":"", "misc-skill-1-ability-mod":"", "misc-skill-1-racial":"", "misc-skill-1-feat":"", "misc-skill-1-item":"", "misc-skill-1-size":"", "misc-skill-1-acp":"", "misc-skill-1-misc":"", "misc-skill-1-reqtrain":"", "misc-skill-2-ability":"", "misc-skill-2-cs":"", "misc-skill-2-ranks":"", "misc-skill-2-class":"", "misc-skill-2-ability-mod":"", "misc-skill-2-racial":"", "misc-skill-2-feat":"", "misc-skill-2-item":"", "misc-skill-2-size":"", "misc-skill-2-acp":"", "misc-skill-2-misc":"", "misc-skill-2-reqtrain":"", "misc-skill-3-ability":"", "misc-skill-3-cs":"", "misc-skill-3-ranks":"", "misc-skill-3-class":"", "misc-skill-3-ability-mod":"", "misc-skill-3-racial":"", "misc-skill-3-feat":"", "misc-skill-3-item":"", "misc-skill-3-size":"", "misc-skill-3-acp":"", "misc-skill-3-misc":"", "misc-skill-3-reqtrain":"", "misc-skill-4-ability":"", "misc-skill-4-cs":"", "misc-skill-4-ranks":"", "misc-skill-4-class":"", "misc-skill-4-ability-mod":"", "misc-skill-4-racial":"", "misc-skill-4-feat":"", "misc-skill-4-item":"", "misc-skill-4-size":"", "misc-skill-4-acp":"", "misc-skill-4-misc":"", "misc-skill-4-reqtrain":"", "misc-skill-5-ability":"", "misc-skill-5-cs":"", "misc-skill-5-ranks":"", "misc-skill-5-class":"", "misc-skill-5-ability-mod":"", "misc-skill-5-racial":"", "misc-skill-5-feat":"", "misc-skill-5-item":"", "misc-skill-5-size":"", "misc-skill-5-acp":"", "misc-skill-5-misc":"", "misc-skill-5-reqtrain":"", "craft-name":"", "craft2-name":"", "craft3-name":"", "lore-name":"", "perform-name":"", "perform2-name":"", "perform3-name":"", "profession-name":"", "profession2-name":"", "profession3-name":"", "misc-skill-0-name":"", "misc-skill-1-name":"", "misc-skill-2-name":"", "misc-skill-3-name":"", "misc-skill-4-name":"", "misc-skill-5-name":"" });
-	
+
 	// Keep track of which of these skills we're on
 	var craft = 1;
 	var perform = 1;
@@ -838,7 +838,7 @@ export function importSkills (attrs,skills,size,ACP)
 	var artistry = 1;
 	var lore = 1;
 	var misc = 0;
-	
+
 	var i = 0;
 	var skill;
 	var skillMisc;
@@ -1015,14 +1015,14 @@ export function importSkills (attrs,skills,size,ACP)
 		}
 		else
 			skillAttrPrefix = skill._name.toLowerCase().replace(/\s/g,"-").replace("(","").replace(")","").replace("-hand","-Hand").replace("e-device","e-Device").replace("-artist","-Artist").replace("-animal","-Animal");
-		
+
 		attrs[skillAttrPrefix] = parseNum(skill._value);
 		attrs[skillAttrPrefix+"-ranks"] = parseNum(skill._ranks);
 		attrs[skillAttrPrefix+"-ability"] = skill._attrname+"-mod";
 		attrs[skillAttrPrefix+"-ability-mod"] = parseNum(skill._attrbonus);
-		
+
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;
-		
+
 		skillMisc = parseNum(skill._value) - parseNum(skill._ranks)- parseNum(skill._attrbonus);
 		if (parseNum(skill._ranks) != 0 && skill._classskill === "yes")
 			skillMisc -= 3;
@@ -1033,9 +1033,9 @@ export function importSkills (attrs,skills,size,ACP)
 		if (skill._name === "Stealth")
 			skillMisc -= (2 * skillSize);
 		attrs[skillAttrPrefix+"-misc"] = skillMisc;
-		
+
 		if (skill._trainedonly === "yes") attrs[skillAttrPrefix+"-ReqTrain"] = 1;
-	
+
 		// Add situation modifiers to the macro
 		if (!_.isUndefined(skill.situationalmodifiers.situationalmodifier))
 		{
@@ -1105,7 +1105,7 @@ export function importAC (attrs,acObj,armorPenalties)
 	attrs["AC-dodge"] = parseNum(acObj._fromdodge);
 	attrs["AC-armor"] = parseNum(acObj._fromarmor);
 	attrs["AC-shield"] = parseNum(acObj._fromshield);
-	
+
 	// Are we replacing Dex to AC with something else?
 	if (acObj._fromdexterity === "")
 	{
@@ -1133,7 +1133,7 @@ export function importAC (attrs,acObj,armorPenalties)
 export function importCharacter (characterObj)
 {
 	var attrs = {};
-	
+
 	importAbilityScores(attrs,characterObj.attributes.attribute);
 	importSaves(attrs,characterObj.saves);
 	var classes, spellClasses, archetypes = {};
@@ -1151,18 +1151,18 @@ export function importCharacter (characterObj)
 			attrs["use_spells"] = 1;
 			characterObj.spellclasses.spellclass = arrayify(characterObj.spellclasses.spellclass);
 			spellClasses = importSpellClasses(attrs, characterObj.spellclasses.spellclass,classes,characterObj.attributes.attribute);
-			
+
 			// Well, it's a spellcaster, so let's import those spells, too!
 			var spellsArray = arrayify(characterObj.spellsknown.spell).concat(arrayify(characterObj.spellbook.spell)).concat(arrayify(characterObj.spellsmemorized.spell));
 			var spellNames = [];
 			spellsArray = _.reject(spellsArray,function(spell) { if (_.contains(spellNames,spell._name)) return true; spellNames.concat(spell._name); return false; });
 			importSpells(spellsArray,spellClasses);
 		}
-		
+
 		// Need to keep track of what archetypes the character has, since class feature source could be an archetype
 		archetypes = buildArchetypeArray(classes);
 	}
-	
+
 	characterObj.penalties.penalty = arrayify(characterObj.penalties.penalty);
 	var ACP = importPenalties(attrs,characterObj.penalties.penalty);
 
@@ -1171,7 +1171,7 @@ export function importCharacter (characterObj)
 	armorPenalties.ACP = parseNum(attrs["armor3-acp"]);
 	armorPenalties.maxDex = parseNum(attrs["armor3-max-dex"]);
 	armorPenalties.spellfail = parseNum(attrs["armor3-spell-fail"]);
-	
+
 	importAC(attrs,characterObj.armorclass,armorPenalties);
 
 	// We might change these values if we're using a shield, so don't set them outside of item import
@@ -1179,22 +1179,22 @@ export function importCharacter (characterObj)
 		delete attrs["armor3-acp"];
 	if (!_.isUndefined(attrs["armor3-spell-fail"]))
 		delete attrs["armor3-spell-fail"];
-	
+
 	var armor = _.reject(arrayify(characterObj.defenses.armor || {}),function(item) { return _.isUndefined(item._name); });
 	var weapons = _.reject(arrayify(characterObj.melee.weapon || {}).concat(arrayify(characterObj.ranged.weapon || {})),function(item) { return _.isUndefined(item._name); });
 
 	// "Tracked Resources" is a list of uses, either a quantity of items, charges, or uses per day
 	var resources = _.object(_.map(characterObj.trackedresources.trackedresource, function (resource) { return [resource._name,resource];}));
-	
+
 	// Make an array of items, both magic and mundane
 	var items = _.reject(arrayify(characterObj.magicitems.item || {}).concat(arrayify(characterObj.gear.item || {})),function(item) { return _.isUndefined(item._name); });
-	
+
 	// "Specials" could include items, so we need to filter them out
 	var itemNames = _.map(items, function(obj) { return obj._name; });
 	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special),arrayify(characterObj.defensive.special)), function(obj) { return _.contains(itemNames, obj._name); });
 
 	importItems(items,resources,armorPenalties,armor,weapons);
-	
+
 	getSectionIDs("repeating_ability", function(idarray) {
 		var abilityNameAttrs = _.union(_.map(idarray,function(id) { return "repeating_ability_"+id+"_name"; 		}),_.map(idarray,function(id) { return "repeating_ability_"+id+"_rule_category"; }));
 		getAttrs(abilityNameAttrs, function(abilityAttrs) {
@@ -1245,7 +1245,7 @@ export function importCharacter (characterObj)
 				characterObj.spelllike.special = arrayify(characterObj.spelllike.special);
 				importSLAs(asyncAttrs, characterObj.spelllike.special, SLAsList, resources);
 			}
-			
+
 			var featuresArray = _.filter(abilityObjList, function (obj) { if (obj.rulecategory === "traits" || obj.rulecategory === "feats") return false; return true; });
 			var featuresList = {};
 			_.each(featuresArray, function(obj){ featuresList[obj.rowID] = obj; });
@@ -1258,7 +1258,7 @@ export function importCharacter (characterObj)
 	attrs["experience"] = parseFloat(characterObj.xp._total);
 
 	attrs["class-0-bab"] = attrs["bab"] = attrs["melee_bab-mod"] = attrs["melee2_bab-mod"] = attrs["ranged_bab-mod"] = attrs["ranged2_bab-mod"] = attrs["melee_bab-mod"] = attrs["cmb_bab-mod"] = attrs["cmb2_bab-mod"] = parseNum(characterObj.attack._baseattack);
-	
+
 	// Set max hp; remove Con mod from hp first, since the sheet will add that in
 	// Since the XML doesn't break this down by class, add it all to class 0
 	attrs["non-lethal-damage_max"] = attrs["HP_max"] = parseNum(characterObj.health._hitpoints);
@@ -1282,7 +1282,7 @@ export function importCharacter (characterObj)
 
 	characterObj.skills.skill = arrayify(characterObj.skills.skill);
 	importSkills(attrs,characterObj.skills.skill,size,ACP);
-	
+
 	if (!_.isUndefined(characterObj.senses.special))
 	{
 		characterObj.senses.special = arrayify(characterObj.senses.special);
@@ -1350,13 +1350,13 @@ export function importCharacter (characterObj)
 
 	attrs["attk-melee"] = parseNum( characterObj.attack._meleeattack.split("/")[0]);
 	attrs["attk-ranged"] = attrs["attk-melee2"] = parseNum( characterObj.attack._rangedattack.split("/")[0]);	// Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
-	
+
 	if (!_.isUndefined(characterObj.favoredclasses.favoredclass))
 	{
 		characterObj.favoredclasses.favoredclass = arrayify(characterObj.favoredclasses.favoredclass);
 		attrs["class-favored"] = buildList(characterObj.favoredclasses.favoredclass, "_name");
 	}
-	
+
 	attrs["other-PP"] = characterObj.money._pp;
 	attrs["other-GP"] = characterObj.money._gp;
 	attrs["other-SP"] = characterObj.money._sp;

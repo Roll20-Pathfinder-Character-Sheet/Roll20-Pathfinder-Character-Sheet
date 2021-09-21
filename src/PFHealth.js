@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as PFMigrate from './PFMigrate';
 import * as PFClassRaceGrid from './PFClassRaceGrid';
@@ -108,15 +108,15 @@ export function setWoundThreshholdsLookup () {
 	});
 }
 /** updateCurrHP- when updating hp, check nonLethalDmg level and wound threshold levels
- * 
- * @param {int} hp 
- * @param {int} temphp 
- * @param {int} nonLethalDmg 
- * @param {boolean} usesWounds 
- * @param {string} hpAbility value of hp dropdown 
- * @param {int} hpAbilityMod 
- * @param {boolean} staggered 
- */ 
+ *
+ * @param {int} hp
+ * @param {int} temphp
+ * @param {int} nonLethalDmg
+ * @param {boolean} usesWounds
+ * @param {string} hpAbility value of hp dropdown
+ * @param {int} hpAbilityMod
+ * @param {boolean} staggered
+ */
 function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilityMod, staggered) {
 	if (hpAbility !== "0") {
 		if (nonLethalDmg >= (hp + temphp + (usesWounds ? (1 + hpAbilityMod) : 0))) {
@@ -136,7 +136,7 @@ function updateCurrHP (hp, temphp, nonLethalDmg, usesWounds, hpAbility, hpAbilit
 /* updateCurrHPLookup - looks up data and calls updateCurrHP */
 export function updateCurrHPLookup () {
 	getAttrs(["HP", "HP-temp", "non-lethal-damage", "wound_threshold-show", "HP-ability", "HP-ability-mod", "condition-Staggered"], function (v) {
-		//TAS.debug("PFHealth.updateCurrHPLookup",v);		
+		//TAS.debug("PFHealth.updateCurrHPLookup",v);
 		updateCurrHP(
 			parseInt(v["HP"], 10) || 0,
 			parseInt(v["HP-temp"], 10) || 0,
@@ -169,10 +169,10 @@ export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 			callback();
 		}
 	});
-	getAttrs(["HP", "HP_max", "HP-ability", "HP-ability-mod", "level", "total-hp", 
-		"total-mythic-hp", "condition-Drained", "HP-formula-mod", "HP-temp", "mythic-adventures-show", "wound_threshold-show", 
+	getAttrs(["HP", "HP_max", "HP-ability", "HP-ability-mod", "level", "total-hp",
+		"total-mythic-hp", "condition-Drained", "HP-formula-mod", "HP-temp", "mythic-adventures-show", "wound_threshold-show",
 		"condition-Wounds", "non-lethal-damage", "non-lethal-damage_max","condition-Staggered", "hp_ability_bonus",
-		"HP_grazed", "HP_wounded", "HP_critical", "HP_disabled","increase_hp"], 
+		"HP_grazed", "HP_wounded", "HP_critical", "HP_disabled","increase_hp"],
 		function (v) {
 		var abilityMod = 0,	abilityBonus =  0, currHPMax = 0, currHP =  0, tempHP =  0, newHP = 0,
 			increaseHPWhenMaxHPIncreases=0,
@@ -189,9 +189,9 @@ export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 			nonLethal = parseInt(v["non-lethal-damage"], 10) || 0;
 			mythic = parseInt(v["mythic-adventures-show"],10)||0;
 			//TAS.debug("at updateMaxHPLookup",v);
-			newHPMax = (abilityBonus + (parseInt(v["total-hp"], 10) || 0) + 
-				(parseInt(v["HP-formula-mod"], 10) || 0) + 
-				(5 * (parseInt(v["condition-Drained"], 10) || 0))) + 
+			newHPMax = (abilityBonus + (parseInt(v["total-hp"], 10) || 0) +
+				(parseInt(v["HP-formula-mod"], 10) || 0) +
+				(5 * (parseInt(v["condition-Drained"], 10) || 0))) +
 				(mythic ? (parseInt(v["total-mythic-hp"], 10) || 0) : 0);
 			if (usesWounds){
 				currWoundLevel = (parseInt(v["condition-Wounds"], 10) || 0);

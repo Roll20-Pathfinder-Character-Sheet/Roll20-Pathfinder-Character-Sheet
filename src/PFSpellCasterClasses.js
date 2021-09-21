@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -60,7 +60,7 @@ export function updateMultiClassedCasterFlag (dummy, eventInfo, callback) {
             }
         } else if (multiclassed) {
             setter.spellclasses_multiclassed= 0;
-        } 
+        }
         if(_.size(setter)>0){
             SWUtils.setWrapper(setter,PFConst.silentParams,done);
         } else {
@@ -123,7 +123,7 @@ function updateCasterRanges (spellclassidx, eventInfo, force, callback, silently
         ranges = {},
         setter = {},
         params = {};
-        try {            
+        try {
             ranges = PFUtils.calculateSpellRanges(level, use_metrics);
             if (force || ranges.close !== closeRng || ranges.medium !== medRng || ranges["long"] !== longRng) {
                 setter[closeField] = ranges.close;
@@ -212,7 +212,7 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
         }
     }),
     conAbility = "Concentration-" + classidx + "-ability";
-    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON", 
+    getAttrs([conAbility, "INT", "WIS", "CHA", "STR", "DEX", "CON",
     "spellclass-" + classidx + "-level-0-bonus",
     "spellclass-" + classidx + "-level-1-bonus","spellclass-" + classidx + "-level-2-bonus",
     "spellclass-" + classidx + "-level-3-bonus","spellclass-" + classidx + "-level-4-bonus",
@@ -262,11 +262,11 @@ function updateBonusSpells (classidx, eventInfo, callback, silently) {
 }
 
 /** updates max spells per day for a given class. ALWAYS SILENT
- * 
- * @param {*} classidx 
- * @param {*} spelllvl 
- * @param {*} callback 
- * @param {*} silently 
+ *
+ * @param {*} classidx
+ * @param {*} spelllvl
+ * @param {*} callback
+ * @param {*} silently
  */
 function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
     var done = _.once(function(){
@@ -283,7 +283,7 @@ function updateMaxSpellsPerDay (classidx, spelllvl, callback, silently) {
             if(isNaN(base)){
                 newCount=0;
             } else {
-                rest = (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-bonus"],10)||0) + 
+                rest = (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-bonus"],10)||0) +
                     (parseInt(v["spellclass-" + classidx + "-level-" + spelllvl + "-misc"],10)||0);
                 newCount = base + rest;
             }
@@ -345,12 +345,12 @@ function recalcOneClass (spellClassIdx, callback, silently) {
     }),
     doneOne = _.after(5, done),
     doneOneLevel = _.after(10,doneOne);
-    
+
     //TAS.debug("at PFSpellCasterClasses.recalcOneClass");
     _.times(10,function(spelllvl){
         updateMaxSpellsPerDay(spellClassIdx,spelllvl,doneOneLevel,silently);
     });
-    
+
     updateConcentration(spellClassIdx, null, doneOne, silently);
     updateSaveDCs(spellClassIdx, null, doneOne, silently);
     updateCasterRanges(spellClassIdx, null, false, doneOne, silently);
@@ -590,7 +590,7 @@ export var recalculate = TAS.callback(function PFSpellCasterClassesRecalculate(c
                 callback();
             }
         }),
-        doneOne = _.after(3, function(){ 
+        doneOne = _.after(3, function(){
             updateAllSpellMenu(callback);
         });
         //TAS.debug("at PFSpellCasterClasses.recalculate.recalcTopSection");
@@ -713,7 +713,7 @@ function registerEventHandlers () {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateCasterRanges(numberIdx, eventInfo, true, null, true);
             }
-        }));        
+        }));
     }); //end of spell classes
 }
 registerEventHandlers();

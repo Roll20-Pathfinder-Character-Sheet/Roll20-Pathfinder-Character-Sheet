@@ -1,10 +1,10 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 
-/** Updates @{init} 
+/** Updates @{init}
  * @param {function} callback when done
  * @param {boolean} silently if call SWUtils.setWrapper with silent:true
  * @param {boolean} force pass to SWUtils.updateRowTotal
