@@ -11433,7 +11433,7 @@
                         <span class="small-label2"><span data-i18n="flat-footed-armor-class-abbrv">Flat-Footed</span><input title="@{Flat-Footed}" type="number" name="attr_Flat-Footed" value="10" class="calc" readonly /></span>
                     </div>
                     <!--details-box-->
-                    <details>
+                    <details open>
                         <summary style="margin: -1.75em 0 0 18.25em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
                         <div class="details-box">
                             <span class="small-label2 right">(</span>
@@ -11469,8 +11469,9 @@
                                 <input title="@{AC-natural}" type="number" name="attr_AC-natural" value="0" />
                                 <span data-i18n="natural">Natural</span>
                             </span>
-                            <span class="small-label2">
-                                <input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" />
+                                <input type="checkbox" name="attr_AC-misc-mod_error" value="1" class="error-mshow">
+                            <span class="small-label2 entry-med highlight">
+                                <input title="@{AC-misc}" type="text" name="attr_AC-misc" value="" data-i18n-placeholder="equation-macro-place" placeholder="#/Equation" />
                                 <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
                             </span>
                             <span class="small-label2">
@@ -11504,7 +11505,7 @@
                         </span>
                     </div>
                     <!--details-box-->
-                    <details>
+                    <details open>
                         <summary style="margin: -1.75em 0 0 8em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
                         <div class="details-box">
                             <span class="small-label2 right">(</span>
@@ -11524,28 +11525,55 @@
                                 <span data-i18n="constitution-abbrv">Con</span>
                             </span>
                             <span class="small-label2">+</span>
-                            <input type="checkbox" name="attr_HP-formula-mod_error" class="error-mshow hidden" value="1" />
-                            <span class="small-label2 highlight" style="width:28%;">
-                                <input title="@{HP-formula-macro-text}" type="text" name="attr_HP-formula-macro-text" value="" data-i18n-placeholder="equation-macro-place" />
-                                <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
-                            </span>
+                                <input type="checkbox" name="attr_HP-formula-mod_error" class="error-mshow hidden" value="1" />
                             <span class="small-label2 highlight">
                                 <input title="@{HP-formula-mod}" type="number" name="attr_HP-formula-mod" value="0" class="calc" readonly />
                                 <span data-i18n="modifier-abbrv">Mod</span>
+                            </span>
+                            <span class="small-label2 highlight entry-med">
+                                <input title="@{HP-formula-macro-text}" type="text" name="attr_HP-formula-macro-text" value="" data-i18n-placeholder="equation-macro-place" />
+                                <span class="super note-a" data-i18n="miscellaneous-abbrv">Misc</span>
                             </span>
                             <span class="small-label2 left">)</span>
                         </div>
                     </details>
                     <div class="npc-statblock-row">
-                        <span class="small-label2"><button class="command-button" title="%{selected|NPC-Fort-Save}" type="roll" name="roll_NPC-Fort-Save" value="@{NPC-whisper} @{fort-save-macro-text} {{name=^{npc} ^{fortitude}}}"> <span data-i18n="fortitude-abbrv">Fort</span> <span name="attr_Fort"></span></button></span>
-                        <span class="small-label2">+</span>
-                        <span class="small-label2 entry-short"><input title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a"></span></span>
-                        <span class="small-label2"><button class="command-button" title="%{selected|NPC-Ref-Save}" type="roll" name="roll_NPC-Ref-Save" value="@{NPC-whisper} @{ref-save-macro-text} {{name=^{npc} ^{reflex}}}"> <span data-i18n="reflex-abbrv">Ref</span> <span name="attr_Ref"></span></button></span>
-                        <span class="small-label2">+</span>
-                        <span class="small-label2 entry-short"><input title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a"></span></span>
-                        <span class="small-label2"><button class="command-button" title="%{selected|NPC-Will-Save}" type="roll" name="roll_NPC-Will-Save" value="@{NPC-whisper} @{will-save-macro-text} {{name=^{npc} ^{willpower}}}"> <span data-i18n="willpower-abbrv">Will</span> <span name="attr_Will"></span></button></span>
-                        <span class="small-label2">+</span>
-                        <span class="small-label2 entry-short"><input title="@{Will-misc}" type="text" name="attr_Will-misc" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a"></span></span>
+                      <span class="small-label2">
+                        <button class="command-button" title="%{selected|NPC-Fort-Save}" type="roll" name="roll_NPC-Fort-Save" value="@{NPC-whisper} @{fort-save-macro-text} {{name=^{npc} ^{fortitude}}}">
+                          <span data-i18n="fortitude-abbrv">Fort</span>
+                          <span name="attr_Fort"></span>
+                        </button>
+                      </span>
+                      <span class="small-label2">+</span>
+                      <span class="small-label2 entry-short">
+                        <input type="checkbox" name="attr_Fort-misc-mod_error" value="1" class="error-mshow">
+                        <input class=" highlight" title="@{Fort-misc}" type="text" name="attr_Fort-misc" value="" data-i18n-placeholder="equation-macro-place" />
+                        <span class="super note-a"></span>
+                      </span>
+                      <span class="small-label2">
+                        <button class="command-button" title="%{selected|NPC-Ref-Save}" type="roll" name="roll_NPC-Ref-Save" value="@{NPC-whisper} @{ref-save-macro-text} {{name=^{npc} ^{reflex}}}">
+                          <span data-i18n="reflex-abbrv">Ref</span>
+                          <span name="attr_Ref"></span>
+                        </button>
+                      </span>
+                      <span class="small-label2">+</span>
+                      <span class="small-label2 entry-short">
+                        <input type="checkbox" name="attr_Ref-misc-mod_error" value="1" class="error-mshow">
+                        <input class=" highlight" title="@{Ref-misc}" type="text" name="attr_Ref-misc" value="" data-i18n-placeholder="equation-macro-place" />
+                        <span class="super note-a"></span>
+                      </span>
+                      <span class="small-label2">
+                        <button class="command-button" title="%{selected|NPC-Will-Save}" type="roll" name="roll_NPC-Will-Save" value="@{NPC-whisper} @{will-save-macro-text} {{name=^{npc} ^{willpower}}}">
+                          <span data-i18n="willpower-abbrv">Will</span>
+                          <span name="attr_Will"></span>
+                        </button>
+                      </span>
+                      <span class="small-label2">+</span>
+                      <span class="small-label2 entry-short">
+                        <input type="checkbox" name="attr_Will-misc-mod_error" value="1" class="error-mshow">
+                        <input class=" highlight" title="@{Will-misc}" type="text" name="attr_Will-misc" value="" data-i18n-placeholder="equation-macro-place" />
+                        <span class="super note-a"></span>
+                      </span>
                     </div>
                     <div class="npc-statblock-row">
                         <span class="small-label2">
@@ -11562,7 +11590,7 @@
                             <span name="attr_npc-defensive-abilities" class="autoexpand"></span>
                         </label>
 						</span>
-                        <input type="checkbox" name="attr_SR_error" class="error-mshow hidden" value="1" />
+                            <input type="checkbox" name="attr_SR_error" class="error-mshow hidden" value="1" />
                         <span class="small-label2 highlight">
                             <span data-i18n="spell-resistance-abbrv" data-i18n-title="spell-resistance-title" data-i18n-aria-label="spell-resistance-title">SR</span>
                             <input title="@{SR}" type="number" name="attr_SR" value="0" class="calc" readonly />
@@ -11596,7 +11624,7 @@
                         </span>
                     </div>
                     <div class="npc-statblock-row">
-                      <textarea style="min-width: 60%;" class="small-label2 inline-textarea" title="@{save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes" placeholder=" Save Notes"></textarea>
+                      <textarea style="width: 60%;" class="inline-textarea" title="@{save-notes}" name="attr_Save-notes" data-i18n-placeholder="save-notes" placeholder=" Save Notes"></textarea>
                       <span class="small-label2" data-i18n-title="include-save-notes">
                         <span class="small-label2" data-i18n="save-notes" data-i18n-title="include-save-notes">Save Notes</span>
                         <input name="attr_toggle_save_notes" value="@{var_save_notes}" title="@{toggle_save_notes}" type="checkbox" />
@@ -12602,15 +12630,17 @@
                             </button>
                           </span>
                           <span class="small-label2 entry-med">
-                            <input title="@{attk-CMB-misc}" type="text" name="attr_attk-CMB-misc" value="0" />
+                            <input type="checkbox" name="attr_attk-CMB-misc-mod_error" class="error-mshow" value="1">
+                            <input class="highlight" title="@{attk-CMB-misc}" type="text" name="attr_attk-CMB-misc" value="" data-i18n-placeholder="equation-macro-place" placeholder="#/Equation" />
                             <span class="super note-a"></span>
                           </span>
-                          <span class="small-label2">
+                          <input type="checkbox" name="attr_CMD-misc-mod_error" value="1" class="error-mshow">
+                          <span class="small-label2 highlight">
                             <span data-i18n="combat-maneuver-defense-abbrv">CMD</span>
-                            <input title="@{CMD}" type="number" name="attr_CMD" value="10" class="calc" readonly />
+                            <input class="calc" title="@{CMD}" type="number" name="attr_CMD" value="10" readonly />
                           </span>
-                          <span class="small-label2 entry-med">
-                            <input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="0" />
+                          <span class="small-label2 entry-med highlight">
+                            <input title="@{CMD-misc}" type="text" name="attr_CMD-misc" value="" data-i18n-placeholder="equation-macro-place" placeholder="#/Equation" />
                             <span class="super note-a"></span>
                           </span>
                           <span class="small-label2 entry-long">
@@ -13559,12 +13589,12 @@
                         <textarea class="inline-textarea" title="@{other_items_treasure}" name="attr_other_items_treasure"></textarea>
                       </span>
                     </div>
-                    <div class="npc-statblock-row">
+                    <div class="npc-statblock-row" style="min-height: 6em;margin-bottom: 2em;">
                 <!--DESCRIPTION-->
-                        <div class="h2-section npc-desc">
+                        <div class="h2-section npc-desc noborder-readonly">
                             <label class="small-label2 wide-textareaparent">
                                 <span data-i18n="description">Desscription</span>
-                                <textarea class="inline-textarea" style="overflow-y: scroll;min-height: 6em;margin-bottom: 1em;" title="@{character_description}" name="attr_character_description" data-i18n-placeholder="description"></textarea>
+                                <textarea class="inline-textarea" style="overflow-y: scroll;min-height: 6em;" title="@{character_description}" name="attr_character_description" data-i18n-placeholder="description"></textarea>
                             </label>
                         </div>
                     </div>
