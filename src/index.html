@@ -35,20 +35,11 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
-                    <li>Fixed a bug that prevented the "Delete All" option in repeating rows from functioning.</li>
-                    <li>Small changes to the NPC/Monster statblock to make it easier to use.</li>
-                    <li>Fixed the Abilities sub-tab header so that it matches the currently selected tab.</li>
-                    <li>Added ft/m (displays based on the metric setting) to NPC/Monster speed.</li>
-                    <li>Misc...</li>
-
-                    <li>Numerous small fixes for typos/mistakes submitted Tranquwil(thank you)</li>
-                    <li>Misc. small adjustments; repeating row number alignment, updated translation text, moved NPC/Monster Ecology sub-section to the end of the page, converted macro text footer info into a detail/summary collapsible section, fixed the rounded corners option from settings for simple templates.</li>
-                    <li>Fixed; ability damage set to 0 (due to NaN error) and power attack damage bonus erroneously applied to ranged attacks.</li>
-                    <li>Added common buff options for Power Attack, Deadly Aim, and Combat Expertise. Power Attack includes a new buff to handle the power attack damage. 'Power Attack Dmg' This was done so that the buff's bonus can be passed to each attack where the damage multiplier can be applied per attack to handle two-handed, off-hand, etc. (thank you player-03 for your help)</li>
-                    <li>Fixed; Tokenbar changes to HP should now trigger sheet events as expected.</li>
-                    <li>Added more emphasis to most of the "total" read-only fields</li>
-                    <li>Small adjustments to the rowID fields to make them easier to select and copy.</li>
-                    <li>Known Issue: linked attacks that have been generated from an Ability or Spell will have their 'Weapon Notes' reset to their 'sheet generated notes' if the "Include link..." sheet setting is toggled or the linked Ability or Spell is edited.</li>
+                        <li>Fixed an attribute naming conflict with Roll20 that prevented the "Delete All" option found in repeating rows from functioning.</li>
+                        <li>Updated the NPC/Monster statblock to make it a little easier to use.</li>
+                        <li>Fixed the Abilities sub-tab header so that it matches the currently selected tab.</li>
+                        <li>Added ft/m (displays based on the metric setting) to NPC/Monster speed.</li>
+                        <li>Added error highlighting on macro field validation in the NPC/Monster tab.</li>
                     </ol>
                     <label class="boldlabel-check"><input type="checkbox" name="attr_attentionv172-show" value="1"> <b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
                     <div class="cheat"></div>
@@ -11511,6 +11502,7 @@
                             <span class="small-label2 right">(</span>
                             <span class="small-label2" data-i18n-title="racial-bonus">
                                 <input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" />
+                                <span>#</span>
                             </span>
                             <span class="small-label2">
                                 <span data-i18n="dice-abbrv">d</span>

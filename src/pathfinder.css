@@ -30,7 +30,12 @@
     display: inline-flex;
     justify-content: space-around;
     margin-top: 4px;
-    padding: 0 2px 7px 2px;
+    padding: 0 2px 0 2px;
+}
+
+.charsheet .details-box .small-label2 {
+	height: auto;
+	display: inline-grid;
 }
 
 .charsheet html,
@@ -2936,28 +2941,7 @@ also need 1 more level in selector or base css will override border */
     padding: 0 0 0 .25em;
 }
 
-/* when a highlighted field is not showing error, put hidden 0.2rem border so size doesn't change */
-
-.charsheet input.highlight,
-.charsheet .highlight input,
-.charsheet .highlight input:disabled,
-.charsheet .highlight input.calc,
-.charsheet .highlight input[readonly] {
-    border-top: 0.2rem transparent solid;
-    border-left: 0.2rem transparent solid;
-    border-right: 0.2rem transparent solid;
-}
-
-.charsheet input.highlight:disabled,
-.charsheet input.highlightinputcalc,
-.charsheet input.highlight[readonly] .highlight input:disabled,
-.charsheet .highlight input.calc,
-.charsheet .highlight input[readonly] {
-    border-bottom: 0.2rem transparent solid;
-    padding: 1px;
-    margin: 3px 0 0 0;
-}
-
+/* use an outline for invalid input/calculation or to bring attention to the field */
 .charsheet .warn-show:checked+textarea.highlight,
 .charsheet .warn-show:checked+input.highlight,
 .charsheet .warn-mshow:checked~input.highlight,
@@ -2966,7 +2950,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .warn-show:checked+.highlight textarea,
 .charsheet .warn-mshow:checked~.highlight input,
 .charsheet .warn-mshow:checked~.highlight textarea {
-    border: 0.2rem #B8860B dashed !important;
+    outline: 0.2rem #B8860B dashed !important;
 }
 
 .charsheet .error-show:checked+input.highlight,
@@ -2977,7 +2961,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .error-show:checked+.highlight textarea,
 .charsheet .error-mshow:checked~.highlight input,
 .charsheet .error-mshow:checked~.highlight textarea {
-    border: 0.2rem #FF0044 dotted !important;
+    outline: 0.2rem #FF0044 dotted !important;
 }
 
 .charsheet .offscreen {
