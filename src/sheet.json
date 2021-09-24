@@ -86,7 +86,7 @@
 			"displaytranslationkey": "use-header-images",
 			"type": "checkbox",
 			"value": "1",
-			"description": "Include the default header image on roll templates.(NOTE: setting can be overidden by Simple roll templates which do not display header images.)",
+			"description": "Include the default header image on roll templates.(NOTE: setting can be overridden by Simple roll templates which do not display header images.)",
 			"descriptiontranslationkey": "header-image-default"			
 		},
 		{
@@ -124,7 +124,7 @@
 			"options": ["0","1","2","3","4","5"],
 			"optiontranslationkeys": ["arial-default","verdana","comic-sans","segoe","lucida","fantasy"],
 			"default": "0",
-			"description": "Extra fonts for Accessiblity"
+			"description": "Extra fonts for Accessibility"
 		},
 		{
 			"attribute": "max-dex-source",

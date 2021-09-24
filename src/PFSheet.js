@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -154,7 +154,7 @@ function expandAll  () {
 				'macros-show':1,
 				'migrations-show':1,
 				'cleanup-show':1,
-				'san-show':1,	
+				'san-show':1,
 				'buff-min-show':0,
 				'buff-expand-show':0,
 				'buff-column-show':0,
@@ -289,7 +289,7 @@ function expandAll  () {
 }
 
 /** Sets any values if sheet created brand new. Makes sure all migrations up to date.
- * makes sure NPC value set. 
+ * makes sure NPC value set.
  */
 function setupNewSheet (callback){
 	var done = _.once(function(){
@@ -504,7 +504,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		}
 	}),
 	parallelRecalcFuncs = [
-		PFSpellCasterClasses.recalculate, 
+		PFSpellCasterClasses.recalculate,
 		PFSaves.recalculate,
 		PFFeatures.recalculate,
 		PFPsionic.recalculate,
@@ -514,7 +514,7 @@ function recalculateParallelModules (callback, silently, oldversion) {
 		PFAttacks.recalculate,
 		PFHorror.recalculate,
 		PFOccult.recalculate
-	],		
+	],
 	numberModules = _.size(parallelRecalcFuncs),
 	doneOneModuleInner = _.after(numberModules, done),
 	curr = 0,
@@ -601,12 +601,12 @@ function recalculateCore (callback, silently, oldversion) {
 	});
 
 	PFMigrate.migrateConfigFlags(buffsOnce,oldversion);
-	
+
 	//TAS.debug("at recalculateCore!!!!");
 
 }
 
-/** recalculate - all pages in sheet!  
+/** recalculate - all pages in sheet!
  *@param {number} oldversion the current version attribute
  *@param {function} callback when done if no errors
  *@param {function} errorCallback  call this if we get an error
@@ -631,7 +631,7 @@ export function recalculate (oldversion, callback, silently) {
 	callRecalcCore();
 }
 /* checkForUpdate looks at current version of page in PFSheet_Version and compares to code PFConst.version
- *  calls recalulateSheet if versions don't match or if recalculate button was pressed.
+ *  calls recalculateSheet if versions don't match or if recalculate button was pressed.
  * */
 export function checkForUpdate (forceRecalc) {
 	var done = function () {
@@ -651,7 +651,7 @@ export function checkForUpdate (forceRecalc) {
 		recalc = false,
 		currVer = parseFloat(v.PFSheet_Version, 10) || 0,
 		setUpgradeFinished = function() {
-			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0, 
+			SWUtils.setWrapper({ recalc1: 0, migrate1: 0, is_newsheet: 0,
 			character_sheet: 'Pathinder_Neceros v'+String(PFConst.version),
 			PFSheet_Version: String((PFConst.version.toFixed(3))) }, PFConst.silentParams, function() {
 				if (currVer < 1.17) {
@@ -667,7 +667,7 @@ export function checkForUpdate (forceRecalc) {
 			if (parseInt(v["recalc1"],10) ){
 				//HIT RECALC
 				recalc = true;
-			} 
+			}
 			if (parseInt(v["migrate1"],10)) {
 				migrateSheet =true;
 			}
@@ -683,7 +683,7 @@ export function checkForUpdate (forceRecalc) {
 		}
 		if (!newSheet && parseInt(v.hide_announcements,10) && !parseInt(v[PFConst.announcementVersionAttr],10)){
 			setter[PFConst.announcementVersionAttr]=1;
-			SWUtils.setWrapper(setter,PFConst.silentParams);		
+			SWUtils.setWrapper(setter,PFConst.silentParams);
 		}
 		if (newSheet) {
 			setupNewSheet(done);
@@ -706,7 +706,7 @@ function registerEventHandlers () {
 		//eventInfo has undefined values for this event.
 		checkForUpdate();
 	}));
-	on("change:recalc1 change:migrate1", TAS.callback(function eventRecaluateSheet(eventInfo) {
+	on("change:recalc1 change:migrate1", TAS.callback(function eventRecalculateSheet(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			checkForUpdate();
@@ -757,16 +757,15 @@ function registerEventHandlers () {
 			});
 		}
 	}));
-	
+
 	//delete a list
-	on("change:delete_repeating_spells change:delete_repeating_weapon change:delete_repeating_item change:delete_repeating_ability change:delete_repeating_mythic-feat change:delete_repeating_mythic-ability change:delete_repeating_buff change:delete_repeating_buff2 change:delete_repeating_trait change:delete_repeating_racial-trait change:delete_repeating_feat change:delete_repeating_class-ability change:delete_repeating_npc-spell-like-abilities",
-	TAS.callback(function eventDeleteOldList(eventInfo){
+	on("change:delete_rep_spells change:delete_rep_weapon change:delete_rep_item change:delete_rep_ability change:delete_rep_mythic-feat change:delete_rep_mythic-ability change:delete_rep_buff change:delete_rep_buff2 change:delete_rep_trait change:delete_rep_racial-trait change:delete_rep_feat change:delete_rep_class-ability change:delete_rep_npc-spell-like-abilities",	TAS.callback(function eventDeleteOldList(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
 			getAttrs([eventInfo.sourceAttribute],function(v){
 				var section="";
 				if (parseInt(v[eventInfo.sourceAttribute],10)){
-					section = eventInfo.sourceAttribute.replace('delete_repeating_','');
+					section = eventInfo.sourceAttribute.replace('delete_rep_','');
 					SWUtils.deleteRepeating(
 						function(){
 							var setter;

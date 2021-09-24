@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
@@ -75,7 +75,7 @@ function getAbilityModUpdates(abilityModName,newval,v,setter){
 }
 /** Looks at the ability-mod changed and then updates rest of sheet. For non repeating
  * @param {string|Array} attr string name of attribute, or array of attributes abilitymods, if null then abilitymods
- * @param {int} oldval 
+ * @param {int} oldval
  */
 function propagateAbilityModsAsync(callback,silently,attr,newval){
     var attrs, fields, done = _.once(function(){
@@ -91,7 +91,7 @@ function propagateAbilityModsAsync(callback,silently,attr,newval){
     } else {
         attrs = abilitymods;
     }
-    PFAttacks.updateRepeatingWeaponAbilityDropdowns(null,null,attr);    
+    PFAttacks.updateRepeatingWeaponAbilityDropdowns(null,null,attr);
     fields = attrs;
     fields = fields.concat(Object.keys(PFConst.abilityScoreManualDropdowns));
     fields = fields.concat(_.values(PFConst.abilityScoreManualDropdowns));
@@ -118,11 +118,11 @@ function propagateAbilityModsAsync(callback,silently,attr,newval){
 }
 
 /** modifies ability-base by val (even #s) and adds the new vals to setter.
- * 
- * @param {string} ability 
- * @param {Number} val 
- * @param {Map<string,string>} v 
- * @param {Map<string,number>} setter 
+ *
+ * @param {string} ability
+ * @param {Number} val
+ * @param {Map<string,string>} v
+ * @param {Map<string,number>} setter
  * @returns {Map<string,number>} returns setter plus updated values for XYZ-base, XYZ-mod , and XYZ
  */
 export function modifyAbility (ability,val,v,setter){
@@ -141,7 +141,7 @@ export function modifyAbility (ability,val,v,setter){
     tempint+=(Math.floor(val/2));
     tempint=Math.max(tempint,1);
     setter[ability+'-mod']=tempint;
-    return setter;    
+    return setter;
 }
 
 /** Looks at current values and calculates new ability , ability-mod and ability-modded values
@@ -191,8 +191,8 @@ function getAbilityScore (ability, values, setter) {
                 mod = -5;
                 penalized = 1;
             } else {
-                newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) + 
-                    (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) + 
+                newVal = base + (parseInt(values[ability + "-enhance"], 10) || 0) +
+                    (parseInt(values[ability + "-inherent"], 10) || 0) + (parseInt(values[ability + "-misc"], 10) || 0) +
                     (parseInt(values[ability + "-drain"], 10) || 0) + (parseInt(values["buff_" + ability + "-total"], 10) || 0);
                 rawDmg = Math.abs(parseInt(values[ability + "-damage"], 10) || 0);
                 if (rawDmg >= newVal || newVal <= 0) {
@@ -210,7 +210,7 @@ function getAbilityScore (ability, values, setter) {
                     } else {
                         //normal
                         if (rawDmgAndPen !== 0) {
-                            penalized = 1;					
+                            penalized = 1;
                         }
                         dmgAndPen = Math.floor(rawDmgAndPen / 2);
                         mod = Math.max(-5,Math.floor((newVal - 10) / 2) - dmgAndPen);
@@ -327,7 +327,7 @@ export function applyConditions (callback, silently, eventInfo) {
             } else if(_.size(setter)){
                 if(_.size(silentSetter)){
                     setAttrs(silentSetter,PFConst.silentParams);
-                }          
+                }
                 setAttrs(setter,{},callback);
             } else if(_.size(silentSetter)){
                 setAttrs(silentSetter,PFConst.silentParams,callback);

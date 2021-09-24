@@ -36,7 +36,7 @@ var webpackConfig = {
     new webpack.optimize.UglifyJsPlugin({
       comments: false,
       sourceMap: false
-    }),   
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
       inlineSource: '.js$'

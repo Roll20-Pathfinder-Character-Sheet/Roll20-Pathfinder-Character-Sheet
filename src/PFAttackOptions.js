@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -53,7 +53,7 @@ events = {
  *@param {map} rowValues output from getAttrs
  */
 export function getOptionText  (prefix, toggleValues, rowValues) {
-    var 
+    var
     attackType = PFUtils.findAbilityInString(rowValues[prefix + "attack-type"]),
     damageAbility = PFUtils.findAbilityInString(rowValues[prefix + "damage-ability"]),
     optionText = "{{buff_note=@{buff_attack_notes}}} {{condition_note=@{condition_attack_notes}}}";
@@ -62,7 +62,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
     } else if (attackType){
         if(attackType!=='dual'){
             attackType = attackType.replace('attk-','').replace('2', '')||"";
-        } 
+        }
         if(toggleValues['show'+attackType.toLowerCase()]){
             optionText += " ";
             optionText += optionTemplates[attackType + "_notes"].replace("REPLACE", optionDefaults.notes[attackType])||"";
@@ -72,7 +72,7 @@ export function getOptionText  (prefix, toggleValues, rowValues) {
         optionText += " ";
         optionText += optionTemplates.header_image.replace("REPLACE", optionDefaults.image[attackType||'melee'])||"";
     }
-    if (attackType!=='dual' && !(damageAbility || rowValues[prefix + "damage"] || 
+    if (attackType!=='dual' && !(damageAbility || rowValues[prefix + "damage"] ||
         (parseInt(rowValues[prefix + "damage-dice-num"], 10) && parseInt(rowValues[prefix + "damage-die"], 10)))) {
         optionText += " {{no_damage=1}}";
     }

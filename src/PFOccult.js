@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFAttacks from './PFAttacks';
@@ -100,7 +100,7 @@ function createAttack (eventInfo){
                 setter[weaponPrefix + "precision_dmg_type"] = dmgname;
                 setter[weaponPrefix + "critical_dmg_macro"] = v.kineticblast_tempdmg;
                 setter[weaponPrefix + "critical_dmg_type"] = dmgname;
-                setter[weaponPrefix + "notes"] = "DC [[@{kineticblast_dc}]] (if applicable)";                
+                setter[weaponPrefix + "notes"] = "DC [[@{kineticblast_dc}]] (if applicable)";
                 setter[weaponPrefix + "default_damage-dice-num"] = 0;
                 setter[weaponPrefix + "default_damage-die"] = 0;
                 setter[weaponPrefix + "damage-dice-num"] = 0;

@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
@@ -21,7 +21,7 @@ export var attackGridFields = {
         "attackmacro": "@{toggle_global_melee_macro_insert}",
         "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
         "babdd": "melee_bab",
-        "bab": "melee_bab-mod"        
+        "bab": "melee_bab-mod"
     },
     "melee2": {
         "size": "size",
@@ -107,7 +107,7 @@ groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
         '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
 
-/** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
+/** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in
  *@param {function} callback optional call when done
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
@@ -146,7 +146,7 @@ export function applyConditions  (callback, silently, eventInfo) {
         }
         //done is already called at end of updateRowTotal
     });
-    
+
 }
 
 export function updateAttack(attype,v,setter){
@@ -174,8 +174,8 @@ export function updateAttack(attype,v,setter){
 }
 
 /**
- * 
- * @param {string} attype 
+ *
+ * @param {string} attype
  * @returns {[string]} for getAttrs
  */
 function getOneSetAttackFields (attype){
@@ -189,8 +189,8 @@ function getOneSetAttackFields (attype){
     return fields;
 }
 /**
- * 
- * @param {[string]} attypes 
+ *
+ * @param {[string]} attypes
  * @returns {[string]} for getAttrs
  */
 function getAttackFields (attypes){
@@ -250,7 +250,7 @@ export function updateAttackAsync  (attype, callback, silently) {
 export function updateAttacks(callback,silently,attypes,eventInfo){
     var fields,validtypes;
     try {
-        if (!attypes){ 
+        if (!attypes){
             attypes = Object.keys(attackGridFields);
             validtypes = attypes;
         } else {
@@ -298,9 +298,9 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
 }
 
 /** wrapper for updateAttack
- * 
+ *
  * @param {string} buffType buff column without 'buff_' or '-total'
- * @param {*} eventInfo 
+ * @param {*} eventInfo
  */
 export function updateAttackGrid(buffType,eventInfo,silently){
     switch(buffType.toLowerCase()){
@@ -315,7 +315,7 @@ export function updateAttackGrid(buffType,eventInfo,silently){
             break;
         case 'melee2':
             updateAttackAsync('melee2',null, silently);
-            break;        
+            break;
         case 'ranged2':
             updateAttackAsync('ranged2',null, silently);
             break;
@@ -387,10 +387,10 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
 export function migrate (callback, oldversion){
     PFMigrate.migrateAttackDropdowns(callback);
 }
-/** recalculates all write-to fields in module 
+/** recalculates all write-to fields in module
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
- * @param {number} oldversion the version upgrading from 
+ * @param {number} oldversion the version upgrading from
  */
 export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
@@ -436,7 +436,7 @@ function registerEventHandlers () {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
                 updateAttackAsync(attack);
             }
-        }));  
+        }));
         on("change:" + attackFields.size, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
             if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
                 TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -473,6 +473,6 @@ function registerEventHandlers () {
         if (eventInfo.sourceType==="sheetworker" || eventInfo.sourceType==="api"){
             updateAttackBABDropdownDiffs(null,null,eventInfo);
         }
-    }));    
+    }));
 }
 registerEventHandlers();

@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFInitiative from './PFInitiative';
@@ -67,7 +67,7 @@ function setFatiguedExhausted(eventInfo){
 	//TAS.debug("PFConditions setFatiguedExhausted",v);
 	PFAbilityScores.applyConditions(null,null,eventInfo);
 	PFAttackGrid.applyConditions(null,null,eventInfo);
-	PFEncumbrance.updateModifiedSpeed();		
+	PFEncumbrance.updateModifiedSpeed();
 }
 
 function toggleFatiguedState (dummy,dummy2,eventInfo) {

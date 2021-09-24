@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -67,7 +67,7 @@ function setClassName (id,callback,eventInfo){
 					clBase = v["race"];
 				} else if (parseInt(v[clbasisField],10)=== 0){
 					clBase ="";
-				} 
+				}
 	//used "(0*(@{level}))" as the value of the "other" basis selector since "0" was already used for N/A
 					else if (v[clbasisField] === "(0*(@{level}))") {
 					clBase = " ";
@@ -125,19 +125,19 @@ function setRuleTab (callback,silently,id,eventInfo){
 
 		//if users changed the rule then change the tab we're checked on
 		if(eventInfo ) {
-			if (ruleForTab!=='-1'){  
-				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilites_tab) ){
+			if (ruleForTab!=='-1'){
+				if( v.abilities_tab !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v.abilities_tab) ){
 					setter.abilities_tab = ruleForTab;
 				}
 				if( v['npc-abilities_tab'] !== ruleForTab && !(/Ex|Sp|Su|99/i).test(v['npc-abilities_tab']) ){
 					setter['npc-abilities_tab'] = ruleForTab;
 				}
 			}
-			if( v[prefix + 'rule_category'] === 'class-features' && 
+			if( v[prefix + 'rule_category'] === 'class-features' &&
 				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{class-0-level}';
 					params={};
-			} else if (v[prefix + 'rule_category'] === 'racial-traits' && 
+			} else if (v[prefix + 'rule_category'] === 'racial-traits' &&
 				(!v[prefix + 'CL-basis'] ||v[prefix + 'CL-basis']==="0")){
 					setter[prefix + 'CL-basis']='@{level}';
 					params={};
@@ -275,7 +275,7 @@ export function copyToAbilities(callback,abilities) {
 		if (typeof callback === "function")  {
 			callback();
 		}
-	}), 
+	}),
 	setter={};
 	//TAS.debug("At PFAbility.copyToAbilities");
 	if (_.size(abilities)){
@@ -316,7 +316,7 @@ function getTopOfMenu (callback,isNPC){
 						if(otherCommandMacros[type]){
 							addlMacros += otherCommandMacros[type].replace("NPCPREFIX",prefix);
 						} else if (type) {
-							TAS.warn("cound not find top macro for "+type);
+							TAS.warn("could not find top macro for "+type);
 						}
 					});
 				}
@@ -422,14 +422,14 @@ export function importFromCompendium (callback,eventInfo){
 				} else if (abilitytype === 'Sp' && !newcat){
 					newcat='spell-like-abilities';
 				}
-				
+
 				if (newcat){
 					setter[prefix+'rule_category']=newcat;
 				} else {
 					note+=compcat;
 				}
 				if (abilitytype==='Sp'){
-					areaEffectText = v[prefix+'target_from_compendium']|| 
+					areaEffectText = v[prefix+'target_from_compendium']||
 						v[prefix+'area_from_compendium']|| v[prefix+'effect_from_compendium']|| "";
 					setter[prefix+'targets'] = areaEffectText;
 					if(v[prefix+'range_from_compendium']){
@@ -438,9 +438,9 @@ export function importFromCompendium (callback,eventInfo){
 						setter[prefix+"range"] = newRangeSettings.rangetext;
 					}
 					setter[prefix+'ability-basis']= '@{CHA-mod}';
-					
+
 				} else if ( v[prefix+'name']){
-					abilname = v[prefix+'name'].tolowercase();
+					abilname = v[prefix + 'name'].toLowerCase();
 					abilname = abilname.match(/^[^(]+/);
 					if(PFDB.specialAttackDCAbilityBase[abilname]){
 						ability_basis= PFDB.specialAttackDCAbilityBase[abilname];
@@ -549,7 +549,7 @@ export function setAttackEntryVals (spellPrefix,weaponPrefix,v,setter,noName){
 		return setter;
 	}
 }
-/**Triggered from a button in repeating spells 
+/**Triggered from a button in repeating spells
  *@param {string} id the row id or null
  *@param {string} weaponId if updating existing row
  */
@@ -591,7 +591,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 			if (_.size(v)===0){
 				abilityexists=false;
 			}
-			if (abilityexists)	{		
+			if (abilityexists)	{
 				//TAS.debug("at PFAbility.createAttackEntryFromRow",v);
 				if (!PFUtils.findAbilityInString(v[slaPrefix + "abil-attack-type"]) && !v[slaPrefix+"damage-macro-text"]){
 					TAS.warn("no attack to create for ability "+ v[slaPrefix+"name"] +", "+ itemId );
@@ -611,7 +611,7 @@ export function createAttackEntryFromRow (id, callback, silently, eventInfo, wea
 			} else if (weaponId) {
 				setter["repeating_weapon_"+ weaponId+"_source-ability"]='DELETED';
 				deletedability=true;
-			}            
+			}
 		} catch (err) {
 			TAS.error("PFAbility.createAttackEntryFromRow", err);
 		} finally {
@@ -783,7 +783,7 @@ function resetOption (setter, id, v, eventInfo){
 	try {
 		if(!v){return setter;}
 		isSP= (v[prefix+'ability_type']==='Sp')?'1':'';
-		
+
 		if(isSP !== v[prefix+'is_sp']){
 			setter[prefix+'is_sp']=isSP;
 		}
@@ -879,7 +879,7 @@ function recalcAbilities (callback,silently, eventInfo,levelOnly){
 		doneOne	= _.after(numids,done);
 		//refactor to do all rows at once
 		calllevel= function(id){
-			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){ 
+			PFUtilsAsync.setRepeatingDropdownValue('ability',id,'CL-basis','CL-basis-mod',function(){
 				updateCharLevel(id,function(){
 					setClassName(id);
 					updateAbilityRange(id,function(){
@@ -925,7 +925,7 @@ export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback
 		done();
 	}
 });
-//sync repeaitng_ability with settings>attacks>link spells
+//sync repeating_ability with settings>attacks>link spells
 function updateIncludeLink() {
 	getSectionIDs('repeating_ability', function (ids) {
 		_.each(ids, function (id) {
@@ -940,7 +940,7 @@ function updateIncludeLink() {
 }
 //trigger updateIncludeLink when updating the sheet version
 export function updateIncludeLinkVersionCheck() {
-		setAttrs({			
+		setAttrs({
 			"include_link_abilities": 1,
 			"include_link_spells": 1
 		});
@@ -982,7 +982,7 @@ function registerEventHandlers () {
 			resetOptionAsync();
 		}
 	}));
-	on("change:repeating_ability:CL-misc change:repeating_ability:spell_level-misc", 
+	on("change:repeating_ability:CL-misc change:repeating_ability:spell_level-misc",
 		TAS.callback(function eventSLAEquationMacro(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		SWUtils.evaluateAndSetNumber(eventInfo.sourceAttribute, eventInfo.sourceAttribute+"-mod");
@@ -1017,7 +1017,7 @@ function registerEventHandlers () {
 		TAS.callback(function eventClassRangeMod(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		//cl-misc-mod, cl-basis-mod  is sheetworker, range_pick and range must be player
-		if ( ((/range/i).test(eventInfo.sourceAttribute) && (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" )) || 
+		if ( ((/range/i).test(eventInfo.sourceAttribute) && (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" )) ||
 			((/CL/i).test(eventInfo.sourceAttribute) && eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") ) {
 				updateAbilityRange(null,null,false,eventInfo);
 			}
@@ -1057,8 +1057,8 @@ function registerEventHandlers () {
 					getAttrs(['showinmenu_all_abilities'], function (values) {
 						const toggle = +values['showinmenu_all_abilities'] || 0,
 							settings = {};
-						fieldNamesAbility.forEach(field => { // loop through the showinmenus array 
-							settings[field] = toggle; // assign the toggle value to each row's attribute 
+						fieldNamesAbility.forEach(field => { // loop through the showinmenu array
+							settings[field] = toggle; // assign the toggle value to each row's attribute
 						});
 						fieldNamesMythicAbility.forEach(field => {
 							settings[field] = toggle;
@@ -1074,7 +1074,7 @@ function registerEventHandlers () {
 			});
 		});
 	});
-	//sync repeaitng_spells with settings>attacks>link spells
+	//sync repeating_spells with settings>attacks>link spells
     on("change:include_link_abilities", function (eventInfo) {
     	var attr;
     	TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);

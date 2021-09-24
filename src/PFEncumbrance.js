@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFDefense from './PFDefense';
@@ -193,7 +193,7 @@ function getCarryingCapacity(str, loadToFind) {
 
 /** updateCurrentLoad-updates the current load radio button
  * @param {function} callback when done
- * @param {boolean} silently 
+ * @param {boolean} silently
  */
 function updateCurrentLoad(callback, silently) {
     var done = function () {
@@ -269,7 +269,7 @@ function updateCurrentLoad(callback, silently) {
 
 /** updates the load and lift numbers
  * @param {function} callback when done
- * @param {boolean} silently 
+ * @param {boolean} silently
  */
 export function updateLoadsAndLift (callback, silently) {
     var done = _.once(function () {
@@ -278,7 +278,7 @@ export function updateLoadsAndLift (callback, silently) {
         }
     });
     getAttrs(["STR", "size", "size-multiplier", "legs", "load-light", "load-medium", "load-heavy", "load-max",
-    "lift-above-head", "lift-off-ground", "lift-drag-and-push", "load-str-bonus", "load-multiplier", 
+    "lift-above-head", "lift-off-ground", "lift-drag-and-push", "load-str-bonus", "load-multiplier",
     "total-load-multiplier", "load-misc", "use_metrics"], function (v) {
         var str = 10,
         size = 1,
@@ -337,7 +337,7 @@ export function updateLoadsAndLift (callback, silently) {
                 l *= use_metrics;
                 m *= use_metrics;
                 h *= use_metrics;
-        //rounding to 2 decimal places after metric multiplier conversion        
+        //rounding to 2 decimal places after metric multiplier conversion
                 l = Math.round(l * 100)/100;
                 m = Math.round(m * 100)/100;
                 h = Math.round(h * 100)/100;
@@ -510,14 +510,14 @@ export function updateModifiedSpeed (callback) {
             //speed penalties stack: http://paizo.com/pathfinderRPG/prd/coreRulebook/combat.html#special-movement-rules
             if(parseInt(v['condition-Entangled'],10)===2) {
                 slowed = 1;
-                base = base/2;  //Math.floor(base/10)*5; 
+                base = base/2;  //Math.floor(base/10)*5;
                 cannotRun = 1;
             }
             if(parseInt(v['condition-Exhausted'],10)===3) {
                 slowed = 1;
                 base = base/2;
                 cannotRun = 1;
-            } 
+            }
             newSpeed = base ;
             if (parseInt(v['condition-Fatigued'],10)===1) {
                 cannotRun = 1;
@@ -557,7 +557,7 @@ export function updateModifiedSpeed (callback) {
                             newRun = 0;
                             cannotRun = 1;
                         } else if (combinedLoad === load.Heavy || combinedLoad === load.Medium) {
-                            if (base < 3) {    
+                            if (base < 3) {
                                 newSpeed = 1.5;
                             } else if (base >= 3 && base < 6.5) {
                                 newSpeed = 3;
@@ -643,17 +643,17 @@ export function updateModifiedSpeed (callback) {
                         setter.run_cond_applied = cannotRun;
                     }
             }
-            
+
         }
         catch (err) {
             TAS.error("PFEncumbrance.updateModifiedSpeed", err);
-        } 
+        }
         finally {
             if (_.size(setter) > 0) {
                 SWUtils.setWrapper(setter, PFConst.silentParams, callback);
-            } 
+            }
             else if (typeof callback === "function") {
-                callback();    
+                callback();
             }
         }
     });
@@ -721,7 +721,7 @@ function registerEventHandlers  () {
             updateLoadsAndLift();
         }
     }));
-    //changing the metric option triggers weight recalcs
+    //changing the metric option triggers weight recalc
     on("change:use_metrics", TAS.callback(function eventUpdateLoadsAndLiftPlayer(eventInfo) {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -735,6 +735,6 @@ function registerEventHandlers  () {
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api"){
             updateLoadsAndLift();
         }
-    }));    
+    }));
 }
 registerEventHandlers();

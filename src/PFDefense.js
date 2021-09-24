@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -49,11 +49,11 @@ export function updateDefenses ( callback, silently, eventInfo) {
             callback();
         }
     });
-    getAttrs(["AC-ability-mod", "FF-DEX", "AC-penalty", "CMD-penalty", "size", "max-dex", "AC-dodge", 
-    "AC-natural", "AC-deflect", "AC-misc-mod", "buff_AC-total", "buff_Touch-total", "buff_CMD-total", 
-    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc-mod", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD", 
-    "AC-ability", "FF-ability", "CMD-ability", "CMD-ability1", "CMD-ability2", "AC-armor", "AC-shield", 
-    "condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained", 
+    getAttrs(["AC-ability-mod", "FF-DEX", "AC-penalty", "CMD-penalty", "size", "max-dex", "AC-dodge",
+    "AC-natural", "AC-deflect", "AC-misc-mod", "buff_AC-total", "buff_Touch-total", "buff_CMD-total",
+    "CMD-DEX", "FF-CMD-DEX", "CMD-STR", "bab", "CMD-misc-mod", "AC", "Touch", "Flat-Footed", "CMD", "FF-CMD",
+    "AC-ability", "FF-ability", "CMD-ability", "CMD-ability1", "CMD-ability2", "AC-armor", "AC-shield",
+    "condition-Blinded", "condition-Pinned", "condition-Stunned", "condition-Cowering", "condition-Drained",
     "condition-Flat-Footed", "AC-ability-display", "FF-DEX-display", "CMD-DEX-display", "FF-CMD-DEX-display",
     "maxdex-toggle", "nodex-toggle", "uncanny_dodge", "unlock_def_ability", "hd_not_bab", "level",
     "buff_armor-total", "buff_shield-total", "buff_flat-footed-total", "buff_natural-total",
@@ -122,7 +122,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
         bufftouch = 0,
         buffff = 0,
         buffffcmd = 0,
-        buffcmd = 0,        
+        buffcmd = 0,
         setAny = 0,
         setter = {},
         params = {};
@@ -141,7 +141,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
                     cmdFFAbility2 = cmdAbility2;
                 }
             }
-            //changed "DEX-mod" to "acAbilityName" on each IF test below. 
+            //changed "DEX-mod" to "acAbilityName" on each IF test below.
             //maxDex logic applies regardless of the ability picked for AC-ability not just DEX
             maxDex = isNaN(maxDex) ? 99 : maxDex; //cannot do "||0" since 0 is falsy but a valid number
             if (maxDex < 99 && maxDex >= 0){
@@ -186,7 +186,7 @@ export function updateDefenses ( callback, silently, eventInfo) {
             } else if (ffed || (currload===3 && (maxDexSource===0 || maxDexSource===2))) {
                 loseDex=1;
             }
-            
+
             if (immobilized ) {
                 if(currUncanny){currUncanny=0;}
                 noDexShowLimit = 1;
@@ -315,10 +315,10 @@ export function updateDefenses ( callback, silently, eventInfo) {
  * NOTE: due to the way eventInfo.sourceAttribute is populated if the change comes from the autocalc code, the value is
  * lower case, so you must check either BOTH the regular and all lowercase, or just change it to lower case before comparing to be sure
  *
- *@param {string} dropdownField fieldname of dropdown to set 
+ *@param {string} dropdownField fieldname of dropdown to set
  *@param {function} callback callback
  *@param {boolean} silently if true set silently make sure to call updateDefenses after!
- *@param {object} the eventInfo object USED, this is checked for uncanny_dodge flag 
+ *@param {object} the eventInfo object USED, this is checked for uncanny_dodge flag
  *@param {boolean} doNotCallUpdateDefenseAfter if not set call updateDefenses after updating dropdown mod.
  */
 export function setDefenseDropdownMod (dropdownField, callback, silently, eventInfo, doNotCallUpdateDefenseAfter) {
@@ -409,7 +409,7 @@ export function setDefenseDropdownMod (dropdownField, callback, silently, eventI
  */
 export function updateArmor (callback, silently, eventInfo) {
     var done = function () { if (typeof callback === "function") { callback(); } };
-    
+
     getAttrs(defenseArmorFields, function (v) {
         var acp = 0, minAcp = 0, acA = 0, acS = 0, sp = 0, atk = 0, subAC = 0, subD = 0,
         subAcp = 0, nonProf = 0, subsp = 0, maxDex = 99, subE = 0,
@@ -471,8 +471,8 @@ export function updateArmor (callback, silently, eventInfo) {
                 acp=0;
             }
 
-            
-            
+
+
             currACP = parseInt(v.acp, 10) || 0;
             currMaxDex = parseInt(v["max-dex"], 10); //cannot do "||0" since 0 is valid but falsy
             currMaxDex = isNaN(currMaxDex) ? 99 : currMaxDex;
@@ -526,7 +526,7 @@ export function applyConditions (callback, silently,eventInfo) {
             callback();
         }
     });
-    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned", 
+    getAttrs(["AC-penalty", "CMD-penalty", "condition-Blinded", "condition-Cowering", "condition-Stunned",
     "condition-Pinned", "condition-Wounds", "condition-Drained", "has_endurance_feat", "wounds_gritty_mode",
     "condition-Grappled", "condition-Invisible",
     "condition-Paralyzed","condition-Helpless","condition-Prone","condition_defense_notes"], function (v) {
@@ -544,7 +544,7 @@ export function applyConditions (callback, silently,eventInfo) {
         params = {};
         try {
             //if user pressed Grappled or invisible, just skip to notes
-            if (!eventInfo || !(/grappled|invisible/i).test(eventInfo.sourceAttribute)){ 
+            if (!eventInfo || !(/grappled|invisible/i).test(eventInfo.sourceAttribute)){
                 drained = parseInt(v["condition-Drained"], 10) || 0;
                 woundLevel = parseInt(v["condition-Wounds"], 10) || 0;
                 AC = parseInt(v["AC-penalty"], 10) || 0;
@@ -582,9 +582,9 @@ export function applyConditions (callback, silently,eventInfo) {
 			}
 
 			if(defenseNote!==v.condition_defense_notes){
-				setter['condition_defense_notes'] = defenseNote;				
+				setter['condition_defense_notes'] = defenseNote;
 			}
-            
+
         } catch (err) {
             TAS.error("PFDefense.applyConditions:", err);
         } finally {
@@ -602,7 +602,7 @@ export function applyConditions (callback, silently,eventInfo) {
 
 /** migrate from old versions
  * @param {function} callback guaranteed call when done
- * @param {number} oldversion 
+ * @param {number} oldversion
  */
 export function migrate (callback,oldversion){
     var done = _.once(function () {
@@ -644,7 +644,7 @@ export function migrate (callback,oldversion){
 /** recalculate defense grid
  * @param {function} callback guaranteed call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
- * @param {number} oldversion 
+ * @param {number} oldversion
  */
 export var recalculate = TAS.callback(function PFDefenseRecalculate(callback, silently, oldversion) {
     var done = _.once(function () {
@@ -687,7 +687,7 @@ function registerEventHandlers () {
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             updateDefenses(null,null,eventInfo);
         }
-    }));		
+    }));
     on(events.defenseEventsAuto, TAS.callback(function eventUpdateDefensesAuto(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {

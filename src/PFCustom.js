@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -144,7 +144,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 			} catch (err) {
 				TAS.error("PFSheet.recalcDropdowns", err);
 				doneOther();
-			}			
+			}
 		});
 	} catch (err2) {
 		TAS.error("PFSheet.recalcDropdowns OUTER wtf how did this happen?", err2);
@@ -210,7 +210,7 @@ export function migrate(callback,oldversion){
 				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
 				getAttrs(fields,function(v){
 					var setter, tempstr='';
-					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);
 					setter = Object.keys(v).reduce(function(m,a){
 						try{
 							if (v[a] && v[a][0]!=="0"){
@@ -246,7 +246,7 @@ export function migrate(callback,oldversion){
             getAttrs(fields,function(v){
                 var setter;
 				try {
-					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
+					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);
 					setter = Object.keys(v).reduce(function(m,a){
 						var tempstr='';
 						if (v[a] && v[a]!=="0"){
@@ -495,7 +495,7 @@ function registerEventHandlers () {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFUtilsAsync.setDropdownValue('kineticist_level', 'kineticist_level-mod');
 		}
-	}));	
+	}));
 }
 
 registerEventHandlers();
