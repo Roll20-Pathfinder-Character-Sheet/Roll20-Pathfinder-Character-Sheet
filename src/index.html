@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Fixed a bug where Buff's toggled using an API might not trigger all the appropriately related attributes as expected. ie toggling a STR buff via API was only triggering attack bonus and not the damage bonus.</li>
                         <li>Fixed chat menus.  The nested quote workaround required for CSE sheets broke the sheet's chat menu buttons after an update to roll20's code base fixed the original issue.</li>
                         <li>Fixed a bug that displayed the NPC tab regardless of the sheet setting for PC or NPC.</li>
                         <li>Fixed an attribute naming conflict with Roll20 that prevented the "Delete All" option found in repeating rows from functioning.</li>
@@ -369,10 +370,10 @@
                             <div class="custrepeating-border nontable-repeating compendium-drop-target">
                                 <h3 class="offscreen">Buff <span name="attr_name"></span></h3>
                                 <input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
-                                <label class="small-label2" data-i18n-title="toggle-buff" data-i18n-aria-label="toggle-buff" title="When checked, this buff is active and will count towards the totals, which will then affect the rest of the sheet. Also, only the visible/selected buffs will count towards the totals.">
+                                <span class="small-label2" data-i18n-title="toggle-buff" data-i18n-aria-label="toggle-buff" title="When checked, this buff is active and will count towards the totals, which will then affect the rest of the sheet. Also, only the visible/selected buffs will count towards the totals.">
                                     <input type="checkbox" name="attr_enable_toggle" title="@{repeating_buff2_$X_enable_toggle}" value="1" />
                                     <span data-i18n="enabled-chkbox">Enable</span>
-                                </label>
+                                </span>
                                 <label class="small-label2 entry-25p-shrink"><input type="text" name="attr_name" title="@{repeating_buff2_$X_name}" data-i18n-placeholder="name" /><span data-i18n="name">Name</span></label>
                                 <label class="small-label2 sect">
                                     <select name="attr_bufftype" title="@{repeating_buff2_$X_bufftype">
@@ -14971,7 +14972,7 @@
             <span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ </i>v.<input type="text" name="attr_PFSheet_Version" value="0" class="calc number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
         </div>
         <div class="three-columns" style="margin-top:-.5em;">
-            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread6"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
+            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread7"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
             <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
             <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
         </div>
