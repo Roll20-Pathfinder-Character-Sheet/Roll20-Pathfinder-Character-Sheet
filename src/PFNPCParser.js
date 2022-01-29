@@ -50,7 +50,6 @@ function getNPCInit (initstring) {
 	}
 	return numberInit;
 }
-
 /*buildImportantFeatObj - saves feats that require updates to the sheet in an object, no spaces and all lowercase.
  * returns sub objects for feats that only apply to certain attacks, and a criticaldamage subobject.
  * for instance:::  obj.weaponfinesse=1 obj.criticaldamage.bleedingcritical:1 obj.longsword.weaponfocus:1
@@ -874,7 +873,6 @@ function parseAttacks (atkstr, atktypestr, cmbval) {
 	}
 	return attacksouter;
 }
-
 function parseSkillRacialBonuses (racialstr) {
 	//abilitymods = modify default ability score for a skill
 	var abilitieslower = _.map(PFAbilityScores.abilities, function (ab) {
@@ -2384,7 +2382,7 @@ function createSkillEntries (skills, racial, abilityScores, importantFeats, clas
 						ranks -= (parseInt(racial.skillmods[skill], 10)||0);
 						if(skill==='Stealth'){TAS.debug("skilltot 4 minus  "+(parseInt(racial.skillmods[skill], 10)||0)+" =:"+ranks);}
 					}
-//					if(importantFeats && importantFeats.skillfocuses && _.contains(importantFeats.skillfocuses,skill)){
+			// 	if(importantFeats && importantFeats.skillfocuses && _.contains(importantFeats.skillfocuses,skill)){
 					if (parseInt(setter[skill + "-feat"], 10) > 0) {
 						ranks -= 3;
 						//ranks -= (parseInt(memo[skill + "-feat"], 10)||0);
@@ -2439,7 +2437,6 @@ function createInitEntries (baseInit, abilityScores, importantFeats,setter) {
 		return setter;
 	}
 }
-
 function createHPAbilityModEntry (abilityScores, isUndead, setter) {
 	try {
 		setter=setter||{};
@@ -2665,7 +2662,6 @@ function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, l
 		setter['ranged2_bab']='bab';
 		setter['ranged2_bab-mod']=bab;
 
-
 		if(importantFeats.defensivecombattraining){
 			setter['cmb_bab']='level';
 			setter['cmb_bab-mod']=level;
@@ -2731,9 +2727,7 @@ function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, l
 	} finally {
 		return attackGrid;
 	}
-
 }
-
 function parseAndCreateAttacks (abilityScores, sizeMap, importantFeats, bab, attackGrid, reachObj, meleeAtkStr,rangedAtkStr,setter) {
 	var attacklist=[], matches,	tempstr='';
 	try {
@@ -2780,14 +2774,12 @@ function createFeatEntries (featlist,race,level,setter) {
 		return memo;
 	}, setter);
 }
-
 function parseFeats (featstring2) {
 	if (featstring2.slice(0,5).toLowerCase()==='feats'){
 		featstring2 = featstring2.slice(5);
 	}
 	return SWUtils.splitByCommaIgnoreParens(featstring2);
 }
-
 function createFeatureEntries (abilitylist, abilityScoreMap, race, level, setter) {
 	var attrs = {}, creatureRace = "", tempint=0,dc=0,abilityMod=0,charlevel=0,calcDC=0;
 	try {
@@ -3011,7 +3003,6 @@ function createClassEntries (characterClass, attrs,setter) {
 		return setter;
 	}
 }
-
 /**************************** THE BIG ONE ***********************/
 /*importFromCompendium - imports all stuff*/
 export function importFromCompendium (eventInfo, callback, errorCallback) {
@@ -3069,7 +3060,7 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				cr = SWUtils.trimBoth(cr);
 				setter["npc-cr"] = cr;
 			}
-//			setter["PC-Whisper"] = "/w gm";
+			//setter["PC-Whisper"] = "/w gm";
 			//Creature Race and Type *****************************************************
 			//undead means use CHA instead of CON
 			if (v.type_compendium) {
@@ -3204,7 +3195,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				setter={};
 			}
 
-
 			parseAndCreateAttacks (abilityScores, sizeMap, importantFeats, bab, attackGrid, reachObj, v["npc-melee-attacks-text"],v["npc-ranged-attacks-text"],setter);
 			if(_.size(setter)){
 				_.extend(allSoFar,setter);
@@ -3321,7 +3311,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 				//TAS.debug("after createFeatureEntries attrnum:" + _.size(setter));
 			}
 
-
 			//TAS.debug("before skills attrnum:" + _.size(setter));
 			// skills *********************************************************
 			if (v.skills_compendium) {
@@ -3366,7 +3355,6 @@ export function importFromCompendium (eventInfo, callback, errorCallback) {
 		}
 	});
 }
-
 // PARSE CREATE NPC MONSTER
 // change:npc_compendium_category
 on("change:npc_import_now", TAS.callback(function eventParseMonsterImport(eventInfo) {

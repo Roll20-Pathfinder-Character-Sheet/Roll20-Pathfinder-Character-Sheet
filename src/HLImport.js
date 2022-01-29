@@ -1322,7 +1322,7 @@ export function importCharacter (characterObj)
 
 	attrs["npc-type"] = arrayify(characterObj.types.type)[0]._name;
 	if (!_.isUndefined(characterObj.subtypes.subtype))
-		 attrs["npc-type"] = attrs["npc-type"] + " ("+buildList(arrayify(characterObj.subtypes.subtype), "_name")+")";
+		attrs["npc-type"] = attrs["npc-type"] + " ("+buildList(arrayify(characterObj.subtypes.subtype), "_name")+")";
 
 	attrs["character_name"] = characterObj._name;
 	// NPC Only
