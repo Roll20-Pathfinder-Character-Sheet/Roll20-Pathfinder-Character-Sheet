@@ -1183,6 +1183,7 @@ export function importCharacter (characterObj)
 	var armor = _.reject(arrayify(characterObj.defenses.armor || {}),function(item) { return _.isUndefined(item._name); });
 	var weapons = _.reject(arrayify(characterObj.melee.weapon || {}).concat(arrayify(characterObj.ranged.weapon || {})),function(item) { return _.isUndefined(item._name); });
 
+
 	// "Tracked Resources" is a list of uses, either a quantity of items, charges, or uses per day
 	var resources = _.object(_.map(characterObj.trackedresources.trackedresource, function (resource) { return [resource._name,resource];}));
 
@@ -1324,6 +1325,14 @@ export function importCharacter (characterObj)
 		 attrs["npc-type"] = attrs["npc-type"] + " ("+buildList(arrayify(characterObj.subtypes.subtype), "_name")+")";
 
 	attrs["character_name"] = characterObj._name;
+	// NPC Only
+	if (characterObj._role !== "pc") {
+		attrs["is_npc"] = 1;
+		attrs["tab"] = 8;
+		attrs["environment"] = arrayify(characterObj.npc.ecology.npcinfo)[0].text;
+		attrs["organization"] = arrayify(characterObj.npc.ecology.npcinfo)[1].text;
+		attrs["other_items_treasure"] = arrayify(characterObj.npc.ecology.npcinfo)[2].text;
+	}
 	attrs["player-name"] = characterObj._playername;
 	attrs["deity"] = characterObj.deity._name;
 	attrs["race"] = characterObj.race._racetext.substr(0,1).toUpperCase()+characterObj.race._racetext.substr(1,1000);
@@ -1335,7 +1344,8 @@ export function importCharacter (characterObj)
 	attrs["hair"] = characterObj.personal._hair;
 	attrs["eyes"] = characterObj.personal._eyes;
 	attrs["skin"] = characterObj.personal._skin;
-	attrs["character_description"] = characterObj.personal.description;
+	// PC/NPC
+	attrs["character_description"] = (characterObj._role !== "pc") ? characterObj.npc.description : characterObj.personal.description;
 
 	attrs["npc-cr"] = characterObj.challengerating._text.replace("CR ","");
 	attrs["npc-xp"] = characterObj.xpaward._value;
