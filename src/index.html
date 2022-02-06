@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Fixed the Spell SaveDC column not calculating correctly.(Thanks Roseilla V.)</li>
                         <li>Fixed a bug where Buff's toggled using an API might not trigger all the appropriately related attributes as expected. ie toggling a STR buff via API was only triggering attack bonus and not the damage bonus.</li>
                         <li>Fixed chat menus.  The nested quote workaround required for CSE sheets broke the sheet's chat menu buttons after an update to roll20's code base fixed the original issue.</li>
                         <li>Fixed a bug that displayed the NPC tab regardless of the sheet setting for PC or NPC.</li>
@@ -9151,7 +9152,7 @@
                                     </div>
                                     <div class="table-group">
                                         <div class="table-row">
-                                            <span class="table-cell"><input title="@{spellclass-0-level-0-savedc}" type="number" name="attr_spellclass-0-level-0-savedc" value="10" class="calc " readonly /></span>
+                                            <span class="table-cell"><input title="@{spellclass-0-level-0-savedc}" type="number" name="attr_spellclass-0-level-0-savedc" value="10" class="calc" readonly /></span>
                                             <span class="table-cell right-border">0</span>
                                             <span class="table-cell"><input title="@{spellclass-0-level-0-spells-per-day}" type="number" name="attr_spellclass-0-level-0-spells-per-day" value="0" /></span>
                                             <span class="table-cell noshow"></span>
@@ -9626,7 +9627,7 @@
                                     </div>
                                     <div class="table-group">
                                         <div class="table-row">
-                                            <span class="table-cell"><input title="@{spellclass-1-level-0-savedc}" type="number" name="attr_spellclass-1-level-0-savedc" value="10" class="calc " readonly /></span>
+                                            <span class="table-cell"><input title="@{spellclass-1-level-0-savedc}" type="number" name="attr_spellclass-1-level-0-savedc" value="10" class="calc" readonly /></span>
                                             <span class="table-cell right-border">0</span>
                                             <span class="table-cell"><input title="@{spellclass-1-level-0-spells-per-day}" type="number" name="attr_spellclass-1-level-0-spells-per-day" value="0" /></span>
                                             <span class="table-cell noshow"></span>
@@ -10101,7 +10102,7 @@
                                     </div>
                                     <div class="table-group">
                                         <div class="table-row">
-                                            <span class="table-cell"><input title="@{spellclass-2-level-0-savedc}" type="number" name="attr_spellclass-2-level-0-savedc" value="10" class="calc " readonly /></span>
+                                            <span class="table-cell"><input title="@{spellclass-2-level-0-savedc}" type="number" name="attr_spellclass-2-level-0-savedc" value="10" class="calc" readonly /></span>
                                             <span class="table-cell right-border">0</span>
                                             <span class="table-cell"><input title="@{spellclass-2-level-0-spells-per-day}" type="number" name="attr_spellclass-2-level-0-spells-per-day" value="0" /></span>
                                             <span class="table-cell noshow"></span>
