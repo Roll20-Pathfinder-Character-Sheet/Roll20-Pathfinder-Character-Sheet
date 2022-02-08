@@ -1706,7 +1706,7 @@ function registerEventHandlers () {
 				}
 			},true);
 	}));
-	on("change:repeating_weapon:attack-type-mod change:repeating_weapon:attack-mod", TAS.callback(function eventUpdateRepeatingWeaponAttackSheet(eventInfo) {
+	on("change:repeating_weapon:attack-type-mod change:repeating_weapon:attack-mod", TAS.callback(function 						eventUpdateRepeatingWeaponAttackSheet(eventInfo) {
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateRepeatingWeaponAttackAsync(null, eventInfo);
@@ -1720,7 +1720,7 @@ function registerEventHandlers () {
 	}));
 	on("change:repeating_weapon:damage-ability", TAS.callback(function eventHandleRepeatingDamageDropdown(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" || eventInfo.sourceType === "sheetworker") {
 			PFUtilsAsync.setRepeatingDropdownValue("weapon", null, "damage-ability", "damage-ability-mod");
 		}
 	}));

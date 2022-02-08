@@ -1,11 +1,10 @@
 'use strict';
-import _ from 'underscore';
-import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
-import {PFLog, PFConsole} from './PFLog';
-import * as PFSheet from './PFSheet';
-import * as PFHealth from  './PFHealth';
-import * as PFSpellOptions from './PFSpellOptions';
-import * as PFSpells from './PFSpells';
+import _ from "underscore";
+import TAS from "exports-loader?TAS!./TheAaronSheet.js";
+import {PFLog, PFConsole} from "./PFLog";
+import * as PFHealth from "./PFHealth";
+import * as PFSpellOptions from "./PFSpellOptions";
+import * as PFSpells from "./PFSpells";
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -304,12 +303,24 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				if (_.contains(weaponNames, weaponCompareName))
 				{
 					var weaponObj = weapons[_.indexOf(weaponNames,weaponCompareName)];
-					if (weaponObj._damage != "As Spell")
+					if (weaponObj._damage !== "As Spell")
 					{
-						attrs[repeatPrefix+"_item-wpenhance"] = parseNum(weaponObj._name.match(/\+\d+/));
+						attrs[repeatPrefix + "_item-wpenhance"] = parseNum(weaponObj._name.match(/\+\d+/));
+
+						// determine if weapon this is melee or ranged
+						const weaponCategory = weaponObj._categorytext;
+						let weaponIsMelee = 0;
+						let weaponIsThrown = 0;
+						if (/Melee/.test(weaponCategory)) {
+							weaponIsMelee = 1;
+							if (/Thrown/.test(weaponCategory)) {
+							weaponIsThrown = 1;
+							}
+						}
+						attrs[repeatPrefix + "_item-attack-type"] = weaponIsMelee && !weaponIsThrown ? "attk-melee" : "attk-ranged";
 
 						if (!_.isUndefined(weaponObj._typetext))
-							attrs[repeatPrefix+"_item-dmg-type"] = weaponObj._typetext;
+							attrs[repeatPrefix + "_item-dmg-type"] = weaponObj._typetext;
 
 						// Check to see if item name includes any words that indicate this is a masterwork item
 						if ((weaponCompareName.toLowerCase().indexOf("masterwork") !== -1) || _.intersection(masterworkWords,item._name.toLowerCase().split(" ")).length > 0)
@@ -350,12 +361,13 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				if (_.contains(armorNames, armorCompareName))
 				{
 					var armorObj = armor[_.indexOf(armorNames,armorCompareName)];
-
+					var enhancement = 0;
+					var ACbonus = 0;
 					// Item is a shield
 					if (nameIsShield(item._name))
 					{
-						var enhancement = parseNum(armorCompareName.match(/\+\d+/));
-						var ACbonus  = parseNum(armorObj._ac) - enhancement;
+						enhancement = parseNum(armorCompareName.match(/\+\d+/));
+						ACbonus  = parseNum(armorObj._ac) - enhancement;
 						attrs[repeatPrefix+"_item-acbonus"] = ACbonus;
 						attrs[repeatPrefix+"_item-acenhance"] = enhancement;
 						if (!_.isUndefined(armorObj._equipped) && armorObj._equipped === "yes")
@@ -369,8 +381,8 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 					}
 					else
 					{
-						var enhancement = parseNum(item._name.match(/\+\d+/));
-						var ACbonus  = parseNum(armorObj._ac) - enhancement;
+						enhancement = parseNum(item._name.match(/\+\d+/));
+						ACbonus  = parseNum(armorObj._ac) - enhancement;
 						attrs[repeatPrefix+"_item-acbonus"] = ACbonus;
 						attrs[repeatPrefix+"_item-acenhance"] = enhancement;
 						if (!_.isUndefined(armorObj._equipped) && armorObj._equipped === "yes")
@@ -389,6 +401,108 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 				}
 			});
 			setAttrs(attrs,{silent: true});
+		});
+	});
+}
+
+export function importAttacks (weapons, characterObj) {
+	let repeatPrefix = "repeating_weapon";
+	getSectionIDs(repeatPrefix, function(idarray) {
+		const weaponNameAttrs = _.union(_.map(idarray, function (id) {
+				return repeatPrefix + "_" + id + "_name";
+			})
+		);
+		getAttrs(weaponNameAttrs, function(names) {
+			const weaponIDList = _.object(_.map(names,function(name,attr) {
+				return [attr.substring(repeatPrefix.length+1,(attr.indexOf("_name"))),name];
+			}));
+			let weaponsList = [];
+			let attrs = {};
+			const weaponNames = _.map(weapons, function(obj) { return obj._name; });
+			// List of words that indicate an item is masterwork
+			const masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"];
+			_.each(weapons,function(v)
+			{
+				const row = getOrMakeItemRowID(weaponIDList,v._name);
+				if (!_.isUndefined(weaponIDList[row])) {
+					delete weaponIDList[row];
+				}
+				weaponsList.push(v._name);
+
+				repeatPrefix = "repeating_weapon_" + row;
+
+				attrs[repeatPrefix + "_name"] = v._name;
+
+				// determine if weapon this is melee or ranged
+				const weaponCategory = v._categorytext;
+				let weaponIsMelee = 0;
+				let weaponIsThrown = 0;
+				if (/Melee/.test(weaponCategory)) {
+					weaponIsMelee = 1;
+					if (/Thrown/.test(weaponCategory)) {
+					weaponIsThrown = 1;
+					}
+				}
+				else {
+					attrs[repeatPrefix + "_isranged"] = 1;
+				}
+
+				attrs[repeatPrefix + "_attack-type"] = weaponIsMelee && !weaponIsThrown ? "attk-melee" : "attk-ranged";
+				attrs[repeatPrefix + "_damage-ability"] = (weaponIsMelee || weaponIsThrown) ? "STR-mod" : "DEX-mod";
+
+				// check if this is a weapon
+				let weaponCompareName = v._name;
+				// If this is a shield (but not a klar), the attack name will be "Heavy/light shield bash"
+				if (v._name.toLowerCase().indexOf("shield") !== -1) {
+					let attackName;
+					if (v._name.toLowerCase().indexOf("heavy" !== -1)) {
+						attackName = "heavy shield bash";
+					}
+					else {
+						attackName = "light shield bash";
+					}
+					weaponCompareName = (_.find(weaponNames,function(name) { if (name.toLowerCase().indexOf(attackName) !== -1) return true; return false;}) || v._name);
+				}
+				if (_.contains(weaponNames, weaponCompareName)) {
+					const weaponObj = weapons[_.indexOf(weaponNames,weaponCompareName)];
+					if (weaponObj._damage !== "As Spell") {
+						attrs[repeatPrefix + "_enhance"] = parseNum(weaponObj._name.match(/\+\d+/));
+
+						if (!_.isUndefined(weaponObj._typetext)) {
+							attrs[repeatPrefix + "_type"] = weaponObj._typetext;
+						}
+
+						// Check to see if weapon name includes any words that indicate masterwork
+						if ((weaponCompareName.toLowerCase().indexOf("masterwork") !== -1) || _.intersection(masterworkWords, v._name.toLowerCase().split(" ")).length > 0) {
+							attrs[repeatPrefix + "_masterwork"] = 1;
+						}
+
+						if (!_.isUndefined(weaponObj._damage)) {
+							const weaponDice = weaponObj._damage.match(/\d+d\d+/);
+							if (!_.isNull(weaponDice) && weaponDice.length > 0) {
+								attrs[repeatPrefix + "_damage-dice-num"] = parseNum(weaponDice[0].split("d")[0]);
+								attrs[repeatPrefix + "_damage-die"] = parseNum(weaponDice[0].split("d")[1]);
+							}
+						}
+
+						if (!_.isUndefined(weaponObj._crit)) {
+							const critArray = weaponObj._crit.split("/");
+							if (critArray.length > 1) {
+								attrs[repeatPrefix + "_crit-target"] = parseNum(critArray[0].match(/\d+/)[0]);
+							}
+							else {
+								attrs[repeatPrefix + "_crit-target"] = 20;
+							}
+							attrs[repeatPrefix + "_crit-multiplier"] = parseNum(critArray[critArray.length-1].replace(/\D/g,""));
+						}
+
+						if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue)) {
+							attrs[repeatPrefix + "_range"] = parseNum(weaponObj.rangedattack._rangeincvalue);
+						}
+					}
+				}
+			});
+			setAttrs(attrs);
 		});
 	});
 }
@@ -1134,7 +1248,7 @@ export function importCharacter (characterObj)
 {
 	var attrs = {};
 
-	importAbilityScores(attrs,characterObj.attributes.attribute);
+	importAbilityScores(attrs, characterObj.attributes.attribute);
 	importSaves(attrs,characterObj.saves);
 	var classes, spellClasses, archetypes = {};
 	// Class objects won't exist for creatures w/o class levels, such as animals
@@ -1183,7 +1297,6 @@ export function importCharacter (characterObj)
 	var armor = _.reject(arrayify(characterObj.defenses.armor || {}),function(item) { return _.isUndefined(item._name); });
 	var weapons = _.reject(arrayify(characterObj.melee.weapon || {}).concat(arrayify(characterObj.ranged.weapon || {})),function(item) { return _.isUndefined(item._name); });
 
-
 	// "Tracked Resources" is a list of uses, either a quantity of items, charges, or uses per day
 	var resources = _.object(_.map(characterObj.trackedresources.trackedresource, function (resource) { return [resource._name,resource];}));
 
@@ -1193,6 +1306,8 @@ export function importCharacter (characterObj)
 	// "Specials" could include items, so we need to filter them out
 	var itemNames = _.map(items, function(obj) { return obj._name; });
 	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special),arrayify(characterObj.defensive.special)), function(obj) { return _.contains(itemNames, obj._name); });
+
+	importAttacks(weapons, characterObj);
 
 	importItems(items,resources,armorPenalties,armor,weapons);
 
@@ -1257,8 +1372,6 @@ export function importCharacter (characterObj)
 	});
 
 	attrs["experience"] = parseFloat(characterObj.xp._total);
-
-	attrs["class-0-bab"] = attrs["bab"] = attrs["melee_bab-mod"] = attrs["melee2_bab-mod"] = attrs["ranged_bab-mod"] = attrs["ranged2_bab-mod"] = attrs["melee_bab-mod"] = attrs["cmb_bab-mod"] = attrs["cmb2_bab-mod"] = parseNum(characterObj.attack._baseattack);
 
 	// Set max hp; remove Con mod from hp first, since the sheet will add that in
 	// Since the XML doesn't break this down by class, add it all to class 0
@@ -1352,14 +1465,31 @@ export function importCharacter (characterObj)
 
 	attrs["speed-base"] = attrs["speed-modified"] = parseNum(characterObj.movement.speed._value);
 
-	attrs["cmb"] = parseNum(characterObj.maneuvers._total);
 	attrs["cmd"] = parseNum(characterObj.maneuvers._cmd);
 	attrs["ff-cmd"] = parseNum(characterObj.maneuvers._cmdflatfooted);
 	attrs["cmd-str"] = attrs["STR-mod"]; // CMB/CMD doesn't have any breakdown in XML, so have to assume still using STR
 	attrs["cmd-misc"] = attrs["cmd"] - 10 - attrs["AC-ability-mod"] - attrs["cmd-str"] - attrs["CMD-size"] - attrs["AC-dodge"] - attrs["AC-deflect"] - attrs["bab"];
 
-	attrs["attk-melee"] = parseNum( characterObj.attack._meleeattack.split("/")[0]);
-	attrs["attk-ranged"] = attrs["attk-melee2"] = parseNum( characterObj.attack._rangedattack.split("/")[0]);	// Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
+	//reset
+	attrs["melee-ability"] = "";
+	attrs["ranged-ability"] = "";
+	attrs["CMB-ability"] = "";
+
+	attrs["cmb"] = parseNum(characterObj.maneuvers._cmb);
+	attrs["attk-melee"] = parseNum(characterObj.attack._meleeattack.split("/")[0]);
+	attrs["attk-melee2"] = parseNum(characterObj.attack._rangedattack.split("/")[0]);	// Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
+	attrs["attk-ranged"] = parseNum(characterObj.attack._rangedattack.split("/")[0]);
+
+	let bab = parseNum(characterObj.attack._baseattack);
+	attrs["class-0-bab"] = bab;
+	attrs["bab"] = bab;
+	attrs["melee_bab-mod"] = bab;
+	attrs["melee2_bab-mod"] = bab;
+	attrs["ranged_bab-mod"] = bab;
+	attrs["ranged2_bab-mod"] = bab;
+	attrs["melee_bab-mod"] = bab;
+	attrs["cmb_bab-mod"] = bab;
+	attrs["cmb2_bab-mod"] = bab;
 
 	if (!_.isUndefined(characterObj.favoredclasses.favoredclass))
 	{
@@ -1395,12 +1525,11 @@ export function importCharacter (characterObj)
 			attrs["faction_notes"] = faction._name;
 		}
 	}
-
 	setAttrs(attrs,{silent: true});
 }
 export function registerEventHandlers () {
 	on("change:herolab_import", function(eventInfo) {
-		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType !== "player")
 			return;
 		getAttrs(["herolab_import"], function(values) {
@@ -1418,6 +1547,16 @@ export function registerEventHandlers () {
 			catch(err) {console.log(err);setAttrs({herolab_import: err.message},{silent: true});}
 		});
 	});
+
+	on("change:repeating_weapons", function(eventInfo) {
+			//Do something here...
+			//event attribute names need to be LOWER CASE!
+			//eventInfo.previousValue = original value of the attribute that triggered this event, before being changed.
+			//eventInfo.newValue = current value of the attribute that triggered this event, having been changed.
+			//eventInfo.sourceAttribute = full name (including repeating ID) of the attribute that originally triggered this event.
+			//eventInfo.sourceType The agent that triggered the event.
+	});
+
 }
 registerEventHandlers();
 PFConsole.log('   HLImport module loaded         ');
