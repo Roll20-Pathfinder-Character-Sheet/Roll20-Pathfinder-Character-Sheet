@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Fixed mythic button clickable area.(Thanks Steve)</li>
                         <li>Fixed the Spell SaveDC column not calculating correctly.(Thanks Roseilla V.)</li>
                         <li>Fixed a bug where Buff's toggled using an API might not trigger all the appropriately related attributes as expected. ie toggling a STR buff via API was only triggering attack bonus and not the damage bonus.</li>
                         <li>Fixed chat menus.  The nested quote workaround required for CSE sheets broke the sheet's chat menu buttons after an update to roll20's code base fixed the original issue.</li>
@@ -8319,11 +8320,20 @@
                                 <input type="checkbox" value="perweek" name="attr_frequency" class="or4-show noshow" />
                                 <input type="checkbox" value="permonth" name="attr_frequency" class="or4-show noshow" />
                                 <input type="checkbox" value="other" name="attr_frequency" class="or4-show noshow" />
-                                <label class="small-label2 or4-sect"><input class="narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="" /><span class="nowrap-over" data-i18n="number-prepared-abbrv"># Left</span></label>
+                                <label class="small-label2 or4-sect">
+                                    <input class="narrow-numbers" title="@{repeating_ability_$X_used}" type="number" name="attr_used" value="" />
+                                    <span class="nowrap-over" data-i18n="number-prepared-abbrv"># Left</span>
+                                </label>
                                 <label class="divider-db-lg or4-sect">/</label>
                                 <input type="checkbox" name="attr_used_max_error" class="error-mshow" value="1" />
-                                <label class="small-label2 highlight or4-sect"><input class="narrow-numbers calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="" readonly /><span class="nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-10p-shrink" style="height:auto;"><textarea class="macro-text-inline both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place"></textarea><span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+                                <label class="small-label2 highlight or4-sect">
+                                    <input class="narrow-numbers calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="" readonly />
+                                    <span class="nowrap-over" data-i18n="maximum-abbrv">Max</span>
+                                </label>
+                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-10p-shrink" style="height:auto;">
+                                    <textarea class="macro-text-inline both" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place"></textarea>
+                                    <span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span>
+                                </label>
                                 <div style="display:none;">
                                     <input type="text" name="attr_compendium_category" accept="Category" value="" />
                                     <input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -8637,20 +8647,32 @@
                         <input class="deletebutton cssbutton deletesect-show" type="checkbox" name="attr_delete_rep_mythic-feat_btn" value="1" data-i18n-title="delete-mythic-feat" data-i18n-aria-label="delete-mythic-feat-must-confirm-next-checkbox" /><span></span><label class="deletesect allrows-note"><input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_mythic-feat" data-i18n-aria-label="confirm-delete-mythic-feat" data-i18n-title="confirm-delete-mythic-feat" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
                         <div class="repeating-fields table">
                             <fieldset class="repeating_mythic-feat">
-                                <div class="table-repeating">
+                                <div class="custrepeating-border nontable-repeating">
                                     <span class="error"><span class="pictos">!</span><span data-i18n="error-msg1">Error! You must delete this row before editing any items in this section.</span></span>
-                                    <input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span class="table-cell"></span>
-                                    <span class="table-cell repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_mythic-feat_$X_roll}" value="@{macro-text}"></button></span>
-                                    <span class="table-cell small-label hide-readonly" style="width:2.5em;"><input type="checkbox" name="attr_showinmenu" title="@{repeating_mythic-feat_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></span>
+                                    <input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
+                                    <span class="small-label2 repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_mythic-feat_$X_roll}" value="@{macro-text}"></button></span>
+                                    <label class="small-label2"><input type="checkbox" name="attr_showinmenu" title="@{repeating_mythic-feat_$X_showinmenu}" value="1" /><span data-i18n="show-in-menu" data-i18n-title="show-in-menu-title" data-i18n-aria-label="show-in-menu-title">Show</span></label>
                                     <input type="hidden" value="mythic-feats" name="attr_rule_category" />
                                     <input type="hidden" value="" name="attr_ability_type" />
-                                    <span class="table-cell small-label"><input title="@{repeating_mythic-feat_$X_name}" type="text" name="attr_name" data-i18n-placeholder="mythic-feat-name"><br><span data-i18n="name">Name</span></span>
-                                    <span class="table-cell small-label entry-30p-shrink"><textarea class="inline-textarea" title="@{repeating_mythic-feat_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea><br><span data-i18n="short-description-abbrv">Short Desc</span></span>
-                                    <span class="table-cell small-label" style="width:0.1%;"><input title="@{repeating_mythic-feat_$X_used}" type="number" name="attr_used" value="0" /><br><span data-i18n="uses">Uses</span></span>
-                                    <span class="divider-lg" style="width:0.1%;">/</span>
+                                    <label class="small-label2 entry-20p-shrink"><input title="@{repeating_mythic-feat_$X_name}" type="text" name="attr_name" data-i18n-placeholder="mythic-feat-name"><span data-i18n="name">Name</span></label>
+                                    <label class="small-label2 entry-30p-shrink" style="height:auto;">
+                                        <textarea class="inline-textarea" title="@{repeating_mythic-feat_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea>
+                                        <span data-i18n="short-description-abbrv">Short Desc</span>
+                                    </label>
+                                    <label class="small-label2 or4-sect">
+                                        <input title="@{repeating_mythic-feat_$X_used}" type="number" name="attr_used" value="0" />
+                                        <span class="nowrap-over" data-i18n="uses">Uses</span>
+                                    </label>
+                                    <label class="divider-db-lg or4-sect">/</label>
                                     <input type="checkbox" name="attr_used_max_error" class="error-mshow" value="1" />
-                                    <span class="table-cell small-label highlight" style="width:0.1%;"><input title="@{repeating_mythic-feat_$X_used|max}" type="number" name="attr_used_max" value="0" class="calc" readonly /><br><span data-i18n="maximum-abbrv">Max</span></span>
-                                    <span class="table-cell small-label sect hide-readonly highlight" style="width:7%;"><textarea class="macro-text-inline both" title="@{repeating_mythic-feat_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place"></textarea><br><span data-i18n="maximum-calculation-abbrv">Max Calc</span></span>
+                                    <label class="small-label2 highlight or4-sect">
+                                        <input title="@{repeating_mythic-feat_$X_used|max}" type="number" name="attr_used_max" value="0" class="calc" readonly />
+                                        <span class="nowrap-over" data-i18n="maximum-abbrv">Max</span>
+                                    </label>
+                                    <label class="small-label2 sect highlight hide-readonly entry-10p-shrink or4-sect" style="height:auto;">
+                                        <textarea class="macro-text-inline both" title="@{repeating_mythic-feat_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place"></textarea>
+                                        <span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span>
+                                    </label>
                                     <div class="sect expand hide-readonly">
                                         <input type="checkbox" class="showarrow desc-show" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" aria-label="Show Description" name="attr_description-show" value="1" />
                                         <label class="showsect desc-showlabel" data-i18n="description">Description</label>
