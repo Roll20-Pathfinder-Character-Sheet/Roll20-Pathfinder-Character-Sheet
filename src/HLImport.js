@@ -15,7 +15,6 @@ export function parseNum (num)
 
 export function bonusSpellSlots (abilMod,spellLevel) { return Math.max(0, Math.floor((abilMod + 4 - spellLevel) / 4)); }
 
-
 export function buildList (objArray, propName) { return _.map(objArray, function (item) { return item[propName]; }).join(", "); }
 
 export function getSizeMod (size)
@@ -224,8 +223,14 @@ export function importFeats (attrs,feats,featIDList,resources)
 			attrs[repeatPrefix+"_"+row+"_name"] = feat._name + " x" + taken;
 		else
 			attrs[repeatPrefix+"_"+row+"_name"] = feat._name;
-		attrs[repeatPrefix+"_"+row+"_description"] = feat.description;
-		attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "feats";
+			attrs[repeatPrefix + "_" + row + "_description"] = feat.description;
+		// doing some additional sorting of feats
+		if (feat._profgroup === "yes") {
+			attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "class-features";
+		}
+		else {
+			attrs[repeatPrefix+"_"+row+"_tabcat"] = attrs[repeatPrefix+"_"+row+"_rule_category"] = "feats";
+		}
 		skipList.push(feat._name);
 		if (_.contains(Object.keys(resources),feat._name))
 			attrs[repeatPrefix+"_"+row+"_max-calculation"] = resources[feat._name]._max;
@@ -407,7 +412,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 	});
 }
 
-export function importAttacks (weapons, characterObj) {
+export function importAttacks (weapons) {
 	let repeatPrefix = "repeating_weapon";
 	getSectionIDs(repeatPrefix, function(idarray) {
 		const weaponNameAttrs = _.union(_.map(idarray, function (id) {
@@ -1310,12 +1315,20 @@ export function importCharacter (characterObj)
 	var itemNames = _.map(items, function(obj) { return obj._name; });
 	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special),arrayify(characterObj.defensive.special)), function(obj) { return _.contains(itemNames, obj._name); });
 
-	importAttacks(weapons, characterObj);
+	importAttacks(weapons);
 
 	importItems(items,resources,armorPenalties,armor,weapons);
 
 	getSectionIDs("repeating_ability", function(idarray) {
-		var abilityNameAttrs = _.union(_.map(idarray,function(id) { return "repeating_ability_"+id+"_name"; 		}),_.map(idarray,function(id) { return "repeating_ability_"+id+"_rule_category"; }));
+		var abilityNameAttrs = _.union(
+			_.map(idarray, function (id) {
+				return "repeating_ability_" + id + "_name";
+			}),
+			_.map(idarray, function (id) {
+				return "repeating_ability_" + id + "_rule_category";
+			})
+		);
+
 		getAttrs(abilityNameAttrs, function(abilityAttrs) {
 			var abilityObjList = {};
 			var abilityKeys = Object.keys(abilityAttrs);
@@ -1327,14 +1340,14 @@ export function importCharacter (characterObj)
 					rowID = abilityKey.substring("repeating_ability_".length,(abilityKey.indexOf("_name")));
 					if (_.isUndefined(abilityObjList[rowID]))
 						abilityObjList[rowID] = {rowID: rowID};
-					abilityObjList[rowID].name = abilityAttrs[abilityKey];
+						abilityObjList[rowID].name = abilityAttrs[abilityKey];
 				}
 				if (abilityKey.indexOf("_rule_category") !== -1)
 				{
 					rowID = abilityKey.substring("repeating_ability_".length,(abilityKey.indexOf("_rule_category")));
 					if (_.isUndefined(abilityObjList[rowID]))
 						abilityObjList[rowID] = {rowID: rowID};
-					abilityObjList[rowID].rulecategory = abilityAttrs[abilityKey];
+						abilityObjList[rowID].rulecategory = abilityAttrs[abilityKey];
 				}
 			});
 
@@ -1391,6 +1404,7 @@ export function importCharacter (characterObj)
 		attrs["add_race"] = 1;
 		attrs["npc-hd-num"] = racialHD;
 	}
+	attrs["HP"] = parseNum(characterObj.health._currenthp);
 
 	var size = getSizeMod(characterObj.size._name);
 	attrs["size"] = size;
