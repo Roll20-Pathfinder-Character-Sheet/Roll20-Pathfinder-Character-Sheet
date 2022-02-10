@@ -5,6 +5,7 @@ import {PFLog, PFConsole} from "./PFLog";
 import * as PFHealth from "./PFHealth";
 import * as PFSpellOptions from "./PFSpellOptions";
 import * as PFSpells from "./PFSpells";
+import PFDB from "./PFDB";
 export function parseNum (num)
 {
 	if (_.isUndefined(num) || num === "")
@@ -263,7 +264,8 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 			var weaponNames = _.map(weapons, function(obj) { return obj._name; });
 
 			// List of words that indicate an item is masterwork
-			var masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"];
+			var masterworkWords = PFDB.masterworkWords;
+
 			_.each(items,function(item)
 			{
 				var row = getOrMakeItemRowID(itemIDList,item._name);
@@ -420,7 +422,7 @@ export function importAttacks (weapons, characterObj) {
 			let attrs = {};
 			const weaponNames = _.map(weapons, function(obj) { return obj._name; });
 			// List of words that indicate an item is masterwork
-			const masterworkWords = ["mithral","adamantine","angelskin","darkleaf","darkwood","dragonhide","eel","fire-forged","frost-forged","greenwood","paueliel"];
+			const masterworkWords = PFDB.masterworkWords;
 			_.each(weapons,function(v)
 			{
 				const row = getOrMakeItemRowID(weaponIDList,v._name);
@@ -502,6 +504,7 @@ export function importAttacks (weapons, characterObj) {
 					}
 				}
 			});
+			//removed silent:true in order for attackgrid and attack/damage attr to set
 			setAttrs(attrs);
 		});
 	});
