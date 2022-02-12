@@ -1480,7 +1480,8 @@ export function importCharacter (characterObj)
 	attrs["npc-cr"] = characterObj.challengerating._text.replace("CR ","");
 	attrs["npc-xp"] = characterObj.xpaward._value;
 
-	attrs["speed-base"] = attrs["speed-modified"] = parseNum(characterObj.movement.speed._value);
+	attrs["speed-base"] = parseNum(characterObj.movement.basespeed._value);
+	attrs["speed-modified"] = parseNum(characterObj.movement.speed._value);
 
 	attrs["cmd"] = parseNum(characterObj.maneuvers._cmd);
 	attrs["ff-cmd"] = parseNum(characterObj.maneuvers._cmdflatfooted);

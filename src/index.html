@@ -11360,7 +11360,7 @@
                         </span>
                     </div>
                     <div class="npc-statblock-row">
-                        <span class="small-label2 entry-vshort">
+                        <span class="small-label2 entry-med">
                             <input title="@{alignment}" type="text" name="attr_alignment" data-i18n-placeholder="alignment" />
                         </span>
                         <span class="small-label2 entry-med" style="padding-left:0.5em;">
@@ -12583,7 +12583,7 @@
                                                 </label>
                                             </div>
                                             <textarea class="desc" title="@{repeating_spells_$X_description}" name="attr_description" accept="Content"></textarea>
-                                            <div class="macro-text" style="background:white;">
+                                            <div class="macro-text">
                                                 <span style="display:inline-block;margin-top:0.25em;"><span data-i18n="options">Options</span>:</span>
                                                 <input class="calc" style="width:90%;float:right;margin:0.2rem;" type="text" name="attr_spell_options" value="{{school=@{school}}}{{duration=@{duration}}}{{range=@{range_numeric}}}{{targets=@{targets}}}{{dc=[[ @{savedc} ]]}}{{level=@{spell_level}}}{{spellclass=@{spellclass}}}{{sr=@{sr}}}{{saving_throw=@{save}}}{{condition_note=@{condition_spell_notes}}}" readonly />
                                                 <textarea style="display:none;" class="macro-text" title="@{repeating_spells_$X_macro-text}" name="attr_macro-text">@{PC-whisper} &{template:pf_spell} @{toggle_spell_accessible} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_spell}}} {{name=@{name}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{deafened_note=@{SpellFailureNote}}} @{spell_options}</textarea>
@@ -14453,7 +14453,7 @@
         <input class="showarrow h2arrow" type="checkbox" name="attr_roll-template-info-show" data-i18n-aria-label="roll-template-info" data-i18n-title="showsect-cmd" value="1" />
         <h2 class="clickheader showsect"><label data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" data-i18n="roll-template-info">Roll Template Information</label></h2>
         <div class="h2-section roll_template_info">
-            <div class="table options named" style="margin-top:0.5em; background-color:#FFFFFF;">
+            <div class="table options named" style="margin-top:0.5em;">
                 <span class="table-name show-readonly" data-i18n="roll-template-info">Roll Template Info</span>
                 <span class="table-row">
                     <span class="table-cell" style="padding:2rem; margin-top:0.5rem;">
