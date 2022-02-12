@@ -2233,6 +2233,7 @@ also need 1 more level in selector or base css will override border */
     display: block;
     clear: both;
     width: 100%;
+    margin-top: .5em;
 }
 
 .charsheet .innerlabel,
@@ -3893,8 +3894,10 @@ spellclass-concentration spellcaster-button {
     position: inherit;
 }
 
-.charsheet .section-state:checked~.background-color1 {
-    background-color: #f0f8ff;
+.charsheet .section-state:checked ~ .background-color1,
+.charsheet .section-state:checked ~ .background-color1.custrepeating-border {
+    /* background-color: #f0f8ff; */
+    border-color: #617c9f;
 }
 
 .charsheet .monster-indicator {
