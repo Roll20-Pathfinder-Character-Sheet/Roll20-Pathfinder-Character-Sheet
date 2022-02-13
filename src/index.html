@@ -2031,9 +2031,9 @@
                                 <div class="table">
                                     <div class="table-row sect expand" style="vertical-align:top;">
                                         <input type="checkbox" class="showarrow macro-text-show hide-readonly" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_macro-text-show" value="1" style="margin-left:0.25em;">
-                                        <label class="showsect macro-text-showlabel hide-readonly super note-d" data-i18n="macro-text">Macro Text</label>
+                                        <span class="showsect macro-text-showlabel hide-readonly super note-d" data-i18n="macro-text">Macro Text</span>
                                         <input type="checkbox" class="showarrow init-notes-show" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_notes-show" value="1" style="margin-left:0.25em;">
-                                        <label class="showsect init-notes-showlabel" data-i18n="notes">Notes</label>
+                                        <span class="showsect init-notes-showlabel" data-i18n="notes">Notes</span>
                                         <div class="macro-text hide-readonly">
                                             <h3 class="super note-d" data-i18n="full-macro">Full Macro:</h3>
                                             <textarea class="macro-text-inline" name="attr_init-macro-text" title="@{init-macro-text}" data-i18n-placeholder="full-macro-place">&{template:pf_generic} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_generic-init}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{initiative}}} {{check=[[ (1d20 + [[ @{init} ]][init] + [[ {(0.01 * @{init}),0}kh1 ]][tie-breaker]) &amp;{tracker} ]]}} @{init_options} {{buff_note=@{buff_init_notes}}} {{condition_note=@{condition_init_notes}}}</textarea>
@@ -2270,9 +2270,9 @@
                     <div class="table">
                         <div class="table-row sect expand" style="vertical-align:top;">
                             <input type="checkbox" class="showarrow macro-text-show hide-readonly" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_all-saves-macro-show" value="1" style="margin-left:0.25em" aria-label="Click to expand">
-                            <label class="showsect all-saves-macro-showlabel hide-readonly super note-d" data-i18n="all-saves-macro">All Saves Macro</label>
+                            <span class="showsect all-saves-macro-showlabel hide-readonly super note-d" data-i18n="all-saves-macro">All Saves Macro</span>
                             <input type="checkbox" class="showarrow save-notes-show" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_save-notes-show" value="1" style="margin-left:0.25em;" aria-label="Click to expand">
-                            <label class="showsect save-notes-showlabel" data-i18n="notes">Notes</label>
+                            <span class="showsect save-notes-showlabel" data-i18n="notes">Notes</span>
                             <div class="macro-text hide-readonly">
                                 <textarea class="macro-text-inline" name="attr_all_saves-macro" data-i18n-title="all-saves-macro-title">&{template:pf_defense} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{subtitle}} {{name=^{all-saves}}} {{^{fortitude-save}=@{fort-macro-text}}} {{^{reflex-save}=@{ref-macro-text}}} {{^{willpower-save}=@{will-macro-text}}} @{toggle_save_notes} {{buff_note=@{buff_save_notes}}} {{condition_note=@{condition_save_notes}}} {{condition_note=@{condition_save_notes}}}</textarea>
                             </div>
@@ -10697,15 +10697,15 @@
                                 <span class="table-cell"><input title="@{carried-total}" type="number" name="attr_carried-total" value="0" class="calc" readonly /></span>
                             </div>
                         </div>
-                        <div class="table sect wide-numbers load" style="background-color:#d3d3d3;">
+                        <div class="table sect wide-numbers load">
                             <span class="table-name secondary-table-name" data-i18n="current-load">Current Load</span>
-                            <div class="table-row" style="height: 4rem;">
+                            <div class="table-row">
                                 <span class="table-config-row-name secondary-table-name show-readonly inverse-readonly" style="width:10%;" data-i18n="current-load">Current Load</span>
-                                <span class="table-cell" style="width:10%;"><label class="center"><input title="@{current-load}" type="radio" value="0" name="attr_current-load" checked> <span data-i18n-title="encumbrance-light-title" data-i18n-aria-label="encumbrance-light-title" data-i18n="light">Light</span></label></span>
-                                <span class="table-cell" style="width:10%;"><label class="center"><input title="@{current-load}" type="radio" value="1" name="attr_current-load"> <span data-i18n-title="encumbrance-medium-title" data-i18n-aria-label="encumbrance-medium-title" data-i18n="medium">Medium</span></label></span>
-                                <span class="table-cell" style="width:10%;"><label class="center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load"> <span data-i18n-title="encumbrance-heavy-title" data-i18n-aria-label="encumbrance-heavy-title" data-i18n="heavy">Heavy</span></label></span>
-                                <span class="table-cell" style="width:10%;"><label class="center"><input title="@{current-load}" type="radio" value="3" name="attr_current-load"> <span data-i18n-title="over-heavy-encumbrance-title" data-i18n-aria-label="over-heavy-encumbrance-title" data-i18n="over">Over</span></label></span>
-                                <span class="table-cell" style="width:10%;"><label class="center"><input title="@{current-load}" type="radio" value="4" name="attr_current-load"> <span data-i18n-title="maximum-encumbrance-title" data-i18n-aria-label="maximum-encumbrance-title" data-i18n="maximum-abbrv">Max</span></label></span>
+                                <span class="table-cell" style="width:10%;"><label class="small-label2 center"><input title="@{current-load}" type="radio" value="0" name="attr_current-load" checked> <span data-i18n-title="encumbrance-light-title" data-i18n-aria-label="encumbrance-light-title" data-i18n="light">Light</span></label></span>
+                                <span class="table-cell" style="width:10%;"><label class="small-label2 center"><input title="@{current-load}" type="radio" value="1" name="attr_current-load"> <span data-i18n-title="encumbrance-medium-title" data-i18n-aria-label="encumbrance-medium-title" data-i18n="medium">Medium</span></label></span>
+                                <span class="table-cell" style="width:10%;"><label class="small-label2 center"><input title="@{current-load}" type="radio" value="2" name="attr_current-load"> <span data-i18n-title="encumbrance-heavy-title" data-i18n-aria-label="encumbrance-heavy-title" data-i18n="heavy">Heavy</span></label></span>
+                                <span class="table-cell" style="width:10%;"><label class="small-label2 center"><input title="@{current-load}" type="radio" value="3" name="attr_current-load"> <span data-i18n-title="over-heavy-encumbrance-title" data-i18n-aria-label="over-heavy-encumbrance-title" data-i18n="over">Over</span></label></span>
+                                <span class="table-cell" style="width:10%;"><label class="small-label2 center"><input title="@{current-load}" type="radio" value="4" name="attr_current-load"> <span data-i18n-title="maximum-encumbrance-title" data-i18n-aria-label="maximum-encumbrance-title" data-i18n="maximum-abbrv">Max</span></label></span>
                             </div>
                         </div>
                     </div>
@@ -14440,8 +14440,8 @@
                         </span>
                     </span><br>
                     <div class="center">
-                        <button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="http://lonedwarf.com/roll20/Roll20PathfinderExporter_v1_1.hl"><b style="font-size:1.1rem;">Exporter plug-in for Hero Lab</b></button> | <button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://www.convertjson.com/xml-to-json.htm"><b style="font-size:1.1rem;">www.convertjson.com</b></button> |
-                        <button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/y5wcljsf"><b data-i18n="more-info" style="font-size:1.1rem;">More info on the wiki.</b></button>
+                        <button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="http://lonedwarf.com/roll20/Roll20PathfinderExporter_v1_1.hl"><b style="font-size:1.1rem;">Exporter plug-in for Hero Lab</b></button> | <button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="https://www.convertjson.com/xml-to-json.htm"><b style="font-size:1.1rem;">www.convertjson.com</b></button> |
+                        <button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="https://tinyurl.com/y5wcljsf"><b data-i18n="more-info" style="font-size:1.1rem;">More info on the wiki.</b></button>
                         <span class="table-data" style="width:50%;">
                             <textarea class="both" name="attr_herolab_import" title="Hero Lab import"></textarea><br>
                         </span>
@@ -14995,9 +14995,9 @@
             <span data-i18n="footer-info">Created by Samuel Marino w/contributions by Vince, Chris Buchholz, Magik, James W. | Last updated:</span> <i>$$CURRENTRELEASEDATE$$ </i>v.<input type="text" name="attr_PFSheet_Version" value="0" class="calc number" readonly="" title="A non-blank version indicates attributes have been successfully recalculated.">
         </div>
         <div class="three-columns" style="margin-top:-.5em;">
-            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread7"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
-            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
-            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" style="color:#0000ff" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
+            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="https://tinyurl.com/PFRoll20Thread7"><b style="font-size:1.1rem;" data-i18n="questions-feedback">Questions/Feedback?</b></button></span>
+            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="https://tinyurl.com/PFCommunityGuide"><b style="font-size:1.1rem;" data-i18n="sheets-guide">KNOWN ISSUES / Wiki HOW TO Guide</b></button></span>
+            <span><button type="roll" class="no-decoration" data-i18n-title="url-link" name="roll_blank" value="http://tinyurl.com/trans-pf-sheet"><b style="font-size:1.1rem;" data-i18n="help-translate">Help Translate</b></button></span>
         </div>
     </div>
 

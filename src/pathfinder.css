@@ -418,6 +418,7 @@
     border: none;
     box-shadow: none;
     text-shadow: none;
+    color: #33F;
 }
 
 .charsheet button[type="roll"].no-decoration::before {
@@ -639,7 +640,7 @@ pf-wrapper,
     font-weight: normal;
 }
 
-.sheet-darkmode .tab-content .charsheet .pf-wrapper .expand label {
+.sheet-darkmode .tab-content .charsheet .pf-wrapper .expand label.showsect {
     color: initial;
 }
 
@@ -1342,7 +1343,6 @@ also need 1 more level in selector or base css will override border */
 .charsheet .pf-wrapper span.super::after,
 .charsheet .pf-wrapper .h2.super::after {
     font-weight: normal;
-    color: black;
     font-family: 'Roboto Mono', monospace;
     font-size: 1rem;
     letter-spacing: -.08em;
@@ -2666,7 +2666,6 @@ also need 1 more level in selector or base css will override border */
     line-height: 1.5em;
     padding: 0.1rem .65rem 0.1rem .25rem;
     cursor: help;
-    color: #333;
 }
 
 .charsheet .corerules .table-row .table-cell {
@@ -3255,6 +3254,7 @@ also need 1 more level in selector or base css will override border */
     min-width: 15em;
     background-color: LightGray;
     margin-right: .125em;
+    color: initial;
 }
 
 .charsheet .wound-threshold,
@@ -3413,7 +3413,6 @@ also need 1 more level in selector or base css will override border */
     font-size: 1.1rem;
     font-style: italic;
     font-weight: bold;
-    color: Black;
     margin-top: -1.7em;
 }
 
