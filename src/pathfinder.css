@@ -623,6 +623,11 @@ pf-wrapper,
 }
 
 /* quick and dirty dark mode */
+
+.sheet-darkmode .ui-dialog {
+	background-color: #0f0f0f;
+}
+
 .sheet-darkmode .tab-content {
 	background-color: #18181a;
 	color: #e1e1e1;
@@ -967,7 +972,6 @@ also need 1 more level in selector or base css will override border */
     font-size: 1.2rem;
     font-style: italic;
     font-weight: bold;
-    color: Black;
 }
 
 .charsheet .secondary-table-name {
@@ -1221,12 +1225,22 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .sheetconfig .table .table-row:nth-child(odd),
 .charsheet .rule-options .table .table-row:nth-child(odd) {
-    background-color: #a6a6a6;
+    background-color: transparent;
+}
+
+.charsheet .sheetconfig .table .table-row:nth-child(even),
+.charsheet .rule-options .table .table-row:nth-child(even) {
+	background-color: #a6a6a6;
 }
 
 .charsheet .sheetconfig .table .table-row:nth-child(odd) span b,
 .charsheet .rule-options .table .table-row:nth-child(odd) span b {
-	color: #fff;
+	color: inherit;
+}
+
+.charsheet .sheetconfig .table .table-row:nth-child(even) span b,
+.charsheet .rule-options .table .table-row:nth-child(even) span b {
+	color: inherit;
 }
 
 .charsheet .header-images.table .macro-text-inline,
@@ -2670,7 +2684,7 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .corerules .table-row .table-cell {
     padding-left: .5em;
-    color: initial;
+    color: inherit;
 }
 
 .charsheet .selectedlabel-check:hover+b:not(.offCase),
