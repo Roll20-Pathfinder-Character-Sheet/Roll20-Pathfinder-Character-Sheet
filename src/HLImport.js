@@ -1,6 +1,7 @@
 'use strict';
 import _, {isNull} from "underscore";
 import TAS from "exports-loader?TAS!./TheAaronSheet.js";
+import * as SWUtils from './SWUtils';
 import {PFLog, PFConsole} from "./PFLog";
 import * as PFHealth from "./PFHealth";
 import * as PFSpellOptions from "./PFSpellOptions";
@@ -23,28 +24,20 @@ export function getSizeMod (size)
 	{
 		case "colossal":
 			return -8;
-			break;
 		case "gargantuan":
 			return -4;
-			break
 		case "huge":
 			return -2;
-			break;
 		case "large":
 			return -1;
-			break;
 		case "small":
 			return 1;
-			break;
 		case "tiny":
 			return 2;
-			break;
 		case "diminutive":
 			return 4;
-			break;
 		case "fine":
 			return 8;
-			break;
 		default:
 			return 0;
 	}
@@ -396,7 +389,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 						{
 							attrs["armor3-acp"] = attrs[repeatPrefix+"_item-acp"] = armorPenalties.ACP - shieldACP;
 							attrs["armor3-spell-fail"] = attrs[repeatPrefix+"_item-spell-fail"] = armorPenalties.spellfail - shieldASF;
-							if (armorPenalties.maxDex == 99)
+							if (armorPenalties.maxDex === 99)
 								attrs["armor3-max-dex"] = attrs[repeatPrefix+"_item-max-dex"] = "";
 							else
 								attrs["armor3-max-dex"] = attrs[repeatPrefix+"_item-max-dex"] = armorPenalties.maxDex;
@@ -412,7 +405,7 @@ export function importItems (items,resources,armorPenalties,armor,weapons)
 	});
 }
 
-export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
+export function importAttacks (meleeAttacks, rangedAttacks, strBonus, baseAttackBonus) {
 	let repeatPrefix = "repeating_weapon";
 	getSectionIDs(repeatPrefix, function(idarray) {
 		const weaponNameAttrs = _.union(_.map(idarray, function (id) {
@@ -444,9 +437,14 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 					weaponsList.push(v._name);
 
 					repeatPrefix = "repeating_weapon_" + row;
-
 					attrs[repeatPrefix + "_name"] = v._name;
 
+					// check if this is a weapon
+					let weaponCompareName = v._name;
+					// grabs attack name up to a parenthesis
+					let shortNameReg = v._name.match(/^[^(]*/g);
+					let shortName = SWUtils.trimBoth(shortNameReg);
+					let attackName = "";
 					let weaponCategory = v._categorytext;
 					let attackIsThrown = 0;
 					let attackIsNatural = 0;
@@ -454,18 +452,26 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 					let attackBonus = 0;
 					let damageBonus = 0;
 					let damageMult = 1;
+					let weaponObj = meleeAttacks[_.indexOf(meleeNames, weaponCompareName)];
+					let enhancementBonus = parseNum(weaponObj._name.match(/\+\d+/));
+					//how many attacks?  count pluses in the attack string
+					let iterativeAttacks = parseNum((weaponObj._attack.match(/\+/g) || []).length);
+					let weaponDice = weaponObj._damage.match(/\d+d\d+/);
+					// grab damage bonus only which s/b same as Total Damage
+					let weaponDamage = weaponObj._damage.split("+").pop().split("plus")[0];
+					// grab attack bonus s/b same as Total Attack
+					let weaponAttack = parseNum(weaponObj._attack.match(/^.+?(?=\+)/));
+					TAS.warn(`~~~~~~ Total Attack is: ${weaponAttack} ~~~~~~`)
 					let iterativeBab = "";
+					let i = 0;
+					let iterativeCount = 0;
+
 					TAS.warn("~~~~~~~Total Melee Attacks detected: " + Object.keys(meleeAttacks).length);
 					TAS.warn("~~~~~~~Melee Weapon ATTACK: " + v._name);
 
 					// natural attack ?
 					if (naturalAttackRegExp.test(v._name)) {
-						if (primaryNaturalAttacksRegExp.test(v._name)) {
-							naturalType = "primary";
-						}
-						else {
-							naturalType = "secondary";
-						}
+						naturalType = primaryNaturalAttacksRegExp.test(v._name) ? "primary" : "secondary";
 						attackIsNatural = 1;
 						TAS.warn("~~~~~~~" + naturalType + " ATTACK: " + v._name);
 					}
@@ -480,11 +486,8 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 					attrs[repeatPrefix + "_isranged"] = attackIsThrown;
 					attrs[repeatPrefix + "_damage-ability"] = "STR-mod";
 
-					// check if this is a weapon
-					let weaponCompareName = v._name;
 					// If this is a shield (but not a klar), the attack name will be "Heavy/light shield bash"
 					if (v._name.toLowerCase().indexOf("shield") !== -1) {
-						let attackName;
 						if (v._name.toLowerCase().indexOf("heavy" !== -1)) {
 							attackName = "heavy shield bash";
 						}
@@ -492,9 +495,8 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 							attackName = "light shield bash";
 						}
 					}
-					let weaponObj = meleeAttacks[_.indexOf(meleeNames, weaponCompareName)];
+
 					if (weaponObj._damage !== "As Spell") {
-						let enhancementBonus = parseNum(weaponObj._name.match(/\+\d+/));
 						attrs[repeatPrefix + "_enhance"] = enhancementBonus;
 
 						if (!_.isUndefined(weaponObj._typetext)) {
@@ -506,57 +508,14 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 							attrs[repeatPrefix + "_masterwork"] = 1;
 						}
 
-						// Natural Attacks info:
-						// https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules/#Natural_Attacks
-						if (!_.isUndefined(weaponObj._attack)) {
-
-							if (!attackIsNatural) {
-								iterativeBab = "";
-							}
-							else {
-								iterativeBab = naturalType === "primary" ? 0 : -5;
-							}
-
-							//how many attacks?  count pluses in the attack string
-							let iterativeAttacks = (weaponObj._attack.match(/\+/g) || []).length;
-							// grab attack name up to a parenthesis
-							let shortName = v._name.match(/.+?(?=[^\w]\()/g);
-							if (iterativeAttacks > 1) {
-								attrs[repeatPrefix + "_group"] = shortName;
-								attrs[repeatPrefix + "_iterative_attack1_name"] = shortName;
-								let i = 1;
-								do {
-									i = i + 1;
-									attrs[repeatPrefix + `_toggle_iterative_attack${i}`] = `@{var_iterative_attack${i}_macro}`;
-									attrs[repeatPrefix + `_iterative_attack${i}_name`] = shortName;
-									attrs[repeatPrefix + `_iterative_attack${i}_value`] = iterativeBab;
-									attrs[repeatPrefix + `_type${i}`] = weaponObj._typetext;
-									TAS.warn(`~~~${i} iterative added~~~`);
-								} while (i < iterativeAttacks);
-							}
-
-							// add-on any unaccounted attack (ie feats, or...?)
-							attackBonus = 0;
-							attrs[repeatPrefix + "_attack"] = attackBonus;
-						}
-
 						if (!_.isUndefined(weaponObj._damage)) {
-							const weaponDice = weaponObj._damage.match(/\d+d\d+/);
-							// grab damage bonus only which s/b same as Total Damage
-							const weaponDamage = weaponObj._damage.split("+").pop().split("plus")[0];
-
 							// natural attack: single or special primary?
-							if (attackIsNatural && naturalType === "primary") {
-								// compare damage bonus against str-mod
-								damageMult = ((weaponDamage - enhancementBonus) > strBonus) ? 1.5 : 1;
-							}
-							if (attackIsNatural && naturalType === "secondary") {
-								// compare damage bonus against str-mod
-								damageMult = ((weaponDamage - enhancementBonus) < strBonus) ? 0.5 : 1;
+							if (attackIsNatural) {
+								damageMult = naturalType === "primary" && ((weaponDamage - enhancementBonus) > strBonus) ? 1.5 : 1;
+								damageMult = naturalType === "secondary" && ((weaponDamage - enhancementBonus) < strBonus) ? 0.5 : 1;
 							}
 
 							attrs[repeatPrefix + "_damage_ability_mult"] = damageMult;
-
 							// add-on any unaccounted damage (ie feats, or...?)
 							damageBonus = weaponDamage - enhancementBonus - Math.floor(strBonus * damageMult);
 							attrs[repeatPrefix + "_damage"] = damageBonus;
@@ -568,7 +527,7 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 						}
 
 						if (!_.isUndefined(weaponObj._crit)) {
-							const critArray = weaponObj._crit.split("/");
+							let critArray = weaponObj._crit.split("/");
 							if (critArray.length > 1) {
 								attrs[repeatPrefix + "_crit-target"] = parseNum(critArray[0].match(/\d+/)[0]);
 							}
@@ -580,6 +539,33 @@ export function importAttacks (meleeAttacks, rangedAttacks, strBonus) {
 
 						if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue)) {
 							attrs[repeatPrefix + "_range"] = parseNum(weaponObj.rangedattack._rangeincvalue);
+						}
+
+						// Natural Attacks info:
+						// https://www.d20pfsrd.com/bestiary/rules-for-monsters/universal-monster-rules/#Natural_Attacks
+						if (!_.isUndefined(weaponObj._attack)) {
+							TAS.warn(`~~~~~~ ${iterativeAttacks} iterative attacks detected ~~~~~~`);
+
+							if (iterativeAttacks > 1) {
+								// natural multi attack?
+								if (attackIsNatural) {
+									iterativeBab = naturalType === "primary" ? 0 : -5;
+								}
+								// add iterative attacks
+								for (i = 1; i < iterativeAttacks; i++) {
+									iterativeCount = i + 1;
+									attrs[`${repeatPrefix}_toggle_iterative_attack${iterativeCount}`] = `@{var_iterative_attack${iterativeCount}_macro}`;
+									attrs[`${repeatPrefix}_iterative_attack${iterativeCount}_value`] = iterativeBab;
+									attrs[`${repeatPrefix}_type${iterativeCount}`] = weaponObj._typetext;
+									TAS.warn(`~~~ ${iterativeCount} iterative added ~~~`);
+								}
+								attrs[repeatPrefix + "_iterative_attack1_name"] = shortName;
+							}
+
+							// add-on any unaccounted attack (ie feats, or...?)
+							attackBonus = weaponAttack - strBonus - enhancementBonus - baseAttackBonus;
+							attrs[repeatPrefix + "_attack"] = attackBonus;
+
 						}
 					}
 				});
@@ -748,7 +734,8 @@ export function importFeatures (attrs,featureList,specials,archetypes,resources)
 
 export function importClasses (attrs, classes,hitdice)
 {
-	var classList = new Object();
+	//var classList = new Object();
+	var classList = {};
 	var diceList = _.without(_.map(hitdice.split(";")[hitdice.split(";").length-1].trim().split(/[\+\-]/), function(hitdie) { var splitDie = hitdie.split("d"); if (splitDie.length < 2) return null; return { dice: splitDie[0], die: splitDie[1]}; }),null);
 
 	var i = 0;
@@ -768,7 +755,10 @@ export function importClasses (attrs, classes,hitdice)
 		attrs["class-"+i+"-name"] = classObj._name;
 		attrs["class-"+i+"-level"] = classObj._level;
 
-		var hitDie = _.find(diceList, function(dieObj) { return (dieObj.dice == classObj._level); });
+		var hitDie = _.find(diceList, function (dieObj) {
+			return dieObj.dice === classObj._level;
+		});
+
 		if (!_.isUndefined(hitDie))
 		{
 			attrs["class-"+i+"-hd"] = hitDie.die;
@@ -787,8 +777,8 @@ export function importClasses (attrs, classes,hitdice)
 // Import spellclasses; presence in spellclasses node means it's a spellcaster, but some of the data is in the classes node
 export function importSpellClasses (attrs, spellclasses,classes,abScores)
 {
-	var spellClassesList = new Object();
-
+	//var spellClassesList = new Object();
+	var spellClassesList = {};
 	var i, j, abMod = 0, currentAbMod, spellslots, spelllevel, casterlevel, concmod, spellpenmod;
 	var spellClassIndex = 0;
 	for (i = 0; i < spellclasses.length; i++)
@@ -799,11 +789,10 @@ export function importSpellClasses (attrs, spellclasses,classes,abScores)
 			return spellClassesList;
 
 		var spellClassName = spellClass._name.replace(/\(([^\)]*)\)/g,"").replace("(","").replace(")","").trim();
-		var classIndex = _.indexOf(Object.keys(classes),_.find(Object.keys(classes),function(className)
-		{
+		var classIndex = _.indexOf(Object.keys(classes), _.find(Object.keys(classes), function (className) {
 			if (className.toLowerCase().indexOf(spellClassName.toLowerCase()) !== -1)
 				return true;
-			return false;
+				return false;
 		}));
 
 		if (classIndex !== -1)
@@ -945,7 +934,7 @@ export function importSpells (spells,spellclasses)
 					spellClassName = spell._class;
 					spellClass = _.indexOf(spellClassesKeys,spellClassName);
 
-					if (spellClass == -1)
+					if (spellClass === -1)
 					{
 						spellClassName = _.intersection(spellClassesKeys,wizNames)[0]
 						spellClass = _.indexOf(spellClassesKeys,spellClassName);
@@ -1045,8 +1034,8 @@ export function calcHitDice (hitdice)
 // Builds an object collection of archetypes, with the appropriate classes as the keys, in the order they're entered in the character sheet; use this to determine class specials come from
 export function buildArchetypeArray (classes)
 {
-	var archetypes = new Object();
-
+	//var archetypes = new Object();
+	var archetypes = {};
 	_.each(classes, function (classObj, className) {
 		if (classObj._name.indexOf("(") === -1)
 		{
@@ -1295,7 +1284,7 @@ export function importSkills (attrs,skills,size,ACP)
 		if (skill._classskill === "yes") attrs[skillAttrPrefix+"-cs"] = 3;
 
 		skillMisc = parseNum(skill._value) - parseNum(skill._ranks)- parseNum(skill._attrbonus);
-		if (parseNum(skill._ranks) != 0 && skill._classskill === "yes")
+		if (parseNum(skill._ranks) !== 0 && skill._classskill === "yes")
 			skillMisc -= 3;
 		if (skill._armorcheck === "yes")
 			skillMisc -= ACP;
@@ -1458,6 +1447,7 @@ export function importCharacter (characterObj)
 	let meleeAttacks = arrayify(characterObj.melee.weapon || {});
 	let rangedAttacks = arrayify(characterObj.ranged.weapon || {});
 	let strBonus = parseNum(characterObj.attributes.attribute[0].attrbonus._modified);
+	let baseAttackBonus = parseNum(characterObj.attack._baseattack);
 
 	// "Tracked Resources" is a list of uses, either a quantity of items, charges, or uses per day
 	var resources = _.object(_.map(characterObj.trackedresources.trackedresource, function (resource) { return [resource._name,resource];}));
@@ -1469,7 +1459,7 @@ export function importCharacter (characterObj)
 	var itemNames = _.map(items, function(obj) { return obj._name; });
 	var specials = _.reject(arrayify(characterObj.attack.special).concat(arrayify(characterObj.defenses.special),arrayify(characterObj.otherspecials.special),arrayify(characterObj.movement.special),arrayify(characterObj.defensive.special)), function(obj) { return _.contains(itemNames, obj._name); });
 
-	importAttacks(meleeAttacks, rangedAttacks, strBonus);
+	importAttacks(meleeAttacks, rangedAttacks, strBonus, baseAttackBonus);
 
 	importItems(items,resources,armorPenalties,armor,weapons);
 
