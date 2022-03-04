@@ -1438,6 +1438,16 @@ also need 1 more level in selector or base css will override border */
     padding: 0 2px 2px 2px;
 }
 
+.charsheet .skills div span.table-cell:nth-child(4) input {
+    background-color: revert;
+    color: #222;
+}
+
+.sheet-darkmode .tab-content .charsheet .skills div span.table-cell:nth-child(4) input {
+	background-color: #222;
+	color: #fff;
+}
+
 .charsheet .skills .table-row.adventure,
 .charsheet .skills .table-row.bg,
 .charsheet .skills .table-row.adventure textarea,
@@ -3909,8 +3919,15 @@ spellclass-concentration spellcaster-button {
 
 .charsheet .section-state:checked ~ .background-color1,
 .charsheet .section-state:checked ~ .background-color1.custrepeating-border {
-    /* background-color: #f0f8ff; */
+    background-color: #f0f8ff;
     border-color: #617c9f;
+}
+
+.sheet-darkmode .tab-content .charsheet .section-state:checked ~ .background-color1,
+.sheet-darkmode .tab-content .charsheet .section-state:checked ~ .background-color1.custrepeating-border {
+	background-color: #23384a;
+	border-color: #617c9f;
+    color: #9f9f9f;
 }
 
 .charsheet .monster-indicator {
@@ -6315,6 +6332,18 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .table-header.emphasize-field {
     background-color: #556677;
     color: white;
+}
+
+.charsheet .emphasize-field input,
+.charsheet .table-header.emphasize-field input {
+	background-color: revert;
+	color: #222;
+}
+
+.sheet-darkmode .tab-content .charsheet .emphasize-field input,
+.sheet-darkmode .tab-content .charsheet .table-header.emphasize-field input {
+	background-color: #222;
+	color: #fff;
 }
 
 .charsheet .inspecial {
