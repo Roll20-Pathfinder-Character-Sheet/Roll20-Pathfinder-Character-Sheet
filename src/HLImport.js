@@ -1604,12 +1604,12 @@ export function importCharacter (characterObj)
 		attrs["is_npc"] = 1;
 		attrs["tab"] = 8;
 		if (!_.isUndefined(characterObj.npc.ecology.npcinfo)) {
-			attrs["environment"] = arrayify(characterObj.npc.ecology.npcinfo)[0].text;
-			attrs["organization"] = arrayify(characterObj.npc.ecology.npcinfo)[1].text;
-			attrs["other_items_treasure"] = arrayify(characterObj.npc.ecology.npcinfo)[2].text;
+			attrs["environment"] = arrayify(characterObj.npc.ecology.npcinfo)[0].text || "";
+			attrs["organization"] = arrayify(characterObj.npc.ecology.npcinfo)[1].text || "";
+			attrs["other_items_treasure"] = arrayify(characterObj.npc.ecology.npcinfo)[2].text || "";
 		}
 		if (!_.isUndefined(characterObj.npc.tactics)) {
-			attrs["npc-during-combat"] = characterObj.npc.tactics;
+			attrs["npc-during-combat"] = characterObj.npc.tactics || "";
 		}
 	}
 	attrs["player-name"] = characterObj._playername;
