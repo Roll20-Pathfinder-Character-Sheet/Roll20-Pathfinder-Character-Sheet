@@ -168,16 +168,17 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
             callback();
         }
     });
-    getAttrs(["use_spells","spellclass-"+classidx+"-exists","Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc"], function (v) {
+    getAttrs(["use_spells", "spellclass-"+classidx+"-exists", "Concentration-" + classidx + "-ability", "Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc"], function (v) {
         var mod = parseInt(v["Concentration-" + classidx + "-mod"], 10) || 0,
+        currAbility = v["Concentration-" + classidx + "-ability"],
         dcLvlZero = 10 + mod,
-        currDC = parseInt(v["spellclass-" + classidx + "-level-0-savedc"], 10),
+        currDC = parseInt(v["spellclass-" + classidx + "-level-0-savedc"], 10) || 0,
         setter = {},
         params = {},
         i;
         try {
             //if 0 is different then rest are different. if 0 is same, rest are same.
-            if (currDC !== dcLvlZero || isNaN(currDC)) {
+            if (currDC !== dcLvlZero || isNaN(currDC) || currAbility !== 0) {
                 setter["spellclass-" + classidx + "-level-0-savedc"] = dcLvlZero;
                 for (i = 1; i < 10; i++) {
                     setter["spellclass-" + classidx + "-level-" + i + "-savedc"] = dcLvlZero + i;
@@ -629,7 +630,8 @@ var events = {
     // events for updates to top of class page, each one calls isSpellClassExists
     spellcastingClassEventsAuto: {
         "change:concentration-REPLACE-mod": [updateBonusSpells, updateSaveDCs, updateConcentration, PFSpells.updateSpellsCasterAbilityRelated],
-        "change:spellclass-REPLACE-level-total": [updateConcentration, updateCasterRanges, PFSpells.updateSpellsCasterLevelRelated],
+        "change:concentration-REPLACE-ability": [updateSaveDCs, PFSpells.updateSpellsCasterAbilityRelated],
+        "change:spellclass-REPLACE-level-total": [updateSaveDCs, updateConcentration, updateCasterRanges, PFSpells.updateSpellsCasterLevelRelated],
         "change:concentration-REPLACE-misc-mod": [updateConcentration, PFSpells.updateSpellsCasterLevelRelated],
         "change:spellclass-REPLACE-SP-mod": [PFSpells.updateSpellsCasterLevelRelated],
         "change:spellclass-REPLACE-level-misc-mod": [updateCasterLevel]

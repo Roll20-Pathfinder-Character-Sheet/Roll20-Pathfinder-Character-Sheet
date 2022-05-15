@@ -202,7 +202,7 @@ export function migrate(callback,oldversion){
 			getSectionIDs('repeating_'+section,function(ids){
 				var fields, attr='';
 				if(!ids || _.size(ids)===0){
-					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for "+ section);
+					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for " + section);
 					doneOneSection();
 					return;
 				}
@@ -430,16 +430,16 @@ export function fixProfessionDropdowns (callback){
 
 
 export var recalculate = TAS.callback(function PFCustomRecalculate(callback,silently,oldversion){
-    migrate(function(){
-        recalcDropdowns(function(){
+	migrate(function(){
+		recalcDropdowns(function(){
 			fixProfessionDropdowns();
-            recalcExpressions(function(){
-                recalcCustomExpressions(function(){
+			recalcExpressions(function(){
+				recalcCustomExpressions(function(){
 					resetCommandMacro(callback);
 				},silently,oldversion);
-            },silently,oldversion);
-        },silently,oldversion);
-    },oldversion);
+			},silently,oldversion);
+		},silently,oldversion);
+	},oldversion);
 });
 
 function registerEventHandlers () {
