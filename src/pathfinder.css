@@ -2207,6 +2207,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .sect.expand .advmacro-text-showlabel,
 .charsheet .sect.expand .init-notes-showlabel,
 .charsheet .sect.expand .save-notes-showlabel,
+.charsheet .sect.expand .ability-notes-showlabel,
 .charsheet .sect.expand .extra-damage-showlabel {
     width: 9em;
 }
@@ -2219,6 +2220,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .sect.expand .advmacro-text-show,
 .charsheet .sect.expand .init-notes-show,
 .charsheet .sect.expand .save-notes-show,
+.charsheet .sect.expand .ability-notes-show,
 .charsheet .sect.expand .extra-damage-show {
     width: 9em;
     margin-right: -9em;
@@ -4147,6 +4149,7 @@ spellclass-concentration spellcaster-button {
 .charsheet .show-spell-cell:not(:checked)~div .spell-cell,
 .charsheet .init-notes-show:not(:checked)~.init-notes,
 .charsheet .save-notes-show:not(:checked)~.save-notes,
+.charsheet .ability-notes-show:not(:checked) ~ .ability-notes,
 .charsheet .iterations-show:not(:checked)~.iterative_attack_section,
 .charsheet .armor-attributes-show:not(:checked)~.armor-attributes,
 .charsheet .weapon-attributes-show:not(:checked)~.weapon-attributes,
