@@ -492,7 +492,8 @@ function getCreatureClassSkills (creatureType) {
  * returns attacks for chaining.
  */
 function assignPrimarySecondary (attacks) {
-	var attackGroups,attacksToCheck;
+	var attackGroups,
+			attacksToCheck;
 	try {
 		attacksToCheck = _.filter(attacks, function (attack) {
 			return (attack.type === 'natural');
@@ -2729,7 +2730,9 @@ function parseAndCreateAttackGrid(abilityScores, sizeMap, importantFeats, bab, l
 	}
 }
 function parseAndCreateAttacks (abilityScores, sizeMap, importantFeats, bab, attackGrid, reachObj, meleeAtkStr,rangedAtkStr,setter) {
-	var attacklist=[], matches,	tempstr='';
+	var attacklist = [],
+			matches,
+			tempstr = '';
 	try {
 		setter=setter||{};
 		// Attacks *****************************
