@@ -33,10 +33,11 @@ var webpackConfig = {
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      sourceMap: false
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   comments: false,
+    //   sourceMap: false
+    // }),
+
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
       inlineSource: '.js$'
@@ -80,3 +81,11 @@ var webpackConfig = {
 };
 
 module.exports = webpackConfig;
+const TerserPlugin = require('terser-webpack-plugin');
+module.exports = {
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()]
+  },
+  mode: 'development'
+};

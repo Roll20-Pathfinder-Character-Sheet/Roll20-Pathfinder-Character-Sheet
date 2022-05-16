@@ -937,7 +937,7 @@ export function createAttackEntryFromRow(id, callback, silently, eventInfo, weap
        // silentSetter={},
         enhance = 0,
         prof = 0,itemexists=true,
-        params = silently?PFUtils.silentParams:{};
+        params = silently?PFConst.silentParams:{};
         try {
             if (_.size(v)===0){
 				itemexists=false;

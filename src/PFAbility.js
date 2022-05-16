@@ -442,8 +442,8 @@ export function importFromCompendium (callback,eventInfo){
 				} else if ( v[prefix+'name']){
 					abilname = v[prefix + 'name'].toLowerCase();
 					abilname = abilname.match(/^[^(]+/);
-					if(PFDB.specialAttackDCAbilityBase[abilname]){
-						ability_basis= PFDB.specialAttackDCAbilityBase[abilname];
+					if(PFDB.default.specialAttackDCAbilityBase[abilname]){
+						ability_basis= PFDB.default.specialAttackDCAbilityBase[abilname];
 					} else {
 						ability_basis = 'CON';
 					}
