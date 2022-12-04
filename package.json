@@ -1,35 +1,40 @@
 {
-  "name": "pathfinder-character-sheet",
+  "name": "roll20-pathfinder-character-sheet",
   "version": "1.0.0",
-  "description": "",
+  "description": "Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various modules of js based on their specific sheet sections or by function(s). It is necessary to minimally install git, node.js, and npm. In order to edit the sheet locally, complete the following sections; ### Install Git (If you don't have it already) Download the latest version and install it. #### Windows  https://gitforwindows.org/ #### Linux https://git-scm.com/download/linux",
   "main": "index.js",
   "scripts": {
     "postinstall": "curl https://raw.githubusercontent.com/shdwjk/TheAaronSheet/master/TheAaronSheet.js -o TheAaronSheet.js",
     "build": "webpack --config webpack.config.js",
     "prod": "SET NODE_ENV=production& webpack --config webpack.config.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet.git"
+  },
   "author": "",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet/issues"
+  },
+  "homepage": "https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet#readme",
+  "dependencies": {
+    "jshint": "^2.13.6",
+    "underscore": "^1.13.6"
+  },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-es2015": "^7.0.0-alpha.1",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^8.3.0",
     "exports-loader": "^0.7.0",
     "extract-loader": "^5.1.0",
     "file-loader": "^2.0.0",
     "html-loader": "^0.5.5",
-    "html-webpack-inline-source-plugin": "0.0.10",
-    "html-webpack-plugin": "^2.30.1",
-    "nth-check": ">=2.0.1",
-    "script-ext-html-webpack-plugin": "^1.8.8",
-    "set-value": ">=4.0.1",
-    "webpack": "^5.72.1",
-    "webpack-cli": "^4.9.2",
-    "yargs-parser": ">=5.0.1"
-  },
-  "dependencies": {
-    "jshint": "^2.13.4",
-    "underscore": "^1.13.1"
+    "html-webpack-inline-source-plugin": "^0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "script-ext-html-webpack-plugin": "^2.1.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^3.12.0",
+    "webpack-cli": "^3.3.12"
   }
 }
