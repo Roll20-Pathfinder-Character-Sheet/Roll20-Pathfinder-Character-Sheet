@@ -20,7 +20,8 @@
   "homepage": "https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet#readme",
   "dependencies": {
     "jshint": "^2.13.6",
-    "underscore": "^1.13.6"
+    "underscore": "^1.13.6",
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
