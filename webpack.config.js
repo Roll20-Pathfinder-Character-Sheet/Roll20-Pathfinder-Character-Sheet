@@ -44,7 +44,6 @@ const webpackConfig = {
 		new HtmlWebpackInlineSourcePlugin(),
 		function RegexReplace(...args) {
 			const onPath = path.join(__dirname, "stubs/on");
-
 			this.plugin("compilation", function (compilation, params) {
 				compilation.plugin("optimize-modules", function (modules) {
 					modules.forEach((module) => {
