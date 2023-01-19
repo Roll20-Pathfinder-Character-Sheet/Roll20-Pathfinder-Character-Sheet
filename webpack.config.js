@@ -58,11 +58,11 @@ const webpackConfig = {
 			});
 
 			this.plugin("emit", function (compilation, callback) {
-				let oldSource = compilation.assets["index.html"].source;
+				const oldSource = compilation.assets["index.html"].source;
 
 				compilation.assets["index.html"].source = function () {
 					let str = oldSource().replace("text/javascript", "text/worker");
-					let d = new Date();
+					const d = new Date();
 					let n = d.toString();
 					n = n.slice(0, n.indexOf("GMT") + 3);
 					str = str.replace("$$CURRENTRELEASEDATE$$", n);
