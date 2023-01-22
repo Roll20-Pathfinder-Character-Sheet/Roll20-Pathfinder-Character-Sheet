@@ -1130,7 +1130,7 @@ export function importSkills(attrs, skills, size, ACP) {
 			skillSize = 0;
 	}
 	if (size < 0) {
-		skillSize = skillSize * -1;
+		skillSize *= -1;
 	}
 
 	// Clear out all existing skills data
