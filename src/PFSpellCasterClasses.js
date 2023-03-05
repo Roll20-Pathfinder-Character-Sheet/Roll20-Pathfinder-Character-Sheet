@@ -639,7 +639,7 @@ var events = {
     },
     spellcastingClassEventsPlayer: {
         "change:concentration-REPLACE-def": [PFSpells.updateSpellsCasterLevelRelated],
-        "change:spellclass-REPLACE-savedc-mod": [updateSaveDCs]
+        "change:spellclass-REPLACE-savedc-mod": [updateSaveDCs, PFSpells.updateSpellsCasterAbilityRelated]
     },
     // events for updates to top of class page even if no spellcasting class exists
     spellcastingClassEventsIgnoreLevel: {

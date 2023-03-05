@@ -933,12 +933,13 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
         done();
         return;
     }
-    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc-mod", "spellclasses_multiclassed"],function(vout){
-        var abilityMod, classConcentrationMisc,multiclassed;
+    getAttrs(["spellclass-" + classIdx + "-level-total", "Concentration-" + classIdx + "-mod", "Concentration-" + classIdx + "-misc-mod", "spellclasses_multiclassed", "spellclass-" + classIdx + "-savedc-mod"],function(vout){
+        var abilityMod, classConcentrationMisc, multiclassed, saveDCmod;
         try {
             abilityMod = parseInt(vout["Concentration-" + classIdx + "-mod"], 10) || 0;
             classConcentrationMisc = parseInt(vout["Concentration-" + classIdx + "-misc-mod"], 10) || 0;
             multiclassed = parseInt(vout["spellclasses_multiclassed"], 10) || 0;
+            saveDCmod = parseInt(vout["spellclass-" + classIdx + "-savedc-mod"], 10) || 0;
             if (!parseInt(vout["spellclass-" + classIdx + "-level-total"],10)){
                 done();
                 return;
@@ -978,7 +979,7 @@ export function updateSpellsCasterAbilityRelated (classIdx, eventInfo, callback)
                                     if (spellLevel !== spellLevelRadio || isNaN(spellLevelRadio)) {
                                         setter[prefix + "spell_level_r"] = spellLevel;
                                     }
-                                    newDC = 10 + spellLevel + abilityMod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
+                                    newDC = 10 + spellLevel + abilityMod + saveDCmod + (parseInt(v[prefix + "DC_misc"], 10) || 0);
                                     currDC = parseInt(v[prefix + "savedc"], 10) || 0;
                                     if (newDC !== currDC) {
                                         setter[prefix + "savedc"] = newDC;
@@ -1187,6 +1188,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         "spellclass-0-SP-mod", "spellclass-1-SP-mod", "spellclass-2-SP-mod",
         "Concentration-0-mod", "Concentration-1-mod", "Concentration-2-mod",
         "Concentration-0-misc-mod", "Concentration-1-misc-mod", "Concentration-2-misc-mod",
+        "spellclass-0-savedc-mod", "spellclass-1-savedc-mod", "spellclass-2-savedc-mod",
         "Concentration-0-def", "Concentration-1-def", "Concentration-2-def",
         "spellclass-0-name", "spellclass-1-name", "spellclass-2-name", "use_metrics"];
 
@@ -1196,9 +1198,9 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         var setter = {},
         use_metrics, baseClassNum, classNum = 0, classRadio = 0, currClassName = "", className = "",
         baseSpellLevel,	spellLevel=0,	spellSlot,	metaMagic=0, spellLevelRadio=0,
-        currCasterLevel, casterlevel=0, spellAbilityMod=0,	newDC = 10,
+        currCasterLevel, casterlevel=0, spellAbilityMod=0, spellDCmod=0, newDC = 10,
         levelSlot=0, currRange=0, currChosenRange='', newSP = 0, newConcentration = 0,
-        hadToSetClass = false, newRange = 0;
+            hadToSetClass = false, newRange = 0;
         try {
             baseClassNum = parseInt(v[classNumberField], 10);
             if (isNaN(baseClassNum)) {
@@ -1295,7 +1297,8 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             }
 
             if (updateDC || updateSpellLevel) {
-                newDC = 10 + spellLevel + spellAbilityMod + (parseInt(v[dcMiscField], 10) || 0);
+                spellDCmod = parseInt(v['spellclass-' + classNum + '-savedc-mod'], 10) || 0;
+                newDC = 10 + spellLevel + spellAbilityMod + spellDCmod + (parseInt(v[dcMiscField], 10) || 0);
                 if (newDC !== (parseInt(v[currDCField], 10) || 0)) {
                     setter[currDCField] = newDC;
                 }
