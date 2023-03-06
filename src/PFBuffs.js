@@ -21,32 +21,10 @@ import * as PFBuffsOld from './PFBuffsOld';
 export var
 //values in the bonus dropdown
 buffColumns = [
-	'ac', 'armor', 'attack', 'casterlevel', 'cha', 'cha_skills', 'check', 'check_ability', 'check_skills',
-	'cmb', 'cmd', 'con', 'con_skills', 'dex', 'dex_skills', 'dmg', 'dmg_melee', 'dmg_ranged',
-	'flatfooted', 'fort', 'hptemp', 'initiative', 'int', 'int_skills', 'melee', 'natural',
-	'ranged', 'ref', 'saves', 'shield', 'size', 'speed', 'str', 'str_skills', 'touch',
-	'will', 'wis', 'wis_skills', 'melee2', 'ranged2', 'cmb2','dmg_melee2','dmg_ranged2',
-	'kineticblast','dmg_kineticblast', 'dmg_power_attack',
-	'customa1','customa2','customa3','customa4','customa5','customa6','customa7','customa8','customa9',
-	'customa10','customa11','customa12'	],
+'ac', 'armor', 'attack', 'casterlevel', 'cha', 'cha_skills', 'check', 'check_ability', 'check_skills', 'cmb', 'cmb2', 'cmd', 'con', 'con_skills', 'customa1', 'customa10', 'customa11', 'customa12', 'customa2', 'customa3', 'customa4', 'customa5', 'customa6', 'customa7', 'customa8', 'customa9', 'dex', 'dex_skills', 'dmg', 'dmg_kineticblast', 'dmg_melee', 'dmg_melee2', 'dmg_power_attack', 'dmg_ranged', 'dmg_ranged2', 'flatfooted', 'fort', 'hptemp', 'initiative', 'int', 'int_skills', 'kineticblast', 'melee', 'melee2', 'natural', 'ranged', 'ranged2', 'ref', 'saves', 'shield', 'size', 'speed', 'spelldc' , 'str', 'str_skills', 'touch', 'will', 'wis', 'wis_skills'	],
 //map of buffColumns to corresponding total field (buff_XYZ-total only XYZ portion)
 buffToTot = {
-	'ac':'AC', 'armor':'armor',	'attack':'attack', 'casterlevel':'CasterLevel',
-	'cha':'CHA', 'cha_skills':'CHA_skills',
-	'check':'Check', 'check_ability':'check_ability',	'check_skills':'check_skills',
-	'cmb':'CMB', 'cmd':'CMD',	'con':'CON', 'con_skills':'CON_skills',
-	'dex':'DEX', 'dex_skills':'DEX_skills',
-	'dmg':'DMG', 'dmg_melee':'dmg_melee',	'dmg_ranged':'dmg_ranged',
-	'flatfooted':'flat-footed',	'fort':'Fort', 'hptemp':'HP-temp',	'initiative':'Initiative',
-	'int':'INT', 'int_skills':'INT_skills',	'melee':'Melee',
-	'natural':'natural', 'ranged':'Ranged',	'ref':'Ref', 'saves':'saves',
-	'shield':'shield', 'size':'size',	'speed':'speed', 'str':'STR',	'str_skills':'STR_skills',
-	'touch':'Touch', 'will':'Will',	'wis':'WIS', 'wis_skills':'WIS_skills',
-	'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2','dmg_melee2':'dmg_melee2','dmg_ranged2':'dmg_ranged2',
-	'kineticblast': 'kineticblast', 'dmg_kineticblast': 'dmg_kineticblast', 'dmg_power_attack': 'dmg_power_attack',
-	'customa1':'customa1','customa2':'customa2','customa3':'customa3','customa4':'customa4',
-	'customa5':'customa5','customa6':'customa6','customa7':'customa7','customa8':'customa8',
-	'customa9':'customa9','customa10':'customa10','customa11':'customa11','customa12':'customa12'},
+'ac':'AC', 'armor':'armor', 'attack':'attack', 'casterlevel':'CasterLevel', 'cha':'CHA', 'cha_skills':'CHA_skills', 'check':'Check', 'check_ability':'check_ability', 'check_skills':'check_skills', 'cmb':'CMB', 'cmd':'CMD', 'con':'CON', 'con_skills':'CON_skills', 'dex':'DEX', 'dex_skills':'DEX_skills', 'dmg':'DMG', 'dmg_melee':'dmg_melee', 'dmg_ranged':'dmg_ranged', 'flatfooted':'flat-footed', 'fort':'Fort', 'hptemp':'HP-temp', 'initiative':'Initiative', 'int':'INT', 'int_skills':'INT_skills', 'melee':'Melee', 'natural':'natural', 'ranged':'Ranged', 'ref':'Ref', 'saves':'saves', 'shield':'shield', 'size':'size', 'speed':'speed', 'spelldc': 'spelldc', 'str':'STR', 'str_skills':'STR_skills', 'touch':'Touch', 'will':'Will', 'wis':'WIS', 'wis_skills':'WIS_skills', 'melee2':'melee2', 'ranged2':'ranged2', 'cmb2':'cmb2', 'dmg_melee2':'dmg_melee2', 'dmg_ranged2':'dmg_ranged2', 'kineticblast': 'kineticblast', 'dmg_kineticblast': 'dmg_kineticblast', 'dmg_power_attack': 'dmg_power_attack', 'customa1':'customa1', 'customa2':'customa2', 'customa3':'customa3', 'customa4':'customa4', 'customa5':'customa5', 'customa6':'customa6', 'customa7':'customa7', 'customa8':'customa8', 'customa9':'customa9', 'customa10':'customa10', 'customa11':'customa11', 'customa12':'customa12'},
 //only the total fields (buff_XYZ-total only XYZ portion) (no penalty fields)
 totColumns = _.values(buffToTot).concat(['dodge']).sort(),
 bonusTypes =['untyped','alchemical','circumstance','competence','enhancement','inherent',
