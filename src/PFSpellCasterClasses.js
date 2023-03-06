@@ -168,9 +168,11 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
             callback();
         }
     });
-    getAttrs(["use_spells", "spellclass-"+classidx+"-exists", "Concentration-" + classidx + "-ability", "Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc", "spellclass-" + classidx + "-savedc-misc"], function (v) {
+    getAttrs(["use_spells", "spellclass-"+classidx+"-exists", "Concentration-" + classidx + "-ability", "Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc", "spellclass-" + classidx + "-savedc-misc", "buff_SpellDC_" + classidx + "-total"], function (v) {
         var mod = parseInt(v["Concentration-" + classidx + "-mod"], 10) || 0,
-        dcMod = parseInt(v["spellclass-" + classidx + "-savedc-misc"], 10) || 0,
+        dcMisc = parseInt(v["spellclass-" + classidx + "-savedc-misc"], 10) || 0,
+        dcBuff = parseInt(v["buff_SpellDC_" + classidx + "-total"], 10) || 0,
+        dcMod = dcMisc + dcBuff,
         currAbility = v["Concentration-" + classidx + "-ability"],
         dcLvlZero = 10 + mod + dcMod,
         currDC = parseInt(v["spellclass-" + classidx + "-level-0-savedc"], 10) || 0,
@@ -635,7 +637,8 @@ var events = {
         "change:spellclass-REPLACE-level-total": [updateSaveDCs, updateConcentration, updateCasterRanges, PFSpells.updateSpellsCasterLevelRelated],
         "change:concentration-REPLACE-misc-mod": [updateConcentration, PFSpells.updateSpellsCasterLevelRelated],
         "change:spellclass-REPLACE-SP-mod": [PFSpells.updateSpellsCasterLevelRelated],
-        "change:spellclass-REPLACE-level-misc-mod": [updateCasterLevel]
+        "change:spellclass-REPLACE-level-misc-mod": [updateCasterLevel],
+        "change:buff_SpellDC_REPLACE-total": [updateSaveDCs, PFSpells.updateSpellsCasterAbilityRelated]
     },
     spellcastingClassEventsPlayer: {
         "change:concentration-REPLACE-def": [PFSpells.updateSpellsCasterLevelRelated],
