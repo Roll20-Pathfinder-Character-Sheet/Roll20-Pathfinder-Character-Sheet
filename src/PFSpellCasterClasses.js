@@ -168,9 +168,9 @@ function updateSaveDCs (classidx, eventInfo, callback, silently) {
             callback();
         }
     });
-    getAttrs(["use_spells", "spellclass-"+classidx+"-exists", "Concentration-" + classidx + "-ability", "Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc", "spellclass-" + classidx + "-savedc-mod"], function (v) {
+    getAttrs(["use_spells", "spellclass-"+classidx+"-exists", "Concentration-" + classidx + "-ability", "Concentration-" + classidx + "-mod", "spellclass-" + classidx + "-level-0-savedc", "spellclass-" + classidx + "-savedc-misc"], function (v) {
         var mod = parseInt(v["Concentration-" + classidx + "-mod"], 10) || 0,
-        dcMod = parseInt(v["spellclass-" + classidx + "-savedc-mod"], 10) || 0,
+        dcMod = parseInt(v["spellclass-" + classidx + "-savedc-misc"], 10) || 0,
         currAbility = v["Concentration-" + classidx + "-ability"],
         dcLvlZero = 10 + mod + dcMod,
         currDC = parseInt(v["spellclass-" + classidx + "-level-0-savedc"], 10) || 0,
@@ -639,7 +639,7 @@ var events = {
     },
     spellcastingClassEventsPlayer: {
         "change:concentration-REPLACE-def": [PFSpells.updateSpellsCasterLevelRelated],
-        "change:spellclass-REPLACE-savedc-mod": [updateSaveDCs, PFSpells.updateSpellsCasterAbilityRelated]
+        "change:spellclass-REPLACE-savedc-misc": [updateSaveDCs, PFSpells.updateSpellsCasterAbilityRelated]
     },
     // events for updates to top of class page even if no spellcasting class exists
     spellcastingClassEventsIgnoreLevel: {

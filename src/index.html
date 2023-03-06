@@ -445,7 +445,9 @@
                                             <option value="check_skills" data-i18n="skill-checks">skill checks</option>
                                             <option value="initiative" data-i18n="initiative-abbrv">init</option>
                                             <option value="casterlevel" data-i18n="caster-level">caster level</option>
-                                            <option value="spelldc" data-i18n="spell-dc">spell dc</option>
+                                            <option value="spelldc_0" data-i18n="spell-dc-0">spell dc class 0</option>
+                                            <option value="spelldc_1" data-i18n="spell-dc-1">spell dc class 1</option>
+                                            <option value="spelldc_2" data-i18n="spell-dc-2">spell dc class 2</option>
                                             <option value="size" class="option-header" data-i18n="size">size</option>
                                             <option value="speed" class="option-header" data-i18n="speed">speed</option>
                                             <option value="hptemp" class="option-header" data-i18n="temporary-hit-points-abbrv">hptemp</option>
@@ -9092,17 +9094,20 @@
                                 <span class="table-name">Roll adjustments</span>
                                 <div class="table-row">
                                     <span class="table-header nowrap-readonly" data-i18n="save-difficulty-class-modifier-abbrv">Save DC Mod</span>
-                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:9em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
+                                    <span class="table-header nowrap-readonly" data-i18n="buff">Buff</span>
+                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:7em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
                                     <span class="table-header"></span>
                                     <span class="table-header nowrap-readonly" data-i18n-title="cast-defensive-bonus" data-i18n-aria-label="cast-defensive-bonus" style="word-wrap:normal;" data-i18n="cast-defensive-bonus-abbrv">Cast Def. Bonus</span>
                                     <span class="table-header table-rightcell show-readonly inverse-readonly" aria-label="empty spacer cell" role="presentation"></span>
                                 </div>
                                 <div class="table-row">
-                                    <span class="table-cell"><input title="@{spellclass-0-savedc-mod}" type="number" name="attr_spellclass-0-savedc-mod" value="0" /></span>
+                                    <input title="@{spellclass-0-savedc-mod}" type="hidden" name="attr_spellclass-0-savedc-mod" value="0" />
+                                    <span class="table-cell"><input title="@{spellclass-0-savedc-misc}" type="number" name="attr_spellclass-0-savedc-misc" value="0" /></span>
+                                    <input type="number" class="calc narrow-numbers" name="attr_buff_SpellDC_0-total" value="0" title="@{buff_SpellDC_0-total}" readonly />
                                     <input type="checkbox" name="attr_spellclass-0-SP-mod_error" class="error-mshow" value="1" />
                                     <span class="table-cell highlight"><textarea class="macro-text-inline" title="@{spellclass-0-SP_misc}" name="attr_spellclass-0-SP_misc" data-i18n-placeholder="equation-macro-place"></textarea></span>
-                                    <span class="table-cell number highlight"><input type="number" title="@{spellclass-0-SP-mod}" name="attr_spellclass-0-SP-mod" value="0" class="calc" readonly /></span>
-                                    <span class="table-cell nowrap-readonly"><input title="@{Concentration-0-def}" type="number" name="attr_Concentration-0-def" value="0" /></span>
+                                    <span class="table-cell number highlight narrow-numbers"><input type="number" title="@{spellclass-0-SP-mod}" name="attr_spellclass-0-SP-mod" value="0" class="calc" readonly /></span>
+                                    <span class="table-cell nowrap-readonly narrow-numbers"><input title="@{Concentration-0-def}" type="number" name="attr_Concentration-0-def" value="0" /></span>
                                     <span class="table-cell show-readonly inverse-readonly"></span>
                                 </div>
                             </div>
@@ -9569,17 +9574,20 @@
                                 <span class="table-name">Roll adjustments</span>
                                 <div class="table-row">
                                     <span class="table-header nowrap-readonly" data-i18n="save-difficulty-class-modifier-abbrv">Save DC Mod</span>
-                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:9em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
+                                    <span class="table-header nowrap-readonly" data-i18n="buff">Buff</span>
+                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:7em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
                                     <span class="table-header"></span>
                                     <span class="table-header nowrap-readonly" data-i18n-title="cast-defensive-bonus" data-i18n-aria-label="cast-defensive-bonus" style="word-wrap:normal;" data-i18n="cast-defensive-bonus-abbrv">Cast Def. Bonus</span>
                                     <span class="table-header table-rightcell show-readonly inverse-readonly" aria-label="empty spacer cell" role="presentation"></span>
                                 </div>
                                 <div class="table-row">
-                                    <span class="table-cell"><input title="@{spellclass-1-savedc-mod}" type="number" name="attr_spellclass-1-savedc-mod" value="0" /></span>
+                                    <input title="@{spellclass-1-savedc-mod}" type="hidden" name="attr_spellclass-1-savedc-mod" value="0" />
+                                    <span class="table-cell"><input title="@{spellclass-1-savedc-misc}" type="number" name="attr_spellclass-1-savedc-misc" value="0" /></span>
+                                    <input type="number" class="calc narrow-numbers" name="attr_buff_SpellDC_1-total" value="0" title="@{buff_SpellDC_1-total}" readonly />
                                     <input type="checkbox" name="attr_spellclass-1-SP-mod_error" class="error-mshow" value="1" />
                                     <span class="table-cell highlight"><textarea class="macro-text-inline" title="@{spellclass-1-SP_misc}" name="attr_spellclass-1-SP_misc" data-i18n-placeholder="equation-macro-place"></textarea></span>
-                                    <span class="table-cell number highlight"><input type="number" title="@{spellclass-1-SP-mod}" name="attr_spellclass-1-SP-mod" value="0" class="calc" readonly /></span>
-                                    <span class="table-cell nowrap-readonly"><input title="@{Concentration-1-def}" type="number" name="attr_Concentration-1-def" value="0" /></span>
+                                    <span class="table-cell number highlight narrow-numbers"><input type="number" title="@{spellclass-1-SP-mod}" name="attr_spellclass-1-SP-mod" value="0" class="calc" readonly /></span>
+                                    <span class="table-cell nowrap-readonly narrow-numbers"><input title="@{Concentration-1-def}" type="number" name="attr_Concentration-1-def" value="0" /></span>
                                     <span class="table-cell show-readonly inverse-readonly"></span>
                                 </div>
                             </div>
@@ -10046,17 +10054,20 @@
                                 <span class="table-name">Roll adjustments</span>
                                 <div class="table-row">
                                     <span class="table-header nowrap-readonly" data-i18n="save-difficulty-class-modifier-abbrv">Save DC Mod</span>
-                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:9em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
+                                    <span class="table-header nowrap-readonly" data-i18n="buff">Buff</span>
+                                    <span class="table-header nowrap entry-30p-shrink super note-a" style="min-width:7em;" data-i18n-aria-label="spell-penetration-bonus-label" data-i18n="spell-penetration-bonus-abbrv">Spell Pen Bonus</span>
                                     <span class="table-header"></span>
                                     <span class="table-header nowrap-readonly" data-i18n-title="cast-defensive-bonus" data-i18n-aria-label="cast-defensive-bonus" style="word-wrap:normal;" data-i18n="cast-defensive-bonus-abbrv">Cast Def. Bonus</span>
                                     <span class="table-header table-rightcell show-readonly inverse-readonly" aria-label="empty spacer cell" role="presentation"></span>
                                 </div>
                                 <div class="table-row">
-                                    <span class="table-cell"><input title="@{spellclass-2-savedc-mod}" type="number" name="attr_spellclass-2-savedc-mod" value="0" /></span>
+                                    <input title="@{spellclass-2-savedc-mod}" type="hidden" name="attr_spellclass-2-savedc-mod" value="0" />
+                                    <span class="table-cell"><input title="@{spellclass-2-savedc-misc}" type="number" name="attr_spellclass-2-savedc-misc" value="0" /></span>
+                                    <input type="number" class="calc narrow-numbers" name="attr_buff_SpellDC_2-total" value="0" title="@{buff_SpellDC_2-total}" readonly />
                                     <input type="checkbox" name="attr_spellclass-2-SP-mod_error" class="error-mshow" value="1" />
                                     <span class="table-cell highlight"><textarea class="macro-text-inline" title="@{spellclass-2-SP_misc}" name="attr_spellclass-2-SP_misc" data-i18n-placeholder="equation-macro-place"></textarea></span>
-                                    <span class="table-cell number highlight"><input type="number" title="@{spellclass-2-SP-mod}" name="attr_spellclass-2-SP-mod" value="0" class="calc" readonly /></span>
-                                    <span class="table-cell nowrap-readonly"><input title="@{Concentration-2-def}" type="number" name="attr_Concentration-2-def" value="0" /></span>
+                                    <span class="table-cell number highlight narrow-numbers"><input type="number" title="@{spellclass-2-SP-mod}" name="attr_spellclass-2-SP-mod" value="0" class="calc" readonly /></span>
+                                    <span class="table-cell nowrap-readonly narrow-numbers"><input title="@{Concentration-2-def}" type="number" name="attr_Concentration-2-def" value="0" /></span>
                                     <span class="table-cell show-readonly inverse-readonly"></span>
                                 </div>
                             </div>
