@@ -359,6 +359,7 @@
   "buff-slow-note": "Also apply *Staggered* condition.",
   "buff-speed-title": "Bonus to speed",
   "buff-spell-caster-level-title": "Bonus to spell caster level",
+  "buff-spell-dc-title": "Bonus to spell DC",
   "buff-stardust": "Stardust",
   "buff-stardust-note": " @{b1_val} penalty to sight based perception checks",
   "buff-strength-based-skills-penalty-title": "Penalty to strength based skills",
