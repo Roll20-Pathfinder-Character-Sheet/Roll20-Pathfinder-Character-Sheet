@@ -6564,6 +6564,9 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .mythic-show:not(:checked) ~ .repeating-fields .section-mythic,
 .charsheet .mythic-show:not(:checked) ~ .repeating-sect .repeating-fields .section-mythic,
 .charsheet .mythic-show:not(:checked) ~ div .section-mythic,
+.charsheet .mythic-show:checked ~ .section-mythic-hidden,
+.charsheet .mythic-show:not(:checked) ~ label .section-mythic,
+.charsheet .mythic-show:checked ~ label .section-mythic-hidden,
 .charsheet .psionic-show:not(:checked) ~ .section-psionic,
 .charsheet .psionic-show:not(:checked) ~ div .section-psionic {
     display: none !important;

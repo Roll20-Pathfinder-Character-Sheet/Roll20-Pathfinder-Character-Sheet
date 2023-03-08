@@ -116,6 +116,12 @@ function setRuleTab (callback,silently,id,eventInfo){
 			case 'monster-rule':
 				ruleForTab='other';
 				break;
+			case 'mythic-abilities':
+				ruleForTab = 'mythic';
+				break;
+			case 'mythic-feats':
+				ruleForTab='feats';
+				break;
 			default:
 				ruleForTab=v[prefix + 'rule_category']||'';
 				break;

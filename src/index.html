@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Added Mythic Abilities and Feats to the Rule dropdown selector to help with sorting.</li>
                         <li>Added Spell DC Misc. field to Spells&#62;Level and Caster Ability&#62;Roll Adjustments. DC Misc. and DC Buff are added to the 'Save DC' column under Spells/Day as well as all spells.</li>
                         <li>Spell DC Class 0,1,2 have been added to the Buffs Bonus selector/dropdown.</li>
                         <li>Added HL Import attacks. <b>Consider this beta...</b> You may need to make adjustments to natural and weapon attacks after import, but this should be faster than creating the attacks from scratch.</li>
@@ -8224,8 +8225,11 @@
                     <div role="menubar" class="abilitiesnav tabs custbordernav" aria-label="Abilities" data-i18n-aria-label="abilities"></div>
                     <input type="radio" class="tabinput tab0 wider-tab" name="attr_abilities_tab" value="class-features" data-i18n-title="class-features" data-i18n-aria-label="class-features" />
                     <label role="menuitem" class="tab tab0 wider-tab" data-i18n="class-features">Features</label>
-                    <input type="radio" class="tabinput tab1 med-tab" name="attr_abilities_tab" value="feats" data-i18n-title="feats" data-i18n-aria-label="feats" />
-                    <label role="menuitem" class="tab tab1 med-tab" data-i18n="feats">Feats</label>
+                    <input type="radio" class="tabinput tab1 wider-tab" name="attr_abilities_tab" value="feats" data-i18n-title="feats" data-i18n-aria-label="feats" />
+                    <label role="menuitem" class="tab tab1 wider-tab">
+                        <span class="section-mythic-hidden" data-i18n="feats">Feats</span>
+                        <span class="section-mythic" data-i18n="mythic-feats">Mythic Feats</span>
+                    </label>
                     <input type="radio" class="tabinput tab2 med-tab" name="attr_abilities_tab" value="traits" data-i18n-title="traits-and-racial-traits" data-i18n-aria-label="traits-and-racial-traits" />
                     <label role="menuitem" class="tab tab2 med-tab" data-i18n="traits">Traits</label>
                     <input type="radio" class="tabinput tab3 section-mythic wider-tab" name="attr_abilities_tab" value="mythic" data-i18n-title="mythic-abilities" data-i18n-aria-label="mythic-abilities" />
@@ -8251,7 +8255,8 @@
                     <label role="menuitem" class="tab tab11 narrow-tab" data-i18n="supernatural-abbrv">Su</label>
                     <div class="cheat"></div>
                         <span class="tab0 nontable-name selected-tabtitle" data-i18n="class-features">Features</span>
-                        <span class="tab1 nontable-name selected-tabtitle" data-i18n="feats">Feats</span>
+                        <span class="tab1 nontable-name selected-tabtitle section-mythic-hidden" data-i18n="feats">Feats</span>
+                        <span class="tab1 nontable-name selected-tabtitle section-mythic" data-i18n="mythic-feats">Mythic Feats</span>
                         <span class="tab2 nontable-name selected-tabtitle" data-i18n="traits">Traits</span>
                         <span class="tab3 nontable-name selected-tabtitle" data-i18n="mythic-abilities">Mythic Abilities</span>
                         <span class="tab4 nontable-name selected-tabtitle" data-i18n="special-attacks-abbrv">Spec Atk</span>
@@ -8302,6 +8307,8 @@
                                 <label class="small-label2 entry-12p-shrink">
                                     <select class="select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category">
                                         <option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
+                                        <option value="mythic-abilities" data-i18n="mythic-abilities" class="section-mythic">Mythic Abilities</option>
+                                        <option value="mythic-feats" data-i18n="mythic-feats" class="section-mythic">Mythic Feats</option>
                                         <option value="class-features" data-i18n="class-features">Class Features</option>
                                         <!-- confusing since defensive abilities already an <option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
                                         <option value="feats" data-i18n="feats">Feats</option>
@@ -13334,6 +13341,8 @@
                                 <label class="small-label2 entry-12p-shrink">
                                     <select class="select-small" title="@{repeating_ability_$X_rule_category}" name="attr_rule_category" data-i18n-aria-label="rule-category">
                                         <option value="" data-i18n="select-one-default" selected>&#8226;Select One</option>
+                                        <option value="mythic-abilities" data-i18n="mythic-abilities" class="section-mythic">Mythic Abilities</option>
+                                        <option value="mythic-feats" data-i18n="mythic-feats" class="section-mythic">Mythic Feats</option>
                                         <option value="class-features" data-i18n="class-features">Class Features</option>
                                         <!-- confusing since defensive abilities already an <option value="defensive-abilities" data-i18n="defensive-abilities">Defensive Abilities</option>-->
                                         <option value="feats" data-i18n="feats">Feats</option>
