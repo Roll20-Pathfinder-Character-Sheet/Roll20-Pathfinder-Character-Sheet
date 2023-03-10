@@ -1391,6 +1391,30 @@ also need 1 more level in selector or base css will override border */
     margin: -5px -5px 0 0;
 }
 
+.charsheet .pf-wrapper span.spell-class-0::after {
+    content: ' 0';
+}
+
+.charsheet .pf-wrapper span.spell-class-1::after {
+    content: ' 1';
+}
+
+.charsheet .pf-wrapper span.spell-class-2::after {
+    content: ' 2';
+}
+
+.charsheet .pf-wrapper span.spell-class-0::after,
+.charsheet .pf-wrapper span.spell-class-1::after,
+.charsheet .pf-wrapper span.spell-class-2::after {
+    margin: 0 -5px 0 2px;
+    padding-left: 1px;
+    position: relative;
+    top: -3px;
+    font-style: normal;
+    font-size: .85rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
 .charsheet .pf-wrapper span.note-a::after,
 .charsheet .pf-wrapper .h2.note-a::after {
     content: '(a)';
