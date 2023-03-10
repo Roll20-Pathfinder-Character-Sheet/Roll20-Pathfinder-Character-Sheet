@@ -1392,15 +1392,15 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .pf-wrapper span.spell-class-0::after {
-    content: ' 0';
+    content: '0';
 }
 
 .charsheet .pf-wrapper span.spell-class-1::after {
-    content: ' 1';
+    content: '1';
 }
 
 .charsheet .pf-wrapper span.spell-class-2::after {
-    content: ' 2';
+    content: '2';
 }
 
 .charsheet .pf-wrapper span.spell-class-0::after,
