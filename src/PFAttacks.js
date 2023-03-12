@@ -24,7 +24,7 @@ updateRowAttrsLU=["_attack-mod","_attack-type","_attack-type-mod","_crit_conf_mo
 sizeFieldsLU=['_default_damage-dice-num','_default_damage-die','_default_size','_not_default_size','_damage-dice-num','_damage-die','_size_affects'],
 updateCharAttrs=["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf",	"attk_melee2_crit_conf", "attk_cmb_crit_conf", "attk_cmb2_crit_conf",
 	"buff_DMG-total","buff_dmg_melee-total","buff_dmg_ranged-total","buff_dmg_melee2-total", "buff_dmg_ranged2-total",
-	"condition-Sickened", "size", "default_char_size", "modify_dmg_by_size", "buff_dmg_power_attack-total"],
+	"condition-Sickened", "size", "default_char_size", "modify_dmg_by_size", "buff_dmg_power_attack-total", "buff_crit_conf-total"],
 linkedAttackType = { 'equipment':1, 'spell':2, 'ability':3,  'weapon':4};
 
 
@@ -287,22 +287,27 @@ function updateRepeatingWeaponDamage(id, eventInfo) {
  */
 function updateRepeatingWeaponCrit (id,v,setter,wasChecked){
 	var idStr = SWUtils.getRepeatingIDStr(id),
-	critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
-	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
-	attkTypeField = "repeating_weapon_" + idStr + "attack-type",
-	critConfirmBonus=0,attkTypeForGrid='',
-	attackTypeBonusField='',attackTypeBonus=0,newBonus=0;
+		critConfirmTotalField = "repeating_weapon_" + idStr + "crit_conf_mod",
+		critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
+		attkTypeField = "repeating_weapon_" + idStr + "attack-type",
+		attackBuff = v["buff_crit_conf-total"] || 0,
+		critConfirmBonus = 0,
+		attkTypeForGrid = '',
+		attackTypeBonusField = '',
+		attackTypeBonus = 0,
+		newBonus = 0;
 	try {
 		setter =setter||{};
-		critConfirmBonus = v[critConfirmField]  || 0;
+		critConfirmBonus = ((v[critConfirmField] || 0) + attackBuff);
 		if( wasChecked||(v[attkTypeField] !== '0' && v[attkTypeField] !=='dual') ){
-			attkTypeForGrid= v[attkTypeField].replace('attk-', '');
+			attkTypeForGrid = v[attkTypeField].replace('attk-', '');
 			if(wasChecked||PFAttackGrid.attackGridFields[attkTypeForGrid])
-			attackTypeBonusField=PFAttackGrid.attackGridFields[attkTypeForGrid].crit;
+				attackTypeBonusField = PFAttackGrid.attackGridFields[attkTypeForGrid].crit;
 			if(wasChecked||attackTypeBonusField){
-				attackTypeBonus=v[attackTypeBonusField] || 0;
+				attackTypeBonus = v[attackTypeBonusField] || 0;
 			}
 		}
+
 		newBonus = critConfirmBonus + attackTypeBonus;
 		if (newBonus !== (v[critConfirmTotalField] || 0)) {
 			setter[critConfirmTotalField] = newBonus;
@@ -323,7 +328,7 @@ function updateRepeatingWeaponCritAsync(id, eventInfo) {
 	critConfirmField = "repeating_weapon_" + idStr + "crit_confirm",
 	attkTypeField = "repeating_weapon_" + idStr + "attack-type",
 	attrs = ["attk_ranged_crit_conf", "attk_ranged2_crit_conf", "attk_melee_crit_conf", "attk_melee2_crit_conf",
-		"attk_cmb_crit_conf", "attk_cmb2_crit_conf", critConfirmTotalField, critConfirmField, attkTypeField];
+		"attk_cmb_crit_conf", "attk_cmb2_crit_conf", "buff_crit_conf-total", critConfirmTotalField, critConfirmField, attkTypeField];
 	getAttrs(attrs, function (v) {
 		var setter = {};
 		try {
@@ -366,11 +371,12 @@ function updateRepeatingWeaponsFromCritAsync(attacktype, eventInfo) {
 			attrs.push("repeating_weapon_" + idStr + "crit_conf_mod");
 			attrs.push("repeating_weapon_" + idStr + "crit_confirm");
 			attrs.push("repeating_weapon_" + idStr + "attack-type");
+			attrs.push("buff_crit_conf-total");
 		});
 		//TAS.debug("about to get ",attrs);
 		getAttrs(attrs, function (v) {
 			var globalCritBonus = parseInt(v[globalCritBonusField], 10) || 0,
-			setter = {};
+				setter = {};
 			try {
 			v = _.mapObject(v,function(val,key){
 				if ((/attack\-type$/i).test(key)  || (/damage\-ability$/i).test(key)|| (/damage\-ability\-max$/i).test(key) || (/damage_ability_mult$/i).test(key) ){
@@ -699,7 +705,7 @@ function  getRecalculatedAttack (id,v,setter){
 				}
 			}
 		}
-		updateRepeatingWeaponCrit(id,v,localsetter);
+		updateRepeatingWeaponCrit(id, v, localsetter);
 		newCritBonus = critConfirmBonus + attackTypeCritBonus;
 		if (newCritBonus !== currCritBonus) {
 			localsetter[prefix+ "crit_conf_mod"] = newCritBonus;
@@ -1758,16 +1764,25 @@ function registerEventHandlers () {
 			updateRepeatingWeaponDamage(null, eventInfo);
 		}
 	}));
-	on("change:repeating_weapon:crit_confirm ", TAS.callback(function eventWeaponCritConfirmBonus(eventInfo) {
+	on("change:repeating_weapon:crit_confirm change:buff_crit_conf-total", TAS.callback(function eventWeaponCritConfirmBonus(eventInfo) {
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			updateRepeatingWeaponCritAsync(null, eventInfo);
 		}
 	}));
+
 	_.each(PFAttackGrid.attackGridFields, function (attackFields, attack) {
 		on("change:" + attackFields.crit, TAS.callback(function eventAttackCrit(eventInfo) {
 			if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				updateRepeatingWeaponsFromCritAsync(attack, eventInfo);
+			}
+		}));
+
+		on("change:" + attackFields.critconfirm, TAS.callback(function eventAttackCrit(eventInfo) {
+			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				let attack = "melee";
 				updateRepeatingWeaponsFromCritAsync(attack, eventInfo);
 			}
 		}));
