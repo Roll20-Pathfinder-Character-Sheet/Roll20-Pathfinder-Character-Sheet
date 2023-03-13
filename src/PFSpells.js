@@ -1301,7 +1301,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
 
             if (updateDC || updateSpellLevel) {
                 spellDCmisc = parseInt(v['spellclass-' + classNum + '-savedc-misc'], 10) || 0;
-                spellDCbuff = parseInt(v['buff_SpellDC_' + classIdx + '-total'], 10) || 0;
+                spellDCbuff = parseInt(v['buff_SpellDC_' + classNum + '-total'], 10) || 0;
                 spellDCmod = spellDCmisc + spellDCbuff;
                 newDC = 10 + spellLevel + spellAbilityMod + spellDCmod + (parseInt(v[dcMiscField], 10) || 0);
                 if (newDC !== (parseInt(v[currDCField], 10) || 0)) {

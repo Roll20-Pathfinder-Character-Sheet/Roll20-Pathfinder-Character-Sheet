@@ -36,6 +36,7 @@
                     </h2>
                     <ol>
                         <li>Added a Critical Confirm bonus to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all attacks.</li>
+                        <li>The Critical Confirm bonus field (+Conf) on attacks has been changed into a macro field. The 'Val' field now shows the Total crit confirm bonus ie local bonus + attack-grid bonus and/or any buffs.</li>
                         <li>Added Mythic Abilities and Mythic Feats to the Rule dropdown selector to help with sorting abilities. Note: this does not convert non-mythic abilities or feats into a mythic version. It simply moves the ability or feat to the appropriate tab.</li>
                         <li>Added Spell DC Misc. field to Spells&#62;Level and Caster Ability&#62;Roll Adjustments. Any 'DC Misc.' modifier and/or 'DC Buff' will be included on the 'Save DC' column under Spells/Day as well as each spells' computed DC.</li>
                         <li>Added Spell DC Classes 0, 1, and 2 to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all spells under a given spell class.</li>
@@ -3437,7 +3438,7 @@
                                 <div class="linked-fields sect nondual-sect">
                                     <input type="checkbox" name="attr_attack-mod_error" class="error-mshow" value="1" />
                                     <label class="small-label2 entry-med highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" /><span class="super note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
-                                    <label class="small-label2 narrow-numbers highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                    <label class="small-label2 narrow-numbers highlight space-right-collapse"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
                                 </div>
                                 <span class="divider-db sect nondual-sect">+</span>
                                 <label class="small-label2 entry-med">
@@ -3473,8 +3474,16 @@
                                     <label class="small-label2 narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
                                 </div>
                                 <div class="linked-fields nondual-sect">
-                                    <label class="small-label2 narrow-numbers sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
-                                    <label class="small-label2 narrow-numbers space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                    <input type="checkbox" name="attr_crit_confirm_temp_error" class="error-mshow" value="1" />
+                                    <label class="small-label2 entry-short highlight sect">
+                                        <input type="text" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" />
+                                        <input type="text" name="attr_crit_confirm_temp" value="0" class="hidden" />
+                                        <span class="super note-a" data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span>
+                                    </label>
+                                    <label class="small-label2 narrow-numbers highlight space-right-collapse">
+                                        <input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="calc" readonly />
+                                        <span data-i18n="value-abbrv">val</span>
+                                    </label>
                                 </div>
                                 <input name="attr_size_affects" type="checkbox" value="1" class="sect3-show noshow" />
                                 <input name="attr_not_default_size" type="checkbox" value="1" class="sect3-show size-affects-show noshow" />
@@ -3500,7 +3509,7 @@
                                 <div class="linked-fields sect nondual-sect">
                                     <input type="checkbox" name="attr_damage-mod_error" class="error-mshow" value="1" />
                                     <label class="small-label2 entry-short highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" /><span class="super note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
-                                    <label class="small-label2 narrow-numbers highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                    <label class="small-label2 narrow-numbers highlight space-right-collapse"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
                                 </div>
                                 <span class="divider-db nondual-sect">+</span>
                                 <label class="small-label2 narrow-numbers sect nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability multiplier: .5, 1.5, 2, etc. Penalties are not multiplied.">Mult</span></label>
@@ -11858,7 +11867,7 @@
                                     <div class="linked-fields sect nondual-sect">
                                         <input type="checkbox" name="attr_attack-mod_error" class="error-mshow" value="1" />
                                         <label class="small-label2 entry-med highlight"><input type="text" name="attr_attack" title="@{repeating_weapon_$X_attack}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" /><span class="super note-a" data-i18n="attack-modifiers-abbrv">Attack Mods</span></label>
-                                        <label class="small-label2 narrow-numbers highlight"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                        <label class="small-label2 narrow-numbers highlight space-right-collapse"><input type="number" name="attr_attack-mod" title="@{repeating_weapon_$X_attack-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
                                     </div>
                                     <span class="divider-db sect nondual-sect">+</span>
                                     <label class="small-label2 entry-med">
@@ -11894,8 +11903,16 @@
                                         <label class="small-label2 narrow-numbers"><input type="number" name="attr_crit-multiplier" title="@{repeating_weapon_$X_crit-multiplier}" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
                                     </div>
                                     <div class="linked-fields nondual-sect">
-                                        <label class="small-label2 narrow-numbers sect"><input type="number" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" value="0" /><span data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span></label>
-                                        <label class="small-label2 narrow-numbers space-right-collapse"><input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                        <input type="checkbox" name="attr_crit_confirm_temp_error" class="error-mshow" value="1" />
+                                        <label class="small-label2 entry-short highlight sect">
+                                            <input type="text" name="attr_crit_confirm" title="@{repeating_weapon_$X_crit_confirm}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" />
+                                            <input type="text" name="attr_crit_confirm_temp" value="0" class="hidden" />
+                                            <span class="super note-a" data-i18n-title="custom-crit-confirmation-bonus" data-i18n-aria-label="custom-crit-confirmation-bonus" title="Custom critical confirmation bonus for this attack" data-i18n="confirm-critical-bonus-abbrv">+Conf</span>
+                                        </label>
+                                        <label class="small-label2 narrow-numbers highlight space-right-collapse">
+                                            <input type="number" name="attr_crit_conf_mod" title="@{repeating_weapon_$X_crit_conf_mod}" value="0" class="calc" readonly />
+                                            <span data-i18n="value-abbrv">val</span>
+                                        </label>
                                     </div>
                                     <input name="attr_size_affects" type="checkbox" value="1" class="sect3-show noshow" />
                                     <input name="attr_not_default_size" type="checkbox" value="1" class="sect3-show size-affects-show noshow" />
@@ -11921,7 +11938,7 @@
                                     <div class="linked-fields sect nondual-sect">
                                         <input type="checkbox" name="attr_damage-mod_error" class="error-mshow" value="1" />
                                         <label class="small-label2 entry-short highlight"><input type="text" name="attr_damage" title="@{repeating_weapon_$X_damage}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" class="macro-text-inline" /><span class="super note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
-                                        <label class="small-label2 narrow-numbers highlight"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
+                                        <label class="small-label2 narrow-numbers highlight space-right-collapse"><input type="number" name="attr_damage-mod" title="@{repeating_weapon_$X_damage-mod}" value="0" class="calc" readonly /><span data-i18n="value-abbrv">val</span></label>
                                     </div>
                                     <span class="divider-db nondual-sect">+</span>
                                     <label class="small-label2 narrow-numbers sect nondual-sect"><input type="number" step=".5" name="attr_damage_ability_mult" title="@{repeating_weapon_$X_damage_ability_mult}" value="1"><span data-i18n="multiplier-abbrv" data-i18n-title="damage-multiplier-title" data-i18n-aria-label="damage-multiplier-title" title="Damage ability modifier: .5, 1.5, 2, etc, can leave blank to represent 1.">Mult</span></label>
