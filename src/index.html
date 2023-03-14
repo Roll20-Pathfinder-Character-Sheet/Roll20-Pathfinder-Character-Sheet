@@ -107,8 +107,8 @@
     <div class="pfsheet">
         <input type="checkbox" name="attr_readonly_show" value="1" class="readonly-show noshow" role="presentation" checked />
         <input type="checkbox" name="attr_is_undead" value="1" class="noshow" role="presentation" />
-        <input type="checkbox" name="attr_normal_macro_show" value="1" class="all-macro-text-show noshow" style="display:none;" role="presentation" />
-        <input type="checkbox" name="attr_adv_macro_show" value="1" class="advanced-macro-show noshow" role="presentation" />
+        <input type="checkbox" name="attr_normal_macro_show" value="1" class="all-macro-text-show noshow" style="display:none;" role="presentation" checked />
+        <input type="checkbox" name="attr_adv_macro_show" value="1" class="advanced-macro-show noshow" role="presentation" checked />
         <input type="checkbox" name="attr_use_spells" value="1" class="show-spell-tab noshow" data-i18n-aria-label="uses-spells-title" role="presentation" />
         <div role="contentinfo" aria-label="Buffs and Conditions" data-i18n-aria-label="buffs-conditions-status-section" class="section-status">
             <div class="status-panel" role="status" aria-live="polite" aria-label="Current Conditions" data-i18n-aria-label="current-conditions">
@@ -288,7 +288,7 @@
             </div>
             <div class="repeating-sect buffs">
                 <span class="nontable-name secondary-table-name" style="margin-bottom:0;" data-i18n="set-buffs">Set Buffs</span>
-                <input type="checkbox" class="bonustype-show noshow" name="attr_use_buff_bonuses" value="1" role="presentation" />
+                <input type="checkbox" class="bonustype-show noshow" name="attr_use_buff_bonuses" value="1" role="presentation" checked />
                 <input type="checkbox" class="minimize-show cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_buff-min-show" value="1" /><span></span>
                 <input type="checkbox" class="lock-show cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_buff-expand-show" value="1" /><span></span>
                 <input type="checkbox" class="split-column-show cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_buff-column-show" value="1" /><span></span>
@@ -14090,7 +14090,7 @@
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="buffs">Buffs</span>
                     <span class="table-cell left">
-                        <input type="checkbox" class="selectedlabel-check bonustype-show" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
+                        <input type="checkbox" class="selectedlabel-check bonustype-show" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" checked /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
                         <input class="csstextbutton newbuff" style="margin-left:-1.125em;" type="checkbox" name="attr_merge_buffs_now" value="1" /><span class="newbuff" data-i18n-title="merge-buffs" data-i18n="merge">Merge</span>
                         <input class="deletebutton newbuff cssbutton deletesect-show" style="margin-left:-.75em;" type="checkbox" name="attr_delete_rep_buff_btn" value="1" data-i18n-title="delete-old-buff-list" data-i18n-aria-label="delete-old-buff-list" /><span class="newbuff"></span><label class="deletesect allrows-note newbuff"><input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-old-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
                     </span>
@@ -14230,14 +14230,14 @@
                         <b><span data-i18n-title="display-advanced-options-title" data-i18n-aria-label="display-advanced-options-title" aria-label="display-advanced-options-title" data-i18n="display-advanced-options">Display user defined and misc fields</span></b>
                     </span>
                     <span class="table-cell left">
-                        <input type="checkbox" title="@{normal_macro_show}" name="attr_normal_macro_show" value="1" class="selectedlabel-check" />
+                        <input type="checkbox" title="@{normal_macro_show}" name="attr_normal_macro_show" value="1" class="selectedlabel-check" checked />
                         <b><span data-i18n-aria-label="display-macro-text-title" data-i18n-title="display-macro-text-title" data-i18n="display-macro-text">Display macro-text fields for customizing rolls</span></b>
                     </span>
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name"> </span>
                     <span class="table-cell left">
-                        <input type="checkbox" title="@{adv_macro_show}" name="attr_adv_macro_show" value="1" class="selectedlabel-check" />
+                        <input type="checkbox" title="@{adv_macro_show}" name="attr_adv_macro_show" value="1" class="selectedlabel-check" checked />
                         <b><span data-i18n-title="display-advanced-macros-title" data-i18n-aria-label="display-advanced-macros-title" aria-label="display-advanced-macros-title" data-i18n="display-advanced-macros">Display 'Advanced' roll-time macro fields to add to rolls</span></b>
                     </span>
                     <span class="table-cell left"> </span>
