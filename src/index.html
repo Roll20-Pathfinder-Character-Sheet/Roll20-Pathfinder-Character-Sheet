@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Added an encumbrance option for Carried Currency.</li>
                         <li>Added a Critical Confirm bonus to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all attacks.</li>
                         <li>The Critical Confirm bonus field (+Conf) on attacks has been changed into a macro field. The 'Val' field now shows the Total crit confirm bonus ie local bonus + attack-grid bonus and/or any buffs.</li>
                         <li>Added Mythic Abilities and Mythic Feats to the Rule dropdown selector to help with sorting abilities. Note: this does not convert non-mythic abilities or feats into a mythic version. It simply moves the ability or feat to the appropriate tab.</li>
@@ -10773,7 +10774,10 @@
                         <div class="table wide-numbers carried-totals">
                             <span class="table-name show-readonly secondary-table-name weight-used" data-i18n="carried-weight">Carried Weight</span>
                             <div class="table-row">
-                                <span class="table-header" data-i18n-title="carried-currency" data-i18n-aria-label="carried-currency" data-i18n="currency">Currency</span>
+                                <span class="table-header">
+                                    <span data-i18n-title="carried-currency" data-i18n-aria-label="carried-currency" data-i18n="currency" title="Carried Currency" aria-label="Carried Currency">Currency</span>
+                                    <input type="checkbox" name="attr_carried-currency-toggle" title="@{carried-currency-toggle}" value="1" checked />
+                                </span>
                                 <span class="table-header hide-readonly"></span>
                                 <span class="table-header" data-i18n-title="carried-equipment" data-i18n-aria-label="carried-equipment" data-i18n="equipment-abbrv">Equip</span>
                                 <span class="table-header hide-readonly"></span>
@@ -14166,6 +14170,14 @@
                     </span>
                     <span class="table-cell left">
                         <input type="checkbox" class="selectedlabel-check" name="attr_is_dwarf" value="1" title="@{is_dwarf}" /><b data-i18n-aria-label="use-dwarf-encumbrance-title" data-i18n="use-dwarf-encumbrance" data-i18n-title="use-dwarf-encumbrance-title">Uses dwarf encumbrance rules</b>
+                    </span>
+                </div>
+                <div class="table-row">
+                    <span class="table-config-row-name" data-i18n="encumbrance">Encumbrance</span>
+                    <span class="table-cell left"></span>
+                    <span class="table-cell left">
+                        <input type="checkbox" name="attr_carried-currency-toggle" title="@{carried-currency-toggle}" value="1" checked />
+                        <b><span data-i18n-title="options-include-carried-currency-title" data-i18n-aria-label="options-include-carried-currency-title" data-i18n="include-carried-currency">Include Carried Currency</span></b>
                     </span>
                 </div>
                 <div class="table-row">

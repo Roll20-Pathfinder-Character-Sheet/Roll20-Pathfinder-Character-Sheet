@@ -217,9 +217,11 @@ function updateCarriedTotal(callback, silently) {
             callback();
         }
     };
-    getAttrs(["carried-currency", "item_total_weight", "carried-misc", "carried-total", "use_metrics"], function (v) {
+    getAttrs(["carried-currency", "carried-currency-toggle", "item_total_weight", "carried-misc", "carried-total", "use_metrics"], function (v) {
         var curr,
-        carried,
+            carried,
+            currency,
+            currencyToggle,
         params = {};
         try {
         //metric multiplier to convert lbs to kgs
@@ -227,8 +229,13 @@ function updateCarriedTotal(callback, silently) {
             if (parseInt(v["use_metrics"]) > 0) {
                 use_metrics = 0.454;
             }
+            currency = parseFloat(v["carried-currency"]) || 0;
+            currencyToggle = parseInt(v["carried-currency-toggle"]);
+            if (currencyToggle === 0) {
+                currency = 0;
+            }
             curr = Math.floor(100 * parseFloat(v["carried-total"]) || 0);
-            carried = Math.floor((parseFloat(v["carried-currency"]) || 0) * 100 + (parseFloat(v["item_total_weight"]) || 0) * 100 + (parseFloat(v["carried-misc"]) || 0) * 100) ; // Fix bad javascript math
+            carried = Math.floor(currency * 100 + (parseFloat(v["item_total_weight"]) || 0) * 100 + (parseFloat(v["carried-misc"]) || 0) * 100) ; // Fix bad javascript math
             TAS.debug("carried curr=" + curr + ", carried total=" + carried);
             if (curr !== carried) {
                 carried = carried / 100;
@@ -1733,7 +1740,7 @@ function registerEventHandlers() {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         updateCarriedCurrency();
     }));
-    on('change:carried-currency change:item_total_weight change:carried-misc', TAS.callback(function eventUpdateCarriedTotal(eventInfo) {
+    on('change:carried-currency change:carried-currency-toggle change:item_total_weight change:carried-misc', TAS.callback(function eventUpdateCarriedTotal(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         updateCarriedTotal();
     }));
