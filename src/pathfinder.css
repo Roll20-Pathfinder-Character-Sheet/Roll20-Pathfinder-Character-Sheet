@@ -4037,6 +4037,30 @@ spellclass-concentration spellcaster-button {
     max-width: 4em;
 }
 
+/* Hides Type select when Feats or Traits are selected */
+.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select,
+.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span,
+.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select,
+.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span {
+    display: none;
+}
+
+.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span ~ *,
+.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span ~ * {
+    display: block;
+    position: revert;
+}
+
+.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown input,
+.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown input ~ * {
+    display: none;
+}
+
+.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown {
+    width: min-content;
+    padding: revert;
+}
+
 .charsheet .section-ability-list .small-label2 span:not(.autoexpand) {
     font-size: 1rem;
 }

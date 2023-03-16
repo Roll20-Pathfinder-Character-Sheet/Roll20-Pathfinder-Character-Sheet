@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Added 'Type' field for Feats and Traits.</li>
                         <li>Added an encumbrance option for Carried Currency. This can be toggled via Sheet Settings>Sheet Configuration>Encumbrance and/or using a checkbox on the Equipment tab>Carried Weight sub-section.</li>
                         <li>Added a Critical Confirm bonus to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all attacks.</li>
                         <li>The Critical Confirm bonus field (+Conf) on attacks has been changed into a macro field. The 'Val' field now shows the Total crit confirm bonus ie local bonus + attack-grid bonus and/or any buffs.</li>
@@ -8369,7 +8370,7 @@
                                     <input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="calc" readonly />
                                     <span class="nowrap" data-i18n="source-name">Source Name</span>
                                 </label>
-                                <label class="small-label2 exspsu-dropdown">
+                                <label class="small-label2 entry-12p-shrink exspsu-dropdown autoexpand">
                                     <select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
                                         <option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
                                         <option value="Ex" data-i18n="extraordinary-abbrv">Ex</option>
@@ -8377,6 +8378,9 @@
                                         <option value="Su" data-i18n="supernatural-abbrv">Su</option>
                                     </select>
                                     <span data-i18n-title="ability-type-title" data-i18n-aria-label="ability-type-title" data-i18n="type">Type</span>
+                                    <input type="text" name="attr_ability_type2" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <span data-i18n="type">Type</span>
+                                    <span name="attr_ability_type2" class="autoexpand"></span>
                                 </label>
                                 <label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
                                 <label class="small-label2" style="width:6em;">
@@ -13414,7 +13418,7 @@
                                     <input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="calc" readonly />
                                     <span class="nowrap" data-i18n="source-name">Source Name</span>
                                 </label>
-                                <label class="small-label2 exspsu-dropdown">
+                                <label class="small-label2 entry-12p-shrink exspsu-dropdown autoexpand">
                                     <select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
                                         <option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
                                         <option value="Ex" data-i18n="extraordinary-abbrv">Ex</option>
@@ -13422,6 +13426,9 @@
                                         <option value="Su" data-i18n="supernatural-abbrv">Su</option>
                                     </select>
                                     <span data-i18n-title="ability-type-title" data-i18n-aria-label="ability-type-title" data-i18n="type">Type</span>
+                                    <input type="text" name="attr_ability_type2" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <span data-i18n="type">Type</span>
+                                    <span name="attr_ability_type2" class="autoexpand"></span>
                                 </label>
                                 <label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
                                 <label class="small-label2" style="width:6em;">
