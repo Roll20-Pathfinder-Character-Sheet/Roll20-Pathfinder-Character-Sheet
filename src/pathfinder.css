@@ -4038,25 +4038,25 @@ spellclass-concentration spellcaster-button {
 }
 
 /* Hides Type select when Feats or Traits are selected */
-.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select,
-.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span,
-.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select,
-.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span {
+.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select,
+.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select + span,
+.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select,
+.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select + span {
     display: none;
 }
 
-.charsheet input.custnavsection-1.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span ~ *,
-.charsheet input.custnavsection-2.tabcopy:checked ~ div > label.small-label2.exspsu-dropdown select + span ~ * {
+.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select + span ~ *,
+.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select + span ~ * {
     display: block;
     position: revert;
 }
 
-.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown input,
-.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown input ~ * {
+.charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown input,
+.charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown input ~ * {
     display: none;
 }
 
-.charsheet input.tabcopy:not(:checked) ~ div > label.small-label2.exspsu-dropdown {
+.charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown {
     width: min-content;
     padding: revert;
 }
