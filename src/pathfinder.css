@@ -6305,12 +6305,12 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(6),
 .charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(6),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(8),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(8),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(9),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(9),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(10),
-.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(10) {
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(11),
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(11),
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(12),
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(12),
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-header:nth-child(13),
+.charsheet .readonly-show:not(:checked) ~ .main .section-core .class-grid .table-cell:nth-child(13) {
     display: none;
 }
 
