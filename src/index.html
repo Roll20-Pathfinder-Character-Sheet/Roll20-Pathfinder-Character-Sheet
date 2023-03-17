@@ -8378,9 +8378,52 @@
                                         <option value="Su" data-i18n="supernatural-abbrv">Su</option>
                                     </select>
                                     <span data-i18n-title="ability-type-title" data-i18n-aria-label="ability-type-title" data-i18n="type">Type</span>
-                                    <input type="text" name="attr_ability_type2" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <input type="text" name="attr_ability_type2" list="traits" class="show-traits" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
                                     <span data-i18n="type">Type</span>
                                     <span name="attr_ability_type2" class="autoexpand"></span>
+                                    <datalist id="traits" class="hidden">
+                                        <option value="Campaign">Campaign</option>
+                                        <option value="Combat">Combat</option>
+                                        <option value="Equipment">Equipment</option>
+                                        <option value="Faith">Faith</option>
+                                        <option value="Family">Family</option>
+                                        <option value="Magic">Magic</option>
+                                        <option value="Mount">Mount</option>
+                                        <option value="Race">Race</option>
+                                        <option value="Regional">Regional</option>
+                                        <option value="Religion">Religion</option>
+                                        <option value="Social">Social</option>
+                                    </datalist>
+                                    <datalist id="feats" class="hidden">
+                                        <option value="Achievement">Achievement</option>
+                                        <option value="Animal Companion">Animal Companion</option>
+                                        <option value="Animal/Familiar">Animal/Familiar</option>
+                                        <option value="Betrayal">Betrayal</option>
+                                        <option value="Blood Hex">Blood Hex</option>
+                                        <option value="Caravan">Caravan</option>
+                                        <option value="Channeling">Channeling</option>
+                                        <option value="Combat">Combat</option>
+                                        <option value="Conduit">Conduit</option>
+                                        <option value="Critical">Critical</option>
+                                        <option value="Damnation">Damnation</option>
+                                        <option value="General">General</option>
+                                        <option value="Grit">Grit</option>
+                                        <option value="Item Creation">Item Creation</option>
+                                        <option value="Item Mastery">Item Mastery</option>
+                                        <option value="Local">Local</option>
+                                        <option value="Metamagic">Metamagic</option>
+                                        <option value="Monster">Monster</option>
+                                        <option value="Mythic">Mythic</option>
+                                        <option value="Panache">Panache</option>
+                                        <option value="Performance">Performance</option>
+                                        <option value="Racial Feat">Racial Feat</option>
+                                        <option value="Stare">Stare</option>
+                                        <option value="Story">Story</option>
+                                        <option value="Style">Style</option>
+                                        <option value="Teamwork">Teamwork</option>
+                                        <option value="Weapon Mastery">Weapon Mastery</option>
+                                    </datalist>
                                 </label>
                                 <label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
                                 <label class="small-label2" style="width:6em;">
@@ -13426,7 +13469,8 @@
                                         <option value="Su" data-i18n="supernatural-abbrv">Su</option>
                                     </select>
                                     <span data-i18n-title="ability-type-title" data-i18n-aria-label="ability-type-title" data-i18n="type">Type</span>
-                                    <input type="text" name="attr_ability_type2" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <input type="text" name="attr_ability_type2" list="traits" class="show-traits" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
                                     <span data-i18n="type">Type</span>
                                     <span name="attr_ability_type2" class="autoexpand"></span>
                                 </label>
