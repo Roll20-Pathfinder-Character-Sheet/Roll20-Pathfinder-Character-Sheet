@@ -338,17 +338,18 @@
     margin-top: -1em;
 }
 
-.charsheet .section-core input.macro-text-inline:focus,
-.charsheet .attacks label > input.macro-text-inline:focus,
-.charsheet .attack-grid input.macro-text-inline:focus,
-.charsheet .saves input.macro-text-inline:focus,
-.charsheet .skills input.macro-text-inline:focus,
-.charsheet .section-spells input.macro-text-inline:focus,
-.charsheet .section-spells .macro-text-inline:focus,
 .charsheet .abilities input.macro-text-inline:focus,
+.charsheet .attack-grid input.macro-text-inline:focus,
+.charsheet .attacks label > input.macro-text-inline:focus,
+.charsheet .defense-grid input.macro-text-inline:focus,
 .charsheet .items input.macro-text-inline:focus,
 .charsheet .items textarea.macro-text-inline:focus,
-.charsheet .defense-grid input.macro-text-inline:focus {
+.charsheet .saves input.macro-text-inline:focus,
+.charsheet .section-core input.macro-text-inline:focus,
+.charsheet .section-npc input.macro-text-inline:focus,
+.charsheet .section-spells .macro-text-inline:focus,
+.charsheet .section-spells input.macro-text-inline:focus,
+.charsheet .skills input.macro-text-inline:focus {
     background-color: #f0f8ff;
     color: revert;
     display: block;
@@ -359,6 +360,10 @@
     width: 26em;
     word-break: normal;
     z-index: 4;
+}
+
+.charsheet .float-right {
+    right: 1em;
 }
 
 .charsheet .both {
