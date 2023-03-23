@@ -24,6 +24,12 @@
     content: revert;
 }
 
+.charsheet details.table-cell,
+.charsheet span.table-cell details {
+  margin: 4px 0 0 4px;
+  width: 90%;
+}
+
 .charsheet summary:hover,
 .charsheet details:hover {
     color: #f00;
@@ -304,14 +310,53 @@
     overflow: hidden;
 }
 
+/* macro-text field pop-up */
+
+.charsheet .skills .table-row span.table-cell > textarea:focus,
 .charsheet details[open] summary + textarea.skill-macro-text {
-    background-color: lightgrey;
+    background-color: #f0f8ff;
     color: revert;
     display: block;
-    height: 9em;
-    left: 10%;
+    height: 10em;
+    left: 1em;
     position: absolute;
-    width: 90%;
+    width: calc(100% - 2em);
+    word-break: normal;
+    z-index: 4;
+}
+
+.charsheet .skills .table-row span.table-cell > textarea:focus {
+    height: 4em;
+    left: auto;
+    margin-top: -1em;
+    right: 2em;
+    width: 33%;
+    z-index: 5;
+}
+
+.charsheet .skills .table-row input.macro-text-inline:focus {
+    margin-top: -1em;
+}
+
+.charsheet .section-core input.macro-text-inline:focus,
+.charsheet .attacks label > input.macro-text-inline:focus,
+.charsheet .attack-grid input.macro-text-inline:focus,
+.charsheet .saves input.macro-text-inline:focus,
+.charsheet .skills input.macro-text-inline:focus,
+.charsheet .section-spells input.macro-text-inline:focus,
+.charsheet .section-spells .macro-text-inline:focus,
+.charsheet .abilities input.macro-text-inline:focus,
+.charsheet .items input.macro-text-inline:focus,
+.charsheet .items textarea.macro-text-inline:focus,
+.charsheet .defense-grid input.macro-text-inline:focus {
+    background-color: #f0f8ff;
+    color: revert;
+    display: block;
+    height: 2.85em;
+    margin: 0;
+    max-width: none;
+    position: absolute;
+    width: 26em;
     word-break: normal;
     z-index: 4;
 }
@@ -327,8 +372,8 @@
 /* keeps textarea and readonly number attribute to right inline with each other in one .table cell */
 .charsheet .small-label2.linked-tablecell,
 .charsheet .table-cell.linked-tablecell {
-    width: 13em;
     min-width: 9em;
+    white-space: nowrap;
 }
 
 .charsheet .table-cell.linked-tablecell-short {
@@ -340,6 +385,7 @@
 .charsheet .linked-fields .macro-text-inline.linked-cellfield,
 .charsheet .linked-tablecell select.linked-cellfield,
 .charsheet .linked-tablecell .macro-text-inline.linked-cellfield {
+    display: inline-block;
     width: calc(97% - 3.5em);
     max-width: calc(100% - 3.5em);
     vertical-align: middle;
@@ -1531,6 +1577,12 @@ also need 1 more level in selector or base css will override border */
 .charsheet .skills .table-row.bg select {
     font-size: 1.2rem;
     margin: 1px 2px 0 2px;
+}
+
+.charsheet .skills .table-row:hover {
+    color: initial;
+    background-color: #f0f8ff;
+    outline: 1px solid #617c9f;
 }
 
 .charsheet .skills button[type="roll"] {
@@ -6035,6 +6087,12 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     border: none;
 }
 
+.charsheet .section-attacks .misc {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
 .charsheet .readonly-show:not(:checked) ~ .main .section-equipment .col.col1 .table {
     margin-right: 0;
 }
@@ -6584,6 +6642,8 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     box-sizing: border-box;
     vertical-align: inherit;
     word-break: break-all;
+    min-width: 8em;
+    width: 100%;
 }
 
 .charsheet .accessible:checked ~ .pf-wrapper input.macro-text-inline,
