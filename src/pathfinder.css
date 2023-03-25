@@ -345,6 +345,7 @@
 .charsheet .items input.macro-text-inline:focus,
 .charsheet .items textarea.macro-text-inline:focus,
 .charsheet .saves input.macro-text-inline:focus,
+.charsheet .sect-buff input.macro-text-inline:focus,
 .charsheet .section-core input.macro-text-inline:focus,
 .charsheet .section-npc input.macro-text-inline:focus,
 .charsheet .section-spells .macro-text-inline:focus,
