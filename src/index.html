@@ -11027,14 +11027,15 @@
                             <input type="radio" name="attr_spell_class_r" value="2" class="tabcopy section-spellclass2" role="presentation" />
                             <input type="checkbox" name="attr_prepared_state" value="1" class="section-state" role="presentation" />
                             <div class="custrepeating-border nontable-repeating background-color1 compendium-drop-target Spells">
+                                <input type="checkbox" class="toggle-casting-type noshow" name="attr_toggle_casting_type" value="1" />
                                 <input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
                                 <span class="repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_spells_$X_roll}" value="@{macro-text}"></button></span>
                                 <label class="small-label2 narrow-numbers">
                                     <input title="@{repeating_spells_$X_used}" type="number" name="attr_used" value="0">
-                                    <span class="sect3" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared">#Prep</span>
-                                    <span class="sect2" style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-used">#Used</span>
+                                    <span class="prepared" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared">#Prep</span>
+                                    <span class="spontaneous" style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-used">#Used</span>
                                 </label>
-                                <label class="small-label2 narrow-numbers sect3">
+                                <label class="small-label2 narrow-numbers prepared">
                                     <input title="@{repeating_spells_$X_cast}" type="number" name="attr_cast" value="0">
                                     <span style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-cast">#Cast</span>
                                 </label>
@@ -13000,15 +13001,16 @@
                                     <input type="radio" name="attr_spell_class_r" value="2" class="tabcopy section-spellclass2" role="presentation" />
                                     <input type="checkbox" name="attr_prepared_state" value="1" class="section-state" role="presentation" />
                                     <div class="custrepeating-border nontable-repeating background-color1 compendium-drop-target Spells">
+                                        <input type="checkbox" class="toggle-casting-type noshow" name="attr_toggle_casting_type" value="1" />
                                         <input type="checkbox" class="counted sect-show" data-i18n-title="minimize-cmd" data-i18n-aria-label="minimize-cmd" title="Minimize Row" name="attr_row-show" value="1" checked /><span></span>
                                         <span style="display:none;" class="repeating-rollbutton"><button type="roll" name="attr_roll" title="%{selected|repeating_spells_$X_roll}" value="@{macro-text}"></button></span>
                                         <span class="repeating-rollbutton"><button type="roll" name="attr_npc-roll" title="%{selected|repeating_spells_$X_npc-roll}" value="@{npc-macro-text}"></button></span>
                                         <label class="small-label2 narrow-numbers">
                                             <input title="@{repeating_spells_$X_used}" type="number" name="attr_used" value="0">
-                                            <span class="sect3" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared">#Prep</span>
-                                            <span class="sect2" style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-used">#Used</span>
+                                            <span class="prepared" style="margin-left:-.5em;" data-i18n-title="number-prepared-title" data-i18n-aria-label="number-prepared-title" data-i18n="number-prepared">#Prep</span>
+                                            <span class="spontaneous" style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-used">#Used</span>
                                         </label>
-                                        <label class="small-label2 narrow-numbers sect3">
+                                        <label class="small-label2 narrow-numbers prepared">
                                             <input title="@{repeating_spells_$X_cast}" type="number" name="attr_cast" value="0">
                                             <span style="margin-left:-.5em;" data-i18n-title="number-used-title" data-i18n="number-cast">#Cast</span>
                                         </label>

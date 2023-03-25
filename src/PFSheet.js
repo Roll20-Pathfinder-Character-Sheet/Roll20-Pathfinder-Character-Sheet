@@ -488,6 +488,9 @@ function migrate (oldversion, callback, errorCallback) {
 			if (oldversion < 1.787) {
 				PFAbility.updateIncludeLinkVersionCheck();
 			}
+			if (oldversion < 1.822) {
+				PFSpells.setCasterTypeSpells();
+			}
 		}
 	} catch (err) {
 		TAS.error("PFSheet.migrate", err);

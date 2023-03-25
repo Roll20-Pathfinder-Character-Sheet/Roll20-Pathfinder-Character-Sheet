@@ -4243,6 +4243,12 @@ spellclass-concentration spellcaster-button {
 .charsheet .subsect-show:not(:checked) ~ div .sect,
 .charsheet .subsect2-show:not(:checked) ~ div .sect2,
 .charsheet .subsect3-show:not(:checked) ~ div .sect3,
+
+.charsheet .repeating-fields .nontable-repeating .toggle-casting-type:checked ~ .spontaneous,
+.charsheet .repeating-fields .nontable-repeating .toggle-casting-type:checked ~ label .spontaneous,
+.charsheet .repeating-fields .nontable-repeating .toggle-casting-type:not(:checked) ~ .prepared,
+.charsheet .repeating-fields .nontable-repeating .toggle-casting-type:not(:checked) ~ label .prepared,
+
 .charsheet .deletesect-show:not(:checked) + span + .deletesect,
 .charsheet .extra-show:not(:checked) ~ .extra-sect,
 .charsheet .extra-show:not(:checked) ~ div .extra-sect,

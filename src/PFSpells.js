@@ -1091,13 +1091,14 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
             if (!doNotUpdateTotals) {
                 resetSpellsTotals();
                 resetCommandMacro();
+                setCasterTypeSpells(eventInfo);
             }
         }
         if (typeof callback === "function") {
             callback();
         }
     }),
-    idStr='',prefix='',classNameField='',classRadioField='',classNumberField='',
+    idStr='',prefix='',classNameField='',classRadioField='',classNumberField='', classCasterTypeField='',
     casterlevelField='',spellLevelField='',spellLevelRadioField='',dcMiscField='',currDCField='',
     fields = [],
     updateClass = false,
@@ -1116,7 +1117,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         updateSpellLevel=true;
     } else {
         updateStr = eventInfo.sourceAttribute.toLowerCase();
-        tempMatches = updateStr.match(/name|use_metrics|lvlstr|category|meta|range_pick|range|sp_misc|cl_misc|spellclass_number|spell_level|dc_misc|concen|slot/);
+        tempMatches = updateStr.match(/name|use_metrics|toggle_casting_type|lvlstr|category|meta|range_pick|range|sp_misc|cl_misc|spellclass_number|spell_level|dc_misc|concen|slot/);
         if (tempMatches && tempMatches[0]) {
             switch (tempMatches[0]) {
                 case 'name':
@@ -1125,6 +1126,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                     updateSpellLevel=true;
                     break;
                 case 'use_metrics':
+                case 'toggle_casting_type':
                 case 'range_pick':
                 case 'range':
                     updateRange = true;
@@ -1175,13 +1177,14 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
         classNameField = prefix + "spellclass";
         classRadioField = prefix + "spell_class_r";
         classNumberField = prefix + "spellclass_number";
+        classCasterTypeField = prefix + "toggle_casting_type";
         casterlevelField = prefix + "casterlevel";
         spellLevelField = prefix + "spell_level";
         spellLevelRadioField = prefix + "spell_level_r";
         dcMiscField = prefix + "DC_misc";
         currDCField = prefix + "savedc";
     }
-    fields = [classNumberField, classRadioField, classNameField, casterlevelField, prefix + "CL_misc",
+    fields = [classNumberField, classRadioField, classCasterTypeField, classNameField, casterlevelField, prefix + "CL_misc",
         prefix + "range_pick", prefix + "range", prefix + "range_numeric",
         prefix + "SP-mod", prefix + "SP_misc", prefix + "Concentration_misc", prefix + "Concentration-mod",
         prefix + "spell_options", prefix + "used", prefix + "slot", prefix + "metamagic", spellLevelField,
@@ -1200,10 +1203,9 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
     getAttrs(fields, function (v) {
         var setter = {},
         use_metrics, baseClassNum, classNum = 0, classRadio = 0, currClassName = "", className = "",
-        baseSpellLevel,	spellLevel=0,	spellSlot,	metaMagic=0, spellLevelRadio=0,
+        baseSpellLevel,	spellLevel=0, spellSlot, metaMagic=0, spellLevelRadio=0,
         currCasterLevel, casterlevel=0, spellAbilityMod=0, spellDCmisc=0, spellDCbuff=0, spellDCmod=0, newDC = 10,
-        levelSlot=0, currRange=0, currChosenRange='', newSP = 0, newConcentration = 0,
-            hadToSetClass = false, newRange = 0;
+        levelSlot=0, currRange=0, currChosenRange='', newSP = 0, newConcentration = 0, hadToSetClass = false, newRange = 0;
         try {
             baseClassNum = parseInt(v[classNumberField], 10);
             if (isNaN(baseClassNum)) {
@@ -1211,6 +1213,7 @@ function updateSpell (id, eventInfo, callback, doNotUpdateTotals) {
                 baseClassNum=0;
                 setter[classNumberField] = 0;
                 setter[classRadioField] = 0;
+                setter[classCasterTypeField] = 0;
                 hadToSetClass = true;
                 updateClass=true;
             }
@@ -1716,6 +1719,65 @@ function updateIncludeLink() {
         });
     });
 }
+
+// sync repeating_spells locally to match the spellclass caster type
+export function setCasterTypeSpells(eventInfo) {
+    getSectionIDs('repeating_spells', (idArray) => {
+      const fieldnames = idArray.reduce((fields, id) => [...fields, `repeating_spells_${id}_spellclass_number`], []);
+      getAttrs(['spellclass_number', 'spellclass-0-casting_type', 'spellclass-1-casting_type', 'spellclass-2-casting_type', ...fieldnames], (v) => {
+        const output = {};
+        const spellClass0 = +v['spellclass-0-casting_type'];
+        const spellClass1 = +v['spellclass-1-casting_type'];
+        const spellClass2 = +v['spellclass-2-casting_type'];
+        idArray.forEach((id) => {
+            let thisCastingType = '';
+            const thisSpellClass = +v[`repeating_spells_${id}_spellclass_number`];
+            if (thisSpellClass === 0) {
+                thisCastingType = spellClass0;
+            }
+            if (thisSpellClass === 1) {
+                thisCastingType = spellClass1;
+            }
+            if (thisSpellClass === 2) {
+                thisCastingType = spellClass2;
+            }
+            thisCastingType === 1 ? thisCastingType = 0 : thisCastingType = 1;
+            // TAS.debug(`~~~ Casting Type Set for: ${id} ~~~`);
+            output[`repeating_spells_${id}_toggle_casting_type`] = thisCastingType;
+        });
+        setAttrs(output, {
+          silent: true,
+        });
+      });
+    });
+}
+function setCasterTypeRow (eventInfo) {
+    const id = eventInfo.sourceAttribute.split('_')[2] || '';
+    getAttrs(['repeating_spells_spellclass_number', 'spellclass-0-casting_type', 'spellclass-1-casting_type', 'spellclass-2-casting_type'], (v) => {
+        const output = {};
+        const spellClass0 = +v['spellclass-0-casting_type'];
+        const spellClass1 = +v['spellclass-1-casting_type'];
+        const spellClass2 = +v['spellclass-2-casting_type'];
+        const thisSpellClass = +v.repeating_spells_spellclass_number;
+        let thisCastingType = '';
+        if (thisSpellClass === 0) {
+            thisCastingType = spellClass0;
+        }
+        if (thisSpellClass === 1) {
+            thisCastingType = spellClass1;
+        }
+        if (thisSpellClass === 2) {
+            thisCastingType = spellClass2;
+        }
+        thisCastingType === 1 ? thisCastingType = 0 : thisCastingType = 1;
+        // TAS.debug(`~~~ Casting Type Set for: ${id} ~~~`);
+        output[`repeating_spells_${id}_toggle_casting_type`] = thisCastingType;
+        setAttrs(output, {
+            silent: true,
+        });
+    });
+}
+
 var events = {
     //events for spell repeating rows
     repeatingSpellUpdatesPlayer : ['DC_misc','Concentration_misc','range','range_pick','CL_misc','SP_misc','spellclass_number','spell_level'],
@@ -1738,7 +1800,7 @@ function registerEventHandlers () {
     on(tempstr,	TAS.callback(function playerUpdateSpell(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ){
-            updateSpell(null,eventInfo);
+            updateSpell(null, eventInfo);
         }
     }));
 
@@ -1798,6 +1860,7 @@ function registerEventHandlers () {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
             resetSpellsTotals();
+            setCasterTypeRow(eventInfo);
         }
     }));
     on("change:repeating_spells:create-attack-entry", TAS.callback(function eventcreateAttackEntryFromSpell(eventInfo) {
@@ -1830,7 +1893,7 @@ function registerEventHandlers () {
             updateAssociatedAttack(null,null,null,eventInfo);
         }
     }));
-//sync repeating_spells with settings>attacks>link spells
+// sync repeating_spells with settings>attacks>link spells
     on("change:include_link_spells", function(eventInfo) {
         var attr;
         TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
@@ -1839,5 +1902,13 @@ function registerEventHandlers () {
             updateIncludeLink();
         }
     });
+// sync repeating_spells locally to match the spellclass caster type
+  on("change:spellclass-0-casting_type change:spellclass-1-casting_type change:spellclass-2-casting_type", function(eventInfo) {
+        if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+            TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+            setCasterTypeSpells(eventInfo);
+        }
+    });
+
 }
 registerEventHandlers();
