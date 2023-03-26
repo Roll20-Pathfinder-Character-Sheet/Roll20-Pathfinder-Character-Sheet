@@ -617,7 +617,7 @@
                                         <span data-i18n-title="bonus-type-title" data-i18n="bonus-type">Bonus Type</span>
                                     </label>
                                     <input type="checkbox" name="attr_b2_val_error" class="error-mshow" value="1" />
-                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline" type="text" name="attr_b2_macro-text" title="@{repeating_buff2_$X_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b2 calc</span></label>
+                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline float-right" type="text" name="attr_b2_macro-text" title="@{repeating_buff2_$X_b2_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b2 calc</span></label>
                                     <label class="small-label2 number highlight"><input type="number" name="attr_b2_val" title="@{repeating_buff2_$X_b2_val}" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n="buff">b2</span></label>
                                 </div>
 
@@ -813,7 +813,7 @@
                                         <span data-i18n-title="bonus-type-title" data-i18n="bonus-type">Bonus Type</span>
                                     </label>
                                     <input type="checkbox" name="attr_b4_val_error" class="error-mshow" value="1" />
-                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline" type="text" name="attr_b4_macro-text" title="@{repeating_buff2_$X_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b4 calc</span></label>
+                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline float-right" type="text" name="attr_b4_macro-text" title="@{repeating_buff2_$X_b4_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b4 calc</span></label>
                                     <label class="small-label2 number highlight"><input type="number" name="attr_b4_val" title="@{repeating_buff2_$X_b4_val}" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n="buff">b4</span></label>
                                 </div>
 
@@ -1008,7 +1008,7 @@
                                         <span data-i18n-title="bonus-type-title" data-i18n="bonus-type">Bonus Type</span>
                                     </label>
                                     <input type="checkbox" name="attr_b6_val_error" class="error-mshow" value="1" />
-                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline" type="text" name="attr_b6_macro-text" title="@{repeating_buff2_$X_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b6 calc</span></label>
+                                    <label class="small-label2 sect entry-med highlight"><input class="macro-text-inline float-right" type="text" name="attr_b6_macro-text" title="@{repeating_buff2_$X_b6_macro-text}" placeholder="#/Equation" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="buff-calculation">b6 calc</span></label>
                                     <label class="small-label2 number highlight"><input type="number" name="attr_b6_val" title="@{repeating_buff2_$X_b6_val}" value="0" class="calc" readonly /><span class="nowrap-over" data-i18n="buff">b6</span></label>
                                 </div>
                                 <div class="sect expand">
@@ -8575,22 +8575,24 @@
                             <input type="number" name="attr_kineticist_ability-mod" title="@{kineticist_ability-mod}" value="0" class="calc" readonly />
                             <span data-i18n="modifier-abbrv">mod</span>
                         </label>
-                        <label class="small-label2 linked-tablecell left">
+                        <label class="small-label2 linked-tablecell center" style="width:25%;">
                             <input type="checkbox" name="attr_kineticistburn_max_error" class="error-mshow" value="1" />
-                            <textarea name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight">3+@{kineticist_ability-mod}</textarea>
+                            <input type="text" name="attr_kineticistburn_macro_text" title="@{kineticistburn_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight" style="display: inline;" value="3+@{kineticist_ability-mod}"/>
                             <input type="number" name="attr_kineticistburn" title="@{kineticistburn}" value="0" />
                             <input type="hidden" name="attr_oldkineticistburn" value="0" />
                             <div class="divider-db-lg">/</div>
                             <input type="number" name="attr_kineticistburn_max" title="@{kineticistburn|max}" value="0" class="calc highlight" readonly />
+                            <br>
                             <span class="note-a" data-i18n="burn" style="display:block;">Burn </span>
                         </label>
-                        <label class="small-label2 linked-tablecell left">
+                        <label class="small-label2 linked-tablecell cetner" style="width:25%;">
                             <input type="checkbox" name="attr_internalbuffer_max_error" class="error-mshow" value="1" />
-                            <textarea name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight">floor((@{kineticist_level-mod}-1)/5)</textarea>
+                            <input type="text" name="attr_internalbuffer_macro_text" title="@{internalbuffer_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight" style="display: inline;" value="floor((@{kineticist_level-mod}-1)/5)"/>
                             <input type="number" name="attr_internalbuffer" title="@{internalbuffer}" value="0" />
                             <div class="divider-db-lg">/</div>
                             <input type="number" name="attr_internalbuffer_max" title="@{internalbuffer|max}" value="0" class="calc highlight" readonly />
-                            <span class="note-a" data-i18n="internal-buffer">Internal Buffer </span>
+                            <br>
+                            <span class="note-a" data-i18n="internal-buffer">Internal Buffer</span>
                         </label>
                         <label class="small-label2">
                             <input type="number" name="attr_kineticblast_dc" title="@{kineticblast_dc}" value="0" class="calc" readonly />
@@ -8600,16 +8602,19 @@
                             <input type="number" name="attr_kineticblast_range" title="@{kineticblast_range}" value="30" />
                             <span data-i18n="range">Range</span>
                         </label>
-                        <label class="small-label2 linked-fields left">
+                        <br>
+                        <label class="small-label2 linked-fields center">
                             <input type="checkbox" name="attr_kineticblast_attack-mod_error" class="error-mshow" value="1" />
-                            <textarea name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight linked-cellfield"></textarea>
+                            <input type="text" name="attr_kineticblast_attack_macro_text" title="@{kineticblast_attack_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight linked-cellfield" />
                             <input type="number" name="attr_kineticblast_attack-mod" title="@{kineticblast_attack-mod}" value="0" class="calc highlight linked-cellfield" readonly />
+                            <br>
                             <span class="note-a" data-i18n="miscellaneous-attack-bonus-abbrv" style="display: block;">misc atk bonus</span>
                         </label>
-                        <label class="small-label2 linked-fields left">
+                        <label class="small-label2 linked-fields cetner">
                             <input type="checkbox" name="attr_kineticblast_dmg-mod_error" class="error-mshow" value="1" />
-                            <textarea name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight linked-cellfield"></textarea>
+                            <input type="text" name="attr_kineticblast_dmg_macro_text" title="@{kineticblast_dmg_macro_text}" data-i18n-placeholder="equation-macro-place" class="macro-text-inline highlight linked-cellfield" />
                             <input type="number" name="attr_kineticblast_dmg-mod" title="@{kineticblast_dmg-mod}" value="0" class="calc highlight" readonly />
+                            <br>
                             <span class="note-a" data-i18n="miscellaneous-damage-bonus-abbrv" style="display: block;">misc dmg bonus</span>
                         </label>
                         <div class="cheat"></div>
@@ -8645,12 +8650,12 @@
                             <input type="checkbox" name="attr_create_kineticblast_macro" value="1" class="cssbutton createmacrobutton" title="@{create_kineticblast_macro}"><span></span>
                             <span data-i18n-title="create-macros" data-i18n="create-macros">Create Macros</span>
                         </div>
-                        <div class="small-label2" style="width:20%;height:auto;">
-                            <textarea name="attr_kineticblast_tempattack" title="@{kineticblast_tempattack}" class="macro-text-inline"></textarea>
+                        <div class="small-label2 entry-med" style="width:20%;height:auto;">
+                            <input type="text" name="attr_kineticblast_tempattack" title="@{kineticblast_tempattack}" class="macro-text-inline" />
                             <span class="note-a" data-i18n="attack-macro">attack macro</span>
                         </div>
-                        <div class="small-label2" style="width:20%;height:auto;">
-                            <textarea name="attr_kineticblast_tempdmg" title="@{kineticblast_tempdmg}" class="macro-text-inline"></textarea>
+                        <div class="small-label2 entry-med" style="width:20%;height:auto;">
+                            <input type="text" name="attr_kineticblast_tempdmg" title="@{kineticblast_tempdmg}" class="macro-text-inline" />
                             <span class="note-b" data-i18n="damage-macro">damage macro</span>
                         </div>
                         <div class="small-label2">
@@ -8876,7 +8881,7 @@
                                     <input class="narrow-numbers calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="" readonly />
                                     <span class="nowrap-over" data-i18n="maximum-abbrv">Max</span>
                                 </label>
-                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-10p-shrink" style="height:auto;">
+                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-med">
                                     <input type="text" class="macro-text-inline" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place" />
                                     <span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span>
                                 </label>
@@ -8916,9 +8921,9 @@
                                             <span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation">CL basis</span>
                                         </label>
                                         <label class="divider-db-lg nowrap extra-sect">+(</label>
-                                        <label class="small-label2 linked-tablecell extra-sect nowrap">
+                                        <label class="small-label2 linked-tablecell extra-sect nowrap entry-med">
                                             <input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="error-mshow" />
-                                            <input type="text" class="macro-text-inline linked-cellfield highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" value="0" />
+                                            <input type="text" class="macro-text-inline linked-cellfield highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" />
                                             <input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="narrow-numbers calc linked-cellfield highlight" readonly />
                                             <br>
                                             <span class="super note-a" data-i18n-title="buff-spell-caster-level-title" data-i18n-aria-label="buff-spell-caster-level-title" data-i18n="miscellaneous-abbrv">Misc</span>
@@ -8952,7 +8957,7 @@
                                         </label>
                                         <input type="checkbox" value="0" class="noshow or-B-show" name="attr_spell_level-basis" role="presentation" />
                                         <label class="divider-db-lg nowrap either-or-sect">+(</label>
-                                        <label class="small-label2 linked-tablecell either-or-sect nowrap">
+                                        <label class="small-label2 linked-tablecell either-or-sect nowrap entry-med">
                                             <input type="checkbox" value="1" name="attr_spell_level-misc-mod_error" class="error-mshow" />
                                             <input type="text" class="macro-text-inline linked-cellfield highlight" title="@{repeating_ability_$X_spell_level-misc}" name="attr_spell_level-misc" data-i18n-placeholder="equation-macro-place" />
                                             <input type="number" value="0" name="attr_spell_level-misc-mod" title="@{repeating_ability_$X_spell_level-misc-mod}" class="narrow-numbers calc linked-cellfield highlight" readonly />
@@ -9047,7 +9052,7 @@
                                             <input title="@{repeating_ability_$X_targets}" type="text" value="" name="attr_targets" data-i18n-placeholder="spell-targets-area-effect" />
                                             <span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="autoexpand"></span>
                                         </label>
-                                        <label class="small-label2 entry-10p-shrink">
+                                        <label class="small-label2 entry-med">
                                             <input type="text" class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_ability_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place" />
                                             <span class="super note-b" data-i18n-title="damage-macro-desc" data-i18n-aria-label="damage-macro-desc" data-i18n="damage">Damage</span>
                                         </label>
@@ -11158,7 +11163,7 @@
                                         <span class="divider-db-lg advanced-spell-option">|</span>
                                         <label class="small-label2 entry-vshort advanced-spell-option"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
                                         <span class="divider-db-lg advanced-spell-option">|</span>
-                                        <label class="small-label2 advanced-spell-option" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
+                                        <label class="small-label2 advanced-spell-option"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
                                         <label class="small-label2 number advanced-spell-option"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
                                         <span class="divider-db-lg">|</span>
                                         <label class="small-label2 entry-short advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
@@ -11182,8 +11187,8 @@
                                             </select>
                                             <span data-i18n="attack-type">Attack Type</span>
                                         </label>
-                                        <label class="small-label2 entry-10p-shrink">
-                                            <textarea class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place"></textarea>
+                                        <label class="small-label2 entry-med">
+                                            <input type="text" class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place" />
                                             <span class="super note-b" data-i18n="damage">Damage</span>
                                         </label>
                                         <label class="small-label2 entry-15p-shrink autoexpand">
@@ -11683,7 +11688,7 @@
                                         <span class="divider-db-lg">d</span>
                                         <label class="small-label2"><input title="@{repeating_item_$X_item-damage-die}" name="attr_item-damage-die" type="number" value="0" min="0" /><span data-i18n="die">Die</span></label>
                                         <span class="divider-db-lg" style="padding-bottom:1rem;margin-right:-.125em;">+</span>
-                                        <label class="small-label2 entry-10p-short"><input class="macro-text-inline" title="@{repeating_item_$X_item-damage}" name="attr_item-damage" type="text" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
+                                        <label class="small-label2 entry-med"><input class="macro-text-inline" title="@{repeating_item_$X_item-damage}" name="attr_item-damage" type="text" value="" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="damage-modifier-abbrv">Dmg Mods</span></label>
                                         <label class="small-label2"><input title="@{repeating_item_$X_item-crit-target}" name="attr_item-crit-target" type="number" value="20" min="1" /><span data-i18n="critical-abbrv">Crit</span></label>
                                         <label class="small-label2"><input title="@{repeating_item_$X_item-crit-multiplier}" name="attr_item-crit-multiplier" type="number" value="2" min="0" /><span data-i18n="multiplier-abbrv">Mult</span></label>
                                         <label class="small-label2"><input title="@{repeating_item_$X_item-range}" name="attr_item-range" type="number" value="0" min="0" /><span class="distance-used" data-i18n="range">Range</span></label>
@@ -11703,16 +11708,16 @@
                                             <span data-i18n="default-size">Default Size</span>
                                         </label>
                                         <br />
-                                        <label class="small-label2 entry-20p-shrink">
-                                            <textarea class="macro-text-inline" name="attr_item-precision_dmg_macro" title="@{repeating_item_$X_item-precision_dmg_macro}" data-i18n-placeholder="full-macro-place"></textarea>
+                                        <label class="small-label2 entry-med">
+                                            <input type="text" class="macro-text-inline" name="attr_item-precision_dmg_macro" title="@{repeating_item_$X_item-precision_dmg_macro}" data-i18n-placeholder="full-macro-place" />
                                             <span class="super note-b" data-i18n-title="precision-damage-title" data-i18n-aria-label="precision-damage-title" title="Extra or Precision Damage (not added to critical damage)" data-i18n="extra-damage">Extra Non-Crit Dmg</span>
                                         </label>
                                         <label class="small-label2 entry-20p-shrink">
                                             <input style="height:2.15em;" type="text" name="attr_item-precision_dmg_type" title="@{repeating_item_$X_item-precision_dmg_type}" value="" data-i18n-placeholder="damage-type-or-description" />
                                             <span data-i18n-title="precision-damage-type" data-i18n-aria-label="precision-damage-type" title="Extra Damage type" data-i18n="type">Type</span>
                                         </label>
-                                        <label class="small-label2 entry-20p-shrink">
-                                            <textarea class="macro-text-inline" name="attr_item-critical_dmg_macro" title="@{repeating_item_$X_item-critical_dmg_macro}" data-i18n-placeholder="full-macro-place"></textarea>
+                                        <label class="small-label2 entry-med">
+                                            <input type="text" class="macro-text-inline" name="attr_item-critical_dmg_macro" title="@{repeating_item_$X_item-critical_dmg_macro}" data-i18n-placeholder="full-macro-place" />
                                             <span class="super note-b" data-i18n-title="extra-critical-damage-title" data-i18n-aria-label="extra-critical-damage-title" title="Extra Critical Damage" data-i18n="extra-critical-damage">Extra Crit Dmg</span>
                                         </label>
                                         <label class="small-label2 entry-20p-shrink">
@@ -13133,7 +13138,7 @@
                                                 <span class="divider-db-lg advanced-spell-option">|</span>
                                                 <label class="small-label2 entry-vshort advanced-spell-option"><input title="@{repeating_spells_$X_DC_misc}" type="number" value="0" name="attr_DC_misc" data-i18n-placeholder="difficulty-class-modifier-abbrv" /><span data-i18n="difficulty-class-modifier-abbrv">DC Mod</span></label>
                                                 <span class="divider-db-lg advanced-spell-option">|</span>
-                                                <label class="small-label2 advanced-spell-option" style="width:7em;"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" style="left:20%;" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
+                                                <label class="small-label2 advanced-spell-option"><input title="@{repeating_spells_$X_SP_misc}" type="number" value="0" name="attr_SP_misc" data-i18n-placeholder="spell-penetration-modifier-abbrv" /><span data-i18n="spell-penetration-modifier-abbrv">Spell Pen Mod</span></label>
                                                 <label class="small-label2 number advanced-spell-option"><input title="@{repeating_spells_$X_SP-mod}" type="number" value="0" name="attr_SP-mod" class="calc" readonly /><span data-i18n="spell-penetration-abbrv-short">SP</span></label>
                                                 <span class="divider-db-lg">|</span>
                                                 <label class="small-label2 entry-short advanced-spell-option"><input title="@{repeating_spells_$X_Concentration_misc}" type="number" value="0" name="attr_Concentration_misc" /><span data-i18n="concentration-miscellaneous-abbrv">Conc Misc</span></label>
@@ -13156,8 +13161,8 @@
                                                     </select>
                                                     <span data-i18n="attack-type">Attack Type</span>
                                                 </label>
-                                                <label class="small-label2 entry-10p-shrink">
-                                                    <textarea class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place"></textarea>
+                                                <label class="small-label2 entry-med">
+                                                    <input type="text" class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_spells_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place" />
                                                     <span class="super note-b" data-i18n="damage">Damage</span>
                                                 </label>
                                                 <label class="small-label2 entry-15p-shrink autoexpand">
@@ -13921,7 +13926,7 @@
                                 <label class="divider-db-lg or4-sect">/</label>
                                 <input type="checkbox" name="attr_used_max_error" class="error-mshow" value="1" />
                                 <label class="small-label2 highlight or4-sect"><input class="narrow-numbers calc" title="@{repeating_ability_$X_used|max}" type="number" name="attr_used_max" value="" readonly /><span class="nowrap-over" data-i18n="maximum-abbrv">Max</span></label>
-                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-10p-shrink" style="height:auto;"><input type="text" class="macro-text-inline" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
+                                <label class="small-label2 sect highlight hide-readonly or4-sect entry-med"><input type="text" class="macro-text-inline" title="@{repeating_ability_$X_max-calculation}" name="attr_max-calculation" data-i18n-placeholder="equation-macro-place" /><span class="super note-a" data-i18n="maximum-calculation-abbrv">Max Calc</span></label>
                                 <div style="display:none;">
                                     <input type="text" name="attr_compendium_category" accept="Category" value="" />
                                     <input type="text" name="attr_ability_type_compendium" accept="Ability Type" value="" />
@@ -13958,7 +13963,7 @@
                                             <span data-i18n-title="caster-level-basis-explanation" data-i18n-aria-label="caster-level-basis-explanation" data-i18n="caster-level-basis-abbreviation">CL basis</span>
                                         </label>
                                         <label class="divider-db-lg nowrap extra-sect">+(</label>
-                                        <label class="small-label2 linked-tablecell extra-sect nowrap">
+                                        <label class="small-label2 linked-tablecell extra-sect nowrap entry-med">
                                             <input type="checkbox" value="1" name="attr_CL-misc-mod_error" class="error-mshow" />
                                             <input type="text" class="macro-text-inline linked-cellfield highlight" title="@{repeating_ability_$X_CL-misc}" name="attr_CL-misc" data-i18n-placeholder="equation-macro-place" />
                                             <input type="number" value="0" name="attr_CL-misc-mod" title="@{repeating_ability_$X_CL-misc-mod}" class="narrow-numbers calc linked-cellfield highlight" readonly />
@@ -13994,7 +13999,7 @@
                                         </label>
                                         <input type="checkbox" value="0" class="noshow or-B-show" name="attr_spell_level-basis" role="presentation" />
                                         <label class="divider-db-lg nowrap either-or-sect">+(</label>
-                                        <label class="small-label2 linked-tablecell either-or-sect nowrap">
+                                        <label class="small-label2 linked-tablecell either-or-sect nowrap entry-med">
                                             <input type="checkbox" value="1" name="attr_spell_level-misc-mod_error" class="error-mshow" />
                                             <input type="text" class="macro-text-inline linked-cellfield highlight" title="@{repeating_ability_$X_spell_level-misc}" name="attr_spell_level-misc" data-i18n-placeholder="equation-macro-place" />
                                             <input type="number" value="0" name="attr_spell_level-misc-mod" title="@{repeating_ability_$X_spell_level-misc-mod}" class="narrow-numbers calc linked-cellfield highlight" readonly />
@@ -14089,7 +14094,7 @@
                                             <input title="@{repeating_ability_$X_targets}" type="text" value="" name="attr_targets" data-i18n-placeholder="spell-targets-area-effect" />
                                             <span data-i18n="spell-targets-area-effect">Targets/Area/Effect</span><span name="attr_targets" class="autoexpand"></span>
                                         </label>
-                                        <label class="small-label2 entry-10p-shrink">
+                                        <label class="small-label2 entry-med">
                                             <input type="text" class="macro-text-inline" name="attr_damage-macro-text" title="@{repeating_ability_$X_damage-macro-text}" data-i18n-placeholder="full-macro-place" />
                                             <span class="super note-b" data-i18n-title="damage-macro-desc" data-i18n-aria-label="damage-macro-desc" data-i18n="damage">Damage</span>
                                         </label>

@@ -338,7 +338,26 @@
     margin-top: -1em;
 }
 
+.charsheet .abilities label.small-label2.linked-tablecell:focus-within::before {
+    height: 14px;
+}
+
+.charsheet .abilities .linked-tablecell:focus-within::before,
+.charsheet .abilities .small-label2.entry-med:focus-within::before,
+.charsheet .section-abilities div.small-label2.entry-med:focus-within::before,
+.charsheet .attacks label.small-label2.entry-short.highlight:focus-within::before,
+.charsheet .items label.small-label2.entry-med:focus-within::before,
+.charsheet .section-spells label.small-label2.entry-med:focus-within::before {
+    content: '...';
+    display: inline-block;
+    position: relative;
+    width: 7em;
+    height: 24px;
+    visibility: hidden;
+}
+
 .charsheet .abilities input.macro-text-inline:focus,
+.charsheet .section-abilities input.macro-text-inline:focus,
 .charsheet .attack-grid input.macro-text-inline:focus,
 .charsheet .attacks label > input.macro-text-inline:focus,
 .charsheet .defense-grid input.macro-text-inline:focus,
@@ -363,7 +382,9 @@
     z-index: 4;
 }
 
-.charsheet .float-right {
+.charsheet input.macro-text-inline.float-right:focus,
+.charsheet .macro-text-inline.float-right:focus {
+    left: auto;
     right: 1em;
 }
 
@@ -378,7 +399,7 @@
 /* keeps textarea and readonly number attribute to right inline with each other in one .table cell */
 .charsheet .small-label2.linked-tablecell,
 .charsheet .table-cell.linked-tablecell {
-    min-width: 9em;
+    min-width: 8em;
     white-space: nowrap;
 }
 
@@ -392,9 +413,10 @@
 .charsheet .linked-tablecell select.linked-cellfield,
 .charsheet .linked-tablecell .macro-text-inline.linked-cellfield {
     display: inline-block;
-    width: calc(97% - 3.5em);
-    max-width: calc(100% - 3.5em);
+    max-width: none;
+    min-width: auto;
     vertical-align: middle;
+    width: 7em;
 }
 
 .charsheet .linked-tablecell-short select.linked-cellfield,
@@ -927,12 +949,14 @@ pf-wrapper,
 .charsheet input[type="number"],
 .charsheet span.number:not(.table-cell),
 .charsheet input.number {
-    text-align: right;
+    margin: auto;
+    padding: 0.25em 0 0.25em 0;
+    text-align: center;
 }
 
 .charsheet .wide-numbers input[type="number"] {
-    width: calc(100% - 2px);
-    max-width: calc(100% - 2px);
+    max-width: calc(90% - 1em);
+    width: calc(90% - 1em);
 }
 
 .charsheet .medium-numbers input[type="number"],
@@ -3386,6 +3410,11 @@ also need 1 more level in selector or base css will override border */
 .charsheet .small-label2 > .calc {
     display: block;
     position: relative;
+    left: 0;
+    top: 0;
+    margin: auto;
+    line-height: 2rem;
+    max-height: 2.5rem;
 }
 
 .charsheet .small-label2 > select {
