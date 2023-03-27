@@ -35,7 +35,9 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
-                        <li>Spell Class, 'Casting Type' now displays the #Prep, #Used, and #Cast fields per spell based on the Caster class selected. One-time sheet version check included to update existing spells.</li>
+                        <li>Fixed local casting type.  Spell Class, 'Casting Type' now displays the #Prep, #Used, and #Cast fields per spell based on the Caster class selected. One-time sheet version check included to update existing spells.</li>
+                        <li>Added popup text-input windows to many of the macro-text fields.</li>
+                        <li>Fixed Ability Notes alignment issue when the sheet is in Compact mode.</li>
                         <li>Added 'Type' field for Feats and Traits.</li>
                         <li>Added an encumbrance option for Carried Currency. This can be toggled via Sheet Settings>Sheet Configuration>Encumbrance and/or using a checkbox on the Equipment tab>Carried Weight sub-section.</li>
                         <li>Added a Critical Confirm bonus to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all attacks.</li>
@@ -1680,19 +1682,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="table">
-                          <div class="table-row sect expand" style="vertical-align:top;">
-                            <input type="checkbox" class="showarrow ability-notes-show" title="" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_ability-notes-show" value="1" style="margin-left:0.25em;" aria-label="Click to expand">
-                            <span class="showsect ability-notes-showlabel" data-i18n="notes">Notes</span>
-                            <div class="ability-notes">
-                              <label>
-                                <input type="checkbox" class="selectedlabel-check" name="attr_toggle_ability_notes" value="@{var_ability_notes}" title="@{toggle_ability_notes}" />
-                                <b data-i18n-title="options-ability-title" data-i18n-aria-label="options-ability-title" data-i18n="include-ability-notes">Include Ability Notes in roll</b>
-                              </label>
-                              <textarea class="inline-textarea" title="@{ability-notes}" name="attr_ability-notes" data-i18n-placeholder="ability-notes-place"></textarea>
+                            <div class="table">
+                                <div class="table-row sect expand">
+                                    <input type="checkbox" class="showarrow ability-notes-show" title="Click to expand" data-i18n-title="showsect-cmd" data-i18n-aria-label="showsect-cmd" name="attr_ability-notes-show" value="1" style="margin-left:0.25em;" aria-label="Click to expand">
+                                    <span class="showsect ability-notes-showlabel" data-i18n="notes">Notes</span>
+                                    <div class="ability-notes">
+                                        <label>
+                                            <input type="checkbox" class="selectedlabel-check" name="attr_toggle_ability_notes" value="@{var_ability_notes}" title="@{toggle_ability_notes}">
+                                            <b data-i18n-title="options-ability-title" data-i18n-aria-label="options-ability-title" data-i18n="include-ability-notes" title="Show Ability Notes" aria-label="Show Ability Notes">Include Ability Notes in roll</b>
+                                        </label>
+                                        <textarea class="inline-textarea" title="@{ability-notes}" name="attr_ability-notes" data-i18n-placeholder="ability-notes-place" placeholder="Put notes about context-sensitive Ability bonuses here"></textarea>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
                         </div>
                         <div class="cheat"></div>
                         <input class="sect-show-inverse noshow" type="checkbox" name="attr_is_npc" value="1" role="presentation" />

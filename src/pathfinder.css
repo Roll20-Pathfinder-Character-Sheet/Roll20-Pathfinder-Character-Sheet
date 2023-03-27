@@ -954,9 +954,16 @@ pf-wrapper,
     text-align: center;
 }
 
-.charsheet .wide-numbers input[type="number"] {
-    max-width: calc(90% - 1em);
-    width: calc(90% - 1em);
+.charsheet .equipment .wide-numbers input[type="number"] {
+    max-width: calc(100% - 2px);
+    margin: 1px 1px 1px 0;
+    width: 100%;
+}
+
+.charsheet .equipment .wide-numbers input[type="number"] {
+    max-width: calc(100% - 1em);
+    margin: auto;
+    width: calc(100% - 1em);
 }
 
 .charsheet .medium-numbers input[type="number"],
@@ -1902,6 +1909,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .tabinput.tab99:checked ~ .tab.tab99 {
     background: Black;
     color: White;
+    height: 1.65em;
 }
 
 /************** TAB AREAS ***********************/
@@ -3296,7 +3304,7 @@ also need 1 more level in selector or base css will override border */
     text-transform: uppercase;
 }
 
-.charsheet .ability-scores .table {
+.charsheet .ability-scores .table:first-of-type {
     height: 100%;
     min-height: 15em;
 }
@@ -6063,7 +6071,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     margin: 0.2rem 0.2rem 0 0;
     float: right;
     width: calc(30% - 6px);
-    min-height: 17em;
+    min-height: 14em;
 }
 
 .charsheet .readonly-show:checked ~ .main .saves-notes-table .table-cell:first-child {
@@ -6086,7 +6094,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .charsheet .readonly-show:not(:checked) ~ .main .tab99:not(:checked) ~ .section-defenses .h2-section.defense-grid {
     width: 69%;
-    min-height: 17em;
+    min-height: 14em;
 }
 
 .charsheet .readonly-show:not(:checked) ~ .main .tab99:checked ~ .section-defenses .h2-section.defense-grid {
@@ -6255,6 +6263,14 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: calc(50% - 2px);
 }
 
+.charsheet .h2-section.core-details,
+.charsheet .h2-section.worn-items,
+.charsheet .h2-section.extra-damage-section,
+.charsheet .h2-section.dual-wield-sect {
+    min-height: 2em;
+    resize: vertical;
+}
+
 /* in case flex not supported: */
 .charsheet .h2-section.worn-items .table:first-child {
     margin-right: .125em;
@@ -6363,6 +6379,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     width: 100%;
     display: block;
     overflow-x: auto;
+}
+
+.charsheet .readonly-show:not(:checked) ~ .main .section-spells .col.col1 .h3-section button {
+    font-size: 80%;
 }
 
 .charsheet .readonly-show:not(:checked) ~ .main .tab99:not(:checked) ~ .section-skills skilllist {
