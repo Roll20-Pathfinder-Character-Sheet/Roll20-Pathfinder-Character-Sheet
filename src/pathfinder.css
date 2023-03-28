@@ -369,7 +369,8 @@
 .charsheet .section-npc input.macro-text-inline:focus,
 .charsheet .section-spells .macro-text-inline:focus,
 .charsheet .section-spells input.macro-text-inline:focus,
-.charsheet .skills input.macro-text-inline:focus {
+.charsheet .skills input.macro-text-inline:focus,
+.charsheet .skill-options textarea.macro-text-inline:focus {
     background-color: #f0f8ff;
     color: revert;
     display: block;
