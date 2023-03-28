@@ -1,6 +1,6 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
@@ -101,7 +101,7 @@ export function migrateRepeatingDamage (ids,callback) {
     fields = [],
     /** findMultiplier - OLD not used anymore  - returns old damage multiplier when it was in the dropdown.
     * @param {string} str = the value of the damage ability
-    * @returns {float} a number indicating the multiplier for the ability mod. Must be 1, .5, 1.5, 2. 
+    * @returns {float} a number indicating the multiplier for the ability mod. Must be 1, .5, 1.5, 2.
     */
     findMultiplier = function (str) {
         var retNum;
@@ -177,7 +177,7 @@ export function migrateRepeatingDamage (ids,callback) {
         }
     });
 }
-/** sets old dropdown  max dex and acp values to new ones for Magik's updates. 
+/** sets old dropdown  max dex and acp values to new ones for Magik's updates.
  * because old values were so different, new values are set to either "none" or "armor and load"
  */
 export function migrateMaxDexAndACP () {
@@ -190,7 +190,7 @@ export function migrateMaxDexAndACP () {
         }
     });
 }
-/** updates repeating_spells ranges from text to dropdown and custom text field, and range number 
+/** updates repeating_spells ranges from text to dropdown and custom text field, and range number
  * @param {function} callback call after finishing */
 export function migrateSpellRanges (callback) {
     var done = function () {
@@ -317,7 +317,7 @@ export function migrateRollTemplateImages () {
         }
     });
 }
-/**addNumberToMacro adds the value to the end of the macro string. 
+/**addNumberToMacro adds the value to the end of the macro string.
  * so the evaluated value of the returned string equals macroVal + miscVal
  * either "macroText + miscVal" or "macroText - miscVal"
  * This is for conversions only, if we are removing the miscfield. it is pretty useless otherwise.
@@ -359,7 +359,7 @@ export function addNumberToMacro (macroText, macroVal, miscMacroText, miscVal){
  *@param {string} macroAttr the attribute name of macro we will update
  *@param {string} modAttr the attribute name containing the # evaluated from macroAttr
  *@param {string} miscMacroAttr the attribute name of macro to remove and whose value to add to macroAttr
- *@param {string} miscAttr the attribute name of a number field, standalone if macroAttr is null, or it is the 
+ *@param {string} miscAttr the attribute name of a number field, standalone if macroAttr is null, or it is the
             field containing evaluted number of miscMacroAttr
  */
 export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,miscMacroAttr,miscAttr) {
@@ -392,7 +392,7 @@ export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,
                 setter[miscAttr]="";
                 if (miscMacroAttr){
                     setter[miscMacroAttr]="";
-                }					
+                }
             }
         } catch (err){
             TAS.error("PFMigrate.migrateMoveIntIntoMacro:" + migrateFlag,err);
@@ -405,7 +405,7 @@ export function migrateMoveIntIntoMacro (callback,migrateFlag,macroAttr,modAttr,
         }
     });
 }
-/**migrateHPMisc copies HP-misc into HP-formula-macro-text and HP-formula-mod 
+/**migrateHPMisc copies HP-misc into HP-formula-macro-text and HP-formula-mod
  * This modifies the same fields aas migrateNPC so make sure to call them in sequence not at the same time!
  *@param {function} callback when done.
  */
@@ -420,7 +420,7 @@ export function migrateMaxSkills (callback){
     //TAS.debug("at migrateMaxSkills");
     migrateMoveIntIntoMacro(callback,"migrated_maxskill_misc","Max-Skill-Ranks-Misc","Max-Skill-Ranks-mod","","Max-Skill-Ranks-Misc2");
 }
-/** updates NPC from pre v 1.00 to version 1.00 
+/** updates NPC from pre v 1.00 to version 1.00
  * @param {function} callback call when done
  * @param {number} oldversion the sheet attribute PFVersion.
  */
@@ -433,11 +433,11 @@ export function migrateNPC (callback, oldversion) {
     }),
     migrateNPCConfig = function(callback){
             SWUtils.setWrapper({ 'normal_macro_show': 1,
-                'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 }, 
+                'use_traits':0 , 'use_racial_traits':0, 'npc-compimport-show':0 },
                 PFConst.silentParams,callback);
     },
     /* updates hp and hp|max, resets npc-hp as avg of hit dice only (npc-hd and npc-hd-num) ,
-    * sets class-0-hd and class-0-level to values of  npc-hd2 and npc-hd-num2 
+    * sets class-0-hd and class-0-level to values of  npc-hd2 and npc-hd-num2
     * if undead then sets ability to CHA */
     migrateNPCHP = function (callback) {
         var done=_.once(function(){
@@ -446,7 +446,7 @@ export function migrateNPC (callback, oldversion) {
                 callback();
             }
         });
-        getAttrs(["HP-ability", "HP-ability-mod", "npc-type", "CON-mod", "CHA-mod", "total-hp","level","bab", "HP-formula-macro-text", "HP-formula-mod", 
+        getAttrs(["HP-ability", "HP-ability-mod", "npc-type", "CON-mod", "CHA-mod", "total-hp","level","bab", "HP-formula-macro-text", "HP-formula-mod",
             "class-0-level","class-1-level","class-2-level","class-3-level","class-4-level","class-5-level",
             "class-0-hp","class-1-hp","class-2-hp","class-3-hp","class-4-hp","class-5-hp",
             "is_undead",
@@ -476,7 +476,7 @@ export function migrateNPC (callback, oldversion) {
                 if (newbab !== bab){
                     setter["bab"]=newbab;
                 }
-                
+
                 abilityMod = isUndead ? (parseInt(v["CHA-mod"], 10) || 0) : (parseInt(v["HP-ability-mod"], 10) || 0);
                 abilityModTot = abilityMod * (currLevel||hitdice);
                 ability=isUndead ? '@{CHA-mod}' : '@{CON-mod}';
@@ -496,7 +496,7 @@ export function migrateNPC (callback, oldversion) {
                 newFormula = addNumberToMacro(v["HP-formula-macro-text"],currhpFormVal,v["npc-hd-misc"],hdMiscVal);
                 if (newFormula.macroText && newFormula.macroText !== v["HP-formula-macro-text"]){
                     setter["HP-formula-macro-text"]= newFormula.macroText;
-                    setter["HP-formula-mod"]= newFormula.macroVal;			
+                    setter["HP-formula-mod"]= newFormula.macroVal;
                 }
                 basehp=PFUtils.getAvgHP(hitdice,hitdie );
                 setter["NPC-HP"]=basehp;
@@ -587,7 +587,7 @@ export function migrateNPC (callback, oldversion) {
                 } else{
                     done();
                 }
-            } 
+            }
             if (!isMigrated){
                 migrateNPCSenses(doneSub);
                 migrateNPCConfig(doneSub);
@@ -635,7 +635,7 @@ export function migrateRepeatingItemAttributes (callback) {
                 });
                 return memo.concat(row);
             }, []);
-            
+
             getAttrs(fields, function (v) {
                 var setter = {};
                 try {
@@ -648,8 +648,8 @@ export function migrateRepeatingItemAttributes (callback) {
                                 setter[prefix+attr]="";
                             }
                         });
-                        
-                        //new default is 1, old was undefined 
+
+                        //new default is 1, old was undefined
                         if (isNaN(parseInt(v[prefix+"qty"],10))){
                             setter[prefix+"qty"]=1;
                         }
@@ -752,7 +752,7 @@ export function migrateSpellPointFlag (callback,oldversion){
 }
 
 export function migrateWhisperDropdowns (callback){
-    var done = _.once(function(){ 
+    var done = _.once(function(){
         //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
@@ -760,11 +760,11 @@ export function migrateWhisperDropdowns (callback){
         var setter={};
         try{
             if(!parseInt(v.migrated_whispers,10)){
-                if (v['PC-whisper']==='&nbsp;'|| v['PC-whisper']===' ' || 
+                if (v['PC-whisper']==='&nbsp;'|| v['PC-whisper']===' ' ||
                     (v['PC-whisper'] && v['PC-whisper']!=='/w gm')) {
                     setter['PC-whisper']='';
                 }
-                if (v['NPC-whisper']==='&nbsp;'|| v['NPC-whisper']===' ' || 
+                if (v['NPC-whisper']==='&nbsp;'|| v['NPC-whisper']===' ' ||
                     (v['NPC-whisper'] && v['NPC-whisper']!=='/w gm')) {
                     setter['NPC-whisper']='';
                 }
@@ -808,7 +808,7 @@ export function migrateAttackDropdowns (callback,oldversion){
 }
 
 export function migrateConfigFlags (callback,oldversion){
-    var done = _.once(function(){ 
+    var done = _.once(function(){
         //TAS.debug("leaving PFMigrate migrateConfigFlags");
         if (typeof callback === "function") { callback(); }
     });
@@ -844,19 +844,19 @@ export function getAllMigrateFlags (v){
     v['migrated_abilityflags109']=1;
     v['migrated_whispers']=1;
     v['migrated_linked_attacks']=1;
-    v['migrated_buffs_rangeddmg_abiilty']=1;
+    v['migrated_buffs_rangeddmg_ability']=1;
     v["migrated_itemlist_newfields"]=1;
     v['migrate_fatigued_conditions']=1;
     v['migrated_attack_bab_dropdowns']=1;
     v['migrated_skill_dropdowns5']=1;
     //force these to migrate, for some reason sheets using old values even for new Sheets!
     //v['migrated_ability_dropdowns4']=1;
-    //v['migrated_take10_dropdown']=1; 
+    //v['migrated_take10_dropdown']=1;
     //v['migrated_skill_speedup3']=1;
     return v;
 }
 export function setAllMigrateFlags (callback){
-    var done = _.once(function(){ 
+    var done = _.once(function(){
         //TAS.debug("leaving PFMigrate setAllMigrateFlags");
         if (typeof callback === "function") { callback(); }
     });

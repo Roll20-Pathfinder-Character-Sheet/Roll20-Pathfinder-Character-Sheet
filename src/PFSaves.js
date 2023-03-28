@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -59,7 +59,7 @@ export function updateSave (save, callback, silently) {
 	var fields = [save, "total-" + save, save + "-ability-mod", save + "-trait", save + "-resist", save + "-misc-mod", "saves-cond", "buff_" + save + "-total", "buff_saves-total"];
 	SWUtils.updateRowTotal(fields, 0, [], false, callback, silently);
 }
-export function updateSaves(callback,silently){
+export function updateSaves (callback, silently) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();

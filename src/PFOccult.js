@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFAttacks from './PFAttacks';
@@ -100,7 +100,7 @@ function createAttack (eventInfo){
                 setter[weaponPrefix + "precision_dmg_type"] = dmgname;
                 setter[weaponPrefix + "critical_dmg_macro"] = v.kineticblast_tempdmg;
                 setter[weaponPrefix + "critical_dmg_type"] = dmgname;
-                setter[weaponPrefix + "notes"] = "DC [[@{kineticblast_dc}]] (if applicable)";                
+                setter[weaponPrefix + "notes"] = "DC [[@{kineticblast_dc}]] (if applicable)";
                 setter[weaponPrefix + "default_damage-dice-num"] = 0;
                 setter[weaponPrefix + "default_damage-die"] = 0;
                 setter[weaponPrefix + "damage-dice-num"] = 0;
@@ -151,7 +151,9 @@ export function updateNLDamageFromBurn (eventInfo){
             TAS.error("PFOccult.change:kineticistburn kineticburn",err);
         } finally {
             if (_.size(setter)){
-                SWUtils.setWrapper(setter,PFConst.silentParams);
+            //  SWUtils.setWrapper(setter,PFConst.silentParams);
+            // when including the PFConst.silentParams option ie silent:true, buffs do not detect linked tokenbar updates
+                SWUtils.setWrapper(setter);
             }
         }
     });
@@ -168,7 +170,6 @@ export var recalculate = TAS.callback(function PFOccultRecalculate(callback,dumm
         }
     });
 });
-
 
 on("change:create_kineticblast_macro",TAS.callback(function eventCreateKineticMacros(eventInfo){
     if(eventInfo.sourceType==="player"||eventInfo.sourceType==="api"){
@@ -188,8 +189,6 @@ on("change:kineticist_level-mod change:kineticist_ability-mod",TAS.callback(func
     }
 }));
 
-
-
 on("change:use_burn",TAS.callback(function eventUseBurn(eventInfo){
     if(eventInfo.sourceType==="player"||eventInfo.sourceType==="api"){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
@@ -204,7 +203,7 @@ on("change:create_kineticblast_attack",TAS.callback(function eventCreateKineticA
     }
 }));
 
-on("change:kineticistburn",TAS.callback(function eventUpdateBurn(eventInfo){
+on("change:kineticistburn", TAS.callback(function eventUpdateBurn(eventInfo) {
     if(eventInfo.sourceType==="player" || eventInfo.sourceType==="api"){
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         updateNLDamageFromBurn(eventInfo);

@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 
@@ -21,7 +21,7 @@ function setSanityThreshold (callback){
                 newThreshold = Math.max(1,newThreshold);
                 if (currThreshold!==newThreshold){
                     setter.sanity_threshold=newThreshold;
-                } 
+                }
             }
         } catch (err){
             TAS.error("PFHorror.setSanityThreshold error",err);
@@ -42,14 +42,14 @@ function setSanityScore (callback){
             callback();
         }
     }
-    getAttrs(['use_horror_adventures','sanity_score_max','sanity_edge','sanity_score_misc-mod', 
+    getAttrs(['use_horror_adventures','sanity_score_max','sanity_edge','sanity_score_misc-mod',
     'WIS','INT','CHA','WIS-damage','INT-damage','CHA-damage','WIS-penalty','INT-penalty','CHA-penalty',
     'buff_WIS-total_penalty','buff_INT-total_penalty','buff_CHA-total_penalty'],function(v){
         var currSanity=0,newSanity=0,newEdge=0,setter={};
         try {
             if (parseInt(v.use_horror_adventures,10)){
                 currSanity = parseInt(v.sanity_score_max,10)||0;
-                newSanity = (parseInt(v['sanity_score_misc-mod'],10)||0) + 
+                newSanity = (parseInt(v['sanity_score_misc-mod'],10)||0) +
                     (parseInt(v['WIS'],10)||0)+(parseInt(v['INT'],10)||0)+(parseInt(v['CHA'],10)||0)+
                     (parseInt(v['WIS-damage'],10)||0)+(parseInt(v['INT-damage'],10)||0)+(parseInt(v['CHA-damage'],10)||0)+
                     (parseInt(v['WIS-penalty'],10)||0)+(parseInt(v['INT-penalty'],10)||0)+(parseInt(v['CHA-penalty'],10)||0)+
@@ -58,7 +58,7 @@ function setSanityScore (callback){
                     newEdge = Math.floor(newSanity/2);
                     setter.sanity_score_max = newSanity;
                     setter.sanity_edge = newEdge;
-                } 
+                }
             }
         } catch (err){
             TAS.error("PFHorror.setSanityScore error",err);
@@ -88,14 +88,14 @@ function registerEventHandlers () {
 		if(eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
             setSanityScore();
 		}
-	}));   
+	}));
  	on("change:WIS-damage change:INT-damage change:CHA-damage change:WIS-penalty change:INT-penalty change:CHA-penalty",
         TAS.callback(function eventAllMentalStatsPlayerUpdate(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if(eventInfo.sourceType === "player" || eventInfo.sourceType === "api" ) {
             setSanityScore();
 		}
-	}));   
+	}));
  	on("change:sanity-ability-mod change:sanity_threshold_misc-mod",TAS.callback(function eventThresholdUpdate(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if(eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {

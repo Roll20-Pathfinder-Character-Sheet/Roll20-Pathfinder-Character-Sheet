@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -9,8 +9,8 @@ import * as PFMigrate from './PFMigrate';
 import * as PFEncumbrance from './PFEncumbrance';
 import * as PFAttacks from './PFAttacks';
 
-//these use strings on the left so javascript doesn't confuse the number with array indices 
-//converts from the attack mod value to easy 0 thrrough 8
+//these use strings on the left so javascript doesn't confuse the number with array indices
+//converts from the attack mod value to easy 0 through 8
 export var sizeModToEasySizeMap={
 	 '0':4, //medium
 	 '1':3, //small
@@ -113,7 +113,7 @@ export function getSizeLevelChange (currSize,defaultSize) {
  *@returns {jsobj} {dice:n,die:n}
  */
 export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
-	var diceSizes = { 1:["1d1"], 2:["1d2"], 3:["1d3"],   
+	var diceSizes = { 1:["1d1"], 2:["1d2"], 3:["1d3"],
 		4:["1d4"],
 		5:["1d6"],
 		6:["1d8","2d4"],
@@ -134,7 +134,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 	newDice=0,newDie=0,matches,
 	rowdiff=0, currow=0, newrow=0, newrowstring="",
 	reversedDiceSizes=_.reduce(diceSizes,function(memo,pairs,idx){
-		_.each(pairs,function(pair){ memo[pair]=idx;  }); 
+		_.each(pairs,function(pair){ memo[pair]=idx;  });
 		return memo;
 	  },{});
 	try {
@@ -159,7 +159,7 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 						rowdiff=1;
 					} else {
 						rowdiff=2;
-					}  
+					}
 				} else if (sizediff<0) {
 					if  ((currDie<=8 && currDice===1)||currSize<=4 ) {
 						rowdiff=-1;
@@ -199,8 +199,8 @@ export function updateDamageDice (sizediff,defaultSize,currDice,currDie){
 		return {"dice":currDice,"die":currDie};
 	}
 }
-/** sets the size veriables based on the string passed in
- * 
+/** sets the size variables based on the string passed in
+ *
  * @param {string} str  the name of the size in english
  * @param {Map<string,int>} setter to pass to setAttrs
  */
@@ -243,11 +243,11 @@ function setSizeDisplay (size,v,setter){
 }
 
 /** Overwrites any current change to size with change to size from buffs
- * 
- * @param {*} levelChange 
- * @param {*} v 
- * @param {*} eventInfo 
- * @param {*} setter 
+ *
+ * @param {*} levelChange
+ * @param {*} v
+ * @param {*} eventInfo
+ * @param {*} setter
  */
 export function updateSize (levelChange,v,eventInfo,setter) {
 	var size =  0,newSize=0, defaultSize=0,deflevel=0,newlevel=0, skillSize = 0;
@@ -291,10 +291,10 @@ export function updateSize (levelChange,v,eventInfo,setter) {
 	}
 }
 /**
- * 
+ *
  * @param {function(Number)} callback  call with the value of the change in sizes so if 0 we know there was no change
- * @param {*} silently 
- * @param {*} eventInfo 
+ * @param {*} silently
+ * @param {*} eventInfo
  */
 function updateSizeAsync (callback, silently,eventInfo) {
 	var done = function (change) {
@@ -317,7 +317,7 @@ function updateSizeAsync (callback, silently,eventInfo) {
 				if (levelChange===0){
 					currSize=parseInt(v.size,10)||0;
 					defSize=parseInt(v.default_char_size,10)||0;
-					levelChange=getSizeLevelChange(currSize,defSize);						
+					levelChange=getSizeLevelChange(currSize,defSize);
 					if (levelChange===0 ){
 						if (eventInfo){
 							if ((parseInt(eventInfo.previousValue,10)||0) !== (parseInt(eventInfo.newValue,10)||0)){
@@ -333,9 +333,9 @@ function updateSizeAsync (callback, silently,eventInfo) {
 				defSize=parseInt(v.default_char_size,10)||0;
 				levelChange=getSizeLevelChange(currSize,defSize);
 			} else {
-				TAS.warn("Called udpateSizeAsync with unexpected event:",eventInfo);
+				TAS.warn("Called updateSizeAsync with unexpected event:",eventInfo);
 			}
-			
+
 		} catch (err) {
 			TAS.error("PFSize.updateSizeAsync", err);
 		} finally {
@@ -357,7 +357,7 @@ function setNewSize(eventInfo){
 	updateSizeAsync(function(changed){
 		if (changed ){
 			PFEncumbrance.updateLoadsAndLift();
-			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+			PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 		}
 	},false,eventInfo);
 	// changing size back to medium would never update DamageDice
@@ -367,7 +367,7 @@ function setNewSize(eventInfo){
 function applyNewSizeToSheet(eventInfo){
 	//TAS.debug("PFSize.applyNewSizeToSheet");
 	PFEncumbrance.updateLoadsAndLift();
-	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);	
+	PFAttacks.adjustAllDamageDiceAsync(null,eventInfo);
 }
 export function migrate (callback){
 	if (typeof callback === "function") {
@@ -393,7 +393,7 @@ function registerEventHandlers () {
 			setNewSize(eventInfo);
 		} else {
 			//if sheetworker then it may be a loop, so don't change size just make sure everything is using the new size.
-			//this will happen every time we call with bufffs so it will be called twice
+			//this will happen every time we call with buffs so it will be called twice
 			//applyNewSizeToSheet(eventInfo);
 		}
 	}));
@@ -402,6 +402,6 @@ function registerEventHandlers () {
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api" ) {
 			setNewSize(eventInfo);
 		}
-	}));	
+	}));
 }
 registerEventHandlers();

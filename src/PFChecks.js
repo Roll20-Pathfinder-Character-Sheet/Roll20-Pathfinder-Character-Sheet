@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as PFUtils from './PFUtils';
 import * as SWUtils from './SWUtils';
 import * as PFSkills from './PFSkills';
@@ -16,7 +16,7 @@ export function applyConditions (callback, silently) {
 			callback();
 		}
 	};
-	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened", 
+	getAttrs(["condition-Blinded", "condition-Fear", "condition-Drained", "condition-Sickened",
 	"condition-Wounds", "has_endurance_feat", "wounds_gritty_mode", "checks-cond", "Phys-skills-cond",
 	"wound_threshold-show", "CasterLevel-Penalty", "condition-Dazzled","condition-Deafened","condition-Fascinated",
 	"condition_skill_notes","condition_init_notes"	], function (v) {
@@ -36,7 +36,7 @@ export function applyConditions (callback, silently) {
 			blindedMod = -2 * (parseInt(v["condition-Blinded"], 10) || 0);
 			currAllSkills = parseInt(v["checks-cond"], 10) || 0;
 			currPhysSkills = parseInt(v["Phys-skills-cond"], 10) || 0;
-	
+
 			currCaster = parseInt(v["CasterLevel-Penalty"], 10) || 0;
 			if (allSkillsMod !== currAllSkills || isNaN(currAllSkills)) {
 				setter["checks-cond"] = allSkillsMod;
@@ -69,7 +69,7 @@ export function applyConditions (callback, silently) {
 				setter['condition_skill_notes'] = skillNote;
 			}
 			if(initNote!==v.condition_init_notes){
-				setter['condition_init_notes'] = initNote;				
+				setter['condition_init_notes'] = initNote;
 			}
 		} catch (err) {
 			TAS.error("PFChecks.applyConditions", err);

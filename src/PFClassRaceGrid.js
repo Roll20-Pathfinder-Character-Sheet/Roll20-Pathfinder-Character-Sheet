@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -37,7 +37,7 @@ export function setMulticlassed (){
     });
 }
 /** PFClassRaceGrid.updateClassInformation Updates totals at bottom of Class Information grid
- *@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns 
+ *@param {string} col end of name of attribute that references column, must be in classColumns or raceColumns
  *@param {function} callback optional call when finished updating
  *@param {bool} silently if true then call SWUtils.setWrapper with PFConst.silentParams
  */
@@ -102,13 +102,13 @@ function updateClassInformation  (col, callback, silently, eventInfo) {
                 currTot=0,
                 params = {},
                 tot=0;
-                tot = Math.floor((parseFloat(v[col0Name], 10) || 0) * (parseInt(v[col0NameTwo], 10) || 0) + 
-                    (parseFloat(v[col1Name], 10) || 0) * (parseInt(v[col1NameTwo], 10) || 0) + 
-                    (parseFloat(v[col2Name], 10) || 0) * (parseInt(v[col2NameTwo], 10) || 0) + 
-                    (parseFloat(v[col3Name], 10) || 0) * (parseInt(v[col3NameTwo], 10) || 0) + 
-                    (parseFloat(v[col4Name], 10) || 0) * (parseInt(v[col4NameTwo], 10) || 0) + 
-                    (parseFloat(v[col5Name], 10) || 0) * (parseInt(v[col5NameTwo], 10) || 0) + 
-                    (parseFloat(v["npc-skill"], 10) || 0) * (parseInt(v['npc-hd-num'], 10) || 0) 
+                tot = Math.floor((parseFloat(v[col0Name], 10) || 0) * (parseInt(v[col0NameTwo], 10) || 0) +
+                    (parseFloat(v[col1Name], 10) || 0) * (parseInt(v[col1NameTwo], 10) || 0) +
+                    (parseFloat(v[col2Name], 10) || 0) * (parseInt(v[col2NameTwo], 10) || 0) +
+                    (parseFloat(v[col3Name], 10) || 0) * (parseInt(v[col3NameTwo], 10) || 0) +
+                    (parseFloat(v[col4Name], 10) || 0) * (parseInt(v[col4NameTwo], 10) || 0) +
+                    (parseFloat(v[col5Name], 10) || 0) * (parseInt(v[col5NameTwo], 10) || 0) +
+                    (parseFloat(v["npc-skill"], 10) || 0) * (parseInt(v['npc-hd-num'], 10) || 0)
                     );
                 currTot = parseInt(v[totalColName], 10);
                 if (isNaN(currTot) || tot !== currTot) {
@@ -124,7 +124,7 @@ function updateClassInformation  (col, callback, silently, eventInfo) {
         }
     };
     //TAS.debug("at PFClassRaceGrid.updateClassInformation: " + col);
-    //no sum for hd 
+    //no sum for hd
     if (!col || col === "hd" || col==="hp") {
         TAS.warn("at updateClassInformation called with bad column:"+col);
         done();
@@ -137,7 +137,7 @@ function updateClassInformation  (col, callback, silently, eventInfo) {
 }
 
 export function setHitPoints (callback,silently,eventInfo){
-    var done = _.once(function(){ if (typeof callback === "function") { 
+    var done = _.once(function(){ if (typeof callback === "function") {
         //TAS.debug("leaving updateClassHpGrid");
         callback();}
     }),
@@ -189,7 +189,7 @@ export function setHitPoints (callback,silently,eventInfo){
                     if (rowhp !== currrowhp){
                         setter['NPC-HP']=rowhp;
                     }
-                } else {          
+                } else {
                     totalhp += currrowhp;
                 }
                 if (maxFirst){ maxFirst = 0;}
@@ -242,7 +242,7 @@ export function setHitPoints (callback,silently,eventInfo){
                 done();
             }
         }
-    });  
+    });
 }
 export function migrate (callback,oldversion){
     if (typeof callback === "function"){
@@ -327,7 +327,7 @@ function registerEventHandlers  () {
     on(events.basehp,TAS.callback(function eventHPAutoCalcSwitches(eventInfo){
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
         if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-            setHitPoints();					
+            setHitPoints();
         }
     }));
     on("change:class-0-level change:class-1-level change:class-2-level change:class-3-level change:class-4-level change:class-5-level change:bab change:level",TAS.callback(function eventUpdateLevel(eventInfo){

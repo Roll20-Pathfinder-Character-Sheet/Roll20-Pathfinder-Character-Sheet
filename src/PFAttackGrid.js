@@ -1,10 +1,9 @@
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import PFConst from './PFConst';
 import * as SWUtils from './SWUtils';
 import * as PFUtils from './PFUtils';
-import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFMigrate from './PFMigrate';
 import * as PFMenus from './PFMenus';
 
@@ -22,7 +21,7 @@ export var attackGridFields = {
         "attackmacro": "@{toggle_global_melee_macro_insert}",
         "damagemacro": "@{toggle_global_melee_damage_macro_insert}",
         "babdd": "melee_bab",
-        "bab": "melee_bab-mod"        
+        "bab": "melee_bab-mod"
     },
     "melee2": {
         "size": "size",
@@ -100,15 +99,15 @@ export var attackGridFields = {
         "bab": "cmb2_bab-mod"
     }
 };
-var attkpenaltyAddToFields = [ "acp-attack-mod", "condition-Drained"],
-attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Sickened", "condition-Wounds"],
+
+var attkpenaltyAddToFields = ["acp-attack-mod", "condition-Drained"],
+attkpenaltySubtractFromFields = ["condition-Dazzled", "condition-Entangled", "condition-Grappled", "condition-Fear", "condition-Sickened", "woundsPenaltyTotal"],
 attkpenaltySumRow = ["attk-penalty"].concat(attkpenaltyAddToFields),
 groupMapForMenu = {'0':'none','@{attk-melee}':'melee','@{attk-melee2}':'melee',
         '@{attk-ranged}':'ranged','@{attk-ranged2}':'ranged2',
         '@{CMB}':'combat-maneuver-bonus-abbrv','@{CMB2}':'combat-maneuver-bonus-abbrv'};
 
-
-/** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in 
+/** updates the attk-penalty for attacks based on conditions including wearing armor you are not proficient in
  *@param {function} callback optional call when done
  *@param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
  *@param {eventInfo} eventInfo unused eventInfo from on method
@@ -147,7 +146,7 @@ export function applyConditions  (callback, silently, eventInfo) {
         }
         //done is already called at end of updateRowTotal
     });
-    
+
 }
 
 export function updateAttack(attype,v,setter){
@@ -175,8 +174,8 @@ export function updateAttack(attype,v,setter){
 }
 
 /**
- * 
- * @param {string} attype 
+ *
+ * @param {string} attype
  * @returns {[string]} for getAttrs
  */
 function getOneSetAttackFields (attype){
@@ -190,8 +189,8 @@ function getOneSetAttackFields (attype){
     return fields;
 }
 /**
- * 
- * @param {[string]} attypes 
+ *
+ * @param {[string]} attypes
  * @returns {[string]} for getAttrs
  */
 function getAttackFields (attypes){
@@ -251,7 +250,7 @@ export function updateAttackAsync  (attype, callback, silently) {
 export function updateAttacks(callback,silently,attypes,eventInfo){
     var fields,validtypes;
     try {
-        if (!attypes){ 
+        if (!attypes){
             attypes = Object.keys(attackGridFields);
             validtypes = attypes;
         } else {
@@ -299,9 +298,9 @@ export function updateAttacks(callback,silently,attypes,eventInfo){
 }
 
 /** wrapper for updateAttack
- * 
+ *
  * @param {string} buffType buff column without 'buff_' or '-total'
- * @param {*} eventInfo 
+ * @param {*} eventInfo
  */
 export function updateAttackGrid(buffType,eventInfo,silently){
     switch(buffType.toLowerCase()){
@@ -316,7 +315,7 @@ export function updateAttackGrid(buffType,eventInfo,silently){
             break;
         case 'melee2':
             updateAttackAsync('melee2',null, silently);
-            break;        
+            break;
         case 'ranged2':
             updateAttackAsync('ranged2',null, silently);
             break;
@@ -388,10 +387,10 @@ function updateAttackBABDropdownDiffs(callback,silently,eventInfo){
 export function migrate (callback, oldversion){
     PFMigrate.migrateAttackDropdowns(callback);
 }
-/** recalculates all write-to fields in module 
+/** recalculates all write-to fields in module
  * @param {function} callback optional call when done
  * @param {boolean} silently optional if true call SWUtils.setWrapper with PFConst.silentParams
- * @param {number} oldversion the version upgrading from 
+ * @param {number} oldversion the version upgrading from
  */
 export var recalculate = TAS.callback(function callPFAttackGridRecalculate (callback, silently, oldversion) {
     var done = function () {
@@ -409,6 +408,16 @@ export var recalculate = TAS.callback(function callPFAttackGridRecalculate (call
     //TAS.debug"At PFAttackGrid.recalculate");
     migrate(callApplyConditions,oldversion);
 });
+export function getWoundsTotal(v) {
+    getAttrs(["condition-Wounds", "wounds_gritty_mode", "has_endurance_feat", "wound_threshold-show", "woundsPenaltyTotal"], function(v) {
+        var woundPenalty = PFUtils.getWoundPenalty((parseInt(v["condition-Wounds"], 10) || 0), (parseInt(v.has_endurance_feat, 10) || 0), (parseInt(v.wounds_gritty_mode, 10) || 0)),
+        wounds = ((parseInt(v["wound_threshold-show"], 10) || 0) * woundPenalty)
+        setAttrs({
+            woundsPenaltyTotal : Math.abs(wounds)
+        });
+        recalculate();
+    });
+}
 function registerEventHandlers () {
     var tempString='';
     _.each(attackGridFields, function (attackFields, attack) {
@@ -428,6 +437,18 @@ function registerEventHandlers () {
                 updateAttackAsync(attack);
             }
         }));
+        on("change:" + attackFields.size, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
+            if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                recalculate();
+            }
+        }));
+        on("change:" + attackFields.size, TAS.callback(function eventAttackGridDropDownMod(eventInfo) {
+            if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
+                TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+                recalculate();
+            }
+        }));
     });
 
     on("change:attk-penalty", TAS.callback(function eventAttackPenalty(eventInfo) {
@@ -436,8 +457,9 @@ function registerEventHandlers () {
             updateAttacks(null,null,null,eventInfo);
         }
     }));
-    on("change:acp-attack-mod", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
+    on("change:acp-attack-mod change:condition-wounds change:wounds_gritty_mode change:has_endurance_feat change:wound_threshold-show", TAS.callback(function PFAttackGrid_applyConditions(eventInfo) {
         TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+        getWoundsTotal();
         applyConditions();
     }));
 
@@ -452,7 +474,5 @@ function registerEventHandlers () {
             updateAttackBABDropdownDiffs(null,null,eventInfo);
         }
     }));
-
-    
 }
 registerEventHandlers();

@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 
@@ -11,12 +11,12 @@ NO asynchronous FUNCTIONS SHOULD GO HERE
 /** findAbilityInString - returns the attribute referenced by a dropdown option value.
  * Looks at a string for instances of an ability modifier DEX-mod, STR-mod,  etc and returns the modifier it finds.
  * if none are found, or if the first character is "0", return ""
- * NOTE: YOU MUST PUT ANY NEW DROPDOWN VALUES HERE! 
+ * NOTE: YOU MUST PUT ANY NEW DROPDOWN VALUES HERE!
  * (if they are references to other fields. obviously, dropdowns with 0, 1, 2 as values are not needed here)
  *@param {string} stringToSearch the value of the dropdown option selected
  *@returns {string} the attribute referenced by a dropdown option value.
  */
-export function findAbilityInString  (stringToSearch) {
+export function findAbilityInString (stringToSearch) {
     if (!stringToSearch) {
         return "";
     }
@@ -131,27 +131,36 @@ export function findAbilityInString  (stringToSearch) {
     return stringToSearch.replace("@{","").replace("}","");
 //    return "";
 }
-/** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel 
+/** calculateSpellRanges - returns {close:x, medium:y , long:z} for casterlevel
  *@param {int} casterlevel level of caster
+ *@param {int} use_metrics metric flag
  *@returns {jsobject} mapping like this: {close:int,medium:int,long:int}
  */
-export function calculateSpellRanges  (casterlevel) {
+export function calculateSpellRanges (casterlevel, use_metrics) {
     casterlevel = casterlevel || 0;
+        //metric multiplier ft to m
+        if (use_metrics > 0) {
+            use_metrics = 0.3048;
+        }
+        else{
+            use_metrics = 1;
+        }
     return {
-        close: 25 + (5 * (Math.floor(casterlevel / 2))),
-        medium: 100 + (10 * casterlevel),
-        "long": 400 + (40 * casterlevel)
+        close: Math.round((25 + (5 * (Math.floor(casterlevel / 2))))*use_metrics),
+        medium: Math.round((100 + (10 * casterlevel))*use_metrics),
+        "long": Math.round((400 + (40 * casterlevel))*use_metrics)
     };
 }
 /**findSpellRange -  calculates range number based on spell settings
  * @param {int} customRangeVal value that is in the custom range field, for "per level" or "custom" choices
  * @param {string} rangeDropdown selected value from spell range dropdown
  * @param {int} casterlevel the level of caster
+ * @param {int} use_metrics metric flag
  * @returns {int_or_""} the spell range
  */
-export function findSpellRange  (customRangeVal, rangeDropdown, casterlevel) {
+export function findSpellRange (customRangeVal, rangeDropdown, casterlevel, use_metrics) {
     var newRange = 0,
-    ranges = calculateSpellRanges(casterlevel);
+    ranges = calculateSpellRanges(casterlevel, use_metrics);
     casterlevel = casterlevel || 0;
     rangeDropdown=rangeDropdown||'blank';
     if (rangeDropdown[0] === "{") {
@@ -200,9 +209,9 @@ export function isOptionTemplateReversed  (spellOptionKey) {
     return spellOptionKey === "range_pick";
 }
 /** getOptionsCompiledRegexMap - finds {{key=*}} in a string to search rolltemplate macros
- * uses lookahead and lookbehind  to ensure must be preceeded by start or }} , followed by end or {{ 
+ * uses lookahead and lookbehind  to ensure must be preceded by start or }} , followed by end or {{
  * @param {jsobj map} options map {} of key , only key looked at.
- * @returns {jsobj map} of key to "{{key=*}}" but as a compiled regex 
+ * @returns {jsobj map} of key to "{{key=*}}" but as a compiled regex
  */
 export function getOptionsCompiledRegexMap  (options) {
     return _.mapObject(options, function (outputstr, key) {
@@ -254,7 +263,7 @@ export function deleteOption  (optionText, optionKey, regexMap) {
  * @param {float} mult optional percent of max to average, must be .5 (average), .75, or 1. If null then assume .5
  * @param {boolean} firstMax if true then 1st level gets 100% hp
  * @param {boolean} ispfs if true then round up EVERY level.
- * @returns {int} hit point average. 
+ * @returns {int} hit point average.
  */
 export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     var hp=0, bonus=1;
@@ -265,7 +274,7 @@ export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     if (!(mult === 0.5 || mult === 0.75 || mult === 1)) {
         mult = 0.5;
     }
-    if (ispfs) { 
+    if (ispfs) {
         bonus = 2;
         mult = 0.5;
     }
@@ -283,7 +292,7 @@ export function getAvgHP  (hdice, hdie, mult, firstMax, ispfs) {
     return hp;
 }
 /** takes value of auto hit point radio and returns percent it represents 50,75,100.
- * @param {int} autohp_percent the value of attr_autohp_percent 
+ * @param {int} autohp_percent the value of attr_autohp_percent
  * @returns {decimal} either 0.5, 0.75,  or 1.00
  */
 export function getAutoHPPercentMultiplier  (autohp_percent) {
@@ -489,15 +498,15 @@ export function convertDashToMinus(str){
     return str.replace(PFConst.dashtominusreg,'-');
 }
 
-/** parseCost gets cost in gp 
- * @param {string} str the string containing the cost: 35gp, 20sp, etc 
+/** parseCost gets cost in gp
+ * @param {string} str the string containing the cost: 35gp, 20sp, etc
  * @returns {int} cost in gp.
  */
 export function getCostInGP  (str){
     var temp=0,
     matches = str.match(/(\d+)/);
     TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on number:",matches);
-    if (matches) { 
+    if (matches) {
         temp = parseInt(matches[1],10)||0;
         matches = str.match(/(gp|cp|sp|pp)/i);
         TAS.debug("PFUtil.getCostInGP: parsing:"+str+", match on coins:",matches);
@@ -528,13 +537,13 @@ export function getIntFromString(str,cleanedup,atStart){
     } else {
         matches = str.match(/^[\+\-]{0,1}\d+/);
     }
-    if (matches) { 
+    if (matches) {
         temp = parseInt(matches[0],10)||0;
     }
     return temp;
 }
 /**Returns object of a crit string as mapped ints as: crit:minimum threat range (def 20), critmult: how much by which to multiply dice (def 2)
- * spaces: number of spaces string took 
+ * spaces: number of spaces string took
  * @param {string} str the string that should have /19-20x2 or x2 in it.
  * @param {boolean} cleanedup if replaceMissingNegatives_CritRange already called on string
  * @returns {{'crit':number,'critmult':number,'spaces':number}}
@@ -623,7 +632,7 @@ export function getSpecialAbilityTypeFromString (str){
 /** returns string after first comma ( that is after an opening parenthesis )
  * or after first comma if there is no opening parenthesis
  * @param {string} str the string to split
- * @param {boolean} putOutside if true then return whateever is before first comma and after opening paren.
+ * @param {boolean} putOutside if true then return whatever is before first comma and after opening paren.
  *      if false, then return everything up to first paren then between 1st and 2nd comma. why? who the hell knows?
  * @returns {?} ?
  */
@@ -650,13 +659,13 @@ export function removeUptoFirstComma  (str, putOutside) {
     }
     return retstr;
 }
-/**getDCString - gets macro formula for special ability calculating DC using ability score, what the level attribute is, and 
+/**getDCString - gets macro formula for special ability calculating DC using ability score, what the level attribute is, and
  * whether to divide that level by 2 or not.
  * @param {string} ability the ability score string the DC is based on. Usually CON for special abilities.
  * @param {string} levelAttr optional the level attribute , either "level" or "class-0-level" or "npc-hd-num" etc
  * @param {boolean} isUndead flag if undead, if true, then if ability is 'CON' change to 'CHA'
  * @param {int} miscBonus a flat number to add in
- * @param {boolean} doNotDivideByTwo if true then do not divide level attr value by 2 
+ * @param {boolean} doNotDivideByTwo if true then do not divide level attr value by 2
  * @returns {string} default is: "DC [[ 10 + @{" + ability + "-mod} + floor(@{"+levelAttr+"}/2) ]]";
  */
 export function getDCString  (ability, levelAttr, isUndead, miscBonus, doNotDivideByTwo) {
@@ -710,7 +719,7 @@ export function replaceDCString  (str, ability, levelAttr, isUndead, levelFlatNu
         return retstr;
     }
 }
-/** returns rest of string after number 
+/** returns rest of string after number
  *@param {string} str the string
  *@returns {string} rest of string after finding a number.
  */
@@ -741,7 +750,7 @@ export function getCompendiumFunctionSet  (prefix,field,methodToCall,v,setter,se
     if (attr){
         temp= methodToCall(attr);
         TAS.debug("on return value is:"+temp);
-        if (temp) { 
+        if (temp) {
             setField=setField||field;
             TAS.debug("setting "+prefix+field+" with value "+ temp);
             setter[prefix+setField]= temp;
@@ -764,7 +773,7 @@ export function getCompendiumIntSet  (prefix,field,v,setter,setField){
         if (attr){
             tempInt= getIntFromString(attr);
             //TAS.debug("get int field:"+field+", val="+attr+", int:"+tempInt);
-            if (tempInt) { 
+            if (tempInt) {
                 setField=setField||field;
                 setter[prefix+field]= tempInt;
             }
@@ -786,6 +795,7 @@ export function removeWhisperFromMacro (macrostr){
     }
     return macrostr;
 }
+
 
 //PFConsole.log( '   PFUtils module loaded          ');
 //PFLog.modulecount++;

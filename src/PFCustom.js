@@ -1,7 +1,7 @@
 'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
-import TAS from 'exports-loader?TAS!TheAaronSheet';
+import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
 import * as PFUtils  from './PFUtils';
@@ -9,6 +9,7 @@ import * as PFUtilsAsync from './PFUtilsAsync';
 import * as PFBuffs from './PFBuffs';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFSkills from './PFSkills';
+import { buffColumns } from './PFBuffsOld';
 
 export function resetCommandMacro (callback, eventInfo){
     getAttrs(['customd1','customd2','customd3','customd4','customd5','customd6',
@@ -66,7 +67,7 @@ export function resetCommandMacro (callback, eventInfo){
 function showMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':1,
-		'extra_fields_skills_show':1,
+		'skill_onetimecolumns_show':1,
 		'extra_fields_saves_show':1,
 		'extra_fields_spells_show':1,
 		'extra_fields_defense_show':1,
@@ -80,7 +81,7 @@ function showMiscFields () {
 function hideMiscFields () {
 	SWUtils.setWrapper({
 		'extra_fields_attacks_show':0,
-		'extra_fields_skills_show':0,
+		'skill_onetimecolumns_show':0,
 		'extra_fields_saves_show':0,
 		'extra_fields_spells_show':0,
 		'extra_fields_defense_show':0,
@@ -143,7 +144,7 @@ function recalcDropdowns (callback, silently, oldversion) {
 			} catch (err) {
 				TAS.error("PFSheet.recalcDropdowns", err);
 				doneOther();
-			}			
+			}
 		});
 	} catch (err2) {
 		TAS.error("PFSheet.recalcDropdowns OUTER wtf how did this happen?", err2);
@@ -201,7 +202,7 @@ export function migrate(callback,oldversion){
 			getSectionIDs('repeating_'+section,function(ids){
 				var fields, attr='';
 				if(!ids || _.size(ids)===0){
-					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for "+ section);
+					TAS.warn("migrate repeating attacktype Dropdowns, there are no rows for " + section);
 					doneOneSection();
 					return;
 				}
@@ -209,7 +210,7 @@ export function migrate(callback,oldversion){
 				fields = ids.map(function(id){return 'repeating_'+section+'_'+id+attr; });
 				getAttrs(fields,function(v){
 					var setter, tempstr='';
-					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);						
+					//TAS.debug("migrate repeating attackDropdowns for "+section+", getting:",v);
 					setter = Object.keys(v).reduce(function(m,a){
 						try{
 							if (v[a] && v[a][0]!=="0"){
@@ -245,7 +246,7 @@ export function migrate(callback,oldversion){
             getAttrs(fields,function(v){
                 var setter;
 				try {
-					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);					
+					//TAS.debug("migrate repeatingweapon AbilityDropdowns getting:",v);
 					setter = Object.keys(v).reduce(function(m,a){
 						var tempstr='';
 						if (v[a] && v[a]!=="0"){
@@ -429,16 +430,16 @@ export function fixProfessionDropdowns (callback){
 
 
 export var recalculate = TAS.callback(function PFCustomRecalculate(callback,silently,oldversion){
-    migrate(function(){
-        recalcDropdowns(function(){
+	migrate(function(){
+		recalcDropdowns(function(){
 			fixProfessionDropdowns();
-            recalcExpressions(function(){
-                recalcCustomExpressions(function(){
+			recalcExpressions(function(){
+				recalcCustomExpressions(function(){
 					resetCommandMacro(callback);
 				},silently,oldversion);
-            },silently,oldversion);
-        },silently,oldversion);
-    },oldversion);
+			},silently,oldversion);
+		},silently,oldversion);
+	},oldversion);
 });
 
 function registerEventHandlers () {
@@ -484,17 +485,17 @@ function registerEventHandlers () {
 
 	_.each(PFConst.customEquationMacros,function(writeField,custField){
 		on('change:'+custField,TAS.callback(function customEquationMacro(eventInfo){
-			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);		
-			SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');		
+				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+				SWUtils.evaluateAndAddAsync(null,null,custField,writeField,'buff_'+custField+'-total');
 		}));
 	});
+
 	on("change:kineticist_level", TAS.callback(function eventKineticistLevel(eventInfo){
 		if(eventInfo.sourceType==='player'){
 			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 			PFUtilsAsync.setDropdownValue('kineticist_level', 'kineticist_level-mod');
 		}
 	}));
-	
 }
 
 registerEventHandlers();
