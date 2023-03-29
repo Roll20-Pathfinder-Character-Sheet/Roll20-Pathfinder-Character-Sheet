@@ -4166,26 +4166,32 @@ spellclass-concentration spellcaster-button {
 }
 
 /* Hides Type select when Feats or Traits are selected */
-.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select,
-.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select + span,
-.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select + span ~ .show-traits,
-.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select,
-.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select + span,
-.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select + span ~ .show-feats {
+
+.charsheet .custnavsection-1:not(:checked) ~ div > .feats-traits-dropdown,
+.charsheet .custnavsection-2:not(:checked) ~ div > .feats-traits-dropdown {
     display: none;
 }
 
-.charsheet .custnavsection-1:checked ~ div > .exspsu-dropdown select + span ~ *,
-.charsheet .custnavsection-2:checked ~ div > .exspsu-dropdown select + span ~ * {
-    display: block;
+.charsheet .custnavsection-1:checked ~ div > .feats-traits-dropdown,
+.charsheet .custnavsection-2:checked ~ div > .feats-traits-dropdown {
+    display: inline-block;
+}
+
+.charsheet .custnavsection-1:checked ~ div > .feats-traits-dropdown .show-traits,
+.charsheet .custnavsection-2:checked ~ div > .feats-traits-dropdown .show-feats {
+    display: none;
+}
+
+.charsheet .custnavsection-1:checked ~ div > .feats-traits-dropdown .autoexpand,
+.charsheet .custnavsection-1:checked ~ div > .feats-traits-dropdown input,
+.charsheet .custnavsection-2:checked ~ div > .feats-traits-dropdown .autoexpand,
+.charsheet .custnavsection-2:checked ~ div > .feats-traits-dropdown input {
+    height: auto;
     position: revert;
+    white-space: nowrap;
 }
 
-.charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown input,
-.charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown input ~ * {
-    display: none;
-}
-
+.charsheet .tabcopy:not(:checked) ~ div > .feats-traits-dropdown,
 .charsheet .tabcopy:not(:checked) ~ div > .exspsu-dropdown {
     width: min-content;
     padding: revert;
