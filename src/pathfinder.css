@@ -334,7 +334,8 @@
     z-index: 5;
 }
 
-.charsheet .skills .table-row input.macro-text-inline:focus {
+.charsheet .skills .table-row input.macro-text-inline:focus,
+.charsheet .section-defenses .table-row input.macro-text-inline:focus {
     margin-top: -1em;
 }
 
@@ -345,6 +346,7 @@
 .charsheet .abilities .linked-tablecell:focus-within::before,
 .charsheet .abilities .small-label2.entry-med:focus-within::before,
 .charsheet .section-abilities div.small-label2.entry-med:focus-within::before,
+.charsheet .section-abilities label.small-label2.entry-10p-shrink:focus-within::before,
 .charsheet .attacks label.small-label2.entry-short.highlight:focus-within::before,
 .charsheet .items label.small-label2.entry-med:focus-within::before,
 .charsheet .section-spells label.small-label2.entry-med:focus-within::before {
@@ -361,6 +363,7 @@
 .charsheet .attack-grid input.macro-text-inline:focus,
 .charsheet .attacks label > input.macro-text-inline:focus,
 .charsheet .defense-grid input.macro-text-inline:focus,
+.charsheet .section-defenses input.macro-text-inline:focus,
 .charsheet .items input.macro-text-inline:focus,
 .charsheet .items textarea.macro-text-inline:focus,
 .charsheet .saves input.macro-text-inline:focus,
@@ -955,16 +958,10 @@ pf-wrapper,
     text-align: center;
 }
 
-.charsheet .equipment .wide-numbers input[type="number"] {
+.charsheet .section-equipment .wide-numbers input[type="number"] {
     max-width: calc(100% - 2px);
     margin: 1px 1px 1px 0;
     width: 100%;
-}
-
-.charsheet .equipment .wide-numbers input[type="number"] {
-    max-width: calc(100% - 1em);
-    margin: auto;
-    width: calc(100% - 1em);
 }
 
 .charsheet .medium-numbers input[type="number"],
