@@ -244,7 +244,7 @@ export function updateMaxHPLookup (callback, silently,eventInfo,forceReset) {
 /* updateTempMaxHP
  * sets temp hp
  */
-export function updateTempMaxHP (callback, silently,forceReset) {
+export function updateTempMaxHP (callback, silently, forceReset, eventInfo) {
 	var done = _.once(function () {
 		if (typeof callback === "function") {
 			callback();
@@ -254,12 +254,28 @@ export function updateTempMaxHP (callback, silently,forceReset) {
 		var newHPTempMax,
 		currHPTemp,
 		newHPTemp,
+		deltaBuffHP = 0,
+		deltaMiscHP = 0,
 		params = {};
 		try {
 			//TAS.debug("at updateTempMaxHP",v);
+				if (eventInfo && eventInfo.sourceAttribute === "buff_hp-temp-total"){
+					if ((parseInt(eventInfo.previousValue,10)||0) !== (parseInt(eventInfo.newValue,10)||0)){
+						deltaBuffHP=(parseInt(eventInfo.newValue,10)||0) - (parseInt(eventInfo.previousValue,10)||0);
+					}
+				} else if (eventInfo && eventInfo.sourceAttribute === "hp-temp-misc") {
+					if ((parseInt(eventInfo.previousValue,10)||0) !== (parseInt(eventInfo.newValue,10)||0)){
+						deltaMiscHP=(parseInt(eventInfo.newValue,10)||0) - (parseInt(eventInfo.previousValue,10)||0);
+					}
+				}
 			newHPTempMax = (parseInt(v["HP-temp-misc"], 10) || 0) + (parseInt(v["buff_HP-temp-total"], 10) || 0);
 			currHPTemp = parseInt(v["HP-temp"], 10) || 0;
-			newHPTemp = forceReset ? newHPTempMax : (currHPTemp + newHPTempMax - currHPTemp);
+			// newHPTemp = forceReset ? newHPTempMax : (currHPTemp + newHPTempMax - currHPTemp); //wrong: is always set to newHPTempMax if falsey
+			newHPTemp = forceReset ? newHPTempMax : (currHPTemp + deltaBuffHP + deltaMiscHP);
+			newHPTempMax = Math.max(newHPTempMax, 0);
+			newHPTemp = Math.max(newHPTemp, 0);
+			newHPTemp = Math.min(newHPTemp, newHPTempMax);
+
 			if (forceReset || newHPTemp !== currHPTemp) {
 				if (silently) {
 					params = PFConst.silentParams;
@@ -377,14 +393,14 @@ function registerEventHandlers () {
 	on("change:hp-temp-misc", TAS.callback(function eventUpdateTempHP(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
-			updateTempMaxHP();
+			updateTempMaxHP(null,null,false,eventInfo);
 		}
 	}));
-	on("change:HP_reset", TAS.callback(function eventResetHP(eventInfo) {
+	on("change:hp_reset", TAS.callback(function eventResetHP(eventInfo) {
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		if (eventInfo.sourceType === "player" || eventInfo.sourceType === "api") {
 			updateMaxHPLookup(null,null,eventInfo,true);
-			updateTempMaxHP(null,null,true);
+			updateTempMaxHP(null,null,true,eventInfo);
 			SWUtils.setWrapper({
 				"HP_reset": "0"
 			}, PFConst.silentParams);

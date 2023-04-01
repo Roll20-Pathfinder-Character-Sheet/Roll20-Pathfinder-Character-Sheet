@@ -1173,6 +1173,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .nontable-name.secondary-table-name,
 .charsheet .table-name.secondary-table-name {
     background-color: #4a6486;
+    padding: 2px 5px 1px 5px;
 }
 
 .charsheet .section-spellclass .table-name,
@@ -3446,7 +3447,8 @@ also need 1 more level in selector or base css will override border */
     box-shadow: none;
 }
 
-.charsheet .hit-points {
+.charsheet .hit-points,
+.charsheet .hit-points-calcs2 {
     width: calc(30% - 4px);
     display: inline-block;
     min-height: 4em;
@@ -3454,6 +3456,12 @@ also need 1 more level in selector or base css will override border */
     background-color: LightGray;
     margin-right: .125em;
     color: initial;
+}
+
+.charsheet .hit-points-calcs2 {
+    width: auto;
+    min-width: auto;
+    padding: 0 0 11px 0;
 }
 
 .charsheet .wound-threshold,

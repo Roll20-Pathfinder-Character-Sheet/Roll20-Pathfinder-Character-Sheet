@@ -35,6 +35,11 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Fixed a bug with Temp hp that erroneously reset to max on triggered events.</li>
+                        <li>Added a 'Death Threshold' macro-calculated field to the Hit Point calculations sub-section.</li>
+                    </ol>
+                    <h4>Older Changes</h4>
+                    <ol>
                         <li>Fixed local casting type. Spell Class, 'Casting Type' now displays the #Prep, #Used, and #Cast fields per spell based on the Caster class selected. One-time sheet version check included to update existing spells.</li>
                         <li>Added popup text-input windows to many of the macro-text fields.</li>
                         <li>Fixed Ability Notes alignment issue when the sheet is in Compact mode.</li>
@@ -46,9 +51,6 @@
                         <li>Added Spell DC Misc. field to Spells&#62;Level and Caster Ability&#62;Roll Adjustments. Any 'DC Misc.' modifier and/or 'DC Buff' will be included on the 'Save DC' column under Spells/Day as well as each spells' computed DC.</li>
                         <li>Added Spell DC Classes 0, 1, and 2 to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all spells under a given spell class.</li>
                         <li>Added HL Import attacks. <b>Consider this beta...</b> You may need to make adjustments to natural and weapon attacks after import, but this should be faster than creating the attacks from scratch.</li>
-                    </ol>
-                    <h4>Older Changes</h4>
-                    <ol>
                         <li>Darkmode adjustments for roll templates.</li>
                         <li>Fixed PC Initiative whisper option.</li>
                         <li>Added an Ability Notes option. Found below the Ability Scores. Toggle including Ability Notes for Ability checks. Existing sheets must clear/reset the ability macro-text field manually (caution:this wipes the existing macro-text which will remove any macro customization) or simply add "@{ability_notes_toggle}" to the end of the macro-text to enable this option. New sheets will include the option automatically. No action required.</li>
@@ -1923,23 +1925,23 @@
                                     <div class="table-group-head">
                                         <span class="table-header"></span>
                                         <span class="table-header" data-i18n-title="current-hp-title" data-i18n-aria-label="current-hp-title" data-i18n="current-hit-points-abbrv">Curr HP</span>
-                                        <span class="table-header">/</span>
+                                        <span class="table-header"></span>
                                         <span class="table-header" data-i18n-title="max-hp-title" data-i18n-aria-label="max-hp-title" data-i18n="maximum-abbrv">Max</span>
                                     </div>
                                     <div class="table-row" style="line-height: 1rem;">
                                         <span class="icon pictos">k</span>
                                         <span class="table-cell"><input type="number" title="@{HP}" name="attr_HP" value="0"></span>
-                                        <span class="divider">/</span>
+                                        <span class="divider-lg">/</span>
                                         <span class="table-cell"><input class="calc" readonly type="number" title="@{HP|max}" name="attr_HP_max" value="0"></span>
                                     </div>
                                 </div>
                                 <div class="table" style="margin-top:0.2rem;">
                                     <div class="table-group-head">
-                                        <span class="table-header" style="width:4em;padding-top:1.8rem;" data-i18n-title="recalculate-hit-points-title" data-i18n-aria-label="recalculate-hit-points-title" data-i18n="reset">Reset</span>
+                                        <span class="table-header" style="width:4em;padding-top:1.8rem;" data-i18n-title="recalculate-hit-points-title" data-i18n-aria-label="recalculate-hit-points-title" data-i18n="reset-hp">Reset hp</span>
                                         <span class="table-header" style="padding-top:1.8rem;" data-i18n-title="temporary-hit-points-title" data-i18n-aria-label="temporary-hit-points-title" data-i18n="temporary-hit-points-abbrv">Temp HP</span>
                                         <span class="table-header"> </span>
                                         <span class="table-header" style="width:4em;padding-top:1.8rem;" data-i18n-title="temporary-hit-points-maximum-title" data-i18n-aria-label="temporary-hit-points-maximum-title" data-i18n="maximum-abbrv">Max</span>
-                                        <span class="table-header" style="line-height:1.5rem;" data-i18n-title="nonlethal-damage-title" data-i18n-aria-label="nonlethal-damage-title" data-i18n="nonlethal-damage">Nonlethal Damage</span>
+                                        <span class="table-header" style="line-height:1.5rem; vertical-align: bottom;" data-i18n-title="nonlethal-damage-title" data-i18n-aria-label="nonlethal-damage-title" data-i18n="nonlethal-damage">Nonlethal Damage</span>
                                     </div>
                                     <div class="table-row">
                                         <span class="table-cell small-label" style="width:4em;">
@@ -1954,7 +1956,7 @@
                                         <span class="table-cell highlight" style="vertical-align:top;"><input type="number" title="@{non-lethal-damage}" name="attr_non-lethal-damage" value="0" min="0"></span>
                                     </div>
                                 </div>
-                                <div class="table">
+                                <div class="table npc-only">
                                     <div class="table-row">
                                         <span class="table-cell small-label" style="padding-left:0.3rem;">
                                             <input type="text" title="@{npc-heal-conditions}" name="attr_npc-heal-conditions" value="" data-i18n-placeholder="heal-conditions" />
@@ -2017,19 +2019,33 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="table" style="margin-top:0.2rem">
-                                <span class="table-name secondary-table-name" data-i18n="temporary-hp-calculations">Temp hp Calculations</span>
+                            <div class="table hit-points-calcs2" style="margin-top:0.2rem">
+                                <span class="table-name secondary-table-name nowrap" data-i18n="temporary-hp-calculations">Temp hp calculations</span>
                                 <div class="table-group-head">
-                                    <span class="table-header number" data-i18n-title="temporary-hit-points-miscellaneous-title" data-i18n-aria-label="temporary-hit-points-miscellaneous-title" data-i18n="miscellaneous-abbrv">Misc</span>
+                                    <span class="table-header number" data-i18n-title="temporary-hit-points-miscellaneous-title" data-i18n-aria-label="temporary-hit-points-miscellaneous-title" data-i18n="miscellaneous-abbrv" title="Player configurable temporary hit points that add to the total Temp hp value" aria-label="Player configurable temporary hit points that add to the total Temp hp value">Misc</span>
                                     <span class="table-header"></span>
-                                    <span class="table-header" data-i18n-title="temporary-hit-points-buff-title" data-i18n-aria-label="temporary-hit-points-buff-title" data-i18n="buff">Buff</span>
-                                    <span class="table-header table-rightcell"></span>
+                                    <span class="table-header" data-i18n-title="temporary-hit-points-buff-title" data-i18n-aria-label="temporary-hit-points-buff-title" data-i18n="buff" title="Temporary hit points that come from active Buffs (see Core tab)" aria-label="Temporary hit points that come from active Buffs (see Core tab)">Buff</span>
                                 </div>
                                 <div class="table-row">
-                                    <span class="table-cell number"><input type="number" title="@{HP-temp-misc}" name="attr_HP-temp-misc" value="0"></span>
+                                    <span class="table-cell number" style="padding-left: 1em;"><input type="number" title="@{HP-temp-misc}" name="attr_HP-temp-misc" value="0"></span>
                                     <span class="divider">+</span>
-                                    <span class="table-cell" style="text-align:right;"><input class="calc" readonly type="number" title="@{buff_HP-temp-total}" name="attr_buff_HP-temp-total" value="0"></span>
-                                    <span class="table-rightcell"></span>
+                                    <span class="table-cell">
+                                        <input class="calc" type="number" title="@{buff_HP-temp-total}" name="attr_buff_HP-temp-total" value="0" readonly />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="table hit-points-calcs2">
+                                <span class="table-name secondary-table-name" data-i18n="death-threshold">Death Threshold</span>
+                                <div class="table-group-head">
+                                    <span class="table-header number super note-a" data-i18n-title="death-threshold-title" data-i18n-aria-label="death-threshold-title" data-i18n="macro" title="Death threshold calculation. Normally this is -@{CON}" aria-label="Death threshold calculation. Normally this is -@{CON}">Macro</span>
+                                    <span class="table-header" data-i18n-title="death-threshold-total-title" data-i18n-aria-label="death-threshold-total-title" data-i18n="total" title="Point at which character death occurs." aria-label="Point at which character death occurs." style="padding-right: 2.2em;">Total</span>
+                                </div>
+                                <div class="table-row">
+                                    <span class="table-cell number highlight linked-tablecell">
+                                        <input type="checkbox" name="attr_death_threshold_total_error" class="error-mshow" value="1">
+                                        <input class="macro-text-inline skill-macro-text linked-cellfield highlight" title="@{death_threshold-macro-text}" name="attr_death_threshold-macro-text" type="text" value="-@{CON}" data-i18n-placeholder="equation-macro-place" placeholder="#/Equation" style="margin-left: 2em;">
+                                        <input type="number" class="narrow-numbers calc highlight" title="@{death_threshold_total}" name="attr_death_threshold_total" value="0" style="margin-left: 1em;" readonly />
+                                    </span>
                                 </div>
                             </div>
                         </div>
