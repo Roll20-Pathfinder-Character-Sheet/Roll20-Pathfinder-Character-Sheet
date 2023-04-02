@@ -1544,15 +1544,18 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .text-tight {
-    font-size: .75em;
-    font-family: 'Roboto Mono', monospace;
-    position: absolute;
-    background-color: #9f9f9f;
-    display: inline-block;
-    padding: 0 2px 0 2px;
-    line-height: 12px;
-    margin: -5px 0 0 -5px;
+    background-color: #777;
     border-radius: 2px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto Mono', monospace;
+    font-size: .75rem;
+    height: 23px;
+    line-height: 10px;
+    margin: -12px 0 0 -3px;
+    padding: 1px 2px 0 2px;
+    position: absolute;
     z-index: 3;
 }
 
@@ -3542,6 +3545,7 @@ also need 1 more level in selector or base css will override border */
     content: "d";
     position: absolute;
     font-size: 2.5em;
+    font-weight: normal;
     margin: 5px 0 0 5px;
     opacity: .75;
 }
@@ -6722,8 +6726,9 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .charsheet .skills .table-row .table-header:nth-of-type(7),
 .charsheet .skills .table-row .table-cell:nth-of-type(7) {
-    width: 2em;
     max-width: 1em;
+    padding: 0 .75em 0 .125em;
+    width: 2em;
 }
 
 .charsheet .readonly-show:not(:checked) ~ .main .skills .table-row .table-header:nth-of-type(7),
