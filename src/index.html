@@ -3657,7 +3657,7 @@
                                 <label class="small-label2 narrow-numbers space-right-collapse nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="calc bigger-total" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
                                 <label class="small-label2 entry-8p-shrink sect nondual-sect"><input type="text" name="attr_type" value="p/b/s...?" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" /><span data-i18n="type">Type</span></label>
                                 <label class="small-label2 narrow-numbers nondual-sect">
-                                    <input class="number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" />
+                                    <input class="number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" style="padding: 0; margin: 4px 0 0 0;">
                                     <input type="checkbox" class="noshow sect2-show sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
                                     <span class="sect2 distance-used" data-i18n="range">Range</span>
                                     <span class="sect-inverse distance-used" data-i18n="reach-small">Reach</span>
@@ -8830,7 +8830,7 @@
                                     <span class="nowrap" data-i18n="source-name">Source Name</span>
                                 </label>
                                 <label class="small-label2 entry-12p-shrink feats-traits-dropdown autoexpand">
-                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" accept="Feat Type" />
                                     <input type="text" name="attr_ability_type2" list="traits" class="show-traits" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
                                     <span class="show-feats" data-i18n="feat-type">Feat Type</span>
                                     <span class="show-traits" data-i18n="trait-type">Trait Type</span>
@@ -12487,7 +12487,7 @@
                                     <label class="small-label2 narrow-numbers space-right-collapse nondual-sect"><input type="number" name="attr_total-damage" title="@{repeating_weapon_$X_total-damage}" value="0" class="calc bigger-total" readonly /><span data-i18n="damage-abbrv">Dmg</span></label>
                                     <label class="small-label2 entry-8p-shrink sect nondual-sect"><input type="text" name="attr_type" value="p/b/s...?" title="@{repeating_weapon_$X_type} Damage Type" data-i18n-placeholder="pierce-blunt-slash-abbrv" /><span data-i18n="type">Type</span></label>
                                     <label class="small-label2 narrow-numbers nondual-sect">
-                                        <input class="number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" />
+                                        <input class="number" type="text" name="attr_range" title="@{repeating_weapon_$X_range}" value="0" style="padding: 0; margin: 4px 0 0 0;">
                                         <input type="checkbox" class="noshow sect2-show sect-show-inverse" name="attr_isranged" value="1" role="presentation" title="@{repeating_weapon_$X_isranged}" />
                                         <span class="sect2 distance-used" data-i18n="range">Range</span>
                                         <span class="sect-inverse distance-used" data-i18n="reach-small">Reach</span>
@@ -13927,6 +13927,13 @@
                                     <input type="text" value="" name="attr_class-name" title="@{repeating_ability_$X_class-name}" class="calc" readonly />
                                     <span class="nowrap" data-i18n="source-name">Source Name</span>
                                 </label>
+                                <label class="small-label2 entry-12p-shrink feats-traits-dropdown autoexpand">
+                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" accept="Feat Type" />
+                                    <input type="text" name="attr_ability_type2" list="traits" class="show-traits" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
+                                    <span class="show-feats" data-i18n="feat-type">Feat Type</span>
+                                    <span class="show-traits" data-i18n="trait-type">Trait Type</span>
+                                    <span name="attr_ability_type2" class="autoexpand"></span>
+                                </label>
                                 <label class="small-label2 entry-12p-shrink exspsu-dropdown autoexpand">
                                     <select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
                                         <option value="" data-i18n="not-applicable-abbrv-default" selected>&#8226;N/A</option>
@@ -13935,10 +13942,6 @@
                                         <option value="Su" data-i18n="supernatural-abbrv">Su</option>
                                     </select>
                                     <span data-i18n-title="ability-type-title" data-i18n-aria-label="ability-type-title" data-i18n="type">Type</span>
-                                    <input type="text" name="attr_ability_type2" list="feats" class="show-feats" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
-                                    <input type="text" name="attr_ability_type2" list="traits" class="show-traits" title="@{repeating_ability_$X_ability_type2}" placeholder="General" data-i18n-placeholder="general" value="" />
-                                    <span data-i18n="type">Type</span>
-                                    <span name="attr_ability_type2" class="autoexpand"></span>
                                 </label>
                                 <label class="small-label2 entry-20p-shrink" style="height:auto;"><textarea class="inline-textarea both" title="@{repeating_ability_$X_short-description}" name="attr_short-description" data-i18n-placeholder="short-description"></textarea><span data-i18n="short-description-abbrv">Short Desc</span></label>
                                 <label class="small-label2" style="width:6em;">

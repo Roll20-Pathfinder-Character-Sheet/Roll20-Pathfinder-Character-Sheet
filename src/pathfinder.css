@@ -1108,33 +1108,39 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* used to signify imperial/metric toggle */
+.charsheet .pf-wrapper .distance-used::after,
+.charsheet .pf-wrapper .weight-used::after,
+.charsheet .use-metrics:checked ~ div .distance-used::after,
+.charsheet .use-metrics:checked ~ div input.distance-used ~ span::before,
+.charsheet input.distance-used ~ span::before {
+    font-family: monospace;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.charsheet .pf-wrapper .distance-used::after,
+.charsheet .use-metrics:checked ~ div .distance-used::after {
+    margin-right: -7px;
+    padding-left: 1px;
+    position: relative;
+    top: -3px;
+}
+
 .charsheet .weight-used::after {
     content: '(lbs)';
     margin-left: 5px;
-    font-weight: normal;
-    font-style: normal;
-    font-size: 1rem;
-    font-family: 'Roboto Mono', monospace;
 }
 
 .charsheet .use-metrics:checked ~ div .weight-used::after {
     content: '(kgs)';
 }
 
-.charsheet .distance-used::after,
-.charsheet input.distance-used ~ span::before {
+.charsheet .pf-wrapper .distance-used::after {
     content: '(ft)';
-    margin: 0 -5px 0 0;
-    padding-left: 1px;
-    position: relative;
-    top: -3px;
-    font-style: normal;
-    font-size: .85rem;
-    font-family: 'Roboto Mono', monospace;
 }
 
-.charsheet .use-metrics:checked ~ div .distance-used::after,
-.charsheet .use-metrics:checked ~ div input.distance-used ~ span::before {
+.charsheet .use-metrics:checked ~ div .distance-used::after {
     content: '(m)';
 }
 
@@ -1142,13 +1148,11 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.distance-used ~ span::before {
     content: 'ft.';
     margin: 1rem -.75em 0 -.75rem;
-    font-style: normal;
-    font-size: 1rem;
-    font-family: 'Roboto Mono', monospace;
 }
 
 .charsheet .use-metrics:checked ~ div input.distance-used ~ span::before {
-    content: 'm.';
+    content: '(m)';
+    margin: 1rem -.75em 0 -.75rem;
 }
 
 /* hide base-speed*/
@@ -1401,7 +1405,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .small-label2 > select.select-small {
-    height: 2em;
+    margin-bottom: 2px;
 }
 
 /* color for disabled/sheet-calc */
@@ -3420,17 +3424,14 @@ also need 1 more level in selector or base css will override border */
 .charsheet .small-label2 > select,
 .charsheet .small-label2 > .calc {
     display: block;
-    position: relative;
     left: 0;
-    top: 0;
-    margin: auto;
     line-height: 2rem;
+    margin: auto;
     max-height: 2.5rem;
+    position: relative;
+    top: 0;
 }
 
-.charsheet .small-label2 > select {
-    padding-top: 0;
-}
 
 /* added for ability level basis inline formulas */
 .charsheet .small-label2 > input.error-mshow {
