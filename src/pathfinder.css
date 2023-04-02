@@ -221,6 +221,12 @@
     margin-top: 0.1rem;
 }
 
+.charsheet .repeating-fields input[type=number] {
+    min-width: 2em;
+    max-width: 3em;
+    width: 85%;
+}
+
 .charsheet input[type="text"] {
     width: 100%;
     min-width: 3em;
@@ -339,12 +345,7 @@
     margin-top: -1em;
 }
 
-.charsheet .abilities label.small-label2.linked-tablecell:focus-within::before {
-    height: 14px;
-}
-
-.charsheet .abilities .linked-tablecell:focus-within::before,
-.charsheet .abilities .small-label2.entry-med:focus-within::before,
+.charsheet .abilities .attack-damage .small-label2.entry-med:focus-within::before,
 .charsheet .section-abilities div.small-label2.entry-med:focus-within::before,
 .charsheet .section-abilities label.small-label2.entry-10p-shrink:focus-within::before,
 .charsheet .attacks label.small-label2.entry-short.highlight:focus-within::before,
