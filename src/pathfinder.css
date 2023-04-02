@@ -3536,6 +3536,40 @@ also need 1 more level in selector or base css will override border */
     display: inline-block;
 }
 
+.charsheet input[value="2"].max-dex-indicator:checked ~ div .max-dex-indicator::before,
+.charsheet input[value="3"].max-dex-indicator:checked ~ div .max-dex-indicator::before {
+    font-family: "Pictos";
+    content: "d";
+    position: absolute;
+    font-size: 2.5em;
+    margin: 5px 0 0 5px;
+    opacity: .75;
+}
+
+.charsheet input[value="2"].max-dex-indicator:checked ~ div .max-dex-indicator.custom-title-text:hover::after,
+.charsheet input[value="3"].max-dex-indicator:checked ~ div .max-dex-indicator.custom-title-text:hover::after {
+    content: "n/a Encumbrance has been disabled in settings.";
+    display: block;
+}
+
+.charsheet .pf-wrapper span.custom-title-text::after {
+    background-color: #292a2d;
+    border: 1px solid lightgray;
+    color: lightgray;
+    display: none;
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1.1rem;
+    line-height: 1.2em;
+    margin: .25em 0 0 -2em;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    white-space: pre-wrap;
+    max-width: 13em;
+    z-index: 4;
+}
+
 .charsheet .readonly-show:not(:checked) ~ .main .tab99:checked ~ .section .col .h2-section.ability-buttons {
     width: calc(50% - 6px);
     float: left;
