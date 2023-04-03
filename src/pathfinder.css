@@ -4757,7 +4757,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_spell .sheet-roll-groupi .sheet-roll-row:first-child > *,
 .sheet-rolltemplate-pf_attack .sheet-roll-groupc .sheet-roll-row:first-child > *,
 .sheet-rolltemplate-pf_spell .sheet-roll-groupc .sheet-roll-row:first-child > * {
-    margin: 2px 0 2px 2px;
+    margin: 2px 0 2px 0;
 }
 
 .sheet-rolltemplate-pf_generic .sheet-roll-group2 .sheet-roll-row .sheet-roll-cell:last-child,
@@ -5663,6 +5663,15 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_spell .sheet-roll-description,
 .sheet-rolltemplate-pf_block .sheet-roll-description {
     max-height: 100%;
+}
+
+.sheet-rolltemplate-pf_generic .sheet-roll-description .sheet-roll-cell,
+.sheet-rolltemplate-pf_ability .sheet-roll-description .sheet-roll-cell,
+.sheet-rolltemplate-pf_defense .sheet-roll-description .sheet-roll-cell,
+.sheet-rolltemplate-pf_attack .sheet-roll-description .sheet-roll-cell,
+.sheet-rolltemplate-pf_spell .sheet-roll-description .sheet-roll-cell,
+.sheet-rolltemplate-pf_block .sheet-roll-description .sheet-roll-cell {
+    padding: 5px 5px 5px 10px;
 }
 
 /*************************************************************************************/

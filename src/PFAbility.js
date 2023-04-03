@@ -1081,13 +1081,13 @@ function registerEventHandlers () {
 		});
 	});
 	//sync repeating_spells with settings>attacks>link spells
-    on("change:include_link_abilities", function (eventInfo) {
-    	var attr;
-    	TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-    	attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-    	if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
-    		updateIncludeLink();
-    	}
-    });
+	on("change:include_link_abilities", function (eventInfo) {
+		var attr;
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
+			updateIncludeLink();
+		}
+	});
 }
 registerEventHandlers();
