@@ -1038,12 +1038,12 @@ function registerEventHandlers () {
 			updateAssociatedAttack(null,null,null,eventInfo);
 		}
 	}));
-		on("change:repeating_ability:toggle_attack_entry", TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
-			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				updateAssociatedAttack(null, null, null, eventInfo);
-			}
-		}));
+	on("change:repeating_ability:toggle_attack_entry", TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			updateAssociatedAttack(null, null, null, eventInfo);
+		}
+	}));
 	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setRuleTab(null,null,null,eventInfo);
@@ -1089,5 +1089,30 @@ function registerEventHandlers () {
 			updateIncludeLink();
 		}
 	});
+	// dynamic translation of datalist for ability_type2
+	on('change:repeating_ability:ability_type2', (eventInfo) => {
+		TAS.debug('caught ' + eventInfo.sourceAttribute + ' event' + eventInfo.sourceType);
+		const id = eventInfo.sourceAttribute.split('_')[2];
+		const updateAttrs = {};
+		const featName = eventInfo.newValue.replace(/\s/g, '').toLowerCase();
+		let translation = getTranslationByKey(featName);
+		if (translation) {
+			console.info({featName, translation});
+			updateAttrs[`repeating_ability_${id}_ability_type2`] = translation;
+			const attr = `repeating_ability_${id}_ability_type2`;
+			const i18n = `${featName}`;
+			if (getTranslationByKey(i18n)) {
+				updateAttrs[attr] = getTranslationByKey(i18n);
+			}
+			TAS.debug(updateAttrs);
+			setAttrs(updateAttrs, {silent: true});
+		}
+	});
+
+	on("change:repeating_ability:ability_type2 change:repeating_ability:rule_category", (eventInfo) => {
+		TAS.debug('caught ' + eventInfo.sourceAttribute + ' event' + eventInfo.sourceType);
+		PFMacros.checkAbilityType2Row(eventInfo);
+	});
+
 }
 registerEventHandlers();

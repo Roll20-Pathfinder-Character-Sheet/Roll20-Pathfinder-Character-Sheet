@@ -35,6 +35,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Feat and Trait abilities will display their type2 field in chat if provided.</li>
                         <li>Fixed a bug with Temp hp that erroneously reset to max on triggered events.</li>
                         <li>Added a 'blocked' image indicator over ACP and Max-Dex on the Defenses page to help show they are not applicable when encumbrance has been disabled from the settings page.</li>
                         <li>Added a 'Death Threshold' macro-calculated field to the Hit Point calculations sub-section.</li>
@@ -1930,7 +1931,7 @@
                                         <span class="table-header"></span>
                                         <span class="table-header" data-i18n-title="max-hp-title" data-i18n-aria-label="max-hp-title" data-i18n="maximum-abbrv">Max</span>
                                     </div>
-                                    <div class="table-row" style="line-height: 1rem;">
+                                    <div class="table-row center" style="line-height: 1rem;">
                                         <span class="icon pictos">k</span>
                                         <span class="table-cell"><input type="number" title="@{HP}" name="attr_HP" value="0"></span>
                                         <span class="divider-lg">/</span>
@@ -2095,7 +2096,7 @@
                                                 <option value="WIS-mod" data-i18n="wisdom-abbrv">WIS</option>
                                                 <option value="CHA-mod" data-i18n="charisma-abbrv">CHA</option>
                                             </select>
-                                            <span class="show-readonly inverse-readonly"><br><span data-i18n="ability">Ability</span></span>
+                                            <span class="show-readonly inverse-readonly" style="margin-top: -3px;display: block;"><span data-i18n="ability">Ability</span></span>
                                         </span>
                                         <span class="table-cell hide-readonly">
                                             <input value="1" type="checkbox" name="attr_nodex-toggle" class="warn-show sect-show sect-show-inverse noshow" />
@@ -8836,48 +8837,6 @@
                                     <span class="show-feats" data-i18n="feat-type">Feat Type</span>
                                     <span class="show-traits" data-i18n="trait-type">Trait Type</span>
                                     <span name="attr_ability_type2" class="autoexpand"></span>
-                                    <datalist id="feats" class="hidden">
-                                        <option value="Achievement" data-i18n="feats-achievement">Achievement</option>
-                                        <option value="Animal Companion" data-i18n="feats-animalCompanion">Animal Companion</option>
-                                        <option value="Animal/Familiar" data-i18n="feats-animalFamiliar">Animal/Familiar</option>
-                                        <option value="Betrayal" data-i18n="feats-betrayal">Betrayal</option>
-                                        <option value="Blood Hex" data-i18n="feats-bloodHex">Blood Hex</option>
-                                        <option value="Caravan" data-i18n="feats-caravan">Caravan</option>
-                                        <option value="Channeling" data-i18n="feats-channeling">Channeling</option>
-                                        <option value="Combat" data-i18n="feats-combat">Combat</option>
-                                        <option value="Conduit" data-i18n="feats-conduit">Conduit</option>
-                                        <option value="Critical" data-i18n="feats-critical">Critical</option>
-                                        <option value="Damnation" data-i18n="feats-damnation">Damnation</option>
-                                        <option value="General" data-i18n="feats-general">General</option>
-                                        <option value="Grit" data-i18n="feats-grit">Grit</option>
-                                        <option value="Item Creation" data-i18n="feats-itemCreation">Item Creation</option>
-                                        <option value="Item Mastery" data-i18n="feats-itemMastery">Item Mastery</option>
-                                        <option value="Local" data-i18n="feats-local">Local</option>
-                                        <option value="Metamagic" data-i18n="feats-metamagic">Metamagic</option>
-                                        <option value="Monster" data-i18n="feats-monster">Monster</option>
-                                        <option value="Mythic" data-i18n="feats-mythic">Mythic</option>
-                                        <option value="Panache" data-i18n="feats-panache">Panache</option>
-                                        <option value="Performance" data-i18n="feats-performance">Performance</option>
-                                        <option value="Racial Feat" data-i18n="feats-racialFeat">Racial Feat</option>
-                                        <option value="Stare" data-i18n="feats-stare">Stare</option>
-                                        <option value="Story" data-i18n="feats-story">Story</option>
-                                        <option value="Style" data-i18n="feats-style">Style</option>
-                                        <option value="Teamwork" data-i18n="feats-teamwork">Teamwork</option>
-                                        <option value="Weapon Mastery" data-i18n="feats-weaponMastery">Weapon Mastery</option>
-                                    </datalist>
-                                    <datalist id="traits" class="hidden">
-                                        <option value="Campaign" data-i18n="traits-campaign">Campaign</option>
-                                        <option value="Combat" data-i18n="traits-combat">Combat</option>
-                                        <option value="Equipment" data-i18n="traits-equipment">Equipment</option>
-                                        <option value="Faith" data-i18n="traits-faith">Faith</option>
-                                        <option value="Family" data-i18n="traits-family">Family</option>
-                                        <option value="Magic" data-i18n="traits-magic">Magic</option>
-                                        <option value="Mount" data-i18n="traits-mount">Mount</option>
-                                        <option value="Race" data-i18n="traits-race">Race</option>
-                                        <option value="Regional" data-i18n="traits-regional">Regional</option>
-                                        <option value="Religion" data-i18n="traits-religion">Religion</option>
-                                        <option value="Social" data-i18n="traits-social">Social</option>
-                                    </datalist>
                                 </label>
                                 <label class="small-label2 entry-12p-shrink exspsu-dropdown autoexpand">
                                     <select title="@{repeating_ability_$X_ability_type}" name="attr_ability_type">
@@ -18170,5 +18129,50 @@
                 </div>
             {{/accessible}}
         </rolltemplate>
+    </div>
+    <div role="contentinfo" class="hidden">
+        <!--datalists-->
+        <datalist id="feats">
+            <option value="achievement" data-i18n="achievement">Achievement</option>
+            <option value="animalcompanion" data-i18n="animalcompanion">Animal Comapanion</option>
+            <option value="animalfamiliar" data-i18n="animalfamiliar">Animal Familiar</option>
+            <option value="betrayal" data-i18n="betrayal">Betrayal</option>
+            <option value="bloodhex" data-i18n="bloodhex">Blood Hex</option>
+            <option value="caravan" data-i18n="caravan">Caravan</option>
+            <option value="channeling" data-i18n="channeling">Channeling</option>
+            <option value="combat" data-i18n="combat">Combat</option>
+            <option value="conduit" data-i18n="conduit">Conduit</option>
+            <option value="critical" data-i18n="critical">Critical</option>
+            <option value="damnation" data-i18n="damnation">Damnation</option>
+            <option value="general" data-i18n="general">General</option>
+            <option value="grit" data-i18n="grit">Grit</option>
+            <option value="itemcreation" data-i18n="itemcreation">Item Creation</option>
+            <option value="itemmastery" data-i18n="itemmastery">Item Mastery</option>
+            <option value="local" data-i18n="local">Local</option>
+            <option value="metamagic" data-i18n="metamagic">Metamagic</option>
+            <option value="monster" data-i18n="monster">Monster</option>
+            <option value="mythic" data-i18n="mythic">Mythic</option>
+            <option value="panache" data-i18n="panache">Panache</option>
+            <option value="performance" data-i18n="performance">Performance</option>
+            <option value="racialfeat" data-i18n="racialfeat">Racial Feat</option>
+            <option value="stare" data-i18n="stare">Stare</option>
+            <option value="story" data-i18n="story">Story</option>
+            <option value="style" data-i18n="style">Style</option>
+            <option value="teamwork" data-i18n="teamwork">Teamwork</option>
+            <option value="weaponmastery" data-i18n="weaponmastery">Weapon Mastery</option>
+        </datalist>
+        <datalist id="traits">
+            <option value="campaign" data-i18n="campaign">Campaign</option>
+            <option value="combat" data-i18n="combat">Combat</option>
+            <option value="equipment" data-i18n="equipment">Equipment</option>
+            <option value="faith" data-i18n="faith">Faith</option>
+            <option value="family" data-i18n="family">Family</option>
+            <option value="magic" data-i18n="magic">Magic</option>
+            <option value="mount" data-i18n="mount">Mount</option>
+            <option value="race" data-i18n="race">Race</option>
+            <option value="regional" data-i18n="regional">Regional</option>
+            <option value="religion" data-i18n="religion">Religion</option>
+            <option value="social" data-i18n="social">Social</option>
+        </datalist>
     </div>
 </div>
