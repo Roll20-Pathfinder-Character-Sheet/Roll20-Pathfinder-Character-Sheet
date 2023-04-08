@@ -951,6 +951,7 @@ export function updateIncludeLinkVersionCheck() {
 			"include_link_spells": 1
 		});
 }
+
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",
@@ -1080,11 +1081,9 @@ function registerEventHandlers () {
 			});
 		});
 	});
-	//sync repeating_spells with settings>attacks>link spells
+	//sync repeating_abilities with settings>attacks>link abilities
 	on("change:include_link_abilities", function (eventInfo) {
-		var attr;
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-		attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
 		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
 			updateIncludeLink();
 		}

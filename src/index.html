@@ -37,13 +37,13 @@
                     <ol>
                         <li>Feat and Trait abilities will display their type2 value with the roll template subtitle in chat if provided.</li>
                         <li>Feat and Trait datalist translation added.</li>
+                    </ol>
+                    <h4 data-i18n="announcements-older-changes">Older Changes</h4>
+                    <ol>
                         <li>Fixed a bug with Temp hp that erroneously reset to max on triggered events.</li>
                         <li>Added a 'blocked' image indicator over ACP and Max-Dex on the Defenses page to help show they are not applicable when encumbrance has been disabled from the settings page.</li>
                         <li>Added a 'Death Threshold' macro-calculated field to the Hit Point calculations sub-section.</li>
                         <li>Some misc adjustments to layout, including metric/empirical postscript and ACP tag on Skills.</li>
-                    </ol>
-                    <h4>Older Changes</h4>
-                    <ol>
                         <li>Fixed local casting type. Spell Class, 'Casting Type' now displays the #Prep, #Used, and #Cast fields per spell based on the Caster class selected. One-time sheet version check included to update existing spells.</li>
                         <li>Added popup text-input windows to many of the macro-text fields.</li>
                         <li>Fixed Ability Notes alignment issue when the sheet is in Compact mode.</li>
@@ -55,22 +55,6 @@
                         <li>Added Spell DC Misc. field to Spells&#62;Level and Caster Ability&#62;Roll Adjustments. Any 'DC Misc.' modifier and/or 'DC Buff' will be included on the 'Save DC' column under Spells/Day as well as each spells' computed DC.</li>
                         <li>Added Spell DC Classes 0, 1, and 2 to the Buffs Bonus selector/dropdown. This is a global modifier that is applied to all spells under a given spell class.</li>
                         <li>Added HL Import attacks. <b>Consider this beta...</b> You may need to make adjustments to natural and weapon attacks after import, but this should be faster than creating the attacks from scratch.</li>
-                        <li>Darkmode adjustments for roll templates.</li>
-                        <li>Fixed PC Initiative whisper option.</li>
-                        <li>Added an Ability Notes option. Found below the Ability Scores. Toggle including Ability Notes for Ability checks. Existing sheets must clear/reset the ability macro-text field manually (caution:this wipes the existing macro-text which will remove any macro customization) or simply add "@{ability_notes_toggle}" to the end of the macro-text to enable this option. New sheets will include the option automatically. No action required.</li>
-                        <li>Changed the Global Damage Type fields to textarea so that multi-line descriptions are possible.</li>
-                        <li>Small fix for HL import of npc's w/class levels failing to parse.</li>
-                        <li>Adjustments added for roll20's dark mode option. Dark mode works with the sheet's default or 'graph-paper' background option. The 'parchment' backgrounds may get adjusted for dark mode in a future update.</li>
-                        <li>Fixed mythic button clickable area.(Thanks Steve)</li>
-                        <li>Fixed the Spell SaveDC column not calculating correctly.(Thanks Roseilla V.)</li>
-                        <li>Fixed a bug where Buff's toggled using an API might not trigger all the appropriately related attributes as expected. ie toggling a STR buff via API was only triggering attack bonus and not the damage bonus.</li>
-                        <li>Fixed chat menus. The nested quote workaround required for CSE sheets broke the sheet's chat menu buttons after an update to roll20's code base fixed the original issue.</li>
-                        <li>Fixed a bug that displayed the NPC tab regardless of the sheet setting for PC or NPC.</li>
-                        <li>Fixed an attribute naming conflict with Roll20 that prevented the "Delete All" option found in repeating rows from functioning.</li>
-                        <li>Updated the NPC/Monster statblock to make it a little easier to use.</li>
-                        <li>Fixed the Abilities sub-tab header so that it matches the currently selected tab.</li>
-                        <li>Added ft/m (displays based on the metric setting) to NPC/Monster speed.</li>
-                        <li>Added error highlighting on macro field validation in the NPC/Monster tab.</li>
                     </ol>
                     <label class="boldlabel-check"><input type="checkbox" name="attr_attentionv172-show" value="1"> <b><span data-i18n="do-not-show-again">Do not show again</span></b></label>
                     <div class="cheat"></div>
@@ -1559,6 +1543,7 @@
                                     <span class="table-header" data-i18n-title="ability-score" data-i18n="total">Total</span>
                                     <span class="table-header right-border" data-i18n="modifier-abbrv">Mod</span>
                                     <span class="table-header emphasize-field" data-i18n="base-value">Base</span>
+                                    <span class="table-header extra-sect" data-i18n-title="racial-modifiers" data-i18n-aria-label="racial-modifiers" data-i18n="race">Race</span>
                                     <span class="table-header extra-sect" data-i18n-title="inherent-bonus" data-i18n-aria-label="inherent-bonus" data-i18n="inherent-abbrv">Inher</span>
                                     <span class="table-header" data-i18n-title="enhancement-bonus" data-i18n="enhancement-abbrv">Enhan</span>
                                     <span class="table-header" data-i18n-title="miscellaneous-bonus" data-i18n="miscellaneous-abbrv">Misc</span>
@@ -1577,6 +1562,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_STR-modded" value="1" /><input class="calc highlight" readonly title="@{STR-mod}" type="number" name="attr_STR-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{STR-base}" type="text" name="attr_STR-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{STR-inherent}" type="number" name="attr_STR-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{STR-racial}" type="number" name="attr_STR-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{STR-enhance}" type="number" name="attr_STR-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{STR-misc}" type="number" name="attr_STR-misc" value="0" /></span>
                                         <span class="table-cell right-border"><input title="@{buff_STR-total}" type="number" name="attr_buff_STR-total" value="0" class="calc" readonly /></span>
@@ -1597,6 +1583,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_DEX-modded" value="1" /><input class="calc highlight" readonly title="@{DEX-mod}" type="number" name="attr_DEX-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{DEX-base}" type="text" name="attr_DEX-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{DEX-inherent}" type="number" name="attr_DEX-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{DEX-racial}" type="number" name="attr_DEX-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-enhance}" type="number" name="attr_DEX-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-misc}" type="number" name="attr_DEX-misc" value="0" min="0" /></span>
                                         <span class="table-cell right-border"><input class="calc" readonly title="@{buff_DEX-total}" type="number" name="attr_buff_DEX-total" value="0" /></span>
@@ -1616,6 +1603,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_CON-modded" value="1" /><input class="calc highlight" readonly title="@{CON-mod}" type="number" name="attr_CON-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{CON-base}" type="text" name="attr_CON-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CON-inherent}" type="number" name="attr_CON-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{CON-racial}" type="number" name="attr_CON-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{CON-enhance}" type="number" name="attr_CON-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{CON-misc}" type="number" name="attr_CON-misc" value="0" min="0" /></span>
                                         <span class="table-cell right-border"><input class="calc" readonly title="@{buff_CON-total}" type="number" name="attr_buff_CON-total" value="0" /></span>
@@ -1635,6 +1623,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_INT-modded" value="1" /><input class="calc highlight" readonly title="@{INT-mod}" type="number" name="attr_INT-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{INT-base}" type="text" name="attr_INT-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{INT-inherent}" type="number" name="attr_INT-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{INT-racial}" type="number" name="attr_INT-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{INT-enhance}" type="number" name="attr_INT-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{INT-misc}" type="number" name="attr_INT-misc" value="0" min="0" /></span>
                                         <span class="table-cell right-border"><input class="calc" readonly title="@{buff_INT-total}" type="number" name="attr_buff_INT-total" value="0" /></span>
@@ -1654,6 +1643,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_WIS-modded" value="1" /><input class="calc highlight" readonly title="@{WIS-mod}" type="number" name="attr_WIS-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{WIS-base}" type="text" name="attr_WIS-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{WIS-inherent}" type="number" name="attr_WIS-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{WIS-racial}" type="number" name="attr_WIS-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-enhance}" type="number" name="attr_WIS-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-misc}" type="number" name="attr_WIS-misc" value="0" min="0" /></span>
                                         <span class="table-cell right-border"><input class="calc" readonly title="@{buff_WIS-total}" type="number" name="attr_buff_WIS-total" value="0" /></span>
@@ -1673,6 +1663,7 @@
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_CHA-modded" value="1" /><input class="calc highlight" readonly title="@{CHA-mod}" type="number" name="attr_CHA-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{CHA-base}" type="text" name="attr_CHA-base" value="10" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CHA-inherent}" type="number" name="attr_CHA-inherent" value="0" /></span>
+                                        <span class="table-cell"><input title="@{CHA-racial}" type="number" name="attr_CHA-racial" value="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-enhance}" type="number" name="attr_CHA-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-misc}" type="number" name="attr_CHA-misc" value="0" min="0" /></span>
                                         <span class="table-cell right-border"><input class="calc" readonly title="@{buff_CHA-total}" type="number" name="attr_buff_CHA-total" value="0" /></span>
