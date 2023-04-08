@@ -164,7 +164,7 @@ export function checkAbilityType2 () {
 }
 
 //one-time update that checks all repeating macro-text for scroll_desc and adds if not
-export function checkScrollDesc () {
+export function checkScrollDescOLD () {
     getSectionIDs("repeating_ability", function(ids) {
         var fields = _.map(ids, function(id) {
             return "repeating_ability_" + id + "_macro-text"
@@ -236,6 +236,65 @@ export function checkScrollDesc () {
             });
         });
     });
+}
+
+//one-time update that checks all repeating macro-text for scroll_desc and adds if not
+export function checkScrollDesc() {
+  getSectionIDs('repeating_ability', (idAbility) => {
+    getSectionIDs('repeating_weapon', (idWeapon) => {
+      getSectionIDs('repeating_spells', (idSpells) => {
+        const output = {};
+        const attrsAbility = '';
+        const attrsWeapon = '';
+        const attrsNPCSpells = '';
+        _.each(idAbility, (itemid) => {
+          attrsAbility.push(`repeating_ability_${itemid}_macro-text`);
+        });
+        _.each(idWeapon, (itemid) => {
+          attrsWeapon.push(`repeating_weapon_${itemid}_macro-text`);
+        });
+        _.each(idSpells, (itemid) => {
+          attrsSpells.push(`repeating_spells_${itemid}_macro-text`);
+          attrsNPCSpells.push(`repeating_spells_${itemid}_npc_macro-text`);
+        });
+        getAttrs([...idAbility, ...idWeapon, ...idSpells], (v) => {
+          _.each(idAbility, (id) => {
+            let macroText = v['repeating_ability_' + id + '_macro-text'];
+            if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+              macroText = macroText.replace(/(&{template:[^}]+})/g, '$1 {{scroll_desc=@{scroll-desc}}}');
+              output['repeating_ability_' + id + '_macro-text'] = macroText;
+              TAS.debug('macro-text updated for repeating_ability_' + id + '_macro-text:' + macroText);
+            }
+          });
+          _.each(idWeapon, (id) => {
+            let macroText = v['repeating_weapon_' + id + '_macro-text'];
+            if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+              macroText = macroText.replace(/(&{template:[^}]+})/g, '$1 {{scroll_desc=@{scroll-desc}}}');
+              output['repeating_weapon_' + id + '_macro-text'] = macroText;
+              TAS.debug('macro-text updated for repeating_weapon_' + id + '_macro-text:' + macroText);
+            }
+          });
+          _.each(idSpells, (id) => {
+            let macroText = v['repeating_spells_' + id + '_macro-text'];
+            let macroTextNPC = v['repeating_spells_' + id + '_npc_macro-text'];
+            if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroText)) {
+              macroText = macroText.replace(/(&{template:[^}]+})/g, '$1 {{scroll_desc=@{scroll-desc}}}');
+              output['repeating_spells_' + id + '_macro-text'] = macroText;
+              TAS.debug('macro-text updated for repeating_spells_' + id + '_macro-text:' + macroText);
+            }
+            if (!/{{scroll_desc=@{scroll-desc}}}/.test(macroTextNPC)) {
+              macroTextNPC = macroTextNPC.replace(/(&{template:[^}]+})/g, '$1 {{scroll_desc=@{scroll-desc}}}');
+              output['repeating_spells_' + id + '_npc_macro-text'] = macroTextNPC;
+              TAS.debug('macro-text updated for repeating_spells_' + id + '_npc_macro-text:' + macroTextNPC);
+            }
+          });
+        });
+        setAttrs(output, {
+          silent: true
+        });
+      });
+    });
+  });
 }
 
 // one-time update to check base attack macro-text for "@{toggle_global" and adds it if not
