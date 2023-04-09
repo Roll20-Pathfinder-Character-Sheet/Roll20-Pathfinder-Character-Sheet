@@ -55,6 +55,8 @@
   "ability-roll-template": "Ability Roll Template",
   "ability-score": "Ability Score",
   "ability-scores": "Ability Scores",
+  "ability-score-increase": "Ability score increase. Every 4th level (4, 8, 12, etc.) increase one ability score by +1.",
+  "ability-score-increase-abbrv": "ASI",
   "ability-skill-checks": "Ability &amp; Skill Checks",
   "ability-tracking": "Ability Tracking",
   "ability-type-title": "Select the type of ability if applicable Ex(Extraordinary), Sp(Spell-like ability), or Su(Supernatural)",
