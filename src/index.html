@@ -1543,16 +1543,17 @@
                                     <span class="table-header" data-i18n-title="ability-score" data-i18n="total">Total</span>
                                     <span class="table-header right-border" data-i18n="modifier-abbrv">Mod</span>
                                     <span class="table-header emphasize-field" data-i18n="base-value">Base</span>
-                                    <span class="table-header extra-sect" data-i18n-title="ability-score-increase-bonus" data-i18n-aria-label="ability-score-increase-bonus" data-i18n="ability-score-increase-abbrv">ASI</span>
-                                    <span class="table-header extra-sect" data-i18n-title="racial-modifiers" data-i18n-aria-label="racial-modifiers" data-i18n="race">Race</span>
                                     <span class="table-header extra-sect" data-i18n-title="inherent-bonus" data-i18n-aria-label="inherent-bonus" data-i18n="inherent-abbrv">Inher</span>
                                     <span class="table-header" data-i18n-title="enhancement-bonus" data-i18n="enhancement-abbrv">Enhan</span>
                                     <span class="table-header" data-i18n-title="miscellaneous-bonus" data-i18n="miscellaneous-abbrv">Misc</span>
+                                    <span class="table-header extra-sect" data-i18n-title="racial-modifiers" data-i18n-aria-label="racial-modifiers" data-i18n="race">Race</span>
+                                    <span class="table-header extra-sect" data-i18n-title="ability-score-increase-bonus" data-i18n-aria-label="ability-score-increase-bonus" data-i18n="ability-score-increase-abbrv">ASI</span>
                                     <span class="table-header" data-i18n="buffs">Buffs</span>
                                     <span class="table-header" data-i18n-title="ability-damage-desc" data-i18n="damage">Damage</span>
                                     <span class="table-header extra-sect" data-i18n-title="ability-penalty-desc" data-i18n="penalty">Penalty</span>
                                     <span class="table-header" data-i18n-title="ability-drain-desc" data-i18n="drain">Drain</span>
-                                    <span class="table-header" data-i18n-title="debuff-title" data-i18n="debuff">Debuff</span>
+                                    <!-- hide debuff with noshow -->
+                                    <span class="table-header noshow" data-i18n-title="debuff-title" data-i18n="debuff">Debuff</span>
                                     <span class="table-header" data-i18n-title="condition-description" data-i18n-aria-label="condition-description" data-i18n="condition-abbrv">Cond</span>
                                     <span class="table-header extra-sect hide-readonly super note-d" data-i18n="macro">Macro</span>
                                 </div>
@@ -1562,16 +1563,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{STR}" type="text" name="attr_STR" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_STR-modded" value="1" /><input class="calc highlight" readonly title="@{STR-mod}" type="number" name="attr_STR-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{STR-base}" type="text" name="attr_STR-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{STR-racial}" type="number" name="attr_STR-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{STR-asi}" type="number" name="attr_STR-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{STR-inherent}" type="number" name="attr_STR-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{STR-enhance}" type="number" name="attr_STR-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{STR-misc}" type="number" name="attr_STR-misc" value="0" /></span>
-                                        <span class="table-cell right-border"><input title="@{buff_STR-total}" type="number" name="attr_buff_STR-total" value="0" class="calc" readonly /></span>
+                                        <span class="table-cell extra-sect"><input title="@{STR-racial}" type="number" name="attr_STR-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{STR-asi}" type="number" name="attr_STR-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input title="@{buff_STR-total}" type="number" name="attr_buff_STR-total" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input title="@{STR-damage}" type="number" name="attr_STR-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{STR-penalty}" type="number" name="attr_STR-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{STR-drain}" type="number" name="attr_STR-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_STR-total_penalty}" name="attr_buff_STR-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_STR-total_penalty}" name="attr_buff_STR-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input title="@{STR-cond}" type="number" name="attr_STR-cond" value="0" class="calc" readonly /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>
@@ -1584,16 +1586,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{DEX}" type="text" name="attr_DEX" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_DEX-modded" value="1" /><input class="calc highlight" readonly title="@{DEX-mod}" type="number" name="attr_DEX-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{DEX-base}" type="text" name="attr_DEX-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{DEX-racial}" type="number" name="attr_DEX-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{DEX-asi}" type="number" name="attr_DEX-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{DEX-inherent}" type="number" name="attr_DEX-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-enhance}" type="number" name="attr_DEX-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-misc}" type="number" name="attr_DEX-misc" value="0" min="0" /></span>
-                                        <span class="table-cell right-border"><input class="calc" readonly title="@{buff_DEX-total}" type="number" name="attr_buff_DEX-total" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{DEX-racial}" type="number" name="attr_DEX-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{DEX-asi}" type="number" name="attr_DEX-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input class="calc" readonly title="@{buff_DEX-total}" type="number" name="attr_buff_DEX-total" value="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-damage}" type="number" name="attr_DEX-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{DEX-penalty}" type="number" name="attr_DEX-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{DEX-drain}" type="number" name="attr_DEX-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_DEX-total_penalty}" name="attr_buff_DEX-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_DEX-total_penalty}" name="attr_buff_DEX-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input class="calc" readonly title="@{DEX-cond}" type="number" name="attr_DEX-cond" value="0" max="0" /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>
@@ -1605,16 +1608,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{CON}" type="text" name="attr_CON" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_CON-modded" value="1" /><input class="calc highlight" readonly title="@{CON-mod}" type="number" name="attr_CON-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{CON-base}" type="text" name="attr_CON-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{CON-racial}" type="number" name="attr_CON-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{CON-asi}" type="number" name="attr_CON-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CON-inherent}" type="number" name="attr_CON-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{CON-enhance}" type="number" name="attr_CON-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{CON-misc}" type="number" name="attr_CON-misc" value="0" min="0" /></span>
-                                        <span class="table-cell right-border"><input class="calc" readonly title="@{buff_CON-total}" type="number" name="attr_buff_CON-total" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{CON-racial}" type="number" name="attr_CON-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{CON-asi}" type="number" name="attr_CON-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input class="calc" readonly title="@{buff_CON-total}" type="number" name="attr_buff_CON-total" value="0" /></span>
                                         <span class="table-cell"><input title="@{CON-damage}" type="number" name="attr_CON-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CON-penalty}" type="number" name="attr_CON-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{CON-drain}" type="number" name="attr_CON-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_CON-total_penalty}" name="attr_buff_CON-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_CON-total_penalty}" name="attr_buff_CON-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input class="calc" readonly title="@{CON-cond}" type="number" name="attr_CON-cond" value="0" max="0" /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>
@@ -1626,16 +1630,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{INT}" type="text" name="attr_INT" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_INT-modded" value="1" /><input class="calc highlight" readonly title="@{INT-mod}" type="number" name="attr_INT-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{INT-base}" type="text" name="attr_INT-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{INT-racial}" type="number" name="attr_INT-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{INT-asi}" type="number" name="attr_INT-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{INT-inherent}" type="number" name="attr_INT-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{INT-enhance}" type="number" name="attr_INT-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{INT-misc}" type="number" name="attr_INT-misc" value="0" min="0" /></span>
-                                        <span class="table-cell right-border"><input class="calc" readonly title="@{buff_INT-total}" type="number" name="attr_buff_INT-total" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{INT-racial}" type="number" name="attr_INT-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{INT-asi}" type="number" name="attr_INT-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input class="calc" readonly title="@{buff_INT-total}" type="number" name="attr_buff_INT-total" value="0" /></span>
                                         <span class="table-cell"><input title="@{INT-damage}" type="number" name="attr_INT-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{INT-penalty}" type="number" name="attr_INT-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{INT-drain}" type="number" name="attr_INT-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_INT-total_penalty}" name="attr_buff_INT-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_INT-total_penalty}" name="attr_buff_INT-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input class="calc" readonly title="@{INT-cond}" type="number" name="attr_INT-cond" value="0" max="0" /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>
@@ -1647,16 +1652,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{WIS}" type="text" name="attr_WIS" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_WIS-modded" value="1" /><input class="calc highlight" readonly title="@{WIS-mod}" type="number" name="attr_WIS-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{WIS-base}" type="text" name="attr_WIS-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{WIS-racial}" type="number" name="attr_WIS-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{WIS-asi}" type="number" name="attr_WIS-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{WIS-inherent}" type="number" name="attr_WIS-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-enhance}" type="number" name="attr_WIS-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-misc}" type="number" name="attr_WIS-misc" value="0" min="0" /></span>
-                                        <span class="table-cell right-border"><input class="calc" readonly title="@{buff_WIS-total}" type="number" name="attr_buff_WIS-total" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{WIS-racial}" type="number" name="attr_WIS-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{WIS-asi}" type="number" name="attr_WIS-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input class="calc" readonly title="@{buff_WIS-total}" type="number" name="attr_buff_WIS-total" value="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-damage}" type="number" name="attr_WIS-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{WIS-penalty}" type="number" name="attr_WIS-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{WIS-drain}" type="number" name="attr_WIS-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_WIS-total_penalty}" name="attr_buff_WIS-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_WIS-total_penalty}" name="attr_buff_WIS-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input class="calc" readonly title="@{WIS-cond}" type="number" name="attr_WIS-cond" value="0" max="0" /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>
@@ -1668,16 +1674,17 @@
                                         <span class="table-cell number"><input class="calc number bigger-total" readonly title="@{CHA}" type="text" name="attr_CHA" value="10" /></span>
                                         <span class="table-cell right-border"><input type="checkbox" class="warn-show" name="attr_CHA-modded" value="1" /><input class="calc highlight" readonly title="@{CHA-mod}" type="number" name="attr_CHA-mod" value="0" /></span>
                                         <span class="table-cell right-border emphasize-field"><input class="number" title="@{CHA-base}" type="text" name="attr_CHA-base" value="10" /></span>
-                                        <span class="table-cell"><input title="@{CHA-racial}" type="number" name="attr_CHA-racial" value="0" /></span>
-                                        <span class="table-cell"><input title="@{CHA-asi}" type="number" name="attr_CHA-asi" value="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CHA-inherent}" type="number" name="attr_CHA-inherent" value="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-enhance}" type="number" name="attr_CHA-enhance" value="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-misc}" type="number" name="attr_CHA-misc" value="0" min="0" /></span>
-                                        <span class="table-cell right-border"><input class="calc" readonly title="@{buff_CHA-total}" type="number" name="attr_buff_CHA-total" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{CHA-racial}" type="number" name="attr_CHA-racial" value="0" /></span>
+                                        <span class="table-cell extra-sect"><input title="@{CHA-asi}" type="number" name="attr_CHA-asi" value="0" /></span>
+                                        <span class="table-cell left-border right-border"><input class="calc" readonly title="@{buff_CHA-total}" type="number" name="attr_buff_CHA-total" value="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-damage}" type="number" name="attr_CHA-damage" value="0" max="0" /></span>
                                         <span class="table-cell extra-sect"><input title="@{CHA-penalty}" type="number" name="attr_CHA-penalty" value="0" max="0" /></span>
                                         <span class="table-cell"><input title="@{CHA-drain}" type="number" name="attr_CHA-drain" value="0" max="0" /></span>
-                                        <span class="table-cell"><input title="@{buff_CHA-total_penalty}" name="attr_buff_CHA-total_penalty" type="number" value="0" class="calc" readonly /></span>
+                                        <!-- hide debuff with noshow -->
+                                        <span class="table-cell noshow"><input title="@{buff_CHA-total_penalty}" name="attr_buff_CHA-total_penalty" type="number" value="0" class="calc" readonly /></span>
                                         <span class="table-cell"><input class="calc" readonly title="@{CHA-cond}" type="number" name="attr_CHA-cond" value="0" max="0" /></span>
                                         <details class="table-cell extra-sect">
                                             <summary class="hide-readonly">...</summary>

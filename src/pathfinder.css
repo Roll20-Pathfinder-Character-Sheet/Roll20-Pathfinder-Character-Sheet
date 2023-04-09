@@ -1589,6 +1589,11 @@ also need 1 more level in selector or base css will override border */
     border-radius: 0.4rem;
 }
 
+.charsheet .ability-scores button[type="roll"].text-button {
+    max-width: 5.25em;
+    padding-left: 12px;
+}
+
 .charsheet .skills .table-row .table-cell:first-child {
     font-size: 1.6rem;
     padding-left: 0;
