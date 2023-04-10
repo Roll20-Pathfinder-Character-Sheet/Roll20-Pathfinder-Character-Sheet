@@ -4132,6 +4132,20 @@ spellclass-concentration spellcaster-button {
     width: 6%;
 }
 
+.charsheet .pfsheet div.top-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.25em;
+    width: 100%;
+}
+
+.charsheet .pfsheet div.top-buttons span.buttons-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 90%;
+}
+
 .charsheet .spell-options .table-cell,
 .charsheet .command-buttons .table-cell {
     text-align: left;
