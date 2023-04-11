@@ -361,3 +361,61 @@ export function resetOneCommandMacro (menuName,isNPC,callback,header,groupMap){
         TAS.error("PFMenus.resetOnceCommandMacro, errouter :",errouter);
     }
 }
+
+function updateAllMenusMenu(eventInfo) {
+  getAttrs(['allmenus_macro', 'is_npc', 'unchained_skills-show', 'BG-Skill-Use'], function (v) {
+    const output = {};
+    const unchained = parseInt(v['unchained_skills-show']);
+    const bgSkillUse = parseInt(v['BG-Skill-Use']);
+    const isNPC = parseInt(v['is_npc']);
+
+    let baseMacro =
+      '&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row01=[^{init-speed-info-abbrv}](~@{character_id}|init-speed-info) }} {{row02=[^{initiative}](~@{character_id}|Roll-for-initiative) }} {{row03=[^{ability-checks}](~@{character_id}|ability_checks) }} {{row04=[^{abilities}](~@{character_id}|abilities) }} {{row05=[^{defenses}](~@{character_id}|defenses) }} {{row06=[^{attacks}](~@{character_id}|attacks) }} ';
+    let skillsMacro =
+      '{{row07=[^{combat-skills}](~@{character_id}|combat_skills) }} {{row08=[^{all-skills}](~@{character_id}|skills) }} ';
+    let endMacro = '{{row09=[^{items}](~@{character_id}|items) }} @{allspells_macro} @{allcustom_macro}';
+
+    let baseMacroNPC =
+      '&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row01=[^{init-speed-info-abbrv}](~@{character_id}|init-speed-info) }} {{row02=[^{abilities}](~@{character_id}|NPC-abilities) }} {{row03=[^{ability-checks}](~@{character_id}|NPC-ability_checks) }} {{row04=[^{initiative}](~@{character_id}|NPC-Initiative-Roll) }} {{row05=[^{defenses}](~@{character_id}|NPC-defenses) }} {{row06=[^{attacks}](~@{character_id}|NPC-attacks) }} ';
+    let skillsMacroNPC = '{{row07=[^{skills}](~@{character_id}|NPC-skills) }} ';
+    let endMacroNPC = '{{row08=[^{items}](~@{character_id}|NPC-items) }} @{NPC-allspells_macro} @{NPC-allcustom_macro}';
+
+    // PC
+    if (!isNPC) {
+      if (unchained && bgSkillUse === 1) {
+        skillsMacro =
+          '{{row07=[^{adventure}](~@{character_id}|adventure_skills) }} {{row08=[^{background}](~@{character_id}|background_skills) }} ';
+        TAS.debug(`~~~ PC w/Background Skills Enabled`);
+      }
+      if (unchained && bgSkillUse === 0) {
+        skillsMacro = '{{row07=[^{consolidated}](~@{character_id}|consolidated_skills) }} ';
+        endMacro = '{{row08=[^{items}](~@{character_id}|items) }} @{allspells_macro} @{allcustom_macro}';
+        TAS.debug(`~~~ PC w/Consolidated Skills Enabled`);
+      }
+      output['allmenus_macro'] = baseMacro.concat(skillsMacro, endMacro);
+      // NPC
+    } else {
+      if (unchained && bgSkillUse === 1) {
+        skillsMacroNPC =
+          '{{row07=[^{adventure}](~@{character_id}|NPC-adventure_skills) }} {{row08=[^{background}](~@{character_id}|NPC-background_skills) }} ';
+        endMacroNPC = '{{row09=[^{items}](~@{character_id}|NPC-items) }} @{NPC-allspells_macro} @{NPC-allcustom_macro}';
+        TAS.debug(`~~~ NPC w/Background Skills Enabled`);
+      }
+      if (unchained && bgSkillUse === 0) {
+        skillsMacroNPC = '{{row07=[^{consolidated}](~@{character_id}|NPC-consolidated_skills) }} ';
+        endMacroNPC = '{{row08=[^{items}](~@{character_id}|NPC-items) }} @{NPC-allspells_macro} @{NPC-allcustom_macro}';
+        TAS.debug(`~~~ NPC w/Consolidated Skills Enabled`);
+      }
+      output['NPC-allmenus_macro'] = baseMacroNPC.concat(skillsMacroNPC, endMacroNPC);
+    }
+    setAttrs(output, {
+      silent: true
+    });
+  });
+}
+
+on('change:unchained_skills-show change:bg-skill-use change:is_npc ', (eventInfo) => {
+  TAS.debug('caught ' + eventInfo.sourceAttribute + ' event' + eventInfo.sourceType);
+  updateAllMenusMenu(eventInfo);
+});
+

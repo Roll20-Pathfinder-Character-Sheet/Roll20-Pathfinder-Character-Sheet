@@ -35,12 +35,14 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
-                        <li>Added Racial modifiers and Ability Score Increases to the Ability Score grid. Given these modifiers are already accounted for in the Base column either directly or through the Misc modifier, you will need to manually adjust these fields for existing characters if you would like to track these modifiers separately.</li>
-                        <li>Feat and Trait abilities will display their type2 value with the roll template subtitle in chat if provided on the repeating row.</li>
-                        <li>Feat and Trait datalist translation added.</li>
+                        <li>Fixed which Menu Buttons to display when Unchained Skills is enabled. Also updated the All menus chat output to match.</li>
                     </ol>
                     <h4 data-i18n="announcements-older-changes">Older Changes</h4>
                     <ol>
+                        <li>Added Racial modifiers and Ability Score Increases to the Ability Score grid. Given these modifiers are already accounted for in the Base column either directly or through the Misc modifier, you will need to manually adjust these fields for existing characters if you would like to track these modifiers separately.</li>
+                        <li>Feat and Trait abilities will display their type2 value with the roll template subtitle in chat if provided on the repeating row.</li>
+                        <li>Feat and Trait datalist translation added.</li>
+                        <li>Hide All Skills and Combat Skills menu buttons when Unchained Skills are being used.</li>
                         <li>Fixed a bug with Temp hp that erroneously reset to max on triggered events.</li>
                         <li>Added a 'blocked' image indicator over ACP and Max-Dex on the Defenses page to help show they are not applicable when encumbrance has been disabled from the settings page.</li>
                         <li>Added a 'Death Threshold' macro-calculated field to the Hit Point calculations sub-section.</li>
@@ -1363,6 +1365,7 @@
                 <button type="roll" name="roll_spellbook-2" class="command-button sect2 sect-spellclass2" value="/w &quot;@{character_name}&quot; @{spellclass-2-book} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-spellbook-2}}" title="%{selected|spellbook-2}"><span name="attr_spellclass-2-name"></span> <span data-i18n="spellbook">Spellbook</span></button>
                 <button type="roll" name="roll_items" class="command-button" value="/w &quot;@{character_name}&quot; @{item_buttons_macro} {{whisper=@{PC-whisper}}} {{switch=~@{character_id}|NPC-items}}" title="%{selected|items}" data-i18n="items">Items</button>
                 <input type="hidden" name="attr_allmenus_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_defense}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{all}}} {{row01=[^{init-speed-info-abbrv}](~@{character_id}|init-speed-info) }} {{row02=[^{initiative}](~@{character_id}|Roll-for-initiative) }} {{row03=[^{ability-checks}](~@{character_id}|ability_checks) }} {{row04=[^{abilities}](~@{character_id}|abilities) }} {{row05=[^{defenses}](~@{character_id}|defenses) }} {{row06=[^{attacks}](~@{character_id}|attacks) }} {{row07=[^{combat-skills}](~@{character_id}|combat_skills) }} {{row08=[^{all-skills}](~@{character_id}|skills) }} {{row09=[^{items}](~@{character_id}|items) }} @{allspells_macro} @{allcustom_macro}" />
+
                 <input type="hidden" name="attr_allspells_macro" value="" />
                 <input type="hidden" name="attr_allcustom_macro" value="" />
                 <input type="hidden" name="attr_ability_checks_macro" value="&{template:pf_block} @{toggle_accessible_flag} @{toggle_rounded_flag} {{font=@{apply_specfont_chat}@{use_specfont}}} {{scroll_desc=@{scroll-desc}}} {{color=@{rolltemplate_color}}} {{header_image=@{header_image-pf_block-check}}} {{character_name=@{character_name}}} {{character_id=@{character_id}}} {{name=^{ability-checks}}} {{row01=^{ability-scores}}} {{row02=[^{strength-abbrv}](~@{character_id}|STR-Check) [^{dexterity-abbrv}](~@{character_id}|DEX-Check) [^{constitution-abbrv}](~@{character_id}|CON-Check) [^{intelligence-abbrv}](~@{character_id}|INT-Check) [^{wisdom-abbrv}](~@{character_id}|WIS-Check) [^{charisma-abbrv}](~@{character_id}|CHA-Check)}} {{row03=^{initiative}}} {{row04=[^{initiative-abbrv-caps}](~@{character_id}|Roll-for-initiative)}}" />
@@ -1379,10 +1382,10 @@
             </span>
         </div>
         <div class="cheat not-A-or-B-sect"></div>
-        <div role="group" aria-label="menu buttons display menus in chat area for user to pick from. These are groups of attacks, abilities, etc" class="top-buttons inline npc-only" style="margin-top:0.25em;">
-            <input class="showarrow h2arrow" style="width:6em;margin-right:-6em;" type="checkbox" name="attr_NPC-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
+        <div role="group" aria-label="menu buttons display menus in chat area for user to pick from. These are groups of attacks, abilities, etc" class="top-buttons inline npc-only">
+            <input class="showarrow h2arrow" style="width:5em;margin-right:-4.75em;" type="checkbox" name="attr_NPC-command-buttons-show" aria-label="check to reveal command buttons" value="1" checked />
             <h2 class="clickheader showsect"><label data-i18n-title="buttons-showsect-cmd" data-i18n-aria-label="buttons-showsect-cmd" data-i18n="npc-buttons">NPC Buttons</label></h2>
-            <span class="h2-section inline" style="margin-left:2em;width:50%;">
+            <span class="h2-section inline buttons-menu">
                 <input type="checkbox" name="attr_unchained_skills-show" class="unchained-show" value="1" role="presentation" />
                 <input type="checkbox" name="attr_BG-Skill-Use" class="consolidated-show" value="0" role="presentation" />
                 <input type="checkbox" name="attr_BG-Skill-Use" class="bg-show" value="1" checked role="presentation" />
@@ -1396,8 +1399,8 @@
                 <button type="roll" name="roll_NPC-defenses" class="command-button" value="/w &quot;@{character_name}&quot; @{NPC-defenses-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|defenses}}" title="%{selected|NPC-defenses}" data-i18n="defenses">Defenses</button>
                 <button type="roll" name="roll_NPC-attacks" class="command-button" value="/w &quot;@{character_name}&quot; @{attacks-macro-npc} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|attacks}}" title="%{selected|NPC-attacks}" data-i18n="attacks">Attacks</button>
                 <button type="roll" name="roll_NPC-abilities" class="command-button" value="/w &quot;@{character_name}&quot; @{NPC-ability_buttons_macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|abilities}}" title="%{selected|NPC-abilities}" data-i18n="abilities">Abilities</button>
-                <button type="roll" name="roll_NPC-combat_skills" class="command-button" value="/w &quot;@{character_name}&quot; @{NPC-combat_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|combat_skills}}" title="%{selected|NPC-combat_skills}" data-i18n="combat-skills">Combat Skills</button>
-                <button type="roll" name="roll_NPC-skills" class="command-button" value="/w &quot;@{character_name}&quot; @{NPC-skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|skills}}" title="%{selected|NPC-skills}" data-i18n="all-skills">All Skills</button>
+                <button type="roll" name="roll_NPC-combat_skills" class="command-button core-only" value="/w &quot;@{character_name}&quot; @{NPC-combat_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|combat_skills}}" title="%{selected|NPC-combat_skills}" data-i18n="combat-skills">Combat Skills</button>
+                <button type="roll" name="roll_NPC-skills" class="command-button core-only" value="/w &quot;@{character_name}&quot; @{NPC-skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|skills}}" title="%{selected|NPC-skills}" data-i18n="all-skills">All Skills</button>
                 <button type="roll" name="roll_NPC-adventure_skills" class="command-button bg-only" value="/w &quot;@{character_name}&quot; @{NPC-adventure_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|adventure_skills}}" title="%{selected|NPC-adventure_skills}" data-i18n="adventure">Adventure</button>
                 <button type="roll" name="roll_NPC-background_skills" class="command-button bg-only" value="/w &quot;@{character_name}&quot; @{NPC-background_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|background_skills}}" title="%{selected|NPC-background_skills}" data-i18n="background">Background</button>
                 <button type="roll" name="roll_NPC-consolidated_skills" class="command-button consolidated" value="/w &quot;@{character_name}&quot; @{NPC-consolidated_skills-macro} {{whisper=@{NPC-whisper}}} {{switch=~@{character_id}|consolidated_skills}}" title="%{selected|NPC-consolidated_skills}" data-i18n="consolidated">Consolidated</button>
