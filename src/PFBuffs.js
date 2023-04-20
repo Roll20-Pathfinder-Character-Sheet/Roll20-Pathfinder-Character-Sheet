@@ -741,13 +741,13 @@ function updateBuffTotal (col, rows, v, setter) {
 			}
 		}
 
-		//section added below to prevent cmd(type:dodge) buff from being included with cmdff
-		//		if(col==='cmd' && bonuses.dodge!==0){
-		//TAS.info('column is CMD, setting buffsFFcmdOnlyTemp to dodge buff:'+bonuses.dodge);
-		//				buffsFFcmdOnlyTemp = bonuses.dodge
-		//				setter['buff_ffCMD-nododge']=buffsFFcmdOnlyTemp;
-		//TAS.info('buff_ffCMD-nododge now set same as dodge buff:'+buffsFFcmdOnlyTemp);
-		//		}
+		// section added below to prevent cmd(type:dodge) buff from being included with cmdff
+		if(col==='cmd' && bonuses.dodge!==0) {
+			TAS.info('column is CMD, setting buffsFFcmdOnlyTemp to dodge buff:'+bonuses.dodge);
+			let buffsFFcmdOnlyTemp = bonuses.dodge;
+			setter['buff_ffCMD-nododge'] = buffsFFcmdOnlyTemp;
+			TAS.info('buff_ffCMD-nododge now set same as dodge buff:'+buffsFFcmdOnlyTemp);
+		}
 
 		totalcol = buffToTot[col];
 		if (totalcol) {
