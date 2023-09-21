@@ -5096,9 +5096,12 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .sheet-roll-header,
 .sheet-rolltemplate-pf_spell .sheet-roll-header,
 .sheet-rolltemplate-pf_block .sheet-roll-header {
-    border-color: Black;
     background-color: Black;
+    border-color: Black;
     color: White;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 /* define vars */
