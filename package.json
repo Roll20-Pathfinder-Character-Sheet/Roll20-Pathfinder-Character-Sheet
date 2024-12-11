@@ -12,23 +12,20 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-loader": "^7.1.5",
-    "babel-preset-es2015": "^7.0.0-alpha.1",
+    "babel-preset-es2015": "^7.0.0-beta.3",
     "exports-loader": "^0.7.0",
     "extract-loader": "^5.1.0",
     "file-loader": "^2.0.0",
     "html-loader": "^0.5.5",
-    "html-webpack-inline-source-plugin": "0.0.10",
-    "html-webpack-plugin": "^2.30.1",
-    "nth-check": ">=2.0.1",
-    "script-ext-html-webpack-plugin": "^1.8.8",
-    "set-value": ">=4.0.1",
-    "webpack": "^2.7.0",
-    "yargs-parser": ">=5.0.1"
+    "html-webpack-inline-source-plugin": "^0.0.10",
+    "html-webpack-plugin": "^3.2.0",
+    "script-ext-html-webpack-plugin": "^2.1.5",
+    "webpack": "^3.12.0"
   },
   "dependencies": {
-    "jshint": "^2.13.4",
-    "underscore": "^1.13.1"
+    "underscore": "^1.13.6",
+    "webpack-sources": "^3.2.3"
   }
 }

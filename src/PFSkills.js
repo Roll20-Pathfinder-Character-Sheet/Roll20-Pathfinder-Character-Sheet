@@ -813,7 +813,7 @@ function resetOneCommandMacro (callback, eventInfo, isNPC,showBonus,unchained,ba
 				var canshowarray, setter = {}, tempMacro ;
 				canshowarray = assembleSkillButtonArray(tempSkillArray, rt, sv);
 				canshowarray.push("CS-Misc-Skill");
-				tempMacro = getSkillButtonMacro("skills", canshowarray, showBonus);
+				tempMacro = getSkillButtonMacro("consolidated-skills", canshowarray, showBonus, isNPC);
 				setter[skillPrefix + "consolidated_skills-macro"] = baseGenMacro + tempMacro;
 				SWUtils.setWrapper(setter,PFConst.silentParams, done);
 			});

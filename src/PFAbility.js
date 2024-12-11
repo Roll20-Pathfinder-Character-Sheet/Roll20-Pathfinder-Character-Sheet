@@ -116,6 +116,12 @@ function setRuleTab (callback,silently,id,eventInfo){
 			case 'monster-rule':
 				ruleForTab='other';
 				break;
+			case 'mythic-abilities':
+				ruleForTab = 'mythic';
+				break;
+			case 'mythic-feats':
+				ruleForTab='feats';
+				break;
 			default:
 				ruleForTab=v[prefix + 'rule_category']||'';
 				break;
@@ -442,8 +448,8 @@ export function importFromCompendium (callback,eventInfo){
 				} else if ( v[prefix+'name']){
 					abilname = v[prefix + 'name'].toLowerCase();
 					abilname = abilname.match(/^[^(]+/);
-					if(PFDB.specialAttackDCAbilityBase[abilname]){
-						ability_basis= PFDB.specialAttackDCAbilityBase[abilname];
+					if(PFDB.default.specialAttackDCAbilityBase[abilname]){
+						ability_basis= PFDB.default.specialAttackDCAbilityBase[abilname];
 					} else {
 						ability_basis = 'CON';
 					}
@@ -945,6 +951,7 @@ export function updateIncludeLinkVersionCheck() {
 			"include_link_spells": 1
 		});
 }
+
 function registerEventHandlers () {
 	var eventToWatch="",
 	macroEvent = "remove:repeating_ability ",
@@ -1032,12 +1039,12 @@ function registerEventHandlers () {
 			updateAssociatedAttack(null,null,null,eventInfo);
 		}
 	}));
-		on("change:repeating_ability:toggle_attack_entry", TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
-			if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
-				TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
-				updateAssociatedAttack(null, null, null, eventInfo);
-			}
-		}));
+	on("change:repeating_ability:toggle_attack_entry", TAS.callback(function eventupdateAssociatedSLAttackAttack(eventInfo) {
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "api") {
+			TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
+			updateAssociatedAttack(null, null, null, eventInfo);
+		}
+	}));
 	on("change:repeating_ability:rule_category", TAS.callback(function eventUpdateAbilityRule(eventInfo){
 		TAS.debug("caught " + eventInfo.sourceAttribute + " event: " + eventInfo.sourceType);
 		setRuleTab(null,null,null,eventInfo);
@@ -1074,14 +1081,37 @@ function registerEventHandlers () {
 			});
 		});
 	});
-	//sync repeating_spells with settings>attacks>link spells
-    on("change:include_link_abilities", function (eventInfo) {
-    	var attr;
-    	TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
-    	attr = SWUtils.getAttributeName(eventInfo.sourceAttribute);
-    	if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
-    		updateIncludeLink();
-    	}
-    });
+	//sync repeating_abilities with settings>attacks>link abilities
+	on("change:include_link_abilities", function (eventInfo) {
+		TAS.debug("caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType);
+		if (eventInfo.sourceType === "sheetworker" || eventInfo.sourceType === "player") {
+			updateIncludeLink();
+		}
+	});
+	// dynamic translation of datalist for ability_type2
+	on('change:repeating_ability:ability_type2', (eventInfo) => {
+		TAS.debug('caught ' + eventInfo.sourceAttribute + ' event' + eventInfo.sourceType);
+		const id = eventInfo.sourceAttribute.split('_')[2];
+		const updateAttrs = {};
+		const featName = eventInfo.newValue.replace(/\s/g, '').toLowerCase();
+		let translation = getTranslationByKey(featName);
+		if (translation) {
+			console.info({featName, translation});
+			updateAttrs[`repeating_ability_${id}_ability_type2`] = translation;
+			const attr = `repeating_ability_${id}_ability_type2`;
+			const i18n = `${featName}`;
+			if (getTranslationByKey(i18n)) {
+				updateAttrs[attr] = getTranslationByKey(i18n);
+			}
+			TAS.debug(updateAttrs);
+			setAttrs(updateAttrs, {silent: true});
+		}
+	});
+
+	on("change:repeating_ability:ability_type2 change:repeating_ability:rule_category", (eventInfo) => {
+		TAS.debug('caught ' + eventInfo.sourceAttribute + ' event' + eventInfo.sourceType);
+		PFMacros.checkAbilityType2Row(eventInfo);
+	});
+
 }
 registerEventHandlers();
