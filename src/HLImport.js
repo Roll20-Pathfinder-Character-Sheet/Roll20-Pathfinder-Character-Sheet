@@ -6,6 +6,7 @@ import * as PFSheet from "./PFSheet";
 import * as PFHealth from "./PFHealth";
 import * as PFSpellOptions from "./PFSpellOptions";
 import * as PFSpells from "./PFSpells";
+
 export function parseNum(num) {
 	if (_.isUndefined(num) || num === "") return 0;
 	return parseInt(num) || 0;
@@ -52,27 +53,27 @@ export function arrayify(stuff) {
 }
 
 export function importInit(attrs, initObj) {
-	attrs["init"] = parseNum(initObj._total);
+	attrs.init = parseNum(initObj._total);
 	attrs["init-misc"] = parseNum(initObj._total) - parseNum(initObj._attrtext);
-	attrs["init-ability"] = initObj._attrname.substr(0, 3).toUpperCase() + "-mod";
+	attrs["init-ability"] = `${initObj._attrname.substr(0, 3).toUpperCase()}-mod`;
 	attrs["init-ability-mod"] = parseNum(initObj._attrtext);
-	attrs["init_notes"] = initObj.situationalmodifiers._text;
+	attrs.init_notes = initObj.situationalmodifiers._text;
 }
 
 export function importAbilityScores(attrs, attributes) {
 	attributes.forEach(function (abScore) {
-		var abName = abScore._name.substr(0, 3).toUpperCase();
-		var base = parseNum(abScore.attrvalue._base);
-		var modifier = parseNum(abScore.attrvalue._modified) - base; // Modifier is the total difference between what HL is reporting as the character's base ability score and the final modified ability score
-		attrs[abName + "-base"] = base;
+		const abName = abScore._name.substr(0, 3).toUpperCase();
+		const base = parseNum(abScore.attrvalue._base);
+		const modifier = parseNum(abScore.attrvalue._modified) - base; // Modifier is the total difference between what HL is reporting as the character's base ability score and the final modified ability score
+		attrs[`${abName}-base`] = base;
 		attrs[abName] = parseNum(abScore.attrvalue._modified);
-		attrs[abName + "-mod"] = parseNum(abScore.attrbonus._modified);
+		attrs[`${abName}-mod`] = parseNum(abScore.attrbonus._modified);
 		// If the modifier is positive, assume it's an enhancement bonus; otherwise, assume it's a penalty
 		if (modifier > 0) {
-			attrs[abName + "-enhance"] = modifier;
+			attrs[`${abName}-enhance`] = modifier;
 			attrs[abName] = parseNum(abScore.attrvalue._modified);
 		} else {
-			attrs[abName + "-penalty"] = modifier;
+			attrs[`${abName}-penalty`] = modifier;
 			attrs[abName] = base;
 		}
 	});
@@ -80,44 +81,37 @@ export function importAbilityScores(attrs, attributes) {
 
 export function importSaves(attrs, saves) {
 	// Since the XML doesn't break this down by class, add it all to class 0
-	var i = 0;
-	var saveNotes = saves.allsaves.situationalmodifiers._text;
+	let i = 0;
+	let saveNotes = saves.allsaves.situationalmodifiers._text;
 	for (i = 0; i < saves.save.length; i++) {
-		var save = saves.save[i];
-		var abbr = save._abbr;
+		const save = saves.save[i];
+		const abbr = save._abbr;
 
 		attrs[abbr] = parseNum(save._save);
-		attrs["class-0-" + abbr] = attrs["total-" + abbr] = parseNum(save._base);
-		attrs[abbr + "-resist"] = parseNum(save._fromresist);
-		attrs[abbr + "-misc"] =
-			parseNum(save._save) -
-			parseNum(save._base) -
-			parseNum(save._fromresist) -
-			parseNum(save._fromattr);
-		attrs[abbr + "-ability-mod"] = parseNum(save._fromattr);
+		attrs[`class-0-${abbr}`] = attrs[`total-${abbr}`] = parseNum(save._base);
+		attrs[`${abbr}-resist`] = parseNum(save._fromresist);
+		attrs[`${abbr}-misc`] =
+			parseNum(save._save) - parseNum(save._base) - parseNum(save._fromresist) - parseNum(save._fromattr);
+		attrs[`${abbr}-ability-mod`] = parseNum(save._fromattr);
 
-		if (
-			save.situationalmodifiers._text !== "" &&
-			saveNotes.indexOf(save.situationalmodifiers._text) === -1
-		)
-			saveNotes =
-				saveNotes + "\n**" + abbr + ":** " + save.situationalmodifiers._text;
+		if (save.situationalmodifiers._text !== "" && saveNotes.indexOf(save.situationalmodifiers._text) === -1)
+			saveNotes = `${saveNotes}\n**${abbr}:** ${save.situationalmodifiers._text}`;
 	}
 	attrs["Save-notes"] = saveNotes.trim();
 }
 
 // Find an existing repeatable item with the same name, or generate new row ID
 export function getOrMakeRowID(featIDList, name) {
-	var attrNames = Object.values(featIDList);
-	var rows = Object.keys(featIDList);
+	const attrNames = Object.values(featIDList);
+	const rows = Object.keys(featIDList);
 
-	var attrMatch = _.find(attrNames, function (currentAttrName) {
-		var attrName = currentAttrName;
+	const attrMatch = _.find(attrNames, function (currentAttrName) {
+		let attrName = currentAttrName;
 		// Eliminate anything in parentheses, dice expressions, and "x#" (we use that to indicate we've taken a feat more than once) before comparing names
 		attrName = attrName.replace(/ x[0-9]+$/, "").trim();
 
 		if (attrName === name) {
-			var ID = rows[_.indexOf(attrNames, currentAttrName)];
+			const ID = rows[_.indexOf(attrNames, currentAttrName)];
 			if (!_.isUndefined(ID)) return true;
 		}
 		return false;
@@ -128,17 +122,17 @@ export function getOrMakeRowID(featIDList, name) {
 
 // Find an existing repeatable item with the same name, or generate new row ID; extra processing for items
 export function getOrMakeItemRowID(featIDList, name) {
-	var attrNames = Object.values(featIDList);
-	var rows = Object.keys(featIDList);
+	const attrNames = Object.values(featIDList);
+	const rows = Object.keys(featIDList);
 
-	var compareName = name
+	const compareName = name
 		.replace(/\(.*\)/, "")
 		.replace(/\+\d+/, "")
 		.toLowerCase()
 		.replace("masterwork", "")
 		.trim();
-	var attrMatch = _.find(attrNames, function (currentAttrName) {
-		var attrName = currentAttrName;
+	const attrMatch = _.find(attrNames, function (currentAttrName) {
+		let attrName = currentAttrName;
 		// Eliminate anything in parentheses, dice expressions, and "x#" (we use that to indicate we've taken a feat more than once) before comparing names
 		attrName = attrName
 			.replace(/\(.*\)/, "")
@@ -148,7 +142,7 @@ export function getOrMakeItemRowID(featIDList, name) {
 			.trim();
 
 		if (attrName === compareName) {
-			var ID = rows[_.indexOf(attrNames, currentAttrName)];
+			const ID = rows[_.indexOf(attrNames, currentAttrName)];
 			if (!_.isUndefined(ID)) return true;
 		}
 		return false;
@@ -159,9 +153,8 @@ export function getOrMakeItemRowID(featIDList, name) {
 
 // Find an existing repeatable item with the same name and spellclass, or generate new row ID
 export function getOrMakeSpellRowID(featIDList, name, spellclass) {
-	var attrMatch = _.find(featIDList, function (currentFeat) {
-		if (currentFeat.name === name && currentFeat.spellclass === spellclass)
-			return true;
+	const attrMatch = _.find(featIDList, function (currentFeat) {
+		if (currentFeat.name === name && currentFeat.spellclass === spellclass) return true;
 		return false;
 	});
 	if (!_.isUndefined(attrMatch)) return attrMatch.rowID;
@@ -169,17 +162,18 @@ export function getOrMakeSpellRowID(featIDList, name, spellclass) {
 }
 
 export function getOrMakeClassRowID(featIDList, name) {
-	var attrObjs = Object.values(featIDList);
-	var rows = Object.keys(featIDList);
+	const attrObjs = Object.values(featIDList);
+	const rows = Object.keys(featIDList);
 
-	var attrMatch = _.find(attrObjs, function (currentAttrObj) {
-		var attrName = currentAttrObj.name;
+	const attrMatch = _.find(attrObjs, function (currentAttrObj) {
+		let attrName = currentAttrObj.name;
 		// Eliminate anything in parentheses, dice expressions, and "x#" (we use that to indicate we've taken a feat more than once) before comparing names
 		name = name
 			.replace(/\(.+\)/g, "")
 			.replace(/\d+d\d+(\+\d*)*/g, "")
 			.replace(/\+\d+/g, "")
 			.trim();
+
 		attrName = attrName
 			.replace(/\(.+\)/g, "")
 			.replace(/\d+d\d+(\+\d*)*/g, "")
@@ -194,9 +188,9 @@ export function getOrMakeClassRowID(featIDList, name) {
 }
 
 export function importFeats(attrs, feats, featIDList, resources) {
-	var repeatPrefix = "repeating_ability";
-	var skipList = [];
-	var featNames = _.map(feats, function (feat) {
+	const repeatPrefix = "repeating_ability";
+	const skipList = [];
+	const featNames = _.map(feats, function (feat) {
 		return feat._name;
 	});
 	_.each(feats, function (feat) {
@@ -204,24 +198,20 @@ export function importFeats(attrs, feats, featIDList, resources) {
 		if (_.contains(skipList, feat._name)) return;
 
 		// Count the number of times the feat is listed, so we can indicate that in the feat name
-		var taken = _.filter(featNames, function (featName) {
+		const taken = _.filter(featNames, function (featName) {
 			return featName === feat._name;
 		}).length;
 
-		var row = getOrMakeRowID(featIDList, feat._name);
+		const row = getOrMakeRowID(featIDList, feat._name);
 		if (!_.isUndefined(featIDList[row])) delete featIDList[row];
 
-		if (taken > 1)
-			attrs[repeatPrefix + "_" + row + "_name"] = feat._name + " x" + taken;
-		else attrs[repeatPrefix + "_" + row + "_name"] = feat._name;
-		attrs[repeatPrefix + "_" + row + "_description"] = feat.description;
-		attrs[repeatPrefix + "_" + row + "_tabcat"] = attrs[
-			repeatPrefix + "_" + row + "_rule_category"
-		] = "feats";
+		if (taken > 1) attrs[`${repeatPrefix}_${row}_name`] = `${feat._name} x${taken}`;
+		else attrs[`${repeatPrefix}_${row}_name`] = feat._name;
+		attrs[`${repeatPrefix}_${row}_description`] = feat.description;
+		attrs[`${repeatPrefix}_${row}_tabcat`] = attrs[`${repeatPrefix}_${row}_rule_category`] = "feats";
 		skipList.push(feat._name);
 		if (_.contains(Object.keys(resources), feat._name))
-			attrs[repeatPrefix + "_" + row + "_max-calculation"] =
-				resources[feat._name]._max;
+			attrs[`${repeatPrefix}_${row}_max-calculation`] = resources[feat._name]._max;
 	});
 }
 
@@ -237,41 +227,37 @@ export function nameIsShield(name) {
 }
 
 export function importItems(items, resources, armorPenalties, armor, weapons) {
-	var repeatPrefix = "repeating_item";
+	let repeatPrefix = "repeating_item";
 	getSectionIDs(repeatPrefix, function (idarray) {
-		var itemNameAttrs = _.union(
+		const itemNameAttrs = _.union(
 			_.map(idarray, function (id) {
-				return repeatPrefix + "_" + id + "_name";
+				return `${repeatPrefix}_${id}_name`;
 			}),
 			["shield3-acp", "shield3-spell-fail"]
 		);
 		getAttrs(itemNameAttrs, function (names) {
 			// Pull out the shield attributes before we build the ID list
-			var shieldACP = parseNum(names["shield3-acp"]);
-			var shieldASF = parseNum(names["shield3-spell-fail"]);
+			const shieldACP = parseNum(names["shield3-acp"]);
+			const shieldASF = parseNum(names["shield3-spell-fail"]);
 			if (!_.isUndefined(names["shield3-acp"])) delete names["shield3-acp"];
-			if (!_.isUndefined(names["shield3-spell-fail"]))
-				delete names["shield3-spell-fail"];
+			if (!_.isUndefined(names["shield3-spell-fail"])) delete names["shield3-spell-fail"];
 
-			var itemIDList = _.object(
+			const itemIDList = _.object(
 				_.map(names, function (name, attr) {
-					return [
-						attr.substring(repeatPrefix.length + 1, attr.indexOf("_name")),
-						name
-					];
+					return [attr.substring(repeatPrefix.length + 1, attr.indexOf("_name")), name];
 				})
 			);
-			var itemsList = [];
-			var attrs = {};
-			var armorNames = _.map(armor, function (obj) {
+			const itemsList = [];
+			const attrs = {};
+			const armorNames = _.map(armor, function (obj) {
 				return obj._name;
 			});
-			var weaponNames = _.map(weapons, function (obj) {
+			const weaponNames = _.map(weapons, function (obj) {
 				return obj._name;
 			});
 
 			// List of words that indicate an item is masterwork
-			var masterworkWords = [
+			const masterworkWords = [
 				"mithral",
 				"adamantine",
 				"angelskin",
@@ -282,28 +268,27 @@ export function importItems(items, resources, armorPenalties, armor, weapons) {
 				"fire-forged",
 				"frost-forged",
 				"greenwood",
-				"paueliel"
+				"paueliel",
 			];
 			_.each(items, function (item) {
-				var row = getOrMakeItemRowID(itemIDList, item._name);
+				const row = getOrMakeItemRowID(itemIDList, item._name);
 				if (!_.isUndefined(itemIDList[row])) delete itemIDList[row];
 				itemsList.push(item._name);
 
-				repeatPrefix = "repeating_item_" + row;
-				attrs[repeatPrefix + "_name"] = item._name;
-				attrs[repeatPrefix + "_item-weight"] = item.weight._value;
-				attrs[repeatPrefix + "_value"] =
-					parseFloat(item.cost._value) / parseInt(item._quantity);
-				attrs[repeatPrefix + "_description"] = item.description;
+				repeatPrefix = `repeating_item_${row}`;
+				attrs[`${repeatPrefix}_name`] = item._name;
+				attrs[`${repeatPrefix}_item-weight`] = item.weight._value;
+				attrs[`${repeatPrefix}_value`] = parseFloat(item.cost._value) / parseInt(item._quantity);
+				attrs[`${repeatPrefix}_description`] = item.description;
 
 				if (
 					_.contains(Object.keys(resources), item._name) &&
 					item._quantity === "1" &&
 					resources[item._name]._max !== "1"
 				) {
-					attrs[repeatPrefix + "_qty"] = resources[item._name]._left;
-					attrs[repeatPrefix + "_qty_max"] = resources[item._name]._max;
-				} else attrs[repeatPrefix + "_qty"] = item._quantity;
+					attrs[`${repeatPrefix}_qty`] = resources[item._name]._left;
+					attrs[`${repeatPrefix}_qty_max`] = resources[item._name]._max;
+				} else attrs[`${repeatPrefix}_qty`] = item._quantity;
 
 				if (!_.isUndefined(item.itempower))
 					_.each(arrayify(item.itempower), function (itemPower) {
@@ -311,12 +296,11 @@ export function importItems(items, resources, armorPenalties, armor, weapons) {
 					});
 
 				// check if this is a weapon
-				var weaponCompareName = item._name;
+				let weaponCompareName = item._name;
 				// If this is a shield (but not a klar), the attack name will be "Heavy/light shield bash"
 				if (item._name.toLowerCase().indexOf("shield") !== -1) {
-					var attackName;
-					if (item._name.toLowerCase().indexOf("heavy" !== -1))
-						attackName = "heavy shield bash";
+					let attackName;
+					if (item._name.toLowerCase().indexOf("heavy" !== -1)) attackName = "heavy shield bash";
 					else attackName = "light shield bash";
 					weaponCompareName =
 						_.find(weaponNames, function (name) {
@@ -325,62 +309,45 @@ export function importItems(items, resources, armorPenalties, armor, weapons) {
 						}) || item._name;
 				}
 				if (_.contains(weaponNames, weaponCompareName)) {
-					var weaponObj = weapons[_.indexOf(weaponNames, weaponCompareName)];
+					const weaponObj = weapons[_.indexOf(weaponNames, weaponCompareName)];
 					if (weaponObj._damage !== "As Spell") {
-						attrs[repeatPrefix + "_item-wpenhance"] = parseNum(
-							weaponObj._name.match(/\+\d+/)
-						);
+						attrs[`${repeatPrefix}_item-wpenhance`] = parseNum(weaponObj._name.match(/\+\d+/));
 
-						if (!_.isUndefined(weaponObj._typetext))
-							attrs[repeatPrefix + "_item-dmg-type"] = weaponObj._typetext;
+						if (!_.isUndefined(weaponObj._typetext)) attrs[`${repeatPrefix}_item-dmg-type`] = weaponObj._typetext;
 
 						// Check to see if item name includes any words that indicate this is a masterwork item
 						if (
 							weaponCompareName.toLowerCase().indexOf("masterwork") !== -1 ||
-							_.intersection(
-								masterworkWords,
-								item._name.toLowerCase().split(" ")
-							).length > 0
+							_.intersection(masterworkWords, item._name.toLowerCase().split(" ")).length > 0
 						)
-							attrs[repeatPrefix + "_item-masterwork"] = 1;
+							attrs[`${repeatPrefix}_item-masterwork`] = 1;
 
 						if (!_.isUndefined(weaponObj._damage)) {
-							var weaponDice = weaponObj._damage.match(/\d+d\d+/);
+							const weaponDice = weaponObj._damage.match(/\d+d\d+/);
 							if (!_.isNull(weaponDice) && weaponDice.length > 0) {
-								attrs[repeatPrefix + "_item-damage-dice-num"] = parseNum(
-									weaponDice[0].split("d")[0]
-								);
-								attrs[repeatPrefix + "_item-damage-die"] = parseNum(
-									weaponDice[0].split("d")[1]
-								);
+								attrs[`${repeatPrefix}_item-damage-dice-num`] = parseNum(weaponDice[0].split("d")[0]);
+								attrs[`${repeatPrefix}_item-damage-die`] = parseNum(weaponDice[0].split("d")[1]);
 							}
 						}
 
 						if (!_.isUndefined(weaponObj._crit)) {
-							var critArray = weaponObj._crit.split("/");
+							const critArray = weaponObj._crit.split("/");
 							if (critArray.length > 1)
-								attrs[repeatPrefix + "_item-crit-target"] = parseNum(
-									critArray[0].match(/\d+/)[0]
-								);
-							else attrs[repeatPrefix + "_item-crit-target"] = 20;
-							attrs[repeatPrefix + "_item-crit-multiplier"] = parseNum(
+								attrs[`${repeatPrefix}_item-crit-target`] = parseNum(critArray[0].match(/\d+/)[0]);
+							else attrs[`${repeatPrefix}_item-crit-target`] = 20;
+							attrs[`${repeatPrefix}_item-crit-multiplier`] = parseNum(
 								critArray[critArray.length - 1].replace(/\D/g, "")
 							);
 						}
 
-						if (
-							!_.isUndefined(weaponObj.rangedattack) &&
-							!_.isUndefined(weaponObj.rangedattack._rangeincvalue)
-						)
-							attrs[repeatPrefix + "_item-range"] = parseNum(
-								weaponObj.rangedattack._rangeincvalue
-							);
+						if (!_.isUndefined(weaponObj.rangedattack) && !_.isUndefined(weaponObj.rangedattack._rangeincvalue))
+							attrs[`${repeatPrefix}_item-range`] = parseNum(weaponObj.rangedattack._rangeincvalue);
 					}
 				}
 
 				// check if this is armor
 				// If this is a klar, the armor name will be different
-				var armorCompareName = item._name;
+				let armorCompareName = item._name;
 				if (item._name.toLowerCase().indexOf("klar") !== -1) {
 					armorCompareName =
 						_.find(armorNames, function (name) {
@@ -389,47 +356,33 @@ export function importItems(items, resources, armorPenalties, armor, weapons) {
 						}) || item._name;
 				}
 				if (_.contains(armorNames, armorCompareName)) {
-					var armorObj = armor[_.indexOf(armorNames, armorCompareName)];
+					const armorObj = armor[_.indexOf(armorNames, armorCompareName)];
 
 					// Item is a shield
 					if (nameIsShield(item._name)) {
 						var enhancement = parseNum(armorCompareName.match(/\+\d+/));
 						var ACbonus = parseNum(armorObj._ac) - enhancement;
-						attrs[repeatPrefix + "_item-acbonus"] = ACbonus;
-						attrs[repeatPrefix + "_item-acenhance"] = enhancement;
-						if (
-							!_.isUndefined(armorObj._equipped) &&
-							armorObj._equipped === "yes"
-						) {
-							attrs[repeatPrefix + "_item-acp"] = shieldACP;
-							attrs[repeatPrefix + "_item-spell-fail"] = shieldASF;
-							attrs["shield3"] = item._name;
+						attrs[`${repeatPrefix}_item-acbonus`] = ACbonus;
+						attrs[`${repeatPrefix}_item-acenhance`] = enhancement;
+						if (!_.isUndefined(armorObj._equipped) && armorObj._equipped === "yes") {
+							attrs[`${repeatPrefix}_item-acp`] = shieldACP;
+							attrs[`${repeatPrefix}_item-spell-fail`] = shieldASF;
+							attrs.shield3 = item._name;
 							attrs["shield3-acbonus"] = ACbonus;
 							attrs["shield3-enhance"] = enhancement;
 						}
 					} else {
 						var enhancement = parseNum(item._name.match(/\+\d+/));
 						var ACbonus = parseNum(armorObj._ac) - enhancement;
-						attrs[repeatPrefix + "_item-acbonus"] = ACbonus;
-						attrs[repeatPrefix + "_item-acenhance"] = enhancement;
-						if (
-							!_.isUndefined(armorObj._equipped) &&
-							armorObj._equipped === "yes"
-						) {
-							attrs["armor3-acp"] = attrs[repeatPrefix + "_item-acp"] =
-								armorPenalties.ACP - shieldACP;
-							attrs["armor3-spell-fail"] = attrs[
-								repeatPrefix + "_item-spell-fail"
-							] = armorPenalties.spellfail - shieldASF;
-							if (armorPenalties.maxDex === 99)
-								attrs["armor3-max-dex"] = attrs[
-									repeatPrefix + "_item-max-dex"
-								] = "";
-							else
-								attrs["armor3-max-dex"] = attrs[
-									repeatPrefix + "_item-max-dex"
-								] = armorPenalties.maxDex;
-							attrs["armor3"] = item._name;
+						attrs[`${repeatPrefix}_item-acbonus`] = ACbonus;
+						attrs[`${repeatPrefix}_item-acenhance`] = enhancement;
+						if (!_.isUndefined(armorObj._equipped) && armorObj._equipped === "yes") {
+							attrs["armor3-acp"] = attrs[`${repeatPrefix}_item-acp`] = armorPenalties.ACP - shieldACP;
+							attrs["armor3-spell-fail"] = attrs[`${repeatPrefix}_item-spell-fail`] =
+								armorPenalties.spellfail - shieldASF;
+							if (armorPenalties.maxDex === 99) attrs["armor3-max-dex"] = attrs[`${repeatPrefix}_item-max-dex`] = "";
+							else attrs["armor3-max-dex"] = attrs[`${repeatPrefix}_item-max-dex`] = armorPenalties.maxDex;
+							attrs.armor3 = item._name;
 							attrs["armor3-acbonus"] = ACbonus;
 							attrs["armor3-enhance"] = enhancement;
 						}
@@ -442,121 +395,97 @@ export function importItems(items, resources, armorPenalties, armor, weapons) {
 }
 
 export function importTraits(attrs, traits, traitIDList, resources) {
-	var repeatPrefix = "repeating_ability";
+	const repeatPrefix = "repeating_ability";
 	traits.forEach(function (trait) {
-		var row = getOrMakeRowID(traitIDList, trait._name);
+		const row = getOrMakeRowID(traitIDList, trait._name);
 		if (!_.isUndefined(traitIDList[row])) delete traitIDList[row];
-		attrs[repeatPrefix + "_" + row + "_name"] = trait._name;
-		attrs[repeatPrefix + "_" + row + "_description"] = trait.description;
-		attrs[repeatPrefix + "_" + row + "_tabcat"] = attrs[
-			repeatPrefix + "_" + row + "_rule_category"
-		] = "traits";
+		attrs[`${repeatPrefix}_${row}_name`] = trait._name;
+		attrs[`${repeatPrefix}_${row}_description`] = trait.description;
+		attrs[`${repeatPrefix}_${row}_tabcat`] = attrs[`${repeatPrefix}_${row}_rule_category`] = "traits";
 		if (_.contains(Object.keys(resources), trait._name))
-			attrs[repeatPrefix + "_" + row + "_max-calculation"] =
-				resources[trait._name]._max;
+			attrs[`${repeatPrefix}_${row}_max-calculation`] = resources[trait._name]._max;
 	});
 }
 
 export function importSLAs(attrs, SLAs, SLAsIDList, resources) {
-	var repeatPrefix = "repeating_ability";
+	const repeatPrefix = "repeating_ability";
 	SLAs.forEach(function (SLA) {
-		var row = getOrMakeRowID(SLAsIDList, SLA._name);
+		const row = getOrMakeRowID(SLAsIDList, SLA._name);
 		if (!_.isUndefined(SLAsIDList[row])) delete SLAsIDList[row];
-		attrs[repeatPrefix + "_" + row + "_name"] = SLA._name;
-		attrs[repeatPrefix + "_" + row + "_description"] = SLA.description;
-		attrs[repeatPrefix + "_" + row + "_tabcat"] = attrs[
-			repeatPrefix + "_" + row + "_rule_category"
-		] = "spell-like-abilities";
-		attrs[repeatPrefix + "_" + row + "_tabcat2"] = attrs[
-			repeatPrefix + "_" + row + "_ability_type"
-		] = "Sp";
+		attrs[`${repeatPrefix}_${row}_name`] = SLA._name;
+		attrs[`${repeatPrefix}_${row}_description`] = SLA.description;
+		attrs[`${repeatPrefix}_${row}_tabcat`] = attrs[`${repeatPrefix}_${row}_rule_category`] = "spell-like-abilities";
+		attrs[`${repeatPrefix}_${row}_tabcat2`] = attrs[`${repeatPrefix}_${row}_ability_type`] = "Sp";
 		if (_.contains(Object.keys(resources), SLA._name))
-			attrs[repeatPrefix + "_" + row + "_max-calculation"] =
-				resources[SLA._name]._max;
+			attrs[`${repeatPrefix}_${row}_max-calculation`] = resources[SLA._name]._max;
 	});
 }
 
-export function importFeatures(
-	attrs,
-	featureList,
-	specials,
-	archetypes,
-	resources
-) {
-	var specNameList = _.map(specials, function (special) {
+export function importFeatures(attrs, featureList, specials, archetypes, resources) {
+	const specNameList = _.map(specials, function (special) {
 		return special._name;
 	});
-	var skipList = [];
+	const skipList = [];
 	_.each(specials, function (special) {
-		var name = special._name;
-		var repeatPrefix = "repeating_ability",
-			row,
-			classSource = -1;
-		var cleanName = name
+		let name = special._name;
+		let repeatPrefix = "repeating_ability";
+		let row;
+		let classSource = -1;
+		const cleanName = name
 			.replace(/ x[0-9]+$/, "")
 			.replace(/\(([^\)]*)\)/g, "")
 			.trim();
 		if (_.contains(skipList, cleanName)) return;
-		var multiList = _.filter(specNameList, function (spec) {
+		const multiList = _.filter(specNameList, function (spec) {
 			return spec.replace(/\(([^\)]*)\)/g, "").trim() === cleanName;
 		});
 		if (multiList.length > 1) {
 			skipList.push(cleanName);
-			var parenList = _.map(multiList, function (item) {
+			const parenList = _.map(multiList, function (item) {
 				return item
 					.match(/\(([^\)]*)\)/)[0]
 					.replace("(", "")
 					.replace(")", "");
 			});
-			name = name.replace(
-				/\(([^\)]*)\)/,
-				"(" + _.uniq(parenList).join(", ") + ")"
-			);
+			name = name.replace(/\(([^\)]*)\)/, `(${_.uniq(parenList).join(", ")})`);
 		}
 		row = getOrMakeClassRowID(featureList, name);
-		repeatPrefix = "repeating_ability_" + row;
+		repeatPrefix = `repeating_ability_${row}`;
 		if (!_.isUndefined(featureList[row])) delete featureList[row];
 		// If we created a new row for this, set rule category
 		else {
 			// Import if it has a "specsource", assume it's a class feature
 			if (special.specsource)
-				attrs[repeatPrefix + "_tabcat"] = attrs[
-					repeatPrefix + "_rule_category"
-				] = "class-features";
-			else
-				attrs[repeatPrefix + "_tabcat"] = attrs[
-					repeatPrefix + "_rule_category"
-				] = "racial-traits";
+				attrs[`${repeatPrefix}_tabcat`] = attrs[`${repeatPrefix}_rule_category`] = "class-features";
+			else attrs[`${repeatPrefix}_tabcat`] = attrs[`${repeatPrefix}_rule_category`] = "racial-traits";
 		}
 		classSource = getClassSource(arrayify(special.specsource), archetypes);
-		attrs[repeatPrefix + "_name"] = name;
-		attrs[repeatPrefix + "_description"] = special.description;
+		attrs[`${repeatPrefix}_name`] = name;
+		attrs[`${repeatPrefix}_description`] = special.description;
 
 		if (classSource !== -1) {
-			attrs[repeatPrefix + "_CL-basis"] = "@{class-" + classSource + "-level}";
-			attrs[repeatPrefix + "_class-name"] =
-				Object.keys(archetypes)[classSource];
+			attrs[`${repeatPrefix}_CL-basis`] = `@{class-${classSource}-level}`;
+			attrs[`${repeatPrefix}_class-name`] = Object.keys(archetypes)[classSource];
 		}
 
 		if (_.contains(Object.keys(resources), special._name))
-			attrs[repeatPrefix + "_max-calculation"] = resources[special._name]._max;
+			attrs[`${repeatPrefix}_max-calculation`] = resources[special._name]._max;
 
 		if (!_.isUndefined(special._type))
-			attrs[repeatPrefix + "_tabcat2"] = attrs[repeatPrefix + "_ability_type"] =
-				special._type.substr(0, 2);
+			attrs[`${repeatPrefix}_tabcat2`] = attrs[`${repeatPrefix}_ability_type`] = special._type.substr(0, 2);
 	});
 }
 
 export function importClasses(attrs, classes, hitdice) {
-	var classList = new Object();
-	var diceList = _.without(
+	const classList = new Object();
+	let diceList = _.without(
 		_.map(
 			hitdice
 				.split(";")
 				[hitdice.split(";").length - 1].trim()
 				.split(/[\+\-]/),
 			function (hitdie) {
-				var splitDie = hitdie.split("d");
+				const splitDie = hitdie.split("d");
 				if (splitDie.length < 2) return null;
 				return {dice: splitDie[0], die: splitDie[1]};
 			}
@@ -564,15 +493,15 @@ export function importClasses(attrs, classes, hitdice) {
 		null
 	);
 
-	var i = 0;
-	var classObj;
+	let i = 0;
+	let classObj;
 	while (i < classes.length) {
 		classObj = classes[i];
 
 		// We can only handle 5 classes
 		if (i >= 5) return;
 
-		if (i > 0) attrs["class" + i + "_show"] = 1;
+		if (i > 0) attrs[`class${i}_show`] = 1;
 
 		classList[
 			classObj._name
@@ -581,14 +510,14 @@ export function importClasses(attrs, classes, hitdice) {
 				.replace(")", "")
 				.trim()
 		] = classObj;
-		attrs["class-" + i + "-name"] = classObj._name;
-		attrs["class-" + i + "-level"] = classObj._level;
+		attrs[`class-${i}-name`] = classObj._name;
+		attrs[`class-${i}-level`] = classObj._level;
 
-		var hitDie = _.find(diceList, function (dieObj) {
+		const hitDie = _.find(diceList, function (dieObj) {
 			return dieObj.dice === classObj._level;
 		});
 		if (!_.isUndefined(hitDie)) {
-			attrs["class-" + i + "-hd"] = hitDie.die;
+			attrs[`class-${i}-hd`] = hitDie.die;
 			diceList = _.without(diceList, hitDie);
 		}
 		i++;
@@ -602,20 +531,20 @@ export function importClasses(attrs, classes, hitdice) {
 
 // Import spellclasses; presence in spellclasses node means it's a spellcaster, but some of the data is in the classes node
 export function importSpellClasses(attrs, spellclasses, classes, abScores) {
-	var spellClassesList = new Object();
+	const spellClassesList = new Object();
 
-	var i,
-		j,
-		abMod = 0,
-		currentAbMod,
-		spellslots,
-		spelllevel,
-		casterlevel,
-		concmod,
-		spellpenmod;
-	var spellClassIndex = 0;
+	let i;
+	let j;
+	let abMod = 0;
+	let currentAbMod;
+	let spellslots;
+	let spelllevel;
+	let casterlevel;
+	let concmod;
+	let spellpenmod;
+	let spellClassIndex = 0;
 	for (i = 0; i < spellclasses.length; i++) {
-		var spellClass = spellclasses[i];
+		const spellClass = spellclasses[i];
 		// Only 3 spellclasses on character sheet, so if they somehow have more...
 		if (spellClassIndex >= 3) return spellClassesList;
 
@@ -624,43 +553,29 @@ export function importSpellClasses(attrs, spellclasses, classes, abScores) {
 			.replace("(", "")
 			.replace(")", "")
 			.trim();
-		var classIndex = _.indexOf(
+		const classIndex = _.indexOf(
 			Object.keys(classes),
 			_.find(Object.keys(classes), function (className) {
-				if (
-					className.toLowerCase().indexOf(spellClassName.toLowerCase()) !== -1
-				)
-					return true;
+				if (className.toLowerCase().indexOf(spellClassName.toLowerCase()) !== -1) return true;
 				return false;
 			})
 		);
 
 		if (classIndex !== -1) {
 			casterlevel = parseNum(classes[spellClassName]._casterlevel);
-			attrs["spellclass-" + spellClassIndex] = classIndex;
-			attrs["spellclass-" + spellClassIndex + "-level-misc"] =
-				casterlevel - parseNum(classes[spellClassName]._level);
-			attrs["spellclass-" + spellClassIndex + "-level"] = parseNum(
-				classes[spellClassName]._level
-			);
-			attrs["spellclass-" + spellClassIndex + "-level-total"] = casterlevel;
-			attrs["spellclass-" + spellClassIndex + "-name"] = classes[
-				spellClassName
-			]._name
-				.replace(/\(.*\)/g, "")
-				.trim();
-			attrs["spellclass-" + spellClassIndex + "-exists"] = 1;
+			attrs[`spellclass-${spellClassIndex}`] = classIndex;
+			attrs[`spellclass-${spellClassIndex}-level-misc`] = casterlevel - parseNum(classes[spellClassName]._level);
+			attrs[`spellclass-${spellClassIndex}-level`] = parseNum(classes[spellClassName]._level);
+			attrs[`spellclass-${spellClassIndex}-level-total`] = casterlevel;
+			attrs[`spellclass-${spellClassIndex}-name`] = classes[spellClassName]._name.replace(/\(.*\)/g, "").trim();
+			attrs[`spellclass-${spellClassIndex}-exists`] = 1;
 
-			attrs["spellclass-" + spellClassIndex + "-close"] =
-				25 + 5 * Math.floor(casterlevel / 2);
-			attrs["spellclass-" + spellClassIndex + "-medium"] =
-				100 + 10 * casterlevel;
-			attrs["spellclass-" + spellClassIndex + "-long"] = 400 + 40 * casterlevel;
+			attrs[`spellclass-${spellClassIndex}-close`] = 25 + 5 * Math.floor(casterlevel / 2);
+			attrs[`spellclass-${spellClassIndex}-medium`] = 100 + 10 * casterlevel;
+			attrs[`spellclass-${spellClassIndex}-long`] = 400 + 40 * casterlevel;
 
 			if (!_.isUndefined(classes[spellClassName].arcanespellfailure))
-				attrs["armor3-spell-fail"] = parseNum(
-					classes[spellClassName].arcanespellfailure._value
-				);
+				attrs["armor3-spell-fail"] = parseNum(classes[spellClassName].arcanespellfailure._value);
 
 			// Make a guess at which ability modifier is used for this class
 			if (!_.isUndefined(classes[spellClassName]._basespelldc)) {
@@ -669,8 +584,7 @@ export function importSpellClasses(attrs, spellclasses, classes, abScores) {
 				// Start at the fourth ability score (Intelligence), so we skip the physical abilities
 				for (j = 3; j < abScores.length; j++) {
 					if (parseNum(abScores[j].attrbonus._modified) === abMod) {
-						attrs["Concentration-" + spellClassIndex + "-ability"] =
-							abScores[j]._name.substr(0, 3).toUpperCase() + "-mod";
+						attrs[`Concentration-${spellClassIndex}-ability`] = `${abScores[j]._name.substr(0, 3).toUpperCase()}-mod`;
 						break;
 					}
 				}
@@ -679,92 +593,55 @@ export function importSpellClasses(attrs, spellclasses, classes, abScores) {
 			if (abMod !== 0) {
 				// Calculate misc mods to concentration
 				if (!_.isUndefined(classes[spellClassName]._concentrationcheck)) {
-					concmod =
-						parseNum(classes[spellClassName]._concentrationcheck) -
-						casterlevel -
-						abMod;
-					attrs["Concentration-" + spellClassIndex + "-misc"] = concmod;
-					attrs["Concentration-" + spellClassIndex] = parseNum(
-						classes[spellClassName]._concentrationcheck
-					);
-					attrs["Concentration-" + spellClassIndex + "-mod"] = abMod;
+					concmod = parseNum(classes[spellClassName]._concentrationcheck) - casterlevel - abMod;
+					attrs[`Concentration-${spellClassIndex}-misc`] = concmod;
+					attrs[`Concentration-${spellClassIndex}`] = parseNum(classes[spellClassName]._concentrationcheck);
+					attrs[`Concentration-${spellClassIndex}-mod`] = abMod;
 				}
 
 				// Calculate misc mods to spell penetration
 				if (!_.isUndefined(classes[spellClassName].overcomespellresistance)) {
-					spellpenmod =
-						parseNum(classes[spellClassName].overcomespellresistance) -
-						casterlevel;
-					attrs["spellclass-" + spellClassIndex + "-SP_misc"] = spellpenmod;
+					spellpenmod = parseNum(classes[spellClassName].overcomespellresistance) - casterlevel;
+					attrs[`spellclass-${spellClassIndex}-SP_misc`] = spellpenmod;
 				}
 
 				// Populate spells / day; Hero Lab includes bonus slots, so remove those
 				if (!_.isUndefined(spellclasses[i].spelllevel)) {
 					// Initialize spells/day
-					for (j = 0; j < 10; j++)
-						attrs[
-							"spellclass-" +
-								spellClassIndex +
-								"-level-" +
-								j +
-								"-spells-per-day_max"
-						] = 0;
+					for (j = 0; j < 10; j++) attrs[`spellclass-${spellClassIndex}-level-${j}-spells-per-day_max`] = 0;
 					spellclasses[i].spelllevel = arrayify(spellclasses[i].spelllevel);
 					for (j = 0; j < spellclasses[i].spelllevel.length; j++) {
 						spellslots = parseNum(spellclasses[i].spelllevel[j]._maxcasts);
 						spelllevel = parseNum(spellclasses[i].spelllevel[j]._level);
-						attrs[
-							"spellclass-" +
-								spellClassIndex +
-								"-level-" +
-								spelllevel +
-								"-spells-per-day_max"
-						] = spellslots;
-						if (spelllevel > 0)
-							spellslots = spellslots - bonusSpellSlots(abMod, spelllevel);
+						attrs[`spellclass-${spellClassIndex}-level-${spelllevel}-spells-per-day_max`] = spellslots;
+						if (spelllevel > 0) spellslots -= bonusSpellSlots(abMod, spelllevel);
 						if (spellslots < 0) spellslots = "";
-						attrs[
-							"spellclass-" +
-								spellClassIndex +
-								"-level-" +
-								spelllevel +
-								"-class"
-						] = spellslots;
+						attrs[`spellclass-${spellClassIndex}-level-${spelllevel}-class`] = spellslots;
 					}
 				}
 				// Set bonus spell slot table entries
-				attrs["spellclass-" + spellClassIndex + "-level-1-bonus"] =
-					bonusSpellSlots(abMod, 1);
-				attrs["spellclass-" + spellClassIndex + "-level-2-bonus"] =
-					bonusSpellSlots(abMod, 2);
-				attrs["spellclass-" + spellClassIndex + "-level-3-bonus"] =
-					bonusSpellSlots(abMod, 3);
-				attrs["spellclass-" + spellClassIndex + "-level-4-bonus"] =
-					bonusSpellSlots(abMod, 4);
-				attrs["spellclass-" + spellClassIndex + "-level-5-bonus"] =
-					bonusSpellSlots(abMod, 5);
-				attrs["spellclass-" + spellClassIndex + "-level-6-bonus"] =
-					bonusSpellSlots(abMod, 6);
-				attrs["spellclass-" + spellClassIndex + "-level-7-bonus"] =
-					bonusSpellSlots(abMod, 7);
-				attrs["spellclass-" + spellClassIndex + "-level-8-bonus"] =
-					bonusSpellSlots(abMod, 8);
-				attrs["spellclass-" + spellClassIndex + "-level-9-bonus"] =
-					bonusSpellSlots(abMod, 9);
+				attrs[`spellclass-${spellClassIndex}-level-1-bonus`] = bonusSpellSlots(abMod, 1);
+				attrs[`spellclass-${spellClassIndex}-level-2-bonus`] = bonusSpellSlots(abMod, 2);
+				attrs[`spellclass-${spellClassIndex}-level-3-bonus`] = bonusSpellSlots(abMod, 3);
+				attrs[`spellclass-${spellClassIndex}-level-4-bonus`] = bonusSpellSlots(abMod, 4);
+				attrs[`spellclass-${spellClassIndex}-level-5-bonus`] = bonusSpellSlots(abMod, 5);
+				attrs[`spellclass-${spellClassIndex}-level-6-bonus`] = bonusSpellSlots(abMod, 6);
+				attrs[`spellclass-${spellClassIndex}-level-7-bonus`] = bonusSpellSlots(abMod, 7);
+				attrs[`spellclass-${spellClassIndex}-level-8-bonus`] = bonusSpellSlots(abMod, 8);
+				attrs[`spellclass-${spellClassIndex}-level-9-bonus`] = bonusSpellSlots(abMod, 9);
 			}
-			spellClassesList[spellClassName] =
-				classes[Object.keys(classes)[classIndex]];
+			spellClassesList[spellClassName] = classes[Object.keys(classes)[classIndex]];
 			spellClassIndex++;
 		}
 	}
 
-	if (spellClassIndex > 1) attrs["spellclasses_multiclassed"] = 1;
+	if (spellClassIndex > 1) attrs.spellclasses_multiclassed = 1;
 
 	return spellClassesList;
 }
 
 export function importSpells(spells, spellclasses) {
-	var wizNames = [
+	const wizNames = [
 		"Abjurer",
 		"Conjurer",
 		"Diviner",
@@ -772,47 +649,44 @@ export function importSpells(spells, spellclasses) {
 		"Evoker",
 		"Illusionist",
 		"Necromancer",
-		"Transmuter"
+		"Transmuter",
 	];
-	var repeatPrefix = "repeating_spells";
+	let repeatPrefix = "repeating_spells";
 	getSectionIDs(repeatPrefix, function (idarray) {
-		var spellNameAttrs = _.union(
+		const spellNameAttrs = _.union(
 			_.map(idarray, function (id) {
-				return repeatPrefix + "_" + id + "_name";
+				return `${repeatPrefix}_${id}_name`;
 			}),
 			_.map(idarray, function (id) {
-				return repeatPrefix + "_" + id + "_spellclass_number";
+				return `${repeatPrefix}_${id}_spellclass_number`;
 			})
 		);
 		getAttrs(spellNameAttrs, function (spellAttrs) {
-			var spellObjList = {};
-			var spellKeys = Object.keys(spellAttrs);
+			const spellObjList = {};
+			const spellKeys = Object.keys(spellAttrs);
 			_.each(spellKeys, function (spellKey) {
-				var rowID;
+				let rowID;
 				if (spellKey.indexOf("_name") !== -1) {
-					rowID = spellKey.substring(
-						repeatPrefix.length + 1,
-						spellKey.indexOf("_name")
-					);
-					if (_.isUndefined(spellObjList[rowID]))
-						spellObjList[rowID] = {rowID: rowID};
+					rowID = spellKey.substring(repeatPrefix.length + 1, spellKey.indexOf("_name"));
+					if (_.isUndefined(spellObjList[rowID])) spellObjList[rowID] = {rowID};
 					spellObjList[rowID].name = spellAttrs[spellKey];
 				}
 				if (spellKey.indexOf("_spellclass_number") !== -1) {
-					rowID = spellKey.substring(
-						repeatPrefix.length + 1,
-						spellKey.indexOf("_spellclass_number")
-					);
-					if (_.isUndefined(spellObjList[rowID]))
-						spellObjList[rowID] = {rowID: rowID};
+					rowID = spellKey.substring(repeatPrefix.length + 1, spellKey.indexOf("_spellclass_number"));
+					if (_.isUndefined(spellObjList[rowID])) spellObjList[rowID] = {rowID};
 					spellObjList[rowID].spellclass = spellAttrs[spellKey];
 				}
 			});
 
-			var spellClassesKeys = Object.keys(spellclasses);
-			var attrs = {};
+			const spellClassesKeys = Object.keys(spellclasses);
+			const attrs = {};
 			_.each(spells, function (spell) {
-				var rowID, spellClass, spellClassName, spellName, school, level;
+				let rowID;
+				let spellClass;
+				let spellClassName;
+				let spellName;
+				let school;
+				let level;
 
 				// Search for a repeating spell with the same name and spellclass; if not found, make new row
 				level = parseNum(spell._level);
@@ -839,90 +713,68 @@ export function importSpells(spells, spellclasses) {
 					console.log(spell);
 				}
 				// Update prefix with ID
-				repeatPrefix = repeatPrefix + rowID;
+				repeatPrefix += rowID;
 
-				attrs[repeatPrefix + "_name"] = spellName;
-				attrs[repeatPrefix + "_spell_level_r"] = attrs[
-					repeatPrefix + "_spell_level"
-				] = level;
-				attrs[repeatPrefix + "_spellclass_number"] = spellClass;
-				attrs[repeatPrefix + "_spellclass"] = spellClassName;
-				attrs[repeatPrefix + "_components"] = spell._componenttext
+				attrs[`${repeatPrefix}_name`] = spellName;
+				attrs[`${repeatPrefix}_spell_level_r`] = attrs[`${repeatPrefix}_spell_level`] = level;
+				attrs[`${repeatPrefix}_spellclass_number`] = spellClass;
+				attrs[`${repeatPrefix}_spellclass`] = spellClassName;
+				attrs[`${repeatPrefix}_components`] = spell._componenttext
 					.replace("Divine Focus", "DF")
 					.replace("Focus", "F")
 					.replace("Material", "M")
 					.replace("Verbal", "V")
 					.replace("Somatic", "S")
 					.replace(" or ", "/");
-				attrs[repeatPrefix + "_duration"] = spell._duration;
-				attrs[repeatPrefix + "_save"] = spell._save
-					.replace(/DC \d+/, "")
-					.trim();
-				attrs[repeatPrefix + "_savedc"] = parseNum(spell._dc);
-				attrs[repeatPrefix + "_cast-time"] = spell._casttime;
-				attrs[repeatPrefix + "_DC_misc"] =
+				attrs[`${repeatPrefix}_duration`] = spell._duration;
+				attrs[`${repeatPrefix}_save`] = spell._save.replace(/DC \d+/, "").trim();
+				attrs[`${repeatPrefix}_savedc`] = parseNum(spell._dc);
+				attrs[`${repeatPrefix}_cast-time`] = spell._casttime;
+				attrs[`${repeatPrefix}_DC_misc`] =
 					parseNum(spell._dc) -
-					parseNum(
-						spellclasses[
-							spellClassName !== ""
-								? spellClassName
-								: Object.keys(spellclasses)[0]
-						]._basespelldc
-					) -
+					parseNum(spellclasses[spellClassName !== "" ? spellClassName : Object.keys(spellclasses)[0]]._basespelldc) -
 					level;
-				attrs[repeatPrefix + "_CL_misc"] =
+				attrs[`${repeatPrefix}_CL_misc`] =
 					parseNum(spell._casterlevel) -
-					parseNum(
-						spellclasses[
-							spellClassName !== ""
-								? spellClassName
-								: Object.keys(spellclasses)[0]
-						]._casterlevel
-					);
-				attrs[repeatPrefix + "_casterlevel"] = spell._casterlevel;
+					parseNum(spellclasses[spellClassName !== "" ? spellClassName : Object.keys(spellclasses)[0]]._casterlevel);
+				attrs[`${repeatPrefix}_casterlevel`] = spell._casterlevel;
 
 				if (spell._resist.toLowerCase().indexOf("yes") !== -1) {
-					if (spell._resist.toLowerCase().indexOf("harmless") !== -1)
-						attrs[repeatPrefix + "_sr"] = "Yes (Harmless)";
-					else if (spell._resist.toLowerCase().indexOf("object") !== -1)
-						attrs[repeatPrefix + "_sr"] = "Yes (Object)";
-					else attrs[repeatPrefix + "_sr"] = "Yes";
-				} else if (spell._resist.toLowerCase().indexOf("no") !== -1)
-					attrs[repeatPrefix + "_sr"] = "No";
-				else attrs[repeatPrefix + "_sr"] = "";
+					if (spell._resist.toLowerCase().indexOf("harmless") !== -1) attrs[`${repeatPrefix}_sr`] = "Yes (Harmless)";
+					else if (spell._resist.toLowerCase().indexOf("object") !== -1) attrs[`${repeatPrefix}_sr`] = "Yes (Object)";
+					else attrs[`${repeatPrefix}_sr`] = "Yes";
+				} else if (spell._resist.toLowerCase().indexOf("no") !== -1) attrs[`${repeatPrefix}_sr`] = "No";
+				else attrs[`${repeatPrefix}_sr`] = "";
 
 				switch (spell._range.toLowerCase()) {
 					case "close (25 + 5 ft./2 levels)":
-						attrs[repeatPrefix + "_range_pick"] = "close";
+						attrs[`${repeatPrefix}_range_pick`] = "close";
 						break;
 					case "medium (100 + 10 ft./level)":
-						attrs[repeatPrefix + "_range_pick"] = "medium";
+						attrs[`${repeatPrefix}_range_pick`] = "medium";
 						break;
 					case "long (400 + 40 ft./level)":
-						attrs[repeatPrefix + "_range_pick"] = "long";
+						attrs[`${repeatPrefix}_range_pick`] = "long";
 						break;
 					case "touch":
 					case "personal":
-						attrs[repeatPrefix + "_range_pick"] = spell._range.toLowerCase();
+						attrs[`${repeatPrefix}_range_pick`] = spell._range.toLowerCase();
 						break;
 					default:
-						attrs[repeatPrefix + "_range_pick"] = "number";
-						attrs[repeatPrefix + "_range"] = spell._range;
+						attrs[`${repeatPrefix}_range_pick`] = "number";
+						attrs[`${repeatPrefix}_range`] = spell._range;
 				}
 
-				if (spell._area !== "") attrs[repeatPrefix + "_targets"] = spell._area;
-				else if (spell._effect !== "")
-					attrs[repeatPrefix + "_targets"] = spell._effect;
-				else attrs[repeatPrefix + "_targets"] = spell._target;
+				if (spell._area !== "") attrs[`${repeatPrefix}_targets`] = spell._area;
+				else if (spell._effect !== "") attrs[`${repeatPrefix}_targets`] = spell._effect;
+				else attrs[`${repeatPrefix}_targets`] = spell._target;
 
 				school = spell._schooltext;
-				if (spell._subschooltext !== "")
-					school = school + " (" + spell._subschooltext + ")";
-				if (spell._descriptortext !== "")
-					school = school + " [" + spell._descriptortext + "]";
-				attrs[repeatPrefix + "_school"] = school;
+				if (spell._subschooltext !== "") school = `${school} (${spell._subschooltext})`;
+				if (spell._descriptortext !== "") school = `${school} [${spell._descriptortext}]`;
+				attrs[`${repeatPrefix}_school`] = school;
 
-				attrs[repeatPrefix + "_description"] = spell.description;
+				attrs[`${repeatPrefix}_description`] = spell.description;
 			});
 			setAttrs(attrs, {silent: true}, function () {
 				PFSpellOptions.resetOptions();
@@ -933,9 +785,9 @@ export function importSpells(spells, spellclasses) {
 }
 
 export function calcHitDice(hitdice) {
-	var dice = hitdice.match(/\d+d\d/g);
-	var numDice = 0;
-	var i = 0;
+	const dice = hitdice.match(/\d+d\d/g);
+	let numDice = 0;
+	let i = 0;
 	while (i < dice.length) {
 		numDice += parseInt(dice[i].split("d")[0]);
 		i++;
@@ -945,18 +797,18 @@ export function calcHitDice(hitdice) {
 
 // Builds an object collection of archetypes, with the appropriate classes as the keys, in the order they're entered in the character sheet; use this to determine class specials come from
 export function buildArchetypeArray(classes) {
-	var archetypes = new Object();
+	const archetypes = new Object();
 
 	_.each(classes, function (classObj, className) {
 		if (classObj._name.indexOf("(") === -1) {
 			archetypes[className] = [];
 			return;
 		}
-		var archeString = classObj._name
+		const archeString = classObj._name
 			.match(/\(([^\)]*)\)/)[0]
 			.replace("(", "")
 			.replace(")", "");
-		var archeList = archeString.split(",");
+		let archeList = archeString.split(",");
 		archeList = _.map(archeList, function (arche) {
 			return arche.trim();
 		});
@@ -971,14 +823,14 @@ export function getClassSource(sources, archetypes) {
 	if (!sources.length) return -1;
 
 	// Grab an array of class names from the archetypes object
-	var classes = Object.keys(archetypes);
+	const classes = Object.keys(archetypes);
 
 	// Check if source is a class, first
-	var intersect = _.intersection(sources, classes);
+	const intersect = _.intersection(sources, classes);
 	if (intersect.length) return classes.indexOf(intersect[0]);
 
 	// If not a class, check for an archetype as a source, and return the associated class
-	var className = _.find(classes, function (item) {
+	const className = _.find(classes, function (item) {
 		return _.intersection(archetypes[item], sources).length;
 	});
 	if (className) return classes.indexOf(className);
@@ -988,7 +840,7 @@ export function getClassSource(sources, archetypes) {
 
 export function importSkills(attrs, skills, size, ACP) {
 	// Ripped from the PF character sheet JS
-	var skillSize;
+	let skillSize;
 	switch (Math.abs(size)) {
 		case 0:
 			skillSize = 0;
@@ -1012,7 +864,7 @@ export function importSkills(attrs, skills, size, ACP) {
 			skillSize = 0;
 	}
 	if (size < 0) {
-		skillSize = skillSize * -1;
+		skillSize *= -1;
 	}
 
 	// Clear out all existing skills data
@@ -1668,26 +1520,26 @@ export function importSkills(attrs, skills, size, ACP) {
 		"misc-skill-2-name": "",
 		"misc-skill-3-name": "",
 		"misc-skill-4-name": "",
-		"misc-skill-5-name": ""
+		"misc-skill-5-name": "",
 	});
 
 	// Keep track of which of these skills we're on
-	var craft = 1;
-	var perform = 1;
-	var profession = 1;
-	var artistry = 1;
-	var lore = 1;
-	var misc = 0;
+	let craft = 1;
+	let perform = 1;
+	let profession = 1;
+	let artistry = 1;
+	let lore = 1;
+	let misc = 0;
 
-	var i = 0;
-	var skill;
-	var skillMisc;
-	var skillAttrPrefix;
+	let i = 0;
+	let skill;
+	let skillMisc;
+	let skillAttrPrefix;
 	for (i = 0; i < skills.length; i++) {
-		/*if (_.isUndefined(skill._name))
+		/* if (_.isUndefined(skill._name))
 		{
 			continue;
-		}*/
+		} */
 		skill = skills[i];
 
 		// Figure out where we're putting this skill on the character sheet
@@ -1701,21 +1553,18 @@ export function importSkills(attrs, skills, size, ACP) {
 						.replace(")", "");
 				craft++;
 			} else if (craft <= 10) {
-				skillAttrPrefix = "craft" + craft;
+				skillAttrPrefix = `craft${craft}`;
 				if (skill._name.match(/\(([^\)]*)\)/) !== null)
-					attrs["craft" + craft + "-name"] = skill._name
+					attrs[`craft${craft}-name`] = skill._name
 						.match(/\(([^\)]*)\)/)[0]
 						.replace("(", "")
 						.replace(")", "");
 				craft++;
-			} else {
-				if (misc <= 10) {
-					skillAttrPrefix = "misc-skill-" + misc;
-					if (skill._name.match(/\(([^\)]*)\)/) !== null)
-						attrs[skillAttrPrefix + "-name"] = skill._name;
-					misc++;
-				} else console.log("Ran out of misc skills for " + skill._name + "!");
-			}
+			} else if (misc <= 10) {
+				skillAttrPrefix = `misc-skill-${misc}`;
+				if (skill._name.match(/\(([^\)]*)\)/) !== null) attrs[`${skillAttrPrefix}-name`] = skill._name;
+				misc++;
+			} else console.log(`Ran out of misc skills for ${skill._name}!`);
 		} else if (skill._name.indexOf("Perform") !== -1) {
 			if (perform === 1) {
 				skillAttrPrefix = "perform";
@@ -1726,21 +1575,18 @@ export function importSkills(attrs, skills, size, ACP) {
 						.replace(")", "");
 				perform++;
 			} else if (perform <= 10) {
-				skillAttrPrefix = "perform" + perform;
+				skillAttrPrefix = `perform${perform}`;
 				if (skill._name.match(/\(([^\)]*)\)/) !== null)
-					attrs["perform" + perform + "-name"] = skill._name
+					attrs[`perform${perform}-name`] = skill._name
 						.match(/\(([^\)]*)\)/)[0]
 						.replace("(", "")
 						.replace(")", "");
 				perform++;
-			} else {
-				if (misc <= 10) {
-					skillAttrPrefix = "misc-skill-" + misc;
-					if (skill._name.match(/\(([^\)]*)\)/) !== null)
-						attrs[skillAttrPrefix + "-name"] = skill._name;
-					misc++;
-				} else console.log("Ran out of misc skills for " + skill._name + "!");
-			}
+			} else if (misc <= 10) {
+				skillAttrPrefix = `misc-skill-${misc}`;
+				if (skill._name.match(/\(([^\)]*)\)/) !== null) attrs[`${skillAttrPrefix}-name`] = skill._name;
+				misc++;
+			} else console.log(`Ran out of misc skills for ${skill._name}!`);
 		} else if (skill._name.indexOf("Profession") !== -1) {
 			if (profession === 1) {
 				skillAttrPrefix = "profession";
@@ -1751,21 +1597,18 @@ export function importSkills(attrs, skills, size, ACP) {
 						.replace(")", "");
 				profession++;
 			} else if (profession <= 10) {
-				skillAttrPrefix = "profession" + profession;
+				skillAttrPrefix = `profession${profession}`;
 				if (skill._name.match(/\(([^\)]*)\)/) !== null)
-					attrs["profession" + profession + "-name"] = skill._name
+					attrs[`profession${profession}-name`] = skill._name
 						.match(/\(([^\)]*)\)/)[0]
 						.replace("(", "")
 						.replace(")", "");
 				profession++;
-			} else {
-				if (misc <= 10) {
-					skillAttrPrefix = "misc-skill-" + misc;
-					if (skill._name.match(/\(([^\)]*)\)/) !== null)
-						attrs[skillAttrPrefix + "-name"] = skill._name;
-					misc++;
-				} else console.log("Ran out of misc skills for " + skill._name + "!");
-			}
+			} else if (misc <= 10) {
+				skillAttrPrefix = `misc-skill-${misc}`;
+				if (skill._name.match(/\(([^\)]*)\)/) !== null) attrs[`${skillAttrPrefix}-name`] = skill._name;
+				misc++;
+			} else console.log(`Ran out of misc skills for ${skill._name}!`);
 		} else if (skill._name.indexOf("Knowledge") !== -1) {
 			switch (skill._name.match(/\(([^\)]*)\)/g)[0]) {
 				case "(arcana)":
@@ -1778,15 +1621,11 @@ export function importSkills(attrs, skills, size, ACP) {
 				case "(nobility)":
 				case "(planes)":
 				case "(religion)":
-					skillAttrPrefix = skill._name
-						.toLowerCase()
-						.replace(/\s/g, "-")
-						.replace("(", "")
-						.replace(")", "");
+					skillAttrPrefix = skill._name.toLowerCase().replace(/\s/g, "-").replace("(", "").replace(")", "");
 					break;
 				default:
-					skillAttrPrefix = "misc-skill-" + misc;
-					attrs[skillAttrPrefix + "-name"] = skill._name;
+					skillAttrPrefix = `misc-skill-${misc}`;
+					attrs[`${skillAttrPrefix}-name`] = skill._name;
 					misc++;
 			}
 		} else if (skill._name.indexOf("Artistry") !== -1) {
@@ -1798,19 +1637,17 @@ export function importSkills(attrs, skills, size, ACP) {
 					.replace(")", "");
 				artistry++;
 			} else if (artistry <= 10) {
-				skillAttrPrefix = "artistry" + artistry;
-				attrs["artistry" + artistry + "-name"] = skill._name
+				skillAttrPrefix = `artistry${artistry}`;
+				attrs[`artistry${artistry}-name`] = skill._name
 					.match(/\(([^\)]*)\)/)[0]
 					.replace("(", "")
 					.replace(")", "");
 				artistry++;
-			} else {
-				if (misc <= 10) {
-					skillAttrPrefix = "misc-skill-" + misc;
-					attrs[skillAttrPrefix + "-name"] = skill._name;
-					misc++;
-				} else console.log("Ran out of misc skills for " + skill._name + "!");
-			}
+			} else if (misc <= 10) {
+				skillAttrPrefix = `misc-skill-${misc}`;
+				attrs[`${skillAttrPrefix}-name`] = skill._name;
+				misc++;
+			} else console.log(`Ran out of misc skills for ${skill._name}!`);
 		} else if (skill._name.indexOf("Lore") !== -1) {
 			if (lore === 1) {
 				skillAttrPrefix = "lore";
@@ -1820,19 +1657,17 @@ export function importSkills(attrs, skills, size, ACP) {
 					.replace(")", "");
 				lore++;
 			} else if (lore <= 10) {
-				skillAttrPrefix = "lore" + lore;
-				attrs["lore" + lore + "-name"] = skill._name
+				skillAttrPrefix = `lore${lore}`;
+				attrs[`lore${lore}-name`] = skill._name
 					.match(/\(([^\)]*)\)/)[0]
 					.replace("(", "")
 					.replace(")", "");
 				lore++;
-			} else {
-				if (misc <= 10) {
-					skillAttrPrefix = "misc-skill-" + misc;
-					attrs[skillAttrPrefix + "-name"] = skill._name;
-					misc++;
-				} else console.log("Ran out of misc skills for " + skill._name + "!");
-			}
+			} else if (misc <= 10) {
+				skillAttrPrefix = `misc-skill-${misc}`;
+				attrs[`${skillAttrPrefix}-name`] = skill._name;
+				misc++;
+			} else console.log(`Ran out of misc skills for ${skill._name}!`);
 		} else
 			skillAttrPrefix = skill._name
 				.toLowerCase()
@@ -1845,62 +1680,51 @@ export function importSkills(attrs, skills, size, ACP) {
 				.replace("-animal", "-Animal");
 
 		attrs[skillAttrPrefix] = parseNum(skill._value);
-		attrs[skillAttrPrefix + "-ranks"] = parseNum(skill._ranks);
-		attrs[skillAttrPrefix + "-ability"] = skill._attrname + "-mod";
-		attrs[skillAttrPrefix + "-ability-mod"] = parseNum(skill._attrbonus);
+		attrs[`${skillAttrPrefix}-ranks`] = parseNum(skill._ranks);
+		attrs[`${skillAttrPrefix}-ability`] = `${skill._attrname}-mod`;
+		attrs[`${skillAttrPrefix}-ability-mod`] = parseNum(skill._attrbonus);
 
-		if (skill._classskill === "yes") attrs[skillAttrPrefix + "-cs"] = 3;
+		if (skill._classskill === "yes") attrs[`${skillAttrPrefix}-cs`] = 3;
 
-		skillMisc =
-			parseNum(skill._value) -
-			parseNum(skill._ranks) -
-			parseNum(skill._attrbonus);
-		if (parseNum(skill._ranks) !== 0 && skill._classskill === "yes")
-			skillMisc -= 3;
+		skillMisc = parseNum(skill._value) - parseNum(skill._ranks) - parseNum(skill._attrbonus);
+		if (parseNum(skill._ranks) !== 0 && skill._classskill === "yes") skillMisc -= 3;
 		if (skill._armorcheck === "yes") skillMisc -= ACP;
 		if (skill._name === "Fly") skillMisc -= skillSize;
 		if (skill._name === "Stealth") skillMisc -= 2 * skillSize;
-		attrs[skillAttrPrefix + "-misc"] = skillMisc;
+		attrs[`${skillAttrPrefix}-misc`] = skillMisc;
 
-		if (skill._trainedonly === "yes") attrs[skillAttrPrefix + "-ReqTrain"] = 1;
+		if (skill._trainedonly === "yes") attrs[`${skillAttrPrefix}-ReqTrain`] = 1;
 
 		// Add situation modifiers to the macro
 		if (!_.isUndefined(skill.situationalmodifiers.situationalmodifier)) {
-			var notes = "";
-			skill.situationalmodifiers.situationalmodifier = arrayify(
-				skill.situationalmodifiers.situationalmodifier
-			);
-			var j = 0;
+			let notes = "";
+			skill.situationalmodifiers.situationalmodifier = arrayify(skill.situationalmodifiers.situationalmodifier);
+			let j = 0;
 			while (j < skill.situationalmodifiers.situationalmodifier.length) {
-				notes =
-					notes +
-					"}} {{" +
-					skill.situationalmodifiers.situationalmodifier[j]._source +
-					"=" +
-					skill.situationalmodifiers.situationalmodifier[j]._text;
+				notes = `${notes}}} {{${skill.situationalmodifiers.situationalmodifier[j]._source}=${skill.situationalmodifiers.situationalmodifier[j]._text}`;
 				j++;
 			}
-			attrs[skillAttrPrefix + "-note"] = notes;
+			attrs[`${skillAttrPrefix}-note`] = notes;
 		}
 	}
-	var numCPP = Math.max(craft, perform, profession, artistry, lore);
-	if (numCPP > 6) attrs["custom_skill_num_show"] = 10;
-	else if (numCPP > 3) attrs["custom_skill_num_show"] = 6;
-	else if (numCPP > 2) attrs["custom_skill_num_show"] = 3;
-	else if (numCPP > 2) attrs["custom_skill_num_show"] = 2;
-	else attrs["custom_skill_num_show"] = 1;
+	const numCPP = Math.max(craft, perform, profession, artistry, lore);
+	if (numCPP > 6) attrs.custom_skill_num_show = 10;
+	else if (numCPP > 3) attrs.custom_skill_num_show = 6;
+	else if (numCPP > 2) attrs.custom_skill_num_show = 3;
+	else if (numCPP > 2) attrs.custom_skill_num_show = 2;
+	else attrs.custom_skill_num_show = 1;
 
-	if (misc > 6) attrs["misc_skill_num_show"] = 10;
-	else if (misc > 3) attrs["misc_skill_num_show"] = 6;
-	else if (misc > 2) attrs["misc_skill_num_show"] = 3;
-	else if (misc > 2) attrs["misc_skill_num_show"] = 2;
-	else attrs["misc_skill_num_show"] = 1;
+	if (misc > 6) attrs.misc_skill_num_show = 10;
+	else if (misc > 3) attrs.misc_skill_num_show = 6;
+	else if (misc > 2) attrs.misc_skill_num_show = 3;
+	else if (misc > 2) attrs.misc_skill_num_show = 2;
+	else attrs.misc_skill_num_show = 1;
 }
 
 // Import ACP and Max Dex; these aren't included under items, but the final values are listed in penalties
 export function importPenalties(attrs, penalties) {
-	var ACP = 0;
-	var i = 0;
+	let ACP = 0;
+	let i = 0;
 	while (i < penalties.length) {
 		if (penalties[i]._name === "Armor Check Penalty") {
 			ACP = parseNum(penalties[i]._value);
@@ -1913,8 +1737,8 @@ export function importPenalties(attrs, penalties) {
 }
 
 export function importAC(attrs, acObj, armorPenalties) {
-	attrs["AC"] = parseNum(acObj._ac);
-	attrs["Touch"] = parseNum(acObj._touch);
+	attrs.AC = parseNum(acObj._ac);
+	attrs.Touch = parseNum(acObj._touch);
 	attrs["Flat-Footed"] = parseNum(acObj._flatfooted);
 
 	attrs["AC-natural"] = parseNum(acObj._fromnatural);
@@ -1927,9 +1751,7 @@ export function importAC(attrs, acObj, armorPenalties) {
 	if (acObj._fromdexterity === "") {
 		if (acObj._fromcharisma !== "") {
 			attrs["AC-ability"] = "CHA-mod";
-			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(
-				acObj._fromcharisma
-			);
+			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromcharisma);
 			attrs["AC-misc"] =
 				parseNum(acObj._ac) -
 				10 -
@@ -1942,9 +1764,7 @@ export function importAC(attrs, acObj, armorPenalties) {
 				parseNum(acObj._fromdodge);
 		} else if (acObj._fromwisdom !== "") {
 			attrs["AC-ability"] = "WIS-mod";
-			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(
-				acObj._fromwisdom
-			);
+			attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromwisdom);
 			attrs["AC-misc"] =
 				parseNum(acObj._ac) -
 				10 -
@@ -1958,9 +1778,7 @@ export function importAC(attrs, acObj, armorPenalties) {
 		}
 	} else {
 		attrs["AC-ability"] = "DEX-mod";
-		attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(
-			acObj._fromdexterity
-		);
+		attrs["AC-ability-mod"] = attrs["AC-ability-display"] = parseNum(acObj._fromdexterity);
 		attrs["AC-misc"] =
 			parseNum(acObj._ac) -
 			10 -
@@ -1975,30 +1793,24 @@ export function importAC(attrs, acObj, armorPenalties) {
 }
 
 export function importCharacter(characterObj) {
-	var attrs = {};
+	const attrs = {};
 
 	importAbilityScores(attrs, characterObj.attributes.attribute);
 	importSaves(attrs, characterObj.saves);
-	var classes,
-		spellClasses,
-		archetypes = {};
+	let classes;
+	let spellClasses;
+	let archetypes = {};
 	// Class objects won't exist for creatures w/o class levels, such as animals
 	if (!_.isUndefined(characterObj.classes.class)) {
 		// Class will be an array if multiclassed, but a single object if single-classed; make it an array, just to be safe
 		characterObj.classes.class = arrayify(characterObj.classes.class);
 
-		classes = importClasses(
-			attrs,
-			characterObj.classes.class,
-			characterObj.health._hitdice
-		);
+		classes = importClasses(attrs, characterObj.classes.class, characterObj.health._hitdice);
 
 		// If any of the character's classes is a spellcaster, it'll be listed here, too
 		if (!_.isUndefined(characterObj.spellclasses.spellclass)) {
-			attrs["use_spells"] = 1;
-			characterObj.spellclasses.spellclass = arrayify(
-				characterObj.spellclasses.spellclass
-			);
+			attrs.use_spells = 1;
+			characterObj.spellclasses.spellclass = arrayify(characterObj.spellclasses.spellclass);
 			spellClasses = importSpellClasses(
 				attrs,
 				characterObj.spellclasses.spellclass,
@@ -2007,10 +1819,10 @@ export function importCharacter(characterObj) {
 			);
 
 			// Well, it's a spellcaster, so let's import those spells, too!
-			var spellsArray = arrayify(characterObj.spellsknown.spell)
+			let spellsArray = arrayify(characterObj.spellsknown.spell)
 				.concat(arrayify(characterObj.spellbook.spell))
 				.concat(arrayify(characterObj.spellsmemorized.spell));
-			var spellNames = [];
+			const spellNames = [];
 			spellsArray = _.reject(spellsArray, function (spell) {
 				if (_.contains(spellNames, spell._name)) return true;
 				spellNames.concat(spell._name);
@@ -2024,10 +1836,10 @@ export function importCharacter(characterObj) {
 	}
 
 	characterObj.penalties.penalty = arrayify(characterObj.penalties.penalty);
-	var ACP = importPenalties(attrs, characterObj.penalties.penalty);
+	const ACP = importPenalties(attrs, characterObj.penalties.penalty);
 
 	// Build an object we can pass to the item importing, so we can attach this to the inventory item
-	var armorPenalties = {};
+	const armorPenalties = {};
 	armorPenalties.ACP = parseNum(attrs["armor3-acp"]);
 	armorPenalties.maxDex = parseNum(attrs["armor3-max-dex"]);
 	armorPenalties.spellfail = parseNum(attrs["armor3-spell-fail"]);
@@ -2036,46 +1848,38 @@ export function importCharacter(characterObj) {
 
 	// We might change these values if we're using a shield, so don't set them outside of item import
 	if (!_.isUndefined(attrs["armor3-acp"])) delete attrs["armor3-acp"];
-	if (!_.isUndefined(attrs["armor3-spell-fail"]))
-		delete attrs["armor3-spell-fail"];
+	if (!_.isUndefined(attrs["armor3-spell-fail"])) delete attrs["armor3-spell-fail"];
 
-	var armor = _.reject(
-		arrayify(characterObj.defenses.armor || {}),
-		function (item) {
-			return _.isUndefined(item._name);
-		}
-	);
-	var weapons = _.reject(
-		arrayify(characterObj.melee.weapon || {}).concat(
-			arrayify(characterObj.ranged.weapon || {})
-		),
+	const armor = _.reject(arrayify(characterObj.defenses.armor || {}), function (item) {
+		return _.isUndefined(item._name);
+	});
+	const weapons = _.reject(
+		arrayify(characterObj.melee.weapon || {}).concat(arrayify(characterObj.ranged.weapon || {})),
 		function (item) {
 			return _.isUndefined(item._name);
 		}
 	);
 
 	// "Tracked Resources" is a list of uses, either a quantity of items, charges, or uses per day
-	var resources = _.object(
+	const resources = _.object(
 		_.map(characterObj.trackedresources.trackedresource, function (resource) {
 			return [resource._name, resource];
 		})
 	);
 
 	// Make an array of items, both magic and mundane
-	var items = _.reject(
-		arrayify(characterObj.magicitems.item || {}).concat(
-			arrayify(characterObj.gear.item || {})
-		),
+	const items = _.reject(
+		arrayify(characterObj.magicitems.item || {}).concat(arrayify(characterObj.gear.item || {})),
 		function (item) {
 			return _.isUndefined(item._name);
 		}
 	);
 
 	// "Specials" could include items, so we need to filter them out
-	var itemNames = _.map(items, function (obj) {
+	const itemNames = _.map(items, function (obj) {
 		return obj._name;
 	});
-	var specials = _.reject(
+	const specials = _.reject(
 		arrayify(characterObj.attack.special).concat(
 			arrayify(characterObj.defenses.special),
 			arrayify(characterObj.otherspecials.special),
@@ -2090,46 +1894,35 @@ export function importCharacter(characterObj) {
 	importItems(items, resources, armorPenalties, armor, weapons);
 
 	getSectionIDs("repeating_ability", function (idarray) {
-		var abilityNameAttrs = _.union(
+		const abilityNameAttrs = _.union(
 			_.map(idarray, function (id) {
-				return "repeating_ability_" + id + "_name";
+				return `repeating_ability_${id}_name`;
 			}),
 			_.map(idarray, function (id) {
-				return "repeating_ability_" + id + "_rule_category";
+				return `repeating_ability_${id}_rule_category`;
 			})
 		);
 		getAttrs(abilityNameAttrs, function (abilityAttrs) {
-			var abilityObjList = {};
-			var abilityKeys = Object.keys(abilityAttrs);
-			var asyncAttrs = {};
+			const abilityObjList = {};
+			const abilityKeys = Object.keys(abilityAttrs);
+			const asyncAttrs = {};
 			_.each(abilityKeys, function (abilityKey) {
-				var rowID;
+				let rowID;
 				if (abilityKey.indexOf("_name") !== -1) {
-					rowID = abilityKey.substring(
-						"repeating_ability_".length,
-						abilityKey.indexOf("_name")
-					);
-					if (_.isUndefined(abilityObjList[rowID]))
-						abilityObjList[rowID] = {rowID: rowID};
+					rowID = abilityKey.substring("repeating_ability_".length, abilityKey.indexOf("_name"));
+					if (_.isUndefined(abilityObjList[rowID])) abilityObjList[rowID] = {rowID};
 					abilityObjList[rowID].name = abilityAttrs[abilityKey];
 				}
 				if (abilityKey.indexOf("_rule_category") !== -1) {
-					rowID = abilityKey.substring(
-						"repeating_ability_".length,
-						abilityKey.indexOf("_rule_category")
-					);
-					if (_.isUndefined(abilityObjList[rowID]))
-						abilityObjList[rowID] = {rowID: rowID};
+					rowID = abilityKey.substring("repeating_ability_".length, abilityKey.indexOf("_rule_category"));
+					if (_.isUndefined(abilityObjList[rowID])) abilityObjList[rowID] = {rowID};
 					abilityObjList[rowID].rulecategory = abilityAttrs[abilityKey];
 				}
 			});
 
 			if (!_.isUndefined(characterObj.feats.feat)) {
-				var featsArray = _.filter(
-					abilityObjList,
-					_.matcher({rulecategory: "feats"})
-				);
-				var featsList = {};
+				const featsArray = _.filter(abilityObjList, _.matcher({rulecategory: "feats"}));
+				const featsList = {};
 				_.each(featsArray, function (obj) {
 					featsList[obj.rowID] = obj.name;
 				});
@@ -2138,49 +1931,30 @@ export function importCharacter(characterObj) {
 			}
 
 			if (!_.isUndefined(characterObj.traits.trait)) {
-				var traitsArray = _.filter(
-					abilityObjList,
-					_.matcher({rulecategory: "traits"})
-				);
-				var traitsList = {};
+				const traitsArray = _.filter(abilityObjList, _.matcher({rulecategory: "traits"}));
+				const traitsList = {};
 				_.each(traitsArray, function (obj) {
 					traitsList[obj.rowID] = obj.name;
 				});
 				characterObj.traits.trait = arrayify(characterObj.traits.trait);
-				importTraits(
-					asyncAttrs,
-					characterObj.traits.trait,
-					traitsList,
-					resources
-				);
+				importTraits(asyncAttrs, characterObj.traits.trait, traitsList, resources);
 			}
 
 			if (!_.isUndefined(characterObj.spelllike.special)) {
-				var SLAsArray = _.filter(
-					abilityObjList,
-					_.matcher({rulecategory: "spell-like-abilities"})
-				);
-				var SLAsList = {};
+				const SLAsArray = _.filter(abilityObjList, _.matcher({rulecategory: "spell-like-abilities"}));
+				const SLAsList = {};
 				_.each(SLAsArray, function (obj) {
 					SLAsList[obj.rowID] = obj.name;
 				});
-				characterObj.spelllike.special = arrayify(
-					characterObj.spelllike.special
-				);
-				importSLAs(
-					asyncAttrs,
-					characterObj.spelllike.special,
-					SLAsList,
-					resources
-				);
+				characterObj.spelllike.special = arrayify(characterObj.spelllike.special);
+				importSLAs(asyncAttrs, characterObj.spelllike.special, SLAsList, resources);
 			}
 
-			var featuresArray = _.filter(abilityObjList, function (obj) {
-				if (obj.rulecategory === "traits" || obj.rulecategory === "feats")
-					return false;
+			const featuresArray = _.filter(abilityObjList, function (obj) {
+				if (obj.rulecategory === "traits" || obj.rulecategory === "feats") return false;
 				return true;
 			});
-			var featuresList = {};
+			const featuresList = {};
 			_.each(featuresArray, function (obj) {
 				featuresList[obj.rowID] = obj;
 			});
@@ -2190,10 +1964,10 @@ export function importCharacter(characterObj) {
 		});
 	});
 
-	attrs["experience"] = parseFloat(characterObj.xp._total);
+	attrs.experience = parseFloat(characterObj.xp._total);
 
 	attrs["class-0-bab"] =
-		attrs["bab"] =
+		attrs.bab =
 		attrs["melee_bab-mod"] =
 		attrs["melee2_bab-mod"] =
 		attrs["ranged_bab-mod"] =
@@ -2205,29 +1979,24 @@ export function importCharacter(characterObj) {
 
 	// Set max hp; remove Con mod from hp first, since the sheet will add that in
 	// Since the XML doesn't break this down by class, add it all to class 0
-	attrs["non-lethal-damage_max"] = attrs["HP_max"] = parseNum(
-		characterObj.health._hitpoints
-	);
-	var level = calcHitDice(characterObj.health._hitdice);
-	attrs["level"] = level;
-	attrs["HP-ability-mod"] = parseNum(
-		characterObj.attributes.attribute[2].attrbonus._modified
-	);
-	attrs["hp_ability_bonus"] =
-		level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
+	attrs["non-lethal-damage_max"] = attrs.HP_max = parseNum(characterObj.health._hitpoints);
+	const level = calcHitDice(characterObj.health._hitdice);
+	attrs.level = level;
+	attrs["HP-ability-mod"] = parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
+	attrs.hp_ability_bonus = level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
 	attrs["total-hp"] = attrs["class-0-hp"] =
 		parseNum(characterObj.health._hitpoints) -
 		level * parseNum(characterObj.attributes.attribute[2].attrbonus._modified);
 	importInit(attrs, characterObj.initiative);
-	var racialHD = level - parseNum(characterObj.classes._level);
+	const racialHD = level - parseNum(characterObj.classes._level);
 	if (racialHD > 0) {
-		attrs["add_race"] = 1;
+		attrs.add_race = 1;
 		attrs["npc-hd-num"] = racialHD;
 	}
 
-	var size = getSizeMod(characterObj.size._name);
-	attrs["size"] = size;
-	attrs["default_char_size"] = size;
+	const size = getSizeMod(characterObj.size._name);
+	attrs.size = size;
+	attrs.default_char_size = size;
 	attrs["CMD-size"] = size * -1;
 
 	characterObj.skills.skill = arrayify(characterObj.skills.skill);
@@ -2235,127 +2004,92 @@ export function importCharacter(characterObj) {
 
 	if (!_.isUndefined(characterObj.senses.special)) {
 		characterObj.senses.special = arrayify(characterObj.senses.special);
-		attrs["vision"] = buildList(characterObj.senses.special, "_shortname");
+		attrs.vision = buildList(characterObj.senses.special, "_shortname");
 	}
 
 	if (!_.isUndefined(characterObj.damagereduction.special)) {
-		characterObj.damagereduction.special = arrayify(
-			characterObj.damagereduction.special
-		);
-		attrs["DR"] = buildList(characterObj.damagereduction.special, "_shortname");
+		characterObj.damagereduction.special = arrayify(characterObj.damagereduction.special);
+		attrs.DR = buildList(characterObj.damagereduction.special, "_shortname");
 	}
 
 	if (!_.isUndefined(characterObj.resistances.special)) {
-		characterObj.resistances.special = arrayify(
-			characterObj.resistances.special
-		);
-		attrs["resistances"] = buildList(
-			characterObj.resistances.special,
-			"_shortname"
-		);
+		characterObj.resistances.special = arrayify(characterObj.resistances.special);
+		attrs.resistances = buildList(characterObj.resistances.special, "_shortname");
 	}
 
 	if (!_.isUndefined(characterObj.immunities.special)) {
 		characterObj.immunities.special = arrayify(characterObj.immunities.special);
-		attrs["immunities"] = buildList(
-			characterObj.immunities.special,
-			"_shortname"
-		);
+		attrs.immunities = buildList(characterObj.immunities.special, "_shortname");
 	}
 
 	if (!_.isUndefined(characterObj.weaknesses.special)) {
 		characterObj.weaknesses.special = arrayify(characterObj.weaknesses.special);
-		attrs["weaknesses"] = buildList(
-			characterObj.weaknesses.special,
-			"_shortname"
-		);
+		attrs.weaknesses = buildList(characterObj.weaknesses.special, "_shortname");
 	}
 
 	if (!_.isUndefined(characterObj.languages.language)) {
 		characterObj.languages.language = arrayify(characterObj.languages.language);
-		attrs["languages"] = buildList(characterObj.languages.language, "_name");
+		attrs.languages = buildList(characterObj.languages.language, "_name");
 	}
 
 	attrs["npc-type"] = arrayify(characterObj.types.type)[0]._name;
 	if (!_.isUndefined(characterObj.subtypes.subtype))
-		attrs["npc-type"] =
-			attrs["npc-type"] +
-			" (" +
-			buildList(arrayify(characterObj.subtypes.subtype), "_name") +
-			")";
+		attrs["npc-type"] = `${attrs["npc-type"]} (${buildList(arrayify(characterObj.subtypes.subtype), "_name")})`;
 
-	attrs["character_name"] = characterObj._name;
+	attrs.character_name = characterObj._name;
 	// NPC Only
 	if (characterObj._role !== "pc") {
-		attrs["is_npc"] = 1;
-		attrs["tab"] = 8;
+		attrs.is_npc = 1;
+		attrs.tab = 8;
 		if (!_.isUndefined(characterObj.npc.ecology.npcinfo)) {
-			attrs["environment"] =
-				arrayify(characterObj.npc.ecology.npcinfo)[0].text || "";
-			attrs["organization"] =
-				arrayify(characterObj.npc.ecology.npcinfo)[1].text || "";
-			attrs["other_items_treasure"] =
-				arrayify(characterObj.npc.ecology.npcinfo)[2].text || "";
+			attrs.environment = arrayify(characterObj.npc.ecology.npcinfo)[0].text || "";
+			attrs.organization = arrayify(characterObj.npc.ecology.npcinfo)[1].text || "";
+			attrs.other_items_treasure = arrayify(characterObj.npc.ecology.npcinfo)[2].text || "";
 		}
 		if (!_.isUndefined(characterObj.npc.tactics)) {
 			attrs["npc-during-combat"] = characterObj.npc.tactics || "";
 		}
 	}
 	attrs["player-name"] = characterObj._playername;
-	attrs["deity"] = characterObj.deity._name;
-	attrs["race"] =
-		characterObj.race._racetext.substr(0, 1).toUpperCase() +
-		characterObj.race._racetext.substr(1, 1000);
-	attrs["alignment"] = characterObj.alignment._name;
-	attrs["gender"] = characterObj.personal._gender;
-	attrs["age"] = characterObj.personal._age;
-	attrs["height"] = characterObj.personal.charheight._text;
-	attrs["weight"] = characterObj.personal.charweight._text;
-	attrs["hair"] = characterObj.personal._hair;
-	attrs["eyes"] = characterObj.personal._eyes;
-	attrs["skin"] = characterObj.personal._skin;
+	attrs.deity = characterObj.deity._name;
+	attrs.race = characterObj.race._racetext.substr(0, 1).toUpperCase() + characterObj.race._racetext.substr(1, 1000);
+	attrs.alignment = characterObj.alignment._name;
+	attrs.gender = characterObj.personal._gender;
+	attrs.age = characterObj.personal._age;
+	attrs.height = characterObj.personal.charheight._text;
+	attrs.weight = characterObj.personal.charweight._text;
+	attrs.hair = characterObj.personal._hair;
+	attrs.eyes = characterObj.personal._eyes;
+	attrs.skin = characterObj.personal._skin;
 	// PC/NPC
-	attrs["character_description"] =
-		characterObj._role !== "pc"
-			? characterObj.npc.description
-			: characterObj.personal.description;
+	attrs.character_description =
+		characterObj._role !== "pc" ? characterObj.npc.description : characterObj.personal.description;
 
 	attrs["npc-cr"] = characterObj.challengerating._text.replace("CR ", "");
 	attrs["npc-xp"] = characterObj.xpaward._value;
 
-	attrs["speed-base"] = attrs["speed-modified"] = parseNum(
-		characterObj.movement.speed._value
-	);
+	attrs["speed-base"] = attrs["speed-modified"] = parseNum(characterObj.movement.speed._value);
 
-	attrs["cmb"] = parseNum(characterObj.maneuvers._total);
-	attrs["cmd"] = parseNum(characterObj.maneuvers._cmd);
+	attrs.cmb = parseNum(characterObj.maneuvers._total);
+	attrs.cmd = parseNum(characterObj.maneuvers._cmd);
 	attrs["ff-cmd"] = parseNum(characterObj.maneuvers._cmdflatfooted);
 	attrs["cmd-str"] = attrs["STR-mod"]; // CMB/CMD doesn't have any breakdown in XML, so have to assume still using STR
 	attrs["cmd-misc"] =
-		attrs["cmd"] -
+		attrs.cmd -
 		10 -
 		attrs["AC-ability-mod"] -
 		attrs["cmd-str"] -
 		attrs["CMD-size"] -
 		attrs["AC-dodge"] -
 		attrs["AC-deflect"] -
-		attrs["bab"];
+		attrs.bab;
 
-	attrs["attk-melee"] = parseNum(
-		characterObj.attack._meleeattack.split("/")[0]
-	);
-	attrs["attk-ranged"] = attrs["attk-melee2"] = parseNum(
-		characterObj.attack._rangedattack.split("/")[0]
-	); // Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
+	attrs["attk-melee"] = parseNum(characterObj.attack._meleeattack.split("/")[0]);
+	attrs["attk-ranged"] = attrs["attk-melee2"] = parseNum(characterObj.attack._rangedattack.split("/")[0]); // Assuming Melee 2 is using Dex, setting to ranged bonus because lazy
 
 	if (!_.isUndefined(characterObj.favoredclasses.favoredclass)) {
-		characterObj.favoredclasses.favoredclass = arrayify(
-			characterObj.favoredclasses.favoredclass
-		);
-		attrs["class-favored"] = buildList(
-			characterObj.favoredclasses.favoredclass,
-			"_name"
-		);
+		characterObj.favoredclasses.favoredclass = arrayify(characterObj.favoredclasses.favoredclass);
+		attrs["class-favored"] = buildList(characterObj.favoredclasses.favoredclass, "_name");
 	}
 
 	attrs["other-PP"] = characterObj.money._pp;
@@ -2363,32 +2097,26 @@ export function importCharacter(characterObj) {
 	attrs["other-SP"] = characterObj.money._sp;
 	attrs["other-CP"] = characterObj.money._cp;
 
-	attrs["load-str-bonus"] =
-		parseNum(characterObj.encumbrance._encumstr) - attrs["STR"];
+	attrs["load-str-bonus"] = parseNum(characterObj.encumbrance._encumstr) - attrs.STR;
 	attrs["load-light"] = characterObj.encumbrance._light;
 	attrs["load-medium"] = characterObj.encumbrance._medium;
-	attrs["load-heavy"] = attrs["lift-above-head"] =
-		characterObj.encumbrance._heavy;
-	attrs["load-max"] = attrs["lift-off-ground"] =
-		parseNum(characterObj.encumbrance._heavy) * 2;
+	attrs["load-heavy"] = attrs["lift-above-head"] = characterObj.encumbrance._heavy;
+	attrs["load-max"] = attrs["lift-off-ground"] = parseNum(characterObj.encumbrance._heavy) * 2;
 	attrs["lift-drag-and-push"] = parseNum(characterObj.encumbrance._heavy) * 5;
 
 	if (!_.isUndefined(characterObj.pathfindersociety)) {
-		attrs["set_pfs"] = 1;
+		attrs.set_pfs = 1;
 		PFHealth.setToPFS(null);
 	}
 
 	if (!_.isUndefined(characterObj.factions.faction)) {
-		var faction = _.find(
-			arrayify(characterObj.factions.faction),
-			function (fac) {
-				return _.isUndefined(fac._retired);
-			}
-		);
+		const faction = _.find(arrayify(characterObj.factions.faction), function (fac) {
+			return _.isUndefined(fac._retired);
+		});
 		if (!_.isUndefined(faction)) {
-			attrs["prestige"] = faction._cpa;
-			attrs["fame"] = faction._tpa;
-			attrs["faction_notes"] = faction._name;
+			attrs.prestige = faction._cpa;
+			attrs.fame = faction._tpa;
+			attrs.faction_notes = faction._name;
 		}
 	}
 
@@ -2396,17 +2124,14 @@ export function importCharacter(characterObj) {
 }
 export function registerEventHandlers() {
 	on("change:herolab_import", function (eventInfo) {
-		TAS.debug(
-			"caught " + eventInfo.sourceAttribute + " event" + eventInfo.sourceType
-		);
+		TAS.debug(`caught ${eventInfo.sourceAttribute} event${eventInfo.sourceType}`);
 		if (eventInfo.sourceType !== "player") return;
 		getAttrs(["herolab_import"], function (values) {
-			var xmlObj;
+			let xmlObj;
 			if (_.isUndefined(values.herolab_import)) return;
 			try {
 				xmlObj = JSON.parse(values.herolab_import);
-				if (_.isArray(xmlObj.document.public.character))
-					importCharacter(xmlObj.document.public.character[0]);
+				if (_.isArray(xmlObj.document.public.character)) importCharacter(xmlObj.document.public.character[0]);
 				else importCharacter(xmlObj.document.public.character);
 				setAttrs({herolab_import: ""}, {silent: true});
 			} catch (err) {

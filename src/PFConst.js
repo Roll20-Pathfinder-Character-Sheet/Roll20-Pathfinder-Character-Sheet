@@ -1,6 +1,6 @@
 export default {
 	/* Pathfinder SHEET constants */
-	version: 1.82,
+	version: 1.828,
 	announcementVersionAttr: "attentionv172-show",
 
 	/** *************************************Lists of Fields *********************************************************** */
@@ -107,6 +107,7 @@ export default {
 	equationMacros: {
 		"init-misc": "init-misc-mod",
 		"HP-formula-macro-text": "HP-formula-mod",
+		"death_threshold-macro-text": "death_threshold_total",
 		"Max-Skill-Ranks-Misc": "Max-Skill-Ranks-mod",
 		"SR-macro-text": "SR",
 		"spellclass-0-SP_misc": "spellclass-0-SP-mod",
