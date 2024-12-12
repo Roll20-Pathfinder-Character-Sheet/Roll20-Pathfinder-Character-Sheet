@@ -25,7 +25,7 @@
     "webpack": "^5.97.1"
   },
   "dependencies": {
-    "underscore": "^1.13.6",
+    "underscore": "^1.13.7",
     "webpack-sources": "^3.2.3"
   }
 }
