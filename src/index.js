@@ -2,10 +2,10 @@
 import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 
 TAS.config({
- logging: {
-   info: process.env.NODE_ENV !== 'production',
-   debug: process.env.NODE_ENV !== 'production'
- }
+  logging: {
+    info: process.env.NODE_ENV !== 'production',
+    debug: process.env.NODE_ENV !== 'production',
+  },
 });
 if (process.env.NODE_ENV !== 'production') {
   TAS.debugMode();
@@ -25,5 +25,5 @@ PFConsole.log('     / / /    ##                  ');
 PFConsole.log('      | ##___#/                   ');
 PFConsole.log('      | ##       athfinder        ');
 PFConsole.log('   #  | ##    sheet version       ');
-PFConsole.log('    ### /           ' + ("0000" + PFConst.version.toFixed(2)).slice(-5) + '         ');
+PFConsole.log('    ### /           ' + ('0000' + PFConst.version.toFixed(2)).slice(-5) + '         ');
 PFConsole.log('                                  ');
