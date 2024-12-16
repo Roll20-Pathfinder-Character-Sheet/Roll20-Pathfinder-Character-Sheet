@@ -179,13 +179,13 @@ var TAS = TAS || (function(){
                 '%c '+label+': %c '+message + ' ',
                 'background-color: '+lBGColor+';color: '+lTxtColor+'; font-weight:bold;',
                 'background-color: '+mBGColor+';color: '+mTxtColor+';'
-            ); 
+            );
             /* eslint-enable no-console */
         };
         return function(){
             if('TAS'===key || config.logging[key]){
                 /* eslint-disable no-console */
-               dataLogger(coloredLoggerFunction,function(m){console.log(m);},_.toArray(arguments)); 
+               dataLogger(coloredLoggerFunction,function(m){console.log(m);},_.toArray(arguments));
                 /* eslint-enable no-console */
             }
         };
@@ -225,7 +225,7 @@ var TAS = TAS || (function(){
         );
         config=newconf;
     },
-    
+
     isDebugMode = function(){
         return config.debugMode;
     },
@@ -254,7 +254,7 @@ var TAS = TAS || (function(){
                logCSA( '===================='+(csa.label ? '> '+csa.label+' <' : '')+'====================');
                logCallstackSub(csa.stack);
                return true;
-            } 
+            }
             logCS(line);
             return false;
         });
@@ -285,10 +285,10 @@ var TAS = TAS || (function(){
                 };
             }(callback,context));
         }
-        
+
         callstack = getCallstack();
         callstack.shift();
-        
+
         return (function(cb,ctx,cs,lbl){
             var ctxref=registerCallstack(cs,lbl);
 
@@ -382,7 +382,7 @@ var TAS = TAS || (function(){
 					return pvalue;
 				}
 			});
-            
+
             // string value
 			Object.defineProperty(obj.S, pname, {
                 enumerable: true,
@@ -445,7 +445,7 @@ var TAS = TAS || (function(){
 
 		}());
 	},
-	
+
 	repeating = function( section ) {
 		return (function(s){
 			var sectionName = s,
@@ -453,7 +453,7 @@ var TAS = TAS || (function(){
 				fieldNames = [],
 				operations = [],
                 after = [],
-			
+
 			repAttrs = function TAS_Repeating_Attrs(){
 				attrNames = namesFromArgs(arguments,attrNames);
 				return this;
@@ -462,7 +462,7 @@ var TAS = TAS || (function(){
 				fieldNames = namesFromArgs(arguments,fieldNames);
 				return this;
 			},
-			repReduce = function TAS_Repeating_Reduce(func, initial, final, context) { 
+			repReduce = function TAS_Repeating_Reduce(func, initial, final, context) {
 				operations.push({
                     type: 'reduce',
                     func: (func && _.isFunction(func) && func) || _.noop,
@@ -519,7 +519,7 @@ var TAS = TAS || (function(){
 					fieldIds = ids;
 					fullFieldNames = _.reduce(fieldIds,function(memo,id){
 						return memo.concat(_.map(fieldNames,function(name){
-							return 'repeating_'+sectionName+'_'+id+'_'+name;  
+							return 'repeating_'+sectionName+'_'+id+'_'+name;
 						}));
 					},[]);
 					getAttrs( _.uniq(attrNames.concat(fullFieldNames)), function(values){
@@ -533,7 +533,7 @@ var TAS = TAS || (function(){
 							var r={};
 							addId(r,id);
 							_.each(fieldNames,function(name){
-								var fn = 'repeating_'+sectionName+'_'+id+'_'+name;  
+								var fn = 'repeating_'+sectionName+'_'+id+'_'+name;
 								addProp(r,name,values[fn],fn);
 							});
 
@@ -581,7 +581,7 @@ var TAS = TAS || (function(){
 					});
 				});
 			};
-				
+
 			return {
 				attrs: repAttrs,
 				attr: repAttrs,

@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 'use strict';
 import _ from 'underscore';
 import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
