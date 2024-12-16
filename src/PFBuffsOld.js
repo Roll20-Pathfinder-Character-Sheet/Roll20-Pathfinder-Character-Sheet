@@ -4,7 +4,7 @@ import {PFLog, PFConsole} from './PFLog';
 import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
 import * as SWUtils from './SWUtils';
 import PFConst from './PFConst';
-import * as PFUtils  from './PFUtils';
+import * as PFUtils from './PFUtils';
 import * as PFAbilityScores from './PFAbilityScores';
 import * as PFSaves from './PFSaves';
 import * as PFAttackGrid from './PFAttackGrid';

@@ -7,7 +7,7 @@ import PFConst from './PFConst';
 import * as PFSheet from './PFSheet';
 import PFDB from './PFDB';
 import * as PFMigrate from './PFMigrate';
-import * as PFUtils  from './PFUtils';
+import * as PFUtils from './PFUtils';
 import * as PFSize from './PFSize';
 import * as PFSkills from './PFSkills';
 import * as PFAbilityScores from './PFAbilityScores';
