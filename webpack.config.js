@@ -90,5 +90,5 @@ const webpackConfig = {
     filename: 'index.js',
   },
 };
-
+process.traceDeprecation = true;
 module.exports = webpackConfig;
