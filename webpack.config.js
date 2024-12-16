@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const webpackSources = require('webpack-sources');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 
 const webpackConfig = {
   entry: path.join(__dirname, 'src/index.js'),
