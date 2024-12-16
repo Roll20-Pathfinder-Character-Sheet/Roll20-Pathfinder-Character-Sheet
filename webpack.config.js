@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const webpackSources = require('webpack-sources');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const webpackConfig = {
   entry: path.join(__dirname, 'src/index.js'),
@@ -34,10 +35,6 @@ const webpackConfig = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      sourceMap: false,
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
@@ -74,6 +71,20 @@ const webpackConfig = {
       });
     },
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            warnings: false,
+          },
+          mangle: true,
+          sourceMap: false,
+        },
+      }),
+    ],
+  },
   output: {
     path: path.join(__dirname, process.env.NODE_ENV === 'production' ? 'prod' : 'dist'),
     filename: 'index.js',
