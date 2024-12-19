@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 'use strict';
 import _ from 'underscore';
-import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
+import TAS from './TheAaronSheet.js';
 import * as ExExp from './ExExp';
 TAS.config({
  logging: {

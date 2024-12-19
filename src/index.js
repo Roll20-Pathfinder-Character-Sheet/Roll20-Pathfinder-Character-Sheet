@@ -1,5 +1,5 @@
 'use strict';
-import TAS from 'exports-loader?TAS!./TheAaronSheet.js';
+import TAS from './TheAaronSheet.js';
 
 TAS.config({
  logging: {
