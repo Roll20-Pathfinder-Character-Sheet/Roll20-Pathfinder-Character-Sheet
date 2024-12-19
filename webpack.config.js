@@ -8,10 +8,6 @@ const webpackConfig = {
   entry: path.join(__dirname, 'src/index.js'),
   resolve: {
     modules: [path.resolve(__dirname, 'stubs'), 'node_modules'],
-    // alias: {
-    //   // Easier way to handle TheAaronSheet
-    //   TheAaronSheet: path.resolve(__dirname, 'src/TheAaronSheet.js'),
-    // },
   },
   module: {
     rules: [
