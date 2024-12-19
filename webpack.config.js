@@ -37,7 +37,8 @@ const webpackConfig = {
         const htmlAsset = compilation.assets['index.html'];
         if (htmlAsset) {
           let html = htmlAsset.source();
-          html = html.replace(/<script\s+type\s*=\s*["']?\s*text\/javascript\s*["']?>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
+          // html = html.replace(/<script\s+type\s*=\s*["']?\s*text\/javascript\s*["']?>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
+          html = html.replace(/<script>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
           const currentDate = new Date().toUTCString();
           html = html.replace('$$CURRENTRELEASEDATE$$', currentDate);
           // Use compilation.assets['index.html'].source() to avoid unnecessary string conversion
