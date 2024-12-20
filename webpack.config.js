@@ -38,7 +38,7 @@ const webpackConfig = {
         const htmlAsset = compilation.assets['index.html'];
         if (htmlAsset) {
           let html = htmlAsset.source();
-          // replace <script> for roll20 sheetworkers
+          // replace <script> tag for roll20 sheetworkers
           html = html.replace(/<script>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
           const currentDate = new Date().toUTCString();
           html = html.replace('$$CURRENTRELEASEDATE$$', currentDate);
