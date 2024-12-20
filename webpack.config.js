@@ -30,6 +30,7 @@ const webpackConfig = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/index.html'),
       inlineSource: '.js$',
+      minify: false,
     }),
     new HtmlInlineScriptPlugin(),
     function HtmlWorkerScriptPlugin() {
@@ -37,7 +38,7 @@ const webpackConfig = {
         const htmlAsset = compilation.assets['index.html'];
         if (htmlAsset) {
           let html = htmlAsset.source();
-          // html = html.replace(/<script\s+type\s*=\s*["']?\s*text\/javascript\s*["']?>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
+          // replace <script> for roll20 sheetworkers
           html = html.replace(/<script>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
           const currentDate = new Date().toUTCString();
           html = html.replace('$$CURRENTRELEASEDATE$$', currentDate);
@@ -51,10 +52,19 @@ const webpackConfig = {
       });
     },
   ],
-  // optimization: {
-  //   minimize: true,
-  //   minimizer: [new TerserPlugin()],
-  // },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        minify: TerserPlugin.uglifyJsMinify,
+        terserOptions: {
+          extractComments: false,
+          parallel: true,
+          test: /\.js(\?.*)?$/i,
+        },
+      }),
+    ],
+  },
   output: {
     path: path.join(__dirname, process.env.NODE_ENV === 'production' ? 'prod' : 'dist'),
     filename: 'index.js',
