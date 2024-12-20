@@ -2067,4 +2067,5 @@ export function registerEventHandlers() {
   });
 }
 registerEventHandlers();
-PFLog.modulecount++;
+//PFConsole.log('   HLImport module loaded          ');
+//PFLog.modulecount++;
