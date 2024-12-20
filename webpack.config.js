@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlInlineScriptPlugin = require('html-inline-script-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const mode = process.env.NODE_ENV;
+console.log(`~~~ webpack is in :${mode} mode ~~~`);
 
 const webpackConfig = {
   entry: path.join(__dirname, 'src/index.js'),
@@ -42,6 +44,9 @@ const webpackConfig = {
           html = html.replace(/<script>(.*?)<\/script>/gs, '<script type="text/worker">$1</script>');
           const currentDate = new Date().toUTCString();
           html = html.replace('$$CURRENTRELEASEDATE$$', currentDate);
+          if (mode === 'production') {
+            html = html.replace(/^\s*<!--DEVELOPMENT CODE\. NOT READY FOR PRODUCTION YET-->\s*\r?\n?/gm, '');
+          }
           // Use compilation.assets['index.html'].source() to avoid unnecessary string conversion
           compilation.assets['index.html'] = {
             source: () => html,
