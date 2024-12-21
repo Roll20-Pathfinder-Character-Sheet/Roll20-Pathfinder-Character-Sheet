@@ -4,7 +4,3 @@ prod
 debug.log
 npm-debug.log
 *.swp
-.babelrc
-.prettierrc.json
-.eslintrc.json
-eslint.config.mjs
