@@ -1,4 +1,3 @@
-// injects the bundled js modules inline at the end of the html
 class HtmlWorkerScriptPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap('HtmlWorkerScriptPlugin', (compilation) => {
