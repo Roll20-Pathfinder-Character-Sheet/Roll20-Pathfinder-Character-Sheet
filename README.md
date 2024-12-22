@@ -1,15 +1,15 @@
-# Pathfinder Character Sheet for Roll20.net
+# Pathfinder Community Sheet for Roll20.net
 ## Editing
-Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the [Pathfinder Community Sheet](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet) must be edited/developed within a specific local environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or function(s). It is necessary to minimally install git and node/npm and bundle the js and html using npm commands. 
+Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the [Pathfinder Community Sheet](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet) must be edited/developed within a specific local environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or function(s). It is necessary to minimally install Git and Node/NPM. The html and js must be bundle using npm commands and webpack. More details below. 
 
 In order to edit the sheet locally, complete the following sections;
 
 ## Install Git or Desktop GUI
-You will need to fork Roll20's repository and access it using Git and/or Github Desktop Gui. 
+You will need to fork and clone the [Pathfinder Community Sheet](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet) using Git and/or Github Desktop Gui. 
 Git for [Windows](https://gitforwindows.org/)  [Linux](https://git-scm.com/download/linux).
 Github [Desktop GUI](https://desktop.github.com/download/)
 
-You can skip Limited Install steps if you are going to setup with VScode. [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode)
+If you are going to setup with VScode [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode) you can skip the Limited Install steps.
 
 ## Limited Install using Node.js using NVM
 This is a good option if you are not going to use VScode as your editor.
@@ -30,10 +30,10 @@ This is a good option if you are not going to use VScode as your editor.
 **NPM** is distributed with Node.js - which means that when you download [Node](https://nodejs.org/en/download/package-manager), you automatically get NPM installed on your computer as well.
 
 ### Install Curl executable (If you don't have it already)
-**Curl** allows us to download The Arron Sheet https://github.com/shdwjk/TheAaronSheet, instead of maintaining our own copy.
-1. Go to https://curl.se/download.html and pick the correct version for your os.
-2. Unzip and save to a directory on your computer ie on windows; c:\curl and copy curl.exe to c:\windows\system32\
-3. You may need to add the Curl install directory or curl.exe to your windows environment PATH variable https://www.computerhope.com/issues/ch000549.htm
+**Curl** allows us to download [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet), instead of maintaining our own copy.
+1. Go to https://curl.se/download.html and download the correct version for your OS.
+2. Unzip and save to a directory on your computer ie on windows; `c:\curl` and copy curl.exe to `c:\windows\system32\`
+3. You may need to add the .\Curl install directory or `curl.exe` to your windows environment PATH variable [More Info](https://www.computerhope.com/issues/ch000549.htm)
 
 ## VScode Installation
 Here are some instructions for using VScode for editing the sheet.
@@ -68,8 +68,9 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
 13. A pull request for any new changes on the Pathfinder Sheet's repo Origin/Master will need to be submitted to Roll20's repository for approval. You may need to fork and clone the [Roll20's repo](https://github.com/Roll20/roll20-character-sheets).
 
 ## Build/Compile Commands
-Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
-Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+From terminal: `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
+From terminal: `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+From Terminal: `npm run postinstall` - downloads [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet) and saves it to the ./src folder as TheAaronSheet.cjs "TAS" is used to handle custom logging/debugging as well as some common utility functions. To simplify bundling, the ./src/TheAaronSheet.js included in the repo is a slightly edited (ie adds module.exports) version of TAS to make it an es6 module as well.
 
 ## Viewing in Roll20
 **Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
