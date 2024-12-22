@@ -1,13 +1,14 @@
 # Pathfinder Character Sheet for Roll20.net
 ## Editing
 Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or by function(s). It is necessary to minimally install git and node/npm. In order to edit the sheet locally, complete the following sections;
-### Install Git (If you don't have it already)
-Download the latest version and install it.
 
-Windows https://gitforwindows.org/  Linux https://git-scm.com/download/linux
+## Install Git or Desktop GUI
+You will need to fork Roll20's repository and access use Git cmd and/or Github Desktop Gui in order to access your github account. 
+Git for [Windows](https://gitforwindows.org/)  [Linux](https://git-scm.com/download/linux).
+Github [Desktop GUI](https://desktop.github.com/download/)
 
 ### Install Node.js using NVM
-- SKIP these steps if you are going to setup Visual Studio Code. See specific instructions below.
+- you can skip these steps if you are going to setup Visual Studio Code. See specific instructions below.
 #### Windows
 1. Download and install latest version of Node Version Manager(NVM):  https://github.com/coreybutler/nvm-windows/releases
 2. Open a **NEW** shell (Right click -> Open Git Bash Here/Git GUI Here) You can not use one which was opened before NVM is installed.
@@ -31,6 +32,25 @@ Windows https://gitforwindows.org/  Linux https://git-scm.com/download/linux
 2. Unzip and save to a directory on your computer ie on windows; c:\curl and copy curl.exe to c:\windows\system32\
 3. You may need to add the Curl install directory or curl.exe to your windows environment PATH variable https://www.computerhope.com/issues/ch000549.htm
 
+## Specific instructions for setting up with VScode
+#### Install git 
+1. Download the Github [Desktop GUI](https://desktop.github.com/download/) and/or install **Git** as noted above. You may also have both installed side-by-side.
+2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable. 
+More specific instructions; (note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
+
+#### VScode and Node.js integration
+1. Download and install VScode: https://code.visualstudio.com/download
+2. Install Node for your platform: https://nodejs.org/ using vscode's integrated terminal. ie npm install
+(note: if you need nvm for version control purposes then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
+
+#### Reccomended Vscode Extensions
+3. "NPM Intellisense" extension: https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense
+4. "Eslint extension": https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+    (works with included ./eslint.config.mjs)
+5. "Prettier Eslint extension": https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint
+    (works with included ./.prettierrc.json)
+6. "GetLens" extension for VSC: https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
+
 ### Build/Compile Commands
 Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
 
@@ -41,26 +61,6 @@ Run `npm run prod` - Turns **debug off** automatically. Builds the project's ind
 
 **Option 2:** Sync a Sandbox game to your local files using Scott C's Chrome browser extension "Roll20 API and Sheet Autouploader" https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick You may need to create a symbolic link https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
 
-
-------
-## Specific instructions for setting up with Visual Studio Code
-#### Install git 
-1. If you already have Github for Windows, you do not need to install **git** separately. If you do not have it, you must download/install it or else download git as noted above. You may also have both side-by-side.
-2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable.More specific instructions;
-(note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
-
-#### Visual Studio Code and Node.js integration
-1. Download and install Visual Studio Code: https://code.visualstudio.com/download
-2. Install Node for your platform: https://nodejs.org/
-(note: if you need nvm for version control purposes then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
-
-#### Reccomended Vscode Extensions
-3. "NPM Intellisense" extension: https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense
-4. "Eslint extension": https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-    (works with included ./eslint.config.mjs)
-5. "Prettier Eslint extension": https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint
-    (works with included ./.prettierrc.json)
-6. "GetLens" extension for VSC: https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
 
 #### curl
 **Curl** is still required. See above.
