@@ -51,28 +51,28 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
 3. You may want to create a unique [Workspace](https://code.visualstudio.com/docs/editor/workspaces) specifically for editing the pathfinder sheet.
 
 #### Reccomended Vscode Extensions
-4. [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense)
-5. [Eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+ - [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense)
+ - [Eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
     (works with included ./eslint.config.mjs)
-6. [Prettier Eslint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+ - [Prettier Eslint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
     (works with included ./.prettierrc.json)
-7. [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+ - [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
 #### Install Curl
 **Curl** is required. [See above](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet#install-curl-executable-if-you-dont-have-it-already).
 
 ### Editing and Submitting updates
-8. [Fork](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet/fork) the Pathfinder Community Sheet code if you haven't already done so.
-9. Clone the project from within VScode or [Github Desktop](https://desktop.github.com/)
-10. It's highly reccomended that you create new "working" branches based on the Development branch.
-11. Submit commits to your working branch until you are done editing and then submit a pull request to Origin/Develop for approval.
-12. Once the latest changes on the Develop branch are approved, they will be merged into the Origin/Master.
-13. A pull request for any new changes on the Pathfinder Sheet's repo Origin/Master will need to be submitted to Roll20's repository for approval. You may need to fork and clone the [Roll20's repo](https://github.com/Roll20/roll20-character-sheets).
+1. [Fork](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet/fork) the Pathfinder Community Sheet code if you haven't already done so.
+2. Clone the project from within VScode or [Github Desktop](https://desktop.github.com/)
+3. It's highly reccomended that you create new "working" branches based on the Development branch.
+4. Submit commits to your working branch until you are done editing and then submit a pull request to Origin/Develop for approval.
+5. Once the latest changes on the Develop branch are approved, they will be merged into the Origin/Master.
+6. A pull request for any new changes on the Pathfinder Sheet's repo Origin/Master will need to be submitted to Roll20's repository for approval. You may need to fork and clone the [Roll20's repo](https://github.com/Roll20/roll20-character-sheets).
 
 ## Build/Compile Commands
-Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
-Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
-Run `npm run postinstall` - downloads [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet) and saves it to the ./src folder as TheAaronSheet.cjs "TAS" is used to handle custom logging/debugging as well as some common utility functions. To simplify bundling, the ./src/TheAaronSheet.js included in the repo is a slightly edited (ie adds module.exports) version of TAS to make it an es6 module as well.
+- Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
+- Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+- Run `npm run postinstall` - downloads [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet) and saves it to the ./src folder as TheAaronSheet.cjs "TAS" is used to handle custom logging/debugging as well as some common utility functions. To simplify bundling, the ./src/TheAaronSheet.js included in the repo is a slightly edited (ie adds module.exports) version of TAS to make it an es6 module as well.
 
 ## Viewing in Roll20
 **Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
