@@ -3,6 +3,7 @@
 Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or by function(s). It is necessary to minimally install git and node/npm. In order to edit the sheet locally, complete the following sections;
 ### Install Git (If you don't have it already)
 Download the latest version and install it.
+
 Windows https://gitforwindows.org/  Linux https://git-scm.com/download/linux
 
 ### Install Node.js using NVM
