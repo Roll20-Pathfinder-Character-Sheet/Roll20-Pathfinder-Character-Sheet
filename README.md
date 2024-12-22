@@ -68,9 +68,9 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
 13. A pull request for any new changes on the Pathfinder Sheet's repo Origin/Master will need to be submitted to Roll20's repository for approval. You may need to fork and clone the [Roll20's repo](https://github.com/Roll20/roll20-character-sheets).
 
 ## Build/Compile Commands
-From terminal: `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
-From terminal: `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
-From Terminal: `npm run postinstall` - downloads [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet) and saves it to the ./src folder as TheAaronSheet.cjs "TAS" is used to handle custom logging/debugging as well as some common utility functions. To simplify bundling, the ./src/TheAaronSheet.js included in the repo is a slightly edited (ie adds module.exports) version of TAS to make it an es6 module as well.
+Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
+Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+Run `npm run postinstall` - downloads [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet) and saves it to the ./src folder as TheAaronSheet.cjs "TAS" is used to handle custom logging/debugging as well as some common utility functions. To simplify bundling, the ./src/TheAaronSheet.js included in the repo is a slightly edited (ie adds module.exports) version of TAS to make it an es6 module as well.
 
 ## Viewing in Roll20
 **Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
