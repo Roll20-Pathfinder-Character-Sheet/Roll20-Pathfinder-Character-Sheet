@@ -1,22 +1,25 @@
 # Pathfinder Character Sheet for Roll20.net
 ## Editing
-Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or by function(s). It is necessary to minimally install git and node/npm. In order to edit the sheet locally, complete the following sections;
+Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the [Pathfinder Community Sheet](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet) must be edited/developed within a specific local environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or function(s). It is necessary to minimally install git and node/npm and bundle the js and html using npm commands. 
+
+In order to edit the sheet locally, complete the following sections;
 
 ## Install Git or Desktop GUI
 You will need to fork Roll20's repository and access it using Git and/or Github Desktop Gui. 
 Git for [Windows](https://gitforwindows.org/)  [Linux](https://git-scm.com/download/linux).
 Github [Desktop GUI](https://desktop.github.com/download/)
 
-### Install Node.js using NVM
-- you can skip these steps if you are going to setup with VScode. [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode)
-#### Windows
+You can skip Limited Install steps if you are going to setup with VScode. [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode)
+
+## Limited Install using Node.js using NVM
+This is a good option if you are not going to use VScode as your editor.
+### Windows
 1. Download and install latest version of Node Version Manager(NVM):  https://github.com/coreybutler/nvm-windows/releases
 2. Open a **NEW** shell (Right click -> Open Git Bash Here/Git GUI Here) You can not use one which was opened before NVM is installed.
 3. Run `nvm install latest` to install the latest version of node.js
 4. Run `nvm list available` and note the version you want to use. The latest version should be fine. 
-4. Run `nvm use node <version#>` include the proper version number as noted above.
-
-#### Linux/Mac (adjust node version as needed)
+5. Run `nvm use node <version#>` include the proper version number as noted above.
+### Linux/Mac (adjust node version as needed)
 1. Run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
 2. Close and reopen your terminal
 3. Run `nvm install 6.9.5`
@@ -32,7 +35,9 @@ Github [Desktop GUI](https://desktop.github.com/download/)
 2. Unzip and save to a directory on your computer ie on windows; c:\curl and copy curl.exe to c:\windows\system32\
 3. You may need to add the Curl install directory or curl.exe to your windows environment PATH variable https://www.computerhope.com/issues/ch000549.htm
 
-## Specific instructions for setting up with VScode
+## VScode Installation
+Here are some instructions for using VScode for editing the sheet.
+
 #### Install git 
 1. Download the Github [Desktop GUI](https://desktop.github.com/download/) and/or install **Git** as noted above. You may also have both installed side-by-side.
 2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable. 
@@ -41,33 +46,34 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
 #### VScode and Node.js integration
 1. Download and install [VScode](https://code.visualstudio.com/download)
 2. Install [Node](https://nodejs.org/) using vscode's integrated terminal. ie `npm install`
-(note: if you need nvm for version control purposes then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
+3. You may want to create a unique [Workspace](https://code.visualstudio.com/docs/editor/workspaces) specifically for editing the pathfinder sheet.
 
 #### Reccomended Vscode Extensions
-3. [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense)
-4. [Eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+4. [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense)
+5. [Eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
     (works with included ./eslint.config.mjs)
-5. [Prettier Eslint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
+6. [Prettier Eslint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
     (works with included ./.prettierrc.json)
-6. [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-
-### Build/Compile Commands
-Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
-
-Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
-
-### Viewing in Roll20
-**Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
-
-**Option 2:** Sync a Sandbox game to your local files using Scott C's Chrome browser extension [Roll20 API and Sheet Autouploader](https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick) You may need to create a [Symbolic link](https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/) for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
-
+7. [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
 #### curl
 **Curl** is still required. See above.
 
-## Opening Project.
-7. fork project if you haven't already.
-8. clone project from within VScode or [Github Desktop](https://desktop.github.com/)
+### Editing and Submitting updates
+8. [Fork](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet/fork) the Pathfinder Community Sheet code if you haven't already done so.
+9. Clone the project from within VScode or [Github Desktop](https://desktop.github.com/)
+10. It's highly reccomended that you create new "working" branches based on the Development branch.
+11. Submit commits to your working branch until you are done editing and then submit a pull request to Origin/Develop for approval.
+12. Once the latest changes on the Develop branch are approved, they will be merged into the Origin/Master.
+13. A pull request for any new changes on the Pathfinder Sheet's repo Origin/Master will need to be submitted to Roll20's repository for approval. You may need to fork and clone the [Roll20's repo](https://github.com/Roll20/roll20-character-sheets).
+
+## Build/Compile Commands
+Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
+Run `npm run prod` - Turns **debug off** automatically. Builds the project's index.html Use Case: roll20 production. Output to "prod" folder.
+
+## Viewing in Roll20
+**Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
+**Option 2:** Sync a Sandbox game to your local files using Scott C's Chrome browser extension [Roll20 API and Sheet Autouploader](https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick) You may need to create a [Symbolic link](https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/) for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
 
 **CTRL-Shift-P opens a terminal prompt at top** it also has better intellisense than the terminal window due to the picklist it generates as you type.
 Much easier to fork from github's web interface first.
