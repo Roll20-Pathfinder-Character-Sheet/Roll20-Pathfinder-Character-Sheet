@@ -13,23 +13,23 @@ If you are going to setup with VScode [See specific instructions below](https://
 
 ## Limited Install using Node.js using NVM
 This is a good option if you are not going to use VScode as your editor.
-### Windows
+#### Windows
 1. Download and install latest version of Node Version Manager(NVM):  https://github.com/coreybutler/nvm-windows/releases
 2. Open a **NEW** shell (Right click -> Open Git Bash Here/Git GUI Here) You can not use one which was opened before NVM is installed.
 3. Run `nvm install latest` to install the latest version of node.js
 4. Run `nvm list available` and note the version you want to use. The latest version should be fine. 
 5. Run `nvm use node <version#>` include the proper version number as noted above.
-### Linux/Mac (adjust node version as needed)
+#### Linux/Mac (adjust node version as needed)
 1. Run `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash`
 2. Close and reopen your terminal
 3. Run `nvm install 6.9.5`
 4. Run `nvm alias default 6.9.5`
 5. Run `nvm use 6.9.5`
 
-### Dependencies
+#### Dependencies
 **NPM** is distributed with Node.js - which means that when you download [Node](https://nodejs.org/en/download/package-manager), you automatically get NPM installed on your computer as well.
 
-### Install Curl executable (If you don't have it already)
+#### Install Curl executable (If you don't have it already)
 **Curl** allows us to download [TheArronSheet.js](https://github.com/shdwjk/TheAaronSheet), instead of maintaining our own copy.
 1. Go to https://curl.se/download.html and download the correct version for your OS.
 2. Unzip and save to a directory on your computer ie on windows; `c:\curl` and copy curl.exe to `c:\windows\system32\`
@@ -56,8 +56,8 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
     (works with included ./.prettierrc.json)
 7. [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
-#### curl
-**Curl** is still required. See above.
+#### Install Curl
+**Curl** is required. [See above](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet#install-curl-executable-if-you-dont-have-it-already).
 
 ### Editing and Submitting updates
 8. [Fork](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet/fork) the Pathfinder Community Sheet code if you haven't already done so.
