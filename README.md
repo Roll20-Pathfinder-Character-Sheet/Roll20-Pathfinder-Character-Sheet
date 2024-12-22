@@ -78,11 +78,6 @@ More specific instructions; there is only a 'cmd' directory, not a bin directory
 * Option 1: Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
 * Option 2: Sync a Sandbox game to your local files using Scott C's Chrome browser extension [Roll20 API and Sheet Autouploader](https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick) You may need to create a [Symbolic link](https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/) for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
 
-**CTRL-Shift-P opens a terminal prompt at top** it also has better intellisense than the terminal window due to the picklist it generates as you type.
-Much easier to fork from github's web interface first.
-Then use the URL of your fork as the url of the repository. I think this can be done using the git `clone` command
-[More Info](https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/)
-
 ## Errors/Issues
 - Webpack dependencies: update webpack and dev dependencies with caution.
 
