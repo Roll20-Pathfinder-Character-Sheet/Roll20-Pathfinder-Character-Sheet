@@ -3,12 +3,12 @@
 Unlike most character sheets found on [Roll20's repo](https://github.com/Roll20/roll20-character-sheets), the Pathfinder Community sheet must be edited/developed within a specific environment. Sheetworkers have been separated into various es modules based on their specific sheet sections or by function(s). It is necessary to minimally install git and node/npm. In order to edit the sheet locally, complete the following sections;
 
 ## Install Git or Desktop GUI
-You will need to fork Roll20's repository and access use Git cmd and/or Github Desktop Gui in order to access your github account. 
+You will need to fork Roll20's repository and access it using Git and/or Github Desktop Gui. 
 Git for [Windows](https://gitforwindows.org/)  [Linux](https://git-scm.com/download/linux).
 Github [Desktop GUI](https://desktop.github.com/download/)
 
 ### Install Node.js using NVM
-- you can skip these steps if you are going to setup Visual Studio Code. See specific instructions below.
+- you can skip these steps if you are going to setup with VScode. [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode)
 #### Windows
 1. Download and install latest version of Node Version Manager(NVM):  https://github.com/coreybutler/nvm-windows/releases
 2. Open a **NEW** shell (Right click -> Open Git Bash Here/Git GUI Here) You can not use one which was opened before NVM is installed.
@@ -24,7 +24,7 @@ Github [Desktop GUI](https://desktop.github.com/download/)
 5. Run `nvm use 6.9.5`
 
 ### Dependencies
-**NPM** is distributed with Node.js - which means that when you download Node.js https://nodejs.org/en/download/package-manager, you automatically get npm installed on your computer.
+**NPM** is distributed with Node.js - which means that when you download [Node](https://nodejs.org/en/download/package-manager), you automatically get NPM installed on your computer as well.
 
 ### Install Curl executable (If you don't have it already)
 **Curl** allows us to download The Arron Sheet https://github.com/shdwjk/TheAaronSheet, instead of maintaining our own copy.
@@ -36,20 +36,20 @@ Github [Desktop GUI](https://desktop.github.com/download/)
 #### Install git 
 1. Download the Github [Desktop GUI](https://desktop.github.com/download/) and/or install **Git** as noted above. You may also have both installed side-by-side.
 2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable. 
-More specific instructions; (note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
+More specific instructions; there is only a 'cmd' directory, not a bin directory, contrary to the directions. [More info](https://www.answerlookup.com/how-add-git-windows-path-environment-variable).
 
 #### VScode and Node.js integration
-1. Download and install VScode: https://code.visualstudio.com/download
-2. Install Node for your platform: https://nodejs.org/ using vscode's integrated terminal. ie npm install
+1. Download and install [VScode](https://code.visualstudio.com/download)
+2. Install [Node](https://nodejs.org/) using vscode's integrated terminal. ie `npm install`
 (note: if you need nvm for version control purposes then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
 
 #### Reccomended Vscode Extensions
-3. "NPM Intellisense" extension: https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense
-4. "Eslint extension": https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+3. [NPM Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense)
+4. [Eslint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
     (works with included ./eslint.config.mjs)
-5. "Prettier Eslint extension": https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint
+5. [Prettier Eslint](https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint)
     (works with included ./.prettierrc.json)
-6. "GetLens" extension for VSC: https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
+6. [GetLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
 
 ### Build/Compile Commands
 Run `npm run build` - Builds the project's index.html Use Case: development/testing. Output to "dist" folder.
@@ -59,7 +59,7 @@ Run `npm run prod` - Turns **debug off** automatically. Builds the project's ind
 ### Viewing in Roll20
 **Option 1:** Use the bundled index.html from the ./dist or ./prod folder accordingly and the pathfinder.css, translation.json, and sheet.json as included in the ./src folder.  These files can be copied as raw text directly into a Custom game's, "Game Settings" editor (HTML|CSS|TRANSLATION). Do not rely on the Preview tab. Always view the sheet in-game for an accurate load.
 
-**Option 2:** Sync a Sandbox game to your local files using Scott C's Chrome browser extension "Roll20 API and Sheet Autouploader" https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick You may need to create a symbolic link https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/ for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
+**Option 2:** Sync a Sandbox game to your local files using Scott C's Chrome browser extension [Roll20 API and Sheet Autouploader](https://chromewebstore.google.com/detail/roll20-api-and-sheet-auto/hboggmcfmaakkifgifjbccnpfmnegick) You may need to create a [Symbolic link](https://www.howtogeek.com/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/) for the ./src/pathfinder.css and/or the ./src/translation.json to the ./dist and ./prod folders so the extension can easily detect local changes.
 
 
 #### curl
@@ -72,7 +72,7 @@ Run `npm run prod` - Turns **debug off** automatically. Builds the project's ind
 **CTRL-Shift-P opens a terminal prompt at top** it also has better intellisense than the terminal window due to the picklist it generates as you type.
 Much easier to fork from github's web interface first.
 Then use the URL of your fork as the url of the repository. I think this can be done using the git `clone` command
-some help: https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/
+[More Info](https://www.theregister.co.uk/2015/12/07/visual_studio_code_git_integration/)
 
 ## Errors/Issues
 - Webpack dependencies: update webpack and dev dependencies with caution.
