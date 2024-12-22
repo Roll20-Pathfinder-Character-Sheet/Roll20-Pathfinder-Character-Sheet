@@ -638,13 +638,10 @@ var TAS =
 
     /* eslint-disable no-console */
     console.log(
-      '%c•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸ The Aaron Sheet  v' + version + '  ¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸',
+      '%c•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸ The Aaron Sheet  v' + version + '  ¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸.•*´¨`*•.¸¸\n'+
+      '•.¸¸.•*´¨`*• Last update: ' + new Date(lastUpdate * 1000) + '..•*´¨` *•.¸¸',
       'background: linear-gradient(to right,green,white,white,green); color:black;text-shadow: 0 0 8px white;',
-    );
-    console.log(
-      '%c•.¸¸.•*´¨`*• Last update: ' + new Date(lastUpdate * 1000) + '¸¸.•*´¨`*•.¸¸',
-      'background: linear-gradient(to right,green,white,white,green); color:black;text-shadow: 0 0 8px white;',
-    );
+		);
     /* eslint-enable no-console */
 
     return {
