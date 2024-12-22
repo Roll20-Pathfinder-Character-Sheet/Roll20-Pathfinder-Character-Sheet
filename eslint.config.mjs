@@ -10,26 +10,29 @@ export default [
 			sourceType: "module",
 			globals: {
 				// Common for Roll20 project
+				$20: false,
+				_: false,
+				__dirname: false,
 				console: false,
+				filterObjs: false,
+				finishRoll: false,
+				generateRowID: false,
+				getActiveCharacterId: false,
+				getAttrByName: false,
+				getAttrs: false,
+				getObj: false,
+				getSectionIDs: false,
+				getTranslationByKey: false,
+				module: false,
 				on: false,
 				process: false,
 				randomInteger: false,
-				getSectionIDs: false,
-				getTranslationByKey: false,
-				getAttrs: false,
-				setAttrs: false,
 				removeRepeatingRow: false,
-				generateRowID: false,
-				setDefaultToken: false,
-				filterObjs: false,
+				require: false,
 				sendChat: false,
-				getObj: false,
-				getAttrByName: false,
+				setAttrs: false,
+				setDefaultToken: false,
 				startRoll: false,
-				finishRoll: false,
-				getActiveCharacterId: false,
-				$20: false,
-				_: false,
 			},
 		},
 		plugins: {
@@ -37,11 +40,7 @@ export default [
 			html,
 		},
 		settings: {
-			"html/javascript-mime-types": [
-				"text/javascript",
-				"text/jsx",
-				"text/worker",
-			],
+			"html/javascript-mime-types": ["text/javascript", "text/worker"],
 			"html/javascript-tag-names": ["script"],
 			"html/html-extensions": [".html", ".htm"],
 			"html/indent": "+2", // indentation is the <script> indentation plus two spaces.
@@ -49,24 +48,24 @@ export default [
 		},
 		rules: {
 			"arrow-body-style": "off",
-			"camelcase": "off",
+			camelcase: "off",
 			"comma-dangle": [
 				"error",
 				{
-					"arrays": "only-multiline",
-					"objects": "only-multiline",
-					"imports": "never",
-					"exports": "never",
-					"functions": "only-multiline"
-				}
+					arrays: "only-multiline",
+					objects: "only-multiline",
+					imports: "never",
+					exports: "never",
+					functions: "only-multiline",
+				},
 			],
-			"eqeqeq": "error",
+			eqeqeq: "error",
 			"max-classes-per-file": "off",
 			"no-bitwise": [
 				"error",
 				{
-					"allow": ["~"]
-				}
+					allow: ["~"],
+				},
 			],
 			"no-case-declarations": "off",
 			"no-console": "off",
@@ -75,8 +74,8 @@ export default [
 			"no-param-reassign": [
 				"error",
 				{
-					"props": false
-				}
+					props: false,
+				},
 			],
 			"no-plusplus": "off",
 			"no-restricted-imports": "off",
@@ -85,18 +84,18 @@ export default [
 			"no-unused-expressions": [
 				"error",
 				{
-					"allowTernary": true
-				}
+					allowTernary: true,
+				},
 			],
 			"no-unused-vars": "warn",
 			"no-useless-concat": "error",
 			"no-useless-escape": "off",
 			"no-var": "error",
 			"prefer-arrow-callback": "off",
-			"quotes": ["error", "single"],
-			"radix": "off",
-			"semi": ["error", "always"],
-			"strict": "error",
+			quotes: ["error", "single"],
+			radix: "off",
+			semi: ["error", "always"],
+			strict: "error",
 			"template-curly-spacing": ["error", "never"],
 			"wrap-iife": ["error", "any"],
 			// Prettier rules
@@ -118,13 +117,13 @@ export default [
 	{
 		// Disables ESLint rules that conflict with Prettier formatting
 		rules: {
-			"arrow-body-style": "off",
-			"prefer-arrow-callback": "off",
-			"no-mixed-operators": "off",
-			"no-confusing-arrow": "off",
-			"space-before-function-paren": "off",
 			"array-bracket-spacing": "off",
+			"arrow-body-style": "off",
+			"no-confusing-arrow": "off",
+			"no-mixed-operators": "off",
 			"object-curly-spacing": "off",
+			"prefer-arrow-callback": "off",
+			"space-before-function-paren": "off",
 			// Add other Prettier-conflicting rules here as necessary
 		},
 	},
