@@ -7,9 +7,9 @@ In order to edit the sheet locally, complete the following sections;
 ## Install Git or Desktop GUI
 You will need to fork and clone the [Pathfinder Community Sheet](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet) using Git and/or Github Desktop Gui.
 
-Git for [Windows](https://gitforwindows.org/)
-Git for [Linux](https://git-scm.com/download/linux)
-Github [Desktop GUI](https://desktop.github.com/download/)
+ - Git for [Windows](https://gitforwindows.org/)
+ - Git for [Linux](https://git-scm.com/download/linux)
+ - Github [Desktop GUI](https://desktop.github.com/download/)
 
 If you are going to setup with VScode [See specific instructions below](https://github.com/Roll20-Pathfinder-Character-Sheet/Roll20-Pathfinder-Character-Sheet?tab=readme-ov-file#specific-instructions-for-setting-up-with-vscode) you can skip the Limited Install steps.
 
