@@ -45,18 +45,18 @@ Run `npm run prod` - Turns **debug off** automatically. Builds the project's ind
 
 
 ------
-## Specific instructions for setting up with Visual Studio Code
-### Install git 
+### Specific instructions for setting up with Visual Studio Code
+## Install git 
 1. If you already have Github for Windows, you do not need to install **git** separately. If you do not have it, you must download/install it or else download git as noted above. You may also have both side-by-side.
 2. Add the Github for Windows install directory to your windows environment [PATH](https://windowsreport.com/edit-windows-path-environment-variable/) variable.More specific instructions;
 (note: there is only a 'cmd' directory. Not a bin directory, contrary to the directions.): https://www.answerlookup.com/how-add-git-windows-path-environment-variable
 
-### Visual Studio Code and Node.js integration
+## Visual Studio Code and Node.js integration
 1. Download and install Visual Studio Code: https://code.visualstudio.com/download
 2. Install Node for your platform: https://nodejs.org/
 (note: if you need nvm for version control purposes then you probably already know what you are doing and don't need these instructions. see nvm instructions above.)
 
-### Reccomended Vscode Extensions
+## Reccomended Vscode Extensions
 3. "NPM Intellisense" extension: https://marketplace.visualstudio.com/items?itemName=christian-kohlernpm-intellisense
 4. "Eslint extension": https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
     (works with included ./eslint.config.mjs)
@@ -64,10 +64,10 @@ Run `npm run prod` - Turns **debug off** automatically. Builds the project's ind
     (works with included ./.prettierrc.json)
 6. "GetLens" extension for VSC: https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens
 
-### curl
+## curl
 **Curl** is still required. See above.
 
-### Opening Project.
+## Opening Project.
 7. fork project if you haven't already.
 8. clone project from within VScode or [Github Desktop](https://desktop.github.com/)
 
