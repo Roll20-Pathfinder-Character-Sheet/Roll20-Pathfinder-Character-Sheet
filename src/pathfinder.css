@@ -127,6 +127,7 @@
 .charsheet button[type="roll"]:before {
     vertical-align: middle;
     font-size: 1.2em;
+    margin-inline: 2px;
 }
 
 .charsheet h1 {
@@ -506,14 +507,30 @@
 }
 
 .charsheet button[type="roll"]:not(.command-button) {
+    align-items: center;
     background-color: black;
+    border: none;
     color: white;
-    margin: 0 .25em 0 .25em;
+    cursor: pointer;
+    display: inline-flex;
     font-size: 1.5rem;
+    justify-content: space-evenly;
+    margin-inline: auto;
     min-height: 1.5em;
     min-width: 1.5em;
     padding: .25em .25em .3em .25em;
-    cursor: pointer;
+    width: 100%;
+}
+
+.charsheet button[type="roll"]:not(.command-button):hover,
+.charsheet button[type="roll"]:not(.command-button):hover span {
+    background-color: #333;
+    color: #FFF;
+}
+
+.charsheet button[type="roll"]:not(.command-button):hover {
+    box-shadow: 1px 1px 3px #000;
+    outline: 1px solid #000;
 }
 
 .charsheet button[type="roll"].no-decoration {
@@ -1592,11 +1609,6 @@ also need 1 more level in selector or base css will override border */
     border-radius: 0.4rem;
 }
 
-.charsheet .ability-scores button[type="roll"].text-button {
-    max-width: 5.25em;
-    padding-left: 12px;
-}
-
 .charsheet .skills .table-row .table-cell:first-child {
     font-size: 1.6rem;
     padding-left: 0;
@@ -1690,7 +1702,7 @@ also need 1 more level in selector or base css will override border */
     text-align: center;
     background: #4a6486;
     color: White;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 1.2rem;
     padding: .4em .2em .1em .2em;
     vertical-align: bottom;
@@ -1923,8 +1935,11 @@ also need 1 more level in selector or base css will override border */
 .charsheet .tabinput.tab11:checked + .tab.tab11,
 .charsheet .tabinput.tab99:checked ~ .tab.tab99 {
     background: Black;
+    box-shadow: -3px 1px 3px #000;
     color: White;
     height: 1.65em;
+    outline: 1px solid #000;
+    z-index: -1;
 }
 
 /************** TAB AREAS ***********************/
@@ -1965,19 +1980,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* abilities tabs */
-.charsheet .abilities .selected-tabtitle.tab0,
-.charsheet .abilities .selected-tabtitle.tab1,
-.charsheet .abilities .selected-tabtitle.tab2,
-.charsheet .abilities .selected-tabtitle.tab3,
-.charsheet .abilities .selected-tabtitle.tab4,
-.charsheet .abilities .selected-tabtitle.tab5,
-.charsheet .abilities .selected-tabtitle.tab6,
-.charsheet .abilities .selected-tabtitle.tab7,
-.charsheet .abilities .selected-tabtitle.tab8,
-.charsheet .abilities .selected-tabtitle.tab9,
-.charsheet .abilities .selected-tabtitle.tab10,
-.charsheet .abilities .selected-tabtitle.tab11,
-.charsheet .abilities .selected-tabtitle.tab99 {
+.charsheet .abilities .selected-tabtitle {
     display: none;
 }
 
@@ -2019,20 +2022,11 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* hover */
-.charsheet .tabinput.tab0:not(:checked):hover + .tab.tab0,
-.charsheet .tabinput.tab1:not(:checked):hover + .tab.tab1,
-.charsheet .tabinput.tab2:not(:checked):hover + .tab.tab2,
-.charsheet .tabinput.tab3:not(:checked):hover + .tab.tab3,
-.charsheet .tabinput.tab4:not(:checked):hover + .tab.tab4,
-.charsheet .tabinput.tab5:not(:checked):hover + .tab.tab5,
-.charsheet .tabinput.tab6:not(:checked):hover + .tab.tab6,
-.charsheet .tabinput.tab7:not(:checked):hover + .tab.tab7,
-.charsheet .tabinput.tab8:not(:checked):hover + .tab.tab8,
-.charsheet .tabinput.tab9:not(:checked):hover + .tab.tab9,
-.charsheet .tabinput.tab10:not(:checked):hover + .tab.tab10,
-.charsheet .tabinput.tab11:not(:checked):hover + .tab.tab11,
-.charsheet .tabinput.tab99:not(:checked):hover ~ .tab.tab99 {
+.charsheet .tabinput:not(:checked):hover + .tab {
+    box-shadow: -3px 1px 3px #000;
     color: #e0e0e0;
+    outline: 1px solid #000;
+    z-index: -1;
 }
 
 /* custom tab overrides */
@@ -2824,9 +2818,11 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .nontable-repeating .repeating-rollbutton button {
+    max-height: 1.5em;
+    max-width: 1.5em;
+    padding: 0;
     position: relative;
-    margin-left: 0;
-    min-width: 2em;
+    width: auto;
 }
 
 /*highlight text */
@@ -2836,10 +2832,8 @@ also need 1 more level in selector or base css will override border */
 .charsheet .status-panel label b,
 .charsheet input.narrow-numbers + b:not(.offCase) {
     display: inline;
-    font-size: 1.2rem;
-    line-height: 1.75em;
     font-weight: normal;
-    padding: 0 0.75em 0 0;
+    padding: .1rem .5rem .25rem .25rem;
     white-space: nowrap;
 }
 
@@ -2848,11 +2842,8 @@ also need 1 more level in selector or base css will override border */
 .tab-content .charsheet .condition-exists.sect-either-show-n:checked ~ label,
 .tab-content .charsheet .condition-exists:checked + label {
     background-color: #4a6486;
-    color: White;
     border-radius: 0.5rem;
-    display: inline;
-    font-weight: normal;
-    padding: .1rem .5rem .25rem .25rem;
+    color: White;
 }
 
 .charsheet .boldlabel-check + b,
@@ -2900,8 +2891,11 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .conditions .option-condition {
-    white-space: nowrap;
-    font-size: 1.2rem;
+    align-items: center;
+    display: flex;
+    flex: 1 1 0;
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 .charsheet .no-pad-right {
@@ -3203,28 +3197,22 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .section-status {
-    margin-top: .25em;
+    column-gap: 2px;
     display: flex;
-    flex-flow: row nowrap;
-}
-
-.charsheet .section-status .status-panel:first-child {
-    margin-right: .125em;
+    margin-top: .25em;
 }
 
 .charsheet .status-panel {
-    display: inline-block;
-    position: relative;
     flex-basis: 50%;
-    line-height: 1.2em;
+    position: relative;
 }
 
 .charsheet .status-panel .options {
-    padding: .5rem;
-    display: block;
-    width: auto;
-    margin-bottom: 0;
-    height: 100%;
+    align-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1px;
+    margin: auto;
     min-height: 100%;
 }
 
@@ -3705,12 +3693,12 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .table-name,
 .charsheet .nontable-name {
-    display: table-caption;
-    text-align: center;
-    font-weight: bold;
-    color: White;
     background-color: Black;
+    color: White;
+    display: table-caption;
+    font-weight: normal;
     padding-top: .25em;
+    text-align: center;
 }
 
 .charsheet .nontable-name {
