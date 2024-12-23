@@ -29,12 +29,6 @@
     content: revert;
 }
 
-.charsheet details.table-cell,
-.charsheet span.table-cell details {
-  margin: 4px 0 0 4px;
-  width: 90%;
-}
-
 .charsheet summary:hover,
 .charsheet summary:hover > *,
 .charsheet summary:hover::marker {
