@@ -200,12 +200,14 @@
 }
 
 /* turn off spinners for disabled number fields in chrome */
+.charsheet input::-webkit-outer-spin-button,
+.charsheet input::-webkit-inner-spin-button,
 .charsheet input[type="number"].calc:hover,
 .charsheet input[type="number"].calc:focus,
 .charsheet input[type="number"].calc,
 .charsheet input[type="number"]:disabled {
     -webkit-appearance: none;
-    -moz-appearance: textfield;
+    margin: 0;
 }
 
 /* turn off spinners for all number field in firefox */
