@@ -254,8 +254,14 @@
             <h2 class="showsect" style="margin-bottom:0;"><label data-i18n="buffs-set">Set Buffs</label></h2>
             <div class="cheat"></div>
             <div class="conditions" data-i18n-list="conditions-list">
-                <span class="nontable-name secondary-table-name" data-i18n="conditions-set">Set Conditions</span>
-                <input type="checkbox" value="1" name="attr_extra_fields_conditions_show" title="@{extra_fields_conditions_show}" class="extra-show selectedlabel-check" /><b data-i18n-title="show-all-conditions-desc" data-i18n="show-all-conditions">SHOW ALL CONDITIONS</b>
+                <span class="nontable-name secondary-table-name">
+                    <span data-i18n="conditions-set">Set Conditions</span>
+                    <label style="position: absolute; right:0;">
+                        <input type="checkbox" value="1" name="attr_extra_fields_conditions_show" title="@{extra_fields_conditions_show}" class="extra-show selectedlabel-check" /><b data-i18n-title="show-all-conditions-desc" data-i18n="show-all-conditions">Show All Conditions</b>
+                    </label>
+                </span>
+                <!-- <span class="nontable-name secondary-table-name" data-i18n="conditions-set">Set Conditions</span> -->
+                <input type="checkbox" value="1" name="attr_extra_fields_conditions_show" class="hidden extra-show selectedlabel-check" />
                 <label class="option-condition extra-sect left" data-i18n-list-item="bleed"><input type="checkbox" title="@{condition-Bleed}" class="boldlabel-check" name="attr_condition-Bleed" value="1" /><b><span data-i18n-title="condition-bleed-title" data-i18n-aria-label="condition-bleed-title" data-i18n="bleed">Bleed</span></b></label>
                 <label class="option-condition left" data-i18n-list-item="blinded"><input type="checkbox" title="@{condition-Blinded}" class="boldlabel-check" name="attr_condition-Blinded" value="2" /><b><span data-i18n-title="condition-blinded-title" data-i18n-aria-label="condition-blinded-title" data-i18n="blinded">Blinded</span></b></label>
                 <label class="option-condition left" data-i18n-list-item="cowering"><input type="checkbox" title="@{condition-Cowering}" class="boldlabel-check" name="attr_condition-Cowering" value="2" /><b><span data-i18n-title="condition-cowering-title" data-i18n-aria-label="condition-cowering-title" data-i18n="cowering">Cowering</span></b></label>

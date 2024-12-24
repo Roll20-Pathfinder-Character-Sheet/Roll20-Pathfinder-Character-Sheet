@@ -2857,10 +2857,13 @@ also need 1 more level in selector or base css will override border */
 
 /*selected text */
 .charsheet .selectedlabel-check + b:not(.offCase) {
-    font-size: 1.2rem;
-    line-height: 1.5em;
-    padding: 0.1rem .65rem 0.1rem .25rem;
+    color: #fff;
     cursor: help;
+    font-size: 1.2rem;
+    font-weight: normal;
+    line-height: 1.5em;
+    padding: 0 4px 0 2px;
+    vertical-align: middle;
 }
 
 .charsheet .corerules .table-row .table-cell {
@@ -2868,15 +2871,12 @@ also need 1 more level in selector or base css will override border */
     color: inherit;
 }
 
-.charsheet .selectedlabel-check:hover + b:not(.offCase),
-.charsheet .selectedlabel-check:focus + b:not(.offCase),
-.charsheet .selectedlabel-check:checked:hover + b:not(.offCase),
-.charsheet .selectedlabel-check:checked:focus + b:not(.offCase) {
-    color: red;
-}
-
-.charsheet .selectedlabel-check:checked + b:not(.offCase) {
-    color: #888;
+.charsheet .conditions label:hover input:not(:checked) + b:not(.offCase),
+.charsheet .conditions label:focus input:not(:checked) + b:not(.offCase) {
+    color: #000;
+    position: relative;
+    top: -1px;
+    transition: all .2s ease-in-out;
 }
 
 .charsheet .conditions {
@@ -2886,7 +2886,7 @@ also need 1 more level in selector or base css will override border */
     align-items: center;
     padding-left: .25em;
     padding-right: .25em;
-
+    position: relative;
 }
 
 .charsheet .conditions .nontable-name {
@@ -2897,9 +2897,8 @@ also need 1 more level in selector or base css will override border */
 .charsheet .conditions .option-condition {
     align-items: center;
     display: flex;
-    flex: 1 1 0;
+    flex: 0 1 0;
     flex-wrap: nowrap;
-    justify-content: center;
 }
 
 .charsheet .conditions .option-condition:hover .boldlabel-check:not(:checked) + b {
