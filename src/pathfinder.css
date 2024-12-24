@@ -2833,9 +2833,11 @@ also need 1 more level in selector or base css will override border */
 .charsheet .condition-exists + label,
 .charsheet .status-panel label b,
 .charsheet input.narrow-numbers + b:not(.offCase) {
-    display: inline;
+    display: flex;
+    font-size: 1.2rem;
     font-weight: normal;
-    padding: .1rem .5rem .25rem .25rem;
+    margin: 1px 2px 1px 0;
+    padding: 2px 4px 2px 3px;
     white-space: nowrap;
 }
 
@@ -2844,7 +2846,7 @@ also need 1 more level in selector or base css will override border */
 .tab-content .charsheet .condition-exists.sect-either-show-n:checked ~ label,
 .tab-content .charsheet .condition-exists:checked + label {
     background-color: #4a6486;
-    border-radius: 0.5rem;
+    border-radius: 3px;
     color: White;
 }
 
@@ -2898,6 +2900,13 @@ also need 1 more level in selector or base css will override border */
     flex: 1 1 0;
     flex-wrap: nowrap;
     justify-content: center;
+}
+
+.charsheet .conditions .option-condition:hover .boldlabel-check:not(:checked) + b {
+    color: #000;
+    padding-top: 0;
+    text-shadow: 0 0 #666;
+    transition: all .2s ease-in-out;
 }
 
 .charsheet .no-pad-right {
