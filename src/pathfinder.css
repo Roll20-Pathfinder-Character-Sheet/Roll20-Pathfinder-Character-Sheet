@@ -1963,6 +1963,25 @@ also need 1 more level in selector or base css will override border */
     z-index: -1;
 }
 
+.sheet-darkmode .charsheet .tabinput.tab0:checked + .tab.tab0,
+.sheet-darkmode .charsheet .tabinput.tab1:checked + .tab.tab1,
+.sheet-darkmode .charsheet .tabinput.tab2:checked + .tab.tab2,
+.sheet-darkmode .charsheet .tabinput.tab3:checked + .tab.tab3,
+.sheet-darkmode .charsheet .tabinput.tab4:checked + .tab.tab4,
+.sheet-darkmode .charsheet .tabinput.tab5:checked + .tab.tab5,
+.sheet-darkmode .charsheet .tabinput.tab6:checked + .tab.tab6,
+.sheet-darkmode .charsheet .tabinput.tab7:checked + .tab.tab7,
+.sheet-darkmode .charsheet .tabinput.tab8:checked + .tab.tab8,
+.sheet-darkmode .charsheet .tabinput.tab9:checked + .tab.tab9,
+.sheet-darkmode .charsheet .tabinput.tab10:checked + .tab.tab10,
+.sheet-darkmode .charsheet .tabinput.tab11:checked + .tab.tab11,
+.sheet-darkmode .charsheet .tabinput.tab99:checked ~ .tab.tab99 {
+    box-shadow: -3px 1px 3px #333;
+    height: 1.85em;
+    outline: 1px solid #333;
+    z-index: 0;
+}
+
 /************** TAB AREAS ***********************/
 
 .charsheet .tabinput.tab0:not(:checked) ~ .section0.section-abilities,
@@ -2043,12 +2062,12 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* hover */
-.charsheet .tabinput:not(:checked):hover + .tab {
-    box-shadow: -3px 1px 3px #000;
+.sheet-darkmode .charsheet .tabinput:not(:checked):hover + .tab {
+    box-shadow: -3px 1px 3px #333;
     color: #e0e0e0;
-    height: 1.65em;
-    outline: 1px solid #000;
-    z-index: -1;
+    height: 1.85em;
+    outline: 1px solid #333;
+    z-index: 0;
 }
 
 /* custom tab overrides */
@@ -2877,10 +2896,8 @@ also need 1 more level in selector or base css will override border */
 
 /*selected text */
 .charsheet .selectedlabel-check + b:not(.offCase) {
-    color: #fff;
     cursor: help;
     font-size: 1.2rem;
-    font-weight: normal;
     line-height: 1.5em;
     padding: 0 4px 0 2px;
     vertical-align: middle;
@@ -2889,14 +2906,6 @@ also need 1 more level in selector or base css will override border */
 .charsheet .corerules .table-row .table-cell {
     padding-left: .5em;
     color: inherit;
-}
-
-.charsheet .conditions label:hover input:not(:checked) + b:not(.offCase),
-.charsheet .conditions label:focus input:not(:checked) + b:not(.offCase) {
-    color: #000;
-    position: relative;
-    top: -1px;
-    transition: all .2s ease-in-out;
 }
 
 .charsheet .conditions {
@@ -2922,7 +2931,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .conditions .option-condition:hover .boldlabel-check:not(:checked) + b {
-    color: #000;
+    color: inherit;
     padding-top: 0;
     text-shadow: 0 0 #666;
     transition: all .2s ease-in-out;
@@ -3190,8 +3199,36 @@ also need 1 more level in selector or base css will override border */
     color: inherit;
 }
 
-.charsheet .table.options span {
-    margin: 0 0 0 1em;
+.charsheet .npc-statistics .options .table-row,
+.charsheet .skill-options .table-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.charsheet .npc-statistics .options .table-row .table-cell,
+.charsheet .skill-options .table-row .table-cell {
+    align-items: center;
+    display: inline-flex;
+    flex: 1 1 0;
+    justify-content: space-around;
+}
+
+.charsheet .npc-statistics .options .table-row .table-cell label,
+.charsheet .skill-options .table-row .table-cell label {
+    align-self: center;
+    display: inline-flex;
+    justify-content: center;
+    min-width: 12em;
+}
+
+.charsheet .npc-statistics .options .table-row .table-cell label b,
+.charsheet .skill-options .table-row .table-cell label b {
+    white-space: normal;
+}
+
+.charsheet .spell-options .table-row .table-cell label {
+    display: flex;
 }
 
 .charsheet .readonly-show:not(:checked) ~ .main .options-readonly,
@@ -4145,8 +4182,8 @@ spellclass-concentration spellcaster-button {
 .charsheet div.macro-text .small-label2,
 .charsheet .extra-damage .small-label2 {
     text-align: left;
+    vertical-align: middle;
     width: auto;
-    height: auto;
 }
 
 .charsheet .readonly-show:checked .main .defense-table .table-header {
@@ -4171,9 +4208,12 @@ spellclass-concentration spellcaster-button {
     justify-content: left;
 }
 
-.charsheet .spell-options .table-cell,
 .charsheet .command-buttons .table-cell {
     text-align: left;
+}
+
+.charsheet .spell-options .table-row .table-cell label {
+    display: flex;
 }
 
 .charsheet .status-panel .options .small-label2 {
@@ -4238,6 +4278,7 @@ spellclass-concentration spellcaster-button {
 
 .charsheet .insertmacrocell .small-label2 {
     display: inline;
+    vertical-align: middle;
 }
 
 .charsheet .ability-column select,
