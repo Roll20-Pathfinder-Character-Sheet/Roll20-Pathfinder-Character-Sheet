@@ -322,16 +322,21 @@
 /* macro-text field pop-up */
 
 .charsheet .skills .table-row span.table-cell > textarea:focus,
-.charsheet details[open] summary + textarea.skill-macro-text {
+.charsheet details[open] summary + textarea.skill-macro-text,
+.charsheet details[open] summary + * {
     background-color: #f0f8ff;
     color: revert;
-    display: block;
-    height: 10em;
+    display: flex;
+    height: auto;
+    min-height: 4.75em;
     left: 1em;
     position: absolute;
+    transition: height .3s ease-in-out;
     width: calc(100% - 2em);
     word-break: normal;
     z-index: 4;
+    outline: 1px solid #777;
+    border-radius: 0;
 }
 
 .charsheet .skills .table-row span.table-cell > textarea:focus {
@@ -1072,10 +1077,9 @@ pf-wrapper,
 }
 
 .charsheet .main {
-    width: 100%;
-    position: relative;
     display: block;
-    overflow: hidden;
+    position: relative;
+    width: 100%;
 }
 
 .charsheet .table {
@@ -1701,18 +1705,18 @@ also need 1 more level in selector or base css will override border */
 
 .tab-content .charsheet .tab,
 .tab-content .charsheet label[role="menuitem"].tab {
-    text-align: center;
     background: #4a6486;
-    color: White;
-    font-weight: normal;
-    font-size: 1.2rem;
-    padding: .4em .2em .1em .2em;
-    vertical-align: bottom;
-    margin-left: -0.4rem;
-    margin-right: 0;
-    white-space: nowrap;
     border-radius: 0.7rem 0.7rem 0 0;
+    color: White;
+    font-size: 1.2rem;
+    font-weight: normal;
     height: 1.5em;
+    margin-left: -3px;
+    margin-right: 0;
+    padding: .4em .2em .1em .2em;
+    text-align: center;
+    vertical-align: bottom;
+    white-space: nowrap;
 }
 
 .charsheet .tabinput {
@@ -1744,13 +1748,26 @@ also need 1 more level in selector or base css will override border */
     height: 1.5em;
 }
 
+/* change hover and select effect for only the first tab */
+.charsheet .tabinput[value="0"]:checked + label.tab.tab0,
+.charsheet .tabinput[value="1"]:checked + label.tab.tab1,
+.charsheet .tabinput[value="class-features"]:checked + label.tab.tab0,
+.charsheet .tabinput[value="0"]:not(:checked):hover + label.tab.tab0,
+.charsheet .tabinput[value="1"]:not(:checked):hover + label.tab.tab1,
+.charsheet .tabinput[value="class-features"]:not(:checked):hover + label.tab.tab0 {
+    box-shadow: 3px 1px 3px #000;
+    outline-offset: -1px;
+    z-index: 0;
+}
+
 .charsheet .mainnav ~ .tab {
     width: 8%;
 }
 
 .charsheet .mainnav ~ .tabinput {
-    width: 8%;
-    margin-right: -8%;
+    margin-left: 0;
+    margin-right: calc(-8% + 2px);
+    width: calc(8% - 2px);
 }
 
 .charsheet .mainnav ~ .tab.narrow-tab {
@@ -1767,8 +1784,10 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .mainnav ~ .tabinput.wider-tab {
-    width: 11%;
-    margin-right: -11%;
+    margin-left: 0;
+    margin-right: calc(-11% + 10px);
+    outline: 1px solid green;
+    width: calc(11% - 10px);
 }
 
 .charsheet .buffnav2 ~ .tab {
@@ -2027,6 +2046,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .tabinput:not(:checked):hover + .tab {
     box-shadow: -3px 1px 3px #000;
     color: #e0e0e0;
+    height: 1.65em;
     outline: 1px solid #000;
     z-index: -1;
 }
@@ -3226,6 +3246,11 @@ also need 1 more level in selector or base css will override border */
     min-height: 100%;
 }
 
+/* outline when a condition is in effect */
+.charsheet .status-panel:first-child .options:has(input:checked) {
+    outline: 2px solid red;
+}
+
 .charsheet .status-panel .options div {
     display: inline;
 }
@@ -4395,6 +4420,7 @@ spellclass-concentration spellcaster-button {
 .charsheet .not-C-show:checked ~ .or-D-show:not(:checked) ~ div .not-C-or-D-sect,
 .charsheet .sect-either-show-n:not(:checked) ~ .sect,
 /* conditions and buffs  */
+.charsheet .either-or-sect:has(.condition-exists:checked) + .panel-name,
 .charsheet .condition-exists:not(:checked) + label,
 .charsheet .condition-exists:checked ~ .panel-name,
 .charsheet .conditions-show:not(:checked) ~ .conditions,
