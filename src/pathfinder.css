@@ -2755,10 +2755,11 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.configbutton,
 .charsheet input.readonly-show,
 .charsheet input.refreshbutton {
-    vertical-align: top;
-    margin-top: .5em;
-    padding-top: 0;
-    margin-left: .75em;
+    height: 3em;
+    left: -6px;
+    margin-top: 5px;
+    min-width: 3em;
+    position: absolute;
 }
 
 .charsheet .configbutton + span::before {
@@ -4302,7 +4303,7 @@ spellclass-concentration spellcaster-button {
     font-size: 1.6rem;
     height: 1.2em;
     margin-top: -1.5em;
-    right: 2em;
+    right: 9em;
     position: absolute;
 }
 
@@ -7050,6 +7051,20 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 .charsheet .readonly-show:not(:checked) ~ .main .section-spellclass .col button[type="roll"] {
     font-size: .95em;
+}
+
+.charsheet .mode-and-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: -5.75em;
+    position: absolute;
+    right: 2em;
+    width: 9em;
+}
+
+.charsheet .mode-and-settings span {
+    margin: auto;
+    position: relative;
 }
 
 /*styles sheet mode note*/
