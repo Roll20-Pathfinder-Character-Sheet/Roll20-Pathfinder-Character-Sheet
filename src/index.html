@@ -15,13 +15,13 @@
 <input type="checkbox" name="attr_use_background" value="3" class="parchment-2 noshow" role="presentation" />
 <input type="checkbox" name="attr_hide_announcements" value="1" class="noshow" role="presentation" />
 <div class="pf-wrapper">
-    <div style="display: grid;grid-template-columns: 1fr auto;">
+    <div>
         <div class="mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" title="Toggle Expanded mode(full editing) or Compact mode(important fields only)" aria-label="Toggle Expanded mode(full editing) or Compact mode(important fields only)">
             <input type="checkbox" name="attr_readonly_show" value="1" class="readonly-show" checked />
             <span class="mode"><span data-i18n="edit-mode">Edit Mode</span></span>
             <span class="mode"><span data-i18n="compact-mode">Compact Mode</span></span>
         </div>
-        <div style="grid-area: 1/1/1/3;">
+        <div>
             <input type="checkbox" class="showarrow ack-button" name="attr_attentionv172-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
             <label class="showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
             <br />
@@ -79,9 +79,15 @@
     <input type="checkbox" class="offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all" />
     <input type="checkbox" name="attr_config-show" value="1" class="hidden cssbutton configbutton config-show" checked />
     <div>
-        <input type="checkbox" name="attr_is_npc" value="1" class="npc-show noshow" role="presentation" />
-        <div class="monster-indicator npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
-            <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists" role="Presentation"><label style="font-size:1.6rem; padding:0.25em .5em .25em .5em;" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character"><b data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</b></label>
+        <div class="monster-indicator" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
+            <label class="pc-only" data-i18n-title="player-character" data-i18n-aria-label="player-character">
+                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists pc-only" role="Presentation" />
+                <span data-i18n="player-character-abbrv">PC</span>
+            </label>
+            <label class="npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character">
+                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists npc-show " role="Presentation" />
+                <span data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</span>
+            </label>
         </div>
         <div class="small-label2" style="display:inline;" role="presentation">
             <img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_logo.png" style="max-height:70px;width:140px;margin-bottom:-.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
@@ -256,8 +262,8 @@
             <div class="conditions" data-i18n-list="conditions-list">
                 <span class="nontable-name secondary-table-name">
                     <span data-i18n="conditions-set">Set Conditions</span>
-                    <label style="position: absolute; right:0;">
-                        <input type="checkbox" value="1" name="attr_extra_fields_conditions_show" title="@{extra_fields_conditions_show}" class="extra-show selectedlabel-check" /><b data-i18n-title="show-all-conditions-desc" data-i18n="show-all-conditions">Show All Conditions</b>
+                    <label>
+                        <input type="checkbox" value="1" name="attr_extra_fields_conditions_show" title="@{extra_fields_conditions_show}" class="extra-show selectedlabel-check" /><span data-i18n-title="show-all-conditions-desc" data-i18n="show-all-conditions">Show All Conditions</span>
                     </label>
                 </span>
                 <!-- <span class="nontable-name secondary-table-name" data-i18n="conditions-set">Set Conditions</span> -->
@@ -272,7 +278,7 @@
                 <label class="option-condition extra-sect left" data-i18n-list-item="disabled"><input type="checkbox" title="@{condition-Disabled}" class="boldlabel-check" name="attr_condition-Disabled" value="1" /><b><span data-i18n-title="condition-disabled-title" data-i18n-aria-label="condition-disabled-title" data-i18n="disabled">Disabled</span></b></label>
                 <label class="option-condition extra-sect left" data-i18n-list-item="drowning"><input type="checkbox" title="@{condition-Drowning}" class="boldlabel-check" name="attr_condition-Drowning" value="1" /><b><span data-i18n-title="condition-drowning-title" data-i18n-aria-label="condition-drowning-title" data-i18n="drowning">Drowning</span></b></label>
                 <label class="option-condition extra-sect left" data-i18n-list-item="dying"><input type="checkbox" title="@{condition-Dying}" class="boldlabel-check" name="attr_condition-Dying" value="1" /><b><span data-i18n-title="condition-dying-title" data-i18n-aria-label="condition-dying-title" data-i18n="dying">Dying</span></b></label>
-                <label class="option-condition left" style="height: 1em;" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" class="narrow-numbers boldlabel-check" /><input type="checkbox" name="attr_condition-Drained-toggle" class="noshow boldlabel-check" value="1" /><b><span data-i18n-title="condition-energy-drained-title" data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
+                <label class="option-condition left" style="height: 1em;" data-i18n-list-item="energy-drained"><input type="number" title="@{condition-Drained}" name="attr_condition-Drained" value="0" max="0" style="margin:0;" class="narrow-numbers boldlabel-check" /><input type="checkbox" name="attr_condition-Drained-toggle" class="noshow boldlabel-check" value="1" /><b><span data-i18n-title="condition-energy-drained-title" data-i18n-aria-label="condition-energy-drained-title" data-i18n="energy-drained">Energy Drain</span></b></label>
                 <label class="option-condition left" data-i18n-list-item="entangled"><input type="checkbox" title="@{condition-Entangled}" class="boldlabel-check" name="attr_condition-Entangled" value="2" /><b><span data-i18n-title="condition-entangled-title" data-i18n-aria-label="condition-entangled-title" data-i18n="entangled">Entangled</span></b></label>
                 <label class="option-condition left" data-i18n-list-item="exhausted"><input type="checkbox" title="@{condition-Exhausted}" class="boldlabel-check" name="attr_condition-Exhausted" value="3" /><b><span data-i18n-title="condition-exhausted-title" data-i18n-aria-label="condition-exhausted-title" data-i18n="exhausted">Exhausted</span></b></label>
                 <label class="option-condition left" data-i18n-list-item="fascinated"><input type="checkbox" title="@{condition-Fascinated}" class="boldlabel-check" name="attr_condition-Fascinated" value="4" /><b><span data-i18n-title="condition-fascinated-title" data-i18n-aria-label="condition-fascinated-title" data-i18n="fascinated">Fascinated</span></b></label>

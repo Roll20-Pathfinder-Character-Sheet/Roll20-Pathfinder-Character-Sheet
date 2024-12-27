@@ -59,10 +59,6 @@
     display: inline-grid;
 }
 
-.charsheet .pf-wrapper {
-    box-sizing: border-box;
-}
-
 .charsheet .section-roll_templates {
     display: none;
     opacity: 0;
@@ -162,9 +158,10 @@
 }
 
 .charsheet .pf-wrapper {
-    width: 100%;
-    min-width: 822px;
+    box-sizing: border-box;
     margin-top: -1rem;
+    min-width: 822px;
+    width: 100%;
 }
 
 /* standalone generic toggles */
@@ -320,6 +317,21 @@
 }
 
 /* macro-text field pop-up */
+.charsheet details[open]:focus-within summary,
+.charsheet details[open]:hover summary,
+.charsheet details[open] summary,
+.charsheet details[open]:focus-within summary::marker,
+.charsheet details[open]:hover summary::marker,
+.charsheet details[open] summary::marker {
+    color: red;
+    opacity: 1;
+}
+
+.charsheet details[open]:focus-within,
+.charsheet details[open]:hover {
+    position: relative;
+    z-index: 2;
+}
 
 .charsheet .skills .table-row span.table-cell > textarea:focus,
 .charsheet details[open] summary + textarea.skill-macro-text,
@@ -334,9 +346,14 @@
     transition: height .3s ease-in-out;
     width: calc(100% - 2em);
     word-break: normal;
-    z-index: 4;
+    z-index: 1;
     outline: 1px solid #777;
     border-radius: 0;
+}
+
+.charsheet details[open] summary + span:has(.footnotes) {
+    margin-bottom: 1em;
+    position: relative;
 }
 
 .charsheet .skills .table-row span.table-cell > textarea:focus {
@@ -1013,7 +1030,6 @@ pf-wrapper,
     min-width: 2.5rem;
     max-width: 3.25rem;
     padding: 2px;
-    margin: 2px 0 2px 0;
 }
 
 .charsheet .calc.narrow-numbers {
@@ -1059,6 +1075,30 @@ pf-wrapper,
 .charsheet .small-label2 span:not(.autoexpand) {
     cursor: help;
     font-size: 1.125rem;
+}
+
+.charsheet .monster-indicator label:has(.condition-exists.npc-show:not(:checked)),
+.charsheet .monster-indicator label:has(.condition-exists.pc-only:checked) {
+    display: none;
+}
+
+.charsheet .monster-indicator label:has(.condition-exists.npc-show:checked),
+.charsheet .monster-indicator label:has(.condition-exists.pc-only:not(:checked)) {
+    cursor: pointer;
+    display: flex;
+    font-weight: normal;
+    padding: 1px 6px 3px 6px;
+}
+
+.charsheet .monster-indicator label:has(.condition-exists.npc-show:checked):hover,
+.charsheet .monster-indicator label:has(.condition-exists.pc-only:not(:checked)):hover {
+    background-color: #4a648670;
+    outline: 1px solid #4a6486;
+}
+
+.charsheet .monster-indicator label:hover span,
+.charsheet .monster-indicator label:hover span {
+    color: red;
 }
 
 .charsheet .h2-section {
@@ -1204,6 +1244,8 @@ also need 1 more level in selector or base css will override border */
 .charsheet .nontable-name.secondary-table-name,
 .charsheet .table-name.secondary-table-name {
     background-color: #4a6486;
+    color: #fff;
+    cursor: default;
     padding: 2px 5px 1px 5px;
 }
 
@@ -2883,7 +2925,8 @@ also need 1 more level in selector or base css will override border */
 .tab-content .charsheet .boldlabel-check:checked + b:not(.offCase),
 .tab-content .charsheet .boldlabel-check:checked + label b:not(.offCase),
 .tab-content .charsheet .condition-exists.sect-either-show-n:checked ~ label,
-.tab-content .charsheet .condition-exists:checked + label {
+.tab-content .charsheet .condition-exists:checked + label,
+.tab-content .charsheet .monster-indicator label:has(.condition-exists) {
     background-color: #4a6486;
     border-radius: 3px;
     color: White;
@@ -2895,12 +2938,28 @@ also need 1 more level in selector or base css will override border */
 }
 
 /*selected text */
-.charsheet .selectedlabel-check + b:not(.offCase) {
-    cursor: help;
+.charsheet .selectedlabel-check + span:not(.offCase) {
+    cursor: pointer;
     font-size: 1.2rem;
+    font-weight: normal;
     line-height: 1.5em;
-    padding: 0 4px 0 2px;
+    padding: 0 4px 0 4px;
     vertical-align: middle;
+}
+
+.charsheet label:has(.selectedlabel-check + span:not(.offCase)) {
+    color: #fff;
+    padding: 1px 0 0 4px;
+    position: absolute;
+    right: 0;
+}
+
+.charsheet label:has(.selectedlabel-check + span:not(.offCase)):hover {
+    background-color: #ffffff96;
+}
+
+.charsheet label:hover .selectedlabel-check + span:not(.offCase) {
+    color: red;
 }
 
 .charsheet .corerules .table-row .table-cell {
@@ -3767,6 +3826,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .nontable-name {
     background-color: Black;
     color: White;
+    cursor: default;
     display: table-caption;
     font-weight: normal;
     padding-top: .25em;
@@ -4239,10 +4299,11 @@ spellclass-concentration spellcaster-button {
 }
 
 .charsheet .monster-indicator {
-    display: flex;
-    justify-content: center;
-    margin-top: -2em;
-    text-align: center;
+    font-size: 1.6rem;
+    height: 1.2em;
+    margin-top: -1.5em;
+    right: 2em;
+    position: absolute;
 }
 
 .charsheet .section-header {
@@ -4257,9 +4318,20 @@ spellclass-concentration spellcaster-button {
 }
 
 .charsheet .announcements {
-    width: 100%;
+    background-color: #f0f8ff;
     display: block;
-    clear: both;
+    margin-top: -5px;
+    position: absolute;
+    width: 75%;
+    z-index: 99;
+}
+
+.charsheet .announcements details[open] summary + ol {
+    display: block;
+    margin: revert;
+    padding: revert;
+    position: relative;
+    width: 90%;
 }
 
 .charsheet textarea-gray:not(:checked) ~ .small-label2 textarea {
@@ -6982,11 +7054,11 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 
 /*styles sheet mode note*/
 .charsheet div.mode {
-    display: flex;
-    flex-direction: row-reverse;
     font-style: italic;
     font-weight: bold;
-    grid-area: 1/2/1/2;
+    margin: -25px 0 0 0;
+    position: absolute;
+    right: 2.4em;
 }
 
 .charsheet div.mode:hover {
