@@ -2062,7 +2062,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 /* abilities tabs */
-.charsheet .abilities .selected-tabtitle {
+.charsheet .abilities .tabinput ~ span.selected-tabtitle {
     display: none;
 }
 
@@ -2172,6 +2172,7 @@ also need 1 more level in selector or base css will override border */
 
 /***************** collapse/expand rows arrow added after text found preceding span ******************************/
 /* ARROWS */
+
 .charsheet input.csstextbutton,
 .charsheet .csstextbutton,
 .charsheet .small-label2 > input[type="checkbox"].cssbutton,
@@ -2179,6 +2180,8 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.cssbutton,
 .charsheet .cssbutton {
     display: inline;
+    margin: auto;
+    position: relative;
 }
 
 /* the label underneath button*/
@@ -2209,7 +2212,19 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.split-column-show,
 .charsheet input.lock-show,
 .charsheet input.counted {
-    height: 1.6em;
+    min-height: 1.6em;
+}
+
+/* repeating section controls */
+.charsheet input.minimize-show.cssbutton ~ span {
+    align-items: center;
+    display: inline-flex;
+    left: -1.75em;
+    margin: auto;
+    margin-right: -1.75em;
+    min-height: 22px;
+    min-width: 22px;
+    position: relative;
 }
 
 .charsheet .hasexpandrows {
@@ -2375,11 +2390,9 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .npc-statblock-row {
-    align-items: start;
     display: inline-flex;
-    flex-wrap: wrap;
-    height: 2.75em;
-    width: inherit;
+    min-height: 3em;
+    width: 100%;
 }
 
 .charsheet .npc-statblock-row .small-label2 > .calc,
@@ -2422,8 +2435,10 @@ also need 1 more level in selector or base css will override border */
 .charsheet .npc-statblock-row span.small-label2 span {
     align-items: center;
     display: inline-flex;
+    flex-direction: row;
     font-size: 1em;
     font-style: normal;
+    margin: 0 8px 0 8px;
 }
 
 .charsheet .npc-statblock-row span.small-label2 span + input {
@@ -2570,13 +2585,12 @@ also need 1 more level in selector or base css will override border */
     border: 0.1rem solid #808080;
     border-radius: 0.5rem;
     color: Black;
-    display: inline-block;
-    font-size: 1.5rem;
+    display: grid;
     font-style: normal !important;
-    height: 2.2rem;
-    margin: 0.3rem 0.2rem 0.2rem 0.2rem;
-    text-align: center;
-    width: 2.2rem;
+    height: 22px;
+    margin: auto;
+    place-items: center;
+    width: 22px;
 }
 
 .charsheet .csstextbutton + span {
@@ -2632,39 +2646,25 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .minimize-show + span::before {
     content: '▂';
-    padding-top: 0;
-    vertical-align: top;
 }
 
 .charsheet .lock-show + span::before {
     font-family: "Pictos" !important;
     content: ')';
-    padding-left: 0.4rem;
-    padding-top: 0;
-    vertical-align: top;
 }
 
 .charsheet .minimize-show:checked ~ .lock-show + span::before,
 .charsheet .lock-show:checked + span::before {
     font-family: "Pictos" !important;
     content: '(';
-    padding-top: 0.1rem;
-    padding-left: 0.2rem;
-    vertical-align: top;
 }
 
 .charsheet .split-column-show + span::before {
     content: '❚❚';
-    /* '▮';*/
-    padding-top: 0.1rem;
-    vertical-align: top;
 }
 
 .charsheet .split-column-show:checked + span::before {
     content: '❚❚';
-    padding-left: 0.2rem;
-    padding-top: 0.1rem;
-    vertical-align: top;
 }
 
 .charsheet .split-column-show:checked:hover + span::before {
@@ -2680,9 +2680,6 @@ also need 1 more level in selector or base css will override border */
 .charsheet .refreshbutton + span::before {
     font-family: "Pictos" !important;
     content: '1';
-    vertical-align: top;
-    margin-top: .5em;
-    height: 2.3rem;
 }
 
 .charsheet .small-label2 .refreshbutton + span::before {
@@ -2755,19 +2752,13 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.configbutton,
 .charsheet input.readonly-show,
 .charsheet input.refreshbutton {
-    height: 3em;
-    left: -6px;
-    margin-top: 5px;
-    min-width: 3em;
+    min-height: 22px;
+    min-width: 22px;
     position: absolute;
 }
 
 .charsheet .configbutton + span::before {
     content: '⛭';
-    margin-top: .5em;
-    vertical-align: top;
-    padding: 0.1rem 0 0 0 !important;
-    height: 2.3rem;
 }
 
 .charsheet .configbutton:checked:hover + span::before {
@@ -2781,8 +2772,7 @@ also need 1 more level in selector or base css will override border */
     content: ' ';
     background-repeat: no-repeat !important;
     vertical-align: top;
-    margin-top: .5em;
-    height: 2.3rem;
+    margin: auto;
     background-position: center;
     background-size: contain;
     color: transparent;
@@ -2802,6 +2792,10 @@ also need 1 more level in selector or base css will override border */
     background-position: center;
     background-size: contain;
     color: transparent;
+    display: grid;
+    margin: auto;
+    place-items: center;
+    position: relative;
 }
 
 .charsheet .readonly-show:checked:hover + span::before {
@@ -2824,10 +2818,18 @@ also need 1 more level in selector or base css will override border */
     margin-top: 0.2rem;
 }
 
-.charsheet .small-label2 input[type="checkbox"].csstextbutton,
+/* .charsheet .small-label2 input[type="checkbox"].csstextbutton,
 .charsheet .small-label2 input[type="checkbox"].cssbutton {
     -webkit-margin-before: 0;
     display: inline-block;
+} */
+
+.charsheet .small-label2 input[type="checkbox"].csstextbutton + span,
+.charsheet .small-label2 input[type="checkbox"].cssbutton + span {
+    margin: auto;
+    outline: 2px solid yellow;
+    position: absolute;
+    top: -3px;
 }
 
 /***********************repeating item counter ************************************/
@@ -3439,7 +3441,7 @@ also need 1 more level in selector or base css will override border */
     min-height: 15em;
 }
 
-.charsheet .small-label2 {
+/* .charsheet .small-label2 {
     display: inline-block;
     margin: .1em .124em .1em .125em;
     height: 3em;
@@ -3447,7 +3449,18 @@ also need 1 more level in selector or base css will override border */
     text-align: center;
     position: relative;
     width: initial;
+} */
+.charsheet .small-label2 {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    max-height: 3.85em;
+    place-items: center;
+    position: relative;
+    vertical-align: top;
 }
+
 
 .charsheet .core-details .small-label2 {
     margin: 0 0.2rem 0 0.2rem;
@@ -3777,13 +3790,21 @@ also need 1 more level in selector or base css will override border */
     vertical-align: top;
 }
 
-.charsheet .divider-subtext {
+/* .charsheet .divider-subtext {
     display: block;
     text-align: center;
     font-size: 1.1rem;
     font-style: italic;
     font-weight: bold;
     margin-top: -1.7em;
+} */
+
+.charsheet .divider-subtext {
+    display: block;
+    font-size: 1.1rem;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
 }
 
 .charsheet .divider,
@@ -3834,10 +3855,11 @@ also need 1 more level in selector or base css will override border */
     text-align: center;
 }
 
-.charsheet .nontable-name {
+.charsheet .pf-wrapper .main .nontable-name {
     caption-side: top;
-    width: 100%;
     display: block;
+    min-height: unset;
+    width: 100%;
 }
 
 .charsheet .spellclassnav ~ .nontable-name {
@@ -4298,6 +4320,7 @@ spellclass-concentration spellcaster-button {
     border-color: #617c9f;
     color: #9f9f9f;
 }
+
 
 .charsheet .monster-indicator {
     font-size: 1.6rem;
@@ -6878,7 +6901,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     height: auto;
 }
 
-.charsheet .small-label2.autoexpand span.autoexpand {
+/* .charsheet .small-label2.autoexpand span.autoexpand {
     visibility: hidden;
     width: 100%;
     white-space: pre-wrap;
@@ -6888,6 +6911,19 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     min-height: 1.3rem;
     padding: 0 1.25rem 0 1.25rem;
     height: auto;
+} */
+
+.charsheet .small-label2.autoexpand span.autoexpand {
+    display: block;
+    height: 0;
+    min-height: 0;
+    outline: 1px solid blue;
+    overflow-wrap: break-word;
+    padding: 0 1.25rem 0 1.25rem;
+    visibility: hidden;
+    white-space: pre-wrap;
+    width: 100%;
+    word-wrap: break-word;
 }
 
 .charsheet .small-label2.wide-textareaparent {
@@ -7056,14 +7092,16 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .mode-and-settings {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-top: -5.75em;
+    margin-top: -5em;
     position: absolute;
     right: 2em;
     width: 9em;
 }
 
 .charsheet .mode-and-settings span {
+    display: grid;
     margin: auto;
+    place-items: center;
     position: relative;
 }
 

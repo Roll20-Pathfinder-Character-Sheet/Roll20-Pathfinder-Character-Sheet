@@ -115,8 +115,8 @@
             <span class="cssbutton-label" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
             <span class="cssbutton-label" data-i18n-title="display-settings-config" data-i18n-aria-label="display-settings-config" data-i18n="settings">Settings</span>
         </span>
-
-        <label class="small-label2 npc-only entry-25p"><input title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type" /><span data-i18n="type-or-sub-type">Type/(sub-type)</span></label>
+        <input type="checkbox" class="noshow npc-show not-A-show" name="attr_is_npc" value="1" role="presentation" />
+        <label class="small-label2 npc-only entry-20p"><input title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type" /><span data-i18n="type-or-sub-type">Type/(sub-type)</span></label>
         <label class="small-label2 npc-only narrow-numbers"><input class="number" title="@{npc-cr}" type="text" name="attr_npc-cr" value="0" /><span data-i18n="challenge-rating-abbrv">CR</span></label>
         <label class="small-label2 npc-only narrow-numbers"><input title="@{npc-hd-num}" type="number" name="attr_npc-hd-num" value="0" /><span data-i18n="hit-dice-abbrv">HD</span></label>
         <label class="small-label2 pc-only narrow-numbers"><input title="@{level}" type="number" name="attr_level" value="0" style="text-align:right;" class="calc" readonly data-i18n-placeholder="level" /><span data-i18n="level">Level</span></label>
@@ -3574,7 +3574,10 @@
                     <input type="checkbox" class="minimize-show cssbutton" data-i18n-title="minimize-all-cmd" data-i18n-aria-label="minimize-all-cmd" title="Minimize all rows." name="attr_weapon-min-show" value="1" /><span></span>
                     <input type="checkbox" class="lock-show cssbutton" data-i18n-title="expand-cmd" data-i18n-aria-label="expand-cmd" title="Collapse or expand all rows." name="attr_weapon-expand-show" value="1" /><span></span>
                     <input type="checkbox" class="split-column-show cssbutton" data-i18n-title="column-cmd" data-i18n-aria-label="column-cmd" title="Split into two columns" name="attr_weapon-column-show" value="1" /><span></span>
-                    <input class="deletebutton cssbutton deletesect-show" type="checkbox" name="attr_delete_rep_weapon_btn" value="1" data-i18n-title="delete-attack" data-i18n-aria-label="delete-attack-must-confirm-next-checkbox" /><span></span><label class="deletesect allrows-note"><input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_weapon" data-i18n-aria-label="confirm-delete-attack" data-i18n-title="confirm-delete-attack" value="1" /><b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
+                    <input class="deletebutton cssbutton deletesect-show" type="checkbox" name="attr_delete_rep_weapon_btn" value="1" data-i18n-title="delete-attack" data-i18n-aria-label="delete-attack-must-confirm-next-checkbox" /><span></span>
+                    <label class="deletesect allrows-note"><input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_weapon" data-i18n-aria-label="confirm-delete-attack" data-i18n-title="confirm-delete-attack" value="1" />
+                        <b data-i18n="delete-all-rows-are-you-sure">Deletes ALL rows, are you sure?</b>
+                    </label>
                     <input type="checkbox" name="attr_adv_macro_show" class="repeating-sect-show" value="1" role="presentation" />
                     <input name="attr_modify_dmg_by_size" type="checkbox" value="1" class="use-size-show" />
                     <div class="repeating-fields">
@@ -11833,7 +11836,7 @@
             <div class="section8 section section-npc npc-only" role="region" aria-label="NPC" data-i18n-aria-label="npc">
                 <h1 class="selected-tabtitle offscreen" data-i18n="npc">NPC</h1>
                 <div class="npc-statblock-row hide-readonly" style="flex-direction: row-reverse;">
-                    <span class="small-label2">
+                    <span class="small-label2" style=" margin-right: 0; flex-direction: row; ">
                         <label class="small-label2">
                             <select name="attr_template_to_add" class="select-small">
                                 <option value="" data-i18n="select-one-default" selected="">•Select One</option>
@@ -12061,7 +12064,7 @@
                     </div>
                     <!--details-box-->
                     <details open>
-                        <summary style="margin: -1.75em 0 0 18.25em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
+                        <summary style="margin: -2em 0 0 20em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
                         <div class="details-box">
                             <span class="small-label2 right">(</span>
                             <span class="small-label2">
@@ -12133,7 +12136,7 @@
                     </div>
                     <!--details-box-->
                     <details open>
-                        <summary style="margin: -1.75em 0 0 8em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
+                        <summary style="margin: -2em 0 0 9.5em;" data-i18n-title="showsect-cmd" title="Click to expand">...</summary>
                         <div class="details-box">
                             <span class="small-label2 right">(</span>
                             <span class="small-label2" data-i18n-title="racial-bonus">
