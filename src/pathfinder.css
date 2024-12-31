@@ -1804,6 +1804,11 @@ also need 1 more level in selector or base css will override border */
     z-index: 0;
 }
 
+.charsheet .tabinput:hover + label {
+    box-shadow: 3px 1px 3px #000;
+    outline: 1px solid #000;
+}
+
 .charsheet .mainnav ~ .tab {
     width: 8%;
 }
@@ -1830,7 +1835,6 @@ also need 1 more level in selector or base css will override border */
 .charsheet .mainnav ~ .tabinput.wider-tab {
     margin-left: 0;
     margin-right: calc(-11% + 10px);
-    outline: 1px solid green;
     width: calc(11% - 10px);
 }
 
@@ -2828,16 +2832,9 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     margin-top: 0.2rem;
 }
 
-/* .charsheet .small-label2 input[type="checkbox"].csstextbutton,
-.charsheet .small-label2 input[type="checkbox"].cssbutton {
-    -webkit-margin-before: 0;
-    display: inline-block;
-} */
-
 .charsheet .small-label2 input[type="checkbox"].csstextbutton + span,
 .charsheet .small-label2 input[type="checkbox"].cssbutton + span {
     margin: auto;
-    outline: 2px solid yellow;
     position: absolute;
     top: -3px;
 }
@@ -3117,11 +3114,6 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     width: 100%;
 }
 
-/* we must have fixed whatever was moving stuff around cause this has no effect anymore
-.repcontainer.editmode + .repcontrol {
-    margin-bottom: 3em;
-}
-*/
 .charsheet .repcontainer.editmode + .repcontrol .repcontrol_edit {
     text-align: right;
     /* margin-left: calc(95% - 4em);*/
@@ -3451,15 +3443,6 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     min-height: 15em;
 }
 
-/* .charsheet .small-label2 {
-    display: inline-block;
-    margin: .1em .124em .1em .125em;
-    height: 3em;
-    vertical-align: top;
-    text-align: center;
-    position: relative;
-    width: initial;
-} */
 .charsheet .small-label2 {
     display: inline-flex;
     flex-direction: column;
@@ -3800,15 +3783,6 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     vertical-align: top;
 }
 
-/* .charsheet .divider-subtext {
-    display: block;
-    text-align: center;
-    font-size: 1.1rem;
-    font-style: italic;
-    font-weight: bold;
-    margin-top: -1.7em;
-} */
-
 .charsheet .divider-subtext {
     display: block;
     font-size: 1.1rem;
@@ -3904,21 +3878,6 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     text-align: left;
 }
 
-/*
-.readonly-show:checked  ~ main spellcaster-button,
-.readonly-show:checked  ~ main table-cellspellcaster-button {
-    width: 14.5rem;
-}
-.readonly-show:not(:checked)  ~ main spellcaster-button,
-.readonly-show:not(:checked)  ~ main table-cellspellcaster-button {
-    max-width: 14.5rem;
-	width:auto;
-}
-spellclass-concentration spellcaster-button {
-	max-width:14.4rem !important;
-	width:14.4rem !important;
-}
-*/
 .charsheet button[type="roll"].spellcaster-button {
     font-size: 1.4rem;
     white-space: nowrap;
@@ -4045,11 +4004,6 @@ spellclass-concentration spellcaster-button {
     width: 2.5em;
 }
 
-/*
-.charsheet .split-column-show:checked~.repeating-fields .small-label2 {
-    height: auto;
-}
-*/
 
 .charsheet .split-column-show:checked ~ .repeating-fields .small-label2 span:not(.autoexpand) {
     margin: 0 -.2em 0 -.2em;
