@@ -286,11 +286,13 @@
 }
 
 .charsheet .progress-icon {
-    position: absolute;
-    z-index: 5;
-    top: 4em;
-    color: red;
     background-color: white;
+    color: red;
+    outline: 1px solid red;
+    padding: 1px 4px 1px 4px;
+    position: absolute;
+    top: 0;
+    z-index: 5;
 }
 
 .charsheet .half,
@@ -2612,12 +2614,16 @@ also need 1 more level in selector or base css will override border */
 .charsheet .showarrow:hover + .showsect:not(.showsect-nocolor),
 .charsheet .showarrow:hover + .showsect::before,
 .charsheet .counted:hover + span,
-.charsheet .counted:hover + span::before {
+.charsheet .counted:hover + span::before,
+.charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"],
+span[data-i18n-title="recalculate-cmd"]:has(.cssbutton:hover) ~ span[data-i18n-title="recalculate-cmd"],
+span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[data-i18n-title="display-settings-config"] {
     color: Red;
 }
 
 .charsheet .csstextbutton:hover,
 .charsheet .csstextbutton:hover + span,
+.charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"] .cssbutton + span::before,
 .charsheet .cssbutton:hover,
 .charsheet .cssbutton:hover + span::before {
     color: Red;
@@ -2752,9 +2758,12 @@ also need 1 more level in selector or base css will override border */
 .charsheet input.configbutton,
 .charsheet input.readonly-show,
 .charsheet input.refreshbutton {
-    min-height: 22px;
-    min-width: 22px;
+    margin: auto;
+    min-height: 2.5em;
+    min-width: 1.85em;
+    opacity: 0;
     position: absolute;
+    z-index: 1;
 }
 
 .charsheet .configbutton + span::before {
@@ -2778,6 +2787,7 @@ also need 1 more level in selector or base css will override border */
     color: transparent;
 }
 
+.charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"] .readonly-show + span::before,
 .charsheet .readonly-show:hover + span::before {
     background-color: white !important;
     background: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/edit_mode_red.png");
@@ -4325,8 +4335,8 @@ spellclass-concentration spellcaster-button {
 .charsheet .monster-indicator {
     font-size: 1.6rem;
     height: 1.2em;
-    margin-top: -1.5em;
-    right: 9em;
+    margin-top: -1.8em;
+    right: 9.75em;
     position: absolute;
 }
 
@@ -7092,10 +7102,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .mode-and-settings {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-top: -5em;
+    margin-top: -6.65em;
     position: absolute;
-    right: 2em;
-    width: 9em;
+    right: 2.5em;
+    width: 8.5em;
 }
 
 .charsheet .mode-and-settings span {
@@ -7106,26 +7116,22 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 /*styles sheet mode note*/
-.charsheet div.mode {
-    font-style: italic;
-    font-weight: bold;
-    margin: -25px 0 0 0;
-    position: absolute;
-    right: 2.4em;
+.charsheet .mode {
+    grid-column: 1/-1;
+    padding-bottom: 1px;
 }
 
-.charsheet div.mode:hover {
+.charsheet .mode input.readonly-show {
+    height: 4em;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    width: 3.5em;
+    z-index: 2;
+}
+
+.charsheet .mode:hover {
     color: red;
-}
-
-.charsheet div.mode input.readonly-show {
-    display: inline-block;
-    opacity: 0;
-    width: 7em;
-    height: 1.5em;
-    position: absolute;
-    margin: -.125em 0 0 -.5em;
-    z-index: 1;
 }
 
 /*hides edit-mode note*/

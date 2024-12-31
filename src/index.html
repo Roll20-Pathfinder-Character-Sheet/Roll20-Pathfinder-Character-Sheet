@@ -16,11 +16,11 @@
 <input type="checkbox" name="attr_hide_announcements" value="1" class="noshow" role="presentation" />
 <div class="pf-wrapper">
     <div>
-        <div class="mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" title="Toggle Expanded mode(full editing) or Compact mode(important fields only)" aria-label="Toggle Expanded mode(full editing) or Compact mode(important fields only)">
+        <!-- <div class="mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" title="Toggle Expanded mode(full editing) or Compact mode(important fields only)" aria-label="Toggle Expanded mode(full editing) or Compact mode(important fields only)">
             <input type="checkbox" name="attr_readonly_show" value="1" class="readonly-show" checked />
             <span class="mode"><span data-i18n="edit-mode">Edit Mode</span></span>
             <span class="mode"><span data-i18n="compact-mode">Compact Mode</span></span>
-        </div>
+        </div> -->
         <div>
             <input type="checkbox" class="showarrow ack-button" name="attr_attentionv172-show" value="1" data-i18n-title="show-announcements" aria-label="Check to hide Announcements section" data-i18n-aria-label="show-announcements" />
             <label class="showsect" data-i18n-title="show-announcements" data-i18n-aria-label="show-announcements" data-i18n="announcements">Announcements</label>
@@ -99,20 +99,25 @@
         <label class="small-label2 pc-only entry-15p"><input title="@{class-0-name}" type="text" name="attr_class-0-name" data-i18n-placeholder="class" /><span data-i18n="class">Class</span></label>
 
         <span class="mode-and-settings">
-            <span data-i18n-title="edit-mode-title">
-                <input type="checkbox" name="attr_readonly_show" value="1" class="cssbutton readonly-show" data-i18n-aria-label="edit-mode-title" checked />
-                <span></span>
+            <span class="mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" title="Toggle Expanded mode(full editing) or Compact mode(important fields only)" aria-label="Toggle Expanded mode(full editing) or Compact mode(important fields only)">
+                <input type="checkbox" name="attr_readonly_show" value="1" class="readonly-show" checked />
+                <span class="mode cssbutton-label" data-i18n="edit">Edit</span>
+                <span class="mode cssbutton-label" data-i18n="compact">Compact</span>
             </span>
             <input type="checkbox" name="attr_migrate1" value="1" class="noshow" aria-label="for the API to ensure sheets up to date" />
             <span data-i18n-title="recalculate-cmd">
                 <input type="checkbox" name="attr_recalc1" value="1" class="cssbutton refreshbutton progress-show" data-i18n-aria-label="recalculate-cmd" /><span></span>
                 <span class="progress-icon" style="position: absolute;top: 7px;left: 2px;"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/busy_icon.gif" style="vertical-align:top;" /> <span data-i18n="recalculating">Recalculating...</span></span>
             </span>
+            <span data-i18n-title="edit-mode-title">
+                <input type="checkbox" name="attr_readonly_show" value="1" class="cssbutton readonly-show" checked />
+                <span></span>
+            </span>
             <span data-i18n-title="display-settings-config">
                 <input type="checkbox" name="attr_config-show" value="1" class="cssbutton configbutton config-show" data-i18n-aria-label="display-settings-config" style="width:3em;" checked /><span></span>
             </span>
-            <span class="cssbutton-label" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
             <span class="cssbutton-label" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
+            <span class="cssbutton-label" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
             <span class="cssbutton-label" data-i18n-title="display-settings-config" data-i18n-aria-label="display-settings-config" data-i18n="settings">Settings</span>
         </span>
         <input type="checkbox" class="noshow npc-show not-A-show" name="attr_is_npc" value="1" role="presentation" />
