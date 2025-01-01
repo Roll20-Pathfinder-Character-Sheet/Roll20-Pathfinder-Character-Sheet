@@ -331,7 +331,6 @@
 
 .charsheet details[open]:focus-within,
 .charsheet details[open]:hover {
-    position: relative;
     z-index: 2;
 }
 
@@ -545,7 +544,6 @@
     min-height: 1.5em;
     min-width: 1.5em;
     padding: .25em .25em .3em .25em;
-    width: 100%;
 }
 
 .charsheet button[type="roll"]:not(.command-button):hover,
@@ -574,6 +572,9 @@
 .charsheet button[type="roll"].no-decoration:hover {
     color: red;
     text-decoration: underline;
+    background-color: inherit;
+    outline: none;
+    box-shadow: none;
 }
 
 .charsheet .pf-border {
@@ -871,7 +872,7 @@ pf-wrapper,
     background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_background_parch1.jpg");
     background-size: cover;
     background-position: center top;
-    padding: .75em;
+    padding: 1.25em .75em .75em .75em;
     color: initial;
 }
 
@@ -923,7 +924,7 @@ pf-wrapper,
     background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_background_parch2.jpg");
     background-size: cover;
     background-position: center top;
-    padding: .75em;
+    padding: 1.25em .75em .75em .75em;
     color: initial;
 }
 
@@ -1248,6 +1249,7 @@ also need 1 more level in selector or base css will override border */
     background-color: #4a6486;
     color: #fff;
     cursor: default;
+    justify-content: center;
     padding: 2px 5px 1px 5px;
 }
 
@@ -1420,8 +1422,9 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .table-config-row-name ~ span.table-cell > label {
-    padding: 0.2rem 0 0.2rem 0.4rem;
+    color: inherit;
     display: block;
+    padding: 0.2rem 0 0.2rem 0.4rem;
 }
 
 .charsheet .sheetconfig .table .table-row:nth-child(odd),
@@ -2590,7 +2593,7 @@ also need 1 more level in selector or base css will override border */
     background-color: #FFFFFF;
     border: 0.1rem solid #808080;
     border-radius: 0.5rem;
-    color: Black;
+    color: inherit;
     display: grid;
     font-style: normal !important;
     height: 22px;
@@ -2625,11 +2628,27 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     color: Red;
 }
 
+
+span[data-i18n-title="display-settings-config"]:has(input.cssbutton) ~ span[data-i18n-title="display-settings-config"].display-settings,
+span[data-i18n-title="display-settings-config"]:has(input.cssbutton) ~ span[data-i18n-title="display-settings-config"].display-sheet {
+    display:none;
+}
+
+
+span[data-i18n-title="display-settings-config"]:has(input.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"].display-settings {
+    display: flex;
+}
+
+span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked)) ~ span[data-i18n-title="display-settings-config"].display-sheet {
+    display: flex;
+}
+
 .charsheet .csstextbutton:hover,
 .charsheet .csstextbutton:hover + span,
 .charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"] .cssbutton + span::before,
 .charsheet .cssbutton:hover,
-.charsheet .cssbutton:hover + span::before {
+.charsheet .cssbutton:hover + span::before,
+.charsheet .merge-buffs label:has(.cssbutton + .newbuff):hover {
     color: Red;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
@@ -2639,6 +2658,12 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
 .charsheet .cssbutton:checked + span::before {
     background-color: #4a6486;
     color: #DDDDDD;
+}
+
+.charsheet .cssbutton.readonly-show:not(:checked) + span::before,
+.charsheet .cssbutton.config-show:checked + span::before {
+    outline: 2px solid red;
+    outline-offset: -1px;
 }
 
 .charsheet .minimize-show:checked + span::before {
@@ -2820,12 +2845,41 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     color: transparent;
 }
 
+.charsheet .merge-buffs {
+    align-items: center;
+    column-gap: 2px;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 18em auto auto;
+    padding-left: 2px;
+    min-height: 3em;
+}
+
+.charsheet .sheetconfig .merge-buffs label:nth-child(2) {
+    background-color: #fff;
+    border-radius: 4px;
+    outline: 1px solid #333;
+    padding: 4px;
+    width: fit-content;
+}
+
 .charsheet .allrows-note span {
     vertical-align: middle;
 }
 
 .charsheet .allrows-note {
+    color: inherit !important;
     margin-left: 1em;
+    opacity: 0;
+    outline: 2px solid red;
+    padding: 2px;
+    pointer-events: none;
+}
+
+.charsheet .deletesect-show:checked ~ .allrows-note,
+.charsheet .sheetconfig label:has(.deletesect-show:checked) + .allrows-note {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .charsheet .small-label2 .createattackbutton + span::before {
@@ -3060,6 +3114,10 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     text-align: left;
     padding-top: .5em;
     white-space: nowrap;
+}
+
+.charsheet .iterative_attack_section .table-row .table-cell:first-child label {
+    display: flex;
 }
 
 .charsheet .footer {
@@ -3448,12 +3506,11 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     flex-direction: column;
     justify-content: center;
     margin: auto;
-    max-height: 3.85em;
+    /* max-height: 3.85em; */
     place-items: center;
     position: relative;
     vertical-align: top;
 }
-
 
 .charsheet .core-details .small-label2 {
     margin: 0 0.2rem 0 0.2rem;
@@ -3837,6 +3894,11 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     font-weight: normal;
     padding-top: .25em;
     text-align: center;
+    width: auto;
+}
+
+.charsheet .section-config .nontable-name {
+    display: block;
 }
 
 .charsheet .pf-wrapper .main .nontable-name {
@@ -4220,10 +4282,22 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
 
 .charsheet .extra-damage,
 .charsheet .extra-damage *,
-.charsheet .sect.expand div.macro-text {
+.charsheet .sect.expand div.macro-text,
+.charsheet .repeating-hidesect {
     background-color: transparent;
     color: inherit;
     height: auto;
+}
+
+.charsheet .extra-damage > div {
+    display: inline-flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.charsheet .repeating-hidesect {
+    display: flex;
+    justify-content: space-around;
 }
 
 .charsheet div.macro-text .small-label2,
@@ -4285,13 +4359,11 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     color: #9f9f9f;
 }
 
-
 .charsheet .monster-indicator {
     font-size: 1.6rem;
-    height: 1.2em;
-    margin-top: -1.8em;
-    right: 9.75em;
     position: absolute;
+    right: 9.75em;
+    top: 3em;
 }
 
 .charsheet .section-header {
@@ -4333,7 +4405,13 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
 }
 
 .charsheet .insertmacrocell {
-    display: table-cell;
+    display: block;
+    flex: 1 1 0;
+    height: auto;
+    margin: auto;
+    max-width: 50%;
+    overflow: hidden;
+    text-align: left;
 }
 
 .charsheet .insertmacrocell .small-label2 {

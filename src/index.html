@@ -74,6 +74,23 @@
     <input type="checkbox" class="offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all" />
     <input type="checkbox" name="attr_config-show" value="1" class="hidden cssbutton configbutton config-show" checked />
     <div>
+        <!-- <div class="monster-indicator" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
+            <label class="pc-only" data-i18n-title="player-character" data-i18n-aria-label="player-character">
+                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists pc-only" role="Presentation" />
+                <span data-i18n="player-character-abbrv">PC</span>
+            </label>
+            <label class="npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character">
+                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists npc-show " role="Presentation" />
+                <span data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</span>
+            </label>
+        </div> -->
+        <div class="small-label2" role="presentation">
+            <img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_logo.png" style="max-height:70px;width:160px;margin-bottom:-.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
+        </div>
+        <label class="small-label2 entry-20p"><input title="@{character_name}" type="text" name="attr_character_name" data-i18n-placeholder="character-name" /><span data-i18n="character-name">Character Name</span></label>
+        <label class="small-label2 pc-only entry-15p"><input title="@{player-name}" type="text" name="attr_player-name" data-i18n-placeholder="player-name" /><span data-i18n="player-name">Player Name</span></label>
+        <label class="small-label2 entry-vshort"><input title="@{alignment}" type="text" name="attr_alignment" data-i18n-placeholder="alignment"><span data-i18n="alignment-abbrv">Align</span></label>
+        <label class="small-label2 pc-only entry-15p"><input title="@{class-0-name}" type="text" name="attr_class-0-name" data-i18n-placeholder="class" /><span data-i18n="class">Class</span></label>
         <div class="monster-indicator" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
             <label class="pc-only" data-i18n-title="player-character" data-i18n-aria-label="player-character">
                 <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists pc-only" role="Presentation" />
@@ -84,15 +101,6 @@
                 <span data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</span>
             </label>
         </div>
-        <div class="small-label2" role="presentation">
-            <img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_logo.png" style="max-height:70px;width:160px;margin-bottom:-.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
-        </div>
-
-        <label class="small-label2 entry-20p"><input title="@{character_name}" type="text" name="attr_character_name" data-i18n-placeholder="character-name" /><span data-i18n="character-name">Character Name</span></label>
-        <label class="small-label2 pc-only entry-15p"><input title="@{player-name}" type="text" name="attr_player-name" data-i18n-placeholder="player-name" /><span data-i18n="player-name">Player Name</span></label>
-        <label class="small-label2 entry-vshort"><input title="@{alignment}" type="text" name="attr_alignment" data-i18n-placeholder="alignment"><span data-i18n="alignment-abbrv">Align</span></label>
-        <label class="small-label2 pc-only entry-15p"><input title="@{class-0-name}" type="text" name="attr_class-0-name" data-i18n-placeholder="class" /><span data-i18n="class">Class</span></label>
-
         <span class="mode-and-settings">
             <span class="mode" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" title="Toggle Expanded mode(full editing) or Compact mode(important fields only)" aria-label="Toggle Expanded mode(full editing) or Compact mode(important fields only)">
                 <input type="checkbox" name="attr_readonly_show" value="1" class="readonly-show" checked />
@@ -113,7 +121,8 @@
             </span>
             <span class="cssbutton-label" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
             <span class="cssbutton-label" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
-            <span class="cssbutton-label" data-i18n-title="display-settings-config" data-i18n-aria-label="display-settings-config" data-i18n="settings">Settings</span>
+            <span class="cssbutton-label display-settings" data-i18n-title="display-settings-config" data-i18n-aria-label="display-settings-config" data-i18n="settings">Settings</span>
+            <span class="cssbutton-label display-sheet" data-i18n-title="display-settings-config" data-i18n-aria-label="display-settings-config" data-i18n="sheet">Sheet</span>
         </span>
         <input type="checkbox" class="noshow npc-show not-A-show" name="attr_is_npc" value="1" role="presentation" />
         <label class="small-label2 npc-only entry-20p"><input title="@{npc-type}" type="text" name="attr_npc-type" data-i18n-placeholder="type-or-sub-type" /><span data-i18n="type-or-sub-type">Type/(sub-type)</span></label>
@@ -3957,7 +3966,7 @@
                                     </div>
                                     <div class="advanced-macros nondual-sect">
                                         <div class="center repeating-hidesect">
-                                            <div class="insertmacrocell" style="width:48.5%">
+                                            <div class="insertmacrocell">
                                                 <input class="textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
                                                 <label class="small-label2">
                                                     <span class="super note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
@@ -3965,7 +3974,7 @@
                                                     <textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
                                                 </label>
                                             </div>
-                                            <div class="insertmacrocell" style="width:48.5%">
+                                            <div class="insertmacrocell">
                                                 <input class="textarea-gray" type="checkbox" name="attr_toggle_damage_macro_insert" value="@{var_damage_macro_insert}" title="@{toggle_damage_macro_insert}" checked />
                                                 <label class="small-label2">
                                                     <span class="super note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
@@ -12746,7 +12755,7 @@
                                         </div>
                                         <div class="advanced-macros nondual-sect">
                                             <div class="center repeating-hidesect">
-                                                <div class="insertmacrocell" style="width:48.5%">
+                                                <div class="insertmacrocell">
                                                     <input class="textarea-gray" type="checkbox" name="attr_toggle_attack_macro_insert" value="@{var_attack_macro_insert}" title="@{toggle_attack_macro_insert}" checked />
                                                     <label class="small-label2">
                                                         <span class="super note-c" data-i18n="insert-macro-attack" data-i18n-title="additional-attack-macro-query-included-with-crits" data-i18n-aria-label="additional-attack-macro-query-included-with-crits" title="Additional Attack Macro/Query(included with crits)">'Add to Attack' Macro:</span>
@@ -12754,7 +12763,7 @@
                                                         <textarea class="macro-text-inline both" name="attr_attack_macro_insert" data-i18n-placeholder="full-macro-place" title="@{repeating_weapon_$X_attack_macro_insert}">0</textarea>
                                                     </label>
                                                 </div>
-                                                <div class="insertmacrocell" style="width:48.5%">
+                                                <div class="insertmacrocell">
                                                     <input class="textarea-gray" type="checkbox" name="attr_toggle_damage_macro_insert" value="@{var_damage_macro_insert}" title="@{toggle_damage_macro_insert}" checked />
                                                     <label class="small-label2">
                                                         <span class="super note-c" data-i18n="insert-macro-damage" data-i18n-title="additional-damage-macro-query-included-with-crits" data-i18n-aria-label="additional-damage-macro-query-included-with-crits" title="Additional Damage Macro/Query(included with crits)">'Add to Damage' Macro:</span>
@@ -14610,13 +14619,26 @@
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="buffs">Buffs</span>
-                    <span class="table-cell left">
-                        <input type="checkbox" class="selectedlabel-check bonustype-show" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" checked /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
-                        <input class="csstextbutton newbuff" style="margin-left:-1.125em;" type="checkbox" name="attr_merge_buffs_now" value="1" /><span class="newbuff" data-i18n-title="merge-buffs" data-i18n="merge">Merge</span>
-                        <input class="deletebutton newbuff cssbutton deletesect-show" style="margin-left:-.75em;" type="checkbox" name="attr_delete_rep_buff_btn" value="1" data-i18n-title="delete-old-buff-list" data-i18n-aria-label="delete-old-buff-list" /><span class="newbuff"></span><label class="deletesect allrows-note newbuff"><input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" /><b data-i18n="delete-all-old-rows-are-you-sure">Deletes ALL rows, are you sure?</b></label>
+                    <span class="table-cell left merge-buffs">
+                        <label>
+                            <input type="checkbox" class="selectedlabel-check bonustype-show" name="attr_use_buff_bonuses" value="1" title="@{use_buff_bonuses}" checked /><b data-i18n-title="use-buff-bonus-stacking" data-i18n-aria-label="use-buff-bonus-stacking" data-i18n="use-buff-bonus-stacking">Use buff bonus types and stacking</b>
+                        </label>
+                        <label data-i18n-title="merge-buffs">
+                            <input class="cssbutton newbuff" type="checkbox" name="attr_merge_buffs_now" value="1" style="position: absolute;">
+                            <span class="newbuff" data-i18n-title="merge-buffs" data-i18n="merge" title="Copy old buffs list into new buffs list">Merge</span>
+                        </label>
                     </span>
                     <span class="table-cell left">
-
+                        <span style="display: flex;">
+                            <label style="width: min-content; display: flex;">
+                                <input class="deletebutton newbuff cssbutton deletesect-show" type="checkbox" name="attr_delete_rep_buff_btn" value="1" data-i18n-title="delete-old-buff-list" data-i18n-aria-label="delete-old-buff-list" style="position: absolute;" />
+                                <span class="newbuff"></span>
+                            </label>
+                            <label class="deletesect allrows-note newbuff">
+                                <input type="checkbox" class="selectedlabel-check" name="attr_delete_rep_buff" data-i18n-aria-label="confirm-delete-buff" data-i18n-title="confirm-delete-buff" value="1" />
+                                <b data-i18n="delete-all-old-rows-are-you-sure">Deletes ALL rows, are you sure?</b>
+                            </label>
+                        </span>
                     </span>
                 </div>
                 <div class="table-row">
