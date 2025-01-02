@@ -14565,6 +14565,13 @@
             <div class="corerules two-equalcolumn table">
                 <span class="table-name show-readonly" data-i18n="sheets-configuration">Sheet configuration</span>
                 <div class="table-row">
+                    <span class="table-config-row-name" data-i18n="pages">Pages</span>
+                    <span class="table-cell left">
+                        <input type="checkbox" class="selectedlabel-check" name="attr_is_npc" value="1" title="@{is_npc}" /><b data-i18n-title="is-npc-description" data-i18n-aria-label="is-npc-description" data-i18n="is-npc-check-caps">IS NPC</b>
+                    </span>
+                    <span class="table-cell left"> </span>
+                </div>
+                <div class="table-row">
                     <span class="table-config-row-name" style="border-bottom:none;" data-i18n="accessibility">Accessibility</span>
                     <input type="hidden" name="attr_var_accessible_flag" value="{{accessible=true}}" />
                     <span class="table-cell left">
@@ -14609,13 +14616,6 @@
                             </select>
                         </span>
                     </span>
-                </div>
-                <div class="table-row">
-                    <span class="table-config-row-name" data-i18n="pages">Pages</span>
-                    <span class="table-cell left">
-                        <input type="checkbox" class="selectedlabel-check" name="attr_is_npc" value="1" title="@{is_npc}" /><b data-i18n-title="is-npc-description" data-i18n-aria-label="is-npc-description" data-i18n="is-npc-check-caps">IS NPC</b>
-                    </span>
-                    <span class="table-cell left"> </span>
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="buffs">Buffs</span>
@@ -14883,31 +14883,37 @@
                     <span class="table-cell left">
                         <input type="checkbox" title="@{use_prestige_fame}" name="attr_use_prestige_fame" value="1" class="selectedlabel-check" /><b><span data-i18n="use-prestige-fame">Use Prestige and Fame Points</span></b>
                     </span>
+                    <span class="table-config-row-name"></span>
                     <span class="table-cell left">
                         <input type="checkbox" title="@{use_hero_points}" name="attr_use_hero_points" value="1" class="selectedlabel-check" /><b><span data-i18n="use-hero-points">Use Hero Points</span></b>
                     </span>
+                    <span class="table-cell left"></span>
                 </div>
             </div>
-            <div class="corerules onecolumn table">
+            <div class="corerules table">
                 <div class="table-row">
-                    <span class="table-config-row-name" data-i18n="pathfinder-unchained" style="border-bottom:none;">Pathfinder Unchained</span>
-                    <span class="table-cell left">
+                    <span class="table-config-row-name" data-i18n="pathfinder-unchained">Pathfinder Unchained</span>
+                    <span class="table-cell left" style="grid-column: span 2;">
                         <input type="checkbox" title="@{unchained_skills-show}" name="attr_unchained_skills-show" value="1" class="selectedlabel-check sect2-show" /><b><span title="Use the Unchained Skills variants." data-i18n="toggle-unchained-skills"> Display/Enable Unchained Skills</span></b>
                         <input type="radio" title="@{BG-Skill-Use}" name="attr_BG-Skill-Use" value="1" class="selectedlabel-check sect2" checked /><b class="sect2"><span title="Background skills ranks are awarded at a rate of two per level and can be spent on any background skill." data-i18n="background-skills"> Background Skills</span></b>
                         <input type="radio" title="@{BG-Skill-Use}" name="attr_BG-Skill-Use" value="0" class="selectedlabel-check sect2" /><b class="sect2"><span title="Consolidated skills ranks are awarded at 1/2 normal skill points." data-i18n="toggle-consolidated-skills">Consolidated Skills.</span></b>
                     </span>
-                </div>
-                <div class="table-row">
-                    <span class="table-config-row-name"> </span>
+                    <span class="table-config-row-name"></span>
                     <span class="table-cell left">
                         <input type="checkbox" title="@{wound_threshold-show}" name="attr_wound_threshold-show" value="1" class="selectedlabel-check sect2-show" /><b><span title="In the wound thresholds variant, a character divides her hit point total into four quarters, and takes penalties whenever she's not in her top quarter." data-i18n="toggle-wound-threshold">Display Wound Thresholds.</span></b>
+                    </span>
+                    <span class="table-cell left">
                         <input type="checkbox" title="@{has_endurance_feat}" name="attr_has_endurance_feat" value="1" class="selectedlabel-check sect2" /><b class="sect2"><span title="Endurance affects wounds by changing the penalty." data-i18n="toggle-endurance-feat">Has Endurance Feat</span></b>
+                    </span>
+                    <span class="table-config-row-name"></span>
+                    <span class="table-cell left">
                         <input type="checkbox" title="@{wounds_gritty_mode}" name="attr_wounds_gritty_mode" value="1" class="selectedlabel-check sect2" /><b class="sect2"><span title="All wound penalties are doubled." data-i18n-title="gritty-title" data-i18n="toggle-gritty-mode">Gritty Mode</span></b>
                     </span>
+                    <span class="table-cell left"></span>
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="pathfinder-mythic-adventures">Pathfinder Mythic Adventures</span>
-                    <span class="table-cell left">
+                    <span class="table-cell left"  style="grid-column: span 2;">
                         <input type="checkbox" title="@{mythic-adventures-show}" name="attr_mythic-adventures-show" value="1" class="selectedlabel-check" /><b><span data-i18n="toggle-mythic-adventures">Display/Enable Mythic Adventures Character Sheet Items</span></b>
                     </span>
                 </div>
@@ -14916,17 +14922,21 @@
                     <span class="table-cell left">
                         <input type="checkbox" title="@{psionics-show}" name="attr_psionics-show" value="1" class="selectedlabel-check" /><b><span data-i18n="toggle-psionics">Display/Enable Psionics Character Sheet Items</span></b>
                     </span>
+                    <span class="table-cell left"></span>
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="advanced-class-guide">Advanced Class Guide</span>
                     <span class="table-cell left">
                         <input type="checkbox" class="selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-arcane-reservoir-title" /><b data-i18n-title="show-arcane-reservoir-title" data-i18n="show-spellpoint-arcane-reservoir"> Show arcane reservoir</b>
                     </span>
+                    <span class="table-cell left"></span>
                 </div>
                 <div class="table-row">
                     <span class="table-config-row-name" data-i18n="occult-adventures">Occult Adventures</span>
                     <span class="table-cell left">
                         <input type="checkbox" title="@{use_burn}" name="attr_use_burn" value="1" class="selectedlabel-check" data-i18n-aria-label="use-kineticist-burn" /><b><span data-i18n-title="use-kineticist-burn" data-i18n="use-kineticist-burn"> Use Kinticist Burn</span></b>
+                    </span>
+                    <span class="table-cell left">
                         <input type="checkbox" class="selectedlabel-check" name="attr_use_spell_points" value="1" title="@{use_spell_points}" data-i18n-aria-label="show-phrenic-spellpoint-pool-title" /><b data-i18n-title="show-phrenic-spellpoint-pool-title" data-i18n="show-phrenic-spellpoint-pool"> Phrenic Pool or Mesmerist</b>
                     </span>
                 </div>

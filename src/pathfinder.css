@@ -1411,20 +1411,27 @@ also need 1 more level in selector or base css will override border */
     max-width: 18%;
 }
 
-.charsheet .corerules.table:not(.two-equalcolumn):not(.onecolumn) .table-row .table-cell:nth-child(2) {
-    width: 30%;
-    max-width: 30%;
-}
-
-.charsheet .corerules.table.twocolumn .table-row .table-cell:nth-child(2) {
-    width: 40%;
-    max-width: 40%;
-}
-
 .charsheet .table-config-row-name ~ span.table-cell > label {
     color: inherit;
     display: block;
     padding: 0.2rem 0 0.2rem 0.4rem;
+}
+
+.charsheet .sheetconfig .table-row,
+.charsheet .rule-options .table-row {
+    align-items: center;
+    display: grid;
+    grid-template-columns: 10em 1fr 1fr;
+    height: -webkit-fill-available;
+}
+
+.charsheet .sheetconfig .table-row > .table-config-row-name,
+.charsheet .rule-options .table-row > .table-config-row-name {
+    height: 100%;
+    margin: auto;
+    max-width: none;
+    min-width: 100%;
+    width: 100%;
 }
 
 .charsheet .sheetconfig .table .table-row:nth-child(odd),
