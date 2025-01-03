@@ -1417,6 +1417,28 @@ also need 1 more level in selector or base css will override border */
     padding: 0.2rem 0 0.2rem 0.4rem;
 }
 
+.charsheet .section-config {
+    position: relative;
+    outline: 2px solid red;
+    top: -3em;
+    background-color: #737373;
+    border-radius: 6px;
+    z-index: 3;
+}
+
+.charsheet .pf-wrapper .section-config .table span:not(.table-config-row-name),
+.charsheet .pf-wrapper .section-config .table-row span:not(.table-config-row-name),
+.charsheet .pf-wrapper .section-config .sheetconfig .corerules .table-row span:not(.table-config-row-name),
+.charsheet .pf-wrapper .section-config .sheetconfig .corerules .table-row span b,
+.charsheet .pf-wrapper .section-config .rule-options .table .table-row span b {
+    font-weight: normal;
+    color: initial;
+}
+
+.charsheet .pf-wrapper .section-config .nontable-name + .table {
+    border-bottom: 1px solid #444;
+}
+
 .charsheet .sheetconfig .table-row,
 .charsheet .rule-options .table-row {
     align-items: center;
@@ -2600,7 +2622,7 @@ also need 1 more level in selector or base css will override border */
     background-color: #FFFFFF;
     border: 0.1rem solid #808080;
     border-radius: 0.5rem;
-    color: inherit;
+    color: initial;
     display: grid;
     font-style: normal !important;
     height: 22px;
@@ -3048,9 +3070,11 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     position: relative;
 }
 
-.charsheet .conditions .nontable-name {
+.charsheet .conditions .nontable-name,
+.charsheet .buffs .nontable-name {
     margin: -.25em -.25em 0 -.25em;
     width: calc(100% + .5em);
+    display: block;
 }
 
 .charsheet .conditions .option-condition {
@@ -3128,21 +3152,21 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet .footer {
-    text-align: center;
-    font-size: 1.2rem;
     border: 0.1rem #000 solid;
     border-radius: 0.3rem;
     clear: both;
+    color: initial;
+    font-size: 1.2rem;
+    text-align: center;
 }
 
 .charsheet .footnotes {
-    width: 98%;
-    font-size: 1rem;
+    color: initial;
     font-family: 'Roboto Mono', monospace;
-    list-style: none;
-    padding-left: 1em;
-    white-space: pre-line;
+    font-size: 1rem;
     line-height: 1.2em;
+    margin: auto;
+    padding: 4px;
 }
 
 .charsheet .compendium-note {
@@ -3571,28 +3595,20 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     white-space: nowrap;
 }
 
-.charsheet .repeating-id .small-label2 span.selectable,
-.charsheet span[name="attr_row_id"].selectable,
-.charsheet input.selectable.calc,
-.charsheet input[name="attr_mainhand_id"].entry-long,
-.charsheet input[name="attr_offhand_id"].entry-long,
-.charsheet input[type="text"][name="attr_source-main"],
-.charsheet input[type="text"][name="attr_source-off"],
-.charsheet input[type="text"][name="attr_source-item"],
-.charsheet input[type="text"][name="attr_source-spell"],
-.charsheet input[type="text"][name="attr_source-ability"] {
+.ui-dialog .charsheet .pf-wrapper input.selectable,
+.ui-dialog .charsheet .pf-wrapper input.selectable.calc {
+    background-color: #fbf5d0;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    box-sizing: content-box;
+    color: #5f5207;
     display: inline-block;
     height: 1.5rem;
-    background-color: #fbf5d0;
-    color: #5f5207;
     margin: 0;
     padding: .125rem;
+    text-align: center;
     white-space: nowrap;
     width: auto;
-    border-radius: 4px;
-    border: 1px solid lightgrey;
-    text-align: center;
-    box-sizing: content-box;
 }
 
 .charsheet .repeating-id {
@@ -4391,6 +4407,10 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     position: absolute;
     width: 75%;
     z-index: 99;
+}
+
+.charsheet .pf-wrapper .announcements .footer h2 span {
+    color: initial;
 }
 
 .charsheet .announcements details[open] summary + ol {
