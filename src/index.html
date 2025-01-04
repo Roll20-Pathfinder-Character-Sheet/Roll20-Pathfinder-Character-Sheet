@@ -14952,149 +14952,107 @@
         <div class="h2-section header-images">
             <span class="nontable-name show-readonly" data-i18n="header-image">Header Images</span>
             <div class="table">
-                <div class="table-row" data-i18n="config-header-image-info">
-                    Header images are iconic images that appear in the header of roll templates. All macros on the sheet include <b>{{header_image=<i>image attribute</i>}}</b>. Each roll template has a specific image attribute that works with the options below. i.e. The Spells roll template would use <b>{{header_image=@{header_image-pf_spell}}}</b> Attack images can be set from within each weapon's "Options" section. Hover over the template names below to learn the specific image attributes. You can substitute images for any roll template by using the URL column below or using the syntax <b>{{header_image=<i>[name](url)</i>}}</b> For best results, try to keep header images under 32x32px.
+                <div class="table-row">
+                    <div data-i18n="config-header-image-info" style="grid-column: 1/-1; padding:1rem;">
+                        Header images are iconic images that appear in the header of roll templates. All macros on the sheet include <b>{{header_image=<i>image attribute</i>}}</b>. Each roll template has a specific image attribute that works with the options below. i.e. The Spells roll template would use <b>{{header_image=@{header_image-pf_spell}}}</b> Attack images can be set from within each weapon's "Options" section. Hover over the template names below to learn the specific image attributes. You can substitute images for any roll template by using the URL column below or using the syntax <b>{{header_image=<i>[name](url)</i>}}</b> For best results, try to keep header images under 32x32px.
+                    </div>
                 </div>
                 <div class="table-row">
-                    <span class="table-header" style="min-width:10rem;" data-i18n="roll-template">Roll Template</span>
-                    <span class="table-header"></span>
+                    <span class="table-header" data-i18n="roll-template">Roll Template</span>
                     <span class="table-header" data-i18n-title="header-image-none" data-i18n-aria-title="header-image-none" data-i18n="none">None</span>
-                    <span class="table-header" style="width:10%;"></span>
-                    <span class="table-header" style="width:3%;"><input type="checkbox" name="attr_header_images_toggle" value="1" title="@{header_images_toggle}" /></span>
-                    <span class="table-header" style="width:5%;"><span data-i18n-title="header-image-default" data-i18n-aria-title="header-image-default" data-i18n="default">Default</span></span>
-                    <span class="table-header" style="width:5%;"></span>
-                    <span class="table-header">
-                        <span data-i18n-title="custom-url-title" data-i18n-aria-title="custom-url-title" data-i18n="custom-url">Custom URL</span>
-                    </span>
+                    <span class="table-header"><input type="checkbox" name="attr_header_images_toggle" value="1" title="@{header_images_toggle}" /></span>
+                    <span class="table-header"><span data-i18n-title="header-image-default" data-i18n-aria-title="header-image-default" data-i18n="default">Default</span></span>
+                    <span class="table-header"><span data-i18n-title="custom-url-title" data-i18n-aria-title="custom-url-title" data-i18n="custom-url">Custom URL</span></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_spell}}}">pf_spell</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_spell" value="" title="@{header_image-pf_spell}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_spell.png)" title="@{header_image-pf_spell}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_spell.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_spell" value="[custom](@{header_image-pf_spell-url})" title="@{header_image-pf_spell}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_spell-url" title="@{header_image-pf_spell-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_spell.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_attack-melee}}}">pf_attack (melee)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-melee" value="" title="@{header_image-pf_attack-melee}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-melee" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_melee.png)" title="@{header_image-pf_attack-melee}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_melee.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-melee" value="[custom](@{header_image-pf_attack-melee-url})" title="@{header_image-pf_attack-melee}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_attack-melee-url" title="@{header_image-pf_attack-melee-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_melee.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_attack-dual}}}">pf_attack (dual)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-dual" value="" title="@{header_image-pf_attack-dual}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-dual" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_dual.png)" title="@{header_image-pf_attack-dual}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_dual.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-dual" value="[custom](@{header_image-pf_attack-dual-url})" title="@{header_image-pf_attack-dual}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_attack-dual-url" title="@{header_image-pf_attack-dual-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_dual.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_attack-ranged}}}">pf_attack (ranged)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-ranged" value="" title="@{header_image-pf_attack-ranged}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-ranged" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_ranged.png)" title="@{header_image-pf_attack}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_ranged.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-ranged" value="[custom](@{header_image-pf_attack-ranged-url})" title="@{header_image-pf_attack}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_attack-ranged-url" title="@{header_image-pf_attack-ranged-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_ranged.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_attack-cmb}}}">pf_attack (cmb)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-cmb" value="" title="@{header_image-pf_attack-cmb}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-cmb" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_cmb.png)" title="@{header_image-pf_attack}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_cmb.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_attack-cmb" value="[custom](@{header_image-pf_attack-cmb-url})" title="@{header_image-pf_attack}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_attack-cmb-url" title="@{header_image-pf_attack-cmb-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_attack_cmb.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_defense}}}">pf_defense</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_defense" value="" title="@{header_image-pf_defense}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_defense" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_defense.png)" title="@{header_image-pf_defense}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_defense.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_defense" value="[custom](@{header_image-pf_defense-url})" title="@{header_image-pf_defense}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_defense-url" title="@{header_image-pf_defense-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_defense.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_generic}}}">pf_generic</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic" value="" title="@{header_image-pf_generic}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png)" title="@{header_image-pf_generic}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic" value="[custom](@{header_image-pf_generic-url})" title="@{header_image-pf_generic}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_generic-url" title="@{header_image-pf_generic-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_ability}}}">pf_ability</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_ability" value="" title="@{header_image-pf_ability}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_ability" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_ability.png)" title="@{header_image-pf_ability}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_ability.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_ability" value="[custom](@{header_image-pf_ability-url})" title="@{header_image-pf_ability}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_ability-url" title="@{header_image-pf_ability-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_ability.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_block}}}">pf_block</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block" value="" title="@{header_image-pf_block}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block.png)" title="@{header_image-pf_block}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block" value="[custom](@{header_image-pf_block-url})" title="@{header_image-pf_block}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_block-url" title="@{header_image-pf_block-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_generic-skill}}}">pf_generic (skill)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-skill" value="" title="@{header_image-pf_generic-skill}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-skill" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png)" title="@{header_image-pf_generic-skill}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-skill" value="[custom](@{header_image-pf_generic-skill-url})" title="@{header_image-pf_generic-skill}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_generic-skill-url" title="@{header_image-pf_generic-skill-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_generic-init}}}">pf_generic (initiative)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-init" value="" title="@{header_image-pf_generic-init}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-init" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic_initiative.png)" title="@{header_image-pf_generic-init}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic_initiative.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_generic-init" value="[custom](@{header_image-pf_generic-init-url})" title="@{header_image-pf_generic-init}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_generic-init-url" title="@{header_image-pf_generic-init-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_generic_initiative.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_block-item}}}">pf_block (item)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-item" value="" title="@{header_image-pf_block-item}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-item" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_item.png)" title="@{header_image-pf_block-item}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_item.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-item" value="[custom](@{header_image-pf_block-item-url})" title="@{header_image-pf_block-item}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_block-item-url" title="@{header_image-pf_block-item-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_item.png</textarea></span>
                 </div>
                 <div class="table-row">
                     <span class="table-cell" title="Macros must include {{header_image=@{header_image-pf_block-check}}}">pf_block (ability check)</span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-check" value="" title="@{header_image-pf_block-check}" checked /></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-check" value="[default](https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_ability_check.png)" title="@{header_image-pf_block-check}" /></span>
                     <span class="table-cell nontable-name"><img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_ability_check.png"></span>
-                    <span class="divider"></span>
                     <span class="table-cell"><input type="radio" name="attr_header_image-pf_block-check" value="[custom](@{header_image-pf_block-check-url})" title="@{header_image-pf_block-check}" /><textarea class="macro-text-inline" style="width:80%; margin-left:0.5em;" name="attr_header_image-pf_block-check-url" title="@{header_image-pf_block-check-url}">https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_block_ability_check.png</textarea></span>
                 </div>
             </div>
