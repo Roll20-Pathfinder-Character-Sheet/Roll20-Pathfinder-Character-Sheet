@@ -74,16 +74,6 @@
     <input type="checkbox" class="offscreen" name="attr_expandall" value="1" aria-label="Expand All" data-i18n-aria-label="expand-all" />
     <input type="checkbox" name="attr_config-show" value="1" class="hidden cssbutton configbutton config-show" checked />
     <div>
-        <!-- <div class="monster-indicator" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-aria-label="monster-or-pc-indicator">
-            <label class="pc-only" data-i18n-title="player-character" data-i18n-aria-label="player-character">
-                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists pc-only" role="Presentation" />
-                <span data-i18n="player-character-abbrv">PC</span>
-            </label>
-            <label class="npc-only" role="status" aria-live="polite" aria-label="Monster or PC Indicator" data-i18n-title="monster-or-non-player-character" data-i18n-aria-label="monster-or-non-player-character">
-                <input type="checkbox" name="attr_is_npc" value="1" class="condition-exists npc-show " role="Presentation" />
-                <span data-i18n="monster-or-non-player-character-abbrv">Monster/NPC</span>
-            </label>
-        </div> -->
         <div class="small-label2" role="presentation">
             <img src="https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_logo.png" style="max-height:70px;width:160px;margin-bottom:-.5em;" data-i18n-alt="pathfinder-logo" alt="Pathfinder RPG Logo &copy; Paizo" />
         </div>
@@ -117,7 +107,7 @@
                 <span></span>
             </span>
             <span data-i18n-title="display-settings-config">
-                <input type="checkbox" name="attr_config-show" value="1" class="cssbutton configbutton config-show" data-i18n-aria-label="display-settings-config" style="width:3em;" checked /><span></span>
+                <input type="checkbox" name="attr_config-show" value="1" class="cssbutton configbutton config-show" data-i18n-aria-label="display-settings-config" checked /><span></span>
             </span>
             <span class="cssbutton-label" data-i18n-title="recalculate-cmd" data-i18n-aria-label="recalculate-cmd" data-i18n="recalculate-abbrv">Recalc</span>
             <span class="cssbutton-label" data-i18n-title="edit-mode-title" data-i18n-aria-label="edit-mode-title" data-i18n="mode">Mode</span>
@@ -14629,8 +14619,8 @@
                         </label>
                     </span>
                     <span class="table-cell left">
-                        <span style="display: flex;">
-                            <label style="width: min-content; display: flex;">
+                        <span style="display: flex; align-items: center;">
+                            <label>
                                 <input class="deletebutton newbuff cssbutton deletesect-show" type="checkbox" name="attr_delete_rep_buff_btn" value="1" data-i18n-title="delete-old-buff-list" data-i18n-aria-label="delete-old-buff-list" style="position: absolute;" />
                                 <span class="newbuff"></span>
                             </label>

@@ -2665,6 +2665,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .counted:hover + span::before,
 .charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"],
 span[data-i18n-title="recalculate-cmd"]:has(.cssbutton:hover) ~ span[data-i18n-title="recalculate-cmd"],
+span[data-i18n-title="display-settings-config"]:has(.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[data-i18n-title="display-settings-config"] {
     color: Red;
 }
@@ -2701,7 +2702,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     color: #DDDDDD;
 }
 
-.charsheet .cssbutton.readonly-show:not(:checked) + span::before,
+/* .charsheet .cssbutton.readonly-show:not(:checked) + span::before, */
 .charsheet .cssbutton.config-show:checked + span::before {
     outline: 2px solid red;
     outline-offset: -1px;
@@ -2909,8 +2910,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet .allrows-note {
-    color: inherit !important;
-    margin-left: 1em;
+    margin-inline: 1em;
     opacity: 0;
     outline: 2px solid red;
     padding: 2px;
