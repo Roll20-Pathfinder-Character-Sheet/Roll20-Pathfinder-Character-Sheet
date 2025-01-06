@@ -285,8 +285,8 @@
 
 .charsheet .progress-icon {
     background-color: white;
-    color: #B31515;
-    outline: 1px solid #B31515;
+    color: #e20c0c;
+    outline: 1px solid #e20c0c;
     padding: 1px 4px 1px 4px;
     position: absolute;
     top: 0;
@@ -323,7 +323,7 @@
 .charsheet details[open]:focus-within summary::marker,
 .charsheet details[open]:hover summary::marker,
 .charsheet details[open] summary::marker {
-    color: #B31515;
+    color: #e20c0c;
     opacity: 1;
 }
 
@@ -568,7 +568,7 @@
 }
 
 .charsheet button[type="roll"].no-decoration:hover {
-    color: #B31515;
+    color: #e20c0c;
     text-decoration: underline;
     background-color: inherit;
     outline: none;
@@ -1100,7 +1100,7 @@ pf-wrapper,
 
 .charsheet .monster-indicator label:hover span,
 .charsheet .monster-indicator label:hover span {
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .charsheet .h2-section {
@@ -1149,7 +1149,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .error {
-    color: #B31515;
+    color: #e20c0c;
     font-size: 1.4rem;
     background-color: White;
     margin-left: .25em;
@@ -1419,7 +1419,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .section-config {
     background-color: #737373;
     margin-bottom: -11rem;
-    outline: 4px solid #B31515;
+    outline: 4px solid #e20c0c;
     outline-offset: -1px;
     position: relative;
     top: -2.65em;
@@ -2681,7 +2681,7 @@ also need 1 more level in selector or base css will override border */
 span[data-i18n-title="recalculate-cmd"]:has(.cssbutton:hover) ~ span[data-i18n-title="recalculate-cmd"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[data-i18n-title="display-settings-config"] {
-    color: #B31515;
+    color: #e20c0c;
 }
 
 
@@ -2705,7 +2705,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .cssbutton:hover,
 .charsheet .cssbutton:hover + span::before,
 .charsheet .merge-buffs label:has(.cssbutton + .newbuff):hover {
-    color: #B31515;
+    color: #e20c0c;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
@@ -2718,7 +2718,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 /* .charsheet .cssbutton.readonly-show:not(:checked) + span::before, */
 .charsheet .cssbutton.config-show:checked + span::before {
-    outline: 2px solid #B31515;
+    outline: 2px solid #e20c0c;
     outline-offset: -1px;
 }
 
@@ -2732,7 +2732,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .minimize-show:checked:hover + span::before {
     background-color: white !important;
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .charsheet .minimize-show + span::before {
@@ -2760,7 +2760,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .split-column-show:checked:hover + span::before {
     background-color: white !important;
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .charsheet .deletebutton + span::before {
@@ -2857,7 +2857,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .configbutton:checked:hover + span::before {
     background-color: white !important;
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .charsheet .readonly-show + span::before {
@@ -2927,7 +2927,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .allrows-note {
     margin-inline: 1em;
     opacity: 0;
-    outline: 2px solid #B31515;
+    outline: 2px solid #e20c0c;
     padding: 2px;
     pointer-events: none;
 }
@@ -3079,7 +3079,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet label:hover .selectedlabel-check + span:not(.offCase) {
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .charsheet .corerules .table-row .table-cell {
@@ -3318,8 +3318,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .repcontrol_edit:hover:before,
 .charsheet .repcontrol_edit:hover:after,
 .charsheet .repcontrol_add:hover:before {
-    /*    background-color: #EFEFEF; */
-    color: Red !important;
+    color: #e20c0c !important;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
@@ -3466,7 +3465,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 /* outline when a condition is in effect */
 .charsheet .status-panel:first-child .options:has(input:checked) {
-    outline: 2px solid #B31515;
+    outline: 2px solid #e20c0c;
 }
 
 .charsheet .status-panel .options div {
@@ -5021,7 +5020,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_ability .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover,
 .sheet-rolltemplate-pf_attack .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover,
 .sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover {
-    color: #B31515;
+    color: #e20c0c;
 }
 
 .sheet-rolltemplate-pf_spell .sheet-pfctracking span.sheet-pictos a .sheet-strong,
@@ -5399,12 +5398,12 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     --sheet-pf-bg: DimGray;
 }
 
-.sheet-rolltemplate-pf_generic .sheet-color-Red,
-.sheet-rolltemplate-pf_ability .sheet-color-Red,
-.sheet-rolltemplate-pf_defense .sheet-color-Red,
-.sheet-rolltemplate-pf_attack .sheet-color-Red,
-.sheet-rolltemplate-pf_spell .sheet-color-Red,
-.sheet-rolltemplate-pf_block .sheet-color-Red {
+.sheet-rolltemplate-pf_generic .sheet-color-red,
+.sheet-rolltemplate-pf_ability .sheet-color-red,
+.sheet-rolltemplate-pf_defense .sheet-color-red,
+.sheet-rolltemplate-pf_attack .sheet-color-red,
+.sheet-rolltemplate-pf_spell .sheet-color-red,
+.sheet-rolltemplate-pf_block .sheet-color-red {
     --sheet-pf-bg: Crimson;
     --sheet-pf-oddbg: MistyRose;
 }
@@ -5926,9 +5925,9 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_attack .inlinerollresult.fullfail,
 .sheet-rolltemplate-pf_spell .inlinerollresult.fullfail,
 .sheet-rolltemplate-pf_block .inlinerollresult.fullfail {
-    border-color: #B31515;
+    border-color: #e20c0c;
     color: White;
-    background-color: #B31515;
+    background-color: #e20c0c;
 }
 
 /* purple when 1 high 1 low */
@@ -7221,7 +7220,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .charsheet .mode:hover {
-    color: #B31515;
+    color: #e20c0c;
 }
 
 /*hides edit-mode note*/
