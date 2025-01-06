@@ -1045,7 +1045,7 @@
   "header-image-default": "Include the default header image on roll templates.(NOTE: setting can be overridden by Simple roll templates which do not display header images.)",
   "header-image-none": "Do not include a header image",
   "header-image": "Header Image",
-  "heading-border-colors": "Heading background and outlines:",
+  "heading-border-colors": "Heading background and border Color:",
   "heal-conditions": "Heal Conditions",
   "heal": "Heal",
   "health-and-wounds": "Health and Wounds",

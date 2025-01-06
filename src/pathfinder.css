@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700|Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700|Open+Sans:ital,wght@0,400;0,700;1,400;1,700|Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+.ui-dialog .charsheet {
+    margin: auto;
+    padding: 0;
+    position: relative;
+}
+
 .charsheet summary {
     display: list-item;
     opacity: .5;
@@ -42,16 +48,15 @@
     color: inherit;
 }
 
-.charsheet summary + .details-box {
-    align-items: center;
-    background-color: #ffffee;
+.charsheet .pf-wrapper {
+    box-sizing: border-box;
+    margin: -1.75rem 0 1rem 0;
+    min-width: 822px;
+    outline: 1px solid #000;
+    padding: .125rem .5rem .5rem .5rem;
+    position: relative;
+    width: 100%;
     border-radius: 6px;
-    border: 1px solid grey;
-    color: initial;
-    display: inline-flex;
-    justify-content: space-around;
-    margin-top: 4px;
-    padding: 0 2px 0 2px;
 }
 
 .charsheet .details-box .small-label2 {
@@ -155,13 +160,6 @@
     color: inherit;
     line-height: 1em;
     font-size: 1.3rem;
-}
-
-.charsheet .pf-wrapper {
-    box-sizing: border-box;
-    margin-top: -1rem;
-    min-width: 822px;
-    width: 100%;
 }
 
 /* standalone generic toggles */
@@ -287,8 +285,8 @@
 
 .charsheet .progress-icon {
     background-color: white;
-    color: red;
-    outline: 1px solid red;
+    color: #B31515;
+    outline: 1px solid #B31515;
     padding: 1px 4px 1px 4px;
     position: absolute;
     top: 0;
@@ -325,7 +323,7 @@
 .charsheet details[open]:focus-within summary::marker,
 .charsheet details[open]:hover summary::marker,
 .charsheet details[open] summary::marker {
-    color: red;
+    color: #B31515;
     opacity: 1;
 }
 
@@ -570,7 +568,7 @@
 }
 
 .charsheet button[type="roll"].no-decoration:hover {
-    color: red;
+    color: #B31515;
     text-decoration: underline;
     background-color: inherit;
     outline: none;
@@ -870,9 +868,8 @@ pf-wrapper,
 /* Parchment 1 */
 .charsheet .parchment-1:checked ~ .pf-wrapper {
     background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_background_parch1.jpg");
-    background-size: cover;
     background-position: center top;
-    padding: 1.25em .75em .75em .75em;
+    background-size: cover;
     color: initial;
 }
 
@@ -922,9 +919,8 @@ pf-wrapper,
 /* Parchment 2 */
 .charsheet .parchment-2:checked ~ .pf-wrapper {
     background-image: url("https://raw.githubusercontent.com/Roll20/roll20-character-sheets/master/Pathfinder%20Community/Images/pf_background_parch2.jpg");
-    background-size: cover;
     background-position: center top;
-    padding: 1.25em .75em .75em .75em;
+    background-size: cover;
     color: initial;
 }
 
@@ -1087,10 +1083,13 @@ pf-wrapper,
 
 .charsheet .monster-indicator label:has(.condition-exists.npc-show:checked),
 .charsheet .monster-indicator label:has(.condition-exists.pc-only:not(:checked)) {
+    align-items: center;
+    box-shadow: 1px 1px 2px #000;
     cursor: pointer;
     display: flex;
     font-weight: normal;
-    padding: 1px 6px 3px 6px;
+    height: 2.15rem;
+    padding: 3px 6px 4px 6px;
 }
 
 .charsheet .monster-indicator label:has(.condition-exists.npc-show:checked):hover,
@@ -1101,7 +1100,7 @@ pf-wrapper,
 
 .charsheet .monster-indicator label:hover span,
 .charsheet .monster-indicator label:hover span {
-    color: red;
+    color: #B31515;
 }
 
 .charsheet .h2-section {
@@ -1150,7 +1149,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .error {
-    color: Red;
+    color: #B31515;
     font-size: 1.4rem;
     background-color: White;
     margin-left: .25em;
@@ -1406,9 +1405,9 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .table-config-row-name {
-    padding: .125em;
-    width: 18%;
-    max-width: 18%;
+    min-width: 6em;
+    padding: 3px;
+    width: 100%;
 }
 
 .charsheet .table-config-row-name ~ span.table-cell > label {
@@ -1418,15 +1417,15 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .section-config {
-    position: relative;
-    outline: 2px solid red;
-    top: -3em;
     background-color: #737373;
-    border-radius: 6px;
+    margin-bottom: -11rem;
+    outline: 4px solid #B31515;
+    outline-offset: -1px;
+    position: relative;
+    top: -2.65em;
     z-index: 3;
 }
 
-.charsheet .pf-wrapper .section-config .table span:not(.table-config-row-name),
 .charsheet .pf-wrapper .section-config .table-row span:not(.table-config-row-name),
 .charsheet .pf-wrapper .section-config .sheetconfig .corerules .table-row span:not(.table-config-row-name),
 .charsheet .pf-wrapper .section-config .sheetconfig .corerules .table-row span b,
@@ -1453,6 +1452,10 @@ also need 1 more level in selector or base css will override border */
     margin-bottom: 2px;
 }
 
+.charsheet .section-config .header-images .table .table-row-name span {
+    color: #FFF;
+}
+
 .charsheet .header-images .table-row span {
     align-items: center;
     display: inline-flex;
@@ -1460,6 +1463,12 @@ also need 1 more level in selector or base css will override border */
     margin: auto;
     width: 100%;
     height: 100%;
+}
+
+.charsheet .migrations .table-row {
+    display: grid;
+    grid-template-columns: 6em 1fr 1fr 1fr 1fr;
+    justify-items: flex-start;
 }
 
 .charsheet .sheetconfig .table-row > .table-config-row-name,
@@ -2408,16 +2417,21 @@ also need 1 more level in selector or base css will override border */
     margin: 0;
 }
 
-/* padding npc section */
 .charsheet .npc-details,
 .charsheet .npc-defense,
-.charsheet .npc-offense,
 .charsheet .npc-tactics,
-.charsheet .npc-abilities,
 .charsheet .npc-racial-abilities,
 .charsheet .npc-statistics,
 .charsheet .npc-ecology {
-    padding: 0 1em 0 1em;
+    display: inline-grid;
+    row-gap: 2px;
+}
+
+.charsheet .npc-offense,
+.charsheet .npc-abilities,
+.charsheet .npc-racial-abilities,
+.charsheet .npc-statistics {
+    display: inline-block;
 }
 
 .charsheet .table.npc-header .table-cell input {
@@ -2441,7 +2455,6 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .npc-statblock-row {
     display: inline-flex;
-    min-height: 3em;
     width: 100%;
 }
 
@@ -2632,8 +2645,9 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet .cssbutton + span::before {
     background-color: #FFFFFF;
-    border: 0.1rem solid #808080;
-    border-radius: 0.5rem;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px #000;
     color: initial;
     display: grid;
     font-style: normal !important;
@@ -2667,7 +2681,7 @@ also need 1 more level in selector or base css will override border */
 span[data-i18n-title="recalculate-cmd"]:has(.cssbutton:hover) ~ span[data-i18n-title="recalculate-cmd"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[data-i18n-title="display-settings-config"] {
-    color: Red;
+    color: #B31515;
 }
 
 
@@ -2691,7 +2705,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .cssbutton:hover,
 .charsheet .cssbutton:hover + span::before,
 .charsheet .merge-buffs label:has(.cssbutton + .newbuff):hover {
-    color: Red;
+    color: #B31515;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
@@ -2704,7 +2718,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 /* .charsheet .cssbutton.readonly-show:not(:checked) + span::before, */
 .charsheet .cssbutton.config-show:checked + span::before {
-    outline: 2px solid red;
+    outline: 2px solid #B31515;
     outline-offset: -1px;
 }
 
@@ -2718,7 +2732,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .minimize-show:checked:hover + span::before {
     background-color: white !important;
-    color: red;
+    color: #B31515;
 }
 
 .charsheet .minimize-show + span::before {
@@ -2746,7 +2760,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .split-column-show:checked:hover + span::before {
     background-color: white !important;
-    color: red;
+    color: #B31515;
 }
 
 .charsheet .deletebutton + span::before {
@@ -2843,7 +2857,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .configbutton:checked:hover + span::before {
     background-color: white !important;
-    color: red;
+    color: #B31515;
 }
 
 .charsheet .readonly-show + span::before {
@@ -2877,6 +2891,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     margin: auto;
     place-items: center;
     position: relative;
+    border-color: transparent;
 }
 
 .charsheet .readonly-show:checked:hover + span::before {
@@ -2912,7 +2927,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .allrows-note {
     margin-inline: 1em;
     opacity: 0;
-    outline: 2px solid red;
+    outline: 2px solid #B31515;
     padding: 2px;
     pointer-events: none;
 }
@@ -3064,12 +3079,13 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet label:hover .selectedlabel-check + span:not(.offCase) {
-    color: red;
+    color: #B31515;
 }
 
 .charsheet .corerules .table-row .table-cell {
-    padding-left: .5em;
     color: inherit;
+    justify-self: left;
+    padding-left: .5em;
 }
 
 .charsheet .conditions {
@@ -3303,7 +3319,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .repcontrol_edit:hover:after,
 .charsheet .repcontrol_add:hover:before {
     /*    background-color: #EFEFEF; */
-    color: red !important;
+    color: Red !important;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
@@ -3450,7 +3466,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 /* outline when a condition is in effect */
 .charsheet .status-panel:first-child .options:has(input:checked) {
-    outline: 2px solid red;
+    outline: 2px solid #B31515;
 }
 
 .charsheet .status-panel .options div {
@@ -3848,18 +3864,14 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet .config-table {
-    margin-bottom: 1em;
     background-color: inherit;
+    padding-inline: 5px;
 }
 
 .charsheet .config-table .table-cell {
     vertical-align: top;
     padding-left: 0;
     padding-right: .5em;
-}
-
-.charsheet .config-table {
-    display: inline-table;
 }
 
 .charsheet .roll-config {
@@ -4396,9 +4408,9 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 
 .charsheet .monster-indicator {
     font-size: 1.6rem;
-    position: absolute;
-    right: 9.75em;
-    top: 3em;
+    margin: auto;
+    margin-right: 1rem;
+    max-width: fit-content;
 }
 
 .charsheet .section-header {
@@ -4410,6 +4422,13 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     display: table-cell;
     padding: 0 .25em 0 .25em;
     vertical-align: bottom;
+}
+
+.charsheet .announcements-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    margin: auto;
+    position: relative;
 }
 
 .charsheet .announcements {
@@ -5002,7 +5021,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_ability .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover,
 .sheet-rolltemplate-pf_attack .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover,
 .sheet-rolltemplate-pf_block .sheet-pfctracking span.sheet-pictos a .sheet-strong:hover {
-    color: red;
+    color: #B31515;
 }
 
 .sheet-rolltemplate-pf_spell .sheet-pfctracking span.sheet-pictos a .sheet-strong,
@@ -5380,12 +5399,12 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     --sheet-pf-bg: DimGray;
 }
 
-.sheet-rolltemplate-pf_generic .sheet-color-red,
-.sheet-rolltemplate-pf_ability .sheet-color-red,
-.sheet-rolltemplate-pf_defense .sheet-color-red,
-.sheet-rolltemplate-pf_attack .sheet-color-red,
-.sheet-rolltemplate-pf_spell .sheet-color-red,
-.sheet-rolltemplate-pf_block .sheet-color-red {
+.sheet-rolltemplate-pf_generic .sheet-color-Red,
+.sheet-rolltemplate-pf_ability .sheet-color-Red,
+.sheet-rolltemplate-pf_defense .sheet-color-Red,
+.sheet-rolltemplate-pf_attack .sheet-color-Red,
+.sheet-rolltemplate-pf_spell .sheet-color-Red,
+.sheet-rolltemplate-pf_block .sheet-color-Red {
     --sheet-pf-bg: Crimson;
     --sheet-pf-oddbg: MistyRose;
 }
@@ -5899,7 +5918,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
     background-color: #3FB315;
 }
 
-/* red*/
+/* Red*/
 
 .sheet-rolltemplate-pf_generic .inlinerollresult.fullfail,
 .sheet-rolltemplate-pf_ability .inlinerollresult.fullfail,
@@ -7173,10 +7192,10 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .mode-and-settings {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin-top: -6.65em;
-    position: absolute;
-    right: 2.5em;
+    position: relative;
     width: 8.5em;
+    margin: auto;
+    margin-right: 0;
 }
 
 .charsheet .mode-and-settings span {
@@ -7202,7 +7221,7 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 }
 
 .charsheet .mode:hover {
-    color: red;
+    color: #B31515;
 }
 
 /*hides edit-mode note*/
