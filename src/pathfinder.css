@@ -329,25 +329,22 @@
 
 .charsheet details[open]:focus-within,
 .charsheet details[open]:hover {
-    z-index: 2;
+    z-index: 3;
 }
 
-.charsheet .skills .table-row span.table-cell > textarea:focus,
 .charsheet details[open] summary + textarea.skill-macro-text,
 .charsheet details[open] summary + * {
     background-color: #f0f8ff;
     color: revert;
     display: flex;
     height: auto;
-    min-height: 4.75em;
     left: 1em;
     position: absolute;
-    transition: height .3s ease-in-out;
     width: calc(100% - 2em);
     word-break: normal;
-    z-index: 1;
-    outline: 1px solid #777;
+    z-index: 2;
     border-radius: 0;
+    outline: 2px solid #e20c0c;
 }
 
 .charsheet details[open] summary + span:has(.footnotes) {
@@ -1684,7 +1681,7 @@ also need 1 more level in selector or base css will override border */
     margin: -12px 0 0 -3px;
     padding: 1px 2px 0 2px;
     position: absolute;
-    z-index: 3;
+    z-index: 1;
 }
 
 /******************************* API COMMAND BUTTONS *************************************/
@@ -7092,10 +7089,6 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
 .charsheet .readonly-show:not(:checked) ~ .main .skills .table-row .table-cell:nth-of-type(7) {
     width: .5em;
     max-width: .5em;
-}
-
-.charsheet .readonly-show:not(:checked) ~ .main .skills .table-row .table-cell:nth-of-type(7) {
-    transform: rotate(90deg);
 }
 
 .charsheet input.macro-text-inline,
