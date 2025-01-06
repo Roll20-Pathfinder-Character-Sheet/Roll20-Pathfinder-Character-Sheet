@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Ubuntu:ital,wght@0,400;0,700;1,400;1,700|Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700|Open+Sans:ital,wght@0,400;0,700;1,400;1,700|Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 .ui-dialog .charsheet {
     margin: auto;
@@ -38,7 +38,7 @@
 .charsheet summary:hover,
 .charsheet summary:hover > *,
 .charsheet summary:hover::marker {
-    color: #f00;
+    color: #e20c0c;
     cursor: pointer;
     opacity: 1;
 }
@@ -1714,7 +1714,7 @@ also need 1 more level in selector or base css will override border */
 
 .charsheet button[type="roll"].command-button:hover,
 .charsheet button[type="roll"].command-button:focus {
-    color: #f00;
+    color: #e20c0c;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
@@ -2501,7 +2501,7 @@ also need 1 more level in selector or base css will override border */
 }
 
 .charsheet .npc-statblock-row button[type="roll"].command-button:hover > span {
-    color: #f00;
+    color: #e20c0c;
     cursor: pointer;
 }
 
@@ -5144,7 +5144,7 @@ equipmentnav ~ tabinputtab99:not(:checked) ~ tabinputtab9:not(:checked) ~ tabinp
 .sheet-rolltemplate-pf_block label span [href^="~"]:hover {
     text-decoration: none;
     cursor: pointer;
-    color: #f00;
+    color: #e20c0c;
     box-shadow: 0.1rem 0.1rem 0.2rem #333;
 }
 
