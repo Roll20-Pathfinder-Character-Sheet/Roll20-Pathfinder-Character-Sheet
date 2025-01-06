@@ -345,6 +345,18 @@
     z-index: 2;
     border-radius: 0;
     outline: 2px solid #e20c0c;
+    box-shadow: 2px 2px 5px #000;
+}
+
+.charsheet details[open]:focus-within summary + textarea.skill-macro-text,
+.charsheet details[open]:hover summary + textarea.skill-macro-text,
+.charsheet details[open]:focus-within summary + *,
+.charsheet details[open]:hover summary + * {
+    box-shadow: 5px 5px 10px #000;
+}
+
+.sheet-darkmode .charsheet details[open] * {
+    color: initial !important;
 }
 
 .charsheet details[open] summary + span:has(.footnotes) {
@@ -1416,10 +1428,12 @@ also need 1 more level in selector or base css will override border */
 .charsheet .section-config {
     background-color: #737373;
     margin-bottom: -11rem;
+    margin-inline: auto;
     outline: 4px solid #e20c0c;
     outline-offset: -1px;
     position: relative;
     top: -2.65em;
+    width: 93%;
     z-index: 3;
 }
 
