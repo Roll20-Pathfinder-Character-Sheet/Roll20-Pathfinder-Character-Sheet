@@ -2688,6 +2688,7 @@ also need 1 more level in selector or base css will override border */
 .charsheet .showarrow:hover + .showsect::before,
 .charsheet .counted:hover + span,
 .charsheet .counted:hover + span::before,
+.charsheet .mode:hover,
 .charsheet .mode:hover ~ span[data-i18n-title="edit-mode-title"],
 span[data-i18n-title="recalculate-cmd"]:has(.cssbutton:hover) ~ span[data-i18n-title="recalculate-cmd"],
 span[data-i18n-title="display-settings-config"]:has(.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"],
@@ -2695,12 +2696,10 @@ span[data-i18n-title="display-settings-config"]:has(.cssbutton:hover) ~ span[dat
     color: #e20c0c;
 }
 
-
 span[data-i18n-title="display-settings-config"]:has(input.cssbutton) ~ span[data-i18n-title="display-settings-config"].display-settings,
 span[data-i18n-title="display-settings-config"]:has(input.cssbutton) ~ span[data-i18n-title="display-settings-config"].display-sheet {
     display:none;
 }
-
 
 span[data-i18n-title="display-settings-config"]:has(input.cssbutton:checked) ~ span[data-i18n-title="display-settings-config"].display-settings {
     display: flex;
@@ -7224,10 +7223,6 @@ also if multiple repeating sects inside h2 they are 100% wide and only h2 is nar
     top: 0;
     width: 3.5em;
     z-index: 2;
-}
-
-.charsheet .mode:hover {
-    color: #e20c0c;
 }
 
 /*hides edit-mode note*/
