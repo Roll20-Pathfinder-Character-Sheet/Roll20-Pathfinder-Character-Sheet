@@ -31,6 +31,7 @@
                     <span data-i18n="new-features">New Features and Updates</span>
                     </h2>
                     <ol>
+                        <li>Fixed a bug where adding a new spell would not show #prep field. There was a typo in the PFSpells.js module that caused the caster type toggle from triggering the #cast and #prep fields.</li>
                         <li>Moved the PF logo, sheet type label(ie PC || NPC/Monster), recalc, mode, and settings buttons to the upper right of the sheet.</li>
                         <li>Made adjustments to fix margin and padding issues when switching sheet backgrounds.</li>
                         <li>Copied the HL export extension to the repo since it was no longer available from the original source. The file is stored on the repo as a '*.js' file but you must change the extension to '*.hl' before installing. The downloadable link has been updated in the HeroLab Character Import section.</li>
@@ -2228,8 +2229,8 @@
                             <div class="table-group">
                                 <div class="table-row">
                                     <span class="table-cell shown">
-                                        <input class="input-feet" title="@{speed-base}" type="number" step="5" min="0" name="attr_speed-base" value="0" />
-                                        <input class="input-meters" title="@{speed-base}" type="number" step="1.5" min="0" name="attr_speed-base" value="0" />
+                                        <input class="input-feet" title="@{speed-base}" type="number" min="0" name="attr_speed-base" value="0" />
+                                        <input class="input-meters" title="@{speed-base}" type="number" min="0" name="attr_speed-base" value="0" />
                                     </span>
                                     <input type="checkbox" name="attr_max-dex-source" value="3" class="sect-show-inverse noshow" />
                                     <span class="table-cell sect-inverse right-border">
@@ -2242,20 +2243,20 @@
                                         <input title="@{speed-run}" type="number" name="attr_speed-run" value="0" class="calc highlight" readonly />
                                     </span>
                                     <span class="table-cell left-border shown">
-                                        <input class="input-feet" title="@{speed-fly}" type="number" step="5" min="0" name="attr_speed-fly" value="0" />
-                                        <input class="input-meters" title="@{speed-fly}" type="number" step="1.5" min="0" name="attr_speed-fly" value="0" />
+                                        <input class="input-feet" title="@{speed-fly}" type="number" min="0" name="attr_speed-fly" value="0" />
+                                        <input class="input-meters" title="@{speed-fly}" type="number" min="0" name="attr_speed-fly" value="0" />
                                     </span>
                                     <span class="table-cell shown">
-                                        <input class="input-feet" title="@{speed-swim}" type="number" step="5" min="0" name="attr_speed-swim" value="0" />
-                                        <input class="input-meters" title="@{speed-swim}" type="number" step="1.5" min="0" name="attr_speed-swim" value="0" />
+                                        <input class="input-feet" title="@{speed-swim}" type="number" min="0" name="attr_speed-swim" value="0" />
+                                        <input class="input-meters" title="@{speed-swim}" type="number" min="0" name="attr_speed-swim" value="0" />
                                     </span>
                                     <span class="table-cell shown">
-                                        <input class="input-feet" title="@{speed-climb}" type="number" step="5" min="0" name="attr_speed-climb" value="0" />
-                                        <input class="input-meters" title="@{speed-climb}" type="number" step="1.5" min="0" name="attr_speed-climb" value="0" />
+                                        <input class="input-feet" title="@{speed-climb}" type="number" min="0" name="attr_speed-climb" value="0" />
+                                        <input class="input-meters" title="@{speed-climb}" type="number" min="0" name="attr_speed-climb" value="0" />
                                     </span>
                                     <span class="table-cell extra-sect shown">
-                                        <input class="input-feet" title="@{speed-burrow}" type="number" step="5" min="0" name="attr_speed-burrow" value="0" />
-                                        <input class="input-meters" title="@{speed-burrow}" type="number" step="1.5" min="0" name="attr_speed-burrow" value="0" />
+                                        <input class="input-feet" title="@{speed-burrow}" type="number" min="0" name="attr_speed-burrow" value="0" />
+                                        <input class="input-meters" title="@{speed-burrow}" type="number" min="0" name="attr_speed-burrow" value="0" />
                                     </span>
                                     <span class="table-cell extra-sect"><input title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" /></span>
                                     <span class="table-cell extra-sect"><input title="@{speed-misc2}" type="number" name="attr_speed-misc2" value="0" /></span>
@@ -12287,8 +12288,8 @@
                         <div class="npc-statblock-row">
                             <span class="small-label2 entry-med">
                                 <span data-i18n="speed" data-i18n-title="speed-base-title">Speed</span>
-                                <input class="input-feet distance-used" title="@{speed-base}" type="number" step="5" min="0" name="attr_speed-base" value="0" />
-                                <input class="input-meters distance-used" title="@{speed-base}" type="number" step="1.5" min="0" name="attr_speed-base" value="0" />
+                                <input class="input-feet distance-used" title="@{speed-base}" type="number" min="0" name="attr_speed-base" value="0" />
+                                <input class="input-meters distance-used" title="@{speed-base}" type="number" min="0" name="attr_speed-base" value="0" />
                                 <span></span>
                             </span>
                             <span class="small-label2 entry-med" data-i18n-title="speed-title">
@@ -12309,20 +12310,20 @@
                         <div class="npc-statblock-row">
                             <span class="small-label2 entry-med">
                                 <span data-i18n="burrow-speed">Burrow</span>
-                                <input class="input-feet distance-used" title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="5" />
-                                <input class="input-meters distance-used" title=" @{speed-burrow}" type="number" name="attr_speed-burrow" value="0" step="1.5" />
+                                <input class="input-feet distance-used" title="@{speed-burrow}" type="number" name="attr_speed-burrow" value="0" />
+                                <input class="input-meters distance-used" title=" @{speed-burrow}" type="number" name="attr_speed-burrow" value="0" />
                                 <span></span>
                             </span>
                             <span class="small-label2 entry-med">
                                 <span data-i18n="climb">Climb</span>
-                                <input class="input-feet distance-used" title="@{speed-climb}" type="number" step="5" min="0" name="attr_speed-climb" value="0" />
-                                <input class="input-meters distance-used" title="@{speed-climb}" type="number" step="1.5" min="0" name="attr_speed-climb" value="0" />
+                                <input class="input-feet distance-used" title="@{speed-climb}" type="number" min="0" name="attr_speed-climb" value="0" />
+                                <input class="input-meters distance-used" title="@{speed-climb}" type="number" min="0" name="attr_speed-climb" value="0" />
                                 <span></span>
                             </span>
                             <span class="small-label2 entry-med">
                                 <span data-i18n="fly">Fly</span>
-                                <input class="input-feet distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="5" />
-                                <input class="input-meters distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" step="1.5" />
+                                <input class="input-feet distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" />
+                                <input class="input-meters distance-used" title="@{speed-fly}" type="number" name="attr_speed-fly" value="0" />
                                 <span></span>
                             </span>
                             <label class="small-label2 autoexpand" style="margin: 3px 0 0 5px;">
@@ -12333,14 +12334,14 @@
                         <div class="npc-statblock-row">
                             <span class="small-label2 entry-med">
                               <span data-i18n="swim-speed">Swim</span>
-                              <input class="input-feet distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="5" />
-                              <input class="input-meters distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" step="1.5" />
+                              <input class="input-feet distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" />
+                              <input class="input-meters distance-used" title="@{speed-swim}" type="number" name="attr_speed-swim" value="0" />
                               <span></span>
                             </span>
                             <span class="small-label2 entry-med">
                               <span data-i18n="miscellaneous-abbrv">Misc</span>
-                              <input class="input-feet distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="5" />
-                              <input class="input-meters distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" step="1.5" />
+                              <input class="input-feet distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" />
+                              <input class="input-meters distance-used" title="@{speed-misc}" type="number" name="attr_speed-misc" value="0" />
                               <span></span>
                             </span>
                             <span class="small-label2">
