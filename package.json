@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "jshint": "^2.13.6",
+    "prettier-eslint": "^16.3.0",
     "underscore": "^1.13.7",
     "webpack-sources": "^3.2.3"
   }
