@@ -2257,6 +2257,11 @@ also need 1 more level in selector or base css will override border */
     position: relative;
 }
 
+.charsheet label input.csstextbutton {
+    position: absolute;
+    width: -webkit-fill-available;
+}
+
 /* the label underneath button*/
 .charsheet .small-label2 > .csstextbutton + span + span,
 .charsheet .small-label2 > .cssbutton + span + span {
@@ -4641,6 +4646,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .extra-show:checked ~ div .extra-sect-inverse,
 /* buttons */
 .charsheet .progress-show:not(:checked) ~ .progress-icon,
+.charsheet label:has(.progress-show:not(:checked)) ~ .progress-icon,
 .charsheet .use-size-show:not(:checked) ~ .use-size,
 .charsheet .use-size-show:checked ~ .dont-use-size,
 .charsheet .use-size-show:not(:checked) ~ .repeating-fields .use-size,

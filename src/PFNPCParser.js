@@ -1,4 +1,3 @@
-'use strict';
 import _ from 'underscore';
 import {PFLog, PFConsole} from './PFLog';
 import TAS from './TheAaronSheet.js';
