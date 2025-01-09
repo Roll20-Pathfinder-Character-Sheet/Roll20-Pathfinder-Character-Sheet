@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 import _ from 'underscore';
 import TAS from './TheAaronSheet.js';
 import {PFLog, PFConsole} from './PFLog';
@@ -2078,14 +2078,47 @@ let events = {
 };
 function registerEventHandlers() {
   let tempstr = '';
-  tempstr = _.reduce(
-    events.repeatingSpellUpdatesPlayer,
-    function (memo, attr) {
-      memo += 'change:repeating_spells:' + attr + ' ';
-      return memo;
-    },
-    '',
-  );
+  // combined all tempstr reduce functions
+  const reducers = [events.repeatingSpellUpdatesPlayer, events.repeatingSpellMenuUpdatePlayer, events.repeatingSpellAttackEventsPlayer, events.repeatingSpellAttackEventsAuto];
+
+  tempstr = reducers.reduce((accumulator, eventList) => {
+    return eventList.reduce((memo, attr) => {
+      return memo + 'change:repeating_spells:' + attr + ' ';
+    }, accumulator); // Use the outer accumulator as the initial memo value
+  }, ''); // Initial value for the outer reduce
+
+  // tempstr = _.reduce(
+  //   events.repeatingSpellUpdatesPlayer,
+  //   function (memo, attr) {
+  //     memo += 'change:repeating_spells:' + attr + ' ';
+  //     return memo;
+  //   },
+  //   '',
+  // );
+  // tempstr = _.reduce(
+  //   events.repeatingSpellMenuUpdatePlayer,
+  //   function (memo, attr) {
+  //     memo += 'change:repeating_spells:' + attr + ' ';
+  //     return memo;
+  //   },
+  //   '',
+  // );
+  // tempstr = _.reduce(
+  //   events.repeatingSpellAttackEventsPlayer,
+  //   function (memo, attr) {
+  //     memo += 'change:repeating_spells:' + attr + ' ';
+  //     return memo;
+  //   },
+  //   '',
+  // );
+  // tempstr = _.reduce(
+  //   events.repeatingSpellAttackEventsAuto,
+  //   function (memo, attr) {
+  //     memo += 'change:repeating_spells:' + attr + ' ';
+  //     return memo;
+  //   },
+  //   '',
+  // );
   on(
     tempstr,
     TAS.callback(function playerUpdateSpell(eventInfo) {
@@ -2095,7 +2128,6 @@ function registerEventHandlers() {
       }
     }),
   );
-
   on(
     'change:use_metrics',
     TAS.callback(function playerUpdateSpell(eventInfo) {
@@ -2109,7 +2141,6 @@ function registerEventHandlers() {
       }
     }),
   );
-
   _.each(events.repeatingSpellEventsPlayer, function (functions, eventToWatch) {
     _.each(functions, function (methodToCall) {
       on(
@@ -2134,7 +2165,6 @@ function registerEventHandlers() {
       }
     }),
   );
-
   on(
     'change:spellmenu_groupby_school change:spellmenu_show_uses change:spellclass-0-hide_unprepared change:spellclass-1-hide_unprepared change:spellclass-2-hide_unprepared change:spellclass-0-show_domain_spells change:spellclass-1-show_domain_spells change:spellclass-2-show_domain_spells',
     TAS.callback(function eventOptionChange(eventInfo) {
@@ -2143,14 +2173,6 @@ function registerEventHandlers() {
         resetCommandMacro();
       }
     }),
-  );
-  tempstr = _.reduce(
-    events.repeatingSpellMenuUpdatePlayer,
-    function (memo, attr) {
-      memo += 'change:repeating_spells:' + attr + ' ';
-      return memo;
-    },
-    '',
   );
   on(
     tempstr,
@@ -2189,14 +2211,6 @@ function registerEventHandlers() {
       }
     }),
   );
-  tempstr = _.reduce(
-    events.repeatingSpellAttackEventsPlayer,
-    function (memo, attr) {
-      memo += 'change:repeating_spells:' + attr + ' ';
-      return memo;
-    },
-    '',
-  );
   on(
     tempstr,
     TAS.callback(function eventupdateAssociatedSpellAttack(eventInfo) {
@@ -2207,14 +2221,6 @@ function registerEventHandlers() {
         updateAssociatedAttack(null, null, null, eventInfo);
       }
     }),
-  );
-  tempstr = _.reduce(
-    events.repeatingSpellAttackEventsAuto,
-    function (memo, attr) {
-      memo += 'change:repeating_spells:' + attr + ' ';
-      return memo;
-    },
-    '',
   );
   on(
     tempstr,
