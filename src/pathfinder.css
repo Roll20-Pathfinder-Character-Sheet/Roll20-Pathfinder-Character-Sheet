@@ -3218,9 +3218,11 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 }
 
 .charsheet .compendium-note {
+    align-items: center;
+    display: flex;
     float: right;
-    text-align: right;
-    margin-top: .25em;
+    max-height: 2rem;
+    position: relative;
 }
 
 .charsheet .vertical-middle {
