@@ -1016,7 +1016,7 @@ export function migrate(callback) {
     callback();
   }
 }
-export var recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
+export let recalculate = TAS.callback(function callPFAbilityRecalculate(callback, silently, oldversion) {
   let done = _.once(function () {
       TAS.info('leaving PFAbility.recalculate');
       if (typeof callback === 'function') {
