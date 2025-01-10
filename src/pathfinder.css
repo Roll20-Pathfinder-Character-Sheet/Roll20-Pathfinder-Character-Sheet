@@ -2257,7 +2257,10 @@ also need 1 more level in selector or base css will override border */
     position: relative;
 }
 
+.charsheet label input.cssbutton,
 .charsheet label input.csstextbutton {
+    display: flex;
+    min-width: -webkit-fill-available;
     position: absolute;
     width: -webkit-fill-available;
 }
@@ -2839,10 +2842,6 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .newtemplate-button + span::before {
     content: '✚';
     /*'⛨☤';*/
-    vertical-align: top;
-    padding: 0.1rem 0.2rem 0.1rem 0.1rem;
-    width: 1.6em;
-    height: 1.6em;
 }
 
 .charsheet .newbuff-button + span::before {
@@ -3427,10 +3426,6 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
 .charsheet .npc-statistics .options .table-row .table-cell label b,
 .charsheet .skill-options .table-row .table-cell label b {
     white-space: normal;
-}
-
-.charsheet .spell-options .table-row .table-cell label {
-    display: flex;
 }
 
 .charsheet .readonly-show:not(:checked) ~ .main .options-readonly,
@@ -4401,6 +4396,7 @@ span[data-i18n-title="display-settings-config"]:has(input.cssbutton:not(:checked
     text-align: left;
 }
 
+.charsheet .attack-options .table-row .table-cell label,
 .charsheet .spell-options .table-row .table-cell label {
     display: flex;
 }
