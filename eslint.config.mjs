@@ -72,7 +72,7 @@ export default [
 			"no-extra-semi": "error",
 			"no-multi-assign": "off",
 			"no-param-reassign": [
-				"error",
+				"warn",
 				{
 					props: false,
 				},
