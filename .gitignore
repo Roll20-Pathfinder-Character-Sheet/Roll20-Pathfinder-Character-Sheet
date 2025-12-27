@@ -1,9 +1,11 @@
-node_modules
-dist
-prod
-debug.log
-npm-debug.log
-*.swp
-.babelrc
-.prettierrc.json
-.eslintrc.json
+# Root level ignores
+node_modules/
+dist/
+prod/
+.vscode/
+
+# dev/ folder ignores
+dev/node_modules/
+dev/dist/
+dev/prod/
+dev/.vscode/
